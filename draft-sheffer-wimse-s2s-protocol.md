@@ -1,7 +1,7 @@
 ---
-title: "TODO - Your title"
-abbrev: "TODO - Abbreviation"
-category: info
+title: "WIMSE Service to Service Authentication"
+abbrev: "WIMSE S2S Auth"
+category: std
 
 docname: draft-sheffer-wimse-s2s-protocol-latest
 submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
@@ -12,9 +12,8 @@ v: 3
 area: "Applications and Real-Time"
 workgroup: "Workload Identity in Multi System Environments"
 keyword:
- - next generation
- - unicorn
- - sparkling distributed ledger
+ - workload
+ - identity
 venue:
   group: "Workload Identity in Multi System Environments"
   type: "Working Group"
@@ -26,8 +25,8 @@ venue:
 author:
  -
     fullname: "Yaron Sheffer"
-    organization: Your Organization Here
-    email: "yaronf@gmx.com"
+    organization: Intuit
+    email: "yaronf.ietf@gmail.com"
 
 normative:
 
