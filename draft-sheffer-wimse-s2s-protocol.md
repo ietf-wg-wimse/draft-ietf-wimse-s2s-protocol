@@ -25,6 +25,8 @@ venue:
 author:
  -
     fullname: "Brian Campbell"
+    organization: Ping Identity
+    email: bcampbell@pingidentity.com
  -
     fullname: "Daniel Feldman"
  -
