@@ -24,6 +24,14 @@ venue:
 
 author:
  -
+    fullname: "Brian Campbell"
+ -
+    fullname: "Daniel Feldman"
+ -
+    fullname: "Joe Saloway"
+ -
+    fullname: "Arndt Schwenkschuster"
+ -
     fullname: "Yaron Sheffer"
     organization: Intuit
     email: "yaronf.ietf@gmail.com"
@@ -44,20 +52,31 @@ TODO Abstract
 
 TODO Introduction
 
+## Deployment Architecture and Message Flow
 
 # Conventions and Definitions
 
 {::boilerplate bcp14-tagged}
 
+# Application Level Service To Service Authentication
+
+## The WIMSE ID Token
+
+## Option 1: DPoP-Based Authetication
+
+## Option 2: Authentication Based on HTTP Message Signatures
+
+# Using Mutual TLS for Service To Service Authentication
 
 # Security Considerations
 
-TODO Security
+TODO Security and Privacy
 
+TLS trust assumptions, server vs mutual auth, middleboxes
 
 # IANA Considerations
 
-This document has no IANA actions.
+TODO IANA
 
 
 --- back
