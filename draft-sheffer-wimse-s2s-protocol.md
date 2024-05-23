@@ -62,7 +62,7 @@ TODO Introduction
 
 ## The WIMSE ID Token
 
-## Option 1: DPoP-Based Authetication
+## Option 1: DPoP-Inspired Authetication
 
 ## Option 2: Authentication Based on HTTP Message Signatures
 
