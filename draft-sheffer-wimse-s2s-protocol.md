@@ -9,19 +9,19 @@ number:
 date:
 consensus: true
 v: 3
-area: AREA
-workgroup: WG Working Group
+area: "Applications and Real-Time"
+workgroup: "Workload Identity in Multi System Environments"
 keyword:
  - next generation
  - unicorn
  - sparkling distributed ledger
 venue:
-  group: WG
-  type: Working Group
-  mail: WG@example.com
-  arch: https://example.com/WG
-  github: USER/REPO
-  latest: https://example.com/LATEST
+  group: "Workload Identity in Multi System Environments"
+  type: "Working Group"
+  mail: "wimse@ietf.org"
+  arch: "https://mailarchive.ietf.org/arch/browse/wimse/"
+  github: "yaronf/wimse-s2s"
+  latest: "https://yaronf.github.io/wimse-s2s/draft-sheffer-wimse-s2s-protocol.html"
 
 author:
  -
