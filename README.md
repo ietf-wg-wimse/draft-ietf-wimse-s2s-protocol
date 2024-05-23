@@ -1,6 +1,6 @@
-# TODO - Your title
+# WIMSE Service to Service Authentication
 
-This is the working area for the individual Internet-Draft, "TODO - Your title".
+This is the working area for the individual Internet-Draft, "draft-sheffer-wimse-s2s-protocol", being developed by a WIMSE design team.
 
 * [Editor's Copy](https://yaronf.github.io/wimse-s2s/#go.draft-sheffer-wimse-s2s-protocol.html)
 * [Datatracker Page](https://datatracker.ietf.org/doc/draft-sheffer-wimse-s2s-protocol)
