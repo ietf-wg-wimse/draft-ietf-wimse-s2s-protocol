@@ -56,6 +56,17 @@ TODO Introduction
 
 ## Deployment Architecture and Message Flow
 
+~~~ aasvg
++---------+
+|         |
+| This    |
+| is      |
+| a       |
+| box     |
+|         |
++---------+
+~~~
+
 # Conventions and Definitions
 
 {::boilerplate bcp14-tagged}
