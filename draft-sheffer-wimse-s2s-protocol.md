@@ -30,7 +30,9 @@ author:
  -
     fullname: "Daniel Feldman"
  -
-    fullname: "Joe Saloway"
+    fullname: "Joe Salowey"
+    organization: Venafi
+    email: joe.salowey@gmail.com
  -
     fullname: "Arndt Schwenkschuster"
  -
