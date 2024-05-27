@@ -68,8 +68,8 @@ level ({{app-level}}).
 * The other commonly deployed architecture has a mutual-TLS connection between each pair of services. This setup
 can be addressed by a simpler solution ({{mutual-tls}}).
 
-It is an explicit goal of this protocol that a service deployment, and in fact a single call chain,
-can include both architectures. In other words, Service A can call Service B with mutual TLS protection,
+It is an explicit goal of this protocol that a service deployment can include both architectures across a multi-chain call.
+In other words, Service A can call Service B with mutual TLS protection,
 while the next call to Service C is protected at the application level.
 
 For application-level protection we currently propose two alternative solutions, one inspired by DPoP {{?RFC9449}} and
@@ -85,13 +85,14 @@ Regardless of the transport between the workloads, we assume the following logic
 |            |               |            |
 |            |               | Workload B |
 | Workload A |==============>|            |
-|            |               +------------+
-|            |               |    PEP     |
-+------------+               +------------+
-      ^                            ^
-      |                            |
-      |                            |
-      v                            v
+|            |               |   +--------+
+|            |               |   |  PEP   |
++------------+               +---+--------+
+      ^                        ^     ^
+      |                        |     |
+      | +----------------------+     |
+      | |                            |
+      v v                            v
 +------------+               +------------+
 |            |               |            |
 |  Identity  |               |    PDP     |
@@ -115,8 +116,11 @@ The high-level message flow is as follows:
 mechanisms defined below.
 * Workload B now authenticates Workload A and decides whether to authorize the call.
 In certain architectures, Workload B may need to consult with an external server to decide whether to accept the call.
+* Workload B returns a response to Workload A, which may be an error response or a regular one.
 
 # Conventions and Definitions
+
+This document uses "service" and "workload" interchangeably. Otherwise, all terms are as defined by {{?I-D.ietf-wimse-arch}}.
 
 {::boilerplate bcp14-tagged}
 
