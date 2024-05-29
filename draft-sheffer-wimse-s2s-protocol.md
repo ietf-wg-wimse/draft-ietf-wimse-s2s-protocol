@@ -56,7 +56,7 @@ TODO Abstract
 
 This document defines authentication and authorization in the context of interaction between two workloads.
 This is the core component of the WIMSE architecture {{?I-D.ietf-wimse-arch}}.
-Assume that Service A needs to call Service B. For simplicity, this document focuses on REST services,
+Assume that Service A needs to call Service B. For simplicity, this document focuses on HTTP services,
 and the service-to-service call consists of a single HTTP request and its response.
 We define the credentials that both services should possess and how they are used to protect the HTTP exchange.
 
@@ -64,7 +64,7 @@ There are multiple deployment styles in use today, and they result in different 
 We propose to address them differently.
 
 * Many use cases have various middleboxes inserted between pairs of services, resulting in a transport layer
-that is not end-to-end encrypted. We propose to address these use cases by protecting the REST messages at the application
+that is not end-to-end encrypted. We propose to address these use cases by protecting the HTTP messages at the application
 level ({{app-level}}).
 
 * The other commonly deployed architecture has a mutual-TLS connection between each pair of services. This setup
@@ -114,7 +114,7 @@ policy management and message authorization are out of scope of this document.
 The high-level message flow is as follows:
 
 * Workload A obtains a credential from the Identity Server. This happens periodically, e.g. once every 24 hours.
-* Workload A makes a REST call into Workload B. This is a regular REST call, with the additional protection
+* Workload A makes an HTTP call into Workload B. This is a regular HTTP call, with the additional protection
 mechanisms defined below.
 * Workload B now authenticates Workload A and decides whether to authorize the call.
 In certain architectures, Workload B may need to consult with an external server to decide whether to accept the call.
