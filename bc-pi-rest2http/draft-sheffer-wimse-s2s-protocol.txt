@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              D. Feldman
-Expires: 30 November 2024                                               
+Expires: 1 December 2024                                                
                                                               J. Salowey
                                                                   Venafi
                                                       A. Schwenkschuster
                                                                         
                                                               Y. Sheffer
                                                                   Intuit
-                                                             29 May 2024
+                                                             30 May 2024
 
 
                 WIMSE Service to Service Authentication
@@ -55,7 +55,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 30 November 2024.
+   This Internet-Draft will expire on 1 December 2024.
 
 Copyright Notice
 
@@ -95,10 +95,10 @@ Table of Contents
    of interaction between two workloads.  This is the core component of
    the WIMSE architecture [I-D.ietf-wimse-arch].  Assume that Service A
    needs to call Service B.  For simplicity, this document focuses on
-   HTTP services, and the service-to-service call consists of a single
-   HTTP request and its response.  We define the credentials that both
-   services should possess and how they are used to protect the HTTP
-   exchange.
+   HTTP-based services, and the service-to-service call consists of a
+   single HTTP request and its response.  We define the credentials that
+   both services should possess and how they are used to protect the
+   HTTP exchange.
 
    There are multiple deployment styles in use today, and they result in
    different security properties.  We propose to address them
