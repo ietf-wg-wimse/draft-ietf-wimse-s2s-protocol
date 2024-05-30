@@ -1208,7 +1208,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
       </h2>
 <p id="section-1-1">This document defines authentication and authorization in the context of interaction between two workloads.
 This is the core component of the WIMSE architecture <span>[<a href="#I-D.ietf-wimse-arch" class="cite xref">I-D.ietf-wimse-arch</a>]</span>.
-Assume that Service A needs to call Service B. For simplicity, this document focuses on REST services,
+Assume that Service A needs to call Service B. For simplicity, this document focuses on HTTP-based services,
 and the service-to-service call consists of a single HTTP request and its response.
 We define the credentials that both services should possess and how they are used to protect the HTTP exchange.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">There are multiple deployment styles in use today, and they result in different security properties.
@@ -1216,7 +1216,7 @@ We propose to address them differently.<a href="#section-1-2" class="pilcrow">¶
 <ul class="normal">
 <li class="normal" id="section-1-3.1">
           <p id="section-1-3.1.1">Many use cases have various middleboxes inserted between pairs of services, resulting in a transport layer
-that is not end-to-end encrypted. We propose to address these use cases by protecting the REST messages at the application
+that is not end-to-end encrypted. We propose to address these use cases by protecting the HTTP messages at the application
 level (<a href="#app-level" class="auto internal xref">Section 3</a>).<a href="#section-1-3.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-1-3.2">
@@ -1297,7 +1297,7 @@ policy management and message authorization are out of scope of this document.<a
             <p id="section-1.1-6.1.1">Workload A obtains a credential from the Identity Server. This happens periodically, e.g. once every 24 hours.<a href="#section-1.1-6.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-1.1-6.2">
-            <p id="section-1.1-6.2.1">Workload A makes a REST call into Workload B. This is a regular REST call, with the additional protection
+            <p id="section-1.1-6.2.1">Workload A makes an HTTP call into Workload B. This is a regular HTTP request, with the additional protection
 mechanisms defined below.<a href="#section-1.1-6.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-1.1-6.3">
