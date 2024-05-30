@@ -56,7 +56,7 @@ TODO Abstract
 
 This document defines authentication and authorization in the context of interaction between two workloads.
 This is the core component of the WIMSE architecture {{?I-D.ietf-wimse-arch}}.
-Assume that Service A needs to call Service B. For simplicity, this document focuses on HTTP services,
+Assume that Service A needs to call Service B. For simplicity, this document focuses on HTTP-based services,
 and the service-to-service call consists of a single HTTP request and its response.
 We define the credentials that both services should possess and how they are used to protect the HTTP exchange.
 
