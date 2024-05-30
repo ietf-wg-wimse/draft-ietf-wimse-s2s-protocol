@@ -166,7 +166,7 @@ Table of Contents
       happens periodically, e.g. once every 24 hours.
 
    *  Workload A makes an HTTP call into Workload B.  This is a regular
-      HTTP call, with the additional protection mechanisms defined
+      HTTP request, with the additional protection mechanisms defined
       below.
 
    *  Workload B now authenticates Workload A and decides whether to
