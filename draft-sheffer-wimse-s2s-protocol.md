@@ -114,7 +114,7 @@ policy management and message authorization are out of scope of this document.
 The high-level message flow is as follows:
 
 * Workload A obtains a credential from the Identity Server. This happens periodically, e.g. once every 24 hours.
-* Workload A makes an HTTP call into Workload B. This is a regular HTTP call, with the additional protection
+* Workload A makes an HTTP call into Workload B. This is a regular HTTP request, with the additional protection
 mechanisms defined below.
 * Workload B now authenticates Workload A and decides whether to authorize the call.
 In certain architectures, Workload B may need to consult with an external server to decide whether to accept the call.
