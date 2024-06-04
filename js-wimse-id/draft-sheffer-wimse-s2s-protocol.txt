@@ -1,0 +1,300 @@
+
+
+
+
+Workload Identity in Multi System Environments               B. Campbell
+Internet-Draft                                             Ping Identity
+Intended status: Standards Track                              D. Feldman
+Expires: 6 December 2024                                                
+                                                              J. Salowey
+                                                                  Venafi
+                                                      A. Schwenkschuster
+                                                               Microsoft
+                                                              Y. Sheffer
+                                                                  Intuit
+                                                             4 June 2024
+
+
+                WIMSE Service to Service Authentication
+                draft-sheffer-wimse-s2s-protocol-latest
+
+Abstract
+
+   TODO Abstract
+
+About This Document
+
+   This note is to be removed before publishing as an RFC.
+
+   The latest revision of this draft can be found at
+   https://yaronf.github.io/wimse-s2s/draft-sheffer-wimse-s2s-
+   protocol.html.  Status information for this document may be found at
+   https://datatracker.ietf.org/doc/draft-sheffer-wimse-s2s-protocol/.
+
+   Discussion of this document takes place on the Workload Identity in
+   Multi System Environments Working Group mailing list
+   (mailto:wimse@ietf.org), which is archived at
+   https://mailarchive.ietf.org/arch/browse/wimse/.  Subscribe at
+   https://www.ietf.org/mailman/listinfo/wimse/.
+
+   Source for this draft and an issue tracker can be found at
+   https://github.com/yaronf/wimse-s2s.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on 6 December 2024.
+
+Copyright Notice
+
+   Copyright (c) 2024 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents (https://trustee.ietf.org/
+   license-info) in effect on the date of publication of this document.
+   Please review these documents carefully, as they describe your rights
+   and restrictions with respect to this document.  Code Components
+   extracted from this document must include Revised BSD License text as
+   described in Section 4.e of the Trust Legal Provisions and are
+   provided without warranty as described in the Revised BSD License.
+
+Table of Contents
+
+   1.  Introduction
+     1.1.  Deployment Architecture and Message Flow
+   2.  Conventions and Definitions
+   3.  WIMSE Identity
+   4.  Application Level Service To Service Authentication
+     4.1.  The WIMSE ID Token
+     4.2.  Option 1: DPoP-Inspired Authentication
+     4.3.  Option 2: Authentication Based on HTTP Message Signatures
+   5.  Using Mutual TLS for Service To Service Authentication
+   6.  Security Considerations
+   7.  IANA Considerations
+   8.  References
+     8.1.  Normative References
+     8.2.  Informative References
+   Acknowledgments
+   Authors' Addresses
+
+1.  Introduction
+
+   This document defines authentication and authorization in the context
+   of interaction between two workloads.  This is the core component of
+   the WIMSE architecture [I-D.ietf-wimse-arch].  Assume that Service A
+   needs to call Service B.  For simplicity, this document focuses on
+   HTTP-based services, and the service-to-service call consists of a
+   single HTTP request and its response.  We define the credentials that
+   both services should possess and how they are used to protect the
+   HTTP exchange.
+
+   There are multiple deployment styles in use today, and they result in
+   different security properties.  We propose to address them
+   differently.
+
+   *  Many use cases have various middleboxes inserted between pairs of
+      services, resulting in a transport layer that is not end-to-end
+      encrypted.  We propose to address these use cases by protecting
+      the HTTP messages at the application level (Section 4).
+
+   *  The other commonly deployed architecture has a mutual-TLS
+      connection between each pair of services.  This setup can be
+      addressed by a simpler solution (Section 5).
+
+   It is an explicit goal of this protocol that a service deployment can
+   include both architectures across a multi-chain call.  In other
+   words, Service A can call Service B with mutual TLS protection, while
+   the next call to Service C is protected at the application level.
+
+   For application-level protection we currently propose two alternative
+   solutions, one inspired by DPoP [RFC9449] and one which is a profile
+   of HTTP Message Signatures [RFC9421].  The design team believes that
+   we need to pick one of these two alternatives for standardization,
+   once we have understood their pros and cons.
+
+1.1.  Deployment Architecture and Message Flow
+
+   Regardless of the transport between the workloads, we assume the
+   following logical architecture:
+
+   +------------+               +------------+
+   |            |               |            |
+   |            |               | Workload B |
+   | Workload A |==============>|            |
+   |            |               |   +--------+
+   |            |               |   |  PEP   |
+   +------------+               +---+--------+
+         ^                        ^     ^
+         |                        |     |
+         | +----------------------+     |
+         | |                            |
+         v v                            v
+   +------------+               +------------+
+   |            |               |            |
+   |  Identity  |               |    PDP     |
+   |   Server   |               | (optional) |
+   |            |               |            |
+   +------------+               +------------+
+
+   The Identity Server provisions credentials to each of the workloads.
+   At least Workload A (and possibly both) must be provisioned with a
+   credential before the call can proceed.  Details of communication
+   with the Identity Server are out of scope of this document, however
+   we do describe the credential received by the workload.
+
+   PEP is a Policy Enforcement Point, the component that allows the call
+   to go through or blocks it.  PDP is an optional Policy Decision
+   Point, which may be deployed in architectures where policy management
+   is centralized.  All details of policy management and message
+   authorization are out of scope of this document.
+
+   The high-level message flow is as follows:
+
+   *  Workload A obtains a credential from the Identity Server.  This
+      happens periodically, e.g. once every 24 hours.
+
+   *  Workload A makes an HTTP call into Workload B.  This is a regular
+      HTTP request, with the additional protection mechanisms defined
+      below.
+
+   *  Workload B now authenticates Workload A and decides whether to
+      authorize the call.  In certain architectures, Workload B may need
+      to consult with an external server to decide whether to accept the
+      call.
+
+   *  Workload B returns a response to Workload A, which may be an error
+      response or a regular one.
+
+2.  Conventions and Definitions
+
+   This document uses "service" and "workload" interchangeably.
+   Otherwise, all terms are as defined by [I-D.ietf-wimse-arch].
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in
+   BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   capitals, as shown here.
+
+3.  WIMSE Identity
+
+   [TODO: using a URI as an identity aligns or perhaps conflicts with
+   SPIFFE's definition of Identity the format below is basically taken
+   from SPIFFE, I'm not convinced that this is a good or bad idea.
+   Perhaps we can reuse all or most of the SPIFFE format
+   (https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md)?]
+
+   THe WIMSE identity is represented as a URI of the format:
+
+   scheme://trustdomain/path
+
+   The scheme is TBD, likely candidates are "spiffe" to align with
+   SPIFFE or "wimse" provide an alternative.  A particular deployment
+   may use one or the other scheme, but not both at the same time since
+   SPIFFE only allows one URI SAN in a certificate.
+
+   THe trust domain is a locally defined string that is compliant with
+   SPIFFE naming schemes.  The issuer of WIMSE credentials is tied to a
+   single trust domain.  The validator of a WIMSE ID token or
+   certificate MUST check that the issuer of the credential is permitted
+   to issuer credentials with the specified trust domains and MUST
+   validate that there are no collisions in the list of supported trust
+   domains.
+
+   The path is a string whose format is defined by the local deployment
+   and is subject to the requirements defined in SPIFFE.  The purpose of
+   the path is to identify a workload for the purposes of authorization,
+   auditing and binding to additional information.
+
+4.  Application Level Service To Service Authentication
+
+4.1.  The WIMSE ID Token
+
+4.2.  Option 1: DPoP-Inspired Authentication
+
+4.3.  Option 2: Authentication Based on HTTP Message Signatures
+
+5.  Using Mutual TLS for Service To Service Authentication
+
+6.  Security Considerations
+
+   TODO Security and Privacy
+
+   TLS trust assumptions, server vs mutual auth, middleboxes
+
+7.  IANA Considerations
+
+   TODO IANA
+
+8.  References
+
+8.1.  Normative References
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/rfc/rfc2119>.
+
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
+
+   [RFC9421]  Backman, A., Ed., Richer, J., Ed., and M. Sporny, "HTTP
+              Message Signatures", RFC 9421, DOI 10.17487/RFC9421,
+              February 2024, <https://www.rfc-editor.org/rfc/rfc9421>.
+
+8.2.  Informative References
+
+   [I-D.ietf-wimse-arch]
+              Salowey, J. A., Rosomakho, Y., and H. Tschofenig,
+              "Workload Identity in a Multi System Environment (WIMSE)
+              Architecture", Work in Progress, Internet-Draft, draft-
+              ietf-wimse-arch-00, 18 April 2024,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
+              arch-00>.
+
+   [RFC9449]  Fett, D., Campbell, B., Bradley, J., Lodderstedt, T.,
+              Jones, M., and D. Waite, "OAuth 2.0 Demonstrating Proof of
+              Possession (DPoP)", RFC 9449, DOI 10.17487/RFC9449,
+              September 2023, <https://www.rfc-editor.org/rfc/rfc9449>.
+
+Acknowledgments
+
+   TODO acknowledge.
+
+Authors' Addresses
+
+   Brian Campbell
+   Ping Identity
+   Email: bcampbell@pingidentity.com
+
+
+   Daniel Feldman
+
+
+   Joe Salowey
+   Venafi
+   Email: joe.salowey@gmail.com
+
+
+   Arndt Schwenkschuster
+   Microsoft
+   Email: arndts.ietf@gmail.com
+
+
+   Yaron Sheffer
+   Intuit
+   Email: yaronf.ietf@gmail.com
