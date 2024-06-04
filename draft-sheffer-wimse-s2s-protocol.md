@@ -128,6 +128,20 @@ This document uses "service" and "workload" interchangeably. Otherwise, all term
 
 {::boilerplate bcp14-tagged}
 
+# WIMSE Identity
+
+[TODO: using a URI as an identity aligns or perhaps conflicts with SPIFFE's definition of Identity the format below is basically taken from SPIFFE, I'm not convinced that this is a good or bad idea.  Perhaps we can reuse all or most of the [SPIFFE format](https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md)?]
+
+THe WIMSE identity is represented as a URI of the format:
+
+scheme://trustdomain/path
+
+The scheme is TBD, likely candidates are "spiffe" to align with SPIFFE or "wimse" provide an alternative. A particular deployment may use one or the other scheme, but not both at the same time since SPIFFE only allows one URI SAN in a certificate.
+
+THe trust domain is a locally defined string that is compliant with SPIFFE naming schemes. The issuer of WIMSE credentials is tied to a single trust domain. The validator of a WIMSE ID token or certificate MUST check that the issuer of the credential is permitted to issuer credentials with the specified trust domains and MUST validate that there are no collisions in the list of supported trust domains.
+
+The path is a string whose format is defined by the local deployment and is subject to the requirements defined in SPIFFE.  The purpose of the path is to identify a workload for the purposes of authorization, auditing and binding to additional information.
+
 # Application Level Service To Service Authentication {#app-level}
 
 ## The WIMSE ID Token
@@ -137,6 +151,7 @@ This document uses "service" and "workload" interchangeably. Otherwise, all term
 ## Option 2: Authentication Based on HTTP Message Signatures
 
 # Using Mutual TLS for Service To Service Authentication {#mutual-tls}
+
 
 # Security Considerations
 
