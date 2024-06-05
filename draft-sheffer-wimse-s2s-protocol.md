@@ -43,8 +43,16 @@ author:
     email: "yaronf.ietf@gmail.com"
 
 normative:
+  RFC7515:
+  RFC7517:
+  RFC7519:
+  RFC7800:
+  RFC8725:
 
 informative:
+  IANA.JOSE.ALGS:
+    target: https://www.iana.org/assignments/jose/jose.xhtml#web-signature-encryption-algorithms
+    title: JSON Web Signature and Encryption Algorithms
 
 
 --- abstract
@@ -130,7 +138,86 @@ This document uses "service" and "workload" interchangeably. Otherwise, all term
 
 # Application Level Service To Service Authentication {#app-level}
 
-## The WIMSE ID Token
+## The Workload Identity Token {#to-wit}
+
+The Workload Identity Token (WIT) is a JWS {{RFC7515}} signed JWT {{RFC7519}} that represents the identity of a workload.
+It is issued by the Identity Server and binds a public key to the workload identity.
+A WIT MUST contain the following:
+
+* in the JOSE header:
+    * `alg`: An identifier for a JWS asymmetric digital signature algorithm
+     (registered algorithm identifiers are listed in the IANA JOSE Algorithms registry {{IANA.JOSE.ALGS}}). The value `none` MUST NOT be used.
+    * `typ`: the WIT is explicitly typed, as recommended in {{Section 3.11 of RFC8725}}, using the `wimse-id+jwt` media type.
+* in the JWT claims:
+    * `iss`: The issuer of the token, which is the Identity Server, represented by a URI.
+    * `sub`: The subject of the token, which is the identity of the workload, represented by a URI.
+    * `exp`: The expiration time of the token (as defined in {{Section 4.1.4 of RFC7519}}).
+    * `jti`: A unique identifier for the token.
+    * `cnf`: A confirmation claim containing the public key of the workload using the `jwk` member as defined in {{Section 3.2 of RFC7800}}.
+
+An example WIT might look like this (all examples, of course, are non-normative and with line breaks and extra space for readability):
+
+~~~ jwt
+eyJ0eXAiOiJ3aW1zZS1pZCtqd3QiLCJhbGciOiJFUzI1NiIsImtpZCI6Ikp1bmUgNSJ9.
+eyJpc3MiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3RydXN0ZWQtY2VudHJhbC1hdXRob3Jpd
+HkiLCJleHAiOjE3MTc2MTI0NzAsInN1YiI6IndpbXNlOi8vZXhhbXBsZS5jb20vc3BlY2
+lmaWMtd29ya2xvYWQiLCJqdGkiOiJ4LV8xQ1RMMmNjYTNDU0U0Y3diX18iLCJjbmYiOns
+iandrIjp7Imt0eSI6Ik9LUCIsImNydiI6IkVkMjU1MTkiLCJ4IjoiX2FtUkMzWXJZYkho
+SDFSdFlyTDhjU21URE1oWXRPVVRHNzhjR1RSNWV6ayJ9fX0.rOSUMR8I5WhM5C704l3iV
+dY0zFqxhugJ8Jo2xo39G7FqUTbwTzAGdpz2lHp6eL1M486XmRgl3uyjj6R_iuzNOA
+~~~
+
+The decoded JOSE header of the WIT from the example above is shown here:
+
+~~~ json
+{
+ "typ": "wimse-id+jwt",
+ "alg": "ES256",
+ "kid": "June 5"
+}
+~~~
+
+The decoded JWT claims of the WIT from the example above are shown here:
+
+~~~ json
+{
+ "iss": "wimse://example.com/trusted-central-authority",
+ "exp": 1717612470,
+ "sub": "wimse://example.com/specific-workload",
+ "jti": "x-_1CTL2cca3CSE4cwb__",
+ "cnf": {
+  "jwk": {
+   "kty": "OKP",
+   "crv": "Ed25519",
+   "x": "_amRC3YrYbHhH1RtYrL8cSmTDMhYtOUTG78cGTR5ezk"
+  }
+ }
+}
+~~~
+
+The claims indicate that the example WIT:
+
+* was issued by an Identity Server known as `wimse://example.com/trusted-central-authority`.
+* is valid until May 15, 2024 3:28:45 PM GMT-06:00 (represented as NumericDate {{Section 2 of RFC7519}} value `1717612470`).
+* identifies the workload to which the token was issued as `wimse://example.com/specific-workload`.
+* has a unique identifier of `x-_1CTL2cca3CSE4cwb__`.
+* binds the public key represented by the `jwk` confirmation method to the workload `wimse://example.com/specific-workload`.
+
+
+The afore-exampled WIT is signed with the private key of the Identity Server.
+The public key(s) of the Identity Server need to be known to all workloads in order to verify the signature of the WIT.
+The Identity Server's public key from this example is shown below in JWK {{RFC7517}} format:
+
+~~~ jwk
+{
+ "kty":"EC",
+ "kid":"June 5",
+ "x":"kXqnA2Op7hgd4zRMbw0iFcc_hDxUxhojxOFVGjE2gks",
+ "y":"n__VndPMR021-59UAs0b9qDTFT-EZtT6xSNs_xFskLo",
+ "crv":"P-256"
+}
+~~~
+
 
 ## Option 1: DPoP-Inspired Authentication
 
@@ -147,6 +234,13 @@ TLS trust assumptions, server vs mutual auth, middleboxes
 # IANA Considerations
 
 TODO IANA
+
+TODO: maybe a URI Scheme registraion of `wimse` in [URI schemes](https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml) per {{?RFC7595}} but it's only being used in an example right now and might not even be appropriate. Or maybe use an ietf URI scheme a la [URN Namespace for IETF Use](https://www.iana.org/assignments/params/params.xhtml) somehow. Or maybe nothing. Or maybe something else.
+
+
+## Media Type Registration
+
+TODO: `application/wimse-id+jwt` or appropriately bikeshedded media type name (dispite my ongoing unease with using media types for typing JWTs) in [Media Types](https://www.iana.org/assignments/media-types/media-types.xhtml).
 
 
 --- back
