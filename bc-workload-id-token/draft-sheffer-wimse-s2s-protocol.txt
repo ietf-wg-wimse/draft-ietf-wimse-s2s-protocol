@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              D. Feldman
-Expires: 7 December 2024                                                
+Expires: 8 December 2024                                                
                                                               J. Salowey
                                                                   Venafi
                                                       A. Schwenkschuster
                                                                Microsoft
                                                               Y. Sheffer
                                                                   Intuit
-                                                             5 June 2024
+                                                             6 June 2024
 
 
                 WIMSE Service to Service Authentication
@@ -55,7 +55,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 7 December 2024.
+   This Internet-Draft will expire on 8 December 2024.
 
 Copyright Notice
 
@@ -217,7 +217,8 @@ Table of Contents
          workload, represented by a URI.
 
       -  exp: The expiration time of the token (as defined in
-         Section 4.1.4 of [RFC7519]).
+         Section 4.1.4 of [RFC7519]).  WITs should be refreshed
+         regularly, e.g. on the order of hours.
 
       -  jti: A unique identifier for the token.
 
