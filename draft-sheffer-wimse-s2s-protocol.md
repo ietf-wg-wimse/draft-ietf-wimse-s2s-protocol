@@ -155,6 +155,7 @@ A WIT MUST contain the following:
       WITs should be refreshed regularly, e.g. on the order of hours.
     * `jti`: A unique identifier for the token.
     * `cnf`: A confirmation claim containing the public key of the workload using the `jwk` member as defined in {{Section 3.2 of RFC7800}}.
+     The workload MUST prove possession of the corresponding private key when presenting the WIT to another party. 
 
 An example WIT might look like this (all examples, of course, are non-normative and with line breaks and extra space for readability):
 
