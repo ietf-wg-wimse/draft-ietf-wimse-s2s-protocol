@@ -1372,7 +1372,8 @@ WITs should be refreshed regularly, e.g. on the order of hours.<a href="#section
                 <p id="section-3.1-2.2.2.4.1"><code>jti</code>: A unique identifier for the token.<a href="#section-3.1-2.2.2.4.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-3.1-2.2.2.5">
-                <p id="section-3.1-2.2.2.5.1"><code>cnf</code>: A confirmation claim containing the public key of the workload using the <code>jwk</code> member as defined in <span><a href="https://rfc-editor.org/rfc/rfc7800#section-3.2" class="relref">Section 3.2</a> of [<a href="#RFC7800" class="cite xref">RFC7800</a>]</span>.<a href="#section-3.1-2.2.2.5.1" class="pilcrow">¶</a></p>
+                <p id="section-3.1-2.2.2.5.1"><code>cnf</code>: A confirmation claim containing the public key of the workload using the <code>jwk</code> member as defined in <span><a href="https://rfc-editor.org/rfc/rfc7800#section-3.2" class="relref">Section 3.2</a> of [<a href="#RFC7800" class="cite xref">RFC7800</a>]</span>.
+   The workload <span class="bcp14">MUST</span> prove possession of the corresponding private key when presenting the WIT to another party.<a href="#section-3.1-2.2.2.5.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 </li>
