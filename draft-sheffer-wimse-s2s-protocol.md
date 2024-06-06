@@ -152,6 +152,7 @@ A WIT MUST contain the following:
     * `iss`: The issuer of the token, which is the Identity Server, represented by a URI.
     * `sub`: The subject of the token, which is the identity of the workload, represented by a URI.
     * `exp`: The expiration time of the token (as defined in {{Section 4.1.4 of RFC7519}}).
+      WITs should be refreshed regularly, e.g. on the order of hours.
     * `jti`: A unique identifier for the token.
     * `cnf`: A confirmation claim containing the public key of the workload using the `jwk` member as defined in {{Section 3.2 of RFC7800}}.
 
