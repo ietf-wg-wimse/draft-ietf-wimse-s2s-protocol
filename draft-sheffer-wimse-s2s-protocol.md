@@ -136,6 +136,51 @@ This document uses "service" and "workload" interchangeably. Otherwise, all term
 
 ## Option 2: Authentication Based on HTTP Message Signatures
 
+This option uses the WIMSE Identity Token (ref TBD) to sign the request and optionally, the response.
+This specification defines a profile of the Message Signatures specification {{!RFC9421}}.
+
+The request is signed as per {{RFC9421}}. The following derived components MUST be signed:
+
+* `@method`
+* `@request-target`
+
+In addition, the following headers MUST be signed when they exist:
+
+* `content-type`
+* `content-digest`
+
+If the response is signed, the following components MUST be signed:
+
+* `@status`
+* `@method;req`
+* `@request-target;req`
+* `content-type` if it exists
+* `content-digest` if it exists
+
+For both requests and responses, the following signature parameters MUST be included:
+
+* `created`
+* `expires` - expiration MUST be short, e.g. on the order of minutes. The WIMSE architecture will provide seperate
+mechanisms in support of long-lived compute processes.
+* `nonce`
+* `alg`
+* `tag` - the value for implementations of this specification is `wimse-service-to-service`
+
+Since the signing key is sent along with the message, the `keyid` parameter SHOULD NOT be used.
+
+It is RECOMMENDED to include only one signature with the HTTP message.
+If multiple ones are included, then the signature label included in both the `Signature-Input` and `Signature` headers SHOULD
+be `wimse`.
+
+To promote interoperability, the `ecdsa-p256-sha256` signing algorithm MUST be implemented
+by general purpose implementations of this spec.
+
+The `Accept-Signature` field is not used by this profile
+
+Following is a non-normative example of a signed request and a signed response, using the keys mentioned in Section TBD.
+
+TODO
+
 # Using Mutual TLS for Service To Service Authentication {#mutual-tls}
 
 # Security Considerations
