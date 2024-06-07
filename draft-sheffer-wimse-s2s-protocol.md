@@ -148,6 +148,8 @@ In addition, the following headers MUST be signed when they exist:
 
 * `content-type`
 * `content-digest`
+* `Authorization`
+* TBD that includes the WIT
 
 If the response is signed, the following components MUST be signed:
 
@@ -156,6 +158,8 @@ If the response is signed, the following components MUST be signed:
 * `@request-target;req`
 * `content-type` if it exists
 * `content-digest` if it exists
+* `Authorization`
+* TBD that includes the WIT
 
 For both requests and responses, the following signature parameters MUST be included:
 
@@ -179,7 +183,17 @@ The `Accept-Signature` field is not used by this profile
 
 Following is a non-normative example of a signed request and a signed response, using the keys mentioned in Section TBD.
 
-TODO
+~~~ http
+GET /gimme-ice-cream?flavor=vanilla HTTP/1.1
+Host: example.com
+Authorization: Basic c3BpZmZlOi8vcmVhbG0uZXhhbXBsZS5jb20vc3ZjYmMxMjM=
+Signature: wimse=:cJktyi42FuhfTjuJl5vlwHMkQggviWQD/ho1UKMy96VtOeECRrc \
+UhxlabRRaTgXdRJrzVR7IAfvR7/8E4y7yBg==:
+Signature-Input: wimse=("@method" "@request-target" "authorization"); \
+created=1717799748;expires=1717800048; \
+nonce="abcd1111";tag="wimse-service-to-service";keyid="dummy-keyid-TODO"
+
+~~~
 
 # Using Mutual TLS for Service To Service Authentication {#mutual-tls}
 
