@@ -1367,6 +1367,12 @@ This specification defines a profile of the Message Signatures specification <sp
           <li class="normal" id="section-3.3-5.2">
             <p id="section-3.3-5.2.1"><code>content-digest</code><a href="#section-3.3-5.2.1" class="pilcrow">¶</a></p>
 </li>
+          <li class="normal" id="section-3.3-5.3">
+            <p id="section-3.3-5.3.1"><code>Authorization</code><a href="#section-3.3-5.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.3-5.4">
+            <p id="section-3.3-5.4.1">TBD that includes the WIT<a href="#section-3.3-5.4.1" class="pilcrow">¶</a></p>
+</li>
         </ul>
 <p id="section-3.3-6">If the response is signed, the following components <span class="bcp14">MUST</span> be signed:<a href="#section-3.3-6" class="pilcrow">¶</a></p>
 <ul class="normal">
@@ -1384,6 +1390,12 @@ This specification defines a profile of the Message Signatures specification <sp
 </li>
           <li class="normal" id="section-3.3-7.5">
             <p id="section-3.3-7.5.1"><code>content-digest</code> if it exists<a href="#section-3.3-7.5.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.3-7.6">
+            <p id="section-3.3-7.6.1"><code>Authorization</code><a href="#section-3.3-7.6.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.3-7.7">
+            <p id="section-3.3-7.7.1">TBD that includes the WIT<a href="#section-3.3-7.7.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-3.3-8">For both requests and responses, the following signature parameters <span class="bcp14">MUST</span> be included:<a href="#section-3.3-8" class="pilcrow">¶</a></p>
@@ -1413,7 +1425,19 @@ be <code>wimse</code>.<a href="#section-3.3-11" class="pilcrow">¶</a></p>
 by general purpose implementations of this spec.<a href="#section-3.3-12" class="pilcrow">¶</a></p>
 <p id="section-3.3-13">The <code>Accept-Signature</code> field is not used by this profile<a href="#section-3.3-13" class="pilcrow">¶</a></p>
 <p id="section-3.3-14">Following is a non-normative example of a signed request and a signed response, using the keys mentioned in Section TBD.<a href="#section-3.3-14" class="pilcrow">¶</a></p>
-<p id="section-3.3-15">TODO<a href="#section-3.3-15" class="pilcrow">¶</a></p>
+<div class="lang-http sourcecode" id="section-3.3-15">
+<pre>
+GET /gimme-ice-cream?flavor=vanilla HTTP/1.1
+Host: example.com
+Authorization: Basic c3BpZmZlOi8vcmVhbG0uZXhhbXBsZS5jb20vc3ZjYmMxMjM=
+Signature: wimse=:cJktyi42FuhfTjuJl5vlwHMkQggviWQD/ho1UKMy96VtOeECRrc \
+UhxlabRRaTgXdRJrzVR7IAfvR7/8E4y7yBg==:
+Signature-Input: wimse=("@method" "@request-target" "authorization"); \
+created=1717799748;expires=1717800048; \
+nonce="abcd1111";tag="wimse-service-to-service";keyid="dummy-keyid-TODO"
+
+</pre><a href="#section-3.3-15" class="pilcrow">¶</a>
+</div>
 </section>
 </div>
 </section>
