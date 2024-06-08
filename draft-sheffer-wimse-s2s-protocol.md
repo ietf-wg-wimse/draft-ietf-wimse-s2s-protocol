@@ -138,6 +138,24 @@ This document uses "service" and "workload" interchangeably. Otherwise, all term
 
 # Using Mutual TLS for Service To Service Authentication {#mutual-tls}
 
+The WIMSE workload identity may be carried within an X.509 certificate. When the WIMSE workload identity is present in a certificate it MUST be encoded in a SubjctAltName extension of type URI.  There MUST be only one SubjectAltName extension of type URI in a WIMSE certificate.  THe WIMSE certificate may contain SubjectAltName extensions of other types such as DNSName.
+
+WIMSE identities may be used to validate server and client connections.  When validating a WIMSE identity the relying party must validate that this CA issuer for the WIMSE identity is authorized to issue certificates for the trust domain of the WIMSE identity in the certificate. Other PKIX path validation rules apply.
+
+## Host Name Validation
+
+[TODO: the following paragraph needs better alignment with RFC 9525. The following is a very drafty straw man]
+
+WIMSE clients MUST validate that the trust domain portion of the WIMSE certificate matches the expected trust domain for the server side of the connection.  It is also RECOMMENDED that the client match the WIMSE identity in the certificate against the WIMSE identity of the workload of the intended server. In this case the trust domain portion of the URI is NOT treated as a host name as specified section 6.4 of RFC 9525 but rather as a trust domain, the server identity is encoded in the path portion of the WIMSE identity in a deployment specific way.
+
+In some cases the WIMSE client may connect to the server using a DNS host name in which case the client MUST perform host name validation as defined in 6.3 in RFC 9525.
+
+## Client Authentication Using the WIMSE Identity
+
+Servers wishing to use the WIMSE identity for authorizing the client MUST require client certificate authentication in the TLS handshake. Other methods of post handshake authentication are not specified by this document.WIMSE servers MUST validate that the trust domain portion of the WIMSE certificate matches the expected trust domain for the client side of the connection.  The server may also may the WIMSE identity available to the application to use the full URI to match against ACLs and other policy constructs for authorization or use the WIMSE ID for accounting and auditing.
+
+WIMSE clients may also use the full WIMSE URI to authorize the server against various policies and for accounting and auditing purposes.
+
 # Security Considerations
 
 TODO Security and Privacy
