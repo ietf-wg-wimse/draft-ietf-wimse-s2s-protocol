@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              D. Feldman
-Expires: 10 December 2024                                               
+Expires: 11 December 2024                                               
                                                               J. Salowey
                                                                   Venafi
                                                       A. Schwenkschuster
                                                                Microsoft
                                                               Y. Sheffer
                                                                   Intuit
-                                                             8 June 2024
+                                                             9 June 2024
 
 
                 WIMSE Service to Service Authentication
@@ -55,7 +55,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 10 December 2024.
+   This Internet-Draft will expire on 11 December 2024.
 
 Copyright Notice
 
@@ -237,7 +237,7 @@ Table of Contents
    Servers wishing to use the WIMSE identity for authorizing the client
    MUST require client certificate authentication in the TLS handshake.
    Other methods of post handshake authentication are not specified by
-   this document.WIMSE servers MUST validate that the trust domain
+   this document.  WIMSE servers MUST validate that the trust domain
    portion of the WIMSE certificate matches the expected trust domain
    for the client side of the connection.  The server may also may the
    WIMSE identity available to the application to use the full URI to
