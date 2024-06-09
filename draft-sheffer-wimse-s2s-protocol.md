@@ -140,9 +140,50 @@ This document uses "service" and "workload" interchangeably. Otherwise, all term
 
 # Security Considerations
 
-TODO Security and Privacy
+## WIMSE ID
 
-TLS trust assumptions, server vs mutual auth, middleboxes
+The WIMSE ID is scoped within a trust domain and therefore a WIMSE ID is only unique within a trust domain. Using a WIMSE ID without taking into account the trust domain could allow one domain to issue tokens to spoof identities in another domain.  Additionally, the trust domain must be tied to an authorized trusted key through some mechanism such as a JWKS or X.509 certificate chain. The association of a trust domain and a cryptographic trust root MUST be communicated securely out of band.
+
+[TODO: Should there be a DNS name to Trust domain mapping defined?]
+
+## WIMSE ID Token and Proof of Possession
+
+The WIMSE ID token is bound to a secret cryptographic key and is always presented with a proof of possession as described in section TBD. It MUST NOT be used as a bearer token. While this helps reduce the sensitivity of the token it is still possible that a token and its proof of possession may be captured and replayed.  If this risk is mitigated then WIMSE ID tokens may be resued for a period of time with fresh proofs generated for each transaction.  The following are some mitigations for the capture and reuse of the proof of possession (POP):
+
+* Preventing Eavesdropping and Interception with TLS
+
+An attacker observing or intercepting the communication channel can view the token and its proof of possession and attempt to replay it to gain an advantage. In order to prevent this the
+token and proof of possession MUST be sent over a secure, server authenticated TLS connection unless a secure channel is provided by some other mechanisms. Host name validation according
+to section TBD MUST be performed. The WIMSE ID token itself is not usable without a proof of possession.
+
+* Limiting Proof of Possession Lifespan
+
+The proof of possession MUST be time limited. A POPs should only for the time necessary for it to be successfully for the purpose it is needed. This will typically be on the order of minutes.  POPs received outside their validity time MUST be rejected.
+
+* Limiting Proof of Possession Scope
+
+The POP MUST have a limited scope. Limitations on scope include constraining the POP to certain receivers and constraining the POP to a usage or transaction.
+
+* Binding to a Nonce
+
+The POP MAY be bound to a fresh nonce to provide single use properties.  The mechanism for distributing a nonce are outside the scope of this specification.
+
+* Binding to Sender
+
+The POP MAY be bound to a sender such as the client identity of a TLS session or TLS channel binding parameters. The mechanisms for binding are outside the scope of this specification.
+
+## Middle Boxes
+
+In some deployments the WIMSE token and proof of possession may pass through multiple systems. The communication between the systems is over TLS, but the token and POP are available in the clear at each intermediary.  While the intermediary cannot modify the token or the information within the POP they can attempt to capture and replay the token or modify the data not protected by the POP. Mitigations listed in the previous section can be used to provide some protection from middle boxes. Deployments should perform analysis on their situation to determine if it is appropriate to trust and allow traffic to pass through a middle box.
+
+## Privacy Considerations
+
+WIMSE tokens and the proofs of possession may contain private information such as user names or other identities. Care should be taken to prevent the disclosure of this information. The use of TLS helps protect the privacy of WIMSE tokens and proofs of possession.
+
+WIMSE tokens are typically associated with a workload that is not directly associated with a user, however in some deployments the workload may be associated directly to a user. In these cases the WIMSE token can be used to track the user if it is disclosed in clear text.
+
+If the WIMSE ID is used with X509 certificates then the workload identity may be disclosed as part of the TLS handshake.  This can be partially mitigated by using TLS 1.3 to protect the client and serve identities.
+
 
 # IANA Considerations
 
