@@ -224,7 +224,7 @@ Table of Contents
    the WIMSE identity in the certificate against the WIMSE identity of
    the workload of the intended server.  In this case the trust domain
    portion of the URI is NOT treated as a host name as specified section
-   6.4 of RFC 9525 but rather as a trust domain, the server identity is
+   6.4 of [RFC9525] but rather as a trust domain, the server identity is
    encoded in the path portion of the WIMSE identity in a deployment
    specific way.
 
@@ -273,6 +273,10 @@ Table of Contents
    [RFC9421]  Backman, A., Ed., Richer, J., Ed., and M. Sporny, "HTTP
               Message Signatures", RFC 9421, DOI 10.17487/RFC9421,
               February 2024, <https://www.rfc-editor.org/rfc/rfc9421>.
+
+   [RFC9525]  Saint-Andre, P. and R. Salz, "Service Identity in TLS",
+              RFC 9525, DOI 10.17487/RFC9525, November 2023,
+              <https://www.rfc-editor.org/rfc/rfc9525>.
 
 7.2.  Informative References
 
