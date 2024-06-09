@@ -152,7 +152,7 @@ In some cases the WIMSE client may connect to the server using a DNS host name i
 
 ## Client Authentication Using the WIMSE Identity
 
-Servers wishing to use the WIMSE identity for authorizing the client MUST require client certificate authentication in the TLS handshake. Other methods of post handshake authentication are not specified by this document.WIMSE servers MUST validate that the trust domain portion of the WIMSE certificate matches the expected trust domain for the client side of the connection.  The server may also may the WIMSE identity available to the application to use the full URI to match against ACLs and other policy constructs for authorization or use the WIMSE ID for accounting and auditing.
+Servers wishing to use the WIMSE identity for authorizing the client MUST require client certificate authentication in the TLS handshake. Other methods of post handshake authentication are not specified by this document. WIMSE servers MUST validate that the trust domain portion of the WIMSE certificate matches the expected trust domain for the client side of the connection.  The server may also may the WIMSE identity available to the application to use the full URI to match against ACLs and other policy constructs for authorization or use the WIMSE ID for accounting and auditing.
 
 WIMSE clients may also use the full WIMSE URI to authorize the server against various policies and for accounting and auditing purposes.
 
