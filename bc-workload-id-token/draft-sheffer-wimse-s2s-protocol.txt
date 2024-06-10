@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              D. Feldman
-Expires: 8 December 2024                                                
+Expires: 12 December 2024                                               
                                                               J. Salowey
                                                                   Venafi
                                                       A. Schwenkschuster
                                                                Microsoft
                                                               Y. Sheffer
                                                                   Intuit
-                                                             6 June 2024
+                                                            10 June 2024
 
 
                 WIMSE Service to Service Authentication
@@ -55,7 +55,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 8 December 2024.
+   This Internet-Draft will expire on 12 December 2024.
 
 Copyright Notice
 
@@ -280,6 +280,16 @@ Table of Contents
 
    *  binds the public key represented by the jwk confirmation method to
       the workload wimse://example.com/specific-workload.
+
+   For elucidative purposes only, the workload's key, including the
+   private part, is shown below in JWK [RFC7517] format:
+
+   {
+    "kty":"OKP",
+    "crv":"Ed25519",
+    "x":"_amRC3YrYbHhH1RtYrL8cSmTDMhYtOUTG78cGTR5ezk",
+    "d":"G4lGAYFtFq5rwyjlgSIRznIoCF7MtKDHByyUUZCqLiA"
+   }
 
    The afore-exampled WIT is signed with the private key of the Identity
    Server.  The public key(s) of the Identity Server need to be known to
