@@ -205,6 +205,16 @@ The claims indicate that the example WIT:
 * has a unique identifier of `x-_1CTL2cca3CSE4cwb__`.
 * binds the public key represented by the `jwk` confirmation method to the workload `wimse://example.com/specific-workload`.
 
+For elucidative purposes only, the workload's key, including the private part, is shown below in JWK {{RFC7517}} format:
+
+~~~ jwk
+{
+ "kty":"OKP",
+ "crv":"Ed25519",
+ "x":"_amRC3YrYbHhH1RtYrL8cSmTDMhYtOUTG78cGTR5ezk",
+ "d":"G4lGAYFtFq5rwyjlgSIRznIoCF7MtKDHByyUUZCqLiA"
+}
+~~~
 
 The afore-exampled WIT is signed with the private key of the Identity Server.
 The public key(s) of the Identity Server need to be known to all workloads in order to verify the signature of the WIT.
