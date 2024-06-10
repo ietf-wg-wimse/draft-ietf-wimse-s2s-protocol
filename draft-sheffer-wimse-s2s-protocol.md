@@ -155,7 +155,7 @@ A WIT MUST contain the following:
       WITs should be refreshed regularly, e.g. on the order of hours.
     * `jti`: A unique identifier for the token.
     * `cnf`: A confirmation claim containing the public key of the workload using the `jwk` member as defined in {{Section 3.2 of RFC7800}}.
-     The workload MUST prove possession of the corresponding private key when presenting the WIT to another party.
+     The WIT MUST NOT be used as a bearer token. Instead, it should be used in conjunction with one of the methods in {{dpop-esque-auth}} or {{http-sig-auth}}.
 
 An example WIT might look like this (all examples, of course, are non-normative and with line breaks and extra space for readability):
 
@@ -231,9 +231,9 @@ The Identity Server's public key from this example is shown below in JWK {{RFC75
 ~~~
 
 
-## Option 1: DPoP-Inspired Authentication
+## Option 1: DPoP-Inspired Authentication {#dpop-esque-auth}
 
-## Option 2: Authentication Based on HTTP Message Signatures
+## Option 2: Authentication Based on HTTP Message Signatures {#http-sig-auth}
 
 # Using Mutual TLS for Service To Service Authentication {#mutual-tls}
 
