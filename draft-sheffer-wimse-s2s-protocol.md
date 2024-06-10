@@ -1,5 +1,5 @@
 ---
-title: "WIMSE Service to Service Authentication"
+title: "WIMSE Workload to Workload Authentication"
 abbrev: "WIMSE S2S Auth"
 category: std
 
@@ -58,23 +58,23 @@ TODO Abstract
 
 This document defines authentication and authorization in the context of interaction between two workloads.
 This is the core component of the WIMSE architecture {{?I-D.ietf-wimse-arch}}.
-Assume that Service A needs to call Service B. For simplicity, this document focuses on HTTP-based services,
-and the service-to-service call consists of a single HTTP request and its response.
-We define the credentials that both services should possess and how they are used to protect the HTTP exchange.
+Assume that Workload A needs to call Workload B. For simplicity, this document focuses on HTTP-based workloads,
+and the workload-to-workload call consists of a single HTTP request and its response.
+We define the credentials that both workloads should possess and how they are used to protect the HTTP exchange.
 
 There are multiple deployment styles in use today, and they result in different security properties.
 We propose to address them differently.
 
-* Many use cases have various middleboxes inserted between pairs of services, resulting in a transport layer
+* Many use cases have various middleboxes inserted between pairs of workloads, resulting in a transport layer
 that is not end-to-end encrypted. We propose to address these use cases by protecting the HTTP messages at the application
 level ({{app-level}}).
 
-* The other commonly deployed architecture has a mutual-TLS connection between each pair of services. This setup
+* The other commonly deployed architecture has a mutual-TLS connection between each pair of workloads. This setup
 can be addressed by a simpler solution ({{mutual-tls}}).
 
-It is an explicit goal of this protocol that a service deployment can include both architectures across a multi-chain call.
-In other words, Service A can call Service B with mutual TLS protection,
-while the next call to Service C is protected at the application level.
+It is an explicit goal of this protocol that a deployment of workloads can include both architectures across a multi-chain call.
+In other words, Workload A can call Workload B with mutual TLS protection,
+while the next call to Workload C is protected at the application level.
 
 For application-level protection we currently propose two alternative solutions, one inspired by DPoP {{?RFC9449}} and
 one which is a profile of HTTP Message Signatures {{!RFC9421}}. The design team believes that we need to pick
@@ -128,7 +128,7 @@ This document uses "service" and "workload" interchangeably. Otherwise, all term
 
 {::boilerplate bcp14-tagged}
 
-# Application Level Service To Service Authentication {#app-level}
+# Application Level Workload To Workload Authentication {#app-level}
 
 ## The WIMSE ID Token
 
@@ -136,7 +136,7 @@ This document uses "service" and "workload" interchangeably. Otherwise, all term
 
 ## Option 2: Authentication Based on HTTP Message Signatures
 
-# Using Mutual TLS for Service To Service Authentication {#mutual-tls}
+# Using Mutual TLS for Workload To Workload Authentication {#mutual-tls}
 
 # Security Considerations
 
