@@ -1373,7 +1373,7 @@ WITs should be refreshed regularly, e.g. on the order of hours.<a href="#section
 </li>
               <li class="normal" id="section-3.1-2.2.2.5">
                 <p id="section-3.1-2.2.2.5.1"><code>cnf</code>: A confirmation claim containing the public key of the workload using the <code>jwk</code> member as defined in <span><a href="https://rfc-editor.org/rfc/rfc7800#section-3.2" class="relref">Section 3.2</a> of [<a href="#RFC7800" class="cite xref">RFC7800</a>]</span>.
-   The workload <span class="bcp14">MUST</span> prove possession of the corresponding private key when presenting the WIT to another party.<a href="#section-3.1-2.2.2.5.1" class="pilcrow">¶</a></p>
+   The WIT <span class="bcp14">MUST NOT</span> be used as a bearer token. Instead, it should be used in conjunction with one of the methods in <a href="#dpop-esque-auth" class="auto internal xref">Section 3.2</a> or <a href="#http-sig-auth" class="auto internal xref">Section 3.3</a>.<a href="#section-3.1-2.2.2.5.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 </li>
@@ -1463,14 +1463,14 @@ The Identity Server's public key from this example is shown below in JWK <span>[
 </div>
 </section>
 </div>
-<div id="option-1-dpop-inspired-authentication">
+<div id="dpop-esque-auth">
 <section id="section-3.2">
         <h3 id="name-option-1-dpop-inspired-auth">
 <a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-option-1-dpop-inspired-auth" class="section-name selfRef">Option 1: DPoP-Inspired Authentication</a>
       </h3>
 </section>
 </div>
-<div id="option-2-authentication-based-on-http-message-signatures">
+<div id="http-sig-auth">
 <section id="section-3.3">
         <h3 id="name-option-2-authentication-bas">
 <a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-option-2-authentication-bas" class="section-name selfRef">Option 2: Authentication Based on HTTP Message Signatures</a>
