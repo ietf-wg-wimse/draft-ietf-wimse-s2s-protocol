@@ -43,11 +43,13 @@ author:
     email: "yaronf.ietf@gmail.com"
 
 normative:
+  RFC5234:
   RFC7515:
   RFC7517:
   RFC7519:
   RFC7800:
   RFC8725:
+  RFC9110:
 
 informative:
   IANA.JOSE.ALGS:
@@ -84,8 +86,8 @@ It is an explicit goal of this protocol that a service deployment can include bo
 In other words, Service A can call Service B with mutual TLS protection,
 while the next call to Service C is protected at the application level.
 
-For application-level protection we currently propose two alternative solutions, one inspired by DPoP {{?RFC9449}} and
-one which is a profile of HTTP Message Signatures {{!RFC9421}}. The design team believes that we need to pick
+For application-level protection we currently propose two alternative solutions, one inspired by DPoP {{?RFC9449}} in {{dpop-esque-auth}} and
+one which is a profile of HTTP Message Signatures {{!RFC9421}} in {{http-sig-auth}}. The design team believes that we need to pick
 one of these two alternatives for standardization, once we have understood their pros and cons.
 
 ## Deployment Architecture and Message Flow
@@ -168,6 +170,7 @@ iandrIjp7Imt0eSI6Ik9LUCIsImNydiI6IkVkMjU1MTkiLCJ4IjoiX2FtUkMzWXJZYkho
 SDFSdFlyTDhjU21URE1oWXRPVVRHNzhjR1RSNWV6ayJ9fX0.rOSUMR8I5WhM5C704l3iV
 dY0zFqxhugJ8Jo2xo39G7FqUTbwTzAGdpz2lHp6eL1M486XmRgl3uyjj6R_iuzNOA
 ~~~
+{: #example-wit title="An example Workload Identity Token (WIT)"}
 
 The decoded JOSE header of the WIT from the example above is shown here:
 
@@ -178,6 +181,7 @@ The decoded JOSE header of the WIT from the example above is shown here:
  "kid": "June 5"
 }
 ~~~
+{: title="Example WIT JOSE Header"}
 
 The decoded JWT claims of the WIT from the example above are shown here:
 
@@ -196,6 +200,7 @@ The decoded JWT claims of the WIT from the example above are shown here:
  }
 }
 ~~~
+{: title="Example WIT Claims"}
 
 The claims indicate that the example WIT:
 
@@ -215,6 +220,7 @@ For elucidative purposes only, the workload's key, including the private part, i
  "d":"G4lGAYFtFq5rwyjlgSIRznIoCF7MtKDHByyUUZCqLiA"
 }
 ~~~
+{: title="Example Workload's Key"}
 
 The afore-exampled WIT is signed with the private key of the Identity Server.
 The public key(s) of the Identity Server need to be known to all workloads in order to verify the signature of the WIT.
@@ -229,7 +235,39 @@ The Identity Server's public key from this example is shown below in JWK {{RFC75
  "crv":"P-256"
 }
 ~~~
+{: title="Example Identity Server Key"}
 
+### The WIT HTTP Header {#wit-http-header}
+
+A WIT is conveyed in an HTTP header field named `Workload-Identity-Token`.
+
+For those who celebrate, ABNF {{RFC5234}} for the value of `Workload-Identity-Token` header field is profivded in {{wit-header-abnf}}:
+
+~~~ abnf
+ALPHA = %x41-5A / %x61-7A ; A-Z / a-z
+DIGIT = %x30-39 ; 0-9
+base64url = 1*(ALPHA / DIGIT / "-" / "_")
+WIT =  base64url "." base64url "." base64url
+~~~~
+{: #wit-header-abnf title="Workload-Identity-Token Header Field ABNF"}
+
+The following shows the WIT from the {{example-wit}} in an example of a `Workload-Identity-Token` header field:
+
+~~~ http-message
+Workload-Identity-Token: eyJ0eXAiOiJ3aW1zZS1pZCtqd3QiLCJhbGciOiJFUzI1
+ NiIsImtpZCI6Ikp1bmUgNSJ9.eyJpc3MiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3RydXN
+ 0ZWQtY2VudHJhbC1hdXRob3JpdHkiLCJleHAiOjE3MTc2MTI0NzAsInN1YiI6IndpbXN
+ lOi8vZXhhbXBsZS5jb20vc3BlY2lmaWMtd29ya2xvYWQiLCJqdGkiOiJ4LV8xQ1RMMmN
+ jYTNDU0U0Y3diX18iLCJjbmYiOnsiandrIjp7Imt0eSI6Ik9LUCIsImNydiI6IkVkMjU
+ 1MTkiLCJ4IjoiX2FtUkMzWXJZYkhoSDFSdFlyTDhjU21URE1oWXRPVVRHNzhjR1RSNWV
+ 6ayJ9fX0.rOSUMR8I5WhM5C704l3iVdY0zFqxhugJ8Jo2xo39G7FqUTbwTzAGdpz2lHp
+6eL1M486XmRgl3uyjj6R_iuzNOA
+~~~
+{: title="An example Workload Identity Token HTTP Header Field"}
+
+Note that per {{RFC9110}}, header field names are case insensitive;
+thus, `Workload-Identity-Token`, `workload-identity-token`, `WORKLOAD-IDENTITY-TOKEN`,
+etc., are all valid and equivalent header field names. However, case is significant in the header field value.
 
 ## Option 1: DPoP-Inspired Authentication {#dpop-esque-auth}
 
@@ -254,6 +292,9 @@ TODO: maybe a URI Scheme registraion of `wimse` in [URI schemes](https://www.ian
 
 TODO: `application/wimse-id+jwt` or appropriately bikeshedded media type name (dispite my ongoing unease with using media types for typing JWTs) in [Media Types](https://www.iana.org/assignments/media-types/media-types.xhtml).
 
+## Hypertext Transfer Protocol (HTTP) Field Name Registration
+
+TODO: `Workload-Identity-Token` from {{wit-http-header}}
 
 --- back
 
