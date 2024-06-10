@@ -1162,6 +1162,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
                 <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-the-workload-identity-token" class="internal xref">The Workload Identity Token</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.1">
+                    <p id="section-toc.1-1.3.2.1.2.1.1"><a href="#section-3.1.1" class="auto internal xref">3.1.1</a>.  <a href="#name-the-wit-http-header" class="internal xref">The WIT HTTP Header</a></p>
+</li>
+                </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
                 <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-option-1-dpop-inspired-auth" class="internal xref">Option 1: DPoP-Inspired Authentication</a></p>
@@ -1182,6 +1187,9 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
                 <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-media-type-registration" class="internal xref">Media Type Registration</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2">
+                <p id="section-toc.1-1.6.2.2.1"><a href="#section-6.2" class="auto internal xref">6.2</a>.  <a href="#name-hypertext-transfer-protocol" class="internal xref">Hypertext Transfer Protocol (HTTP) Field Name Registration</a></p>
 </li>
             </ul>
 </li>
@@ -1232,8 +1240,8 @@ can be addressed by a simpler solution (<a href="#mutual-tls" class="auto intern
 <p id="section-1-4">It is an explicit goal of this protocol that a service deployment can include both architectures across a multi-chain call.
 In other words, Service A can call Service B with mutual TLS protection,
 while the next call to Service C is protected at the application level.<a href="#section-1-4" class="pilcrow">¶</a></p>
-<p id="section-1-5">For application-level protection we currently propose two alternative solutions, one inspired by DPoP <span>[<a href="#RFC9449" class="cite xref">RFC9449</a>]</span> and
-one which is a profile of HTTP Message Signatures <span>[<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>. The design team believes that we need to pick
+<p id="section-1-5">For application-level protection we currently propose two alternative solutions, one inspired by DPoP <span>[<a href="#RFC9449" class="cite xref">RFC9449</a>]</span> in <a href="#dpop-esque-auth" class="auto internal xref">Section 3.2</a> and
+one which is a profile of HTTP Message Signatures <span>[<a href="#RFC9421" class="cite xref">RFC9421</a>]</span> in <a href="#http-sig-auth" class="auto internal xref">Section 3.3</a>. The design team believes that we need to pick
 one of these two alternatives for standardization, once we have understood their pros and cons.<a href="#section-1-5" class="pilcrow">¶</a></p>
 <div id="deployment-architecture-and-message-flow">
 <section id="section-1.1">
@@ -1379,7 +1387,9 @@ WITs should be refreshed regularly, e.g. on the order of hours.<a href="#section
 </li>
         </ul>
 <p id="section-3.1-3">An example WIT might look like this (all examples, of course, are non-normative and with line breaks and extra space for readability):<a href="#section-3.1-3" class="pilcrow">¶</a></p>
-<div class="lang-jwt sourcecode" id="section-3.1-4">
+<span id="name-an-example-workload-identit"></span><div id="example-wit">
+<figure id="figure-1">
+          <div class="lang-jwt sourcecode" id="section-3.1-4.1">
 <pre>
 eyJ0eXAiOiJ3aW1zZS1pZCtqd3QiLCJhbGciOiJFUzI1NiIsImtpZCI6Ikp1bmUgNSJ9.
 eyJpc3MiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3RydXN0ZWQtY2VudHJhbC1hdXRob3Jpd
@@ -1388,20 +1398,29 @@ lmaWMtd29ya2xvYWQiLCJqdGkiOiJ4LV8xQ1RMMmNjYTNDU0U0Y3diX18iLCJjbmYiOns
 iandrIjp7Imt0eSI6Ik9LUCIsImNydiI6IkVkMjU1MTkiLCJ4IjoiX2FtUkMzWXJZYkho
 SDFSdFlyTDhjU21URE1oWXRPVVRHNzhjR1RSNWV6ayJ9fX0.rOSUMR8I5WhM5C704l3iV
 dY0zFqxhugJ8Jo2xo39G7FqUTbwTzAGdpz2lHp6eL1M486XmRgl3uyjj6R_iuzNOA
-</pre><a href="#section-3.1-4" class="pilcrow">¶</a>
+</pre>
+</div>
+<figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
+<a href="#name-an-example-workload-identit" class="selfRef">An example Workload Identity Token (WIT)</a>
+          </figcaption></figure>
 </div>
 <p id="section-3.1-5">The decoded JOSE header of the WIT from the example above is shown here:<a href="#section-3.1-5" class="pilcrow">¶</a></p>
-<div class="lang-json sourcecode" id="section-3.1-6">
+<span id="name-example-wit-jose-header"></span><figure id="figure-2">
+          <div class="lang-json sourcecode" id="section-3.1-6.1">
 <pre>
 {
  "typ": "wimse-id+jwt",
  "alg": "ES256",
  "kid": "June 5"
 }
-</pre><a href="#section-3.1-6" class="pilcrow">¶</a>
+</pre>
 </div>
+<figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
+<a href="#name-example-wit-jose-header" class="selfRef">Example WIT JOSE Header</a>
+          </figcaption></figure>
 <p id="section-3.1-7">The decoded JWT claims of the WIT from the example above are shown here:<a href="#section-3.1-7" class="pilcrow">¶</a></p>
-<div class="lang-json sourcecode" id="section-3.1-8">
+<span id="name-example-wit-claims"></span><figure id="figure-3">
+          <div class="lang-json sourcecode" id="section-3.1-8.1">
 <pre>
 {
  "iss": "wimse://example.com/trusted-central-authority",
@@ -1416,8 +1435,11 @@ dY0zFqxhugJ8Jo2xo39G7FqUTbwTzAGdpz2lHp6eL1M486XmRgl3uyjj6R_iuzNOA
   }
  }
 }
-</pre><a href="#section-3.1-8" class="pilcrow">¶</a>
+</pre>
 </div>
+<figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
+<a href="#name-example-wit-claims" class="selfRef">Example WIT Claims</a>
+          </figcaption></figure>
 <p id="section-3.1-9">The claims indicate that the example WIT:<a href="#section-3.1-9" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.1-10.1">
@@ -1437,7 +1459,8 @@ dY0zFqxhugJ8Jo2xo39G7FqUTbwTzAGdpz2lHp6eL1M486XmRgl3uyjj6R_iuzNOA
 </li>
         </ul>
 <p id="section-3.1-11">For elucidative purposes only, the workload's key, including the private part, is shown below in JWK <span>[<a href="#RFC7517" class="cite xref">RFC7517</a>]</span> format:<a href="#section-3.1-11" class="pilcrow">¶</a></p>
-<div class="lang-jwk sourcecode" id="section-3.1-12">
+<span id="name-example-workloads-key"></span><figure id="figure-4">
+          <div class="lang-jwk sourcecode" id="section-3.1-12.1">
 <pre>
 {
  "kty":"OKP",
@@ -1445,12 +1468,16 @@ dY0zFqxhugJ8Jo2xo39G7FqUTbwTzAGdpz2lHp6eL1M486XmRgl3uyjj6R_iuzNOA
  "x":"_amRC3YrYbHhH1RtYrL8cSmTDMhYtOUTG78cGTR5ezk",
  "d":"G4lGAYFtFq5rwyjlgSIRznIoCF7MtKDHByyUUZCqLiA"
 }
-</pre><a href="#section-3.1-12" class="pilcrow">¶</a>
+</pre>
 </div>
+<figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
+<a href="#name-example-workloads-key" class="selfRef">Example Workload's Key</a>
+          </figcaption></figure>
 <p id="section-3.1-13">The afore-exampled WIT is signed with the private key of the Identity Server.
 The public key(s) of the Identity Server need to be known to all workloads in order to verify the signature of the WIT.
 The Identity Server's public key from this example is shown below in JWK <span>[<a href="#RFC7517" class="cite xref">RFC7517</a>]</span> format:<a href="#section-3.1-13" class="pilcrow">¶</a></p>
-<div class="lang-jwk sourcecode" id="section-3.1-14">
+<span id="name-example-identity-server-key"></span><figure id="figure-5">
+          <div class="lang-jwk sourcecode" id="section-3.1-14.1">
 <pre>
 {
  "kty":"EC",
@@ -1459,7 +1486,53 @@ The Identity Server's public key from this example is shown below in JWK <span>[
  "y":"n__VndPMR021-59UAs0b9qDTFT-EZtT6xSNs_xFskLo",
  "crv":"P-256"
 }
-</pre><a href="#section-3.1-14" class="pilcrow">¶</a>
+</pre>
+</div>
+<figcaption><a href="#figure-5" class="selfRef">Figure 5</a>:
+<a href="#name-example-identity-server-key" class="selfRef">Example Identity Server Key</a>
+          </figcaption></figure>
+<div id="wit-http-header">
+<section id="section-3.1.1">
+          <h4 id="name-the-wit-http-header">
+<a href="#section-3.1.1" class="section-number selfRef">3.1.1. </a><a href="#name-the-wit-http-header" class="section-name selfRef">The WIT HTTP Header</a>
+          </h4>
+<p id="section-3.1.1-1">A WIT is conveyed in an HTTP header field named <code>Workload-Identity-Token</code>.<a href="#section-3.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-2">For those who celebrate, ABNF <span>[<a href="#RFC5234" class="cite xref">RFC5234</a>]</span> for the value of <code>Workload-Identity-Token</code> header field is profivded in <a href="#wit-header-abnf" class="auto internal xref">Figure 6</a>:<a href="#section-3.1.1-2" class="pilcrow">¶</a></p>
+<span id="name-workload-identity-token-hea"></span><div id="wit-header-abnf">
+<figure id="figure-6">
+            <div class="lang-abnf sourcecode" id="section-3.1.1-3.1">
+<pre>
+ALPHA = %x41-5A / %x61-7A ; A-Z / a-z
+DIGIT = %x30-39 ; 0-9
+base64url = 1*(ALPHA / DIGIT / "-" / "_")
+WIT =  base64url "." base64url "." base64url
+</pre>
+</div>
+<figcaption><a href="#figure-6" class="selfRef">Figure 6</a>:
+<a href="#name-workload-identity-token-hea" class="selfRef">Workload-Identity-Token Header Field ABNF</a>
+            </figcaption></figure>
+</div>
+<p id="section-3.1.1-4">The following shows the WIT from the <a href="#example-wit" class="auto internal xref">Figure 1</a> in an example of a <code>Workload-Identity-Token</code> header field:<a href="#section-3.1.1-4" class="pilcrow">¶</a></p>
+<span id="name-an-example-workload-identity"></span><figure id="figure-7">
+            <div class="lang-http-message sourcecode" id="section-3.1.1-5.1">
+<pre>
+Workload-Identity-Token: eyJ0eXAiOiJ3aW1zZS1pZCtqd3QiLCJhbGciOiJFUzI1
+ NiIsImtpZCI6Ikp1bmUgNSJ9.eyJpc3MiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3RydXN
+ 0ZWQtY2VudHJhbC1hdXRob3JpdHkiLCJleHAiOjE3MTc2MTI0NzAsInN1YiI6IndpbXN
+ lOi8vZXhhbXBsZS5jb20vc3BlY2lmaWMtd29ya2xvYWQiLCJqdGkiOiJ4LV8xQ1RMMmN
+ jYTNDU0U0Y3diX18iLCJjbmYiOnsiandrIjp7Imt0eSI6Ik9LUCIsImNydiI6IkVkMjU
+ 1MTkiLCJ4IjoiX2FtUkMzWXJZYkhoSDFSdFlyTDhjU21URE1oWXRPVVRHNzhjR1RSNWV
+ 6ayJ9fX0.rOSUMR8I5WhM5C704l3iVdY0zFqxhugJ8Jo2xo39G7FqUTbwTzAGdpz2lHp
+6eL1M486XmRgl3uyjj6R_iuzNOA
+</pre>
+</div>
+<figcaption><a href="#figure-7" class="selfRef">Figure 7</a>:
+<a href="#name-an-example-workload-identity" class="selfRef">An example Workload Identity Token HTTP Header Field</a>
+            </figcaption></figure>
+<p id="section-3.1.1-6">Note that per <span>[<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>, header field names are case insensitive;
+thus, <code>Workload-Identity-Token</code>, <code>workload-identity-token</code>, <code>WORKLOAD-IDENTITY-TOKEN</code>,
+etc., are all valid and equivalent header field names. However, case is significant in the header field value.<a href="#section-3.1.1-6" class="pilcrow">¶</a></p>
+</section>
 </div>
 </section>
 </div>
@@ -1510,6 +1583,14 @@ The Identity Server's public key from this example is shown below in JWK <span>[
 <p id="section-6.1-1">TODO: <code>application/wimse-id+jwt</code> or appropriately bikeshedded media type name (dispite my ongoing unease with using media types for typing JWTs) in <a href="https://www.iana.org/assignments/media-types/media-types.xhtml">Media Types</a>.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
+<div id="hypertext-transfer-protocol-http-field-name-registration">
+<section id="section-6.2">
+        <h3 id="name-hypertext-transfer-protocol">
+<a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-hypertext-transfer-protocol" class="section-name selfRef">Hypertext Transfer Protocol (HTTP) Field Name Registration</a>
+        </h3>
+<p id="section-6.2-1">TODO: <code>Workload-Identity-Token</code> from <a href="#wit-http-header" class="auto internal xref">Section 3.1.1</a><a href="#section-6.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
 </section>
 </div>
 <section id="section-7">
@@ -1525,6 +1606,10 @@ The Identity Server's public key from this example is shown below in JWK <span>[
 <dt id="RFC2119">[RFC2119]</dt>
         <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC5234">[RFC5234]</dt>
+        <dd>
+<span class="refAuthor">Crocker, D., Ed.</span> and <span class="refAuthor">P. Overell</span>, <span class="refTitle">"Augmented BNF for Syntax Specifications: ABNF"</span>, <span class="seriesInfo">STD 68</span>, <span class="seriesInfo">RFC 5234</span>, <span class="seriesInfo">DOI 10.17487/RFC5234</span>, <time datetime="2008-01" class="refDate">January 2008</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc5234">https://www.rfc-editor.org/rfc/rfc5234</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC7515">[RFC7515]</dt>
         <dd>
@@ -1549,6 +1634,10 @@ The Identity Server's public key from this example is shown below in JWK <span>[
 <dt id="RFC8725">[RFC8725]</dt>
         <dd>
 <span class="refAuthor">Sheffer, Y.</span>, <span class="refAuthor">Hardt, D.</span>, and <span class="refAuthor">M. Jones</span>, <span class="refTitle">"JSON Web Token Best Current Practices"</span>, <span class="seriesInfo">BCP 225</span>, <span class="seriesInfo">RFC 8725</span>, <span class="seriesInfo">DOI 10.17487/RFC8725</span>, <time datetime="2020-02" class="refDate">February 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8725">https://www.rfc-editor.org/rfc/rfc8725</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9110">[RFC9110]</dt>
+        <dd>
+<span class="refAuthor">Fielding, R., Ed.</span>, <span class="refAuthor">Nottingham, M., Ed.</span>, and <span class="refAuthor">J. Reschke, Ed.</span>, <span class="refTitle">"HTTP Semantics"</span>, <span class="seriesInfo">STD 97</span>, <span class="seriesInfo">RFC 9110</span>, <span class="seriesInfo">DOI 10.17487/RFC9110</span>, <time datetime="2022-06" class="refDate">June 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9110">https://www.rfc-editor.org/rfc/rfc9110</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9421">[RFC9421]</dt>
       <dd>
