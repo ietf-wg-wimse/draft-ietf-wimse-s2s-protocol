@@ -324,7 +324,7 @@ Table of Contents
    Token.
 
    For those who celebrate, ABNF [RFC5234] for the value of Workload-
-   Identity-Token header field is profivded in Figure 6:
+   Identity-Token header field is provided in Figure 6:
 
    ALPHA = %x41-5A / %x61-7A ; A-Z / a-z
    DIGIT = %x30-39 ; 0-9
