@@ -149,6 +149,7 @@ In addition, the following headers MUST be signed when they exist:
 * `content-type`
 * `content-digest`
 * `Authorization`
+* `Txn-Token` {{I-D.oauth-transaction-tokens}}
 * TBD that includes the WIT
 
 If the response is signed, the following components MUST be signed:
