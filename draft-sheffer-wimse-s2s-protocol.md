@@ -159,7 +159,6 @@ If the response is signed, the following components MUST be signed:
 * `@request-target;req`
 * `content-type` if it exists
 * `content-digest` if it exists
-* `Authorization`
 * TBD that includes the WIT
 
 For both requests and responses, the following signature parameters MUST be included:
