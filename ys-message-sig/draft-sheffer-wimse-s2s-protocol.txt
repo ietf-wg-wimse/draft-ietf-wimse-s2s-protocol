@@ -209,9 +209,9 @@ Table of Contents
 
    In addition, the following headers MUST be signed when they exist:
 
-   *  content-type
+   *  Content-Type
 
-   *  content-digest
+   *  Content-Digest
 
    *  Authorization
 
@@ -227,9 +227,9 @@ Table of Contents
 
    *  @request-target;req
 
-   *  content-type if it exists
+   *  Content-Type if it exists
 
-   *  content-digest if it exists
+   *  Content-Digest if it exists
 
    *  TBD that includes the WIT
 
@@ -255,10 +255,16 @@ Table of Contents
    included in both the Signature-Input and Signature headers SHOULD be
    wimse.
 
+   A sender MUST ensure that each nonce it generates is unique, at least
+   among messages sent to the same recipient.  To detect message
+   replays, a recipient MAY reject a message (request or response) if a
+   nonce is repeated.
+
    To promote interoperability, the ecdsa-p256-sha256 signing algorithm
    MUST be implemented by general purpose implementations of this spec.
 
-   The Accept-Signature field is not used by this profile
+   OPEN ISSUE: do we use the Accept-Signature field to signal that the
+   response must be signed?
 
    Following is a non-normative example of a signed request and a signed
    response, using the keys mentioned in Section TBD.
