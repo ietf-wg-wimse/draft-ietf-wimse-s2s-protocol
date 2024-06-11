@@ -146,8 +146,8 @@ The request is signed as per {{RFC9421}}. The following derived components MUST 
 
 In addition, the following headers MUST be signed when they exist:
 
-* `content-type`
-* `content-digest`
+* `Content-Type`
+* `Content-Digest`
 * `Authorization`
 * `Txn-Token` {{?I-D.ietf-oauth-transaction-tokens}}
 * TBD that includes the WIT
@@ -157,8 +157,8 @@ If the response is signed, the following components MUST be signed:
 * `@status`
 * `@method;req`
 * `@request-target;req`
-* `content-type` if it exists
-* `content-digest` if it exists
+* `Content-Type` if it exists
+* `Content-Digest` if it exists
 * TBD that includes the WIT
 
 For both requests and responses, the following signature parameters MUST be included:
@@ -175,10 +175,14 @@ It is RECOMMENDED to include only one signature with the HTTP message.
 If multiple ones are included, then the signature label included in both the `Signature-Input` and `Signature` headers SHOULD
 be `wimse`.
 
+A sender MUST ensure that each nonce it generates is unique, at least among messages sent to the same recipient.
+To detect message replays,
+a recipient MAY reject a message (request or response) if a nonce is repeated.
+
 To promote interoperability, the `ecdsa-p256-sha256` signing algorithm MUST be implemented
 by general purpose implementations of this spec.
 
-The `Accept-Signature` field is not used by this profile
+OPEN ISSUE: do we use the `Accept-Signature` field to signal that the response must be signed?
 
 Following is a non-normative example of a signed request and a signed response, using the keys mentioned in Section TBD.
 
