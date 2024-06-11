@@ -149,7 +149,7 @@ In addition, the following headers MUST be signed when they exist:
 * `content-type`
 * `content-digest`
 * `Authorization`
-* `Txn-Token` {{I-D.oauth-transaction-tokens}}
+* `Txn-Token` {{?I-D.ietf-oauth-transaction-tokens}}
 * TBD that includes the WIT
 
 If the response is signed, the following components MUST be signed:
@@ -167,7 +167,6 @@ For both requests and responses, the following signature parameters MUST be incl
 * `expires` - expiration MUST be short, e.g. on the order of minutes. The WIMSE architecture will provide seperate
 mechanisms in support of long-lived compute processes.
 * `nonce`
-* `alg`
 * `tag` - the value for implementations of this specification is `wimse-service-to-service`
 
 Since the signing key is sent along with the message, the `keyid` parameter SHOULD NOT be used.
@@ -186,12 +185,33 @@ Following is a non-normative example of a signed request and a signed response, 
 ~~~ http
 GET /gimme-ice-cream?flavor=vanilla HTTP/1.1
 Host: example.com
-Authorization: Basic c3BpZmZlOi8vcmVhbG0uZXhhbXBsZS5jb20vc3ZjYmMxMjM=
-Signature: wimse=:cJktyi42FuhfTjuJl5vlwHMkQggviWQD/ho1UKMy96VtOeECRrc \
-UhxlabRRaTgXdRJrzVR7IAfvR7/8E4y7yBg==:
-Signature-Input: wimse=("@method" "@request-target" "authorization"); \
-created=1717799748;expires=1717800048; \
-nonce="abcd1111";tag="wimse-service-to-service";keyid="dummy-keyid-TODO"
+Authorization: Basic c3BpZmZlOi8vcmVhbG0uZXhhbXBsZS5jb20vc3ZjMTphYmMxMjM=
+Signature: wimse=:L0xn/2/XncJ0QYNYuwvPsDGkJ6Gbe+rFA9soJlDfXcsqEfC7enVXFIHqCGJM7gtG6kukZUw0j/YaSXmDOiaZCQ==:
+Signature-Input: wimse=("@method" "@request-target" "authorization");created=1718102553;expires=1718102853;nonce="abcd1111";tag="wimse-service-to-service"
+
+~~~
+
+Assuming that the workload being called has the following keypair:
+
+~~~ jwk
+{
+ "kty":"OKP",
+ "crv":"Ed25519",
+ "x":"CfaY1XX-aHJpenRP8ATm3yGlbcKA_treqOfwKrilwyg",
+ "d":"fycSKS-iHZ6TC1BNwN6cE0sOBP3-4KgR-eqxNpnyhws"
+}
+~~~
+
+A signed response would be:
+
+~~~ http
+HTTP/1.1 404 Not Found
+Connection: close
+Content-Type: text/plain
+Signature: wimse=:tYjoiuZ3hm7Z6j4xoJKjutgNMvsag1TwaxPQk+eKNG0GsjAnNRsNz66DybN/2aCWoFkEsji2fH8uNegZrHLaBg==:
+Signature-Input: wimse=("@status" "content-type" "@method";req "@request-target";req);created=1718104175;expires=1718104477;nonce="abcd2222";tag="wimse-service-to-service"
+
+No ice cream today.
 
 ~~~
 
