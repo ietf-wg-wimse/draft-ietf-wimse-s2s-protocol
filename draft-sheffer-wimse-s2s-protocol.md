@@ -140,15 +140,15 @@ This document uses "service" and "workload" interchangeably. Otherwise, all term
 
 # Security Considerations
 
-## WIMSE ID
+## WIMSE Identity
 
-The WIMSE ID is scoped within a trust domain and therefore a WIMSE ID is only unique within a trust domain. Using a WIMSE ID without taking into account the trust domain could allow one domain to issue tokens to spoof identities in another domain.  Additionally, the trust domain must be tied to an authorized trusted key through some mechanism such as a JWKS or X.509 certificate chain. The association of a trust domain and a cryptographic trust root MUST be communicated securely out of band.
+The WIMSE ID is scoped within a trust domain and therefore any sub components (path portion of ID) are only unique within a trust domain. Using a WIMSE ID sub components without taking into account the trust domain could allow one domain to issue tokens to spoof identities in another domain.  Additionally, the trust domain must be tied to an authorized trusted key through some mechanism such as a JWKS or X.509 certificate chain. The association of a trust domain and a cryptographic trust root MUST be communicated securely out of band.
 
 [TODO: Should there be a DNS name to Trust domain mapping defined?]
 
 ## WIMSE ID Token and Proof of Possession
 
-The WIMSE ID token is bound to a secret cryptographic key and is always presented with a proof of possession as described in section TBD. It MUST NOT be used as a bearer token. While this helps reduce the sensitivity of the token it is still possible that a token and its proof of possession may be captured and replayed.  If this risk is mitigated then WIMSE ID tokens may be resued for a period of time with fresh proofs generated for each transaction.  The following are some mitigations for the capture and reuse of the proof of possession (POP):
+The WIMSE ID token is bound to a secret cryptographic key and is always presented with a proof of possession as described in section TBD. The ID Token and its PoP are only used in the application-level options, and both are not used in MTLS. The ID token MUST NOT be used as a bearer token. While this helps reduce the sensitivity of the token it is still possible that a token and its proof of possession may be captured and replayed.  If this risk is mitigated then WIMSE ID tokens may be resued for a period of time with fresh proofs generated for each transaction.  The following are some mitigations for the capture and reuse of the proof of possession (POP):
 
 * Preventing Eavesdropping and Interception with TLS
 
@@ -158,7 +158,7 @@ to section TBD MUST be performed. The WIMSE ID token itself is not usable withou
 
 * Limiting Proof of Possession Lifespan
 
-The proof of possession MUST be time limited. A POPs should only for the time necessary for it to be successfully for the purpose it is needed. This will typically be on the order of minutes.  POPs received outside their validity time MUST be rejected.
+The proof of possession MUST be time limited. A POP should only be valid over the time necessary for it to be successfully used for the purpose it is needed. This will typically be on the order of minutes.  POPs received outside their validity time MUST be rejected.
 
 * Limiting Proof of Possession Scope
 
@@ -166,7 +166,7 @@ The POP MUST have a limited scope. Limitations on scope include constraining the
 
 * Binding to a Nonce
 
-The POP MAY be bound to a fresh nonce to provide single use properties.  The mechanism for distributing a nonce are outside the scope of this specification.
+A nonce MAY included in the POP to limit the possibility of replay as defined in section TBD.  The POP MAY be bound to a fresh nonce to provide single use properties.  A mechanism for distributing a fresh challenge nonce to provide single use properties of a POP is outside the scope of this specification.
 
 * Binding to Sender
 
@@ -182,7 +182,7 @@ WIMSE tokens and the proofs of possession may contain private information such a
 
 WIMSE tokens are typically associated with a workload that is not directly associated with a user, however in some deployments the workload may be associated directly to a user. In these cases the WIMSE token can be used to track the user if it is disclosed in clear text.
 
-If the WIMSE ID is used with X509 certificates then the workload identity may be disclosed as part of the TLS handshake.  This can be partially mitigated by using TLS 1.3 to protect the client and serve identities.
+If the WIMSE ID is used with X.509 certificates then the workload identity may be disclosed as part of the TLS handshake.  This can be partially mitigated by using TLS 1.3 to protect the client and server identities.
 
 
 # IANA Considerations
