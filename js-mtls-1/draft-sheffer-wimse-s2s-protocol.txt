@@ -236,7 +236,7 @@ Table of Contents
 
    In some cases the WIMSE client may connect to the server using a DNS
    host name in which case the client MUST perform host name validation
-   as defined in 6.3 in RFC 9525.
+   as defined in section 6.3 of RFC 9525.
 
 4.2.  Authorization Using the WIMSE Identity
 
