@@ -138,7 +138,7 @@ scheme://trustdomain/path
 
 The scheme is TBD, likely candidates are "spiffe" to align with SPIFFE or "wimse" provide an alternative. A particular deployment may use one or the other scheme, but not both at the same time since SPIFFE only allows one URI SAN in a certificate.
 
-THe trust domain is a locally defined string that is compliant with SPIFFE naming schemes. The issuer of WIMSE credentials is tied to a single trust domain. The validator of a WIMSE ID token or certificate MUST check that the issuer of the credential is permitted to issuer credentials with the specified trust domains and MUST validate that there are no collisions in the list of supported trust domains.
+The trust domain is a locally defined string that is compliant with WIMSE naming schemes. The issuer of WIMSE credentials is tied to a single trust domain. The validator of a WIMSE ID token or certificate MUST check that the issuer of the credential is permitted to issue credentials with the specified trust domains and MUST validate that there are no collisions in the list of supported trust domains.
 
 The path is a string whose format is defined by the local deployment and is subject to the requirements defined in SPIFFE.  The purpose of the path is to identify a workload for the purposes of authorization, auditing and binding to additional information.
 
