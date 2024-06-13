@@ -152,7 +152,7 @@ WIMSE clients and servers MUST validate that the trust domain portion of the WIM
 
  It is RECOMMENDED that the client match the WIMSE identity in the certificate against the WIMSE identity of the workload of the intended server. In this case the host portion of the URI is NOT treated as a host name as specified in section 6.4 of {{!RFC9525}} but rather as a trust domain. The server identity is encoded in the path portion of the WIMSE identity in a deployment specific way.
 
-In some cases the WIMSE client may connect to the server using a DNS host name in which case the client MUST perform host name validation as defined in 6.3 in RFC 9525.
+In some cases the WIMSE client may connect to the server using a DNS host name in which case the client MUST perform host name validation as defined in section 6.3 of RFC 9525.
 
 ## Authorization Using the WIMSE Identity
 
