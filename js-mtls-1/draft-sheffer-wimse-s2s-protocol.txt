@@ -230,7 +230,7 @@ Table of Contents
    It is RECOMMENDED that the client match the WIMSE identity in the
    certificate against the WIMSE identity of the workload of the
    intended server.  In this case the host portion of the URI is NOT
-   treated as a host name as specified section 6.4 of [RFC9525] but
+   treated as a host name as specified in section 6.4 of [RFC9525] but
    rather as a trust domain.  The server identity is encoded in the path
    portion of the WIMSE identity in a deployment specific way.
 
