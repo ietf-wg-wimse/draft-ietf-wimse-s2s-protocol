@@ -128,7 +128,7 @@ This document uses "service" and "workload" interchangeably. Otherwise, all term
 
 {::boilerplate bcp14-tagged}
 
-# WIMSE Identity
+# WIMSE Identity {#whimsical-identity}
 
 [TODO: using a URI as an identity aligns or perhaps conflicts with SPIFFE's definition of Identity the format below is basically taken from SPIFFE, I'm not convinced that this is a good or bad idea.  Perhaps we can reuse all or most of the [SPIFFE format](https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md)?]
 
