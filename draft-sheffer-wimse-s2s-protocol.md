@@ -136,6 +136,91 @@ This document uses "service" and "workload" interchangeably. Otherwise, all term
 
 ## Option 2: Authentication Based on HTTP Message Signatures
 
+This option uses the WIMSE Identity Token (ref TBD) to sign the request and optionally, the response.
+This specification defines a profile of the Message Signatures specification {{!RFC9421}}.
+
+The request is signed as per {{RFC9421}}. The following derived components MUST be signed:
+
+* `@method`
+* `@request-target`
+
+In addition, the following headers MUST be signed when they exist:
+
+* `Content-Type`
+* `Content-Digest`
+* `Authorization`
+* `Txn-Token` {{?I-D.ietf-oauth-transaction-tokens}}
+* `Workload-Identity-Token`
+
+If the response is signed, the following components MUST be signed:
+
+* `@status`
+* `@method;req`
+* `@request-target;req`
+* `Content-Type` if it exists
+* `Content-Digest` if it exists
+* `Workload-Identity-Token`
+
+For both requests and responses, the following signature parameters MUST be included:
+
+* `created`
+* `expires` - expiration MUST be short, e.g. on the order of minutes. The WIMSE architecture will provide seperate
+mechanisms in support of long-lived compute processes.
+* `nonce`
+* `tag` - the value for implementations of this specification is `wimse-service-to-service`
+
+Since the signing key is sent along with the message, the `keyid` parameter SHOULD NOT be used.
+
+It is RECOMMENDED to include only one signature with the HTTP message.
+If multiple ones are included, then the signature label included in both the `Signature-Input` and `Signature` headers SHOULD
+be `wimse`.
+
+A sender MUST ensure that each nonce it generates is unique, at least among messages sent to the same recipient.
+To detect message replays,
+a recipient MAY reject a message (request or response) if a nonce is repeated.
+
+To promote interoperability, the `ecdsa-p256-sha256` signing algorithm MUST be implemented
+by general purpose implementations of this spec.
+
+OPEN ISSUE: do we use the `Accept-Signature` field to signal that the response must be signed?
+
+Following is a non-normative example of a signed request and a signed response, using the keys mentioned in Section TBD.
+
+~~~ http
+GET /gimme-ice-cream?flavor=vanilla HTTP/1.1
+Host: example.com
+Signature: wimse=:K4dfGnguF5f1L4DKBSp5XeFXosLGj8Y9fiUX06rL/wdOF+x3zTWmsvKWiY0B1oFZaOtm2FHru+YLjdkqa2WfCQ==:
+Signature-Input: wimse=("@method" "@request-target" "workload-identity-token");created=1718291357;expires=1718291657;nonce="abcd1111";tag="wimse-service-to-service"
+Workload-Identity-Token: aGVhZGVyCg.VGhpcyBpcyBub3QgYSByZWFsIHRva2VuLgo.c2lnbmF0dXJlCg
+
+~~~
+
+Assuming that the workload being called has the following keypair:
+
+~~~ jwk
+{
+ "kty":"OKP",
+ "crv":"Ed25519",
+ "x":"CfaY1XX-aHJpenRP8ATm3yGlbcKA_treqOfwKrilwyg",
+ "d":"fycSKS-iHZ6TC1BNwN6cE0sOBP3-4KgR-eqxNpnyhws"
+}
+~~~
+
+A signed response would be:
+
+~~~ http
+HTTP/1.1 404 Not Found
+Connection: close
+Content-Digest: sha-256=:47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=:
+Content-Type: text/plain
+Signature: wimse=:NMrMn3xhI6m9PI8mKVfpnH5qFGcEfuFxiCmsB5PJhGjUHT/5J4612EZwRw3V4kU4gGJmO+ER8RC4DM2HKVOYDQ==:
+Signature-Input: wimse=("@status" "workload-identity-token" "content-type" "content-digest" "@method";req "@request-target";req);created=1718295368;expires=1718295670;nonce="abcd2222";tag="wimse-service-to-service"
+Workload-Identity-Token: aGVhZGVyCg.VGhpcyBhaW4ndCBvbmUsIHRvby4K.c2lnbmF0dXJlCg
+
+No ice cream today.
+
+~~~
+
 # Using Mutual TLS for Service To Service Authentication {#mutual-tls}
 
 # Security Considerations
