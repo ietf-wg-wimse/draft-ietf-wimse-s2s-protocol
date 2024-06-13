@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              D. Feldman
-Expires: 11 December 2024                                               
+Expires: 15 December 2024                                               
                                                               J. Salowey
                                                                   Venafi
                                                       A. Schwenkschuster
                                                                Microsoft
                                                               Y. Sheffer
                                                                   Intuit
-                                                             9 June 2024
+                                                            13 June 2024
 
 
                 WIMSE Service to Service Authentication
@@ -55,7 +55,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 11 December 2024.
+   This Internet-Draft will expire on 15 December 2024.
 
 Copyright Notice
 
@@ -209,7 +209,7 @@ Table of Contents
 
    WIMSE identities may be used to validate server and client
    connections.  When validating a WIMSE identity the relying party MUST
-   validate that this CA issuer for the WIMSE identity is authorized to
+   validate that the CA issuer for the WIMSE identity is authorized to
    issue certificates for the trust domain of the WIMSE identity in the
    certificate.  Other PKIX path validation rules apply.
 
