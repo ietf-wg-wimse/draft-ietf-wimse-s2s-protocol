@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              D. Feldman
-Expires: 12 December 2024                                               
+Expires: 15 December 2024                                               
                                                               J. Salowey
                                                                   Venafi
                                                       A. Schwenkschuster
                                                                Microsoft
                                                               Y. Sheffer
                                                                   Intuit
-                                                            10 June 2024
+                                                            13 June 2024
 
 
                 WIMSE Service to Service Authentication
@@ -55,7 +55,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 12 December 2024.
+   This Internet-Draft will expire on 15 December 2024.
 
 Copyright Notice
 
@@ -227,9 +227,12 @@ Table of Contents
 
       -  cnf: A confirmation claim containing the public key of the
          workload using the jwk member as defined in Section 3.2 of
-         [RFC7800].  The WIT MUST NOT be used as a bearer token.
-         Instead, it should be used in conjunction with one of the
-         methods in Section 3.2 or Section 3.3.
+         [RFC7800].  The workload MUST prove possession of the
+         corresponding private key when presenting the WIT to another
+         party, which can be accomplished by using it in conjunction
+         with one of the methods in Section 3.2 or Section 3.3.  As
+         such, it MUST NOT be used as a bearer token and is not intended
+         for use in the Authorization header.
 
    An example WIT might look like this (all examples, of course, are
    non-normative and with line breaks and extra space for readability):
