@@ -19,17 +19,17 @@
 <meta content="draft-sheffer-wimse-s2s-protocol-latest" name="ietf.draft">
 <!-- Generator version information:
   xml2rfc 3.21.0
-    Python 3.11.9
+    Python 3.12.3
     ConfigArgParse 1.7
     google-i18n-address 3.1.0
     intervaltree 3.1.0
-    Jinja2 3.1.2
-    lxml 4.9.3
-    platformdirs 4.2.1
+    Jinja2 3.1.4
+    lxml 4.9.4
+    platformdirs 4.2.2
     pycountry 22.3.5
     PyYAML 6.0.1
     requests 2.31.0
-    setuptools 68.2.2
+    setuptools 69.5.1
     six 1.16.0
     wcwidth 0.2.13
 -->
@@ -1030,11 +1030,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">WIMSE S2S Auth</td>
-<td class="right">May 2024</td>
+<td class="right">June 2024</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Campbell, et al.</td>
-<td class="center">Expires 1 December 2024</td>
+<td class="center">Expires 15 December 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1047,12 +1047,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-sheffer-wimse-s2s-protocol-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-05-30" class="published">30 May 2024</time>
+<time datetime="2024-06-13" class="published">13 June 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-12-01">1 December 2024</time></dd>
+<dd class="expires"><time datetime="2024-12-15">15 December 2024</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1117,7 +1117,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 1 December 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 15 December 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1347,7 +1347,120 @@ appear in all capitals, as shown here.<a href="#section-2-2" class="pilcrow">¶<
 <section id="section-3.3">
         <h3 id="name-option-2-authentication-bas">
 <a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-option-2-authentication-bas" class="section-name selfRef">Option 2: Authentication Based on HTTP Message Signatures</a>
-      </h3>
+        </h3>
+<p id="section-3.3-1">This option uses the WIMSE Identity Token (ref TBD) to sign the request and optionally, the response.
+This specification defines a profile of the Message Signatures specification <span>[<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
+<p id="section-3.3-2">The request is signed as per <span>[<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>. The following derived components <span class="bcp14">MUST</span> be signed:<a href="#section-3.3-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.3-3.1">
+            <p id="section-3.3-3.1.1"><code>@method</code><a href="#section-3.3-3.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.3-3.2">
+            <p id="section-3.3-3.2.1"><code>@request-target</code><a href="#section-3.3-3.2.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-3.3-4">In addition, the following headers <span class="bcp14">MUST</span> be signed when they exist:<a href="#section-3.3-4" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.3-5.1">
+            <p id="section-3.3-5.1.1"><code>Content-Type</code><a href="#section-3.3-5.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.3-5.2">
+            <p id="section-3.3-5.2.1"><code>Content-Digest</code><a href="#section-3.3-5.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.3-5.3">
+            <p id="section-3.3-5.3.1"><code>Authorization</code><a href="#section-3.3-5.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.3-5.4">
+            <p id="section-3.3-5.4.1"><code>Txn-Token</code> <span>[<a href="#I-D.ietf-oauth-transaction-tokens" class="cite xref">I-D.ietf-oauth-transaction-tokens</a>]</span><a href="#section-3.3-5.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.3-5.5">
+            <p id="section-3.3-5.5.1"><code>Workload-Identity-Token</code><a href="#section-3.3-5.5.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-3.3-6">If the response is signed, the following components <span class="bcp14">MUST</span> be signed:<a href="#section-3.3-6" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.3-7.1">
+            <p id="section-3.3-7.1.1"><code>@status</code><a href="#section-3.3-7.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.3-7.2">
+            <p id="section-3.3-7.2.1"><code>@method;req</code><a href="#section-3.3-7.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.3-7.3">
+            <p id="section-3.3-7.3.1"><code>@request-target;req</code><a href="#section-3.3-7.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.3-7.4">
+            <p id="section-3.3-7.4.1"><code>Content-Type</code> if it exists<a href="#section-3.3-7.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.3-7.5">
+            <p id="section-3.3-7.5.1"><code>Content-Digest</code> if it exists<a href="#section-3.3-7.5.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.3-7.6">
+            <p id="section-3.3-7.6.1"><code>Workload-Identity-Token</code><a href="#section-3.3-7.6.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-3.3-8">For both requests and responses, the following signature parameters <span class="bcp14">MUST</span> be included:<a href="#section-3.3-8" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.3-9.1">
+            <p id="section-3.3-9.1.1"><code>created</code><a href="#section-3.3-9.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.3-9.2">
+            <p id="section-3.3-9.2.1"><code>expires</code> - expiration <span class="bcp14">MUST</span> be short, e.g. on the order of minutes. The WIMSE architecture will provide seperate
+mechanisms in support of long-lived compute processes.<a href="#section-3.3-9.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.3-9.3">
+            <p id="section-3.3-9.3.1"><code>nonce</code><a href="#section-3.3-9.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.3-9.4">
+            <p id="section-3.3-9.4.1"><code>tag</code> - the value for implementations of this specification is <code>wimse-service-to-service</code><a href="#section-3.3-9.4.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-3.3-10">Since the signing key is sent along with the message, the <code>keyid</code> parameter <span class="bcp14">SHOULD NOT</span> be used.<a href="#section-3.3-10" class="pilcrow">¶</a></p>
+<p id="section-3.3-11">It is <span class="bcp14">RECOMMENDED</span> to include only one signature with the HTTP message.
+If multiple ones are included, then the signature label included in both the <code>Signature-Input</code> and <code>Signature</code> headers <span class="bcp14">SHOULD</span>
+be <code>wimse</code>.<a href="#section-3.3-11" class="pilcrow">¶</a></p>
+<p id="section-3.3-12">A sender <span class="bcp14">MUST</span> ensure that each nonce it generates is unique, at least among messages sent to the same recipient.
+To detect message replays,
+a recipient <span class="bcp14">MAY</span> reject a message (request or response) if a nonce is repeated.<a href="#section-3.3-12" class="pilcrow">¶</a></p>
+<p id="section-3.3-13">To promote interoperability, the <code>ecdsa-p256-sha256</code> signing algorithm <span class="bcp14">MUST</span> be implemented
+by general purpose implementations of this spec.<a href="#section-3.3-13" class="pilcrow">¶</a></p>
+<p id="section-3.3-14">OPEN ISSUE: do we use the <code>Accept-Signature</code> field to signal that the response must be signed?<a href="#section-3.3-14" class="pilcrow">¶</a></p>
+<p id="section-3.3-15">Following is a non-normative example of a signed request and a signed response, using the keys mentioned in Section TBD.<a href="#section-3.3-15" class="pilcrow">¶</a></p>
+<div class="lang-http sourcecode" id="section-3.3-16">
+<pre>
+GET /gimme-ice-cream?flavor=vanilla HTTP/1.1
+Host: example.com
+Signature: wimse=:K4dfGnguF5f1L4DKBSp5XeFXosLGj8Y9fiUX06rL/wdOF+x3zTWmsvKWiY0B1oFZaOtm2FHru+YLjdkqa2WfCQ==:
+Signature-Input: wimse=("@method" "@request-target" "workload-identity-token");created=1718291357;expires=1718291657;nonce="abcd1111";tag="wimse-service-to-service"
+Workload-Identity-Token: aGVhZGVyCg.VGhpcyBpcyBub3QgYSByZWFsIHRva2VuLgo.c2lnbmF0dXJlCg
+
+</pre><a href="#section-3.3-16" class="pilcrow">¶</a>
+</div>
+<p id="section-3.3-17">Assuming that the workload being called has the following keypair:<a href="#section-3.3-17" class="pilcrow">¶</a></p>
+<div class="lang-jwk sourcecode" id="section-3.3-18">
+<pre>
+{
+ "kty":"OKP",
+ "crv":"Ed25519",
+ "x":"CfaY1XX-aHJpenRP8ATm3yGlbcKA_treqOfwKrilwyg",
+ "d":"fycSKS-iHZ6TC1BNwN6cE0sOBP3-4KgR-eqxNpnyhws"
+}
+</pre><a href="#section-3.3-18" class="pilcrow">¶</a>
+</div>
+<p id="section-3.3-19">A signed response would be:<a href="#section-3.3-19" class="pilcrow">¶</a></p>
+<div class="lang-http sourcecode" id="section-3.3-20">
+<pre>
+HTTP/1.1 404 Not Found
+Connection: close
+Content-Digest: sha-256=:47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=:
+Content-Type: text/plain
+Signature: wimse=:NMrMn3xhI6m9PI8mKVfpnH5qFGcEfuFxiCmsB5PJhGjUHT/5J4612EZwRw3V4kU4gGJmO+ER8RC4DM2HKVOYDQ==:
+Signature-Input: wimse=("@status" "workload-identity-token" "content-type" "content-digest" "@method";req "@request-target";req);created=1718295368;expires=1718295670;nonce="abcd2222";tag="wimse-service-to-service"
+Workload-Identity-Token: aGVhZGVyCg.VGhpcyBhaW4ndCBvbmUsIHRvby4K.c2lnbmF0dXJlCg
+
+No ice cream today.
+
+</pre><a href="#section-3.3-20" class="pilcrow">¶</a>
+</div>
 </section>
 </div>
 </section>
@@ -1407,6 +1520,10 @@ appear in all capitals, as shown here.<a href="#section-2-2" class="pilcrow">¶<
 <a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
+<dt id="I-D.ietf-oauth-transaction-tokens">[I-D.ietf-oauth-transaction-tokens]</dt>
+        <dd>
+<span class="refAuthor">Tulshibagwale, A.</span>, <span class="refAuthor">Fletcher, G.</span>, and <span class="refAuthor">P. Kasselman</span>, <span class="refTitle">"Transaction Tokens"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-transaction-tokens-01</span>, <time datetime="2024-03-16" class="refDate">16 March 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-transaction-tokens-01">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-transaction-tokens-01</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="I-D.ietf-wimse-arch">[I-D.ietf-wimse-arch]</dt>
         <dd>
 <span class="refAuthor">Salowey, J. A.</span>, <span class="refAuthor">Rosomakho, Y.</span>, and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"Workload Identity in a Multi System Environment (WIMSE) Architecture"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-arch-00</span>, <time datetime="2024-04-18" class="refDate">18 April 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-00">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-00</a>&gt;</span>. </dd>
