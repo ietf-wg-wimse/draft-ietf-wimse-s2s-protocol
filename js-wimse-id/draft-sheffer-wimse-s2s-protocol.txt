@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              D. Feldman
-Expires: 6 December 2024                                                
+Expires: 15 December 2024                                               
                                                               J. Salowey
                                                                   Venafi
                                                       A. Schwenkschuster
                                                                Microsoft
                                                               Y. Sheffer
                                                                   Intuit
-                                                             4 June 2024
+                                                            13 June 2024
 
 
                 WIMSE Service to Service Authentication
@@ -55,7 +55,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 6 December 2024.
+   This Internet-Draft will expire on 15 December 2024.
 
 Copyright Notice
 
@@ -206,11 +206,11 @@ Table of Contents
    may use one or the other scheme, but not both at the same time since
    SPIFFE only allows one URI SAN in a certificate.
 
-   THe trust domain is a locally defined string that is compliant with
-   SPIFFE naming schemes.  The issuer of WIMSE credentials is tied to a
+   The trust domain is a locally defined string that is compliant with
+   WIMSE naming schemes.  The issuer of WIMSE credentials is tied to a
    single trust domain.  The validator of a WIMSE ID token or
    certificate MUST check that the issuer of the credential is permitted
-   to issuer credentials with the specified trust domains and MUST
+   to issue credentials with the specified trust domains and MUST
    validate that there are no collisions in the list of supported trust
    domains.
 
