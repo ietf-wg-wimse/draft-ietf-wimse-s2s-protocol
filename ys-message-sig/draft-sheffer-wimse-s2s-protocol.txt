@@ -271,10 +271,9 @@ Table of Contents
 
    GET /gimme-ice-cream?flavor=vanilla HTTP/1.1
    Host: example.com
-   Authorization: Basic c3BpZmZlOi8vcmVhbG0uZXhhbXBsZS5jb20vc3ZjMTphYmMxMjM=
-   Signature: wimse=:gJcSlLKRVBt6MMbcoWRaifmYsMFMYUMUM7ikQLM1dNmuXaarehoWlFhmpOb9mlgUBibxjBIosy/15WVL0nxuAw==:
-   Signature-Input: wimse=("@method" "@request-target" "authorization" "workload-identity-token");created=1718267142;expires=1718267442;nonce="abcd1111";tag="wimse-service-to-service"
-   Workload-Identity-Token: :VGhpcyBpcyBub3QgYSByZWFsIHRva2VuLgo=:
+   Signature: wimse=:K4dfGnguF5f1L4DKBSp5XeFXosLGj8Y9fiUX06rL/wdOF+x3zTWmsvKWiY0B1oFZaOtm2FHru+YLjdkqa2WfCQ==:
+   Signature-Input: wimse=("@method" "@request-target" "workload-identity-token");created=1718291357;expires=1718291657;nonce="abcd1111";tag="wimse-service-to-service"
+   Workload-Identity-Token: aGVhZGVyCg.VGhpcyBpcyBub3QgYSByZWFsIHRva2VuLgo.c2lnbmF0dXJlCg
 
    Assuming that the workload being called has the following keypair:
 
@@ -289,10 +288,11 @@ Table of Contents
 
    HTTP/1.1 404 Not Found
    Connection: close
+   Content-Digest: sha-256=:47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=:
    Content-Type: text/plain
-   Signature: wimse=:+DygYcb4akWJqIWETb8F+ByEZKBj9XJ1HSux7GBOidbe2PqJmdWQNnDvnOLq0a9StrgeZq/Pgydn1ZcnMRG4CQ==:
-   Signature-Input: wimse=("@status" "workload-identity-token" "content-type" "@method";req "@request-target";req);created=1718267142;expires=1718267444;nonce="abcd2222";tag="wimse-service-to-service"
-   Workload-Identity-Token: :VGhpcyBhaW4ndCBvbmUsIHRvby4K:
+   Signature: wimse=:NMrMn3xhI6m9PI8mKVfpnH5qFGcEfuFxiCmsB5PJhGjUHT/5J4612EZwRw3V4kU4gGJmO+ER8RC4DM2HKVOYDQ==:
+   Signature-Input: wimse=("@status" "workload-identity-token" "content-type" "content-digest" "@method";req "@request-target";req);created=1718295368;expires=1718295670;nonce="abcd2222";tag="wimse-service-to-service"
+   Workload-Identity-Token: aGVhZGVyCg.VGhpcyBhaW4ndCBvbmUsIHRvby4K.c2lnbmF0dXJlCg
 
    No ice cream today.
 
