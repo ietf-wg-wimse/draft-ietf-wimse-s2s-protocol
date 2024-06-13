@@ -150,7 +150,7 @@ In addition, the following headers MUST be signed when they exist:
 * `Content-Digest`
 * `Authorization`
 * `Txn-Token` {{?I-D.ietf-oauth-transaction-tokens}}
-* TBD that includes the WIT
+* `Workload-Identity-Token`
 
 If the response is signed, the following components MUST be signed:
 
@@ -159,7 +159,7 @@ If the response is signed, the following components MUST be signed:
 * `@request-target;req`
 * `Content-Type` if it exists
 * `Content-Digest` if it exists
-* TBD that includes the WIT
+* `Workload-Identity-Token`
 
 For both requests and responses, the following signature parameters MUST be included:
 
@@ -190,8 +190,9 @@ Following is a non-normative example of a signed request and a signed response, 
 GET /gimme-ice-cream?flavor=vanilla HTTP/1.1
 Host: example.com
 Authorization: Basic c3BpZmZlOi8vcmVhbG0uZXhhbXBsZS5jb20vc3ZjMTphYmMxMjM=
-Signature: wimse=:L0xn/2/XncJ0QYNYuwvPsDGkJ6Gbe+rFA9soJlDfXcsqEfC7enVXFIHqCGJM7gtG6kukZUw0j/YaSXmDOiaZCQ==:
-Signature-Input: wimse=("@method" "@request-target" "authorization");created=1718102553;expires=1718102853;nonce="abcd1111";tag="wimse-service-to-service"
+Signature: wimse=:gJcSlLKRVBt6MMbcoWRaifmYsMFMYUMUM7ikQLM1dNmuXaarehoWlFhmpOb9mlgUBibxjBIosy/15WVL0nxuAw==:
+Signature-Input: wimse=("@method" "@request-target" "authorization" "workload-identity-token");created=1718267142;expires=1718267442;nonce="abcd1111";tag="wimse-service-to-service"
+Workload-Identity-Token: :VGhpcyBpcyBub3QgYSByZWFsIHRva2VuLgo=:
 
 ~~~
 
@@ -212,8 +213,9 @@ A signed response would be:
 HTTP/1.1 404 Not Found
 Connection: close
 Content-Type: text/plain
-Signature: wimse=:tYjoiuZ3hm7Z6j4xoJKjutgNMvsag1TwaxPQk+eKNG0GsjAnNRsNz66DybN/2aCWoFkEsji2fH8uNegZrHLaBg==:
-Signature-Input: wimse=("@status" "content-type" "@method";req "@request-target";req);created=1718104175;expires=1718104477;nonce="abcd2222";tag="wimse-service-to-service"
+Signature: wimse=:+DygYcb4akWJqIWETb8F+ByEZKBj9XJ1HSux7GBOidbe2PqJmdWQNnDvnOLq0a9StrgeZq/Pgydn1ZcnMRG4CQ==:
+Signature-Input: wimse=("@status" "workload-identity-token" "content-type" "@method";req "@request-target";req);created=1718267142;expires=1718267444;nonce="abcd2222";tag="wimse-service-to-service"
+Workload-Identity-Token: :VGhpcyBhaW4ndCBvbmUsIHRvby4K:
 
 No ice cream today.
 
