@@ -19,17 +19,17 @@
 <meta content="draft-sheffer-wimse-s2s-protocol-latest" name="ietf.draft">
 <!-- Generator version information:
   xml2rfc 3.21.0
-    Python 3.11.9
+    Python 3.12.3
     ConfigArgParse 1.7
     google-i18n-address 3.1.0
     intervaltree 3.1.0
-    Jinja2 3.1.2
-    lxml 4.9.3
-    platformdirs 4.2.1
+    Jinja2 3.1.4
+    lxml 4.9.4
+    platformdirs 4.2.2
     pycountry 22.3.5
     PyYAML 6.0.1
     requests 2.31.0
-    setuptools 68.2.2
+    setuptools 69.5.1
     six 1.16.0
     wcwidth 0.2.13
 -->
@@ -1034,7 +1034,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Campbell, et al.</td>
-<td class="center">Expires 11 December 2024</td>
+<td class="center">Expires 15 December 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1047,12 +1047,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-sheffer-wimse-s2s-protocol-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-06-09" class="published">9 June 2024</time>
+<time datetime="2024-06-13" class="published">13 June 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-12-11">11 December 2024</time></dd>
+<dd class="expires"><time datetime="2024-12-15">15 December 2024</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1117,7 +1117,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 11 December 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 15 December 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1178,7 +1178,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
             <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1">
-                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="auto internal xref">5.1</a>.  <a href="#name-wimse-id" class="internal xref">WIMSE ID</a></p>
+                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="auto internal xref">5.1</a>.  <a href="#name-wimse-identity" class="internal xref">WIMSE Identity</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2">
                 <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="auto internal xref">5.2</a>.  <a href="#name-wimse-id-token-and-proof-of" class="internal xref">WIMSE ID Token and Proof of Possession</a></p>
@@ -1378,12 +1378,12 @@ appear in all capitals, as shown here.<a href="#section-2-2" class="pilcrow">¶<
       <h2 id="name-security-considerations">
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<div id="wimse-id">
+<div id="wimse-identity">
 <section id="section-5.1">
-        <h3 id="name-wimse-id">
-<a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-wimse-id" class="section-name selfRef">WIMSE ID</a>
+        <h3 id="name-wimse-identity">
+<a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-wimse-identity" class="section-name selfRef">WIMSE Identity</a>
         </h3>
-<p id="section-5.1-1">The WIMSE ID is scoped within a trust domain and therefore a WIMSE ID is only unique within a trust domain. Using a WIMSE ID without taking into account the trust domain could allow one domain to issue tokens to spoof identities in another domain.  Additionally, the trust domain must be tied to an authorized trusted key through some mechanism such as a JWKS or X.509 certificate chain. The association of a trust domain and a cryptographic trust root <span class="bcp14">MUST</span> be communicated securely out of band.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
+<p id="section-5.1-1">The WIMSE ID is scoped within a trust domain and therefore any sub components (path portion of ID) are only unique within a trust domain. Using a WIMSE ID sub components without taking into account the trust domain could allow one domain to issue tokens to spoof identities in another domain.  Additionally, the trust domain must be tied to an authorized trusted key through some mechanism such as a JWKS or X.509 certificate chain. The association of a trust domain and a cryptographic trust root <span class="bcp14">MUST</span> be communicated securely out of band.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
 <p id="section-5.1-2">[TODO: Should there be a DNS name to Trust domain mapping defined?]<a href="#section-5.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1392,7 +1392,7 @@ appear in all capitals, as shown here.<a href="#section-2-2" class="pilcrow">¶<
         <h3 id="name-wimse-id-token-and-proof-of">
 <a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-wimse-id-token-and-proof-of" class="section-name selfRef">WIMSE ID Token and Proof of Possession</a>
         </h3>
-<p id="section-5.2-1">The WIMSE ID token is bound to a secret cryptographic key and is always presented with a proof of possession as described in section TBD. It <span class="bcp14">MUST NOT</span> be used as a bearer token. While this helps reduce the sensitivity of the token it is still possible that a token and its proof of possession may be captured and replayed.  If this risk is mitigated then WIMSE ID tokens may be resued for a period of time with fresh proofs generated for each transaction.  The following are some mitigations for the capture and reuse of the proof of possession (POP):<a href="#section-5.2-1" class="pilcrow">¶</a></p>
+<p id="section-5.2-1">The WIMSE ID token is bound to a secret cryptographic key and is always presented with a proof of possession as described in section TBD. The ID Token and its PoP are only used in the application-level options, and both are not used in MTLS. The ID token <span class="bcp14">MUST NOT</span> be used as a bearer token. While this helps reduce the sensitivity of the token it is still possible that a token and its proof of possession may be captured and replayed.  If this risk is mitigated then WIMSE ID tokens may be resued for a period of time with fresh proofs generated for each transaction.  The following are some mitigations for the capture and reuse of the proof of possession (POP):<a href="#section-5.2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.2-2.1">
             <p id="section-5.2-2.1.1">Preventing Eavesdropping and Interception with TLS<a href="#section-5.2-2.1.1" class="pilcrow">¶</a></p>
@@ -1406,7 +1406,7 @@ to section TBD <span class="bcp14">MUST</span> be performed. The WIMSE ID token 
             <p id="section-5.2-4.1.1">Limiting Proof of Possession Lifespan<a href="#section-5.2-4.1.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-5.2-5">The proof of possession <span class="bcp14">MUST</span> be time limited. A POPs should only for the time necessary for it to be successfully for the purpose it is needed. This will typically be on the order of minutes.  POPs received outside their validity time <span class="bcp14">MUST</span> be rejected.<a href="#section-5.2-5" class="pilcrow">¶</a></p>
+<p id="section-5.2-5">The proof of possession <span class="bcp14">MUST</span> be time limited. A POP should only be valid over the time necessary for it to be successfully used for the purpose it is needed. This will typically be on the order of minutes.  POPs received outside their validity time <span class="bcp14">MUST</span> be rejected.<a href="#section-5.2-5" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.2-6.1">
             <p id="section-5.2-6.1.1">Limiting Proof of Possession Scope<a href="#section-5.2-6.1.1" class="pilcrow">¶</a></p>
@@ -1418,7 +1418,7 @@ to section TBD <span class="bcp14">MUST</span> be performed. The WIMSE ID token 
             <p id="section-5.2-8.1.1">Binding to a Nonce<a href="#section-5.2-8.1.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-5.2-9">The POP <span class="bcp14">MAY</span> be bound to a fresh nonce to provide single use properties.  The mechanism for distributing a nonce are outside the scope of this specification.<a href="#section-5.2-9" class="pilcrow">¶</a></p>
+<p id="section-5.2-9">A nonce <span class="bcp14">MAY</span> included in the POP to limit the possibility of replay as defined in section TBD.  The POP <span class="bcp14">MAY</span> be bound to a fresh nonce to provide single use properties.  A mechanism for distributing a fresh challenge nonce to provide single use properties of a POP is outside the scope of this specification.<a href="#section-5.2-9" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.2-10.1">
             <p id="section-5.2-10.1.1">Binding to Sender<a href="#section-5.2-10.1.1" class="pilcrow">¶</a></p>
@@ -1442,7 +1442,7 @@ to section TBD <span class="bcp14">MUST</span> be performed. The WIMSE ID token 
         </h3>
 <p id="section-5.4-1">WIMSE tokens and the proofs of possession may contain private information such as user names or other identities. Care should be taken to prevent the disclosure of this information. The use of TLS helps protect the privacy of WIMSE tokens and proofs of possession.<a href="#section-5.4-1" class="pilcrow">¶</a></p>
 <p id="section-5.4-2">WIMSE tokens are typically associated with a workload that is not directly associated with a user, however in some deployments the workload may be associated directly to a user. In these cases the WIMSE token can be used to track the user if it is disclosed in clear text.<a href="#section-5.4-2" class="pilcrow">¶</a></p>
-<p id="section-5.4-3">If the WIMSE ID is used with X509 certificates then the workload identity may be disclosed as part of the TLS handshake.  This can be partially mitigated by using TLS 1.3 to protect the client and serve identities.<a href="#section-5.4-3" class="pilcrow">¶</a></p>
+<p id="section-5.4-3">If the WIMSE ID is used with X.509 certificates then the workload identity may be disclosed as part of the TLS handshake.  This can be partially mitigated by using TLS 1.3 to protect the client and server identities.<a href="#section-5.4-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
