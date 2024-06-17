@@ -140,6 +140,14 @@ This document uses "service" and "workload" interchangeably. Otherwise, all term
 
 # Application Level Service To Service Authentication {#app-level}
 
+As noted in the Introduction, there are commonly deployments where communication between workloads cannot use
+end-to-end TLS. For these deployment styles, this document proposes application-level protections.
+
+The current version of the document includes two alternatives, both using the newly introduced
+Workload Identity Token {{to-wit}}. The first alternative {{dpop-esque-auth}} is inspired by the OAuth DPoP specification.
+The second {{http-sig-auth}} is based on the HTTP Message Signatures RFC. We present both alternatives and expect
+the working group to select one of them as this document progresses towards IETF consensus.
+
 ## The Workload Identity Token {#to-wit}
 
 The Workload Identity Token (WIT) is a JWS {{RFC7515}} signed JWT {{RFC7519}} that represents the identity of a workload.
@@ -301,7 +309,7 @@ If the response is signed, the following components MUST be signed:
 For both requests and responses, the following signature parameters MUST be included:
 
 * `created`
-* `expires` - expiration MUST be short, e.g. on the order of minutes. The WIMSE architecture will provide seperate
+* `expires` - expiration MUST be short, e.g. on the order of minutes. The WIMSE architecture will provide separate
 mechanisms in support of long-lived compute processes.
 * `nonce`
 * `tag` - the value for implementations of this specification is `wimse-service-to-service`
