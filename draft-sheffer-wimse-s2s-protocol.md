@@ -128,7 +128,7 @@ This document uses "service" and "workload" interchangeably. Otherwise, all term
 
 {::boilerplate bcp14-tagged}
 
-# Workload Identity
+# Workload Identity {#whimsical-identity}
 
 [TODO: using a URI as an identity aligns or perhaps conflicts with SPIFFE's definition of Identity the format below is basically taken from SPIFFE.  Perhaps we can reuse all or most of the [SPIFFE format](https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md)?]
 
@@ -138,7 +138,7 @@ scheme://trustdomain/path
 
 The scheme is TBD, likely candidates are "spiffe" to align with SPIFFE or "wimse" provide an alternative. A particular deployment may use both schemes, but a Workload Identity Token may only use one scheme since SPIFFE only allows one URI SAN in a certificate.
 
-The trust domain is a string that is compliant with SPIFFE naming scheme [SPIFFE-ID](https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md). The issuer of workload credentials is tied to a single trust domain. The validator of a Workload Identity token or certificate MUST check that the issuer of the credential is permitted to issue credentials with the specified trust domains and MUST validate that there are no collisions in the list of supported trust domains.
+The trust domain is a string that is compliant with WIMSE naming scheme [TBD]). The issuer of workload credentials is tied to a single trust domain. The validator of a Workload Identity token or certificate MUST check that the issuer of the credential is permitted to issue credentials with the specified trust domains and MUST validate that there are no collisions in the list of supported trust domains.
 
 [TODO: Should the trust domain be a valid DNS name that could be used in a domain validation process?]
 
