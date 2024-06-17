@@ -1327,7 +1327,7 @@ described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</s
 appear in all capitals, as shown here.<a href="#section-2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="workload-identity">
+<div id="whimsical-identity">
 <section id="section-3">
       <h2 id="name-workload-identity">
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-workload-identity" class="section-name selfRef">Workload Identity</a>
@@ -1336,7 +1336,7 @@ appear in all capitals, as shown here.<a href="#section-2-2" class="pilcrow">¶<
 <p id="section-3-2">THe WIMSE identity is represented as a URI of the format:<a href="#section-3-2" class="pilcrow">¶</a></p>
 <p id="section-3-3">scheme://trustdomain/path<a href="#section-3-3" class="pilcrow">¶</a></p>
 <p id="section-3-4">The scheme is TBD, likely candidates are "spiffe" to align with SPIFFE or "wimse" provide an alternative. A particular deployment may use both schemes, but a Workload Identity Token may only use one scheme since SPIFFE only allows one URI SAN in a certificate.<a href="#section-3-4" class="pilcrow">¶</a></p>
-<p id="section-3-5">The trust domain is a string that is compliant with SPIFFE naming scheme <a href="https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md">SPIFFE-ID</a>. The issuer of workload credentials is tied to a single trust domain. The validator of a Workload Identity token or certificate <span class="bcp14">MUST</span> check that the issuer of the credential is permitted to issue credentials with the specified trust domains and <span class="bcp14">MUST</span> validate that there are no collisions in the list of supported trust domains.<a href="#section-3-5" class="pilcrow">¶</a></p>
+<p id="section-3-5">The trust domain is a string that is compliant with WIMSE naming scheme [TBD]). The issuer of workload credentials is tied to a single trust domain. The validator of a Workload Identity token or certificate <span class="bcp14">MUST</span> check that the issuer of the credential is permitted to issue credentials with the specified trust domains and <span class="bcp14">MUST</span> validate that there are no collisions in the list of supported trust domains.<a href="#section-3-5" class="pilcrow">¶</a></p>
 <p id="section-3-6">[TODO: Should the trust domain be a valid DNS name that could be used in a domain validation process?]<a href="#section-3-6" class="pilcrow">¶</a></p>
 <p id="section-3-7">The path is a string whose format is defined by the local deployment and is subject to the requirements defined in [SPIFFE-ID].  The purpose of the path is to identify a workload for the purposes of authorization, auditing and binding to additional information.<a href="#section-3-7" class="pilcrow">¶</a></p>
 </section>
