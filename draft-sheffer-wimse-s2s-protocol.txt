@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              D. Feldman
-Expires: 15 December 2024                                               
+Expires: 19 December 2024                                               
                                                               J. Salowey
                                                                   Venafi
                                                       A. Schwenkschuster
                                                                Microsoft
                                                               Y. Sheffer
                                                                   Intuit
-                                                            13 June 2024
+                                                            17 June 2024
 
 
                 WIMSE Service to Service Authentication
@@ -55,7 +55,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 15 December 2024.
+   This Internet-Draft will expire on 19 December 2024.
 
 Copyright Notice
 
@@ -193,6 +193,19 @@ Table of Contents
    capitals, as shown here.
 
 3.  Application Level Service To Service Authentication
+
+   As noted in the Introduction, there are commonly deployments where
+   communication between workloads cannot use end-to-end TLS.  For these
+   deployment styles, this document proposes application-level
+   protections.
+
+   The current version of the document includes two alternatives, both
+   using the newly introduced Workload Identity Token Section 3.1.  The
+   first alternative Section 3.2 is inspired by the OAuth DPoP
+   specification.  The second Section 3.3 is based on the HTTP Message
+   Signatures RFC.  We present both alternatives and expect the working
+   group to select one of them as this document progresses towards IETF
+   consensus.
 
 3.1.  The Workload Identity Token
 
@@ -402,7 +415,7 @@ Table of Contents
    *  created
 
    *  expires - expiration MUST be short, e.g. on the order of minutes.
-      The WIMSE architecture will provide seperate mechanisms in support
+      The WIMSE architecture will provide separate mechanisms in support
       of long-lived compute processes.
 
    *  nonce
