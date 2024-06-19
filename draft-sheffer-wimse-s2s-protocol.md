@@ -138,7 +138,7 @@ This document uses "service" and "workload" interchangeably. Otherwise, all term
 
 # Using Mutual TLS for Service To Service Authentication {#mutual-tls}
 
-The WIMSE workload identity may be carried within an X.509 certificate. The WIMSE workload identity MUST be encoded in a SubjctAltName extension of type URI.  There MUST be only one SubjectAltName extension of type URI in a WIMSE certificate.  The WIMSE certificate may contain SubjectAltName extensions of other types such as DNSName.
+The WIMSE workload identity may be carried within an X.509 certificate. The WIMSE workload identity MUST be encoded in a SubjectAltName extension of type URI.  There MUST be only one SubjectAltName extension of type URI in a WIMSE certificate.  The WIMSE certificate may contain SubjectAltName extensions of other types such as DNSName.
 
 WIMSE identities may be used to validate server and client connections.  When validating a WIMSE identity the relying party MUST validate that the CA issuer for the WIMSE identity is authorized to issue certificates for the trust domain of the WIMSE identity in the certificate. Other PKIX path validation rules apply.
 
