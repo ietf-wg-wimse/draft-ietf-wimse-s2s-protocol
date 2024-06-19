@@ -269,7 +269,7 @@ Workload-Identity-Token: eyJ0eXAiOiJ3aW1zZS1pZCtqd3QiLCJhbGciOiJFUzI1
  jYTNDU0U0Y3diX18iLCJjbmYiOnsiandrIjp7Imt0eSI6Ik9LUCIsImNydiI6IkVkMjU
  1MTkiLCJ4IjoiX2FtUkMzWXJZYkhoSDFSdFlyTDhjU21URE1oWXRPVVRHNzhjR1RSNWV
  6ayJ9fX0.rOSUMR8I5WhM5C704l3iVdY0zFqxhugJ8Jo2xo39G7FqUTbwTzAGdpz2lHp
-6eL1M486XmRgl3uyjj6R_iuzNOA
+ 6eL1M486XmRgl3uyjj6R_iuzNOA
 ~~~
 {: title="An example Workload Identity Token HTTP Header Field"}
 
@@ -278,6 +278,109 @@ thus, `Workload-Identity-Token`, `workload-identity-token`, `WORKLOAD-IDENTITY-T
 etc., are all valid and equivalent header field names. However, case is significant in the header field value.
 
 ## Option 1: DPoP-Inspired Authentication {#dpop-esque-auth}
+
+This option, inspired by the OAuth DPoP specification {{?RFC9449}}, uses a DPoP-like mechanism to authenticate
+the calling workload in the context of the request. The WIMSE Identity Token {{to-wit}} is sent in the request as
+described in {{wit-http-header}}. An additional JWT, the Workload Proof Token (WPT), is signed by the private key
+corresponding to the public key in the WIT. The WPT is sent in the `Workload-Proof-Token` header field of the request.
+A WPT contains the following:
+
+* in the JOSE header:
+    * `alg`: An identifier for an appropriate JWS asymmetric digital signature algorithm corresponding to
+     the confirmation key in the associated WIT.
+    * `typ`: the WPT is explicitly typed, as recommended in {{Section 3.11 of RFC8725}},
+     using the `application/wimse-proof+jwt` media type.
+* in the JWT claims:
+    * `iss`: The issuer of the token, which is the calling workload, represented by the same value as the `sub` claim
+     of the associated WIT.
+    * `aud`: The audience of the token contains the the HTTP target URI ({{Section 7.1 of RFC9110}}) of the request
+     to which the WPT is attached, without query or fragment parts.
+    * `iat`: The time at which the token was created (as defined in {{Section 4.1.6 of RFC7519}}).
+    * `jti`: A unique identifier for the token.
+    * `ctx_token_hash`: Hash of the OAuth access token, Transaction Token {{?I-D.ietf-oauth-transaction-tokens}},
+     or other token in the request that might convey end-user identity and authorization context of the request.
+     The value MUST be the result of a base64url encoding (as defined in {{Section 2 of RFC7515}}) the SHA-256 hash of
+     the ASCII encoding of the associated token's value.
+
+An example WPT might look like the following:
+
+~~~ jwt
+eyJ0eXAiOiJ3aW1zZS1wcm9vZitqd3QiLCJhbGciOiJFZERTQSJ9.eyJpc3MiOiJ3aW1z
+ZTovL2V4YW1wbGUuY29tL3NwZWNpZmljLXdvcmtsb2FkIiwiYXVkIjoiaHR0cHM6Ly9zZ
+XJ2aWNlLmV4YW1wbGUuY29tL3BhdGgiLCJpYXQiOjE3MTc2MTI1NDUsImp0aSI6Il9fYn
+djNEVTQzNhY2MyTFRDMS1feCIsImN0eF90b2tlbl9oYXNoIjoiQ0w0d2pmcFJtTmYtYmR
+ZSWJZTG5WOWQ1ck1BUkd3S1lFMTB3VXd6QzBqSSJ9.YVS0gGOnsCK5xWhE9lcRzp0CDpl
+TGLDv3lUK4dSF_o2uw2wh6I2FOwsa0OmUMeTAr-qO0bJJBjSOy64UKBekCg
+
+~~~
+{: #example-wpt title="Example Workload Proof Token (WPT)"}
+
+The decoded JOSE header of the WPT from the example above is shown here:
+
+~~~ json
+{
+ "typ": "wimse-proof+jwt",
+ "alg": "EdDSA"
+}
+~~~
+{: title="Example WPT JOSE Header"}
+
+The decoded JWT claims of the WPT from the example above are shown here:
+
+~~~ json
+{
+ "iss": "wimse://example.com/specific-workload",
+ "aud": "https://service.example.com/path",
+ "iat": 1717612545,
+ "jti": "__bwc4ESC3acc2LTC1-_x",
+ "ctx_token_hash": "CL4wjfpRmNf-bdYIbYLnV9d5rMARGwKYE10wUwzC0jI"
+}
+~~~
+{: title="Example WPT Claims"}
+
+An example of an HTTP request with both the WIT and WPT from prior examples is shown below:
+
+~~~ http-message
+POST /path HTTP/1.1
+Host: service.example.com
+Content-Type: application/json
+Authorization: Bearer 16_mAd0GiwaZokU26_0902100
+Workload-Identity-Token: eyJ0eXAiOiJ3aW1zZS1pZCtqd3QiLCJhbGciOiJFUzI1
+ NiIsImtpZCI6Ikp1bmUgNSJ9.eyJpc3MiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3RydXN
+ 0ZWQtY2VudHJhbC1hdXRob3JpdHkiLCJleHAiOjE3MTc2MTI0NzAsInN1YiI6IndpbXN
+ lOi8vZXhhbXBsZS5jb20vc3BlY2lmaWMtd29ya2xvYWQiLCJqdGkiOiJ4LV8xQ1RMMmN
+ jYTNDU0U0Y3diX18iLCJjbmYiOnsiandrIjp7Imt0eSI6Ik9LUCIsImNydiI6IkVkMjU
+ 1MTkiLCJ4IjoiX2FtUkMzWXJZYkhoSDFSdFlyTDhjU21URE1oWXRPVVRHNzhjR1RSNWV
+ 6ayJ9fX0.rOSUMR8I5WhM5C704l3iVdY0zFqxhugJ8Jo2xo39G7FqUTbwTzAGdpz2lHp
+ 6eL1M486XmRgl3uyjj6R_iuzNOA
+Workload-Proof-Token: eyJ0eXAiOiJ3aW1zZS1wcm9vZitqd3QiLCJhbGciOiJFZER
+ TQSJ9.eyJpc3MiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3NwZWNpZmljLXdvcmtsb2FkIi
+ wiYXVkIjoiaHR0cHM6Ly9zZXJ2aWNlLmV4YW1wbGUuY29tL3BhdGgiLCJpYXQiOjE3MT
+ c2MTI1NDUsImp0aSI6Il9fYndjNEVTQzNhY2MyTFRDMS1feCIsImN0eF90b2tlbl9oYX
+ NoIjoiQ0w0d2pmcFJtTmYtYmRZSWJZTG5WOWQ1ck1BUkd3S1lFMTB3VXd6QzBqSSJ9.Y
+ VS0gGOnsCK5xWhE9lcRzp0CDplTGLDv3lUK4dSF_o2uw2wh6I2FOwsa0OmUMeTAr-qO0
+ bJJBjSOy64UKBekCg
+
+{"do stuff":"please"}
+~~~
+{: title="Example HTTP Request with WIT and WPT"}
+
+To validate the WPT in the request, the recipient MUST ensure the following:
+
+* There is not more than one `Workload-Proof-Token` header field in the request.
+* The `Workload-Proof-Token` header field value is a single and well-formed JWT.
+* The WPT signature is valid using the public key from the confirmation claim of the WIT.
+* The `typ` JOSE header parameter of the WPT conveys a media type of `wimse-proof+jwt`.
+* The `iss` claim of the WPT matches the `sub` claim of the WIT. (note: not sure `iss` in the WPT is necessary)
+* The `aud` claim of the WPT matches the target URI, or an acceptable alias or normalization thereof, of the HTTP request
+ in which the WPT was received, ignoring any query and fragment parts.
+* The `iat` claim of the WPT is within an acceptable window, e.g. within a few seconds or minutes of the current time.
+* Optionally, check that the value of the `jti` claim has not been used before in the time window in which the
+ respective WPT would be considered valid.
+* If presented in conjunction with a token conveying end-user identity or authorization context, the value of
+ the `ctx_token_hash` claim matches the hash of that token's value.
+
+
 
 ## Option 2: Authentication Based on HTTP Message Signatures {#http-sig-auth}
 
@@ -385,9 +488,13 @@ TODO: maybe a URI Scheme registration of `wimse` in [URI schemes](https://www.ia
 
 TODO: `application/wimse-id+jwt` or appropriately bikeshedded media type name (despite my ongoing unease with using media types for typing JWTs) in [Media Types](https://www.iana.org/assignments/media-types/media-types.xhtml).
 
+TODO: `application/wimse-proof+jwt` ...
+
 ## Hypertext Transfer Protocol (HTTP) Field Name Registration
 
 TODO: `Workload-Identity-Token` from {{wit-http-header}}
+
+TODO: `Workload-Proof-Token` from {{dpop-esque-auth}}
 
 --- back
 
