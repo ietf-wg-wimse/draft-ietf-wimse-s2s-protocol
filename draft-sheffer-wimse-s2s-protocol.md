@@ -61,8 +61,17 @@ informative:
 
 --- abstract
 
-TODO Abstract
-
+The WIMSE architecture defines authentication and authorization for software workloads
+in a variety of runtime environments, from the most basic ones up to complex
+multi-service, multi-cloud, multi-tenant deployments. This document defines the simplest, atomic unit of
+this architecture: the protocol between two workloads that need to verify each other's identity
+in order to communicate securely. The scope of this protocol is a single HTTP request-and-response
+pair. To address the needs of different setups, we propose two protocols,
+ one at the application level and one that makes use of trusted TLS transport.
+These two protocols are compatible, in the sense that a single call
+chain can have some calls use one protocol and some use the other. Service A can call
+Service B with mutual TLS protection, while the next call from Service B to Service C
+would be protected at the application level.
 
 --- middle
 
