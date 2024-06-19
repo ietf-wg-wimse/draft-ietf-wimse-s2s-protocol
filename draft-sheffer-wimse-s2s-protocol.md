@@ -68,8 +68,8 @@ pair. To address the needs of different setups, we propose two protocols,
  one at the application level and one that makes use of trusted TLS transport.
 These two protocols are compatible, in the sense that a single call
 chain can have some calls use one protocol and some use the other. Service A can call
-Service B with mutual TLS protection, while the next call from Service B to Service C
-would be protected at the application level.
+Service B with mutual TLS authentication, while the next call from Service B to Service C
+would be authenticated at the application level.
 
 --- middle
 
