@@ -54,9 +54,7 @@ normative:
   RFC9110:
 
 informative:
-  IANA.JOSE.ALGS:
-    target: https://www.iana.org/assignments/jose/jose.xhtml#web-signature-encryption-algorithms
-    title: JSON Web Signature and Encryption Algorithms
+  IANA.JOSE.ALGS: IANA.jose_web-signature-encryption-algorithms
 
 
 --- abstract
