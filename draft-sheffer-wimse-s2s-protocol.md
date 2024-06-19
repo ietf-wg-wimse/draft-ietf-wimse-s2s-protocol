@@ -29,6 +29,8 @@ author:
     email: bcampbell@pingidentity.com
  -
     fullname: "Daniel Feldman"
+    organization: "Independent"
+    email: dfeldman.mn@gmail.com
  -
     fullname: "Joe Salowey"
     organization: Venafi
