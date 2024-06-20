@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              D. Feldman
-Expires: 21 December 2024                                    Independent
+Expires: 22 December 2024                                    Independent
                                                               J. Salowey
                                                                   Venafi
                                                       A. Schwenkschuster
                                                                Microsoft
                                                               Y. Sheffer
                                                                   Intuit
-                                                            19 June 2024
+                                                            20 June 2024
 
 
                 WIMSE Service to Service Authentication
@@ -20,7 +20,20 @@ Expires: 21 December 2024                                    Independent
 
 Abstract
 
-   TODO Abstract
+   The WIMSE architecture defines authentication and authorization for
+   software workloads in a variety of runtime environments, from the
+   most basic ones up to complex multi-service, multi-cloud, multi-
+   tenant deployments.  This document defines the simplest, atomic unit
+   of this architecture: the protocol between two workloads that need to
+   verify each other's identity in order to communicate securely.  The
+   scope of this protocol is a single HTTP request-and-response pair.
+   To address the needs of different setups, we propose two protocols,
+   one at the application level and one that makes use of trusted TLS
+   transport.  These two protocols are compatible, in the sense that a
+   single call chain can have some calls use one protocol and some use
+   the other.  Service A can call Service B with mutual TLS
+   authentication, while the next call from Service B to Service C would
+   be authenticated at the application level.
 
 About This Document
 
@@ -55,7 +68,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 21 December 2024.
+   This Internet-Draft will expire on 22 December 2024.
 
 Copyright Notice
 
@@ -569,9 +582,8 @@ Table of Contents
               arch-00>.
 
    [IANA.JOSE.ALGS]
-              "JSON Web Signature and Encryption Algorithms", n.d.,
-              <https://www.iana.org/assignments/jose/jose.xhtml#web-
-              signature-encryption-algorithms>.
+              IANA, "JSON Web Signature and Encryption Algorithms",
+              <http://www.iana.org/assignments/jose>.
 
    [RFC7595]  Thaler, D., Ed., Hansen, T., and T. Hardie, "Guidelines
               and Registration Procedures for URI Schemes", BCP 35,
