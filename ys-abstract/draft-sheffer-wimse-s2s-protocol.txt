@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              D. Feldman
-Expires: 21 December 2024                                    Independent
+Expires: 22 December 2024                                    Independent
                                                               J. Salowey
                                                                   Venafi
                                                       A. Schwenkschuster
                                                                Microsoft
                                                               Y. Sheffer
                                                                   Intuit
-                                                            19 June 2024
+                                                            20 June 2024
 
 
                 WIMSE Service to Service Authentication
@@ -31,9 +31,9 @@ Abstract
    one at the application level and one that makes use of trusted TLS
    transport.  These two protocols are compatible, in the sense that a
    single call chain can have some calls use one protocol and some use
-   the other.  Service A can call Service B with mutual TLS protection,
-   while the next call from Service B to Service C would be protected at
-   the application level.
+   the other.  Service A can call Service B with mutual TLS
+   authentication, while the next call from Service B to Service C would
+   be authenticated at the application level.
 
 About This Document
 
@@ -68,7 +68,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 21 December 2024.
+   This Internet-Draft will expire on 22 December 2024.
 
 Copyright Notice
 
