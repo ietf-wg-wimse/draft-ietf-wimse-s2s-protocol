@@ -224,26 +224,23 @@ Table of Contents
 
 4.1.  Host Name Validation
 
-   [TODO: the following paragraph needs better alignment with RFC 9525.
-   The following is a very drafty straw man]
+   [TODO: need to define trust root used to validate the certificate is
+   appropriate for the trust domain.]
 
    It is RECOMMENDED that the server certificate contain a DNS SAN that
-   the client can use to perform standard host name validation.  The
-   client SHOULD also extract the WMISE identity from the certificate if
-   it is present and validate that the WIMSE trust domain matches the
-   intended trust domain for the server.  The client MAY further use the
-   WIMSE identity in applying authorization policy to the server.  If
-   the client does not use the DNS SAN then the client MUST match the
-   WIMSE identity in the certificate against the WIMSE identity of the
-   workload of the intended server according to a locally defined
-   policy.  The host portion of the WIMSE URI is NOT treated as a host
-   name as specified in section 6.4 of [RFC9525] but rather as a trust
-   domain.  The server identity is encoded in the path portion of the
-   WIMSE identity in a deployment specific way.
-
-   In some cases the WIMSE client may connect to the server using a DNS
-   host name in which case the client MUST perform host name validation
-   as defined in section 6.3 of RFC 9525.
+   the client can use to perform standard host name validation
+   Section 6.3 of [RFC9525].  The client SHOULD also extract the WIMSE
+   identity from the certificate if it is present and validate that the
+   WIMSE trust domain matches the intended trust domain for the server.
+   The client MAY then further use the WIMSE identity in applying
+   authorization policy to the server.  If the client does not use the
+   DNS SAN then the client MUST match the WIMSE identity in the
+   certificate against the WIMSE identity of the workload of the
+   intended server according to a locally defined policy.  The host
+   portion of the WIMSE URI is NOT treated as a host name as specified
+   in section 6.4 of [RFC9525] but rather as a trust domain.  The server
+   identity is encoded in the path portion of the WIMSE identity in a
+   deployment specific way.
 
 4.2.  Authorization Using the WIMSE Identity
 
