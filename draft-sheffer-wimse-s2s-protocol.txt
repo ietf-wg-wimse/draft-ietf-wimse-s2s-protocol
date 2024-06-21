@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              D. Feldman
-Expires: 22 December 2024                                    Independent
+Expires: 23 December 2024                                    Independent
                                                               J. Salowey
                                                                   Venafi
                                                       A. Schwenkschuster
                                                                Microsoft
                                                               Y. Sheffer
                                                                   Intuit
-                                                            20 June 2024
+                                                            21 June 2024
 
 
                 WIMSE Service to Service Authentication
@@ -68,7 +68,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 22 December 2024.
+   This Internet-Draft will expire on 23 December 2024.
 
 Copyright Notice
 
@@ -95,6 +95,8 @@ Table of Contents
      3.2.  Option 1: DPoP-Inspired Authentication
      3.3.  Option 2: Authentication Based on HTTP Message Signatures
    4.  Using Mutual TLS for Service To Service Authentication
+     4.1.  Host Name Validation
+     4.2.  Authorization Using the WIMSE Identity
    5.  Security Considerations
    6.  IANA Considerations
      6.1.  Media Type Registration
@@ -487,6 +489,55 @@ Table of Contents
 
 4.  Using Mutual TLS for Service To Service Authentication
 
+   The WIMSE workload identity may be carried within an X.509
+   certificate.  The WIMSE workload identity MUST be encoded in a
+   SubjectAltName extension of type URI.  There MUST be only one
+   SubjectAltName extension of type URI in a WIMSE certificate.  The
+   WIMSE certificate may contain SubjectAltName extensions of other
+   types such as DNSName.
+
+   WIMSE identities may be used to validate server and client
+   connections.  When validating a WIMSE identity the relying party MUST
+   validate that the CA issuer for the WIMSE identity is authorized to
+   issue certificates for the trust domain of the WIMSE identity in the
+   certificate.  Other PKIX path validation rules apply.
+
+   Servers wishing to use the WIMSE identity for authorizing the client
+   MUST require client certificate authentication in the TLS handshake.
+   Other methods of post handshake authentication are not specified by
+   this document.
+
+   WIMSE clients and servers MUST validate that the trust domain portion
+   of the WIMSE certificate matches the expected trust domain for the
+   other side of the connection.
+
+4.1.  Host Name Validation
+
+   [TODO: need to define trust root used to validate the certificate is
+   appropriate for the trust domain.]
+
+   It is RECOMMENDED that the server certificate contain a DNS SAN that
+   the client can use to perform standard host name validation
+   Section 6.3 of [RFC9525].  The client SHOULD also extract the WIMSE
+   identity from the certificate if it is present and validate that the
+   WIMSE trust domain matches the intended trust domain for the server.
+   The client MAY then further use the WIMSE identity in applying
+   authorization policy to the server.  If the client does not use the
+   DNS SAN then the client MUST match the WIMSE identity in the
+   certificate against the WIMSE identity of the workload of the
+   intended server according to a locally defined policy.  The host
+   portion of the WIMSE URI is NOT treated as a host name as specified
+   in section 6.4 of [RFC9525] but rather as a trust domain.  The server
+   identity is encoded in the path portion of the WIMSE identity in a
+   deployment specific way.
+
+4.2.  Authorization Using the WIMSE Identity
+
+   The client or server application may retrieve the WIMSE identity from
+   the TLS layer for use in authorization, accounting and auditing.  For
+   example, the full URI may be matched against ACLs and other policy
+   constructs to authorize actions requested by the peer.
+
 5.  Security Considerations
 
    TODO Security and Privacy
@@ -564,14 +615,18 @@ Table of Contents
               Message Signatures", RFC 9421, DOI 10.17487/RFC9421,
               February 2024, <https://www.rfc-editor.org/rfc/rfc9421>.
 
+   [RFC9525]  Saint-Andre, P. and R. Salz, "Service Identity in TLS",
+              RFC 9525, DOI 10.17487/RFC9525, November 2023,
+              <https://www.rfc-editor.org/rfc/rfc9525>.
+
 7.2.  Informative References
 
    [I-D.ietf-oauth-transaction-tokens]
               Tulshibagwale, A., Fletcher, G., and P. Kasselman,
               "Transaction Tokens", Work in Progress, Internet-Draft,
-              draft-ietf-oauth-transaction-tokens-01, 16 March 2024,
+              draft-ietf-oauth-transaction-tokens-02, 21 June 2024,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              transaction-tokens-01>.
+              transaction-tokens-02>.
 
    [I-D.ietf-wimse-arch]
               Salowey, J. A., Rosomakho, Y., and H. Tschofenig,
