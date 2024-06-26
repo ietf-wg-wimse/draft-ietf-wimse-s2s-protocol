@@ -367,7 +367,7 @@ Workload-Proof-Token: eyJ0eXAiOiJ3aW1zZS1wcm9vZitqd3QiLCJhbGciOiJFZER
 
 To validate the WPT in the request, the recipient MUST ensure the following:
 
-* There is not more than one `Workload-Proof-Token` header field in the request.
+* There is exactly one `Workload-Proof-Token` header field in the request.
 * The `Workload-Proof-Token` header field value is a single and well-formed JWT.
 * The WPT signature is valid using the public key from the confirmation claim of the WIT.
 * The `typ` JOSE header parameter of the WPT conveys a media type of `wimse-proof+jwt`.
