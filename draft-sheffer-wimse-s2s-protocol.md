@@ -293,7 +293,7 @@ A WPT contains the following:
 * in the JWT claims:
     * `iss`: The issuer of the token, which is the calling workload, represented by the same value as the `sub` claim
      of the associated WIT.
-    * `aud`: The audience of the token contains the the HTTP target URI ({{Section 7.1 of RFC9110}}) of the request
+    * `aud`: The audience of the token contains the HTTP target URI ({{Section 7.1 of RFC9110}}) of the request
      to which the WPT is attached, without query or fragment parts.
     * `exp`: The expiration time of the WIT (as defined in {{Section 4.1.4 of RFC7519}}). WPT lifetimes MUST be short,
      e.g., on the order of minutes or seconds.
