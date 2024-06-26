@@ -1592,12 +1592,12 @@ A WPT contains the following:<a href="#section-3.2-1" class="pilcrow">¶</a></p>
               <li class="normal" id="section-3.2-2.2.2.6">
                 <p id="section-3.2-2.2.2.6.1"><code>tth</code>: Hash of the Txn-Token <span>[<a href="#I-D.ietf-oauth-transaction-tokens" class="cite xref">I-D.ietf-oauth-transaction-tokens</a>]</span>, if present in the request,
    which might convey end-user identity and authorization context of the request. The value <span class="bcp14">MUST</span> be the result of
-   a base64url encoding (as defined in <span><a href="https://rfc-editor.org/rfc/rfc7515#section-2" class="relref">Section 2</a> of [<a href="#RFC7515" class="cite xref">RFC7515</a>]</span>) the SHA-256 hash of
+   a base64url encoding (as defined in <span><a href="https://rfc-editor.org/rfc/rfc7515#section-2" class="relref">Section 2</a> of [<a href="#RFC7515" class="cite xref">RFC7515</a>]</span>) of the SHA-256 hash of
    the ASCII encoding of the associated token's value.<a href="#section-3.2-2.2.2.6.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-3.2-2.2.2.7">
                 <p id="section-3.2-2.2.2.7.1"><code>oth</code>: Hash of any other token in the request that might convey end-user identity and authorization context of the
-   request. The value <span class="bcp14">MUST</span> be the result of a base64url encoding (as defined in <span><a href="https://rfc-editor.org/rfc/rfc7515#section-2" class="relref">Section 2</a> of [<a href="#RFC7515" class="cite xref">RFC7515</a>]</span>) the
+   request. The value <span class="bcp14">MUST</span> be the result of a base64url encoding (as defined in <span><a href="https://rfc-editor.org/rfc/rfc7515#section-2" class="relref">Section 2</a> of [<a href="#RFC7515" class="cite xref">RFC7515</a>]</span>) of the
    SHA-256 hash of the ASCII encoding of the associated token's value.
    (note: this is less than ideal but seems we need something like this for extensibility)<a href="#section-3.2-2.2.2.7.1" class="pilcrow">¶</a></p>
 </li>
