@@ -303,10 +303,10 @@ A WPT contains the following:
      is the base64url encoding of the SHA-256 hash of the ASCII encoding of the access token's value.
     * `tth`: Hash of the Txn-Token {{?I-D.ietf-oauth-transaction-tokens}}, if present in the request,
      which might convey end-user identity and authorization context of the request. The value MUST be the result of
-     a base64url encoding (as defined in {{Section 2 of RFC7515}}) the SHA-256 hash of
+     a base64url encoding (as defined in {{Section 2 of RFC7515}}) of the SHA-256 hash of
      the ASCII encoding of the associated token's value.
     * `oth`: Hash of any other token in the request that might convey end-user identity and authorization context of the
-     request. The value MUST be the result of a base64url encoding (as defined in {{Section 2 of RFC7515}}) the
+     request. The value MUST be the result of a base64url encoding (as defined in {{Section 2 of RFC7515}}) of the
      SHA-256 hash of the ASCII encoding of the associated token's value.
      (note: this is less than ideal but seems we need something like this for extensibility)
 
