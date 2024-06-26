@@ -1585,10 +1585,21 @@ A WPT contains the following:<a href="#section-3.2-1" class="pilcrow">¶</a></p>
                 <p id="section-3.2-2.2.2.4.1"><code>jti</code>: A unique identifier for the token.<a href="#section-3.2-2.2.2.4.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-3.2-2.2.2.5">
-                <p id="section-3.2-2.2.2.5.1"><code>ctx_token_hash</code>: Hash of the OAuth access token, Transaction Token <span>[<a href="#I-D.ietf-oauth-transaction-tokens" class="cite xref">I-D.ietf-oauth-transaction-tokens</a>]</span>,
-   or other token in the request that might convey end-user identity and authorization context of the request.
-   The value <span class="bcp14">MUST</span> be the result of a base64url encoding (as defined in <span><a href="https://rfc-editor.org/rfc/rfc7515#section-2" class="relref">Section 2</a> of [<a href="#RFC7515" class="cite xref">RFC7515</a>]</span>) the SHA-256 hash of
-   the ASCII encoding of the associated token's value.<a href="#section-3.2-2.2.2.5.1" class="pilcrow">¶</a></p>
+                <p id="section-3.2-2.2.2.5.1"><code>ath</code>: Hash of the OAuth access token, if present in the request, which might convey end-user identity and
+   authorization context of the request. The value, as per <span><a href="https://rfc-editor.org/rfc/rfc9449#section-4.1" class="relref">Section 4.1</a> of [<a href="#RFC9449" class="cite xref">RFC9449</a>]</span>,
+   is the base64url encoding of the SHA-256 hash of the ASCII encoding of the access token's value.<a href="#section-3.2-2.2.2.5.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-3.2-2.2.2.6">
+                <p id="section-3.2-2.2.2.6.1"><code>tth</code>: Hash of the Txn-Token <span>[<a href="#I-D.ietf-oauth-transaction-tokens" class="cite xref">I-D.ietf-oauth-transaction-tokens</a>]</span>, if present in the request,
+   which might convey end-user identity and authorization context of the request. The value <span class="bcp14">MUST</span> be the result of
+   a base64url encoding (as defined in <span><a href="https://rfc-editor.org/rfc/rfc7515#section-2" class="relref">Section 2</a> of [<a href="#RFC7515" class="cite xref">RFC7515</a>]</span>) the SHA-256 hash of
+   the ASCII encoding of the associated token's value.<a href="#section-3.2-2.2.2.6.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-3.2-2.2.2.7">
+                <p id="section-3.2-2.2.2.7.1"><code>oth</code>: Hash of any other token in the request that might convey end-user identity and authorization context of the
+   request. The value <span class="bcp14">MUST</span> be the result of a base64url encoding (as defined in <span><a href="https://rfc-editor.org/rfc/rfc7515#section-2" class="relref">Section 2</a> of [<a href="#RFC7515" class="cite xref">RFC7515</a>]</span>) the
+   SHA-256 hash of the ASCII encoding of the associated token's value.
+   (note: this is less than ideal but seems we need something like this for extensibility)<a href="#section-3.2-2.2.2.7.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 </li>
@@ -1601,9 +1612,9 @@ A WPT contains the following:<a href="#section-3.2-1" class="pilcrow">¶</a></p>
 eyJ0eXAiOiJ3aW1zZS1wcm9vZitqd3QiLCJhbGciOiJFZERTQSJ9.eyJpc3MiOiJ3aW1z
 ZTovL2V4YW1wbGUuY29tL3NwZWNpZmljLXdvcmtsb2FkIiwiYXVkIjoiaHR0cHM6Ly9zZ
 XJ2aWNlLmV4YW1wbGUuY29tL3BhdGgiLCJleHAiOjE3MTc2MTI4MjAsImp0aSI6Il9fYn
-djNEVTQzNhY2MyTFRDMS1feCIsImN0eF90b2tlbl9oYXNoIjoiQ0w0d2pmcFJtTmYtYmR
-ZSWJZTG5WOWQ1ck1BUkd3S1lFMTB3VXd6QzBqSSJ9.6BFrZdobweg5cg1NHvSKqEtmqka
-3zu78d2E91VKMoO0tP3J0Pwja7GoAOKuU2ztPAH3yfogFyOBS2GKqo4RSDA
+djNEVTQzNhY2MyTFRDMS1feCIsImF0aCI6IkNMNHdqZnBSbU5mLWJkWUliWUxuVjlkNXJ
+NQVJHd0tZRTEwd1V3ekMwakkifQ.Zq50mcIVTUykQhOBS7lyF93py3q5QOSPIbnI_oESv
+j6zSTWi-p0QNNHpKeB4IAgmC8Mt3dBM_rufwCxiKHSmDA
 </pre>
 </div>
 <figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
@@ -1632,7 +1643,7 @@ ZSWJZTG5WOWQ1ck1BUkd3S1lFMTB3VXd6QzBqSSJ9.6BFrZdobweg5cg1NHvSKqEtmqka
  "aud": "https://service.example.com/path",
  "exp": 1717612820,
  "jti": "__bwc4ESC3acc2LTC1-_x",
- "ctx_token_hash": "CL4wjfpRmNf-bdYIbYLnV9d5rMARGwKYE10wUwzC0jI"
+ "ath": "CL4wjfpRmNf-bdYIbYLnV9d5rMARGwKYE10wUwzC0jI"
 }
 </pre>
 </div>
@@ -1657,11 +1668,11 @@ Workload-Identity-Token: eyJ0eXAiOiJ3aW1zZS1pZCtqd3QiLCJhbGciOiJFUzI1
  6eL1M486XmRgl3uyjj6R_iuzNOA
 Workload-Proof-Token: eyJ0eXAiOiJ3aW1zZS1wcm9vZitqd3QiLCJhbGciOiJFZER
  TQSJ9.eyJpc3MiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3NwZWNpZmljLXdvcmtsb2FkIi
- wiYXVkIjoiaHR0cHM6Ly9zZXJ2aWNlLmV4YW1wbGUuY29tL3BhdGgiLCJpYXQiOjE3MT
- c2MTI1NDUsImp0aSI6Il9fYndjNEVTQzNhY2MyTFRDMS1feCIsImN0eF90b2tlbl9oYX
- NoIjoiQ0w0d2pmcFJtTmYtYmRZSWJZTG5WOWQ1ck1BUkd3S1lFMTB3VXd6QzBqSSJ9.Y
- VS0gGOnsCK5xWhE9lcRzp0CDplTGLDv3lUK4dSF_o2uw2wh6I2FOwsa0OmUMeTAr-qO0
- bJJBjSOy64UKBekCg
+ wiYXVkIjoiaHR0cHM6Ly9zZXJ2aWNlLmV4YW1wbGUuY29tL3BhdGgiLCJleHAiOjE3MT
+ c2MTI4MjAsImp0aSI6Il9fYndjNEVTQzNhY2MyTFRDMS1feCIsImF0aCI6IkNMNHdqZn
+ BSbU5mLWJkWUliWUxuVjlkNXJNQVJHd0tZRTEwd1V3ekMwakkifQ.Zq50mcIVTUykQhO
+ BS7lyF93py3q5QOSPIbnI_oESvj6zSTWi-p0QNNHpKeB4IAgmC8Mt3dBM_rufwCxiKHS
+ mDA
 
 {"do stuff":"please"}
 </pre>
@@ -1684,7 +1695,7 @@ Workload-Proof-Token: eyJ0eXAiOiJ3aW1zZS1wcm9vZitqd3QiLCJhbGciOiJFZER
             <p id="section-3.2-12.4.1">The <code>typ</code> JOSE header parameter of the WPT conveys a media type of <code>wimse-proof+jwt</code>.<a href="#section-3.2-12.4.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.2-12.5">
-            <p id="section-3.2-12.5.1">The <code>iss</code> claim of the WPT matches the <code>sub</code> claim of the WIT. (note: not sure <code>iss</code> in the WPT is necessary)<a href="#section-3.2-12.5.1" class="pilcrow">¶</a></p>
+            <p id="section-3.2-12.5.1">The <code>iss</code> claim of the WPT matches the <code>sub</code> claim of the WIT. (note: not sure <code>iss</code> in the WPT is useful or necessary)<a href="#section-3.2-12.5.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.2-12.6">
             <p id="section-3.2-12.6.1">The <code>aud</code> claim of the WPT matches the target URI, or an acceptable alias or normalization thereof, of the HTTP request
@@ -1699,8 +1710,14 @@ Workload-Proof-Token: eyJ0eXAiOiJ3aW1zZS1wcm9vZitqd3QiLCJhbGciOiJFZER
  respective WPT would be considered valid.<a href="#section-3.2-12.8.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.2-12.9">
-            <p id="section-3.2-12.9.1">If presented in conjunction with a token conveying end-user identity or authorization context, the value of
- the <code>ctx_token_hash</code> claim matches the hash of that token's value.<a href="#section-3.2-12.9.1" class="pilcrow">¶</a></p>
+            <p id="section-3.2-12.9.1">If presented in conjunction with an OAauth access token, the value of the <code>ath</code> claim matches the hash of that token's value.<a href="#section-3.2-12.9.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.2-12.10">
+            <p id="section-3.2-12.10.1">If presented in conjunction with a Txn-Token, the value of the <code>tth</code> claim matches the hash of that token's value.<a href="#section-3.2-12.10.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.2-12.11">
+            <p id="section-3.2-12.11.1">If presented in conjunction with a token conveying end-user identity or authorization context, the value of
+ the <code>oth</code> claim matches the hash of that token's value.<a href="#section-3.2-12.11.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
@@ -1850,6 +1867,7 @@ No ice cream today.
       </h2>
 <p id="section-6-1">TODO IANA<a href="#section-6-1" class="pilcrow">¶</a></p>
 <p id="section-6-2">TODO: maybe a URI Scheme registration of <code>wimse</code> in <a href="https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml">URI schemes</a> per <span>[<a href="#RFC7595" class="cite xref">RFC7595</a>]</span> but it's only being used in an example right now and might not even be appropriate. Or maybe use an ietf URI scheme a la <a href="https://www.iana.org/assignments/params/params.xhtml">URN Namespace for IETF Use</a> somehow. Or maybe nothing. Or maybe something else.<a href="#section-6-2" class="pilcrow">¶</a></p>
+<p id="section-6-3">TODO: <code>tth</code> and maybe <code>oth</code> claim in <a href="https://www.iana.org/assignments/jwt/jwt.xhtml">JSON Web Token Claims Registry</a><a href="#section-6-3" class="pilcrow">¶</a></p>
 <div id="media-type-registration">
 <section id="section-6.1">
         <h3 id="name-media-type-registration">
