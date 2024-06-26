@@ -153,8 +153,8 @@ As noted in the Introduction, there are commonly deployments where communication
 end-to-end TLS. For these deployment styles, this document proposes application-level protections.
 
 The current version of the document includes two alternatives, both using the newly introduced
-Workload Identity Token {{to-wit}}. The first alternative {{dpop-esque-auth}} is inspired by the OAuth DPoP specification.
-The second {{http-sig-auth}} is based on the HTTP Message Signatures RFC. We present both alternatives and expect
+Workload Identity Token ({{to-wit}}). The first alternative ({{dpop-esque-auth}}) is inspired by the OAuth DPoP specification.
+The second ({{http-sig-auth}}) is based on the HTTP Message Signatures RFC. We present both alternatives and expect
 the working group to select one of them as this document progresses towards IETF consensus.
 
 ## The Workload Identity Token {#to-wit}
@@ -268,7 +268,7 @@ WIT =  base64url "." base64url "." base64url
 ~~~~
 {: #wit-header-abnf title="Workload-Identity-Token Header Field ABNF"}
 
-The following shows the WIT from the {{example-wit}} in an example of a `Workload-Identity-Token` header field:
+The following shows the WIT from {{example-wit}} in an example of a `Workload-Identity-Token` header field:
 
 ~~~ http-message
 Workload-Identity-Token: eyJ0eXAiOiJ3aW1zZS1pZCtqd3QiLCJhbGciOiJFUzI1
@@ -289,7 +289,7 @@ etc., are all valid and equivalent header field names. However, case is signific
 ## Option 1: DPoP-Inspired Authentication {#dpop-esque-auth}
 
 This option, inspired by the OAuth DPoP specification {{?RFC9449}}, uses a DPoP-like mechanism to authenticate
-the calling workload in the context of the request. The WIMSE Identity Token {{to-wit}} is sent in the request as
+the calling workload in the context of the request. The WIMSE Identity Token ({{to-wit}}) is sent in the request as
 described in {{wit-http-header}}. An additional JWT, the Workload Proof Token (WPT), is signed by the private key
 corresponding to the public key in the WIT. The WPT is sent in the `Workload-Proof-Token` header field of the request.
 A WPT contains the following:
@@ -504,9 +504,9 @@ WIMSE clients and servers MUST validate that the trust domain portion of the WIM
 
 ## Host Name Validation
 
-[TODO: need to define trust root used to validate the certificate is appropriate for the trust domain.]
+TODO: need to define trust root used to validate the certificate is appropriate for the trust domain.
 
-It is RECOMMENDED that the server certificate contain a DNS SAN that the client can use to perform standard host name validation {{Section 6.3 of RFC9525}}.  The client SHOULD also extract the WIMSE identity from the certificate if it is present and validate that the WIMSE trust domain matches the intended trust domain for the server.  The client MAY then further use the WIMSE identity in applying authorization policy to the server.  If the client does not use the DNS SAN then the client MUST match the WIMSE identity in the certificate against the WIMSE identity of the workload of the intended server according to a locally defined policy. The host portion of the WIMSE URI is NOT treated as a host name as specified in section 6.4 of {{!RFC9525}} but rather as a trust domain. The server identity is encoded in the path portion of the WIMSE identity in a deployment specific way.
+It is RECOMMENDED that the server certificate contain a DNS SAN that the client can use to perform standard host name validation ({{Section 6.3 of RFC9525}}).  The client SHOULD also extract the WIMSE identity from the certificate if it is present and validate that the WIMSE trust domain matches the intended trust domain for the server.  The client MAY then further use the WIMSE identity in applying authorization policy to the server.  If the client does not use the DNS SAN then the client MUST match the WIMSE identity in the certificate against the WIMSE identity of the workload of the intended server according to a locally defined policy. The host portion of the WIMSE URI is NOT treated as a host name as specified in section 6.4 of {{!RFC9525}} but rather as a trust domain. The server identity is encoded in the path portion of the WIMSE identity in a deployment specific way.
 
 
 ## Authorization Using the WIMSE Identity
