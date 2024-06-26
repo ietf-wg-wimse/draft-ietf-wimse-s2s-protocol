@@ -1578,7 +1578,8 @@ A WPT contains the following:<a href="#section-3.2-1" class="pilcrow">¶</a></p>
    to which the WPT is attached, without query or fragment parts.<a href="#section-3.2-2.2.2.2.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-3.2-2.2.2.3">
-                <p id="section-3.2-2.2.2.3.1"><code>iat</code>: The time at which the token was created (as defined in <span><a href="https://rfc-editor.org/rfc/rfc7519#section-4.1.6" class="relref">Section 4.1.6</a> of [<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>).<a href="#section-3.2-2.2.2.3.1" class="pilcrow">¶</a></p>
+                <p id="section-3.2-2.2.2.3.1"><code>exp</code>: The expiration time of the WIT (as defined in <span><a href="https://rfc-editor.org/rfc/rfc7519#section-4.1.4" class="relref">Section 4.1.4</a> of [<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>). WPT lifetimes <span class="bcp14">MUST</span> be short,
+   e.g., on the order of minutes or seconds.<a href="#section-3.2-2.2.2.3.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-3.2-2.2.2.4">
                 <p id="section-3.2-2.2.2.4.1"><code>jti</code>: A unique identifier for the token.<a href="#section-3.2-2.2.2.4.1" class="pilcrow">¶</a></p>
@@ -1599,11 +1600,10 @@ A WPT contains the following:<a href="#section-3.2-1" class="pilcrow">¶</a></p>
 <pre>
 eyJ0eXAiOiJ3aW1zZS1wcm9vZitqd3QiLCJhbGciOiJFZERTQSJ9.eyJpc3MiOiJ3aW1z
 ZTovL2V4YW1wbGUuY29tL3NwZWNpZmljLXdvcmtsb2FkIiwiYXVkIjoiaHR0cHM6Ly9zZ
-XJ2aWNlLmV4YW1wbGUuY29tL3BhdGgiLCJpYXQiOjE3MTc2MTI1NDUsImp0aSI6Il9fYn
+XJ2aWNlLmV4YW1wbGUuY29tL3BhdGgiLCJleHAiOjE3MTc2MTI4MjAsImp0aSI6Il9fYn
 djNEVTQzNhY2MyTFRDMS1feCIsImN0eF90b2tlbl9oYXNoIjoiQ0w0d2pmcFJtTmYtYmR
-ZSWJZTG5WOWQ1ck1BUkd3S1lFMTB3VXd6QzBqSSJ9.YVS0gGOnsCK5xWhE9lcRzp0CDpl
-TGLDv3lUK4dSF_o2uw2wh6I2FOwsa0OmUMeTAr-qO0bJJBjSOy64UKBekCg
-
+ZSWJZTG5WOWQ1ck1BUkd3S1lFMTB3VXd6QzBqSSJ9.6BFrZdobweg5cg1NHvSKqEtmqka
+3zu78d2E91VKMoO0tP3J0Pwja7GoAOKuU2ztPAH3yfogFyOBS2GKqo4RSDA
 </pre>
 </div>
 <figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
@@ -1630,7 +1630,7 @@ TGLDv3lUK4dSF_o2uw2wh6I2FOwsa0OmUMeTAr-qO0bJJBjSOy64UKBekCg
 {
  "iss": "wimse://example.com/specific-workload",
  "aud": "https://service.example.com/path",
- "iat": 1717612545,
+ "exp": 1717612820,
  "jti": "__bwc4ESC3acc2LTC1-_x",
  "ctx_token_hash": "CL4wjfpRmNf-bdYIbYLnV9d5rMARGwKYE10wUwzC0jI"
 }
@@ -1691,7 +1691,8 @@ Workload-Proof-Token: eyJ0eXAiOiJ3aW1zZS1wcm9vZitqd3QiLCJhbGciOiJFZER
  in which the WPT was received, ignoring any query and fragment parts.<a href="#section-3.2-12.6.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.2-12.7">
-            <p id="section-3.2-12.7.1">The <code>iat</code> claim of the WPT is within an acceptable window, e.g. within a few seconds or minutes of the current time.<a href="#section-3.2-12.7.1" class="pilcrow">¶</a></p>
+            <p id="section-3.2-12.7.1">The <code>exp</code> claim is present and conveys a time that has not passed. WPTs with an expiration time unreasonably
+ far in the future <span class="bcp14">SHOULD</span> be rejected.<a href="#section-3.2-12.7.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.2-12.8">
             <p id="section-3.2-12.8.1">Optionally, check that the value of the <code>jti</code> claim has not been used before in the time window in which the

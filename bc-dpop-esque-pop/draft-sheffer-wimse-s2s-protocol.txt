@@ -399,8 +399,9 @@ Table of Contents
          (Section 7.1 of [RFC9110]) of the request to which the WPT is
          attached, without query or fragment parts.
 
-      -  iat: The time at which the token was created (as defined in
-         Section 4.1.6 of [RFC7519]).
+      -  exp: The expiration time of the WIT (as defined in
+         Section 4.1.4 of [RFC7519]).  WPT lifetimes MUST be short,
+         e.g., on the order of minutes or seconds.
 
       -  jti: A unique identifier for the token.
 
@@ -416,10 +417,10 @@ Table of Contents
 
    eyJ0eXAiOiJ3aW1zZS1wcm9vZitqd3QiLCJhbGciOiJFZERTQSJ9.eyJpc3MiOiJ3aW1z
    ZTovL2V4YW1wbGUuY29tL3NwZWNpZmljLXdvcmtsb2FkIiwiYXVkIjoiaHR0cHM6Ly9zZ
-   XJ2aWNlLmV4YW1wbGUuY29tL3BhdGgiLCJpYXQiOjE3MTc2MTI1NDUsImp0aSI6Il9fYn
+   XJ2aWNlLmV4YW1wbGUuY29tL3BhdGgiLCJleHAiOjE3MTc2MTI4MjAsImp0aSI6Il9fYn
    djNEVTQzNhY2MyTFRDMS1feCIsImN0eF90b2tlbl9oYXNoIjoiQ0w0d2pmcFJtTmYtYmR
-   ZSWJZTG5WOWQ1ck1BUkd3S1lFMTB3VXd6QzBqSSJ9.YVS0gGOnsCK5xWhE9lcRzp0CDpl
-   TGLDv3lUK4dSF_o2uw2wh6I2FOwsa0OmUMeTAr-qO0bJJBjSOy64UKBekCg
+   ZSWJZTG5WOWQ1ck1BUkd3S1lFMTB3VXd6QzBqSSJ9.6BFrZdobweg5cg1NHvSKqEtmqka
+   3zu78d2E91VKMoO0tP3J0Pwja7GoAOKuU2ztPAH3yfogFyOBS2GKqo4RSDA
 
                 Figure 8: Example Workload Proof Token (WPT)
 
@@ -439,7 +440,7 @@ Table of Contents
    {
     "iss": "wimse://example.com/specific-workload",
     "aud": "https://service.example.com/path",
-    "iat": 1717612545,
+    "exp": 1717612820,
     "jti": "__bwc4ESC3acc2LTC1-_x",
     "ctx_token_hash": "CL4wjfpRmNf-bdYIbYLnV9d5rMARGwKYE10wUwzC0jI"
    }
@@ -495,8 +496,9 @@ Table of Contents
       alias or normalization thereof, of the HTTP request in which the
       WPT was received, ignoring any query and fragment parts.
 
-   *  The iat claim of the WPT is within an acceptable window, e.g.
-      within a few seconds or minutes of the current time.
+   *  The exp claim is present and conveys a time that has not passed.
+      WPTs with an expiration time unreasonably far in the future SHOULD
+      be rejected.
 
    *  Optionally, check that the value of the jti claim has not been
       used before in the time window in which the respective WPT would
