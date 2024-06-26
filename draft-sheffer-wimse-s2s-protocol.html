@@ -1374,8 +1374,8 @@ appear in all capitals, as shown here.<a href="#section-2-2" class="pilcrow">¶<
 <p id="section-3-1">As noted in the Introduction, there are commonly deployments where communication between workloads cannot use
 end-to-end TLS. For these deployment styles, this document proposes application-level protections.<a href="#section-3-1" class="pilcrow">¶</a></p>
 <p id="section-3-2">The current version of the document includes two alternatives, both using the newly introduced
-Workload Identity Token <a href="#to-wit" class="auto internal xref">Section 3.1</a>. The first alternative <a href="#dpop-esque-auth" class="auto internal xref">Section 3.2</a> is inspired by the OAuth DPoP specification.
-The second <a href="#http-sig-auth" class="auto internal xref">Section 3.3</a> is based on the HTTP Message Signatures RFC. We present both alternatives and expect
+Workload Identity Token (<a href="#to-wit" class="auto internal xref">Section 3.1</a>). The first alternative (<a href="#dpop-esque-auth" class="auto internal xref">Section 3.2</a>) is inspired by the OAuth DPoP specification.
+The second (<a href="#http-sig-auth" class="auto internal xref">Section 3.3</a>) is based on the HTTP Message Signatures RFC. We present both alternatives and expect
 the working group to select one of them as this document progresses towards IETF consensus.<a href="#section-3-2" class="pilcrow">¶</a></p>
 <div id="to-wit">
 <section id="section-3.1">
@@ -1494,7 +1494,8 @@ dY0zFqxhugJ8Jo2xo39G7FqUTbwTzAGdpz2lHp6eL1M486XmRgl3uyjj6R_iuzNOA
 </li>
         </ul>
 <p id="section-3.1-11">For elucidative purposes only, the workload's key, including the private part, is shown below in JWK <span>[<a href="#RFC7517" class="cite xref">RFC7517</a>]</span> format:<a href="#section-3.1-11" class="pilcrow">¶</a></p>
-<span id="name-example-workloads-key"></span><figure id="figure-4">
+<span id="name-example-workloads-key"></span><div id="example-caller-jwk">
+<figure id="figure-4">
           <div class="lang-jwk sourcecode" id="section-3.1-12.1">
 <pre>
 {
@@ -1508,6 +1509,7 @@ dY0zFqxhugJ8Jo2xo39G7FqUTbwTzAGdpz2lHp6eL1M486XmRgl3uyjj6R_iuzNOA
 <figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
 <a href="#name-example-workloads-key" class="selfRef">Example Workload's Key</a>
           </figcaption></figure>
+</div>
 <p id="section-3.1-13">The afore-exampled WIT is signed with the private key of the Identity Server.
 The public key(s) of the Identity Server need to be known to all workloads in order to verify the signature of the WIT.
 The Identity Server's public key from this example is shown below in JWK <span>[<a href="#RFC7517" class="cite xref">RFC7517</a>]</span> format:<a href="#section-3.1-13" class="pilcrow">¶</a></p>
@@ -1547,7 +1549,7 @@ WIT =  base64url "." base64url "." base64url
 <a href="#name-workload-identity-token-hea" class="selfRef">Workload-Identity-Token Header Field ABNF</a>
             </figcaption></figure>
 </div>
-<p id="section-3.1.1-4">The following shows the WIT from the <a href="#example-wit" class="auto internal xref">Figure 1</a> in an example of a <code>Workload-Identity-Token</code> header field:<a href="#section-3.1.1-4" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-4">The following shows the WIT from <a href="#example-wit" class="auto internal xref">Figure 1</a> in an example of a <code>Workload-Identity-Token</code> header field:<a href="#section-3.1.1-4" class="pilcrow">¶</a></p>
 <span id="name-an-example-workload-identity"></span><figure id="figure-7">
             <div class="lang-http-message sourcecode" id="section-3.1.1-5.1">
 <pre>
@@ -1577,7 +1579,7 @@ etc., are all valid and equivalent header field names. However, case is signific
 <a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-option-1-dpop-inspired-auth" class="section-name selfRef">Option 1: DPoP-Inspired Authentication</a>
         </h3>
 <p id="section-3.2-1">This option, inspired by the OAuth DPoP specification <span>[<a href="#RFC9449" class="cite xref">RFC9449</a>]</span>, uses a DPoP-like mechanism to authenticate
-the calling workload in the context of the request. The WIMSE Identity Token <a href="#to-wit" class="auto internal xref">Section 3.1</a> is sent in the request as
+the calling workload in the context of the request. The WIMSE Identity Token (<a href="#to-wit" class="auto internal xref">Section 3.1</a>) is sent in the request as
 described in <a href="#wit-http-header" class="auto internal xref">Section 3.1.1</a>. An additional JWT, the Workload Proof Token (WPT), is signed by the private key
 corresponding to the public key in the WIT. The WPT is sent in the <code>Workload-Proof-Token</code> header field of the request.
 A WPT contains the following:<a href="#section-3.2-1" class="pilcrow">¶</a></p>
@@ -1756,7 +1758,7 @@ Workload-Proof-Token: eyJ0eXAiOiJ3aW1zZS1wcm9vZitqd3QiLCJhbGciOiJFZER
         <h3 id="name-option-2-authentication-bas">
 <a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-option-2-authentication-bas" class="section-name selfRef">Option 2: Authentication Based on HTTP Message Signatures</a>
         </h3>
-<p id="section-3.3-1">This option uses the WIMSE Identity Token (ref TBD) to sign the request and optionally, the response.
+<p id="section-3.3-1">This option uses the WIMSE Identity Token (<a href="#to-wit" class="auto internal xref">Section 3.1</a>) to sign the request and optionally, the response.
 This specification defines a profile of the Message Signatures specification <span>[<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
 <p id="section-3.3-2">The request is signed as per <span>[<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>. The following derived components <span class="bcp14">MUST</span> be signed:<a href="#section-3.3-2" class="pilcrow">¶</a></p>
 <ul class="normal">
@@ -1767,7 +1769,7 @@ This specification defines a profile of the Message Signatures specification <sp
             <p id="section-3.3-3.2.1"><code>@request-target</code><a href="#section-3.3-3.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-3.3-4">In addition, the following headers <span class="bcp14">MUST</span> be signed when they exist:<a href="#section-3.3-4" class="pilcrow">¶</a></p>
+<p id="section-3.3-4">In addition, the following request headers <span class="bcp14">MUST</span> be signed when they exist:<a href="#section-3.3-4" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.3-5.1">
             <p id="section-3.3-5.1.1"><code>Content-Type</code><a href="#section-3.3-5.1.1" class="pilcrow">¶</a></p>
@@ -1832,8 +1834,10 @@ a recipient <span class="bcp14">MAY</span> reject a message (request or response
 <p id="section-3.3-13">To promote interoperability, the <code>ecdsa-p256-sha256</code> signing algorithm <span class="bcp14">MUST</span> be implemented
 by general purpose implementations of this spec.<a href="#section-3.3-13" class="pilcrow">¶</a></p>
 <p id="section-3.3-14">OPEN ISSUE: do we use the <code>Accept-Signature</code> field to signal that the response must be signed?<a href="#section-3.3-14" class="pilcrow">¶</a></p>
-<p id="section-3.3-15">Following is a non-normative example of a signed request and a signed response, using the keys mentioned in Section TBD.<a href="#section-3.3-15" class="pilcrow">¶</a></p>
-<div class="lang-http sourcecode" id="section-3.3-16">
+<p id="section-3.3-15">Following is a non-normative example of a signed request and a signed response,
+where the caller is using the keys specified in <a href="#example-caller-jwk" class="auto internal xref">Figure 4</a>.<a href="#section-3.3-15" class="pilcrow">¶</a></p>
+<span id="name-signed-request"></span><figure id="figure-12">
+          <div class="lang-http sourcecode" id="section-3.3-16.1">
 <pre>
 GET /gimme-ice-cream?flavor=vanilla HTTP/1.1
 Host: example.com
@@ -1841,10 +1845,14 @@ Signature: wimse=:K4dfGnguF5f1L4DKBSp5XeFXosLGj8Y9fiUX06rL/wdOF+x3zTWmsvKWiY0B1o
 Signature-Input: wimse=("@method" "@request-target" "workload-identity-token");created=1718291357;expires=1718291657;nonce="abcd1111";tag="wimse-service-to-service"
 Workload-Identity-Token: aGVhZGVyCg.VGhpcyBpcyBub3QgYSByZWFsIHRva2VuLgo.c2lnbmF0dXJlCg
 
-</pre><a href="#section-3.3-16" class="pilcrow">¶</a>
+</pre>
 </div>
+<figcaption><a href="#figure-12" class="selfRef">Figure 12</a>:
+<a href="#name-signed-request" class="selfRef">Signed Request</a>
+          </figcaption></figure>
 <p id="section-3.3-17">Assuming that the workload being called has the following keypair:<a href="#section-3.3-17" class="pilcrow">¶</a></p>
-<div class="lang-jwk sourcecode" id="section-3.3-18">
+<span id="name-callee-private-key"></span><figure id="figure-13">
+          <div class="lang-jwk sourcecode" id="section-3.3-18.1">
 <pre>
 {
  "kty":"OKP",
@@ -1852,10 +1860,14 @@ Workload-Identity-Token: aGVhZGVyCg.VGhpcyBpcyBub3QgYSByZWFsIHRva2VuLgo.c2lnbmF0
  "x":"CfaY1XX-aHJpenRP8ATm3yGlbcKA_treqOfwKrilwyg",
  "d":"fycSKS-iHZ6TC1BNwN6cE0sOBP3-4KgR-eqxNpnyhws"
 }
-</pre><a href="#section-3.3-18" class="pilcrow">¶</a>
+</pre>
 </div>
+<figcaption><a href="#figure-13" class="selfRef">Figure 13</a>:
+<a href="#name-callee-private-key" class="selfRef">Callee Private Key</a>
+          </figcaption></figure>
 <p id="section-3.3-19">A signed response would be:<a href="#section-3.3-19" class="pilcrow">¶</a></p>
-<div class="lang-http sourcecode" id="section-3.3-20">
+<span id="name-signed-response"></span><figure id="figure-14">
+          <div class="lang-http sourcecode" id="section-3.3-20.1">
 <pre>
 HTTP/1.1 404 Not Found
 Connection: close
@@ -1867,8 +1879,11 @@ Workload-Identity-Token: aGVhZGVyCg.VGhpcyBhaW4ndCBvbmUsIHRvby4K.c2lnbmF0dXJlCg
 
 No ice cream today.
 
-</pre><a href="#section-3.3-20" class="pilcrow">¶</a>
+</pre>
 </div>
+<figcaption><a href="#figure-14" class="selfRef">Figure 14</a>:
+<a href="#name-signed-response" class="selfRef">Signed Response</a>
+          </figcaption></figure>
 </section>
 </div>
 </section>
@@ -1887,8 +1902,8 @@ No ice cream today.
         <h3 id="name-host-name-validation">
 <a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-host-name-validation" class="section-name selfRef">Host Name Validation</a>
         </h3>
-<p id="section-4.1-1">[TODO: need to define trust root used to validate the certificate is appropriate for the trust domain.]<a href="#section-4.1-1" class="pilcrow">¶</a></p>
-<p id="section-4.1-2">It is <span class="bcp14">RECOMMENDED</span> that the server certificate contain a DNS SAN that the client can use to perform standard host name validation <span><a href="https://rfc-editor.org/rfc/rfc9525#section-6.3" class="relref">Section 6.3</a> of [<a href="#RFC9525" class="cite xref">RFC9525</a>]</span>.  The client <span class="bcp14">SHOULD</span> also extract the WIMSE identity from the certificate if it is present and validate that the WIMSE trust domain matches the intended trust domain for the server.  The client <span class="bcp14">MAY</span> then further use the WIMSE identity in applying authorization policy to the server.  If the client does not use the DNS SAN then the client <span class="bcp14">MUST</span> match the WIMSE identity in the certificate against the WIMSE identity of the workload of the intended server according to a locally defined policy. The host portion of the WIMSE URI is NOT treated as a host name as specified in section 6.4 of <span>[<a href="#RFC9525" class="cite xref">RFC9525</a>]</span> but rather as a trust domain. The server identity is encoded in the path portion of the WIMSE identity in a deployment specific way.<a href="#section-4.1-2" class="pilcrow">¶</a></p>
+<p id="section-4.1-1">TODO: need to define trust root used to validate the certificate is appropriate for the trust domain.<a href="#section-4.1-1" class="pilcrow">¶</a></p>
+<p id="section-4.1-2">It is <span class="bcp14">RECOMMENDED</span> that the server certificate contain a DNS SAN that the client can use to perform standard host name validation (<span><a href="https://rfc-editor.org/rfc/rfc9525#section-6.3" class="relref">Section 6.3</a> of [<a href="#RFC9525" class="cite xref">RFC9525</a>]</span>).  The client <span class="bcp14">SHOULD</span> also extract the WIMSE identity from the certificate if it is present and validate that the WIMSE trust domain matches the intended trust domain for the server.  The client <span class="bcp14">MAY</span> then further use the WIMSE identity in applying authorization policy to the server.  If the client does not use the DNS SAN then the client <span class="bcp14">MUST</span> match the WIMSE identity in the certificate against the WIMSE identity of the workload of the intended server according to a locally defined policy. The host portion of the WIMSE URI is NOT treated as a host name as specified in section 6.4 of <span>[<a href="#RFC9525" class="cite xref">RFC9525</a>]</span> but rather as a trust domain. The server identity is encoded in the path portion of the WIMSE identity in a deployment specific way.<a href="#section-4.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="authorization-using-the-wimse-identity">
