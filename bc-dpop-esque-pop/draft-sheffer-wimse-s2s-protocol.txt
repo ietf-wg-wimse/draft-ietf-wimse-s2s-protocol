@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              D. Feldman
-Expires: 21 December 2024                                               
+Expires: 28 December 2024                                               
                                                               J. Salowey
                                                                   Venafi
                                                       A. Schwenkschuster
                                                                Microsoft
                                                               Y. Sheffer
                                                                   Intuit
-                                                            19 June 2024
+                                                            26 June 2024
 
 
                 WIMSE Service to Service Authentication
@@ -55,7 +55,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 21 December 2024.
+   This Internet-Draft will expire on 28 December 2024.
 
 Copyright Notice
 
@@ -476,8 +476,8 @@ Table of Contents
    To validate the WPT in the request, the recipient MUST ensure the
    following:
 
-   *  There is not more than one Workload-Proof-Token header field in
-      the request.
+   *  There is exactly one Workload-Proof-Token header field in the
+      request.
 
    *  The Workload-Proof-Token header field value is a single and well-
       formed JWT.
@@ -696,9 +696,9 @@ Table of Contents
    [I-D.ietf-oauth-transaction-tokens]
               Tulshibagwale, A., Fletcher, G., and P. Kasselman,
               "Transaction Tokens", Work in Progress, Internet-Draft,
-              draft-ietf-oauth-transaction-tokens-01, 16 March 2024,
+              draft-ietf-oauth-transaction-tokens-02, 21 June 2024,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              transaction-tokens-01>.
+              transaction-tokens-02>.
 
    [I-D.ietf-wimse-arch]
               Salowey, J. A., Rosomakho, Y., and H. Tschofenig,
