@@ -153,8 +153,8 @@ As noted in the Introduction, there are commonly deployments where communication
 end-to-end TLS. For these deployment styles, this document proposes application-level protections.
 
 The current version of the document includes two alternatives, both using the newly introduced
-Workload Identity Token {{to-wit}}. The first alternative {{dpop-esque-auth}} is inspired by the OAuth DPoP specification.
-The second {{http-sig-auth}} is based on the HTTP Message Signatures RFC. We present both alternatives and expect
+Workload Identity Token ({{to-wit}}). The first alternative ({{dpop-esque-auth}}) is inspired by the OAuth DPoP specification.
+The second ({{http-sig-auth}}) is based on the HTTP Message Signatures RFC. We present both alternatives and expect
 the working group to select one of them as this document progresses towards IETF consensus.
 
 ## The Workload Identity Token {#to-wit}
@@ -237,7 +237,7 @@ For elucidative purposes only, the workload's key, including the private part, i
  "d":"G4lGAYFtFq5rwyjlgSIRznIoCF7MtKDHByyUUZCqLiA"
 }
 ~~~
-{: title="Example Workload's Key"}
+{: #example-caller-jwk title="Example Workload's Key"}
 
 The afore-exampled WIT is signed with the private key of the Identity Server.
 The public key(s) of the Identity Server need to be known to all workloads in order to verify the signature of the WIT.
@@ -268,7 +268,7 @@ WIT =  base64url "." base64url "." base64url
 ~~~~
 {: #wit-header-abnf title="Workload-Identity-Token Header Field ABNF"}
 
-The following shows the WIT from the {{example-wit}} in an example of a `Workload-Identity-Token` header field:
+The following shows the WIT from {{example-wit}} in an example of a `Workload-Identity-Token` header field:
 
 ~~~ http-message
 Workload-Identity-Token: eyJ0eXAiOiJ3aW1zZS1pZCtqd3QiLCJhbGciOiJFUzI1
@@ -289,7 +289,7 @@ etc., are all valid and equivalent header field names. However, case is signific
 ## Option 1: DPoP-Inspired Authentication {#dpop-esque-auth}
 
 This option, inspired by the OAuth DPoP specification {{?RFC9449}}, uses a DPoP-like mechanism to authenticate
-the calling workload in the context of the request. The WIMSE Identity Token {{to-wit}} is sent in the request as
+the calling workload in the context of the request. The WIMSE Identity Token ({{to-wit}}) is sent in the request as
 described in {{wit-http-header}}. An additional JWT, the Workload Proof Token (WPT), is signed by the private key
 corresponding to the public key in the WIT. The WPT is sent in the `Workload-Proof-Token` header field of the request.
 A WPT contains the following:
@@ -403,7 +403,7 @@ To validate the WPT in the request, the recipient MUST ensure the following:
 
 ## Option 2: Authentication Based on HTTP Message Signatures {#http-sig-auth}
 
-This option uses the WIMSE Identity Token (ref TBD) to sign the request and optionally, the response.
+This option uses the WIMSE Identity Token ({{to-wit}}) to sign the request and optionally, the response.
 This specification defines a profile of the Message Signatures specification {{!RFC9421}}.
 
 The request is signed as per {{RFC9421}}. The following derived components MUST be signed:
@@ -411,7 +411,7 @@ The request is signed as per {{RFC9421}}. The following derived components MUST 
 * `@method`
 * `@request-target`
 
-In addition, the following headers MUST be signed when they exist:
+In addition, the following request headers MUST be signed when they exist:
 
 * `Content-Type`
 * `Content-Digest`
@@ -451,7 +451,8 @@ by general purpose implementations of this spec.
 
 OPEN ISSUE: do we use the `Accept-Signature` field to signal that the response must be signed?
 
-Following is a non-normative example of a signed request and a signed response, using the keys mentioned in Section TBD.
+Following is a non-normative example of a signed request and a signed response,
+where the caller is using the keys specified in {{example-caller-jwk}}.
 
 ~~~ http
 GET /gimme-ice-cream?flavor=vanilla HTTP/1.1
@@ -461,6 +462,7 @@ Signature-Input: wimse=("@method" "@request-target" "workload-identity-token");c
 Workload-Identity-Token: aGVhZGVyCg.VGhpcyBpcyBub3QgYSByZWFsIHRva2VuLgo.c2lnbmF0dXJlCg
 
 ~~~
+{: title="Signed Request"}
 
 Assuming that the workload being called has the following keypair:
 
@@ -472,6 +474,7 @@ Assuming that the workload being called has the following keypair:
  "d":"fycSKS-iHZ6TC1BNwN6cE0sOBP3-4KgR-eqxNpnyhws"
 }
 ~~~
+{: title="Callee Private Key"}
 
 A signed response would be:
 
@@ -487,6 +490,7 @@ Workload-Identity-Token: aGVhZGVyCg.VGhpcyBhaW4ndCBvbmUsIHRvby4K.c2lnbmF0dXJlCg
 No ice cream today.
 
 ~~~
+{: title="Signed Response"}
 
 # Using Mutual TLS for Service To Service Authentication {#mutual-tls}
 
@@ -500,9 +504,9 @@ WIMSE clients and servers MUST validate that the trust domain portion of the WIM
 
 ## Host Name Validation
 
-[TODO: need to define trust root used to validate the certificate is appropriate for the trust domain.]
+TODO: need to define trust root used to validate the certificate is appropriate for the trust domain.
 
-It is RECOMMENDED that the server certificate contain a DNS SAN that the client can use to perform standard host name validation {{Section 6.3 of RFC9525}}.  The client SHOULD also extract the WIMSE identity from the certificate if it is present and validate that the WIMSE trust domain matches the intended trust domain for the server.  The client MAY then further use the WIMSE identity in applying authorization policy to the server.  If the client does not use the DNS SAN then the client MUST match the WIMSE identity in the certificate against the WIMSE identity of the workload of the intended server according to a locally defined policy. The host portion of the WIMSE URI is NOT treated as a host name as specified in section 6.4 of {{!RFC9525}} but rather as a trust domain. The server identity is encoded in the path portion of the WIMSE identity in a deployment specific way.
+It is RECOMMENDED that the server certificate contain a DNS SAN that the client can use to perform standard host name validation ({{Section 6.3 of RFC9525}}).  The client SHOULD also extract the WIMSE identity from the certificate if it is present and validate that the WIMSE trust domain matches the intended trust domain for the server.  The client MAY then further use the WIMSE identity in applying authorization policy to the server.  If the client does not use the DNS SAN then the client MUST match the WIMSE identity in the certificate against the WIMSE identity of the workload of the intended server according to a locally defined policy. The host portion of the WIMSE URI is NOT treated as a host name as specified in section 6.4 of {{!RFC9525}} but rather as a trust domain. The server identity is encoded in the path portion of the WIMSE identity in a deployment specific way.
 
 
 ## Authorization Using the WIMSE Identity
