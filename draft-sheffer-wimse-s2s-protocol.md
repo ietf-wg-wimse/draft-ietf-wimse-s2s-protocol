@@ -237,7 +237,7 @@ For elucidative purposes only, the workload's key, including the private part, i
  "d":"G4lGAYFtFq5rwyjlgSIRznIoCF7MtKDHByyUUZCqLiA"
 }
 ~~~
-{: title="Example Workload's Key"}
+{: #example-caller-jwk title="Example Workload's Key"}
 
 The afore-exampled WIT is signed with the private key of the Identity Server.
 The public key(s) of the Identity Server need to be known to all workloads in order to verify the signature of the WIT.
@@ -403,7 +403,7 @@ To validate the WPT in the request, the recipient MUST ensure the following:
 
 ## Option 2: Authentication Based on HTTP Message Signatures {#http-sig-auth}
 
-This option uses the WIMSE Identity Token (ref TBD) to sign the request and optionally, the response.
+This option uses the WIMSE Identity Token ({{to-wit}}) to sign the request and optionally, the response.
 This specification defines a profile of the Message Signatures specification {{!RFC9421}}.
 
 The request is signed as per {{RFC9421}}. The following derived components MUST be signed:
@@ -411,7 +411,7 @@ The request is signed as per {{RFC9421}}. The following derived components MUST 
 * `@method`
 * `@request-target`
 
-In addition, the following headers MUST be signed when they exist:
+In addition, the following request headers MUST be signed when they exist:
 
 * `Content-Type`
 * `Content-Digest`
@@ -451,7 +451,8 @@ by general purpose implementations of this spec.
 
 OPEN ISSUE: do we use the `Accept-Signature` field to signal that the response must be signed?
 
-Following is a non-normative example of a signed request and a signed response, using the keys mentioned in Section TBD.
+Following is a non-normative example of a signed request and a signed response,
+where the caller is using the keys specified in {{example-caller-jwk}}.
 
 ~~~ http
 GET /gimme-ice-cream?flavor=vanilla HTTP/1.1
@@ -461,6 +462,7 @@ Signature-Input: wimse=("@method" "@request-target" "workload-identity-token");c
 Workload-Identity-Token: aGVhZGVyCg.VGhpcyBpcyBub3QgYSByZWFsIHRva2VuLgo.c2lnbmF0dXJlCg
 
 ~~~
+{: title="Signed Request"}
 
 Assuming that the workload being called has the following keypair:
 
@@ -472,6 +474,7 @@ Assuming that the workload being called has the following keypair:
  "d":"fycSKS-iHZ6TC1BNwN6cE0sOBP3-4KgR-eqxNpnyhws"
 }
 ~~~
+{: title="Callee Private Key"}
 
 A signed response would be:
 
@@ -487,6 +490,7 @@ Workload-Identity-Token: aGVhZGVyCg.VGhpcyBhaW4ndCBvbmUsIHRvby4K.c2lnbmF0dXJlCg
 No ice cream today.
 
 ~~~
+{: title="Signed Response"}
 
 # Using Mutual TLS for Service To Service Authentication {#mutual-tls}
 
