@@ -298,10 +298,17 @@ A WPT contains the following:
     * `exp`: The expiration time of the WIT (as defined in {{Section 4.1.4 of RFC7519}}). WPT lifetimes MUST be short,
      e.g., on the order of minutes or seconds.
     * `jti`: A unique identifier for the token.
-    * `ctx_token_hash`: Hash of the OAuth access token, Transaction Token {{?I-D.ietf-oauth-transaction-tokens}},
-     or other token in the request that might convey end-user identity and authorization context of the request.
-     The value MUST be the result of a base64url encoding (as defined in {{Section 2 of RFC7515}}) the SHA-256 hash of
+    * `ath`: Hash of the OAuth access token, if present in the request, which might convey end-user identity and
+     authorization context of the request. The value, as per {{Section 4.1 of RFC9449}},
+     is the base64url encoding of the SHA-256 hash of the ASCII encoding of the access token's value.
+    * `tth`: Hash of the Txn-Token {{?I-D.ietf-oauth-transaction-tokens}}, if present in the request,
+     which might convey end-user identity and authorization context of the request. The value MUST be the result of
+     a base64url encoding (as defined in {{Section 2 of RFC7515}}) the SHA-256 hash of
      the ASCII encoding of the associated token's value.
+    * `oth`: Hash of any other token in the request that might convey end-user identity and authorization context of the
+     request. The value MUST be the result of a base64url encoding (as defined in {{Section 2 of RFC7515}}) the
+     SHA-256 hash of the ASCII encoding of the associated token's value.
+     (note: this is less than ideal but seems we need something like this for extensibility)
 
 An example WPT might look like the following:
 
@@ -309,9 +316,9 @@ An example WPT might look like the following:
 eyJ0eXAiOiJ3aW1zZS1wcm9vZitqd3QiLCJhbGciOiJFZERTQSJ9.eyJpc3MiOiJ3aW1z
 ZTovL2V4YW1wbGUuY29tL3NwZWNpZmljLXdvcmtsb2FkIiwiYXVkIjoiaHR0cHM6Ly9zZ
 XJ2aWNlLmV4YW1wbGUuY29tL3BhdGgiLCJleHAiOjE3MTc2MTI4MjAsImp0aSI6Il9fYn
-djNEVTQzNhY2MyTFRDMS1feCIsImN0eF90b2tlbl9oYXNoIjoiQ0w0d2pmcFJtTmYtYmR
-ZSWJZTG5WOWQ1ck1BUkd3S1lFMTB3VXd6QzBqSSJ9.6BFrZdobweg5cg1NHvSKqEtmqka
-3zu78d2E91VKMoO0tP3J0Pwja7GoAOKuU2ztPAH3yfogFyOBS2GKqo4RSDA
+djNEVTQzNhY2MyTFRDMS1feCIsImF0aCI6IkNMNHdqZnBSbU5mLWJkWUliWUxuVjlkNXJ
+NQVJHd0tZRTEwd1V3ekMwakkifQ.Zq50mcIVTUykQhOBS7lyF93py3q5QOSPIbnI_oESv
+j6zSTWi-p0QNNHpKeB4IAgmC8Mt3dBM_rufwCxiKHSmDA
 ~~~
 {: #example-wpt title="Example Workload Proof Token (WPT)"}
 
@@ -333,7 +340,7 @@ The decoded JWT claims of the WPT from the example above are shown here:
  "aud": "https://service.example.com/path",
  "exp": 1717612820,
  "jti": "__bwc4ESC3acc2LTC1-_x",
- "ctx_token_hash": "CL4wjfpRmNf-bdYIbYLnV9d5rMARGwKYE10wUwzC0jI"
+ "ath": "CL4wjfpRmNf-bdYIbYLnV9d5rMARGwKYE10wUwzC0jI"
 }
 ~~~
 {: title="Example WPT Claims"}
@@ -355,11 +362,11 @@ Workload-Identity-Token: eyJ0eXAiOiJ3aW1zZS1pZCtqd3QiLCJhbGciOiJFUzI1
  6eL1M486XmRgl3uyjj6R_iuzNOA
 Workload-Proof-Token: eyJ0eXAiOiJ3aW1zZS1wcm9vZitqd3QiLCJhbGciOiJFZER
  TQSJ9.eyJpc3MiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3NwZWNpZmljLXdvcmtsb2FkIi
- wiYXVkIjoiaHR0cHM6Ly9zZXJ2aWNlLmV4YW1wbGUuY29tL3BhdGgiLCJpYXQiOjE3MT
- c2MTI1NDUsImp0aSI6Il9fYndjNEVTQzNhY2MyTFRDMS1feCIsImN0eF90b2tlbl9oYX
- NoIjoiQ0w0d2pmcFJtTmYtYmRZSWJZTG5WOWQ1ck1BUkd3S1lFMTB3VXd6QzBqSSJ9.Y
- VS0gGOnsCK5xWhE9lcRzp0CDplTGLDv3lUK4dSF_o2uw2wh6I2FOwsa0OmUMeTAr-qO0
- bJJBjSOy64UKBekCg
+ wiYXVkIjoiaHR0cHM6Ly9zZXJ2aWNlLmV4YW1wbGUuY29tL3BhdGgiLCJleHAiOjE3MT
+ c2MTI4MjAsImp0aSI6Il9fYndjNEVTQzNhY2MyTFRDMS1feCIsImF0aCI6IkNMNHdqZn
+ BSbU5mLWJkWUliWUxuVjlkNXJNQVJHd0tZRTEwd1V3ekMwakkifQ.Zq50mcIVTUykQhO
+ BS7lyF93py3q5QOSPIbnI_oESvj6zSTWi-p0QNNHpKeB4IAgmC8Mt3dBM_rufwCxiKHS
+ mDA
 
 {"do stuff":"please"}
 ~~~
@@ -371,15 +378,17 @@ To validate the WPT in the request, the recipient MUST ensure the following:
 * The `Workload-Proof-Token` header field value is a single and well-formed JWT.
 * The WPT signature is valid using the public key from the confirmation claim of the WIT.
 * The `typ` JOSE header parameter of the WPT conveys a media type of `wimse-proof+jwt`.
-* The `iss` claim of the WPT matches the `sub` claim of the WIT. (note: not sure `iss` in the WPT is necessary)
+* The `iss` claim of the WPT matches the `sub` claim of the WIT. (note: not sure `iss` in the WPT is useful or necessary)
 * The `aud` claim of the WPT matches the target URI, or an acceptable alias or normalization thereof, of the HTTP request
  in which the WPT was received, ignoring any query and fragment parts.
 * The `exp` claim is present and conveys a time that has not passed. WPTs with an expiration time unreasonably
  far in the future SHOULD be rejected.
 * Optionally, check that the value of the `jti` claim has not been used before in the time window in which the
  respective WPT would be considered valid.
+* If presented in conjunction with an OAauth access token, the value of the `ath` claim matches the hash of that token's value.
+* If presented in conjunction with a Txn-Token, the value of the `tth` claim matches the hash of that token's value.
 * If presented in conjunction with a token conveying end-user identity or authorization context, the value of
- the `ctx_token_hash` claim matches the hash of that token's value.
+ the `oth` claim matches the hash of that token's value.
 
 
 
@@ -484,6 +493,7 @@ TODO IANA
 
 TODO: maybe a URI Scheme registration of `wimse` in [URI schemes](https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml) per {{?RFC7595}} but it's only being used in an example right now and might not even be appropriate. Or maybe use an ietf URI scheme a la [URN Namespace for IETF Use](https://www.iana.org/assignments/params/params.xhtml) somehow. Or maybe nothing. Or maybe something else.
 
+TODO: `tth` and maybe `oth` claim in [JSON Web Token Claims Registry](https://www.iana.org/assignments/jwt/jwt.xhtml)
 
 ## Media Type Registration
 
