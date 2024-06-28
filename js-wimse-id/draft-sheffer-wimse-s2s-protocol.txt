@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              D. Feldman
-Expires: 19 December 2024                                               
+Expires: 30 December 2024                                               
                                                               J. Salowey
                                                                   Venafi
                                                       A. Schwenkschuster
                                                                Microsoft
                                                               Y. Sheffer
                                                                   Intuit
-                                                            17 June 2024
+                                                            28 June 2024
 
 
                 WIMSE Service to Service Authentication
@@ -55,7 +55,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 19 December 2024.
+   This Internet-Draft will expire on 30 December 2024.
 
 Copyright Notice
 
@@ -191,35 +191,24 @@ Table of Contents
 
 3.  Workload Identity
 
-   [TODO: using a URI as an identity aligns or perhaps conflicts with
-   SPIFFE's definition of Identity the format below is basically taken
-   from SPIFFE.  Perhaps we can reuse all or most of the SPIFFE format
-   (https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md)?]
+   This document defines a workload identity as a URI string.  This URI
+   is used in the subject fields in the certificates and tokens defined
+   later in this document.  This specification treats the URI string as
+   opaque.  The format of the URI and the namespace for the URI are
+   chosen by the issuer of the token.  Other specifications may define
+   specific URI structures for particular use cases.  An example of a
+   defined identity format is the SPIFFE ID SPIFFE-ID
+   (https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md).
 
-   THe WIMSE identity is represented as a URI of the format:
-
-   scheme://trustdomain/path
-
-   The scheme is TBD, likely candidates are "spiffe" to align with
-   SPIFFE or "wimse" provide an alternative.  A particular deployment
-   may use both schemes, but a Workload Identity Token may only use one
-   scheme since SPIFFE only allows one URI SAN in a certificate.
-
-   The trust domain is a string that is compliant with WIMSE naming
-   scheme [TBD]).  The issuer of workload credentials is tied to a
-   single trust domain.  The validator of a Workload Identity token or
-   certificate MUST check that the issuer of the credential is permitted
-   to issue credentials with the specified trust domains and MUST
-   validate that there are no collisions in the list of supported trust
-   domains.
-
-   [TODO: Should the trust domain be a valid DNS name that could be used
-   in a domain validation process?]
-
-   The path is a string whose format is defined by the local deployment
-   and is subject to the requirements defined in [SPIFFE-ID].  The
-   purpose of the path is to identify a workload for the purposes of
-   authorization, auditing and binding to additional information.
+   A workload identity only has meaning within the scope of a specific
+   issuer.  Two identities of the same value issued by different issuers
+   may or may not refer to the same workload.  In order to avoid
+   collisions identity URIs should include a concept of a trust domain
+   associated with an issuer that is selected from a global name space
+   such as host domains.  However, the validator of an identity
+   credential MUST make sure that the are using the correct issuer
+   credential to verify the identity credential and that the issuer is
+   trusted to issue tokens for the defined trust domain.
 
 4.  Application Level Service To Service Authentication
 
