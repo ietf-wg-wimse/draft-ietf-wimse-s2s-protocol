@@ -191,9 +191,9 @@ Table of Contents
 
 3.  Workload Identity
 
-   This document defines a workload identity as a URI string.  This URI
-   is used in the subject fields in the certificates and tokens defined
-   later in this document.  This specification treats the URI string as
+   This document defines a workload identity as a URI [RFC3986].  This
+   URI is used in the subject fields in the certificates and tokens
+   defined later in this document.  This specification treats the URI as
    opaque.  The format of the URI and the namespace for the URI are
    chosen by the issuer of the token.  Other specifications may define
    specific URI structures for particular use cases.  An example of a
@@ -238,6 +238,11 @@ Table of Contents
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/rfc/rfc2119>.
+
+   [RFC3986]  Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
+              Resource Identifier (URI): Generic Syntax", STD 66,
+              RFC 3986, DOI 10.17487/RFC3986, January 2005,
+              <https://www.rfc-editor.org/rfc/rfc3986>.
 
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,

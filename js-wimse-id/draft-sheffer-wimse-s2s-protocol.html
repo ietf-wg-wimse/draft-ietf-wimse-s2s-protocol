@@ -1332,7 +1332,7 @@ appear in all capitals, as shown here.<a href="#section-2-2" class="pilcrow">¶<
       <h2 id="name-workload-identity">
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-workload-identity" class="section-name selfRef">Workload Identity</a>
       </h2>
-<p id="section-3-1">This document defines a workload identity as a URI string. This URI is used in the subject fields in the certificates and tokens defined later in this document. This specification treats the URI string as opaque. The format of the URI and the namespace for the URI are chosen by the issuer of the token. Other specifications may define specific URI structures for particular use cases. An example of a defined identity format is the SPIFFE ID <a href="https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md">SPIFFE-ID</a>.<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-3-1">This document defines a workload identity as a URI <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>. This URI is used in the subject fields in the certificates and tokens defined later in this document. This specification treats the URI as opaque. The format of the URI and the namespace for the URI are chosen by the issuer of the token. Other specifications may define specific URI structures for particular use cases. An example of a defined identity format is the SPIFFE ID <a href="https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md">SPIFFE-ID</a>.<a href="#section-3-1" class="pilcrow">¶</a></p>
 <p id="section-3-2">A workload identity only has meaning within the scope of a specific issuer. Two identities of the same value issued by different issuers may or may not refer to the same workload. In order to avoid collisions identity URIs should include a concept of a trust domain associated with an issuer that is selected from a global name space such as host domains. However, the validator of an identity credential <span class="bcp14">MUST</span> make sure that the are using the correct issuer credential to verify the identity credential and that the issuer is trusted to issue tokens for the defined trust domain.<a href="#section-3-2" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1401,6 +1401,10 @@ appear in all capitals, as shown here.<a href="#section-2-2" class="pilcrow">¶<
 <dt id="RFC2119">[RFC2119]</dt>
         <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC3986">[RFC3986]</dt>
+        <dd>
+<span class="refAuthor">Berners-Lee, T.</span>, <span class="refAuthor">Fielding, R.</span>, and <span class="refAuthor">L. Masinter</span>, <span class="refTitle">"Uniform Resource Identifier (URI): Generic Syntax"</span>, <span class="seriesInfo">STD 66</span>, <span class="seriesInfo">RFC 3986</span>, <span class="seriesInfo">DOI 10.17487/RFC3986</span>, <time datetime="2005-01" class="refDate">January 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc3986">https://www.rfc-editor.org/rfc/rfc3986</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8174">[RFC8174]</dt>
         <dd>
