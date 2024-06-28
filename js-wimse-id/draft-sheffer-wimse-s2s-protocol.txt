@@ -203,12 +203,13 @@ Table of Contents
    A workload identity only has meaning within the scope of a specific
    issuer.  Two identities of the same value issued by different issuers
    may or may not refer to the same workload.  In order to avoid
-   collisions identity URIs should include a concept of a trust domain
-   associated with an issuer that is selected from a global name space
-   such as host domains.  However, the validator of an identity
-   credential MUST make sure that the are using the correct issuer
-   credential to verify the identity credential and that the issuer is
-   trusted to issue tokens for the defined trust domain.
+   collisions identity URIs SHOULD specify, in the URI's "authority"
+   field, the trust domain associated with an issuer that is selected
+   from a global name space such as host domains.  However, the
+   validator of an identity credential MUST make sure that they are
+   using the correct issuer credential to verify the identity credential
+   and that the issuer is trusted to issue tokens for the defined trust
+   domain.
 
 4.  Application Level Service To Service Authentication
 
