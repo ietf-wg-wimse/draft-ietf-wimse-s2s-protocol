@@ -144,7 +144,6 @@ A workload identity only has meaning within the scope of a specific issuer. Two 
 
 # Using Mutual TLS for Service To Service Authentication {#mutual-tls}
 
-
 # Security Considerations
 
 TODO Security and Privacy
