@@ -149,13 +149,13 @@ This document uses "service" and "workload" interchangeably. Otherwise, all term
 
 # Workload Identity {#whimsical-identity}
 
-This document defines a workload identity as a URI {{!RFC3986}}. This URI is used in the subject fields in the certificates and tokens defined later in this document. This specification treats the URI as opaque. The format of the URI and the namespace for the URI are at the discretion of the deployment at large. Other specifications may define specific URI structures for particular use cases. An example of a defined identity format is the SPIFFE ID [SPIFFE-ID](https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md).
+This document defines a workload identity as a URI {{!RFC3986}}. This URI is used in the subject fields in the certificates and tokens defined later in this document. This specification treats the URI as opaque. The format of the URI and the namespace for the URI are at the discretion of the deployment at large. Other specifications may define specific URI structures for particular use cases. An example of a defined identity format is the [SPIFFE ID](https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md).
 
 A workload identity only has meaning within the scope of a specific issuer. Two identities of the same value issued by different issuers may or may not refer to the same workload. In order to avoid collisions identity URIs SHOULD specify, in the URI's "authority" field, the trust domain associated with an issuer that is selected from a global name space such as host domains. However, the validator of an identity credential MUST make sure that they are using the correct issuer credential to verify the identity credential and that the issuer is trusted to issue tokens for the defined trust domain.
 
 # Application Level Service To Service Authentication {#app-level}
 
-As noted in the Introduction, there are commonly deployments where communication between workloads cannot use
+As noted in the Introduction, for many deployments communication between workloads cannot use
 end-to-end TLS. For these deployment styles, this document proposes application-level protections.
 
 The current version of the document includes two alternatives, both using the newly introduced
@@ -510,7 +510,7 @@ WIMSE clients and servers MUST validate that the trust domain portion of the WIM
 
 ## Host Name Validation
 
-TODO: need to define trust root used to validate the certificate is appropriate for the trust domain.
+<cref>TODO: need to define trust root used to validate the certificate is appropriate for the trust domain.</cref>
 
 It is RECOMMENDED that the server certificate contain a DNS SAN that the client can use to perform standard host name validation ({{Section 6.3 of RFC9525}}).  The client SHOULD also extract the WIMSE identity from the certificate if it is present and validate that the WIMSE trust domain matches the intended trust domain for the server.  The client MAY then further use the WIMSE identity in applying authorization policy to the server.  If the client does not use the DNS SAN then the client MUST match the WIMSE identity in the certificate against the WIMSE identity of the workload of the intended server according to a locally defined policy. The host portion of the WIMSE URI is NOT treated as a host name as specified in section 6.4 of {{!RFC9525}} but rather as a trust domain. The server identity is encoded in the path portion of the WIMSE identity in a deployment specific way.
 
@@ -551,4 +551,4 @@ TODO: `Workload-Proof-Token` from {{dpop-esque-auth}}
 # Acknowledgments
 {:numbered="false"}
 
-TODO acknowledge.
+<cref>TODO acknowledge.</cref>
