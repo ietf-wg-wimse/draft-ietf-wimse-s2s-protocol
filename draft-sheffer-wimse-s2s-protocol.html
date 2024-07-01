@@ -1374,7 +1374,7 @@ appear in all capitals, as shown here.<a href="#section-2-2" class="pilcrow">¶<
       <h2 id="name-workload-identity">
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-workload-identity" class="section-name selfRef">Workload Identity</a>
       </h2>
-<p id="section-3-1">This document defines a workload identity as a URI <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>. This URI is used in the subject fields in the certificates and tokens defined later in this document. This specification treats the URI as opaque. The format of the URI and the namespace for the URI are at the discretion of the deployment at large. Other specifications may define specific URI structures for particular use cases. An example of a defined identity format is the SPIFFE ID <a href="https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md">SPIFFE-ID</a>.<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-3-1">This document defines a workload identity as a URI <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>. This URI is used in the subject fields in the certificates and tokens defined later in this document. This specification treats the URI as opaque. The format of the URI and the namespace for the URI are at the discretion of the deployment at large. Other specifications may define specific URI structures for particular use cases. An example of a defined identity format is the <a href="https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md">SPIFFE ID</a>.<a href="#section-3-1" class="pilcrow">¶</a></p>
 <p id="section-3-2">A workload identity only has meaning within the scope of a specific issuer. Two identities of the same value issued by different issuers may or may not refer to the same workload. In order to avoid collisions identity URIs <span class="bcp14">SHOULD</span> specify, in the URI's "authority" field, the trust domain associated with an issuer that is selected from a global name space such as host domains. However, the validator of an identity credential <span class="bcp14">MUST</span> make sure that they are using the correct issuer credential to verify the identity credential and that the issuer is trusted to issue tokens for the defined trust domain.<a href="#section-3-2" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1383,7 +1383,7 @@ appear in all capitals, as shown here.<a href="#section-2-2" class="pilcrow">¶<
       <h2 id="name-application-level-service-t">
 <a href="#section-4" class="section-number selfRef">4. </a><a href="#name-application-level-service-t" class="section-name selfRef">Application Level Service To Service Authentication</a>
       </h2>
-<p id="section-4-1">As noted in the Introduction, there are commonly deployments where communication between workloads cannot use
+<p id="section-4-1">As noted in the Introduction, for many deployments communication between workloads cannot use
 end-to-end TLS. For these deployment styles, this document proposes application-level protections.<a href="#section-4-1" class="pilcrow">¶</a></p>
 <p id="section-4-2">The current version of the document includes two alternatives, both using the newly introduced
 Workload Identity Token (<a href="#to-wit" class="auto internal xref">Section 4.1</a>). The first alternative (<a href="#dpop-esque-auth" class="auto internal xref">Section 4.2</a>) is inspired by the OAuth DPoP specification.
@@ -1914,7 +1914,7 @@ No ice cream today.
         <h3 id="name-host-name-validation">
 <a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-host-name-validation" class="section-name selfRef">Host Name Validation</a>
         </h3>
-<p id="section-5.1-1">TODO: need to define trust root used to validate the certificate is appropriate for the trust domain.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
+<p id="section-5.1-1"><span class="cref">TODO: need to define trust root used to validate the certificate is appropriate for the trust domain.</span><a href="#section-5.1-1" class="pilcrow">¶</a></p>
 <p id="section-5.1-2">It is <span class="bcp14">RECOMMENDED</span> that the server certificate contain a DNS SAN that the client can use to perform standard host name validation (<span><a href="https://rfc-editor.org/rfc/rfc9525#section-6.3" class="relref">Section 6.3</a> of [<a href="#RFC9525" class="cite xref">RFC9525</a>]</span>).  The client <span class="bcp14">SHOULD</span> also extract the WIMSE identity from the certificate if it is present and validate that the WIMSE trust domain matches the intended trust domain for the server.  The client <span class="bcp14">MAY</span> then further use the WIMSE identity in applying authorization policy to the server.  If the client does not use the DNS SAN then the client <span class="bcp14">MUST</span> match the WIMSE identity in the certificate against the WIMSE identity of the workload of the intended server according to a locally defined policy. The host portion of the WIMSE URI is NOT treated as a host name as specified in section 6.4 of <span>[<a href="#RFC9525" class="cite xref">RFC9525</a>]</span> but rather as a trust domain. The server identity is encoded in the path portion of the WIMSE identity in a deployment specific way.<a href="#section-5.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -2061,7 +2061,7 @@ No ice cream today.
       <h2 id="name-acknowledgments">
 <a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
       </h2>
-<p id="appendix-A-1">TODO acknowledge.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+<p id="appendix-A-1"><span class="cref">TODO acknowledge.</span><a href="#appendix-A-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="authors-addresses">
