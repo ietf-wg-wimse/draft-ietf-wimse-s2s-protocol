@@ -147,6 +147,12 @@ This document uses "service" and "workload" interchangeably. Otherwise, all term
 
 {::boilerplate bcp14-tagged}
 
+# Workload Identity {#whimsical-identity}
+
+This document defines a workload identity as a URI {{!RFC3986}}. This URI is used in the subject fields in the certificates and tokens defined later in this document. This specification treats the URI as opaque. The format of the URI and the namespace for the URI are at the discretion of the deployment at large. Other specifications may define specific URI structures for particular use cases. An example of a defined identity format is the SPIFFE ID [SPIFFE-ID](https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md).
+
+A workload identity only has meaning within the scope of a specific issuer. Two identities of the same value issued by different issuers may or may not refer to the same workload. In order to avoid collisions identity URIs SHOULD specify, in the URI's "authority" field, the trust domain associated with an issuer that is selected from a global name space such as host domains. However, the validator of an identity credential MUST make sure that they are using the correct issuer credential to verify the identity credential and that the issuer is trusted to issue tokens for the defined trust domain.
+
 # Application Level Service To Service Authentication {#app-level}
 
 As noted in the Introduction, there are commonly deployments where communication between workloads cannot use
