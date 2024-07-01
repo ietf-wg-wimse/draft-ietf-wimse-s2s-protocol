@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              D. Feldman
-Expires: 30 December 2024                                               
+Expires: 2 January 2025                                                 
                                                               J. Salowey
                                                                   Venafi
                                                       A. Schwenkschuster
                                                                Microsoft
                                                               Y. Sheffer
                                                                   Intuit
-                                                            28 June 2024
+                                                             1 July 2024
 
 
                 WIMSE Service to Service Authentication
@@ -55,7 +55,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 30 December 2024.
+   This Internet-Draft will expire on 2 January 2025.
 
 Copyright Notice
 
@@ -194,10 +194,10 @@ Table of Contents
    This document defines a workload identity as a URI [RFC3986].  This
    URI is used in the subject fields in the certificates and tokens
    defined later in this document.  This specification treats the URI as
-   opaque.  The format of the URI and the namespace for the URI are
-   chosen by the issuer of the token.  Other specifications may define
-   specific URI structures for particular use cases.  An example of a
-   defined identity format is the SPIFFE ID SPIFFE-ID
+   opaque.  The format of the URI and the namespace for the URI are at
+   the discretion of the deployment at large.  Other specifications may
+   define specific URI structures for particular use cases.  An example
+   of a defined identity format is the SPIFFE ID SPIFFE-ID
    (https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md).
 
    A workload identity only has meaning within the scope of a specific
