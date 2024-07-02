@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              D. Feldman
-Expires: 15 December 2024                                               
+Expires: 3 January 2025                                                 
                                                               J. Salowey
                                                                   Venafi
                                                       A. Schwenkschuster
                                                                Microsoft
                                                               Y. Sheffer
                                                                   Intuit
-                                                            13 June 2024
+                                                             2 July 2024
 
 
                 WIMSE Service to Service Authentication
@@ -55,7 +55,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 15 December 2024.
+   This Internet-Draft will expire on 3 January 2025.
 
 Copyright Notice
 
@@ -83,7 +83,7 @@ Table of Contents
    4.  Using Mutual TLS for Service To Service Authentication
    5.  Security Considerations
      5.1.  WIMSE Identity
-     5.2.  WIMSE ID Token and Proof of Possession
+     5.2.  Workload ID Token and Proof of Possession
      5.3.  Middle Boxes
      5.4.  Privacy Considerations
    6.  IANA Considerations
@@ -206,31 +206,31 @@ Table of Contents
 
 5.1.  WIMSE Identity
 
-   The WIMSE ID is scoped within a trust domain and therefore any sub
-   components (path portion of ID) are only unique within a trust
-   domain.  Using a WIMSE ID sub components without taking into account
+   The WIMSE ID is scoped within a issuer and therefore any sub
+   components (path portion of ID) are only unique within a trust domain
+   defined by the issuer.  Using a WIMSE ID without taking into account
    the trust domain could allow one domain to issue tokens to spoof
    identities in another domain.  Additionally, the trust domain must be
-   tied to an authorized trusted key through some mechanism such as a
-   JWKS or X.509 certificate chain.  The association of a trust domain
-   and a cryptographic trust root MUST be communicated securely out of
-   band.
+   tied to an authorized issuer cryptographic trust root through some
+   mechanism such as a JWKS or X.509 certificate chain.  The association
+   of an issuer, trust domain and a cryptographic trust root MUST be
+   communicated securely out of band.
 
-   [TODO: Should there be a DNS name to Trust domain mapping defined?]
+   [TODO: Should there be a DNS name to Trust domain mapping defined or
+   some other discovery mechanism?]
 
-5.2.  WIMSE ID Token and Proof of Possession
+5.2.  Workload ID Token and Proof of Possession
 
-   The WIMSE ID token is bound to a secret cryptographic key and is
-   always presented with a proof of possession as described in section
-   TBD.  The ID Token and its PoP are only used in the application-level
-   options, and both are not used in MTLS.  The ID token MUST NOT be
-   used as a bearer token.  While this helps reduce the sensitivity of
-   the token it is still possible that a token and its proof of
-   possession may be captured and replayed.  If this risk is mitigated
-   then WIMSE ID tokens may be resued for a period of time with fresh
-   proofs generated for each transaction.  The following are some
-   mitigations for the capture and reuse of the proof of possession
-   (POP):
+   The Workload ID token (WIT) is bound to a secret cryptographic key
+   and is always presented with a proof of possession as described in
+   section [to-wit].  The WIT is a general purpose token that can be
+   presented in multiple contexts.  The WIT and its PoP are only used in
+   the application-level options, and both are not used in MTLS.  The
+   WIT MUST NOT be used as a bearer token.  While this helps reduce the
+   sensitivity of the token it is still possible that a token and its
+   proof of possession may be captured and replayed within the POP's
+   lifetime.  The following are some mitigations for the capture and
+   reuse of the proof of possession (POP):
 
    *  Preventing Eavesdropping and Interception with TLS
 
@@ -239,9 +239,9 @@ Table of Contents
    to gain an advantage.  In order to prevent this the token and proof
    of possession MUST be sent over a secure, server authenticated TLS
    connection unless a secure channel is provided by some other
-   mechanisms.  Host name validation according to section TBD MUST be
-   performed.  The WIMSE ID token itself is not usable without a proof
-   of possession.
+   mechanisms.  Host name validation according to section [mutual-tls]
+   MUST be performed.  The WIT itself is not usable without a proof of
+   possession.
 
    *  Limiting Proof of Possession Lifespan
 
@@ -252,17 +252,27 @@ Table of Contents
 
    *  Limiting Proof of Possession Scope
 
-   The POP MUST have a limited scope.  Limitations on scope include
-   constraining the POP to certain receivers and constraining the POP to
-   a usage or transaction.
+   In order to reduce the risk of theft and replay the POP should have a
+   limited scope.  For example, a POP may be targeted for use with a
+   specific workload and even a specific transaction to reduce the
+   impact of a stolen POP.  In some cases a workload may wish to reuse a
+   POP for a period of time or have it accepted by multiple target
+   workloads.  A careful analysis is warranted to understand the impacts
+   to the system if a POP is disclosed allowing it to be presented by an
+   attacker along with a captured WIT.
 
-   *  Binding to a Nonce
+   *  Binding to a Timestamp or Nonce
 
-   A nonce MAY included in the POP to limit the possibility of replay as
-   defined in section TBD.  The POP MAY be bound to a fresh nonce to
-   provide single use properties.  A mechanism for distributing a fresh
-   challenge nonce to provide single use properties of a POP is outside
-   the scope of this specification.
+   A proof of possession should include information that can be used to
+   uniquely identify it such as a unique timestamp or nonce.  This can
+   be used by the receiver to perform basic replay protection against
+   tokens it has already seen.  Depending upon the design of the system
+   it may be difficult to synchronize the replay cache across all token
+   validators.  In this case, if the POP is not sufficiently scoped it
+   may be usable with another workload.  While a fresh nonce could be
+   included in the POP, a mechanism for distributing a fresh challenge
+   nonce from the validator to provide single use properties of a POP is
+   outside the scope of this specification.
 
    *  Binding to Sender
 
@@ -285,21 +295,16 @@ Table of Contents
 
 5.4.  Privacy Considerations
 
-   WIMSE tokens and the proofs of possession may contain private
-   information such as user names or other identities.  Care should be
-   taken to prevent the disclosure of this information.  The use of TLS
-   helps protect the privacy of WIMSE tokens and proofs of possession.
+   WITs and the proofs of possession may contain private information
+   such as user names or other identities.  Care should be taken to
+   prevent the disclosure of this information.  The use of TLS helps
+   protect the privacy of WITs and proofs of possession.
 
-   WIMSE tokens are typically associated with a workload that is not
-   directly associated with a user, however in some deployments the
-   workload may be associated directly to a user.  In these cases the
-   WIMSE token can be used to track the user if it is disclosed in clear
-   text.
-
-   If the WIMSE ID is used with X.509 certificates then the workload
-   identity may be disclosed as part of the TLS handshake.  This can be
-   partially mitigated by using TLS 1.3 to protect the client and server
-   identities.
+   WITs and Certificates with WIMSE identifiers are typically associated
+   with a workload and not a specific user, however in some deployments
+   the workload may be associated directly to a user.  While these are
+   exceptional cases a deployment should evaluate if the disclosure of
+   WITs or certificates can be used to track a user.
 
 6.  IANA Considerations
 
