@@ -558,7 +558,7 @@ Table of Contents
       used before in the time window in which the respective WPT would
       be considered valid.
 
-   *  If presented in conjunction with an OAauth access token, the value
+   *  If presented in conjunction with an OAuth access token, the value
       of the ath claim matches the hash of that token's value.
 
    *  If presented in conjunction with a Txn-Token, the value of the tth
@@ -638,8 +638,9 @@ Table of Contents
    To promote interoperability, the ecdsa-p256-sha256 signing algorithm
    MUST be implemented by general purpose implementations of this spec.
 
-   OPEN ISSUE: do we use the Accept-Signature field to signal that the
-   response must be signed?
+
+   // OPEN ISSUE: do we use the `Accept-Signature` field to signal that
+   // the response must be signed?
 
    Following is a non-normative example of a signed request and a signed
    response, where the caller is using the keys specified in Figure 4.
@@ -835,8 +836,6 @@ Table of Contents
    WITs or certificates can be used to track a user.
 
 7.  IANA Considerations
-
-   TODO IANA
 
    TODO: maybe a URI Scheme registration of wimse in URI schemes
    (https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml) per

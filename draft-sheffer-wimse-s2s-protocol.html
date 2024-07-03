@@ -1766,7 +1766,7 @@ Workload-Proof-Token: eyJ0eXAiOiJ3aW1zZS1wcm9vZitqd3QiLCJhbGciOiJFZER
  respective WPT would be considered valid.<a href="#section-4.2-12.8.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.2-12.9">
-            <p id="section-4.2-12.9.1">If presented in conjunction with an OAauth access token, the value of the <code>ath</code> claim matches the hash of that token's value.<a href="#section-4.2-12.9.1" class="pilcrow">¶</a></p>
+            <p id="section-4.2-12.9.1">If presented in conjunction with an OAuth access token, the value of the <code>ath</code> claim matches the hash of that token's value.<a href="#section-4.2-12.9.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.2-12.10">
             <p id="section-4.2-12.10.1">If presented in conjunction with a Txn-Token, the value of the <code>tth</code> claim matches the hash of that token's value.<a href="#section-4.2-12.10.1" class="pilcrow">¶</a></p>
@@ -1858,7 +1858,7 @@ To detect message replays,
 a recipient <span class="bcp14">MAY</span> reject a message (request or response) if a nonce is repeated.<a href="#section-4.3-12" class="pilcrow">¶</a></p>
 <p id="section-4.3-13">To promote interoperability, the <code>ecdsa-p256-sha256</code> signing algorithm <span class="bcp14">MUST</span> be implemented
 by general purpose implementations of this spec.<a href="#section-4.3-13" class="pilcrow">¶</a></p>
-<p id="section-4.3-14">OPEN ISSUE: do we use the <code>Accept-Signature</code> field to signal that the response must be signed?<a href="#section-4.3-14" class="pilcrow">¶</a></p>
+<p id="section-4.3-14"><span class="cref">OPEN ISSUE: do we use the `Accept-Signature` field to signal that the response must be signed?</span><a href="#section-4.3-14" class="pilcrow">¶</a></p>
 <p id="section-4.3-15">Following is a non-normative example of a signed request and a signed response,
 where the caller is using the keys specified in <a href="#example-caller-jwk" class="auto internal xref">Figure 4</a>.<a href="#section-4.3-15" class="pilcrow">¶</a></p>
 <span id="name-signed-request"></span><figure id="figure-12">
@@ -2020,9 +2020,8 @@ While a fresh nonce could be included in the PoP, a mechanism for distributing a
       <h2 id="name-iana-considerations">
 <a href="#section-7" class="section-number selfRef">7. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
-<p id="section-7-1">TODO IANA<a href="#section-7-1" class="pilcrow">¶</a></p>
-<p id="section-7-2">TODO: maybe a URI Scheme registration of <code>wimse</code> in <a href="https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml">URI schemes</a> per <span>[<a href="#RFC7595" class="cite xref">RFC7595</a>]</span> but it's only being used in an example right now and might not even be appropriate. Or maybe use an ietf URI scheme a la <a href="https://www.iana.org/assignments/params/params.xhtml">URN Namespace for IETF Use</a> somehow. Or maybe nothing. Or maybe something else.<a href="#section-7-2" class="pilcrow">¶</a></p>
-<p id="section-7-3">TODO: <code>tth</code> and maybe <code>oth</code> claim in <a href="https://www.iana.org/assignments/jwt/jwt.xhtml">JSON Web Token Claims Registry</a><a href="#section-7-3" class="pilcrow">¶</a></p>
+<p id="section-7-1">TODO: maybe a URI Scheme registration of <code>wimse</code> in <a href="https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml">URI schemes</a> per <span>[<a href="#RFC7595" class="cite xref">RFC7595</a>]</span> but it's only being used in an example right now and might not even be appropriate. Or maybe use an ietf URI scheme a la <a href="https://www.iana.org/assignments/params/params.xhtml">URN Namespace for IETF Use</a> somehow. Or maybe nothing. Or maybe something else.<a href="#section-7-1" class="pilcrow">¶</a></p>
+<p id="section-7-2">TODO: <code>tth</code> and maybe <code>oth</code> claim in <a href="https://www.iana.org/assignments/jwt/jwt.xhtml">JSON Web Token Claims Registry</a><a href="#section-7-2" class="pilcrow">¶</a></p>
 <div id="media-type-registration">
 <section id="section-7.1">
         <h3 id="name-media-type-registration">
