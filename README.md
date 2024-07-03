@@ -6,6 +6,7 @@ This is the working area for the individual Internet-Draft, "draft-sheffer-wimse
 * [Datatracker Page](https://datatracker.ietf.org/doc/draft-sheffer-wimse-s2s-protocol)
 * [Individual Draft](https://datatracker.ietf.org/doc/html/draft-sheffer-wimse-s2s-protocol)
 * [Compare Editor's Copy to Individual Draft](https://yaronf.github.io/wimse-s2s/#go.draft-sheffer-wimse-s2s-protocol.diff)
+* [Preview copy of a PR](http://www.sheffer.org/wimse-s2s/branch-name/draft-sheffer-wimse-s2s-protocol.html)
 
 
 ## Contributing
