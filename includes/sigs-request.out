@@ -1,0 +1,12 @@
+=============== NOTE: '\' line wrapping per RFC 8792 ================
+
+GET /gimme-ice-cream?flavor=vanilla HTTP/1.1
+Host: example.com
+Signature: wimse=:K4dfGnguF5f1L4DKBSp5XeFXosLGj8Y9fiUX06rL/wdOF+x3zT\
+WmsvKWiY0B1oFZaOtm2FHru+YLjdkqa2WfCQ==:
+Signature-Input: wimse=("@method" "@request-target" "workload-identi\
+ty-token");created=1718291357;expires=1718291657;nonce="abcd1111";ta\
+g="wimse-service-to-service"
+Workload-Identity-Token: aGVhZGVyCg.VGhpcyBpcyBub3QgYSByZWFsIHRva2Vu\
+Lgo.c2lnbmF0dXJlCg
+
