@@ -400,7 +400,7 @@ To validate the WPT in the request, the recipient MUST ensure the following:
  far in the future SHOULD be rejected.
 * Optionally, check that the value of the `jti` claim has not been used before in the time window in which the
  respective WPT would be considered valid.
-* If presented in conjunction with an OAauth access token, the value of the `ath` claim matches the hash of that token's value.
+* If presented in conjunction with an OAuth access token, the value of the `ath` claim matches the hash of that token's value.
 * If presented in conjunction with a Txn-Token, the value of the `tth` claim matches the hash of that token's value.
 * If presented in conjunction with a token conveying end-user identity or authorization context, the value of
  the `oth` claim matches the hash of that token's value.
@@ -455,7 +455,7 @@ a recipient MAY reject a message (request or response) if a nonce is repeated.
 To promote interoperability, the `ecdsa-p256-sha256` signing algorithm MUST be implemented
 by general purpose implementations of this spec.
 
-OPEN ISSUE: do we use the `Accept-Signature` field to signal that the response must be signed?
+<cref>OPEN ISSUE: do we use the `Accept-Signature` field to signal that the response must be signed?</cref>
 
 Following is a non-normative example of a signed request and a signed response,
 where the caller is using the keys specified in {{example-caller-jwk}}.
@@ -567,8 +567,6 @@ WITs and certificates with WIMSE identifiers are typically associated with a wor
 
 
 # IANA Considerations
-
-TODO IANA
 
 TODO: maybe a URI Scheme registration of `wimse` in [URI schemes](https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml) per {{?RFC7595}} but it's only being used in an example right now and might not even be appropriate. Or maybe use an ietf URI scheme a la [URN Namespace for IETF Use](https://www.iana.org/assignments/params/params.xhtml) somehow. Or maybe nothing. Or maybe something else.
 
