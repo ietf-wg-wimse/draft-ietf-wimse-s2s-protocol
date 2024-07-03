@@ -463,9 +463,13 @@ where the caller is using the keys specified in {{example-caller-jwk}}.
 ~~~ http
 GET /gimme-ice-cream?flavor=vanilla HTTP/1.1
 Host: example.com
-Signature: wimse=:K4dfGnguF5f1L4DKBSp5XeFXosLGj8Y9fiUX06rL/wdOF+x3zTWmsvKWiY0B1oFZaOtm2FHru+YLjdkqa2WfCQ==:
-Signature-Input: wimse=("@method" "@request-target" "workload-identity-token");created=1718291357;expires=1718291657;nonce="abcd1111";tag="wimse-service-to-service"
-Workload-Identity-Token: aGVhZGVyCg.VGhpcyBpcyBub3QgYSByZWFsIHRva2VuLgo.c2lnbmF0dXJlCg
+Signature: wimse=:K4dfGnguF5f1L4DKBSp5XeFXosLGj8Y9fiUX06rL/wdOF+x3zTW
+msvKWiY0B1oFZaOtm2FHru+YLjdkqa2WfCQ==:
+Signature-Input: wimse=("@method" "@request-target"
+"workload-identity-token");created=1718291357;expires=1718291657;
+nonce="abcd1111";tag="wimse-service-to-service"
+Workload-Identity-Token: aGVhZGVyCg.VGhpcyBpcyBub3QgYSByZWFsIHRva2VuL
+go.c2lnbmF0dXJlCg
 
 ~~~
 {: title="Signed Request"}
@@ -487,11 +491,17 @@ A signed response would be:
 ~~~ http
 HTTP/1.1 404 Not Found
 Connection: close
-Content-Digest: sha-256=:47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=:
+Content-Digest: sha-256=:47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3h
+SuFU=:
 Content-Type: text/plain
-Signature: wimse=:NMrMn3xhI6m9PI8mKVfpnH5qFGcEfuFxiCmsB5PJhGjUHT/5J4612EZwRw3V4kU4gGJmO+ER8RC4DM2HKVOYDQ==:
-Signature-Input: wimse=("@status" "workload-identity-token" "content-type" "content-digest" "@method";req "@request-target";req);created=1718295368;expires=1718295670;nonce="abcd2222";tag="wimse-service-to-service"
-Workload-Identity-Token: aGVhZGVyCg.VGhpcyBhaW4ndCBvbmUsIHRvby4K.c2lnbmF0dXJlCg
+Signature: wimse=:NMrMn3xhI6m9PI8mKVfpnH5qFGcEfuFxiCmsB5PJhGjUHT
+/5J4612EZwRw3V4kU4gGJmO+ER8RC4DM2HKVOYDQ==:
+Signature-Input: wimse=("@status" "workload-identity-token"
+"content-type" "content-digest" "@method";req "@request-target";
+req);created=1718295368;expires=1718295670;nonce="abcd2222";
+tag="wimse-service-to-service"
+Workload-Identity-Token: aGVhZGVyCg.VGhpcyBhaW4ndCBvbmUsIHRvby4K
+.c2lnbmF0dXJlCg
 
 No ice cream today.
 
