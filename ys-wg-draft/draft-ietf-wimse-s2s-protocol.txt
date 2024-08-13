@@ -40,7 +40,7 @@ About This Document
    This note is to be removed before publishing as an RFC.
 
    The latest revision of this draft can be found at
-   https://yaronf.github.io/wimse-s2s/draft-sheffer-wimse-s2s-
+   https://yaronf.github.io/wimse-s2s/draft-ietf-wimse-s2s-
    protocol.html.  Status information for this document may be found at
    https://datatracker.ietf.org/doc/draft-ietf-wimse-s2s-protocol/.
 
@@ -109,6 +109,8 @@ Table of Contents
    8.  References
      8.1.  Normative References
      8.2.  Informative References
+   Appendix A.  Document History
+     A.1.  draft-ietf-wimse-s2s-protocol-00
    Acknowledgments
    Authors' Addresses
 
@@ -964,6 +966,18 @@ Table of Contents
               Jones, M., and D. Waite, "OAuth 2.0 Demonstrating Proof of
               Possession (DPoP)", RFC 9449, DOI 10.17487/RFC9449,
               September 2023, <https://www.rfc-editor.org/rfc/rfc9449>.
+
+Appendix A.  Document History
+
+
+   // RFC Editor: please remove before publication.
+
+A.1.  draft-ietf-wimse-s2s-protocol-00
+
+   *  Initial WG draft, an exact copy of draft-sheffer-wimse-s2s-
+      protocol-00
+
+   *  Added this document history section
 
 Acknowledgments
 
