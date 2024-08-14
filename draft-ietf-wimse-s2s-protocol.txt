@@ -5,18 +5,18 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              D. Feldman
-Expires: 4 January 2025                                      Independent
+Expires: 15 February 2025                                    Independent
                                                               J. Salowey
                                                                   Venafi
                                                       A. Schwenkschuster
                                                                Microsoft
                                                               Y. Sheffer
                                                                   Intuit
-                                                             3 July 2024
+                                                          14 August 2024
 
 
                 WIMSE Service to Service Authentication
-                draft-sheffer-wimse-s2s-protocol-latest
+                  draft-ietf-wimse-s2s-protocol-latest
 
 Abstract
 
@@ -39,10 +39,10 @@ About This Document
 
    This note is to be removed before publishing as an RFC.
 
-   The latest revision of this draft can be found at
-   https://yaronf.github.io/wimse-s2s/draft-sheffer-wimse-s2s-
+   The latest revision of this draft can be found at https://ietf-wg-
+   wimse.github.io/draft-ietf-wimse-s2s-protocol/draft-ietf-wimse-s2s-
    protocol.html.  Status information for this document may be found at
-   https://datatracker.ietf.org/doc/draft-sheffer-wimse-s2s-protocol/.
+   https://datatracker.ietf.org/doc/draft-ietf-wimse-s2s-protocol/.
 
    Discussion of this document takes place on the Workload Identity in
    Multi System Environments Working Group mailing list
@@ -51,7 +51,7 @@ About This Document
    https://www.ietf.org/mailman/listinfo/wimse/.
 
    Source for this draft and an issue tracker can be found at
-   https://github.com/yaronf/wimse-s2s.
+   https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol.
 
 Status of This Memo
 
@@ -68,7 +68,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 4 January 2025.
+   This Internet-Draft will expire on 15 February 2025.
 
 Copyright Notice
 
@@ -109,6 +109,8 @@ Table of Contents
    8.  References
      8.1.  Normative References
      8.2.  Informative References
+   Appendix A.  Document History
+     A.1.  draft-ietf-wimse-s2s-protocol-00
    Acknowledgments
    Authors' Addresses
 
@@ -939,21 +941,21 @@ Table of Contents
    [I-D.ietf-oauth-transaction-tokens]
               Tulshibagwale, A., Fletcher, G., and P. Kasselman,
               "Transaction Tokens", Work in Progress, Internet-Draft,
-              draft-ietf-oauth-transaction-tokens-02, 21 June 2024,
+              draft-ietf-oauth-transaction-tokens-03, 3 July 2024,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              transaction-tokens-02>.
+              transaction-tokens-03>.
 
    [I-D.ietf-wimse-arch]
               Salowey, J. A., Rosomakho, Y., and H. Tschofenig,
               "Workload Identity in a Multi System Environment (WIMSE)
               Architecture", Work in Progress, Internet-Draft, draft-
-              ietf-wimse-arch-00, 18 April 2024,
+              ietf-wimse-arch-01, 8 July 2024,
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
-              arch-00>.
+              arch-01>.
 
    [IANA.JOSE.ALGS]
               IANA, "JSON Web Signature and Encryption Algorithms",
-              <http://www.iana.org/assignments/jose>.
+              <https://www.iana.org/assignments/jose>.
 
    [RFC7595]  Thaler, D., Ed., Hansen, T., and T. Hardie, "Guidelines
               and Registration Procedures for URI Schemes", BCP 35,
@@ -964,6 +966,18 @@ Table of Contents
               Jones, M., and D. Waite, "OAuth 2.0 Demonstrating Proof of
               Possession (DPoP)", RFC 9449, DOI 10.17487/RFC9449,
               September 2023, <https://www.rfc-editor.org/rfc/rfc9449>.
+
+Appendix A.  Document History
+
+
+   // RFC Editor: please remove before publication.
+
+A.1.  draft-ietf-wimse-s2s-protocol-00
+
+   *  Initial WG draft, an exact copy of draft-sheffer-wimse-s2s-
+      protocol-00
+
+   *  Added this document history section
 
 Acknowledgments
 
