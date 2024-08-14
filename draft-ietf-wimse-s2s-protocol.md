@@ -3,7 +3,7 @@ title: "WIMSE Service to Service Authentication"
 abbrev: "WIMSE S2S Auth"
 category: std
 
-docname: draft-sheffer-wimse-s2s-protocol-latest
+docname: draft-ietf-wimse-s2s-protocol-latest
 submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
 number:
 date:
@@ -19,8 +19,8 @@ venue:
   type: "Working Group"
   mail: "wimse@ietf.org"
   arch: "https://mailarchive.ietf.org/arch/browse/wimse/"
-  github: "yaronf/wimse-s2s"
-  latest: "https://yaronf.github.io/wimse-s2s/draft-sheffer-wimse-s2s-protocol.html"
+  github: "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol"
+  latest: "https://ietf-wg-wimse.github.io/draft-ietf-wimse-s2s-protocol/draft-ietf-wimse-s2s-protocol.html"
 
 author:
  -
@@ -571,6 +571,14 @@ TODO: `Workload-Identity-Token` from {{wit-http-header}}
 TODO: `Workload-Proof-Token` from {{dpop-esque-auth}}
 
 --- back
+
+# Document History
+<cref>RFC Editor: please remove before publication.</cref>
+
+## draft-ietf-wimse-s2s-protocol-00
+
+* Initial WG draft, an exact copy of draft-sheffer-wimse-s2s-protocol-00
+* Added this document history section
 
 # Acknowledgments
 {:numbered="false"}

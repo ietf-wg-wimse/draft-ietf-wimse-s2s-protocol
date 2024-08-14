@@ -1,18 +1,17 @@
 # WIMSE Service to Service Authentication
 
-This is the working area for the individual Internet-Draft, "draft-sheffer-wimse-s2s-protocol", being developed by a WIMSE design team.
+This is the working area for the IETF [WIMSE Working Group](https://datatracker.ietf.org/wg/wimse/documents/) Internet-Draft, "WIMSE Service to Service Authentication".
 
-* [Editor's Copy](https://yaronf.github.io/wimse-s2s/#go.draft-sheffer-wimse-s2s-protocol.html)
-* [Datatracker Page](https://datatracker.ietf.org/doc/draft-sheffer-wimse-s2s-protocol)
-* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-sheffer-wimse-s2s-protocol)
-* [Compare Editor's Copy to Individual Draft](https://yaronf.github.io/wimse-s2s/#go.draft-sheffer-wimse-s2s-protocol.diff)
-* [Preview copy of a PR](https://www.sheffer.org/wimse-s2s/branch-name/draft-sheffer-wimse-s2s-protocol.html)
+* [Editor's Copy](https://ietf-wg-wimse.github.io/draft-ietf-wimse-s2s-protocol/#go.draft-ietf-wimse-s2s-protocol.html)
+* [Datatracker Page](https://datatracker.ietf.org/doc/draft-ietf-wimse-s2s-protocol)
+* [Working Group Draft](https://datatracker.ietf.org/doc/html/draft-ietf-wimse-s2s-protocol)
+* [Compare Editor's Copy to Working Group Draft](https://ietf-wg-wimse.github.io/draft-ietf-wimse-s2s-protocol/#go.draft-ietf-wimse-s2s-protocol.diff)
 
 
 ## Contributing
 
 See the
-[guidelines for contributions](https://github.com/yaronf/wimse-s2s/blob/main/CONTRIBUTING.md).
+[guidelines for contributions](https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/blob/main/CONTRIBUTING.md).
 
 Contributions can be made by creating pull requests.
 The GitHub interface supports creating pull requests using the Edit (✏) button.

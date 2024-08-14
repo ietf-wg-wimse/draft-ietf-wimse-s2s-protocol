@@ -1,4 +1,4 @@
 # License
 
 See the
-[guidelines for contributions](https://github.com/yaronf/wimse-s2s/blob/main/CONTRIBUTING.md).
+[guidelines for contributions](https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/blob/main/CONTRIBUTING.md).
