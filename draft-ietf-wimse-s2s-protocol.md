@@ -532,6 +532,18 @@ The proof of possession MUST be time limited. A PoP should only be valid over th
 
 In order to reduce the risk of theft and replay the PoP should have a limited scope. For example, a PoP may be targeted for use with a specific workload and even a specific transaction to reduce the impact of a stolen PoP. In some cases a workload may wish to reuse a PoP for a period of time or have it accepted by multiple target workloads. A careful analysis is warranted to understand the impacts to the system if a PoP is disclosed allowing it to be presented by an attacker along with a captured WIT.
 
+* Binding WIT to Proof of Possession
+
+If the WIT itself is not bound in the proof of possession then it is possible that the WIT could be replaced by an attacker. If multiple WITs with different claims is issued for the same key this could result in the proof of possession having different meaning than what the sender intended and could give the attacker an advantage. Here are some possible mitigations.
+
+If the WIT only contains information that is already included in the POP signature then the different in WITs would not be meaningful. The verifier must check that the signed information matches the information in the WIT. Care must also be taken to understand what is substantial information. For example, even a unique identifier such as a jti claim could be problematic if the system associates additional information to this identifier.
+
+If the system ensures that the information associated with a WIT is the same for a given key that is embedded in the WIT then the attacker will not be able to substitute a different WIT with the signature. Here to care must be taken to understand what is substantial difference is.
+
+If the proof of possession includes the entire WIT in the signature then the signature will fail if the WIT is substituted and the attacker will not be able to replace the WIT.
+
+The last option to sign the WIT as part of the POP requires the least special verification steps. This is the approach taken by http message signatures in {{http-sig-auth}}. THe DPOP mechanism should take a similar approach if it continues to be part of the proposal.
+
 * Binding to a Timestamp or Nonce
 
 A proof of possession should include information that can be used to uniquely identify it such as a unique timestamp or nonce.  This can be used by the receiver to perform basic replay protection against tokens it has already seen. Depending upon the design of the system it may be difficult to synchronize the replay cache across all token validators. In this case, if the PoP is not sufficiently scoped it may be usable with another workload.
