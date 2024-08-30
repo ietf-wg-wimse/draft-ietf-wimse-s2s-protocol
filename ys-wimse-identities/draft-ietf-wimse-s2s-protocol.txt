@@ -703,7 +703,7 @@ Table of Contents
    WIMSE certificate may contain SubjectAltName extensions of other
    types such as DNSName.
 
-   WIMSE certificate may be used to secure both server and client
+   WIMSE certificates may be used to secure both server and client
    connections.  When validating a WIMSE certificate, the relying party
    MUST validate that the CA issuer for the WIMSE certificate is
    authorized to issue certificates for the trust domain of the WIMSE
