@@ -23,12 +23,12 @@ chain can have some calls use one protocol and some use the other. Service A can
 Service B with mutual TLS authentication, while the next call from Service B to Service C
 would be authenticated at the application level. 
     " name="description">
-<meta content="xml2rfc 3.22.0" name="generator">
+<meta content="xml2rfc 3.23.0" name="generator">
 <meta content="workload" name="keyword">
 <meta content="identity" name="keyword">
 <meta content="draft-ietf-wimse-s2s-protocol-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.22.0
+  xml2rfc 3.23.0
     Python 3.12.3
     ConfigArgParse 1.7
     google-i18n-address 3.1.0
@@ -39,7 +39,7 @@ would be authenticated at the application level.
     pycountry 22.3.5
     PyYAML 6.0.1
     requests 2.32.3
-    setuptools 69.5.1
+    setuptools 70.3.0
     wcwidth 0.2.13
 -->
 <link href="draft-ietf-wimse-s2s-protocol.xml" rel="alternate" type="application/rfc+xml">
@@ -1039,11 +1039,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">WIMSE S2S Auth</td>
-<td class="right">August 2024</td>
+<td class="right">September 2024</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Campbell, et al.</td>
-<td class="center">Expires 15 February 2025</td>
+<td class="center">Expires 8 March 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1056,12 +1056,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-wimse-s2s-protocol-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-08-14" class="published">14 August 2024</time>
+<time datetime="2024-09-04" class="published">4 September 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-02-15">15 February 2025</time></dd>
+<dd class="expires"><time datetime="2025-03-08">8 March 2025</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1137,7 +1137,7 @@ would be authenticated at the application level.<a href="#section-abstract-1" cl
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 15 February 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 8 March 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1941,8 +1941,8 @@ No ice cream today.
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-using-mutual-tls-for-servic" class="section-name selfRef">Using Mutual TLS for Service To Service Authentication</a>
       </h2>
 <p id="section-5-1">The WIMSE workload identity may be carried within an X.509 certificate. The WIMSE workload identity <span class="bcp14">MUST</span> be encoded in a SubjectAltName extension of type URI.  There <span class="bcp14">MUST</span> be only one SubjectAltName extension of type URI in a WIMSE certificate.  The WIMSE certificate may contain SubjectAltName extensions of other types such as DNSName.<a href="#section-5-1" class="pilcrow">¶</a></p>
-<p id="section-5-2">WIMSE identities may be used to validate server and client connections.  When validating a WIMSE identity the relying party <span class="bcp14">MUST</span> validate that the CA issuer for the WIMSE identity is authorized to issue certificates for the trust domain of the WIMSE identity in the certificate. Other PKIX path validation rules apply.<a href="#section-5-2" class="pilcrow">¶</a></p>
-<p id="section-5-3">Servers wishing to use the WIMSE identity for authorizing the client <span class="bcp14">MUST</span> require client certificate authentication in the TLS handshake. Other methods of post handshake authentication are not specified by this document.<a href="#section-5-3" class="pilcrow">¶</a></p>
+<p id="section-5-2">WIMSE certificates may be used to secure both server and client connections.  When validating a WIMSE certificate, the relying party <span class="bcp14">MUST</span> validate that the CA issuer for the WIMSE certificate is authorized to issue certificates for the trust domain of the WIMSE workload identified by the certificate. Other PKIX path validation rules apply.<a href="#section-5-2" class="pilcrow">¶</a></p>
+<p id="section-5-3">Servers wishing to use the WIMSE certificate for authorizing the client <span class="bcp14">MUST</span> require client certificate authentication in the TLS handshake. Other methods of post handshake authentication are not specified by this document.<a href="#section-5-3" class="pilcrow">¶</a></p>
 <p id="section-5-4">WIMSE clients and servers <span class="bcp14">MUST</span> validate that the trust domain portion of the WIMSE certificate matches the expected trust domain for the other side of the connection.<a href="#section-5-4" class="pilcrow">¶</a></p>
 <div id="host-name-validation">
 <section id="section-5.1">
@@ -1950,7 +1950,7 @@ No ice cream today.
 <a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-host-name-validation" class="section-name selfRef">Host Name Validation</a>
         </h3>
 <p id="section-5.1-1"><span class="cref">TODO: need to define trust root used to validate the certificate is appropriate for the trust domain.</span><a href="#section-5.1-1" class="pilcrow">¶</a></p>
-<p id="section-5.1-2">It is <span class="bcp14">RECOMMENDED</span> that the server certificate contain a DNS SAN that the client can use to perform standard host name validation (<span><a href="https://rfc-editor.org/rfc/rfc9525#section-6.3" class="relref">Section 6.3</a> of [<a href="#RFC9525" class="cite xref">RFC9525</a>]</span>).  The client <span class="bcp14">SHOULD</span> also extract the WIMSE identity from the certificate if it is present and validate that the WIMSE trust domain matches the intended trust domain for the server.  The client <span class="bcp14">MAY</span> then further use the WIMSE identity in applying authorization policy to the server.  If the client does not use the DNS SAN then the client <span class="bcp14">MUST</span> match the WIMSE identity in the certificate against the WIMSE identity of the workload of the intended server according to a locally defined policy. The host portion of the WIMSE URI is NOT treated as a host name as specified in section 6.4 of <span>[<a href="#RFC9525" class="cite xref">RFC9525</a>]</span> but rather as a trust domain. The server identity is encoded in the path portion of the WIMSE identity in a deployment specific way.<a href="#section-5.1-2" class="pilcrow">¶</a></p>
+<p id="section-5.1-2">It is <span class="bcp14">RECOMMENDED</span> that the server certificate contain a DNS SAN that the client can use to perform standard host name validation (<span><a href="https://rfc-editor.org/rfc/rfc9525#section-6.3" class="relref">Section 6.3</a> of [<a href="#RFC9525" class="cite xref">RFC9525</a>]</span>).  The client <span class="bcp14">SHOULD</span> also extract the WIMSE identifier from the certificate if it is present and validate that the WIMSE trust domain matches the intended trust domain for the server.  The client <span class="bcp14">MAY</span> then further use the WIMSE identifier in applying authorization policy to the server.  If the client does not use the DNS SAN then the client <span class="bcp14">MUST</span> match the WIMSE identifier in the certificate against the WIMSE identity of the workload of the intended server according to a locally defined policy. The host portion of the WIMSE URI is NOT treated as a host name as specified in section 6.4 of <span>[<a href="#RFC9525" class="cite xref">RFC9525</a>]</span> but rather as a trust domain. The server identity is encoded in the path portion of the WIMSE identifier in a deployment specific way.<a href="#section-5.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="authorization-using-the-wimse-identity">
@@ -1958,7 +1958,7 @@ No ice cream today.
         <h3 id="name-authorization-using-the-wim">
 <a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-authorization-using-the-wim" class="section-name selfRef">Authorization Using the WIMSE Identity</a>
         </h3>
-<p id="section-5.2-1">The client or server application may retrieve the WIMSE identity from the TLS layer for use in authorization, accounting and auditing.  For example, the full URI may be matched against ACLs and other policy constructs to authorize actions requested by the peer.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
+<p id="section-5.2-1">The client or server application may retrieve the WIMSE identifier from the TLS layer for use in authorization, accounting and auditing.  For example, the full URI may be matched against ACLs and other policy constructs to authorize actions requested by the peer.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
