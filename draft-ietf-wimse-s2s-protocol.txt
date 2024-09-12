@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              D. Feldman
-Expires: 8 March 2025                                        Independent
+Expires: 16 March 2025                                       Independent
                                                               J. Salowey
                                                                   Venafi
                                                       A. Schwenkschuster
                                                                Microsoft
                                                               Y. Sheffer
                                                                   Intuit
-                                                        4 September 2024
+                                                       12 September 2024
 
 
                 WIMSE Service to Service Authentication
@@ -68,7 +68,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 8 March 2025.
+   This Internet-Draft will expire on 16 March 2025.
 
 Copyright Notice
 
@@ -722,7 +722,7 @@ Table of Contents
 5.1.  Host Name Validation
 
 
-   // TODO: need to define trust root used to validate the certificate
+   // TODO: need to define trust anchor used to validate the certificate
    // is appropriate for the trust domain.
 
    It is RECOMMENDED that the server certificate contain a DNS SAN that
@@ -756,9 +756,9 @@ Table of Contents
    defined by the issuer.  Using a WIMSE ID without taking into account
    the trust domain could allow one domain to issue tokens to spoof
    identities in another domain.  Additionally, the trust domain must be
-   tied to an authorized issuer cryptographic trust root through some
+   tied to an authorized issuer cryptographic trust anchor through some
    mechanism such as a JWKS or X.509 certificate chain.  The association
-   of an issuer, trust domain and a cryptographic trust root MUST be
+   of an issuer, trust domain and a cryptographic trust anchor MUST be
    communicated securely out of band.
 
 
