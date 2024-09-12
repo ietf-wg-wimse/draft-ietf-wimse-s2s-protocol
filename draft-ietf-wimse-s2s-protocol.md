@@ -496,7 +496,7 @@ WIMSE clients and servers MUST validate that the trust domain portion of the WIM
 
 ## Host Name Validation
 
-<cref>TODO: need to define trust root used to validate the certificate is appropriate for the trust domain.</cref>
+<cref>TODO: need to define trust anchor used to validate the certificate is appropriate for the trust domain.</cref>
 
 It is RECOMMENDED that the server certificate contain a DNS SAN that the client can use to perform standard host name validation ({{Section 6.3 of RFC9525}}).  The client SHOULD also extract the WIMSE identifier from the certificate if it is present and validate that the WIMSE trust domain matches the intended trust domain for the server.  The client MAY then further use the WIMSE identifier in applying authorization policy to the server.  If the client does not use the DNS SAN then the client MUST match the WIMSE identifier in the certificate against the WIMSE identity of the workload of the intended server according to a locally defined policy. The host portion of the WIMSE URI is NOT treated as a host name as specified in section 6.4 of {{!RFC9525}} but rather as a trust domain. The server identity is encoded in the path portion of the WIMSE identifier in a deployment specific way.
 
@@ -510,7 +510,7 @@ The client or server application may retrieve the WIMSE identifier from the TLS 
 
 ## WIMSE Identity
 
-The WIMSE ID is scoped within an issuer and therefore any sub-components (path portion of ID) are only unique within a trust domain defined by the issuer. Using a WIMSE ID without taking into account the trust domain could allow one domain to issue tokens to spoof identities in another domain.  Additionally, the trust domain must be tied to an authorized issuer cryptographic trust root through some mechanism such as a JWKS or X.509 certificate chain. The association of an issuer, trust domain and a cryptographic trust root MUST be communicated securely out of band.
+The WIMSE ID is scoped within an issuer and therefore any sub-components (path portion of ID) are only unique within a trust domain defined by the issuer. Using a WIMSE ID without taking into account the trust domain could allow one domain to issue tokens to spoof identities in another domain.  Additionally, the trust domain must be tied to an authorized issuer cryptographic trust anchor through some mechanism such as a JWKS or X.509 certificate chain. The association of an issuer, trust domain and a cryptographic trust anchor MUST be communicated securely out of band.
 
 <cref>TODO: Should there be a DNS name to Trust domain mapping defined or some other discovery mechanism?</cref>
 
