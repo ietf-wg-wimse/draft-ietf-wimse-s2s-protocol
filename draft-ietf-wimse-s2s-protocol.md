@@ -319,8 +319,8 @@ Optionally, the `Workload Proof Token` (WPT) may include the following, addition
      authorization context of the request. The value, as per {{Section 4.1 of RFC9449}},
      is the base64url encoding of the SHA-256 hash of the ASCII encoding of the access token's value.
     * `signed_headers`: A key-value map of headers where
-         * key: The name of the request header. In HTTP this is the HTTP-Header. In other protocols different headers can be used.
-         * value: base64url-encoded SHA-256 hash of the header value as present in the request.
+         * key: The name of the header field. In HTTP this can be generic, request or entity fields. This may differ in other protocols.
+         * value: base64url-encoded SHA-256 hash of the header value present in the request.
 
 An example WPT might look like the following:
 
@@ -409,9 +409,9 @@ To validate the WPT in the request, the recipient MUST ensure the following:
 
 ### `ath` claim vs `Authorization` key in `signed_header` claim
 
-Because access tokens are transmitted via the `Authorization` header it is possible to transport proof via `ath` claim, as an `Authorization` key in the `signed_headers` claim or both. The authors believe that supporting `ath` improves interoperability, as `ath` claim has been defined before by {{Section 4.1 of RFC9449}}.
+Because access tokens are transmitted via the `Authorization` header it is possible to transport proof via `ath` claim, as an `Authorization` key in the `signed_headers` claim or both. The authors believe that supporting `ath` improves interoperability, as it has been defined for similar reasons before by {{Section 4.1 of RFC9449}}. If both are present, both MUST be validated.
 
-It is important to keep in mind hat the processing between `ath` and `signed_headers` differs. `ath` would only compare the hashes of the actual token whilst the `Authorization` header in the `signed_headers` claim would compare the entire header value, including for example, a `Bearer ` prefix.
+It is important to keep in mind hat the processing rules between `ath` and `signed_headers` differs. `ath` would only compare the hashes of the actual token whilst the `Authorization` value in the `signed_headers` claim would compare the entire header value, including for example, a `Bearer ` prefix.
 
 ## Option 2: Authentication Based on HTTP Message Signatures {#http-sig-auth}
 
