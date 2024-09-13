@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              D. Feldman
-Expires: 14 February 2025                                    Independent
+Expires: 17 March 2025                                       Independent
                                                               J. Salowey
                                                                   Venafi
                                                       A. Schwenkschuster
                                                                Microsoft
                                                               Y. Sheffer
                                                                   Intuit
-                                                          13 August 2024
+                                                       13 September 2024
 
 
                 WIMSE Service to Service Authentication
@@ -68,7 +68,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 14 February 2025.
+   This Internet-Draft will expire on 17 March 2025.
 
 Copyright Notice
 
@@ -94,6 +94,7 @@ Table of Contents
      4.1.  The Workload Identity Token
        4.1.1.  The WIT HTTP Header
      4.2.  Option 1: DPoP-Inspired Authentication
+       4.2.1.  ath claim vs Authorization key in signed_header claim
      4.3.  Option 2: Authentication Based on HTTP Message Signatures
    5.  Using Mutual TLS for Service To Service Authentication
      5.1.  Host Name Validation
@@ -448,26 +449,16 @@ Table of Contents
 
       -  jti: A unique identifier for the token.
 
-      -  ath: Hash of the OAuth access token, if present in the request,
-         which might convey end-user identity and authorization context
-         of the request.  The value, as per Section 4.1 of [RFC9449], is
-         the base64url encoding of the SHA-256 hash of the ASCII
-         encoding of the access token's value.
-
-      -  tth: Hash of the Txn-Token [I-D.ietf-oauth-transaction-tokens],
-         if present in the request, which might convey end-user identity
-         and authorization context of the request.  The value MUST be
-         the result of a base64url encoding (as defined in Section 2 of
-         [RFC7515]) of the SHA-256 hash of the ASCII encoding of the
-         associated token's value.
-
-      -  oth: Hash of any other token in the request that might convey
-         end-user identity and authorization context of the request.
-         The value MUST be the result of a base64url encoding (as
-         defined in Section 2 of [RFC7515]) of the SHA-256 hash of the
-         ASCII encoding of the associated token's value.  (note: this is
-         less than ideal but seems we need something like this for
-         extensibility)
+   Optionally, the Workload Proof Token (WPT) may include the following,
+   additional claims, that restrict the context further: * ath: Hash of
+   the OAuth access token, if present in the request, which might convey
+   end-user identity and authorization context of the request.  The
+   value, as per Section 4.1 of [RFC9449], is the base64url encoding of
+   the SHA-256 hash of the ASCII encoding of the access token's value.
+   * signed_headers: A key-value map of headers where * key: The name of
+   the request header.  In HTTP this is the HTTP-Header.  In other
+   protocols different headers can be used.  * value: base64url-encoded
+   SHA-256 hash of the header value as present in the request.
 
    An example WPT might look like the following:
 
@@ -494,11 +485,14 @@ Table of Contents
    here:
 
    {
-    "iss": "wimse://example.com/specific-workload",
-    "aud": "https://service.example.com/path",
-    "exp": 1717612820,
-    "jti": "__bwc4ESC3acc2LTC1-_x",
-    "ath": "CL4wjfpRmNf-bdYIbYLnV9d5rMARGwKYE10wUwzC0jI"
+     "iss": "wimse://example.com/specific-workload",
+     "aud": "https://service.example.com/path",
+     "exp": 1717612820,
+     "jti": "__bwc4ESC3acc2LTC1-_x",
+     "ath": "CL4wjfpRmNf-bdYIbYLnV9d5rMARGwKYE10wUwzC0jI",
+     "signed_headers": {
+       "Workload-Identity-Token": "-Ji8TlMNFk3qmzmpAxBO_7W-YutcH_2_fuFAFFSV1Rg"
+     }
    }
 
                        Figure 10: Example WPT Claims
@@ -563,12 +557,35 @@ Table of Contents
    *  If presented in conjunction with an OAuth access token, the value
       of the ath claim matches the hash of that token's value.
 
-   *  If presented in conjunction with a Txn-Token, the value of the tth
-      claim matches the hash of that token's value.
+   *  If Workload-Proof-Token contains signed_headers claim:
 
-   *  If presented in conjunction with a token conveying end-user
-      identity or authorization context, the value of the oth claim
-      matches the hash of that token's value.
+      -  The request contains a header for each claim in the
+         signed_headers.
+
+      -  Each corresponding value in the claim matches the hash of the
+         value in the header.
+
+      -  Headers not present in the Workload-Proof-Token are accepted
+         without further proof.
+
+      -  If a header is present more than once in the request, each
+         value has a corresponding hash in the Workload-Proof-Token.
+         Proof of just a single value in a multi-value header are not
+         allowed.
+
+4.2.1.  ath claim vs Authorization key in signed_header claim
+
+   Because access tokens are transmitted via the Authorization header it
+   is possible to transport proof via ath claim, as an Authorization key
+   in the signed_headers claim or both.  The authors believe that
+   supporting ath improves interoperability, as ath claim has been
+   defined before by Section 4.1 of [RFC9449].
+
+   It is important to keep in mind hat the processing between ath and
+   signed_headers differs. ath would only compare the hashes of the
+   actual token whilst the Authorization header in the signed_headers
+   claim would compare the entire header value, including for example, a
+   Bearer prefix.
 
 4.3.  Option 2: Authentication Based on HTTP Message Signatures
 
@@ -703,16 +720,17 @@ Table of Contents
    WIMSE certificate may contain SubjectAltName extensions of other
    types such as DNSName.
 
-   WIMSE identities may be used to validate server and client
-   connections.  When validating a WIMSE identity the relying party MUST
-   validate that the CA issuer for the WIMSE identity is authorized to
-   issue certificates for the trust domain of the WIMSE identity in the
-   certificate.  Other PKIX path validation rules apply.
+   WIMSE certificates may be used to secure both server and client
+   connections.  When validating a WIMSE certificate, the relying party
+   MUST validate that the CA issuer for the WIMSE certificate is
+   authorized to issue certificates for the trust domain of the WIMSE
+   workload identified by the certificate.  Other PKIX path validation
+   rules apply.
 
-   Servers wishing to use the WIMSE identity for authorizing the client
-   MUST require client certificate authentication in the TLS handshake.
-   Other methods of post handshake authentication are not specified by
-   this document.
+   Servers wishing to use the WIMSE certificate for authorizing the
+   client MUST require client certificate authentication in the TLS
+   handshake.  Other methods of post handshake authentication are not
+   specified by this document.
 
    WIMSE clients and servers MUST validate that the trust domain portion
    of the WIMSE certificate matches the expected trust domain for the
@@ -721,30 +739,30 @@ Table of Contents
 5.1.  Host Name Validation
 
 
-   // TODO: need to define trust root used to validate the certificate
+   // TODO: need to define trust anchor used to validate the certificate
    // is appropriate for the trust domain.
 
    It is RECOMMENDED that the server certificate contain a DNS SAN that
    the client can use to perform standard host name validation
    (Section 6.3 of [RFC9525]).  The client SHOULD also extract the WIMSE
-   identity from the certificate if it is present and validate that the
-   WIMSE trust domain matches the intended trust domain for the server.
-   The client MAY then further use the WIMSE identity in applying
-   authorization policy to the server.  If the client does not use the
-   DNS SAN then the client MUST match the WIMSE identity in the
-   certificate against the WIMSE identity of the workload of the
+   identifier from the certificate if it is present and validate that
+   the WIMSE trust domain matches the intended trust domain for the
+   server.  The client MAY then further use the WIMSE identifier in
+   applying authorization policy to the server.  If the client does not
+   use the DNS SAN then the client MUST match the WIMSE identifier in
+   the certificate against the WIMSE identity of the workload of the
    intended server according to a locally defined policy.  The host
    portion of the WIMSE URI is NOT treated as a host name as specified
    in section 6.4 of [RFC9525] but rather as a trust domain.  The server
-   identity is encoded in the path portion of the WIMSE identity in a
+   identity is encoded in the path portion of the WIMSE identifier in a
    deployment specific way.
 
 5.2.  Authorization Using the WIMSE Identity
 
-   The client or server application may retrieve the WIMSE identity from
-   the TLS layer for use in authorization, accounting and auditing.  For
-   example, the full URI may be matched against ACLs and other policy
-   constructs to authorize actions requested by the peer.
+   The client or server application may retrieve the WIMSE identifier
+   from the TLS layer for use in authorization, accounting and auditing.
+   For example, the full URI may be matched against ACLs and other
+   policy constructs to authorize actions requested by the peer.
 
 6.  Security Considerations
 
@@ -755,9 +773,9 @@ Table of Contents
    defined by the issuer.  Using a WIMSE ID without taking into account
    the trust domain could allow one domain to issue tokens to spoof
    identities in another domain.  Additionally, the trust domain must be
-   tied to an authorized issuer cryptographic trust root through some
+   tied to an authorized issuer cryptographic trust anchor through some
    mechanism such as a JWKS or X.509 certificate chain.  The association
-   of an issuer, trust domain and a cryptographic trust root MUST be
+   of an issuer, trust domain and a cryptographic trust anchor MUST be
    communicated securely out of band.
 
 
@@ -860,8 +878,8 @@ Table of Contents
    Namespace for IETF Use (https://www.iana.org/assignments/params/
    params.xhtml) somehow.  Or maybe nothing.  Or maybe something else.
 
-   TODO: tth and maybe oth claim in JSON Web Token Claims Registry
-   (https://www.iana.org/assignments/jwt/jwt.xhtml)
+   TODO: registration of signed_headers at JSON Web Token Claims
+   Registry (https://www.iana.org/assignments/jwt/jwt.xhtml)
 
 7.1.  Media Type Registration
 
