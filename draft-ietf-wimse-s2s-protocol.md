@@ -313,17 +313,14 @@ A WPT contains the following:
     * `exp`: The expiration time of the WIT (as defined in {{Section 4.1.4 of RFC7519}}). WPT lifetimes MUST be short,
      e.g., on the order of minutes or seconds.
     * `jti`: A unique identifier for the token.
+
+Optionally, the `Workload Proof Token` (WPT) may include the following, additional claims, that restrict the context further:
     * `ath`: Hash of the OAuth access token, if present in the request, which might convey end-user identity and
      authorization context of the request. The value, as per {{Section 4.1 of RFC9449}},
      is the base64url encoding of the SHA-256 hash of the ASCII encoding of the access token's value.
-    * `tth`: Hash of the Txn-Token {{?I-D.ietf-oauth-transaction-tokens}}, if present in the request,
-     which might convey end-user identity and authorization context of the request. The value MUST be the result of
-     a base64url encoding (as defined in {{Section 2 of RFC7515}}) of the SHA-256 hash of
-     the ASCII encoding of the associated token's value.
-    * `oth`: Hash of any other token in the request that might convey end-user identity and authorization context of the
-     request. The value MUST be the result of a base64url encoding (as defined in {{Section 2 of RFC7515}}) of the
-     SHA-256 hash of the ASCII encoding of the associated token's value.
-     (note: this is less than ideal but seems we need something like this for extensibility)
+    * `signed_headers`: A key-value map of headers where
+         * key: The name of the request header. In HTTP this is the HTTP-Header. In other protocols different headers can be used.
+         * value: base64url-encoded SHA-256 hash of the header value as present in the request.
 
 An example WPT might look like the following:
 
@@ -351,11 +348,14 @@ The decoded JWT claims of the WPT from the example above are shown here:
 
 ~~~ json
 {
- "iss": "wimse://example.com/specific-workload",
- "aud": "https://service.example.com/path",
- "exp": 1717612820,
- "jti": "__bwc4ESC3acc2LTC1-_x",
- "ath": "CL4wjfpRmNf-bdYIbYLnV9d5rMARGwKYE10wUwzC0jI"
+  "iss": "wimse://example.com/specific-workload",
+  "aud": "https://service.example.com/path",
+  "exp": 1717612820,
+  "jti": "__bwc4ESC3acc2LTC1-_x",
+  "ath": "CL4wjfpRmNf-bdYIbYLnV9d5rMARGwKYE10wUwzC0jI",
+  "signed_headers": {
+    "Workload-Identity-Token": "-Ji8TlMNFk3qmzmpAxBO_7W-YutcH_2_fuFAFFSV1Rg"
+  }
 }
 ~~~
 {: title="Example WPT Claims"}
@@ -401,11 +401,17 @@ To validate the WPT in the request, the recipient MUST ensure the following:
 * Optionally, check that the value of the `jti` claim has not been used before in the time window in which the
  respective WPT would be considered valid.
 * If presented in conjunction with an OAuth access token, the value of the `ath` claim matches the hash of that token's value.
-* If presented in conjunction with a Txn-Token, the value of the `tth` claim matches the hash of that token's value.
-* If presented in conjunction with a token conveying end-user identity or authorization context, the value of
- the `oth` claim matches the hash of that token's value.
+* If `Workload-Proof-Token` contains `signed_headers` claim:
+   * The request contains a header for each claim in the `signed_headers`.
+   * Each corresponding value in the claim matches the hash of the value in the header.
+   * Headers not present in the `Workload-Proof-Token` are accepted without further proof.
+   * If a header is present more than once in the request, each value has a corresponding hash in the `Workload-Proof-Token`. Proof of just a single value in a multi-value header are not allowed.
 
+### `ath` claim vs `Authorization` key in `signed_header` claim
 
+Because access tokens are transmitted via the `Authorization` header it is possible to transport proof via `ath` claim, as an `Authorization` key in the `signed_headers` claim or both. The authors believe that supporting `ath` improves interoperability, as `ath` claim has been defined before by {{Section 4.1 of RFC9449}}.
+
+It is important to keep in mind hat the processing between `ath` and `signed_headers` differs. `ath` would only compare the hashes of the actual token whilst the `Authorization` header in the `signed_headers` claim would compare the entire header value, including for example, a `Bearer ` prefix.
 
 ## Option 2: Authentication Based on HTTP Message Signatures {#http-sig-auth}
 
@@ -556,7 +562,7 @@ WITs and certificates with WIMSE identifiers are typically associated with a wor
 
 TODO: maybe a URI Scheme registration of `wimse` in [URI schemes](https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml) per {{?RFC7595}} but it's only being used in an example right now and might not even be appropriate. Or maybe use an ietf URI scheme a la [URN Namespace for IETF Use](https://www.iana.org/assignments/params/params.xhtml) somehow. Or maybe nothing. Or maybe something else.
 
-TODO: `tth` and maybe `oth` claim in [JSON Web Token Claims Registry](https://www.iana.org/assignments/jwt/jwt.xhtml)
+TODO: registration of `signed_headers` at [JSON Web Token Claims Registry](https://www.iana.org/assignments/jwt/jwt.xhtml)
 
 ## Media Type Registration
 
