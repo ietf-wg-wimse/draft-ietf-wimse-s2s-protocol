@@ -91,6 +91,7 @@ Table of Contents
    2.  Conventions and Definitions
    3.  Workload Identity
      3.1.  Trust Domain
+     3.2.  Workload Identifier
    4.  Application Level Service To Service Authentication
      4.1.  The Workload Identity Token
        4.1.1.  The WIT HTTP Header
@@ -217,6 +218,25 @@ Table of Contents
 
 3.  Workload Identity
 
+3.1.  Trust Domain
+
+   A trust domain is the authority that issues wimse certificates and
+   tokens.  Trust domains SHOULD be identified by a fully qualified
+   domain name belonging to the organization defining the trust domain.
+   A trust domain maps to a trust anchor for validating X.509
+   certificates and a mechanism to securely obtain a JWK Set [RFC7517]
+   for validating wimse WIT tokens.  This mapping MUST be obtained
+   through a secure mechanism that ensures the authenticity and
+   integrity of the mapping is fresh and not compromised.
+
+   A single organization may define multiple trust domains for different
+   purpose such as different departments or environments.  Each trust
+   domain must have a unique identifier.  Workload identifiers are
+   scoped within a trust domain.  If two identifiers differ only by
+   trust domain they still refer to two different entities.
+
+3.2.  Workload Identifier
+
    This document defines a workload identity as a URI [RFC3986].  This
    URI is used in the subject fields in the certificates and tokens
    defined later in this document.  This specification treats the URI as
@@ -236,17 +256,6 @@ Table of Contents
    using the correct issuer credential to verify the identity credential
    and that the issuer is trusted to issue tokens for the defined trust
    domain.
-
-3.1.  Trust Domain
-
-   A trust domain is the authority that issues wimse certificates and
-   tokens.  Trust domains SHOULD be identified by a fully qualified
-   domain name belonging to the organization defining the trust domain.
-   A trust domain maps to a trust anchor for validating X.509
-   certificates and a mechanism to securely obtain a JWK Set [RFC7517]
-   for validating wimse WIT tokens.  This mapping MUST be obtained
-   through a secure mechanism that ensures the authenticity and
-   integrity of the mapping is fresh and not compromised.
 
 4.  Application Level Service To Service Authentication
 
