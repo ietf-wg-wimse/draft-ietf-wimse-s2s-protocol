@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              D. Feldman
-Expires: 15 February 2025                                    Independent
+Expires: 24 March 2025                                       Independent
                                                               J. Salowey
                                                                   Venafi
                                                       A. Schwenkschuster
                                                                Microsoft
                                                               Y. Sheffer
                                                                   Intuit
-                                                          14 August 2024
+                                                       20 September 2024
 
 
                 WIMSE Service to Service Authentication
@@ -68,7 +68,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 15 February 2025.
+   This Internet-Draft will expire on 24 March 2025.
 
 Copyright Notice
 
@@ -90,6 +90,7 @@ Table of Contents
      1.1.  Deployment Architecture and Message Flow
    2.  Conventions and Definitions
    3.  Workload Identity
+     3.1.  Workload Identifier
    4.  Application Level Service To Service Authentication
      4.1.  The Workload Identity Token
        4.1.1.  The WIT HTTP Header
@@ -216,25 +217,26 @@ Table of Contents
 
 3.  Workload Identity
 
-   This document defines a workload identity as a URI [RFC3986].  This
-   URI is used in the subject fields in the certificates and tokens
-   defined later in this document.  This specification treats the URI as
-   opaque.  The format of the URI and the namespace for the URI are at
-   the discretion of the deployment at large.  Other specifications may
-   define specific URI structures for particular use cases.  An example
-   of a defined identity format is the SPIFFE ID
-   (https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md).
+3.1.  Workload Identifier
 
-   A workload identity only has meaning within the scope of a specific
-   issuer.  Two identities of the same value issued by different issuers
-   may or may not refer to the same workload.  In order to avoid
-   collisions identity URIs SHOULD specify, in the URI's "authority"
-   field, the trust domain associated with an issuer that is selected
-   from a global name space such as host domains.  However, the
-   validator of an identity credential MUST make sure that they are
-   using the correct issuer credential to verify the identity credential
-   and that the issuer is trusted to issue tokens for the defined trust
-   domain.
+   This document defines a workload identifier as a URI [RFC3986].  This
+   URI is used in the subject fields in the certificates and tokens
+   defined later in this document.  The URI MUST meet the criteria for
+   the URI type of Subject Alternative Name defined in Section 4.2.1.6
+   of [RFC5280].
+
+      The name MUST NOT be a relative URI, and it MUST follow the URI
+      syntax and encoding rules specified in [RFC3986].  The name MUST
+      include both a scheme and a scheme-specific-part.
+
+   In addition the URI MUST include an authority that identifies the
+   trust domain defining the identifier.  The trust domain SHOULD be a
+   fully qualified domain name belonging to the organization defining
+   the trust domain to help provide uniqueness for the trust domain
+   identifier.  The scheme and scheme specific part are not defined by
+   this specification.  An example of an identifier format that conforms
+   to this definition is SPIFFE ID
+   (https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md).
 
 4.  Application Level Service To Service Authentication
 
@@ -703,16 +705,17 @@ Table of Contents
    WIMSE certificate may contain SubjectAltName extensions of other
    types such as DNSName.
 
-   WIMSE identities may be used to validate server and client
-   connections.  When validating a WIMSE identity the relying party MUST
-   validate that the CA issuer for the WIMSE identity is authorized to
-   issue certificates for the trust domain of the WIMSE identity in the
-   certificate.  Other PKIX path validation rules apply.
+   WIMSE certificates may be used to secure both server and client
+   connections.  When validating a WIMSE certificate, the relying party
+   MUST validate that the CA issuer for the WIMSE certificate is
+   authorized to issue certificates for the trust domain of the WIMSE
+   workload identified by the certificate.  Other PKIX path validation
+   rules apply.
 
-   Servers wishing to use the WIMSE identity for authorizing the client
-   MUST require client certificate authentication in the TLS handshake.
-   Other methods of post handshake authentication are not specified by
-   this document.
+   Servers wishing to use the WIMSE certificate for authorizing the
+   client MUST require client certificate authentication in the TLS
+   handshake.  Other methods of post handshake authentication are not
+   specified by this document.
 
    WIMSE clients and servers MUST validate that the trust domain portion
    of the WIMSE certificate matches the expected trust domain for the
@@ -721,30 +724,30 @@ Table of Contents
 5.1.  Host Name Validation
 
 
-   // TODO: need to define trust root used to validate the certificate
+   // TODO: need to define trust anchor used to validate the certificate
    // is appropriate for the trust domain.
 
    It is RECOMMENDED that the server certificate contain a DNS SAN that
    the client can use to perform standard host name validation
    (Section 6.3 of [RFC9525]).  The client SHOULD also extract the WIMSE
-   identity from the certificate if it is present and validate that the
-   WIMSE trust domain matches the intended trust domain for the server.
-   The client MAY then further use the WIMSE identity in applying
-   authorization policy to the server.  If the client does not use the
-   DNS SAN then the client MUST match the WIMSE identity in the
-   certificate against the WIMSE identity of the workload of the
+   identifier from the certificate if it is present and validate that
+   the WIMSE trust domain matches the intended trust domain for the
+   server.  The client MAY then further use the WIMSE identifier in
+   applying authorization policy to the server.  If the client does not
+   use the DNS SAN then the client MUST match the WIMSE identifier in
+   the certificate against the WIMSE identity of the workload of the
    intended server according to a locally defined policy.  The host
    portion of the WIMSE URI is NOT treated as a host name as specified
    in section 6.4 of [RFC9525] but rather as a trust domain.  The server
-   identity is encoded in the path portion of the WIMSE identity in a
+   identity is encoded in the path portion of the WIMSE identifier in a
    deployment specific way.
 
 5.2.  Authorization Using the WIMSE Identity
 
-   The client or server application may retrieve the WIMSE identity from
-   the TLS layer for use in authorization, accounting and auditing.  For
-   example, the full URI may be matched against ACLs and other policy
-   constructs to authorize actions requested by the peer.
+   The client or server application may retrieve the WIMSE identifier
+   from the TLS layer for use in authorization, accounting and auditing.
+   For example, the full URI may be matched against ACLs and other
+   policy constructs to authorize actions requested by the peer.
 
 6.  Security Considerations
 
@@ -755,9 +758,9 @@ Table of Contents
    defined by the issuer.  Using a WIMSE ID without taking into account
    the trust domain could allow one domain to issue tokens to spoof
    identities in another domain.  Additionally, the trust domain must be
-   tied to an authorized issuer cryptographic trust root through some
+   tied to an authorized issuer cryptographic trust anchor through some
    mechanism such as a JWKS or X.509 certificate chain.  The association
-   of an issuer, trust domain and a cryptographic trust root MUST be
+   of an issuer, trust domain and a cryptographic trust anchor MUST be
    communicated securely out of band.
 
 
@@ -896,6 +899,12 @@ Table of Contents
               Specifications: ABNF", STD 68, RFC 5234,
               DOI 10.17487/RFC5234, January 2008,
               <https://www.rfc-editor.org/rfc/rfc5234>.
+
+   [RFC5280]  Cooper, D., Santesson, S., Farrell, S., Boeyen, S.,
+              Housley, R., and W. Polk, "Internet X.509 Public Key
+              Infrastructure Certificate and Certificate Revocation List
+              (CRL) Profile", RFC 5280, DOI 10.17487/RFC5280, May 2008,
+              <https://www.rfc-editor.org/rfc/rfc5280>.
 
    [RFC7515]  Jones, M., Bradley, J., and N. Sakimura, "JSON Web
               Signature (JWS)", RFC 7515, DOI 10.17487/RFC7515, May
