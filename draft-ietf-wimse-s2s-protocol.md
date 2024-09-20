@@ -153,6 +153,10 @@ This document defines a workload identity as a URI {{!RFC3986}}. This URI is use
 
 A workload identity only has meaning within the scope of a specific issuer. Two identities of the same value issued by different issuers may or may not refer to the same workload. In order to avoid collisions identity URIs SHOULD specify, in the URI's "authority" field, the trust domain associated with an issuer that is selected from a global name space such as host domains. However, the validator of an identity credential MUST make sure that they are using the correct issuer credential to verify the identity credential and that the issuer is trusted to issue tokens for the defined trust domain.
 
+## Trust Domain
+
+A trust domain is the authority that issues wimse certificates and tokens. Trust domains SHOULD be identified by a fully qualified domain name belonging to the organization defining the trust domain.  A trust domain maps to a trust anchor for validating X.509 certificates and a mechanism to securely obtain a JWK Set {{!RFC7517}} for validating wimse WIT tokens. This mapping MUST be obtained through a secure mechanism that ensures the authenticity and integrity of the mapping is fresh and not compromised.
+
 # Application Level Service To Service Authentication {#app-level}
 
 As noted in the Introduction, for many deployments communication between workloads cannot use
