@@ -149,13 +149,19 @@ This document uses "service" and "workload" interchangeably. Otherwise, all term
 
 # Workload Identity {#whimsical-identity}
 
+## Trust Domain
+
+A trust domain is the authority that issues wimse certificates and tokens. Trust domains SHOULD be identified by a fully qualified domain name belonging to the organization defining the trust domain.
+A trust domain maps to a trust anchor for validating X.509 certificates and a mechanism to securely obtain a JWK Set {{!RFC7517}} for validating wimse WIT tokens. This mapping MUST be obtained through a secure mechanism that ensures the authenticity and integrity of the mapping is fresh and not compromised.
+
+A single organization may define multiple trust domains for different purpose such as different departments or environments. Each trust domain must have a unique identifier. Workload identifiers are scoped within a trust domain. If two identifiers differ only by trust domain they still refer to two different entities.
+
+## Workload Identifier
+
 This document defines a workload identity as a URI {{!RFC3986}}. This URI is used in the subject fields in the certificates and tokens defined later in this document. This specification treats the URI as opaque. The format of the URI and the namespace for the URI are at the discretion of the deployment at large. Other specifications may define specific URI structures for particular use cases. An example of a defined identity format is the [SPIFFE ID](https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md).
 
 A workload identity only has meaning within the scope of a specific issuer. Two identities of the same value issued by different issuers may or may not refer to the same workload. In order to avoid collisions identity URIs SHOULD specify, in the URI's "authority" field, the trust domain associated with an issuer that is selected from a global name space such as host domains. However, the validator of an identity credential MUST make sure that they are using the correct issuer credential to verify the identity credential and that the issuer is trusted to issue tokens for the defined trust domain.
 
-## Trust Domain
-
-A trust domain is the authority that issues wimse certificates and tokens. Trust domains SHOULD be identified by a fully qualified domain name belonging to the organization defining the trust domain.  A trust domain maps to a trust anchor for validating X.509 certificates and a mechanism to securely obtain a JWK Set {{!RFC7517}} for validating wimse WIT tokens. This mapping MUST be obtained through a secure mechanism that ensures the authenticity and integrity of the mapping is fresh and not compromised.
 
 # Application Level Service To Service Authentication {#app-level}
 
