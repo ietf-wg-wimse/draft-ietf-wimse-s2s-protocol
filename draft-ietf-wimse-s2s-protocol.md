@@ -534,7 +534,7 @@ In order to reduce the risk of theft and replay the PoP should have a limited sc
 
 * Binding WIT to Proof of Possession
 
-If the WIT itself is not bound in the proof of possession then it is possible that the WIT could be replaced by an attacker. If multiple WITs with different claims is issued for the same key this could result in the proof of possession having different meaning than what the sender intended and could give the attacker an advantage. Here are some possible mitigations.
+If the WIT itself is not bound in the proof of possession then it is possible that the WIT could be replaced by an attacker. If multiple WITs with different claims are issued for the same key this could result in the proof of possession having different meaning than what the sender intended and could give the attacker an advantage. Here are some possible mitigations.
 
 If the WIT only contains information that is already included in the POP signature then the different in WITs would not be meaningful. The verifier must check that the signed information matches the information in the WIT. Care must also be taken to understand what is substantial information. For example, even a unique identifier such as a jti claim could be problematic if the system associates additional information to this identifier.
 
