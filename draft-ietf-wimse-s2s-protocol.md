@@ -540,7 +540,7 @@ If the WIT only contains information that is already included in the POP signatu
 
 If the system ensures that the information associated with a WIT is the same for a given key that is embedded in the WIT then the attacker will not be able to substitute a different WIT with the signature. Here to care must be taken to understand what is substantial difference is.
 
-If the proof of possession includes the entire WIT in the signature then the signature will fail if the WIT is substituted and the attacker will not be able to replace the WIT.
+If the proof of possession covers the entire WIT in the signature then the signature will fail if the WIT is substituted and the attacker will not be able to replace the WIT.
 
 The last option to sign the WIT as part of the POP requires the least special verification steps. This is the approach taken by http message signatures in {{http-sig-auth}}. THe DPOP mechanism should take a similar approach if it continues to be part of the proposal.
 
