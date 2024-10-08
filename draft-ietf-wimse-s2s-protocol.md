@@ -542,7 +542,7 @@ If the system ensures that the information associated with a WIT is the same for
 
 If the proof of possession covers the entire WIT in the signature then the signature will fail if the WIT is substituted and the attacker will not be able to replace the WIT.
 
-The last option to sign the WIT as part of the POP requires the least special verification steps. This is the approach taken by http message signatures in {{http-sig-auth}}. THe DPOP mechanism should take a similar approach if it continues to be part of the proposal.
+The last option to sign the WIT as part of the POP requires the fewest special verification steps. This is the approach taken by http message signatures in {{http-sig-auth}}. The DPOP mechanism should take a similar approach if it continues to be part of the proposal.
 
 * Binding to a Timestamp or Nonce
 
