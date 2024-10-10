@@ -158,7 +158,7 @@ This document defines a workload identifier as a URI {{!RFC3986}}. This URI is u
 >   scheme and a scheme-specific-part.
 
 In addition the URI MUST include an authority that identifies the trust domain within which the identifier is scoped. The trust domain SHOULD be a fully qualified domain name belonging to the organization defining the trust domain to help provide uniqueness for the trust domain identifier. The scheme and scheme specific part are not defined by this specification. An example of an identifier format that conforms to this definition is [SPIFFE ID](https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md).
-
+While the URI encoding rules allow host names to be specified as IP addresses, IP addresses MUT NOT be used to represent trust domains except in the case where they are needed for compatibility with existing naming schemes.
 # Application Level Service To Service Authentication {#app-level}
 
 As noted in the Introduction, for many deployments communication between workloads cannot use
