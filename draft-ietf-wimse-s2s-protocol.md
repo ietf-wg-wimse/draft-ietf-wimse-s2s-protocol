@@ -484,6 +484,32 @@ A signed response would be:
 ~~~
 {: title="Signed Response"}
 
+## Comparing the DPoP Inspired Option with Message Signatures
+
+<cref>
+This section is temporarily part of the draft, while we expect the working group
+to select one of these options.
+</cref>
+
+The two options for protecting the workload's traffic vary with respect to implementation
+complexity, extensibility and security. Here is a summary of the main differences between
+{{dpop-esque-auth}} and {{http-sig-auth}}.
+
+- The DPoP-inspired solution is less HTTP-specific, making it easier to adapt for other protocols beyond HTTP. This flexibility is particularly valuable for asynchronous communication scenarios, such as event-driven systems.
+
+-    Message Signatures, on the other hand, benefit from an existing RFC with established implementations. This existing groundwork means that this option could be simpler to deploy.
+
+-    Given that the WIT (Web Interaction Token) is a type of JWT, the DPoP-inspired approach is less complex and technology-intensive than Message Signatures. In contrast, Message Signatures introduce additional layers of technology, potentially increasing the complexity of the overall system.
+
+-    Message Signatures offer superior integrity protection, particularly by mitigating message modification by middleboxes.
+
+-    A key advantage of Message Signatures is that they support response signing.
+This opens up the possibility for future decisions about whether to make
+response signing mandatory, allowing for flexibility in the specification
+and/or in specific deployment scenarios.
+
+-    In general, Message Signatures provide greater flexibility compared to the DPoP-inspired approach. The draft (and subsequent implementations) can decide whether specific aspects of message signing, such as coverage of particular fields, should be mandatory or optional.
+
 # Using Mutual TLS for Service To Service Authentication {#mutual-tls}
 
 The WIMSE workload identity may be carried within an X.509 certificate. The WIMSE workload identity MUST be encoded in a SubjectAltName extension of type URI.  There MUST be only one SubjectAltName extension of type URI in a WIMSE certificate.  The WIMSE certificate may contain SubjectAltName extensions of other types such as DNSName.
