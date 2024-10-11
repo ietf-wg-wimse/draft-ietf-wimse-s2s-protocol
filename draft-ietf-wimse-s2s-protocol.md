@@ -37,7 +37,7 @@ author:
     email: joe.salowey@gmail.com
  -
     fullname: "Arndt Schwenkschuster"
-    organization: Microsoft
+    organization: SPIRL
     email: arndts.ietf@gmail.com
  -
     fullname: "Yaron Sheffer"
