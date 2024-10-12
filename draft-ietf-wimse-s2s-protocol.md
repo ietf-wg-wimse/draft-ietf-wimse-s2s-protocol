@@ -486,7 +486,7 @@ A signed response would be:
 
 # Using Mutual TLS for Service To Service Authentication {#mutual-tls}
 
-The WIMSE workload identity may be carried within an X.509 certificate. The WIMSE workload identity MUST be encoded in a SubjectAltName extension of type URI.  There MUST be only one SubjectAltName extension of type URI in a WIMSE certificate.  If the workload will act as a TLS server for clients that do not understand WIMSE workload identities it is RECOMMENDED that WIMSE certificate contain a SubjectAltName of DNSName with the appropriate DNS names for the server. The certificate may contain SubjectAltName extensions of other types.
+The WIMSE workload identity may be carried within an X.509 certificate. The WIMSE workload identity MUST be encoded in a SubjectAltName extension of type URI.  There MUST be only one SubjectAltName extension of type URI in a WIMSE certificate.  If the workload will act as a TLS server for clients that do not understand WIMSE workload identities it is RECOMMENDED that WIMSE certificate contain a SubjectAltName of type DNSName with the appropriate DNS names for the server. The certificate may contain SubjectAltName extensions of other types.
 
 WIMSE certificates may be used to authenticate both the server and client side of the connections.  When validating a WIMSE certificate, the relying party MUST use the trust anchors configured for the trust domain in the WIMSE identity to validate the peer's certificate.  Other PKIX {{!RFC5280}} path validation rules apply. WIMSE clients and servers MUST validate that the trust domain portion of the WIMSE certificate matches the expected trust domain for the other side of the connection.
 
