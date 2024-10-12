@@ -1203,10 +1203,10 @@ would be authenticated at the application level.<a href="#section-abstract-1" cl
             <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-using-mutual-tls-for-servic" class="internal xref">Using Mutual TLS for Service To Service Authentication</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1">
-                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="auto internal xref">5.1</a>.  <a href="#name-host-name-validation" class="internal xref">Host Name Validation</a></p>
+                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="auto internal xref">5.1</a>.  <a href="#name-server-name-validation" class="internal xref">Server Name Validation</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2">
-                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="auto internal xref">5.2</a>.  <a href="#name-authorization-using-the-wim" class="internal xref">Authorization Using the WIMSE Identity</a></p>
+                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="auto internal xref">5.2</a>.  <a href="#name-client-authorization-using-" class="internal xref">Client Authorization Using the WIMSE Identity</a></p>
 </li>
             </ul>
 </li>
@@ -1940,25 +1940,24 @@ No ice cream today.
       <h2 id="name-using-mutual-tls-for-servic">
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-using-mutual-tls-for-servic" class="section-name selfRef">Using Mutual TLS for Service To Service Authentication</a>
       </h2>
-<p id="section-5-1">The WIMSE workload identity may be carried within an X.509 certificate. The WIMSE workload identity <span class="bcp14">MUST</span> be encoded in a SubjectAltName extension of type URI.  There <span class="bcp14">MUST</span> be only one SubjectAltName extension of type URI in a WIMSE certificate.  The WIMSE certificate may contain SubjectAltName extensions of other types such as DNSName.<a href="#section-5-1" class="pilcrow">¶</a></p>
-<p id="section-5-2">WIMSE certificates may be used to secure both server and client connections.  When validating a WIMSE certificate, the relying party <span class="bcp14">MUST</span> validate that the CA issuer for the WIMSE certificate is authorized to issue certificates for the trust domain of the WIMSE workload identified by the certificate. Other PKIX path validation rules apply.<a href="#section-5-2" class="pilcrow">¶</a></p>
+<p id="section-5-1">The WIMSE workload identity may be carried within an X.509 certificate. The WIMSE workload identity <span class="bcp14">MUST</span> be encoded in a SubjectAltName extension of type URI.  There <span class="bcp14">MUST</span> be only one SubjectAltName extension of type URI in a WIMSE certificate.  If the workload will act as a TLS server for clients that do not understand WIMSE workload identities it is <span class="bcp14">RECOMMENDED</span> that WIMSE certificate contain a SubjectAltName of type DNSName with the appropriate DNS names for the server. The certificate may contain SubjectAltName extensions of other types.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-2">WIMSE certificates may be used to authenticate both the server and client side of the connections.  When validating a WIMSE certificate, the relying party <span class="bcp14">MUST</span> use the trust anchors configured for the trust domain in the WIMSE identity to validate the peer's certificate.  Other PKIX <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span> path validation rules apply. WIMSE clients and servers <span class="bcp14">MUST</span> validate that the trust domain portion of the WIMSE certificate matches the expected trust domain for the other side of the connection.<a href="#section-5-2" class="pilcrow">¶</a></p>
 <p id="section-5-3">Servers wishing to use the WIMSE certificate for authorizing the client <span class="bcp14">MUST</span> require client certificate authentication in the TLS handshake. Other methods of post handshake authentication are not specified by this document.<a href="#section-5-3" class="pilcrow">¶</a></p>
-<p id="section-5-4">WIMSE clients and servers <span class="bcp14">MUST</span> validate that the trust domain portion of the WIMSE certificate matches the expected trust domain for the other side of the connection.<a href="#section-5-4" class="pilcrow">¶</a></p>
-<div id="host-name-validation">
+<p id="section-5-4">WIMSE server certificates <span class="bcp14">SHOULD</span> have the id-kp-serverAuth extended key usage <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span> field set and WIMSE client certificates <span class="bcp14">SHOULD</span> have the id-kp-clientAuth extended key usage field set. A certificate that is used for both client and server connections may have both fields set. This specification does not make any other requirements beyond <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span> on the contents of WIMSE certificates or on the certification authorities that issue WIMSE certificates.<a href="#section-5-4" class="pilcrow">¶</a></p>
+<div id="server-name">
 <section id="section-5.1">
-        <h3 id="name-host-name-validation">
-<a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-host-name-validation" class="section-name selfRef">Host Name Validation</a>
+        <h3 id="name-server-name-validation">
+<a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-server-name-validation" class="section-name selfRef">Server Name Validation</a>
         </h3>
-<p id="section-5.1-1"><span class="cref">TODO: need to define trust anchor used to validate the certificate is appropriate for the trust domain.</span><a href="#section-5.1-1" class="pilcrow">¶</a></p>
-<p id="section-5.1-2">It is <span class="bcp14">RECOMMENDED</span> that the server certificate contain a DNS SAN that the client can use to perform standard host name validation (<span><a href="https://rfc-editor.org/rfc/rfc9525#section-6.3" class="relref">Section 6.3</a> of [<a href="#RFC9525" class="cite xref">RFC9525</a>]</span>).  The client <span class="bcp14">SHOULD</span> also extract the WIMSE identifier from the certificate if it is present and validate that the WIMSE trust domain matches the intended trust domain for the server.  The client <span class="bcp14">MAY</span> then further use the WIMSE identifier in applying authorization policy to the server.  If the client does not use the DNS SAN then the client <span class="bcp14">MUST</span> match the WIMSE identifier in the certificate against the WIMSE identity of the workload of the intended server according to a locally defined policy. The host portion of the WIMSE URI is NOT treated as a host name as specified in section 6.4 of <span>[<a href="#RFC9525" class="cite xref">RFC9525</a>]</span> but rather as a trust domain. The server identity is encoded in the path portion of the WIMSE identifier in a deployment specific way.<a href="#section-5.1-2" class="pilcrow">¶</a></p>
+<p id="section-5.1-1">If the WIMSE client uses a hostname to connect to the server and the server certificate contain a DNS SAN the client <span class="bcp14">MUST</span> perform standard host name validation (<span><a href="https://rfc-editor.org/rfc/rfc9525#section-6.3" class="relref">Section 6.3</a> of [<a href="#RFC9525" class="cite xref">RFC9525</a>]</span>) unless it is configured with the information necessary to validate the peer's WIMSE identity. If the client did not perform standard host name validation then the WIMSE client <span class="bcp14">SHOULD</span> further use the WIMSE workload identifier to validate the server.  The host portion of the WIMSE URI is NOT treated as a host name as specified in section 6.4 of <span>[<a href="#RFC9525" class="cite xref">RFC9525</a>]</span> but rather as a trust domain. The server identity is encoded in the path portion of the WIMSE workload identifier in a deployment specific way. Validating the WIMSE workload identity could be a simple match on the trust domain and path portions of the identifier or validation may be based on the specific details on how the identifier is constructed. The path portion of the WIMSE identifier <span class="bcp14">MUST</span> always be considered in the scope of the trust domain.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="authorization-using-the-wimse-identity">
+<div id="client-name">
 <section id="section-5.2">
-        <h3 id="name-authorization-using-the-wim">
-<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-authorization-using-the-wim" class="section-name selfRef">Authorization Using the WIMSE Identity</a>
+        <h3 id="name-client-authorization-using-">
+<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-client-authorization-using-" class="section-name selfRef">Client Authorization Using the WIMSE Identity</a>
         </h3>
-<p id="section-5.2-1">The client or server application may retrieve the WIMSE identifier from the TLS layer for use in authorization, accounting and auditing.  For example, the full URI may be matched against ACLs and other policy constructs to authorize actions requested by the peer.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
+<p id="section-5.2-1">The server application retrieves the client certificate WIMSE URI subjectAltName from the TLS layer for use in authorization, accounting and auditing.  For example, the full WIMSE URI may be matched against ACLs to authorize actions requested by the peer and the URI may be included in log messages to associate actions to the client workload for audit purposes. A deployment may specify other authorization policies based on the specific details of how the WIMSE identifier is constructed. The path portion of the WIMSE identifier <span class="bcp14">MUST</span> always be considered in the scope of the trust domain.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2086,6 +2085,10 @@ While a fresh nonce could be included in the PoP, a mechanism for distributing a
 <dt id="RFC5234">[RFC5234]</dt>
         <dd>
 <span class="refAuthor">Crocker, D., Ed.</span> and <span class="refAuthor">P. Overell</span>, <span class="refTitle">"Augmented BNF for Syntax Specifications: ABNF"</span>, <span class="seriesInfo">STD 68</span>, <span class="seriesInfo">RFC 5234</span>, <span class="seriesInfo">DOI 10.17487/RFC5234</span>, <time datetime="2008-01" class="refDate">January 2008</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc5234">https://www.rfc-editor.org/rfc/rfc5234</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC5280">[RFC5280]</dt>
+        <dd>
+<span class="refAuthor">Cooper, D.</span>, <span class="refAuthor">Santesson, S.</span>, <span class="refAuthor">Farrell, S.</span>, <span class="refAuthor">Boeyen, S.</span>, <span class="refAuthor">Housley, R.</span>, and <span class="refAuthor">W. Polk</span>, <span class="refTitle">"Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile"</span>, <span class="seriesInfo">RFC 5280</span>, <span class="seriesInfo">DOI 10.17487/RFC5280</span>, <time datetime="2008-05" class="refDate">May 2008</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc5280">https://www.rfc-editor.org/rfc/rfc5280</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC7515">[RFC7515]</dt>
         <dd>
