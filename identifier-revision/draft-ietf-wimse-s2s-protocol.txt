@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              D. Feldman
-Expires: 30 March 2025                                       Independent
+Expires: 15 April 2025                                       Independent
                                                               J. Salowey
                                                                   Venafi
                                                       A. Schwenkschuster
                                                                Microsoft
                                                               Y. Sheffer
                                                                   Intuit
-                                                       26 September 2024
+                                                         12 October 2024
 
 
                 WIMSE Service to Service Authentication
@@ -68,7 +68,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 30 March 2025.
+   This Internet-Draft will expire on 15 April 2025.
 
 Copyright Notice
 
@@ -237,6 +237,10 @@ Table of Contents
    defined by this specification.  An example of an identifier format
    that conforms to this definition is SPIFFE ID
    (https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md).
+   While the URI encoding rules allow host names to be specified as IP
+   addresses, IP addresses MUT NOT be used to represent trust domains
+   except in the case where they are needed for compatibility with
+   existing naming schemes.
 
 4.  Application Level Service To Service Authentication
 
