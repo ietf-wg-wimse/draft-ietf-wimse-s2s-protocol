@@ -1418,8 +1418,16 @@ A trust domain maps to one or more trust anchors for validating X.509 certificat
         <h3 id="name-workload-identifier">
 <a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-workload-identifier" class="section-name selfRef">Workload Identifier</a>
         </h3>
-<p id="section-3.2-1">This document defines a workload identity as a URI <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>. This URI is used in the subject fields in the certificates and tokens defined later in this document. This specification treats the URI as opaque. The format of the URI and the namespace for the URI are at the discretion of the deployment at large. Other specifications may define specific URI structures for particular use cases. An example of a defined identity format is the <a href="https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md">SPIFFE ID</a>.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
-<p id="section-3.2-2">A workload identity only has meaning within the scope of a specific issuer. Two identities of the same value issued by different issuers may or may not refer to the same workload. In order to avoid collisions identity URIs <span class="bcp14">SHOULD</span> specify, in the URI's "authority" field, the trust domain associated with an issuer that is selected from a global name space such as host domains. However, the validator of an identity credential <span class="bcp14">MUST</span> make sure that they are using the correct issuer credential to verify the identity credential and that the issuer is trusted to issue tokens for the defined trust domain.<a href="#section-3.2-2" class="pilcrow">¶</a></p>
+<p id="section-3.2-1">This document defines a workload identifier as a URI <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>. This URI is used in the subject fields in the certificates and tokens defined later in this document. The URI <span class="bcp14">MUST</span> meet the criteria for the URI type of Subject Alternative Name defined in Section 4.2.1.6 of <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span>.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
+<ul class="normal ulEmpty">
+<li class="normal ulEmpty" id="section-3.2-2.1">
+            <p id="section-3.2-2.1.1">The name <span class="bcp14">MUST NOT</span> be a relative URI, and it <span class="bcp14">MUST</span> follow the URI syntax and
+  encoding rules specified in <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>.  The name <span class="bcp14">MUST</span> include both a
+  scheme and a scheme-specific-part.<a href="#section-3.2-2.1.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-3.2-3">In addition the URI <span class="bcp14">MUST</span> include an authority that identifies the trust domain within which the identifier is scoped. The trust domain <span class="bcp14">SHOULD</span> be a fully qualified domain name belonging to the organization defining the trust domain to help provide uniqueness for the trust domain identifier. The scheme and scheme specific part are not defined by this specification. An example of an identifier format that conforms to this definition is <a href="https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md">SPIFFE ID</a>.
+While the URI encoding rules allow host names to be specified as IP addresses, IP addresses MUT NOT be used to represent trust domains except in the case where they are needed for compatibility with existing naming schemes.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
