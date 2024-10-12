@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              D. Feldman
-Expires: 13 April 2025                                       Independent
+Expires: 15 April 2025                                       Independent
                                                               J. Salowey
                                                                   Venafi
                                                       A. Schwenkschuster
                                                                Microsoft
                                                               Y. Sheffer
                                                                   Intuit
-                                                         10 October 2024
+                                                         12 October 2024
 
 
                 WIMSE Service to Service Authentication
@@ -68,7 +68,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 13 April 2025.
+   This Internet-Draft will expire on 15 April 2025.
 
 Copyright Notice
 
@@ -715,7 +715,7 @@ Table of Contents
       RFC with established implementations.  This existing groundwork
       means that this option could be simpler to deploy.
 
-   *  Given that the WIT (Web Interaction Token) is a type of JWT, the
+   *  Given that the WIT (Workload Identity Token) is a type of JWT, the
       DPoP-inspired approach is less complex and technology-intensive
       than Message Signatures.  In contrast, Message Signatures
       introduce additional layers of technology, potentially increasing
