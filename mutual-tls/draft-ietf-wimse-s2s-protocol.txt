@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              D. Feldman
-Expires: 12 April 2025                                       Independent
+Expires: 15 April 2025                                       Independent
                                                               J. Salowey
                                                                   Venafi
                                                       A. Schwenkschuster
                                                                Microsoft
                                                               Y. Sheffer
                                                                   Intuit
-                                                          9 October 2024
+                                                         12 October 2024
 
 
                 WIMSE Service to Service Authentication
@@ -68,7 +68,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 12 April 2025.
+   This Internet-Draft will expire on 15 April 2025.
 
 Copyright Notice
 
@@ -702,8 +702,8 @@ Table of Contents
    SubjectAltName extension of type URI in a WIMSE certificate.  If the
    workload will act as a TLS server for clients that do not understand
    WIMSE workload identities it is RECOMMENDED that WIMSE certificate
-   contain a SubjectAltName of DNSName with the appropriate DNS names
-   for the server.  The certificate may contain SubjectAltName
+   contain a SubjectAltName of type DNSName with the appropriate DNS
+   names for the server.  The certificate may contain SubjectAltName
    extensions of other types.
 
    WIMSE certificates may be used to authenticate both the server and

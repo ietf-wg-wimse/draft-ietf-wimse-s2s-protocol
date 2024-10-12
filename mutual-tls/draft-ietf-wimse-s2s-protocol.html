@@ -29,7 +29,7 @@ would be authenticated at the application level.
 <meta content="draft-ietf-wimse-s2s-protocol-latest" name="ietf.draft">
 <!-- Generator version information:
   xml2rfc 3.23.2
-    Python 3.12.6
+    Python 3.12.7
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
     intervaltree 3.1.0
@@ -1043,7 +1043,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Campbell, et al.</td>
-<td class="center">Expires 12 April 2025</td>
+<td class="center">Expires 15 April 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1056,12 +1056,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-wimse-s2s-protocol-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-10-09" class="published">9 October 2024</time>
+<time datetime="2024-10-12" class="published">12 October 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-04-12">12 April 2025</time></dd>
+<dd class="expires"><time datetime="2025-04-15">15 April 2025</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1137,7 +1137,7 @@ would be authenticated at the application level.<a href="#section-abstract-1" cl
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 12 April 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 15 April 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1940,7 +1940,7 @@ No ice cream today.
       <h2 id="name-using-mutual-tls-for-servic">
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-using-mutual-tls-for-servic" class="section-name selfRef">Using Mutual TLS for Service To Service Authentication</a>
       </h2>
-<p id="section-5-1">The WIMSE workload identity may be carried within an X.509 certificate. The WIMSE workload identity <span class="bcp14">MUST</span> be encoded in a SubjectAltName extension of type URI.  There <span class="bcp14">MUST</span> be only one SubjectAltName extension of type URI in a WIMSE certificate.  If the workload will act as a TLS server for clients that do not understand WIMSE workload identities it is <span class="bcp14">RECOMMENDED</span> that WIMSE certificate contain a SubjectAltName of DNSName with the appropriate DNS names for the server. The certificate may contain SubjectAltName extensions of other types.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-1">The WIMSE workload identity may be carried within an X.509 certificate. The WIMSE workload identity <span class="bcp14">MUST</span> be encoded in a SubjectAltName extension of type URI.  There <span class="bcp14">MUST</span> be only one SubjectAltName extension of type URI in a WIMSE certificate.  If the workload will act as a TLS server for clients that do not understand WIMSE workload identities it is <span class="bcp14">RECOMMENDED</span> that WIMSE certificate contain a SubjectAltName of type DNSName with the appropriate DNS names for the server. The certificate may contain SubjectAltName extensions of other types.<a href="#section-5-1" class="pilcrow">¶</a></p>
 <p id="section-5-2">WIMSE certificates may be used to authenticate both the server and client side of the connections.  When validating a WIMSE certificate, the relying party <span class="bcp14">MUST</span> use the trust anchors configured for the trust domain in the WIMSE identity to validate the peer's certificate.  Other PKIX <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span> path validation rules apply. WIMSE clients and servers <span class="bcp14">MUST</span> validate that the trust domain portion of the WIMSE certificate matches the expected trust domain for the other side of the connection.<a href="#section-5-2" class="pilcrow">¶</a></p>
 <p id="section-5-3">Servers wishing to use the WIMSE certificate for authorizing the client <span class="bcp14">MUST</span> require client certificate authentication in the TLS handshake. Other methods of post handshake authentication are not specified by this document.<a href="#section-5-3" class="pilcrow">¶</a></p>
 <p id="section-5-4">WIMSE server certificates <span class="bcp14">MUST</span> have the id-kp-serverAuth extended key usage <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span> field set and WIMSE client certificates <span class="bcp14">MUST</span> have the id-kp-clientAuth extended key usage field set. A certificate that is used for both client and server connections may has both fields set. This specification does not make any other requirements beyond <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span> on the contents of WIMSE certificates or on the certificates that issue WIMSE certificates.<a href="#section-5-4" class="pilcrow">¶</a></p>
