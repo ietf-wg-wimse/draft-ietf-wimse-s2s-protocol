@@ -37,7 +37,7 @@ author:
     email: joe.salowey@gmail.com
  -
     fullname: "Arndt Schwenkschuster"
-    organization: Microsoft
+    organization: SPIRL
     email: arndts.ietf@gmail.com
  -
     fullname: "Yaron Sheffer"
@@ -149,6 +149,13 @@ This document uses "service" and "workload" interchangeably. Otherwise, all term
 
 # Workload Identity {#whimsical-identity}
 
+## Trust Domain
+
+A trust domain is a logical grouping of systems that share a common set of security controls and policies. WIMSE certificates and tokens are issued under the authority of a trust domain. Trust domains SHOULD be identified by a fully qualified domain name belonging to the organization defining the trust domain.
+A trust domain maps to one or more trust anchors for validating X.509 certificates and a mechanism to securely obtain a JWK Set {{!RFC7517}} for validating WIMSE WIT tokens. This mapping MUST be obtained through a secure mechanism that ensures the authenticity and integrity of the mapping is fresh and not compromised. This secure mechanism is out of scope for this document.
+
+A single organization may define multiple trust domains for different purpose such as different departments or environments. Each trust domain must have a unique identifier. Workload identifiers are scoped within a trust domain. If two identifiers differ only by trust domain they still refer to two different entities.
+
 ## Workload Identifier
 
 This document defines a workload identifier as a URI {{!RFC3986}}. This URI is used in the subject fields in the certificates and tokens defined later in this document. The URI MUST meet the criteria for the URI type of Subject Alternative Name defined in Section 4.2.1.6 of {{!RFC5280}}.
@@ -159,6 +166,7 @@ This document defines a workload identifier as a URI {{!RFC3986}}. This URI is u
 
 In addition the URI MUST include an authority that identifies the trust domain within which the identifier is scoped. The trust domain SHOULD be a fully qualified domain name belonging to the organization defining the trust domain to help provide uniqueness for the trust domain identifier. The scheme and scheme specific part are not defined by this specification. An example of an identifier format that conforms to this definition is [SPIFFE ID](https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md).
 While the URI encoding rules allow host names to be specified as IP addresses, IP addresses MUT NOT be used to represent trust domains except in the case where they are needed for compatibility with existing naming schemes.
+
 
 # Application Level Service To Service Authentication {#app-level}
 
@@ -493,25 +501,21 @@ A signed response would be:
 
 # Using Mutual TLS for Service To Service Authentication {#mutual-tls}
 
-The WIMSE workload identity may be carried within an X.509 certificate. The WIMSE workload identity MUST be encoded in a SubjectAltName extension of type URI.  There MUST be only one SubjectAltName extension of type URI in a WIMSE certificate.  The WIMSE certificate may contain SubjectAltName extensions of other types such as DNSName.
+The WIMSE workload identity may be carried within an X.509 certificate. The WIMSE workload identity MUST be encoded in a SubjectAltName extension of type URI.  There MUST be only one SubjectAltName extension of type URI in a WIMSE certificate.  If the workload will act as a TLS server for clients that do not understand WIMSE workload identities it is RECOMMENDED that WIMSE certificate contain a SubjectAltName of type DNSName with the appropriate DNS names for the server. The certificate may contain SubjectAltName extensions of other types.
 
-WIMSE certificates may be used to secure both server and client connections.  When validating a WIMSE certificate, the relying party MUST validate that the CA issuer for the WIMSE certificate is authorized to issue certificates for the trust domain of the WIMSE workload identified by the certificate. Other PKIX path validation rules apply.
+WIMSE certificates may be used to authenticate both the server and client side of the connections.  When validating a WIMSE certificate, the relying party MUST use the trust anchors configured for the trust domain in the WIMSE identity to validate the peer's certificate.  Other PKIX {{!RFC5280}} path validation rules apply. WIMSE clients and servers MUST validate that the trust domain portion of the WIMSE certificate matches the expected trust domain for the other side of the connection.
 
 Servers wishing to use the WIMSE certificate for authorizing the client MUST require client certificate authentication in the TLS handshake. Other methods of post handshake authentication are not specified by this document.
 
-WIMSE clients and servers MUST validate that the trust domain portion of the WIMSE certificate matches the expected trust domain for the other side of the connection.
+WIMSE server certificates SHOULD have the id-kp-serverAuth extended key usage {{!RFC5280}} field set and WIMSE client certificates SHOULD have the id-kp-clientAuth extended key usage field set. A certificate that is used for both client and server connections may have both fields set. This specification does not make any other requirements beyond {{!RFC5280}} on the contents of WIMSE certificates or on the certification authorities that issue WIMSE certificates.
 
-## Host Name Validation
+## Server Name Validation {#server-name}
 
-<cref>TODO: need to define trust anchor used to validate the certificate is appropriate for the trust domain.</cref>
+If the WIMSE client uses a hostname to connect to the server and the server certificate contain a DNS SAN the client MUST perform standard host name validation ({{Section 6.3 of RFC9525}}) unless it is configured with the information necessary to validate the peer's WIMSE identity. If the client did not perform standard host name validation then the WIMSE client SHOULD further use the WIMSE workload identifier to validate the server.  The host portion of the WIMSE URI is NOT treated as a host name as specified in section 6.4 of {{!RFC9525}} but rather as a trust domain. The server identity is encoded in the path portion of the WIMSE workload identifier in a deployment specific way. Validating the WIMSE workload identity could be a simple match on the trust domain and path portions of the identifier or validation may be based on the specific details on how the identifier is constructed. The path portion of the WIMSE identifier MUST always be considered in the scope of the trust domain.
 
-It is RECOMMENDED that the server certificate contain a DNS SAN that the client can use to perform standard host name validation ({{Section 6.3 of RFC9525}}).  The client SHOULD also extract the WIMSE identifier from the certificate if it is present and validate that the WIMSE trust domain matches the intended trust domain for the server.  The client MAY then further use the WIMSE identifier in applying authorization policy to the server.  If the client does not use the DNS SAN then the client MUST match the WIMSE identifier in the certificate against the WIMSE identity of the workload of the intended server according to a locally defined policy. The host portion of the WIMSE URI is NOT treated as a host name as specified in section 6.4 of {{!RFC9525}} but rather as a trust domain. The server identity is encoded in the path portion of the WIMSE identifier in a deployment specific way.
+## Client Authorization Using the WIMSE Identity {#client-name}
 
-
-## Authorization Using the WIMSE Identity
-
-The client or server application may retrieve the WIMSE identifier from the TLS layer for use in authorization, accounting and auditing.  For example, the full URI may be matched against ACLs and other policy constructs to authorize actions requested by the peer.
-
+The server application retrieves the client certificate WIMSE URI subjectAltName from the TLS layer for use in authorization, accounting and auditing.  For example, the full WIMSE URI may be matched against ACLs to authorize actions requested by the peer and the URI may be included in log messages to associate actions to the client workload for audit purposes. A deployment may specify other authorization policies based on the specific details of how the WIMSE identifier is constructed. The path portion of the WIMSE identifier MUST always be considered in the scope of the trust domain.
 
 # Security Considerations
 
