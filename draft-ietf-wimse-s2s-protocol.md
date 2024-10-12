@@ -158,9 +158,14 @@ A single organization may define multiple trust domains for different purpose su
 
 ## Workload Identifier
 
-This document defines a workload identity as a URI {{!RFC3986}}. This URI is used in the subject fields in the certificates and tokens defined later in this document. This specification treats the URI as opaque. The format of the URI and the namespace for the URI are at the discretion of the deployment at large. Other specifications may define specific URI structures for particular use cases. An example of a defined identity format is the [SPIFFE ID](https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md).
+This document defines a workload identifier as a URI {{!RFC3986}}. This URI is used in the subject fields in the certificates and tokens defined later in this document. The URI MUST meet the criteria for the URI type of Subject Alternative Name defined in Section 4.2.1.6 of {{!RFC5280}}.
 
-A workload identity only has meaning within the scope of a specific issuer. Two identities of the same value issued by different issuers may or may not refer to the same workload. In order to avoid collisions identity URIs SHOULD specify, in the URI's "authority" field, the trust domain associated with an issuer that is selected from a global name space such as host domains. However, the validator of an identity credential MUST make sure that they are using the correct issuer credential to verify the identity credential and that the issuer is trusted to issue tokens for the defined trust domain.
+>   The name MUST NOT be a relative URI, and it MUST follow the URI syntax and
+>   encoding rules specified in {{!RFC3986}}.  The name MUST include both a
+>   scheme and a scheme-specific-part.
+
+In addition the URI MUST include an authority that identifies the trust domain within which the identifier is scoped. The trust domain SHOULD be a fully qualified domain name belonging to the organization defining the trust domain to help provide uniqueness for the trust domain identifier. The scheme and scheme specific part are not defined by this specification. An example of an identifier format that conforms to this definition is [SPIFFE ID](https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md).
+While the URI encoding rules allow host names to be specified as IP addresses, IP addresses MUT NOT be used to represent trust domains except in the case where they are needed for compatibility with existing naming schemes.
 
 
 # Application Level Service To Service Authentication {#app-level}
