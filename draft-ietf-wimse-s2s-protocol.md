@@ -492,7 +492,7 @@ WIMSE certificates may be used to authenticate both the server and client side o
 
 Servers wishing to use the WIMSE certificate for authorizing the client MUST require client certificate authentication in the TLS handshake. Other methods of post handshake authentication are not specified by this document.
 
-WIMSE server certificates MUST have the id-kp-serverAuth extended key usage {{!RFC5280}} field set and WIMSE client certificates MUST have the id-kp-clientAuth extended key usage field set. A certificate that is used for both client and server connections may has both fields set. This specification does not make any other requirements beyond {{!RFC5280}} on the contents of WIMSE certificates or on the certificates that issue WIMSE certificates.
+WIMSE server certificates SHOULD have the id-kp-serverAuth extended key usage {{!RFC5280}} field set and WIMSE client certificates SHOULD have the id-kp-clientAuth extended key usage field set. A certificate that is used for both client and server connections may have both fields set. This specification does not make any other requirements beyond {{!RFC5280}} on the contents of WIMSE certificates or on the certification authorities that issue WIMSE certificates.
 
 ## Server Name Validation {#server-name}
 
