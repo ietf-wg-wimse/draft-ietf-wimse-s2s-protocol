@@ -589,7 +589,8 @@ TODO: `Workload-Proof-Token` from {{dpop-esque-auth}}
 ## draft-ietf-wimse-s2s-protocol-01
 
 * Addressed multiple comments from Pieter.
-* Clarified "trust domain" and "workload identifier".
+* Clarified WIMSE identity concepts, specifically "trust domain"
+and "workload identifier".
 * Much more detail around mTLS, including some normative language.
 * WIT (the identity token) is now included in the WPT proof of possession.
 * Added a section comparing the DPoP-inspired app-level security option to
