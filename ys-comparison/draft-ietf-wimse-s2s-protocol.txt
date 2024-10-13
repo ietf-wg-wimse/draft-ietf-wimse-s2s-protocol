@@ -738,7 +738,7 @@ Table of Contents
       proof so it cannot be easily reused in another context, which is
       often a security improvement.  The DPoP inspired approach could be
       designed to include extensibility to sign other fields, but this
-      makes it closer to trying to reinvent message signatures.
+      would make it closer to trying to reinvent Message Signatures.
 
 5.  Using Mutual TLS for Service To Service Authentication
 
