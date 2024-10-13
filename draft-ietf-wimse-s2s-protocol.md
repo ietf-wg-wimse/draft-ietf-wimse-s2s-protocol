@@ -519,7 +519,10 @@ and/or in specific deployment scenarios.
 - In general, Message Signatures provide greater flexibility compared to
 the DPoP-inspired approach. The draft (and subsequent implementations) can decide
 whether specific aspects of message signing, such as coverage of particular fields,
-should be mandatory or optional.
+should be mandatory or optional. Covering more fields will constrain the proof
+so it cannot be easily reused in another context, which is often a security improvement. The DPoP inspired approach could
+be designed to include extensibility to sign other fields, but this makes it closer to
+trying to reinvent message signatures.
 
 # Using Mutual TLS for Service To Service Authentication {#mutual-tls}
 
