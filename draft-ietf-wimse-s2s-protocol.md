@@ -586,6 +586,15 @@ TODO: `Workload-Proof-Token` from {{dpop-esque-auth}}
 # Document History
 <cref>RFC Editor: please remove before publication.</cref>
 
+## draft-ietf-wimse-s2s-protocol-01
+
+* Addressed multiple comments from Pieter.
+* Clarified "trust domain" and "workload identifier".
+* Much more detail around mTLS, including some normative language.
+* WIT (the identity token) is now included in the WPT proof of possession.
+* Added a section comparing the DPoP-inspired app-level security option to
+the Message Signature-based alternative.
+
 ## draft-ietf-wimse-s2s-protocol-00
 
 * Initial WG draft, an exact copy of draft-sheffer-wimse-s2s-protocol-00
