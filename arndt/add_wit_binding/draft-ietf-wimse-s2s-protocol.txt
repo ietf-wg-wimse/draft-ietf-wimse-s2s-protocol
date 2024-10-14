@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              D. Feldman
-Expires: 14 April 2025                                       Independent
+Expires: 17 April 2025                                       Independent
                                                               J. Salowey
                                                                   Venafi
                                                       A. Schwenkschuster
                                                                Microsoft
                                                               Y. Sheffer
                                                                   Intuit
-                                                         11 October 2024
+                                                         14 October 2024
 
 
                 WIMSE Service to Service Authentication
@@ -68,7 +68,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 14 April 2025.
+   This Internet-Draft will expire on 17 April 2025.
 
 Copyright Notice
 
@@ -448,8 +448,8 @@ Table of Contents
 
       -  jti: A unique identifier for the token.
 
-      -  wth: Hash of the Workload Identity Token.  The value, as
-         defined in Section 4.1, is the base64url encoding of the
+      -  wth: Hash of the Workload Identity Token, defined in
+         Section 4.1.  The value is the base64url encoding of the
          SHA-256 hash of the ASCII encoding of the token's value.
 
       -  ath: Hash of the OAuth access token, if present in the request,
@@ -871,7 +871,7 @@ Table of Contents
    Namespace for IETF Use (https://www.iana.org/assignments/params/
    params.xhtml) somehow.  Or maybe nothing.  Or maybe something else.
 
-   TODO: tth and maybe oth claim in JSON Web Token Claims Registry
+   TODO: tth, wth and maybe oth claim in JSON Web Token Claims Registry
    (https://www.iana.org/assignments/jwt/jwt.xhtml)
 
 7.1.  Media Type Registration
