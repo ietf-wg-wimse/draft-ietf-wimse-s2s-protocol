@@ -313,8 +313,8 @@ A WPT contains the following:
     * `exp`: The expiration time of the WIT (as defined in {{Section 4.1.4 of RFC7519}}). WPT lifetimes MUST be short,
      e.g., on the order of minutes or seconds.
     * `jti`: A unique identifier for the token.
-    * `wth`: Hash of the Workload Identity Token. The value, as defined in {{to-wit}}, is the base64url encoding of the SHA-256
-     hash of the ASCII encoding of the token's value.
+    * `wth`: Hash of the Workload Identity Token, defined in {{to-wit}}. The value is the base64url encoding of the 
+     SHA-256 hash of the ASCII encoding of the token's value.
     * `ath`: Hash of the OAuth access token, if present in the request, which might convey end-user identity and
      authorization context of the request. The value, as per {{Section 4.1 of RFC9449}},
      is the base64url encoding of the SHA-256 hash of the ASCII encoding of the access token's value.
@@ -562,7 +562,7 @@ WITs and certificates with WIMSE identifiers are typically associated with a wor
 
 TODO: maybe a URI Scheme registration of `wimse` in [URI schemes](https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml) per {{?RFC7595}} but it's only being used in an example right now and might not even be appropriate. Or maybe use an ietf URI scheme a la [URN Namespace for IETF Use](https://www.iana.org/assignments/params/params.xhtml) somehow. Or maybe nothing. Or maybe something else.
 
-TODO: `tth` and maybe `oth` claim in [JSON Web Token Claims Registry](https://www.iana.org/assignments/jwt/jwt.xhtml)
+TODO: `tth`, `wth` and maybe `oth` claim in [JSON Web Token Claims Registry](https://www.iana.org/assignments/jwt/jwt.xhtml)
 
 ## Media Type Registration
 
