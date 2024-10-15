@@ -499,9 +499,9 @@ complexity, extensibility and security. Here is a summary of the main difference
 other protocols beyond HTTP. This flexibility is particularly valuable for
 asynchronous communication scenarios, such as event-driven systems.
 
-- Message Signatures, on the other hand, benefit from an existing RFC with
-established implementations. This existing groundwork means that this option could
-be simpler to deploy.
+- Message Signatures, on the other hand, benefit from an existing HTTP specific RFC with
+some established implementations. This existing groundwork means that this option could
+be simpler to deploy, to the extent such implementations are available and easily integrated.  
 
 - Given that the WIT (Workload Identity Token) is a type of JWT, the
 DPoP-inspired approach is less complex and technology-intensive than Message
