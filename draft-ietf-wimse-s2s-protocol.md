@@ -504,7 +504,7 @@ some established implementations. This existing groundwork means that this optio
 be simpler to deploy, to the extent such implementations are available and easily integrated.  
 
 - Given that the WIT (Workload Identity Token) is a type of JWT, the
-DPoP-inspired approach is less complex and technology-intensive than Message
+DPoP-inspired approach that also uses JWT is less complex and technology-intensive than Message
 Signatures. In contrast, Message Signatures introduce additional layers of
 technology, potentially increasing the complexity of the overall system.
 
