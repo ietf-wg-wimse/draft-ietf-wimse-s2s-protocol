@@ -113,7 +113,8 @@ Table of Contents
      8.1.  Normative References
      8.2.  Informative References
    Appendix A.  Document History
-     A.1.  draft-ietf-wimse-s2s-protocol-00
+     A.1.  draft-ietf-wimse-s2s-protocol-01
+     A.2.  draft-ietf-wimse-s2s-protocol-00
    Acknowledgments
    Authors' Addresses
 
@@ -1076,7 +1077,22 @@ Appendix A.  Document History
 
    // RFC Editor: please remove before publication.
 
-A.1.  draft-ietf-wimse-s2s-protocol-00
+A.1.  draft-ietf-wimse-s2s-protocol-01
+
+   *  Addressed multiple comments from Pieter.
+
+   *  Clarified WIMSE identity concepts, specifically "trust domain" and
+      "workload identifier".
+
+   *  Much more detail around mTLS, including some normative language.
+
+   *  WIT (the identity token) is now included in the WPT proof of
+      possession.
+
+   *  Added a section comparing the DPoP-inspired app-level security
+      option to the Message Signature-based alternative.
+
+A.2.  draft-ietf-wimse-s2s-protocol-00
 
    *  Initial WG draft, an exact copy of draft-sheffer-wimse-s2s-
       protocol-00
