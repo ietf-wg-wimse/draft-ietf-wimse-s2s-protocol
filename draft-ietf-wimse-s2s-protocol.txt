@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              D. Feldman
-Expires: 17 April 2025                                       Independent
+Expires: 18 April 2025                                       Independent
                                                               J. Salowey
                                                                   Venafi
                                                       A. Schwenkschuster
                                                                    SPIRL
                                                               Y. Sheffer
                                                                   Intuit
-                                                         14 October 2024
+                                                         15 October 2024
 
 
                 WIMSE Service to Service Authentication
@@ -68,7 +68,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 17 April 2025.
+   This Internet-Draft will expire on 18 April 2025.
 
 Copyright Notice
 
@@ -97,6 +97,7 @@ Table of Contents
        4.1.1.  The WIT HTTP Header
      4.2.  Option 1: DPoP-Inspired Authentication
      4.3.  Option 2: Authentication Based on HTTP Message Signatures
+     4.4.  Comparing the DPoP Inspired Option with Message Signatures
    5.  Using Mutual TLS for Service To Service Authentication
      5.1.  Server Name Validation
      5.2.  Client Authorization Using the WIMSE Identity
@@ -730,6 +731,53 @@ Table of Contents
    No ice cream today.
 
                          Figure 14: Signed Response
+
+4.4.  Comparing the DPoP Inspired Option with Message Signatures
+
+
+   // This section is temporarily part of the draft, while we expect the
+   // working group to select one of these options.
+
+   The two options for protecting the workload's traffic vary with
+   respect to implementation complexity, extensibility and security.
+   Here is a summary of the main differences between Section 4.2 and
+   Section 4.3.
+
+   *  The DPoP-inspired solution is less HTTP-specific, making it easier
+      to adapt for other protocols beyond HTTP.  This flexibility is
+      particularly valuable for asynchronous communication scenarios,
+      such as event-driven systems.
+
+   *  Message Signatures, on the other hand, benefit from an existing
+      HTTP specific RFC with some established implementations.  This
+      existing groundwork means that this option could be simpler to
+      deploy, to the extent such implementations are available and
+      easily integrated.
+
+   *  Given that the WIT (Workload Identity Token) is a type of JWT, the
+      DPoP-inspired approach that also uses JWT is less complex and
+      technology-intensive than Message Signatures.  In contrast,
+      Message Signatures introduce additional layers of technology,
+      potentially increasing the complexity of the overall system.
+
+   *  Message Signatures offer superior integrity protection,
+      particularly by mitigating message modification by middleboxes.
+
+   *  A key advantage of Message Signatures is that they support
+      response signing.  This opens up the possibility for future
+      decisions about whether to make response signing mandatory,
+      allowing for flexibility in the specification and/or in specific
+      deployment scenarios.
+
+   *  In general, Message Signatures provide greater flexibility
+      compared to the DPoP-inspired approach.  The draft (and subsequent
+      implementations) can decide whether specific aspects of message
+      signing, such as coverage of particular fields, should be
+      mandatory or optional.  Covering more fields will constrain the
+      proof so it cannot be easily reused in another context, which is
+      often a security improvement.  The DPoP inspired approach could be
+      designed to include extensibility to sign other fields, but this
+      would make it closer to trying to reinvent Message Signatures.
 
 5.  Using Mutual TLS for Service To Service Authentication
 
