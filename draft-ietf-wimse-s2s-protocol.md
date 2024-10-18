@@ -77,7 +77,7 @@ would be authenticated at the application level.
 
 This document defines authentication and authorization in the context of interaction between two workloads.
 This is the core component of the WIMSE architecture {{?I-D.ietf-wimse-arch}}.
-Assume that Service A needs to call Service B. For simplicity, this document focuses on HTTP-based services,
+For simplicity, this document focuses on HTTP-based services,
 and the service-to-service call consists of a single HTTP request and its response.
 We define the credentials that both services should possess and how they are used to protect the HTTP exchange.
 
@@ -154,7 +154,7 @@ This document uses "service" and "workload" interchangeably. Otherwise, all term
 A trust domain is a logical grouping of systems that share a common set of security controls and policies. WIMSE certificates and tokens are issued under the authority of a trust domain. Trust domains SHOULD be identified by a fully qualified domain name belonging to the organization defining the trust domain.
 A trust domain maps to one or more trust anchors for validating X.509 certificates and a mechanism to securely obtain a JWK Set {{!RFC7517}} for validating WIMSE WIT tokens. This mapping MUST be obtained through a secure mechanism that ensures the authenticity and integrity of the mapping is fresh and not compromised. This secure mechanism is out of scope for this document.
 
-A single organization may define multiple trust domains for different purpose such as different departments or environments. Each trust domain must have a unique identifier. Workload identifiers are scoped within a trust domain. If two identifiers differ only by trust domain they still refer to two different entities.
+A single organization may define multiple trust domains for different purposes such as different departments or environments. Each trust domain must have a unique identifier. Workload identifiers are scoped within a trust domain. If two identifiers differ only by trust domain they still refer to two different entities.
 
 ## Workload Identifier
 
@@ -177,6 +177,7 @@ The current version of the document includes two alternatives, both using the ne
 Workload Identity Token ({{to-wit}}). The first alternative ({{dpop-esque-auth}}) is inspired by the OAuth DPoP specification.
 The second ({{http-sig-auth}}) is based on the HTTP Message Signatures RFC. We present both alternatives and expect
 the working group to select one of them as this document progresses towards IETF consensus.
+A comparison of the two alternatives is attempted in {{app-level-comparison}}.
 
 ## The Workload Identity Token {#to-wit}
 
@@ -338,9 +339,10 @@ A WPT contains the following:
      a base64url encoding (as defined in {{Section 2 of RFC7515}}) of the SHA-256 hash of
      the ASCII encoding of the associated token's value.
     * `oth`: Hash of any other token in the request that might convey end-user identity and authorization context of the
-     request. The value MUST be the result of a base64url encoding (as defined in {{Section 2 of RFC7515}}) of the
+     request, if such a token exists.
+     The value MUST be the result of a base64url encoding (as defined in {{Section 2 of RFC7515}}) of the
      SHA-256 hash of the ASCII encoding of the associated token's value.
-     (note: this is less than ideal but seems we need something like this for extensibility)
+     (Note: this is less than ideal but seems we need something like this for extensibility.)
 
 An example WPT might look like the following:
 
@@ -413,7 +415,7 @@ To validate the WPT in the request, the recipient MUST ensure the following:
 * The `Workload-Proof-Token` header field value is a single and well-formed JWT.
 * The WPT signature is valid using the public key from the confirmation claim of the WIT.
 * The `typ` JOSE header parameter of the WPT conveys a media type of `wimse-proof+jwt`.
-* The `iss` claim of the WPT matches the `sub` claim of the WIT. (note: not sure `iss` in the WPT is useful or necessary)
+* The `iss` claim of the WPT matches the `sub` claim of the WIT. (Note: not sure `iss` in the WPT is useful or necessary.)
 * The `aud` claim of the WPT matches the target URI, or an acceptable alias or normalization thereof, of the HTTP request
  in which the WPT was received, ignoring any query and fragment parts.
 * The `exp` claim is present and conveys a time that has not passed. WPTs with an expiration time unreasonably
@@ -431,7 +433,7 @@ To validate the WPT in the request, the recipient MUST ensure the following:
 ## Option 2: Authentication Based on HTTP Message Signatures {#http-sig-auth}
 
 This option uses the WIMSE Identity Token ({{to-wit}}) to sign the request and optionally, the response.
-This specification defines a profile of the Message Signatures specification {{!RFC9421}}.
+This section defines a profile of the Message Signatures specification {{!RFC9421}}.
 
 The request is signed as per {{RFC9421}}. The following derived components MUST be signed:
 
@@ -474,9 +476,9 @@ To detect message replays,
 a recipient MAY reject a message (request or response) if a nonce is repeated.
 
 To promote interoperability, the `ecdsa-p256-sha256` signing algorithm MUST be implemented
-by general purpose implementations of this spec.
+by general purpose implementations of this document.
 
-<cref>OPEN ISSUE: do we use the `Accept-Signature` field to signal that the response must be signed?</cref>
+<cref>OPEN ISSUE: do we use the Accept-Signature field to signal that the response must be signed?</cref>
 
 Following is a non-normative example of a signed request and a signed response,
 where the caller is using the keys specified in {{example-caller-jwk}}.
@@ -505,32 +507,33 @@ A signed response would be:
 ~~~
 {: title="Signed Response"}
 
-## Comparing the DPoP Inspired Option with Message Signatures
+## Comparing the DPoP Inspired Option with Message Signatures {#app-level-comparison}
 
 <cref>
 This section is temporarily part of the draft, while we expect the working group
 to select one of these options.
 </cref>
 
-The two options for protecting the workload's traffic vary with respect to implementation
-complexity, extensibility and security. Here is a summary of the main differences between
+The two workload protection options have different strengths and weaknesses regarding implementation
+complexity, extensibility, and security.
+Here is a summary of the main differences between
 {{dpop-esque-auth}} and {{http-sig-auth}}.
 
 - The DPoP-inspired solution is less HTTP-specific, making it easier to adapt for
 other protocols beyond HTTP. This flexibility is particularly valuable for
 asynchronous communication scenarios, such as event-driven systems.
 
-- Message Signatures, on the other hand, benefit from an existing HTTP specific RFC with
+- Message Signatures, on the other hand, benefit from an existing HTTP-specific RFC with
 some established implementations. This existing groundwork means that this option could
 be simpler to deploy, to the extent such implementations are available and easily integrated.
 
 - Given that the WIT (Workload Identity Token) is a type of JWT, the
 DPoP-inspired approach that also uses JWT is less complex and technology-intensive than Message
-Signatures. In contrast, Message Signatures introduce additional layers of
+Signatures. In contrast, Message Signatures introduce an additional layer of
 technology, potentially increasing the complexity of the overall system.
 
 - Message Signatures offer superior integrity protection, particularly by mitigating
-message modification by middleboxes.
+message modification by middleboxes. See also {{middleboxes}}.
 
 - A key advantage of Message Signatures is that they support response signing.
 This opens up the possibility for future decisions about whether to make
@@ -538,7 +541,7 @@ response signing mandatory, allowing for flexibility in the specification
 and/or in specific deployment scenarios.
 
 - In general, Message Signatures provide greater flexibility compared to
-the DPoP-inspired approach. The draft (and subsequent implementations) can decide
+the DPoP-inspired approach. Future versions of this draft (and subsequent implementations) can decide
 whether specific aspects of message signing, such as coverage of particular fields,
 should be mandatory or optional. Covering more fields will constrain the proof
 so it cannot be easily reused in another context, which is often a security improvement. The DPoP inspired approach could
@@ -547,13 +550,22 @@ trying to reinvent Message Signatures.
 
 # Using Mutual TLS for Service To Service Authentication {#mutual-tls}
 
-The WIMSE workload identity may be carried within an X.509 certificate. The WIMSE workload identity MUST be encoded in a SubjectAltName extension of type URI.  There MUST be only one SubjectAltName extension of type URI in a WIMSE certificate.  If the workload will act as a TLS server for clients that do not understand WIMSE workload identities it is RECOMMENDED that WIMSE certificate contain a SubjectAltName of type DNSName with the appropriate DNS names for the server. The certificate may contain SubjectAltName extensions of other types.
+As noted in the introduction, for many deployments, transport-level protection
+of application traffic using TLS is ideal.
+
+In this solution, the WIMSE workload identity may be carried within an X.509 certificate.
+The WIMSE workload identity MUST be encoded in a SubjectAltName extension of type URI.
+There MUST be only one SubjectAltName extension of type URI in a WIMSE certificate.
+If the workload will act as a TLS server for clients that do not understand WIMSE workload
+identities it is RECOMMENDED that the WIMSE certificate contain a SubjectAltName of type
+DNSName with the appropriate DNS names for the server.
+The certificate may contain SubjectAltName extensions of other types.
 
 WIMSE certificates may be used to authenticate both the server and client side of the connections.  When validating a WIMSE certificate, the relying party MUST use the trust anchors configured for the trust domain in the WIMSE identity to validate the peer's certificate.  Other PKIX {{!RFC5280}} path validation rules apply. WIMSE clients and servers MUST validate that the trust domain portion of the WIMSE certificate matches the expected trust domain for the other side of the connection.
 
 Servers wishing to use the WIMSE certificate for authorizing the client MUST require client certificate authentication in the TLS handshake. Other methods of post handshake authentication are not specified by this document.
 
-WIMSE server certificates SHOULD have the id-kp-serverAuth extended key usage {{!RFC5280}} field set and WIMSE client certificates SHOULD have the id-kp-clientAuth extended key usage field set. A certificate that is used for both client and server connections may have both fields set. This specification does not make any other requirements beyond {{!RFC5280}} on the contents of WIMSE certificates or on the certification authorities that issue WIMSE certificates.
+WIMSE server certificates SHOULD have the `id-kp-serverAuth` extended key usage {{!RFC5280}} field set and WIMSE client certificates SHOULD have the `id-kp-clientAuth` extended key usage field set. A certificate that is used for both client and server connections may have both fields set. This specification does not make any other requirements beyond {{!RFC5280}} on the contents of WIMSE certificates or on the certification authorities that issue WIMSE certificates.
 
 ## Server Name Validation {#server-name}
 
@@ -567,13 +579,13 @@ The server application retrieves the client certificate WIMSE URI subjectAltName
 
 ## WIMSE Identity
 
-The WIMSE ID is scoped within an issuer and therefore any sub-components (path portion of ID) are only unique within a trust domain defined by the issuer. Using a WIMSE ID without taking into account the trust domain could allow one domain to issue tokens to spoof identities in another domain.  Additionally, the trust domain must be tied to an authorized issuer cryptographic trust anchor through some mechanism such as a JWKS or X.509 certificate chain. The association of an issuer, trust domain and a cryptographic trust anchor MUST be communicated securely out of band.
+The WIMSE Identifier is scoped within an issuer and therefore any sub-components (path portion of Identifier) are only unique within a trust domain defined by the issuer. Using a WIMSE Identifier without taking into account the trust domain could allow one domain to issue tokens to spoof identities in another domain.  Additionally, the trust domain must be tied to an authorized issuer cryptographic trust anchor through some mechanism such as a JWKS or X.509 certificate chain. The association of an issuer, trust domain and a cryptographic trust anchor MUST be communicated securely out of band.
 
-<cref>TODO: Should there be a DNS name to Trust domain mapping defined or some other discovery mechanism?</cref>
+<cref>TODO: Should there be a DNS name to trust domain mapping defined or some other discovery mechanism?</cref>
 
-## Workload ID Token and Proof of Possession
+## Workload Identity Token and Proof of Possession
 
-The Workload ID token (WIT) is bound to a secret cryptographic key and is always presented with a proof of possession as described in {{to-wit}}. The WIT is a general purpose token that can be presented in multiple contexts. The WIT and its PoP are only used in the application-level options, and both are not used in MTLS. The WIT MUST NOT be used as a bearer token. While this helps reduce the sensitivity of the token it is still possible that a token and its proof of possession may be captured and replayed within the PoP's lifetime. The following are some mitigations for the capture and reuse of the proof of possession (PoP):
+The Workload Identity Token (WIT) is bound to a secret cryptographic key and is always presented with a proof of possession as described in {{to-wit}}. The WIT is a general purpose token that can be presented in multiple contexts. The WIT and its PoP are only used in the application-level options, and both are not used in MTLS. The WIT MUST NOT be used as a bearer token. While this helps reduce the sensitivity of the token it is still possible that a token and its proof of possession may be captured and replayed within the PoP's lifetime. The following are some mitigations for the capture and reuse of the proof of possession (PoP):
 
 * Preventing Eavesdropping and Interception with TLS
 
@@ -598,7 +610,7 @@ While a fresh nonce could be included in the PoP, a mechanism for distributing a
 
 The POP MAY be bound to a transport layer sender such as the client identity of a TLS session or TLS channel binding parameters. The mechanisms for binding are outside the scope of this specification.
 
-## Middle Boxes
+## Middle Boxes {#middleboxes}
 
 In some deployments the WIMSE token and proof of possession may pass through multiple systems. The communication between the systems is over TLS, but the token and PoP are available in the clear at each intermediary.  While the intermediary cannot modify the token or the information within the PoP they can attempt to capture and replay the token or modify the data not protected by the PoP. Mitigations listed in the previous section can be used to provide some protection from middle boxes. Deployments should perform analysis on their situation to determine if it is appropriate to trust and allow traffic to pass through a middle box.
 
