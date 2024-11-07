@@ -176,7 +176,8 @@ While the URI encoding rules allow host names to be specified as IP addresses, I
 
 As noted in the Introduction, for many deployments communication between workloads cannot use
 end-to-end TLS. For these deployment styles, this document proposes application-level protections.
-For deployments using end-to-end TLS, application-level credentials may enrich the security context.
+For deployments using end-to-end TLS, application-level credentials may be used to enrich the 
+application security context.
 
 The current version of the document includes three alternatives, all using the newly introduced
 Workload Identity Token ({{to-wit}}). The first alternative ({{dpop-esque-auth}}) is inspired by the OAuth DPoP specification.
@@ -189,7 +190,7 @@ A comparison of the first two alternatives is attempted in {{app-level-compariso
 ## The Workload Identity Token {#to-wit}
 
 The Workload Identity Token (WIT) is a JWS {{RFC7515}} signed JWT {{RFC7519}} that represents the identity of a workload.
-It is issued by the Identity Server and binds a public key to the workload identity.
+It is issued by the Identity Server and binds a public key or certificate to the workload identity.
 A WIT MUST contain the following:
 
 * in the JOSE header:
@@ -202,9 +203,9 @@ A WIT MUST contain the following:
     * `exp`: The expiration time of the token (as defined in {{Section 4.1.4 of RFC7519}}).
       WITs should be refreshed regularly, e.g. on the order of hours.
     * `jti`: A unique identifier for the token.
-    * `cnf`: A confirmation claim containing either the public key of the workload OR a cryptographically strong hash of the X.509 certificate that was conveyed during Transport layer security.
-        * The public key `cnf` contains the `jwk` member as defined in {{Section 3.2 of RFC7800}}. The workload MUST prove possession of the corresponding private key when presenting the WIT to another party, which can be accomplished by using it in conjunction with one of the methods in {{dpop-esque-auth}} or {{http-sig-auth}}. As such, it MUST NOT be used as a bearer token and is not intended for use in the `Authorization` header.
-        * The X.509 certificate hash `cnf` contains the `x5t#S256` hash as described in [Section 3.1](https://datatracker.ietf.org/doc/html/rfc8705#section-3.1) of [[RFC7805](https://datatracker.ietf.org/doc/html/rfc8705)]. When this value is provided, Proof-of-possession is delegated to the Transport-layer using the method in {{transport-layer-pop}}. The receiving Workload MUST verify that the `x5t#S256` claim matches the hash of the Client's X.509 Certificate presented at the Transport-layer.
+    * `cnf`: A confirmation claim containing either the public key of the workload OR a the hash of the X.509 certificate of the workload.
+        * The `cnf` MAY contain the `jwk` member as defined in {{Section 3.2 of RFC7800}}. The workload MUST prove possession of the corresponding private key when presenting the WIT to another party, which can be accomplished by using it in conjunction with one of the methods in {{dpop-esque-auth}} or {{http-sig-auth}}. As such, it MUST NOT be used as a bearer token and is not intended for use in the `Authorization` header.
+        * The `cnf` MAY contain the `x5t#S256` member as defined in [Section 3.1](https://datatracker.ietf.org/doc/html/rfc8705#section-3.1) of [[RFC7805](https://datatracker.ietf.org/doc/html/rfc8705)]. When this value is provided, Proof-of-possession is delegated to the Transport layer using the method described in {{transport-layer-pop}}. The receiving Workload MUST verify that the `x5t#S256` claim matches the SHA-256 hash of the Client's X.509 Certificate presented at the Transport layer.
 
 An example WIT might look like this (all examples, of course, are non-normative and with line breaks and extra space for readability):
 
@@ -517,7 +518,7 @@ A signed response would be:
 
 ## Option 3: Authentication Based on the Transport Layer {#transport-layer-pop}
 
-This option provides authentication of the WIT using Transport Layer credentials. The proof-of-possession for the Workload's Private Key is provided in the WIT via a cyrptographically strong hash that MUST match the Transport Layer mutual authentication credential. The cryptographically strong hash binds the WIT to a particular Transport Layer certificate credential, so that it cannot be replayed without proof of the corresponding Workload Private Key.
+This option provides authentication of the WIT using Transport Layer credentials. The proof-of-possession for the Workload's Private Key is provided in the WIT via a cryptographically strong hash that MUST match the Transport Layer mutual authentication credential. The cryptographically strong hash binds the WIT to a particular Transport Layer certificate credential, so that it cannot be replayed without proof of the corresponding Workload Private Key.
 
 When an Application receives a Certificate-bound WIT, it MUST treat the WIT as a JWT bound to an X.509 certificate in the manner described in [Section 3.1](https://datatracker.ietf.org/doc/html/rfc8705#section-3.1) of [[RFC8705](https://datatracker.ietf.org/doc/html/rfc8705)]. To authenticate a Certificate-bound WIT using the Transport Layer, Workload-to-Workload communication MUST be secured by Mutually-authenticated [Transport Layer Security 1.3](https://datatracker.ietf.org/doc/html/rfc8446#section-2) (TLS 1.3). Proof-of-possession MUST be conveyed via each Workload's `CertificateVerify` message. In this case, each network peer MUST validate its Peer's Proof-of-possession of the Private Key. Proof-of-possession is conveyed during the TLS 1.3 handshake protocol using each peer's `Certificate` and `CertificateVerify` messages. The Transport Layer MUST cache the SHA-256 hash of the validated Client Certificate in the TLS session, for use at the Application Layer. When the Destination Workload receives a WIT at the Application Layer with `cnf` claim with `x5t#S256` property, it MUST establish Proof-of-possession as follows:
 
@@ -525,19 +526,19 @@ When an Application receives a Certificate-bound WIT, it MUST treat the WIT as a
 
 This ensures that the WIT can only be used by a client with access to the Workload's Private Key.
 
-## Comparing the DPoP Inspired Option with Message Signatures {#app-level-comparison}
+## Comparing the DPoP Inspired Option with Message Signatures and TLS Authentication {#app-level-comparison}
 
 <cref>
 This section is temporarily part of the draft, while we expect the working group
-to select one of these options.
+to select among these options.
 </cref>
 
-The two workload protection options have different strengths and weaknesses regarding implementation
+The three workload protection options have different strengths and weaknesses regarding implementation
 complexity, extensibility, and security.
 Here is a summary of the main differences between
 {{dpop-esque-auth}} and {{http-sig-auth}}.
 
-- The DPoP-inspired solution is less HTTP-specific, making it easier to adapt for
+- The DPoP-inspired and TLS authentcation options are less HTTP-specific, making them easier to adapt for
 other protocols beyond HTTP. This flexibility is particularly valuable for
 asynchronous communication scenarios, such as event-driven systems.
 
@@ -550,19 +551,20 @@ DPoP-inspired approach that also uses JWT is less complex and technology-intensi
 Signatures. In contrast, Message Signatures introduce an additional layer of
 technology, potentially increasing the complexity of the overall system.
 
-- Message Signatures offer superior integrity protection, particularly by mitigating
+- Message Signatures and TLS Authentication offer superior integrity protection, particularly by mitigating
 message modification by middleboxes. See also {{middleboxes}}.
 
-- A key advantage of Message Signatures is that they support response signing.
+- A key advantage of Message Signatures and TLS Authentication with AES-GCM is that they support response signing.
 This opens up the possibility for future decisions about whether to make
 response signing mandatory, allowing for flexibility in the specification
 and/or in specific deployment scenarios.
 
-- In general, Message Signatures provide greater flexibility compared to
-the DPoP-inspired approach. Future versions of this draft (and subsequent implementations) can decide
+- In general, Message Signatures and TLS Authentication provide greater flexibility compared to
+the DPoP-inspired approach. For Message Signatures, future versions of this draft (and subsequent implementations) can decide
 whether specific aspects of message signing, such as coverage of particular fields,
 should be mandatory or optional. Covering more fields will constrain the proof
-so it cannot be easily reused in another context, which is often a security improvement. The DPoP inspired approach could
+so it cannot be easily reused in another context, which is often a security improvement. For TLS Authentication with AES-GCM,
+all messages are integrity-protected. The DPoP inspired approach could
 be designed to include extensibility to sign other fields, but this would make it closer to
 trying to reinvent Message Signatures.
 
