@@ -172,12 +172,15 @@ While the URI encoding rules allow host names to be specified as IP addresses, I
 
 As noted in the Introduction, for many deployments communication between workloads cannot use
 end-to-end TLS. For these deployment styles, this document proposes application-level protections.
+For deployments using end-to-end TLS, application-level credentials may enrich the security context.
 
-The current version of the document includes two alternatives, both using the newly introduced
+The current version of the document includes three alternatives, all using the newly introduced
 Workload Identity Token ({{to-wit}}). The first alternative ({{dpop-esque-auth}}) is inspired by the OAuth DPoP specification.
-The second ({{http-sig-auth}}) is based on the HTTP Message Signatures RFC. We present both alternatives and expect
-the working group to select one of them as this document progresses towards IETF consensus.
-A comparison of the two alternatives is attempted in {{app-level-comparison}}.
+The second alternative ({{http-sig-auth}}) is based on the HTTP Message Signatures RFC. The third
+alternative ({{transport-layer-pop}}) is based on the TLS 1.3 and Token Binding RFCs. 
+We present the alternatives and expect
+the working group to select those that should progress towards IETF consensus.
+A comparison of the first two alternatives is attempted in {{app-level-comparison}}.
 
 ## The Workload Identity Token {#to-wit}
 
@@ -195,8 +198,9 @@ A WIT MUST contain the following:
     * `exp`: The expiration time of the token (as defined in {{Section 4.1.4 of RFC7519}}).
       WITs should be refreshed regularly, e.g. on the order of hours.
     * `jti`: A unique identifier for the token.
-    * `cnf`: A confirmation claim containing the public key of the workload using the `jwk` member as defined in {{Section 3.2 of RFC7800}}.
-     The workload MUST prove possession of the corresponding private key when presenting the WIT to another party, which can be accomplished by using it in conjunction with one of the methods in {{dpop-esque-auth}} or {{http-sig-auth}}. As such, it MUST NOT be used as a bearer token and is not intended for use in the `Authorization` header.
+    * `cnf`: A confirmation claim containing either the public key of the workload OR a cryptographically strong hash of the X.509 certificate that was conveyed during Transport layer security.
+        * The public key `cnf` contains the `jwk` member as defined in {{Section 3.2 of RFC7800}}. The workload MUST prove possession of the corresponding private key when presenting the WIT to another party, which can be accomplished by using it in conjunction with one of the methods in {{dpop-esque-auth}} or {{http-sig-auth}}. As such, it MUST NOT be used as a bearer token and is not intended for use in the `Authorization` header.
+        * The X.509 certificate hash `cnf` contains the `x5t#S256` hash as described in [Section 3.1](https://datatracker.ietf.org/doc/html/rfc8705#section-3.1) of [[RFC7805](https://datatracker.ietf.org/doc/html/rfc8705)]. When this value is provided, Proof-of-possession is delegated to the Transport-layer using the method in {{transport-layer-pop}}. The receiving Workload MUST verify that the `x5t#S256` claim matches the hash of the Client's X.509 Certificate presented at the Transport-layer.
 
 An example WIT might look like this (all examples, of course, are non-normative and with line breaks and extra space for readability):
 
@@ -506,6 +510,16 @@ A signed response would be:
 {::include includes/sigs-response.out}
 ~~~
 {: title="Signed Response"}
+
+## Option 3: Authentication Based on the Transport Layer {#transport-layer-pop}
+
+This option provides authentication of the WIT using Transport Layer credentials. The proof-of-possession for the Workload's Private Key is provided in the WIT via a cyrptographically strong hash that MUST match the Transport Layer mutual authentication credential. The cryptographically strong hash binds the WIT to a particular Transport Layer certificate credential, so that it cannot be replayed without proof of the corresponding Workload Private Key.
+
+To authenticate a WIT using the Transport Layer, Workload-to-Workload communication MUST be secured by Mutually-authenticated [Transport Layer Security 1.3](https://datatracker.ietf.org/doc/html/rfc8446#section-2) (TLS 1.3). Proof-of-possession MUST be conveyed via each Workload's `CertificateVerify` message. In this case, each network peer MUST validate its Peer's Proof-of-possession of the Private Key. Proof-of-possession is conveyed during the TLS 1.3 handshake protocol using each peer's `Certificate` and `CertificateVerify` messages. The Transport Layer MUST cache the SHA-256 hash of the validated Client Certificate in the TLS session, for use at the Application Layer. When the Destination Workload receives a WIT at the Application Layer with `cnf` claim with `x5t#S256` property, it MUST establish Proof-of-possession as follows:
+
+* Validate that the Certificate-bound WIT's `cnf` claim's `x5t#S256` property matches the cached SHA-256 hash of the validated Client Certificate used at the Transport layer.
+
+This ensures that the WIT can only be used by a client with access to the Workload's Private Key.
 
 ## Comparing the DPoP Inspired Option with Message Signatures {#app-level-comparison}
 
