@@ -43,6 +43,10 @@ author:
     fullname: "Yaron Sheffer"
     organization: Intuit
     email: "yaronf.ietf@gmail.com"
+ -
+    fullname: "Ken McCracken"
+    organization: Google
+    email: "kenmccracken@google.com"
 
 normative:
   RFC5234:
@@ -515,7 +519,7 @@ A signed response would be:
 
 This option provides authentication of the WIT using Transport Layer credentials. The proof-of-possession for the Workload's Private Key is provided in the WIT via a cyrptographically strong hash that MUST match the Transport Layer mutual authentication credential. The cryptographically strong hash binds the WIT to a particular Transport Layer certificate credential, so that it cannot be replayed without proof of the corresponding Workload Private Key.
 
-To authenticate a WIT using the Transport Layer, Workload-to-Workload communication MUST be secured by Mutually-authenticated [Transport Layer Security 1.3](https://datatracker.ietf.org/doc/html/rfc8446#section-2) (TLS 1.3). Proof-of-possession MUST be conveyed via each Workload's `CertificateVerify` message. In this case, each network peer MUST validate its Peer's Proof-of-possession of the Private Key. Proof-of-possession is conveyed during the TLS 1.3 handshake protocol using each peer's `Certificate` and `CertificateVerify` messages. The Transport Layer MUST cache the SHA-256 hash of the validated Client Certificate in the TLS session, for use at the Application Layer. When the Destination Workload receives a WIT at the Application Layer with `cnf` claim with `x5t#S256` property, it MUST establish Proof-of-possession as follows:
+When an Application receives a Certificate-bound WIT, it MUST treat the WIT as a JWT bound to an X.509 certificate in the manner described in [Section 3.1](https://datatracker.ietf.org/doc/html/rfc8705#section-3.1) of [[RFC8705](https://datatracker.ietf.org/doc/html/rfc8705)]. To authenticate a Certificate-bound WIT using the Transport Layer, Workload-to-Workload communication MUST be secured by Mutually-authenticated [Transport Layer Security 1.3](https://datatracker.ietf.org/doc/html/rfc8446#section-2) (TLS 1.3). Proof-of-possession MUST be conveyed via each Workload's `CertificateVerify` message. In this case, each network peer MUST validate its Peer's Proof-of-possession of the Private Key. Proof-of-possession is conveyed during the TLS 1.3 handshake protocol using each peer's `Certificate` and `CertificateVerify` messages. The Transport Layer MUST cache the SHA-256 hash of the validated Client Certificate in the TLS session, for use at the Application Layer. When the Destination Workload receives a WIT at the Application Layer with `cnf` claim with `x5t#S256` property, it MUST establish Proof-of-possession as follows:
 
 * Validate that the Certificate-bound WIT's `cnf` claim's `x5t#S256` property matches the cached SHA-256 hash of the validated Client Certificate used at the Transport layer.
 
