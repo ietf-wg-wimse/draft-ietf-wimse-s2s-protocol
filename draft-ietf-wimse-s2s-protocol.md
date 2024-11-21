@@ -28,10 +28,6 @@ author:
     organization: "Ping Identity"
     email: bcampbell@pingidentity.com
  -
-    fullname: "Daniel Feldman"
-    organization: "Independent"
-    email: dfeldman.mn@gmail.com
- -
     fullname: "Joe Salowey"
     organization: Venafi
     email: joe.salowey@gmail.com
@@ -662,4 +658,6 @@ the Message Signature-based alternative.
 # Acknowledgments
 {:numbered="false"}
 
-<cref>TODO acknowledge.</cref>
+The authors would like to thank Pieter Kasselman for his detailed comments.
+
+We thank Daniel Feldman for his contributions to earlier versions of this document.
