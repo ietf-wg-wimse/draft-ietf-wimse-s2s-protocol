@@ -156,8 +156,8 @@ Table of Contents
 1.1.  Deployment Architecture and Message Flow
 
    Regardless of the transport between the workloads, we assume the
-   following logical architecture (numbers refer to the sequence of step
-   listed below):
+   following logical architecture (numbers refer to the sequence of
+   steps listed below):
 
    +------------+               +------------+
    |            |      (2)      |            |
