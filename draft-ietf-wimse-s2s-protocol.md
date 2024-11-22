@@ -102,7 +102,7 @@ one of these two alternatives for standardization, once we have understood their
 ## Deployment Architecture and Message Flow
 
 Regardless of the transport between the workloads, we assume the following logical architecture
-(numbers refer to the sequence of step listed below):
+(numbers refer to the sequence of steps listed below):
 
 ~~~ aasvg
 +------------+               +------------+
