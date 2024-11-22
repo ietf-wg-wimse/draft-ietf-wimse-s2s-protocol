@@ -101,19 +101,20 @@ one of these two alternatives for standardization, once we have understood their
 
 ## Deployment Architecture and Message Flow
 
-Regardless of the transport between the workloads, we assume the following logical architecture:
+Regardless of the transport between the workloads, we assume the following logical architecture
+(numbers refer to the sequence of step listed below):
 
 ~~~ aasvg
 +------------+               +------------+
-|            |               |            |
-|            |               | Workload B |
-| Workload A |==============>|            |
-|            |               |   +--------+
-|            |               |   |  PEP   |
+|            |      (2)      |            |
+|            |==============>| Workload B |
+| Workload A |               |            |
+|            |<==============|   +--------+
+|            |      (4)      |   |  PEP   |
 +------------+               +---+--------+
       ^                        ^     ^
-      |                        |     |
-      | +----------------------+     |
+      |            (1)         |     |
+  (1) | +----------------------+     | (3)
       | |                            |
       v v                            v
 +------------+               +------------+
@@ -123,6 +124,7 @@ Regardless of the transport between the workloads, we assume the following logic
 |            |               |            |
 +------------+               +------------+
 ~~~
+{: #high-level-seq title="Sequence of Operations"}
 
 The Identity Server provisions credentials to each of the workloads. At least Workload A (and possibly both) must be provisioned
 with a credential before the call can proceed. Details of communication with the Identity Server are out of scope
@@ -134,12 +136,12 @@ policy management and message authorization are out of scope of this document.
 
 The high-level message flow is as follows:
 
-* Workload A obtains a credential from the Identity Server. This happens periodically, e.g. once every 24 hours.
-* Workload A makes an HTTP call into Workload B. This is a regular HTTP request, with the additional protection
+1. Workload A (and similarly, Workload B) obtains a credential from the Identity Server. This happens periodically, e.g. once every 24 hours.
+2. Workload A makes an HTTP call into Workload B. This is a regular HTTP request, with the additional protection
 mechanisms defined below.
-* Workload B now authenticates Workload A and decides whether to authorize the call.
+3. Workload B now authenticates Workload A and decides whether to authorize the call.
 In certain architectures, Workload B may need to consult with an external server to decide whether to accept the call.
-* Workload B returns a response to Workload A, which may be an error response or a regular one.
+4. Workload B returns a response to Workload A, which may be an error response or a regular one.
 
 # Conventions and Definitions
 
