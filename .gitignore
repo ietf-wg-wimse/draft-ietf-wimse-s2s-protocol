@@ -7,9 +7,9 @@
 *~
 .tags
 /*-[0-9][0-9].xml
+/.*.mk
 /.gems/
 /.refcache
-/.*.mk
 /.venv/
 /.vscode/
 /lib
@@ -17,6 +17,7 @@
 /versioned/
 Gemfile.lock
 archive.json
+draft-ietf-wimse-s2s-protocol.xml
 draft-sheffer-wimse-s2s-protocol.xml
 package-lock.json
 report.xml
