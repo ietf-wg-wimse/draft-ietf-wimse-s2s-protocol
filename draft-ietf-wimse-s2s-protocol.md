@@ -680,6 +680,6 @@ the Message Signature-based alternative.
 
 <cref>TODO acknowledge.</cref>
 
-## Contributors
+Contributors
 
 * Ken McCracken, Google, kenmccracken@google.com
