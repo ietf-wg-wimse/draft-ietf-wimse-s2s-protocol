@@ -43,10 +43,6 @@ author:
     fullname: "Yaron Sheffer"
     organization: Intuit
     email: "yaronf.ietf@gmail.com"
- -
-    fullname: "Ken McCracken"
-    organization: Google
-    email: "kenmccracken@google.com"
 
 normative:
   RFC5234:
@@ -683,3 +679,7 @@ the Message Signature-based alternative.
 {:numbered="false"}
 
 <cref>TODO acknowledge.</cref>
+
+Contributors
+
+* Ken McCracken, Google, kenmccracken@google.com
