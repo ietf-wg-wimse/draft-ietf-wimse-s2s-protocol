@@ -176,13 +176,13 @@ While the URI encoding rules allow host names to be specified as IP addresses, I
 
 As noted in the Introduction, for many deployments communication between workloads cannot use
 end-to-end TLS. For these deployment styles, this document proposes application-level protections.
-For deployments using end-to-end TLS, application-level credentials may be used to enrich the 
+For deployments using end-to-end TLS, application-level credentials may be used to enrich the
 application security context.
 
 The current version of the document includes three alternatives, all using the newly introduced
 Workload Identity Token ({{to-wit}}). The first alternative ({{dpop-esque-auth}}) is inspired by the OAuth DPoP specification.
 The second alternative ({{http-sig-auth}}) is based on the HTTP Message Signatures RFC. The third
-alternative ({{transport-layer-pop}}) is based on the TLS 1.3 and Token Binding RFCs. 
+alternative ({{transport-layer-pop}}) is based on the TLS 1.3 and Token Binding RFCs.
 We present the alternatives and expect
 the working group to select those that should progress towards IETF consensus.
 A comparison of the first two alternatives is attempted in {{app-level-comparison}}.
