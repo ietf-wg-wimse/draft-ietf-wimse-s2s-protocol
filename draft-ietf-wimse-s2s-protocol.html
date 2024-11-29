@@ -1059,7 +1059,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Campbell, et al.</td>
-<td class="center">Expires 26 May 2025</td>
+<td class="center">Expires 2 June 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1072,12 +1072,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-wimse-s2s-protocol-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-11-22" class="published">22 November 2024</time>
+<time datetime="2024-11-29" class="published">29 November 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-05-26">26 May 2025</time></dd>
+<dd class="expires"><time datetime="2025-06-02">2 June 2025</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1153,7 +1153,7 @@ would be authenticated at the application level.<a href="#section-abstract-1" cl
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 26 May 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 2 June 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1779,28 +1779,30 @@ PQXZ4UOuttPdNj8fRmIG4ZDFF9B10y7uGbiNIhbRdpgG_KXEPLHXWnvzLmBA
           </figcaption></figure>
 <p id="section-4.2-9">An example of an HTTP request with both the WIT and WPT from prior examples is shown below:<a href="#section-4.2-9" class="pilcrow">¶</a></p>
 <span id="name-example-http-request-with-w"></span><figure id="figure-11">
-          <div class="lang-http-message sourcecode" id="section-4.2-10.1">
+          <div class="lang-http sourcecode" id="section-4.2-10.1">
 <pre>
+=============== NOTE: '\' line wrapping per RFC 8792 ================
+
 POST /path HTTP/1.1
 Host: service.example.com
 Content-Type: application/json
 Authorization: Bearer 16_mAd0GiwaZokU26_0902100
-Workload-Identity-Token: eyJ0eXAiOiJ3aW1zZS1pZCtqd3QiLCJhbGciOiJFUzI1
-  NiIsImtpZCI6Ikp1bmUgNSJ9.eyJpc3MiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3RydX
-  N0ZWQtY2VudHJhbC1hdXRob3JpdHkiLCJleHAiOjE3MTc2MTI0NzAsInN1YiI6Indpb
-  XNlOi8vZXhhbXBsZS5jb20vc3BlY2lmaWMtd29ya2xvYWQiLCJqdGkiOiJ4LV8xQ1RM
-  MmNjYTNDU0U0Y3diX18iLCJjbmYiOnsiandrIjp7Imt0eSI6Ik9LUCIsImNydiI6IkV
-  kMjU1MTkiLCJ4IjoiX2FtUkMzWXJZYkhoSDFSdFlyTDhjU21URE1oWXRPVVRHNzhjR1
-  RSNWV6ayJ9fX0.rOSUMR8I5WhM5C704l3iVdY0zFqxhugJ8Jo2xo39G7FqUTbwTzAGd
-  pz2lHp6eL1M486XmRgl3uyjj6R_iuzNOA
-Workload-Proof-Token: eyJhbGciOiJFZERTQSIsInR5cCI6IndpbXNlLXByb29mK2p
-  3dCJ9.eyJhdGgiOiJDTDR3amZwUm1OZi1iZFlJYllMblY5ZDVyTUFSR3dLWUUxMHdVd
-  3pDMGpJIiwiYXVkIjoiaHR0cHM6Ly9zZXJ2aWNlLmV4YW1wbGUuY29tL3BhdGgiLCJl
-  eHAiOjE3Mjg2NTg2NzIsImlzcyI6IndpbXNlOi8vZXhhbXBsZS5jb20vc3BlY2lmaWM
-  td29ya2xvYWQiLCJqdGkiOiI0YjQyYzVmNjExZTJiMWNmYTFkMmM0MWIzYTJmYjc4Mi
-  IsInd0aCI6Ii1KaThUbE1ORmszcW16bXBBeEJPXzdXLVl1dGNIXzJfZnVGQUZGU1YxU
-  mcifQ.jrUBsDjWMG_FpuhLo3lNC-IBeiPQXZ4UOuttPdNj8fRmIG4ZDFF9B10y7uGbi
-  NIhbRdpgG_KXEPLHXWnvzLmBA
+Workload-Identity-Token: eyJ0eXAiOiJ3aW1zZS1pZCtqd3QiLCJhbGciOiJFUzI\
+1NiIsImtpZCI6Ikp1bmUgNSJ9.eyJpc3MiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3RydX\
+N0ZWQtY2VudHJhbC1hdXRob3JpdHkiLCJleHAiOjE3MTc2MTI0NzAsInN1YiI6IndpbX\
+NlOi8vZXhhbXBsZS5jb20vc3BlY2lmaWMtd29ya2xvYWQiLCJqdGkiOiJ4LV8xQ1RMMm\
+NjYTNDU0U0Y3diX18iLCJjbmYiOnsiandrIjp7Imt0eSI6Ik9LUCIsImNydiI6IkVkMj\
+U1MTkiLCJ4IjoiX2FtUkMzWXJZYkhoSDFSdFlyTDhjU21URE1oWXRPVVRHNzhjR1RSNW\
+V6ayJ9fX0.rOSUMR8I5WhM5C704l3iVdY0zFqxhugJ8Jo2xo39G7FqUTbwTzAGdpz2lH\
+p6eL1M486XmRgl3uyjj6R_iuzNOA
+Workload-Proof-Token: eyJhbGciOiJFZERTQSIsInR5cCI6IndpbXNlLXByb29mK2\
+p3dCJ9.eyJhdGgiOiJDTDR3amZwUm1OZi1iZFlJYllMblY5ZDVyTUFSR3dLWUUxMHdVd\
+3pDMGpJIiwiYXVkIjoiaHR0cHM6Ly9zZXJ2aWNlLmV4YW1wbGUuY29tL3BhdGgiLCJle\
+HAiOjE3Mjg2NTg2NzIsImlzcyI6IndpbXNlOi8vZXhhbXBsZS5jb20vc3BlY2lmaWMtd\
+29ya2xvYWQiLCJqdGkiOiI0YjQyYzVmNjExZTJiMWNmYTFkMmM0MWIzYTJmYjc4MiIsI\
+nd0aCI6Ii1KaThUbE1ORmszcW16bXBBeEJPXzdXLVl1dGNIXzJfZnVGQUZGU1YxUmcif\
+Q.jrUBsDjWMG_FpuhLo3lNC-IBeiPQXZ4UOuttPdNj8fRmIG4ZDFF9B10y7uGbiNIhbR\
+dpgG_KXEPLHXWnvzLmBA
 
 {"do stuff":"please"}
 </pre>
