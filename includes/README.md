@@ -1,0 +1,1 @@
+Run `make generate-includes` to generate `.out` files for each of the present `.txt` files.

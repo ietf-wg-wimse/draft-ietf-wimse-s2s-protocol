@@ -383,29 +383,8 @@ The decoded JWT claims of the WPT from the example above are shown here:
 
 An example of an HTTP request with both the WIT and WPT from prior examples is shown below:
 
-~~~ http-message
-POST /path HTTP/1.1
-Host: service.example.com
-Content-Type: application/json
-Authorization: Bearer 16_mAd0GiwaZokU26_0902100
-Workload-Identity-Token: eyJ0eXAiOiJ3aW1zZS1pZCtqd3QiLCJhbGciOiJFUzI1
-  NiIsImtpZCI6Ikp1bmUgNSJ9.eyJpc3MiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3RydX
-  N0ZWQtY2VudHJhbC1hdXRob3JpdHkiLCJleHAiOjE3MTc2MTI0NzAsInN1YiI6Indpb
-  XNlOi8vZXhhbXBsZS5jb20vc3BlY2lmaWMtd29ya2xvYWQiLCJqdGkiOiJ4LV8xQ1RM
-  MmNjYTNDU0U0Y3diX18iLCJjbmYiOnsiandrIjp7Imt0eSI6Ik9LUCIsImNydiI6IkV
-  kMjU1MTkiLCJ4IjoiX2FtUkMzWXJZYkhoSDFSdFlyTDhjU21URE1oWXRPVVRHNzhjR1
-  RSNWV6ayJ9fX0.rOSUMR8I5WhM5C704l3iVdY0zFqxhugJ8Jo2xo39G7FqUTbwTzAGd
-  pz2lHp6eL1M486XmRgl3uyjj6R_iuzNOA
-Workload-Proof-Token: eyJhbGciOiJFZERTQSIsInR5cCI6IndpbXNlLXByb29mK2p
-  3dCJ9.eyJhdGgiOiJDTDR3amZwUm1OZi1iZFlJYllMblY5ZDVyTUFSR3dLWUUxMHdVd
-  3pDMGpJIiwiYXVkIjoiaHR0cHM6Ly9zZXJ2aWNlLmV4YW1wbGUuY29tL3BhdGgiLCJl
-  eHAiOjE3Mjg2NTg2NzIsImlzcyI6IndpbXNlOi8vZXhhbXBsZS5jb20vc3BlY2lmaWM
-  td29ya2xvYWQiLCJqdGkiOiI0YjQyYzVmNjExZTJiMWNmYTFkMmM0MWIzYTJmYjc4Mi
-  IsInd0aCI6Ii1KaThUbE1ORmszcW16bXBBeEJPXzdXLVl1dGNIXzJfZnVGQUZGU1YxU
-  mcifQ.jrUBsDjWMG_FpuhLo3lNC-IBeiPQXZ4UOuttPdNj8fRmIG4ZDFF9B10y7uGbi
-  NIhbRdpgG_KXEPLHXWnvzLmBA
-
-{"do stuff":"please"}
+~~~ http
+{::include includes/wpt-request.txt.out}
 ~~~
 {: title="Example HTTP Request with WIT and WPT"}
 
@@ -484,7 +463,7 @@ Following is a non-normative example of a signed request and a signed response,
 where the caller is using the keys specified in {{example-caller-jwk}}.
 
 ~~~ http
-{::include includes/sigs-request.out}
+{::include includes/sigs-request.txt.out}
 ~~~
 {: title="Signed Request"}
 
@@ -503,7 +482,7 @@ Assuming that the workload being called has the following keypair:
 A signed response would be:
 
 ~~~ http
-{::include includes/sigs-response.out}
+{::include includes/sigs-response.txt.out}
 ~~~
 {: title="Signed Response"}
 

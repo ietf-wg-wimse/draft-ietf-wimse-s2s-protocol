@@ -3,6 +3,7 @@
 *.redxml
 *.swp
 *.txt
+!includes/*
 *.upload
 *~
 .tags

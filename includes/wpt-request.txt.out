@@ -1,0 +1,24 @@
+=============== NOTE: '\' line wrapping per RFC 8792 ================
+
+POST /path HTTP/1.1
+Host: service.example.com
+Content-Type: application/json
+Authorization: Bearer 16_mAd0GiwaZokU26_0902100
+Workload-Identity-Token: eyJ0eXAiOiJ3aW1zZS1pZCtqd3QiLCJhbGciOiJFUzI\
+1NiIsImtpZCI6Ikp1bmUgNSJ9.eyJpc3MiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3RydX\
+N0ZWQtY2VudHJhbC1hdXRob3JpdHkiLCJleHAiOjE3MTc2MTI0NzAsInN1YiI6IndpbX\
+NlOi8vZXhhbXBsZS5jb20vc3BlY2lmaWMtd29ya2xvYWQiLCJqdGkiOiJ4LV8xQ1RMMm\
+NjYTNDU0U0Y3diX18iLCJjbmYiOnsiandrIjp7Imt0eSI6Ik9LUCIsImNydiI6IkVkMj\
+U1MTkiLCJ4IjoiX2FtUkMzWXJZYkhoSDFSdFlyTDhjU21URE1oWXRPVVRHNzhjR1RSNW\
+V6ayJ9fX0.rOSUMR8I5WhM5C704l3iVdY0zFqxhugJ8Jo2xo39G7FqUTbwTzAGdpz2lH\
+p6eL1M486XmRgl3uyjj6R_iuzNOA
+Workload-Proof-Token: eyJhbGciOiJFZERTQSIsInR5cCI6IndpbXNlLXByb29mK2\
+p3dCJ9.eyJhdGgiOiJDTDR3amZwUm1OZi1iZFlJYllMblY5ZDVyTUFSR3dLWUUxMHdVd\
+3pDMGpJIiwiYXVkIjoiaHR0cHM6Ly9zZXJ2aWNlLmV4YW1wbGUuY29tL3BhdGgiLCJle\
+HAiOjE3Mjg2NTg2NzIsImlzcyI6IndpbXNlOi8vZXhhbXBsZS5jb20vc3BlY2lmaWMtd\
+29ya2xvYWQiLCJqdGkiOiI0YjQyYzVmNjExZTJiMWNmYTFkMmM0MWIzYTJmYjc4MiIsI\
+nd0aCI6Ii1KaThUbE1ORmszcW16bXBBeEJPXzdXLVl1dGNIXzJfZnVGQUZGU1YxUmcif\
+Q.jrUBsDjWMG_FpuhLo3lNC-IBeiPQXZ4UOuttPdNj8fRmIG4ZDFF9B10y7uGbiNIhbR\
+dpgG_KXEPLHXWnvzLmBA
+
+{"do stuff":"please"}

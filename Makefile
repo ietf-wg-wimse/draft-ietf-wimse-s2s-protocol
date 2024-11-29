@@ -9,3 +9,6 @@ else
 	git clone -q --depth 10 $(CLONE_ARGS) \
 	    -b main https://github.com/martinthomson/i-d-template $(LIBDIR)
 endif
+
+generate-includes: 
+	find ./includes/*.txt -maxdepth 1 -type f -exec includes/rfcfold.sh -i {} -o {}.out \;
