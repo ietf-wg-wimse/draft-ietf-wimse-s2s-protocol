@@ -4,15 +4,13 @@
 
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
-Intended status: Standards Track                              D. Feldman
-Expires: 2 June 2025                                         Independent
-                                                              J. Salowey
-                                                                  Venafi
+Intended status: Standards Track                              J. Salowey
+Expires: 4 June 2025                                              Venafi
                                                       A. Schwenkschuster
                                                                    SPIRL
                                                               Y. Sheffer
                                                                   Intuit
-                                                        29 November 2024
+                                                         1 December 2024
 
 
                 WIMSE Service to Service Authentication
@@ -68,7 +66,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 2 June 2025.
+   This Internet-Draft will expire on 4 June 2025.
 
 Copyright Notice
 
@@ -1109,19 +1107,17 @@ A.2.  draft-ietf-wimse-s2s-protocol-00
 
 Acknowledgments
 
+   The authors would like to thank Pieter Kasselman for his detailed
+   comments.
 
-   // TODO acknowledge.
+   We thank Daniel Feldman for his contributions to earlier versions of
+   this document.
 
 Authors' Addresses
 
    Brian Campbell
    Ping Identity
    Email: bcampbell@pingidentity.com
-
-
-   Daniel Feldman
-   Independent
-   Email: dfeldman.mn@gmail.com
 
 
    Joe Salowey
