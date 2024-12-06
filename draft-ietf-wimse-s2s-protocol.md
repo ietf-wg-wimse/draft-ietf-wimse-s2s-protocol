@@ -106,15 +106,18 @@ Regardless of the transport between the workloads, we assume the following logic
 
 ~~~ aasvg
 +------------+               +------------+
-|            |      (2)      |            |
-|            |==============>| Workload B |
-| Workload A |               |            |
-|            |<==============|   +--------+
-|            |      (4)      |   |  PEP   |
+|            |      (1)      |            |
+|            |<=============>|            |
+|            |               |            |
+| Workload A |      (3)      | Workload B |
+|            |==============>|            |
+|            |               |            |
+|            |      (5)      |   +--------+
+|            |<==============|   |  PEP   |
 +------------+               +---+--------+
       ^                        ^     ^
-      |            (1)         |     |
-  (1) | +----------------------+     | (3)
+      |            (2)         |     |
+  (2) | +----------------------+     | (4)
       | |                            |
       v v                            v
 +------------+               +------------+
@@ -136,12 +139,16 @@ policy management and message authorization are out of scope of this document.
 
 The high-level message flow is as follows:
 
-1. Workload A (and similarly, Workload B) obtains a credential from the Identity Server. This happens periodically, e.g. once every 24 hours.
-2. Workload A makes an HTTP call into Workload B. This is a regular HTTP request, with the additional protection
+1. A transport connection is set up. In the case of mutual TLS, this includes authentication of both workloads to
+one another. In the case of application-level security, the TLS connection is typically one-way authenticated,
+and workload-level authentication does not yet take place.
+2. Workload A (and similarly, Workload B) obtains a credential from the Identity Server. This happens periodically, e.g. once every 24 hours.
+3. Workload A makes an HTTP call into Workload B. This is a regular HTTP request, with the additional protection
 mechanisms defined below.
-3. Workload B now authenticates Workload A and decides whether to authorize the call.
-In certain architectures, Workload B may need to consult with an external server to decide whether to accept the call.
-4. Workload B returns a response to Workload A, which may be an error response or a regular one.
+4. In the case of application-level security, Workload B authenticates Workload A (when using mutual TLS, this happened in step 1).
+In either case, Workload B decides whether to authorize the call.
+In certain architectures, Workload B may need to consult with an external server when making this decision.
+5. Workload B returns a response to Workload A, which may be an error response or a regular one.
 
 # Conventions and Definitions
 
