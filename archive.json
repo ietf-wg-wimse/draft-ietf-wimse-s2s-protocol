@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-12-05T01:20:23.679890+00:00",
+  "timestamp": "2024-12-08T01:25:43.521898+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -423,11 +423,13 @@
       "state": "OPEN",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "bc-pi"
+      ],
       "labels": [],
       "body": "In Sec. [The WIT HTTP Header](https://www.sheffer.org/wimse-s2s/draft-sheffer-wimse-s2s-protocol.html#name-the-wit-http-header), we define the ABNF even though we say the WIT is a JWT and this completely defines the syntax. IMO the ABNF could actually confuse implementers.",
       "createdAt": "2024-07-03T16:33:37Z",
-      "updatedAt": "2024-07-12T02:03:59Z",
+      "updatedAt": "2024-12-05T16:00:48Z",
       "closedAt": null,
       "comments": [
         {
@@ -436,6 +438,13 @@
           "body": "The last time I went through the process of requesting registration of an HTTP Field Name to carry a JWT, there was some grumbling from one of the designated experts about it not being defined as an RFC 8941 Structured Field Value. When it was explained that there wasn't really an appropriate SF type to carry a JWT (and especially that sf-binary didn't fit at all) the grumbling shifted to general complaints that the syntax wasn't well defined (despite, as you point out, the syntax of a JWT being completely defined by JWT). The grumbling was partially mollified by the addition of some less than useful ABNF (found [here](https://www.rfc-editor.org/rfc/rfc9449.html#section-4.1-6)). It was more involved than that, of course, but that's the basic story line. So I thought I'd try and get ahead of that kind of DE push-back a bit while adding some ABNF that's a little more descriptive/useful. Which is what is [here](https://www.ietf.org/archive/id/draft-sheffer-wimse-s2s-protocol-00.html#name-workload-identity-token-hea). I think the WPT header field should also get some ABNF but I couldn't fit it in as well and ran out of time for the pre -00 PR deadline. ",
           "createdAt": "2024-07-12T02:03:58Z",
           "updatedAt": "2024-07-12T02:03:58Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@bc-pi: we should have a similar (same?) ABNF for the WPT.",
+          "createdAt": "2024-12-05T16:00:38Z",
+          "updatedAt": "2024-12-05T16:00:38Z"
         }
       ]
     },
@@ -444,15 +453,15 @@
       "id": "I_kwDOLJmm786OZoCf",
       "title": "Long lines - automation",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/34",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Instead of manually breaking lines, it's best to use [rfcfold](https://github.com/ietf-tools/rfcfold/blob/master/rfcfold). And then ideally we'd automate generation of the sample code.",
       "createdAt": "2024-07-03T17:02:38Z",
-      "updatedAt": "2024-07-03T17:02:38Z",
-      "closedAt": null,
+      "updatedAt": "2024-12-05T15:50:22Z",
+      "closedAt": "2024-12-05T15:50:22Z",
       "comments": []
     },
     {
@@ -509,15 +518,15 @@
       "id": "I_kwDOLJmm786OhmUa",
       "title": "Extensibility of the Workload Proof Token",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/38",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "Commenting as identity enthusiast as opposed to WIMSE co-chair:\r\n\r\nIt may be helpful to make the proof mechanism extensible and allow for the inclusion of additional elements that may be included in the proof (similar to DPoP).",
       "createdAt": "2024-07-04T16:18:03Z",
-      "updatedAt": "2024-07-15T14:12:47Z",
-      "closedAt": null,
+      "updatedAt": "2024-12-05T15:48:07Z",
+      "closedAt": "2024-12-05T15:48:07Z",
       "comments": [
         {
           "author": "bc-pi",
@@ -532,6 +541,13 @@
           "body": "I believe there's a broader discussion on \"What proof of possession attributes do we want\" if we go down the DPoP-ish route. HTTP message signatures come with the capability to let the implementer choose what property the signature covers. (whether this is good or not).\r\n\r\nI personally don't know yet and I'm hoping IETF120 will give new perspectives.",
           "createdAt": "2024-07-15T14:12:46Z",
           "updatedAt": "2024-07-15T14:12:46Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "After considering the differences between HTTP Message Sigs and the DPoP mechanisms we decided to limit extensibility of this one. ",
+          "createdAt": "2024-12-05T15:48:07Z",
+          "updatedAt": "2024-12-05T15:48:07Z"
         }
       ]
     },
@@ -1221,13 +1237,23 @@
       "state": "OPEN",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "arndt-s"
+      ],
       "labels": [],
       "body": "Now, `iss` claim in WPT is required and required to match the `sub` claim of the WIT.\r\n\r\nWith the `wth` claim (hash of WIT in WPT) this becomes kind of duplicate and we should consider to either:\r\n\r\n- make the `iss` claim in WPT optional\r\n- remove the `iss` claim from the WPT\r\n- other options ..\r\n",
       "createdAt": "2024-10-15T14:32:16Z",
-      "updatedAt": "2024-10-15T14:32:17Z",
+      "updatedAt": "2024-12-05T15:55:04Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Decision: remove and forbid `iss`.",
+          "createdAt": "2024-12-05T15:55:03Z",
+          "updatedAt": "2024-12-05T15:55:03Z"
+        }
+      ]
     },
     {
       "number": 69,
@@ -1298,7 +1324,7 @@
       "id": "I_kwDOLJmm786aquYj",
       "title": "Extended key usage normative language",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/74",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "NONE",
       "assignees": [
@@ -1307,8 +1333,8 @@
       "labels": [],
       "body": "Comparing the normative language for WIMSE certificates and X.509 SVIDs appears to suggest that extended key usage MUST include both server and client auth extended key usage, while for WIMSE, it is optional and you can have one or the other. Is there a specific reason why we want to be more lenient in the WIMSE draft than in the SPIFFE drafts?",
       "createdAt": "2024-10-17T14:19:03Z",
-      "updatedAt": "2024-11-22T14:15:23Z",
-      "closedAt": null,
+      "updatedAt": "2024-12-05T15:31:05Z",
+      "closedAt": "2024-12-05T15:31:05Z",
       "comments": [
         {
           "author": "yaronf",
@@ -6521,13 +6547,13 @@
       "labels": [],
       "body": "Fixes #36.",
       "createdAt": "2024-11-22T14:05:28Z",
-      "updatedAt": "2024-12-01T00:13:26Z",
+      "updatedAt": "2024-12-06T16:28:41Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "ba2577a228ab66ef2bb4dd7ffba24e511bb5295c",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-figure",
-      "headRefOid": "1ec9099f06740352c0f31a0cfd633fc246ce1447",
+      "headRefOid": "b0e09e4736f1780e4e90366c37c20a797ce606a0",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -6546,6 +6572,66 @@
           "createdAt": "2024-12-01T00:13:26Z",
           "updatedAt": "2024-12-01T00:13:26Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm786T8CjK",
+          "commit": {
+            "abbreviatedOid": "1ec9099"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-12-05T15:09:35Z",
+          "updatedAt": "2024-12-05T15:09:35Z",
+          "comments": [
+            {
+              "originalPosition": 16,
+              "body": "Should we make the arrow on 2) go in both direction to accumulate mTLS?",
+              "createdAt": "2024-12-05T15:09:35Z",
+              "updatedAt": "2024-12-05T15:09:35Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786T8fB0",
+          "commit": {
+            "abbreviatedOid": "1ec9099"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-12-05T15:46:11Z",
+          "updatedAt": "2024-12-05T15:46:11Z",
+          "comments": [
+            {
+              "originalPosition": 16,
+              "body": "After discussion, maybe add authn to step 2 and leave step 3 with authz only?",
+              "createdAt": "2024-12-05T15:46:11Z",
+              "updatedAt": "2024-12-05T15:46:11Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786UI1kT",
+          "commit": {
+            "abbreviatedOid": "1ec9099"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-12-06T16:28:27Z",
+          "updatedAt": "2024-12-06T16:28:27Z",
+          "comments": [
+            {
+              "originalPosition": 16,
+              "body": "Please see the new version. I'm afraid the diagram's diff is a bit messy.",
+              "createdAt": "2024-12-06T16:28:27Z",
+              "updatedAt": "2024-12-06T16:28:27Z"
+            }
+          ]
         }
       ]
     },
