@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-12-15T01:26:59.229382+00:00",
+  "timestamp": "2024-12-17T01:20:02.665464+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -815,7 +815,7 @@
       "id": "I_kwDOLJmm786OhyLW",
       "title": "X.509 fields",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/46",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "NONE",
       "assignees": [
@@ -824,8 +824,8 @@
       "labels": [],
       "body": "Commenting as identity enthusiast as opposed to WIMSE co-chair\r\n\r\nSection 5 states that the identifier may be used in an X.509 certificate. From reading the draft, this may be a client or a server certificate. Should we included additional details about the certificates themeselves? Should a workload be able to use the same certificate for client authentication and as a server? What are the extended key usage parameters that should be supported (can a cert have both)?",
       "createdAt": "2024-07-04T16:59:25Z",
-      "updatedAt": "2024-10-09T04:13:14Z",
-      "closedAt": null,
+      "updatedAt": "2024-12-16T02:03:05Z",
+      "closedAt": "2024-12-16T02:03:04Z",
       "comments": [
         {
           "author": "jsalowey",
@@ -833,6 +833,13 @@
           "body": "PR#63 adds some of this.  We may want to make more specification around what can be in the URI (no port, username; trust domain lowercase)",
           "createdAt": "2024-10-09T04:12:46Z",
           "updatedAt": "2024-10-09T04:12:46Z"
+        },
+        {
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This issue is addressed by text in section 5 an section 3. ",
+          "createdAt": "2024-12-16T02:03:04Z",
+          "updatedAt": "2024-12-16T02:03:04Z"
         }
       ]
     },
@@ -937,7 +944,7 @@
       "labels": [],
       "body": "Commenting as identity enthusiast as opposed to WIMSE co-chair:\r\n\r\nSection 5 introduces the term \"WIMSE URI\" - if this is defined in the architecture document, it should be referenced. If this is defined in Section 3, perhaps rename as workload identitifier.",
       "createdAt": "2024-07-04T17:09:11Z",
-      "updatedAt": "2024-09-20T00:53:44Z",
+      "updatedAt": "2024-12-16T01:59:03Z",
       "closedAt": null,
       "comments": [
         {
@@ -981,6 +988,13 @@
           "body": "See PR #61  and #62 ",
           "createdAt": "2024-09-20T00:53:43Z",
           "updatedAt": "2024-09-20T00:53:43Z"
+        },
+        {
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "body": "resolved by PR #82  by removing references WIMSE URI and using WIMSE Identity instead ",
+          "createdAt": "2024-12-16T01:59:02Z",
+          "updatedAt": "2024-12-16T01:59:02Z"
         }
       ]
     },
@@ -1102,7 +1116,7 @@
       "labels": [],
       "body": "The current draft says that the WIT must not be accepted without proof of possession of the corresponding private key.  This is for security reasons because if you are willing to accept the WIT without proof of possession then the security benefit of the WIT is greatly diminished.  \r\n\r\nThis restriction makes it difficult to integrate a WIT seamlessly into existing applications.  I question whether this could be done securely, but I think we should have the discussion:\r\n1. Is there a sensible policy that would make this OK?  It seems that legacy application would be none the worse off, but application that could handle the WIT would still benefit.  I think there is a difficulty here in that you have client an services sides that might be updated a different times making it more complex.\r\n2. Perhaps there is an alternate form of POP that would be easier.  For example binding to a TLS key or identity.  While this seems attractive, one of the reasons for the WIT is to suport cases where MTLS isn't realistic. \r\n\r\n",
       "createdAt": "2024-07-17T17:27:44Z",
-      "updatedAt": "2024-09-20T10:49:08Z",
+      "updatedAt": "2024-12-16T01:38:55Z",
       "closedAt": null,
       "comments": [
         {
@@ -1153,6 +1167,13 @@
           "body": "I can think of ways to deal with it. But all in all, I agree that it's simpler (for implementations) and more secure to keep the current wording that requires PoP for any use of the WIT.",
           "createdAt": "2024-09-20T10:49:07Z",
           "updatedAt": "2024-09-20T10:49:07Z"
+        },
+        {
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "body": "The draft already states that the WIT MUST NOT be used as a bearer token and it defines new headers for the WIT and WPT so there is no conflict with existing tokens so they could be presented at the same time.  I think this issue could be closed, but we could also add text to the document describing that bearer tokens in existing headers can be presented in the same message as WPT and WIT tokens for compatibility during transitions but applications should implement policy controls to reject the use of identity bearer tokens once the WIT is in use.  ",
+          "createdAt": "2024-12-16T01:38:54Z",
+          "updatedAt": "2024-12-16T01:38:54Z"
         }
       ]
     },
@@ -6674,6 +6695,59 @@
           "createdAt": "2024-11-29T11:23:30Z",
           "updatedAt": "2024-11-29T11:23:30Z",
           "comments": []
+        }
+      ]
+    },
+    {
+      "number": 82,
+      "id": "PR_kwDOLJmm786FSdzp",
+      "title": "resolve issue 49",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/82",
+      "state": "OPEN",
+      "author": "jsalowey",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "resolve issue #49 ",
+      "createdAt": "2024-12-16T01:56:28Z",
+      "updatedAt": "2024-12-16T18:06:22Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "18fe59fa46980891e2fd8f025f85f5c743fece7f",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "issue-49",
+      "headRefOid": "4b5754732d850d082cd2291b07edb32ba2e4a314",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm786VbH0r",
+          "commit": {
+            "abbreviatedOid": "4b57547"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2024-12-16T18:01:59Z",
+          "updatedAt": "2024-12-16T18:06:22Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\r\nIf the WIMSE client uses a hostname to connect to the server and the server certificate contain a DNS SAN the client MUST perform standard host name validation ({{Section 6.3 of RFC9525}}) unless it is configured with the information necessary to validate the peer's WIMSE identity. If the client did not perform standard host name validation then the WIMSE client SHOULD further use the WIMSE workload identifier to validate the server.  The host portion of the WIMSE workload identifier is NOT treated as a host name as specified in section 6.4 of {{!RFC9525}} but rather as a trust domain. The server identity is encoded in the path portion of the WIMSE workload identifier in a deployment specific way. Validating the WIMSE workload identity could be a simple match on the trust domain and path portions of the identifier or validation may be based on the specific details on how the identifier is constructed. The path portion of the WIMSE identifier MUST always be considered in the scope of the trust domain.\r\n```\r\n\r\nReplaced \"The host portion of the URI representation of the WIMSE workload identity\" by what I think is simpler and more consistent.",
+              "createdAt": "2024-12-16T18:01:59Z",
+              "updatedAt": "2024-12-16T18:06:22Z"
+            },
+            {
+              "originalPosition": 10,
+              "body": "```suggestion\r\nThe server application retrieves the WIMSE workload identifier from the client certificate subjectAltName, which in turn is obtained from the TLS layer. The identifier is used in authorization, accounting and auditing.  For example, the full WIMSE workload identifier may be matched against ACLs to authorize actions requested by the peer and the identifier may be included in log messages to associate actions to the client workload for audit purposes. A deployment may specify other authorization policies based on the specific details of how the WIMSE identifier is constructed. The path portion of the WIMSE identifier MUST always be considered in the scope of the trust domain.\r\n```\r\n\r\nIdentity -> identifier when a concrete value is meant.",
+              "createdAt": "2024-12-16T18:05:33Z",
+              "updatedAt": "2024-12-16T18:06:22Z"
+            }
+          ]
         }
       ]
     }
