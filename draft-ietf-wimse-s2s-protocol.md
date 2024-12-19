@@ -544,11 +544,16 @@ WIMSE server certificates SHOULD have the `id-kp-serverAuth` extended key usage 
 
 ## Server Name Validation {#server-name}
 
-If the WIMSE client uses a hostname to connect to the server and the server certificate contain a DNS SAN the client MUST perform standard host name validation ({{Section 6.3 of RFC9525}}) unless it is configured with the information necessary to validate the peer's WIMSE identity. If the client did not perform standard host name validation then the WIMSE client SHOULD further use the WIMSE workload identifier to validate the server.  The host portion of the WIMSE URI is NOT treated as a host name as specified in section 6.4 of {{!RFC9525}} but rather as a trust domain. The server identity is encoded in the path portion of the WIMSE workload identifier in a deployment specific way. Validating the WIMSE workload identity could be a simple match on the trust domain and path portions of the identifier or validation may be based on the specific details on how the identifier is constructed. The path portion of the WIMSE identifier MUST always be considered in the scope of the trust domain.
+If the WIMSE client uses a hostname to connect to the server and the server certificate contain a DNS SAN the client MUST perform standard host name validation ({{Section 6.3 of RFC9525}}) unless it is configured with the information necessary to validate the peer's WIMSE identity.
+If the client did not perform standard host name validation then the WIMSE client SHOULD further use the WIMSE workload identifier to validate the server.
+The host portion of the WIMSE workload identifier is NOT treated as a host name as specified in section 6.4 of {{!RFC9525}} but rather as a trust domain. The server identity is encoded in the path portion of the WIMSE workload identifier in a deployment specific way.
+Validating the WIMSE workload identity could be a simple match on the trust domain and path portions of the identifier or validation may be based on the specific details on how the identifier is constructed. The path portion of the WIMSE identifier MUST always be considered in the scope of the trust domain.
 
 ## Client Authorization Using the WIMSE Identity {#client-name}
 
-The server application retrieves the client certificate WIMSE URI subjectAltName from the TLS layer for use in authorization, accounting and auditing.  For example, the full WIMSE URI may be matched against ACLs to authorize actions requested by the peer and the URI may be included in log messages to associate actions to the client workload for audit purposes. A deployment may specify other authorization policies based on the specific details of how the WIMSE identifier is constructed. The path portion of the WIMSE identifier MUST always be considered in the scope of the trust domain.
+The server application retrieves the WIMSE workload identifier from the client certificate subjectAltName, which in turn is obtained from the TLS layer. The identifier is used in authorization, accounting and auditing.
+For example, the full WIMSE workload identifier may be matched against ACLs to authorize actions requested by the peer and the identifier may be included in log messages to associate actions to the client workload for audit purposes.
+A deployment may specify other authorization policies based on the specific details of how the WIMSE identifier is constructed. The path portion of the WIMSE identifier MUST always be considered in the scope of the trust domain.
 
 # Security Considerations
 
