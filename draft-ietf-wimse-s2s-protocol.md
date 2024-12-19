@@ -314,7 +314,7 @@ corresponding to the public key in the WIT. The WPT is sent in the `Workload-Pro
 The ABNF syntax of the `Workload-Proof-Token` header field is:
 
 ~~~ abnf
-WIT =  JWT
+WPT =  JWT
 ~~~~
 {: #wpt-header-abnf title="Workload-Proof-Token Header Field ABNF"}
 
