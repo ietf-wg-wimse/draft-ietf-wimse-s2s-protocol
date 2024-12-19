@@ -450,7 +450,7 @@ Table of Contents
    Workload-Proof-Token header field of the request.  The ABNF syntax of
    the Workload-Proof-Token header field is:
 
-   WIT =  JWT
+   WPT =  JWT
 
               Figure 8: Workload-Proof-Token Header Field ABNF
 
