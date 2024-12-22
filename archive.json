@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-12-19T01:17:56.053456+00:00",
+  "timestamp": "2024-12-22T01:19:22.134079+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -424,12 +424,12 @@
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
-        "bc-pi"
+        "yaronf"
       ],
       "labels": [],
       "body": "In Sec. [The WIT HTTP Header](https://www.sheffer.org/wimse-s2s/draft-sheffer-wimse-s2s-protocol.html#name-the-wit-http-header), we define the ABNF even though we say the WIT is a JWT and this completely defines the syntax. IMO the ABNF could actually confuse implementers.",
       "createdAt": "2024-07-03T16:33:37Z",
-      "updatedAt": "2024-12-05T16:00:48Z",
+      "updatedAt": "2024-12-19T15:31:30Z",
       "closedAt": null,
       "comments": [
         {
@@ -1116,7 +1116,7 @@
       "labels": [],
       "body": "The current draft says that the WIT must not be accepted without proof of possession of the corresponding private key.  This is for security reasons because if you are willing to accept the WIT without proof of possession then the security benefit of the WIT is greatly diminished.  \r\n\r\nThis restriction makes it difficult to integrate a WIT seamlessly into existing applications.  I question whether this could be done securely, but I think we should have the discussion:\r\n1. Is there a sensible policy that would make this OK?  It seems that legacy application would be none the worse off, but application that could handle the WIT would still benefit.  I think there is a difficulty here in that you have client an services sides that might be updated a different times making it more complex.\r\n2. Perhaps there is an alternate form of POP that would be easier.  For example binding to a TLS key or identity.  While this seems attractive, one of the reasons for the WIT is to suport cases where MTLS isn't realistic. \r\n\r\n",
       "createdAt": "2024-07-17T17:27:44Z",
-      "updatedAt": "2024-12-16T01:38:55Z",
+      "updatedAt": "2024-12-19T15:18:19Z",
       "closedAt": null,
       "comments": [
         {
@@ -1174,6 +1174,13 @@
           "body": "The draft already states that the WIT MUST NOT be used as a bearer token and it defines new headers for the WIT and WPT so there is no conflict with existing tokens so they could be presented at the same time.  I think this issue could be closed, but we could also add text to the document describing that bearer tokens in existing headers can be presented in the same message as WPT and WIT tokens for compatibility during transitions but applications should implement policy controls to reject the use of identity bearer tokens once the WIT is in use.  ",
           "createdAt": "2024-12-16T01:38:54Z",
           "updatedAt": "2024-12-16T01:38:54Z"
+        },
+        {
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "body": "On call decided to add section on co-existance with bearer token JWT",
+          "createdAt": "2024-12-19T15:18:18Z",
+          "updatedAt": "2024-12-19T15:18:18Z"
         }
       ]
     },
@@ -6568,7 +6575,7 @@
       "labels": [],
       "body": "Fixes #36.",
       "createdAt": "2024-11-22T14:05:28Z",
-      "updatedAt": "2024-12-06T16:28:41Z",
+      "updatedAt": "2024-12-19T15:13:08Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "ba2577a228ab66ef2bb4dd7ffba24e511bb5295c",
@@ -6653,6 +6660,19 @@
               "updatedAt": "2024-12-06T16:28:27Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786V6mST",
+          "commit": {
+            "abbreviatedOid": "b0e09e4"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-12-19T15:13:08Z",
+          "updatedAt": "2024-12-19T15:13:08Z",
+          "comments": []
         }
       ]
     },
@@ -6710,18 +6730,26 @@
       "labels": [],
       "body": "resolve issue #49 ",
       "createdAt": "2024-12-16T01:56:28Z",
-      "updatedAt": "2024-12-16T18:06:22Z",
+      "updatedAt": "2024-12-19T16:02:43Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "18fe59fa46980891e2fd8f025f85f5c743fece7f",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "issue-49",
-      "headRefOid": "4b5754732d850d082cd2291b07edb32ba2e4a314",
+      "headRefOid": "ac229b0cef2e7221a71de93727158fc9a4a8f6f4",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "body": "added line breaks to lines added in this PR",
+          "createdAt": "2024-12-19T15:58:20Z",
+          "updatedAt": "2024-12-19T15:58:20Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOLJmm786VbH0r",
@@ -6748,6 +6776,59 @@
               "updatedAt": "2024-12-16T18:06:22Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786V7a6e",
+          "commit": {
+            "abbreviatedOid": "ac229b0"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-12-19T16:02:43Z",
+          "updatedAt": "2024-12-19T16:02:43Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 83,
+      "id": "PR_kwDOLJmm786F0y-I",
+      "title": "Terribly complex ABNF for WPT",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/83",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Closes #32.",
+      "createdAt": "2024-12-19T17:53:01Z",
+      "updatedAt": "2024-12-19T18:26:51Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "18fe59fa46980891e2fd8f025f85f5c743fece7f",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-abnf",
+      "headRefOid": "ba28b19efed81a73dbb3badaea1f1d5753622760",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm786V9XhH",
+          "commit": {
+            "abbreviatedOid": "ba28b19"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-12-19T18:26:51Z",
+          "updatedAt": "2024-12-19T18:26:51Z",
+          "comments": []
         }
       ]
     }
