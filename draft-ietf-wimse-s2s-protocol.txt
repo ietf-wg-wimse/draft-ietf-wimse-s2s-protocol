@@ -5,12 +5,12 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 26 June 2025                                             Venafi
+Expires: 27 June 2025                                             Venafi
                                                       A. Schwenkschuster
                                                                    SPIRL
                                                               Y. Sheffer
                                                                   Intuit
-                                                        23 December 2024
+                                                        24 December 2024
 
 
                 WIMSE Service to Service Authentication
@@ -66,7 +66,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 June 2025.
+   This Internet-Draft will expire on 27 June 2025.
 
 Copyright Notice
 
@@ -415,7 +415,8 @@ Table of Contents
    ALPHA = %x41-5A / %x61-7A ; A-Z / a-z
    DIGIT = %x30-39 ; 0-9
    base64url = 1*(ALPHA / DIGIT / "-" / "_")
-   WIT =  base64url "." base64url "." base64url
+   JWT =  base64url "." base64url "." base64url
+   WIT =  JWT
 
             Figure 6: Workload-Identity-Token Header Field ABNF
 
@@ -446,8 +447,16 @@ Table of Contents
    sent in the request as described in Section 4.1.1.  An additional
    JWT, the Workload Proof Token (WPT), is signed by the private key
    corresponding to the public key in the WIT.  The WPT is sent in the
-   Workload-Proof-Token header field of the request.  A WPT contains the
-   following:
+   Workload-Proof-Token header field of the request.  The ABNF syntax of
+   the Workload-Proof-Token header field is:
+
+   WPT =  JWT
+
+              Figure 8: Workload-Proof-Token Header Field ABNF
+
+   where the JWT projection is defined in Figure 6.
+
+   A WPT contains the following:
 
    *  in the JOSE header:
 
@@ -510,7 +519,7 @@ Table of Contents
    bXBBeEJPXzdXLVl1dGNIXzJfZnVGQUZGU1YxUmcifQ.jrUBsDjWMG_FpuhLo3lNC-IBei
    PQXZ4UOuttPdNj8fRmIG4ZDFF9B10y7uGbiNIhbRdpgG_KXEPLHXWnvzLmBA
 
-                Figure 8: Example Workload Proof Token (WPT)
+                Figure 9: Example Workload Proof Token (WPT)
 
    The decoded JOSE header of the WPT from the example above is shown
    here:
@@ -520,7 +529,7 @@ Table of Contents
      "typ": "wimse-proof+jwt"
    }
 
-                     Figure 9: Example WPT JOSE Header
+                     Figure 10: Example WPT JOSE Header
 
    The decoded JWT claims of the WPT from the example above are shown
    here:
@@ -534,7 +543,7 @@ Table of Contents
      "wth": "-Ji8TlMNFk3qmzmpAxBO_7W-YutcH_2_fuFAFFSV1Rg"
    }
 
-                       Figure 10: Example WPT Claims
+                       Figure 11: Example WPT Claims
 
    An example of an HTTP request with both the WIT and WPT from prior
    examples is shown below:
@@ -564,7 +573,7 @@ Table of Contents
 
    {"do stuff":"please"}
 
-              Figure 11: Example HTTP Request with WIT and WPT
+              Figure 12: Example HTTP Request with WIT and WPT
 
    To validate the WPT in the request, the recipient MUST ensure the
    following:
@@ -699,7 +708,7 @@ Table of Contents
    Workload-Identity-Token: aGVhZGVyCg.VGhpcyBpcyBub3QgYSByZWFsIHRva2Vu\
    Lgo.c2lnbmF0dXJlCg
 
-                         Figure 12: Signed Request
+                         Figure 13: Signed Request
 
    Assuming that the workload being called has the following keypair:
 
@@ -710,7 +719,7 @@ Table of Contents
     "d":"fycSKS-iHZ6TC1BNwN6cE0sOBP3-4KgR-eqxNpnyhws"
    }
 
-                       Figure 13: Callee Private Key
+                       Figure 14: Callee Private Key
 
    A signed response would be:
 
@@ -732,7 +741,7 @@ Table of Contents
 
    No ice cream today.
 
-                         Figure 14: Signed Response
+                         Figure 15: Signed Response
 
 4.4.  Comparing the DPoP Inspired Option with Message Signatures
 
