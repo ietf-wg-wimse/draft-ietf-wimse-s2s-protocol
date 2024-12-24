@@ -1330,55 +1330,75 @@ one of these two alternatives for standardization, once we have understood their
         <h3 id="name-deployment-architecture-and">
 <a href="#section-1.1" class="section-number selfRef">1.1. </a><a href="#name-deployment-architecture-and" class="section-name selfRef">Deployment Architecture and Message Flow</a>
         </h3>
-<p id="section-1.1-1">Regardless of the transport between the workloads, we assume the following logical architecture:<a href="#section-1.1-1" class="pilcrow">¶</a></p>
-<div id="section-1.1-2">
-          <div class="alignLeft art-svg artwork" id="section-1.1-2.1">
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="320" width="352" viewBox="0 0 352 320" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
-              <path d="M 8,32 L 8,128" fill="none" stroke="black"></path>
-              <path d="M 8,224 L 8,304" fill="none" stroke="black"></path>
-              <path d="M 56,136 L 56,216" fill="none" stroke="black"></path>
-              <path d="M 72,176 L 72,216" fill="none" stroke="black"></path>
-              <path d="M 112,32 L 112,128" fill="none" stroke="black"></path>
-              <path d="M 112,224 L 112,304" fill="none" stroke="black"></path>
-              <path d="M 240,32 L 240,128" fill="none" stroke="black"></path>
-              <path d="M 240,224 L 240,304" fill="none" stroke="black"></path>
-              <path d="M 256,136 L 256,176" fill="none" stroke="black"></path>
-              <path d="M 272,96 L 272,128" fill="none" stroke="black"></path>
-              <path d="M 304,136 L 304,216" fill="none" stroke="black"></path>
-              <path d="M 344,32 L 344,128" fill="none" stroke="black"></path>
-              <path d="M 344,224 L 344,304" fill="none" stroke="black"></path>
-              <path d="M 8,32 L 112,32" fill="none" stroke="black"></path>
-              <path d="M 240,32 L 344,32" fill="none" stroke="black"></path>
-              <path d="M 120,78 L 232,78" fill="none" stroke="black"></path>
-              <path d="M 120,82 L 232,82" fill="none" stroke="black"></path>
-              <path d="M 272,96 L 344,96" fill="none" stroke="black"></path>
-              <path d="M 8,128 L 112,128" fill="none" stroke="black"></path>
-              <path d="M 240,128 L 344,128" fill="none" stroke="black"></path>
-              <path d="M 72,176 L 256,176" fill="none" stroke="black"></path>
-              <path d="M 8,224 L 112,224" fill="none" stroke="black"></path>
-              <path d="M 240,224 L 344,224" fill="none" stroke="black"></path>
-              <path d="M 8,304 L 112,304" fill="none" stroke="black"></path>
-              <path d="M 240,304 L 344,304" fill="none" stroke="black"></path>
-              <polygon class="arrowhead" points="312,216 300,210.4 300,221.6" fill="black" transform="rotate(90,304,216)"></polygon>
-              <polygon class="arrowhead" points="312,136 300,130.4 300,141.6" fill="black" transform="rotate(270,304,136)"></polygon>
-              <polygon class="arrowhead" points="264,136 252,130.4 252,141.6" fill="black" transform="rotate(270,256,136)"></polygon>
-              <polygon class="arrowhead" points="240,80 228,74.4 228,85.6" fill="black" transform="rotate(0,232,80)"></polygon>
-              <polygon class="arrowhead" points="80,216 68,210.4 68,221.6" fill="black" transform="rotate(90,72,216)"></polygon>
-              <polygon class="arrowhead" points="64,216 52,210.4 52,221.6" fill="black" transform="rotate(90,56,216)"></polygon>
-              <polygon class="arrowhead" points="64,136 52,130.4 52,141.6" fill="black" transform="rotate(270,56,136)"></polygon>
-              <g class="text">
-                <text x="284" y="68">Workload</text>
-                <text x="328" y="68">B</text>
-                <text x="52" y="84">Workload</text>
-                <text x="96" y="84">A</text>
-                <text x="304" y="116">PEP</text>
-                <text x="60" y="260">Identity</text>
-                <text x="288" y="260">PDP</text>
-                <text x="60" y="276">Server</text>
-                <text x="292" y="276">(optional)</text>
-              </g>
-            </svg><a href="#section-1.1-2.1" class="pilcrow">¶</a>
+<p id="section-1.1-1">Regardless of the transport between the workloads, we assume the following logical architecture
+(numbers refer to the sequence of steps listed below):<a href="#section-1.1-1" class="pilcrow">¶</a></p>
+<span id="name-sequence-of-operations"></span><div id="high-level-seq">
+<figure id="figure-1">
+          <div id="section-1.1-2.1">
+            <div class="alignLeft art-svg artwork" id="section-1.1-2.1.1">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="368" width="352" viewBox="0 0 352 368" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
+                <path d="M 8,32 L 8,176" fill="none" stroke="black"></path>
+                <path d="M 8,272 L 8,352" fill="none" stroke="black"></path>
+                <path d="M 56,184 L 56,264" fill="none" stroke="black"></path>
+                <path d="M 72,224 L 72,264" fill="none" stroke="black"></path>
+                <path d="M 112,32 L 112,176" fill="none" stroke="black"></path>
+                <path d="M 112,272 L 112,352" fill="none" stroke="black"></path>
+                <path d="M 240,32 L 240,176" fill="none" stroke="black"></path>
+                <path d="M 240,272 L 240,352" fill="none" stroke="black"></path>
+                <path d="M 256,184 L 256,224" fill="none" stroke="black"></path>
+                <path d="M 272,144 L 272,176" fill="none" stroke="black"></path>
+                <path d="M 304,184 L 304,264" fill="none" stroke="black"></path>
+                <path d="M 344,32 L 344,176" fill="none" stroke="black"></path>
+                <path d="M 344,272 L 344,352" fill="none" stroke="black"></path>
+                <path d="M 8,32 L 112,32" fill="none" stroke="black"></path>
+                <path d="M 240,32 L 344,32" fill="none" stroke="black"></path>
+                <path d="M 120,62 L 232,62" fill="none" stroke="black"></path>
+                <path d="M 120,66 L 232,66" fill="none" stroke="black"></path>
+                <path d="M 120,110 L 232,110" fill="none" stroke="black"></path>
+                <path d="M 120,114 L 232,114" fill="none" stroke="black"></path>
+                <path d="M 272,144 L 344,144" fill="none" stroke="black"></path>
+                <path d="M 120,158 L 232,158" fill="none" stroke="black"></path>
+                <path d="M 120,162 L 232,162" fill="none" stroke="black"></path>
+                <path d="M 8,176 L 112,176" fill="none" stroke="black"></path>
+                <path d="M 240,176 L 344,176" fill="none" stroke="black"></path>
+                <path d="M 72,224 L 256,224" fill="none" stroke="black"></path>
+                <path d="M 8,272 L 112,272" fill="none" stroke="black"></path>
+                <path d="M 240,272 L 344,272" fill="none" stroke="black"></path>
+                <path d="M 8,352 L 112,352" fill="none" stroke="black"></path>
+                <path d="M 240,352 L 344,352" fill="none" stroke="black"></path>
+                <polygon class="arrowhead" points="312,264 300,258.4 300,269.6" fill="black" transform="rotate(90,304,264)"></polygon>
+                <polygon class="arrowhead" points="312,184 300,178.4 300,189.6" fill="black" transform="rotate(270,304,184)"></polygon>
+                <polygon class="arrowhead" points="264,184 252,178.4 252,189.6" fill="black" transform="rotate(270,256,184)"></polygon>
+                <polygon class="arrowhead" points="240,112 228,106.4 228,117.6" fill="black" transform="rotate(0,232,112)"></polygon>
+                <polygon class="arrowhead" points="240,64 228,58.4 228,69.6" fill="black" transform="rotate(0,232,64)"></polygon>
+                <polygon class="arrowhead" points="128,160 116,154.4 116,165.6" fill="black" transform="rotate(180,120,160)"></polygon>
+                <polygon class="arrowhead" points="128,64 116,58.4 116,69.6" fill="black" transform="rotate(180,120,64)"></polygon>
+                <polygon class="arrowhead" points="80,264 68,258.4 68,269.6" fill="black" transform="rotate(90,72,264)"></polygon>
+                <polygon class="arrowhead" points="64,264 52,258.4 52,269.6" fill="black" transform="rotate(90,56,264)"></polygon>
+                <polygon class="arrowhead" points="64,184 52,178.4 52,189.6" fill="black" transform="rotate(270,56,184)"></polygon>
+                <g class="text">
+                  <text x="176" y="52">(1)</text>
+                  <text x="52" y="100">Workload</text>
+                  <text x="96" y="100">A</text>
+                  <text x="176" y="100">(3)</text>
+                  <text x="284" y="100">Workload</text>
+                  <text x="328" y="100">B</text>
+                  <text x="176" y="148">(5)</text>
+                  <text x="304" y="164">PEP</text>
+                  <text x="168" y="212">(2)</text>
+                  <text x="32" y="228">(2)</text>
+                  <text x="328" y="228">(4)</text>
+                  <text x="60" y="308">Identity</text>
+                  <text x="288" y="308">PDP</text>
+                  <text x="60" y="324">Server</text>
+                  <text x="292" y="324">(optional)</text>
+                </g>
+              </svg><a href="#section-1.1-2.1.1" class="pilcrow">¶</a>
 </div>
+</div>
+<figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
+<a href="#name-sequence-of-operations" class="selfRef">Sequence of Operations</a>
+          </figcaption></figure>
 </div>
 <p id="section-1.1-3">The Identity Server provisions credentials to each of the workloads. At least Workload A (and possibly both) must be provisioned
 with a credential before the call can proceed. Details of communication with the Identity Server are out of scope
@@ -1387,22 +1407,28 @@ of this document, however we do describe the credential received by the workload
 Policy Decision Point, which may be deployed in architectures where policy management is centralized. All details of
 policy management and message authorization are out of scope of this document.<a href="#section-1.1-4" class="pilcrow">¶</a></p>
 <p id="section-1.1-5">The high-level message flow is as follows:<a href="#section-1.1-5" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-1.1-6.1">
-            <p id="section-1.1-6.1.1">Workload A obtains a credential from the Identity Server. This happens periodically, e.g. once every 24 hours.<a href="#section-1.1-6.1.1" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-1.1-6">
+<li id="section-1.1-6.1">
+            <p id="section-1.1-6.1.1">A transport connection is set up. In the case of mutual TLS, this includes authentication of both workloads to
+one another. In the case of application-level security, the TLS connection is typically one-way authenticated,
+and workload-level authentication does not yet take place.<a href="#section-1.1-6.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-1.1-6.2">
-            <p id="section-1.1-6.2.1">Workload A makes an HTTP call into Workload B. This is a regular HTTP request, with the additional protection
-mechanisms defined below.<a href="#section-1.1-6.2.1" class="pilcrow">¶</a></p>
+          <li id="section-1.1-6.2">
+            <p id="section-1.1-6.2.1">Workload A (and similarly, Workload B) obtains a credential from the Identity Server. This happens periodically, e.g. once every 24 hours.<a href="#section-1.1-6.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-1.1-6.3">
-            <p id="section-1.1-6.3.1">Workload B now authenticates Workload A and decides whether to authorize the call.
-In certain architectures, Workload B may need to consult with an external server to decide whether to accept the call.<a href="#section-1.1-6.3.1" class="pilcrow">¶</a></p>
+          <li id="section-1.1-6.3">
+            <p id="section-1.1-6.3.1">Workload A makes an HTTP call into Workload B. This is a regular HTTP request, with the additional protection
+mechanisms defined below.<a href="#section-1.1-6.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-1.1-6.4">
-            <p id="section-1.1-6.4.1">Workload B returns a response to Workload A, which may be an error response or a regular one.<a href="#section-1.1-6.4.1" class="pilcrow">¶</a></p>
+          <li id="section-1.1-6.4">
+            <p id="section-1.1-6.4.1">In the case of application-level security, Workload B authenticates Workload A (when using mutual TLS, this happened in step 1).
+In either case, Workload B decides whether to authorize the call.
+In certain architectures, Workload B may need to consult with an external server when making this decision.<a href="#section-1.1-6.4.1" class="pilcrow">¶</a></p>
 </li>
-        </ul>
+          <li id="section-1.1-6.5">
+            <p id="section-1.1-6.5.1">Workload B returns a response to Workload A, which may be an error response or a regular one.<a href="#section-1.1-6.5.1" class="pilcrow">¶</a></p>
+</li>
+        </ol>
 </section>
 </div>
 </section>
@@ -1511,7 +1537,7 @@ WITs should be refreshed regularly, e.g. on the order of hours.<a href="#section
         </ul>
 <p id="section-4.1-3">An example WIT might look like this (all examples, of course, are non-normative and with line breaks and extra space for readability):<a href="#section-4.1-3" class="pilcrow">¶</a></p>
 <span id="name-an-example-workload-identit"></span><div id="example-wit">
-<figure id="figure-1">
+<figure id="figure-2">
           <div class="lang-jwt sourcecode" id="section-4.1-4.1">
 <pre>
 eyJ0eXAiOiJ3aW1zZS1pZCtqd3QiLCJhbGciOiJFUzI1NiIsImtpZCI6Ikp1bmUgNSJ9.
@@ -1523,12 +1549,12 @@ SDFSdFlyTDhjU21URE1oWXRPVVRHNzhjR1RSNWV6ayJ9fX0.rOSUMR8I5WhM5C704l3iV
 dY0zFqxhugJ8Jo2xo39G7FqUTbwTzAGdpz2lHp6eL1M486XmRgl3uyjj6R_iuzNOA
 </pre>
 </div>
-<figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
+<figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
 <a href="#name-an-example-workload-identit" class="selfRef">An example Workload Identity Token (WIT)</a>
           </figcaption></figure>
 </div>
 <p id="section-4.1-5">The decoded JOSE header of the WIT from the example above is shown here:<a href="#section-4.1-5" class="pilcrow">¶</a></p>
-<span id="name-example-wit-jose-header"></span><figure id="figure-2">
+<span id="name-example-wit-jose-header"></span><figure id="figure-3">
           <div class="lang-json sourcecode" id="section-4.1-6.1">
 <pre>
 {
@@ -1538,11 +1564,11 @@ dY0zFqxhugJ8Jo2xo39G7FqUTbwTzAGdpz2lHp6eL1M486XmRgl3uyjj6R_iuzNOA
 }
 </pre>
 </div>
-<figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
+<figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
 <a href="#name-example-wit-jose-header" class="selfRef">Example WIT JOSE Header</a>
           </figcaption></figure>
 <p id="section-4.1-7">The decoded JWT claims of the WIT from the example above are shown here:<a href="#section-4.1-7" class="pilcrow">¶</a></p>
-<span id="name-example-wit-claims"></span><figure id="figure-3">
+<span id="name-example-wit-claims"></span><figure id="figure-4">
           <div class="lang-json sourcecode" id="section-4.1-8.1">
 <pre>
 {
@@ -1560,7 +1586,7 @@ dY0zFqxhugJ8Jo2xo39G7FqUTbwTzAGdpz2lHp6eL1M486XmRgl3uyjj6R_iuzNOA
 }
 </pre>
 </div>
-<figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
+<figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
 <a href="#name-example-wit-claims" class="selfRef">Example WIT Claims</a>
           </figcaption></figure>
 <p id="section-4.1-9">The claims indicate that the example WIT:<a href="#section-4.1-9" class="pilcrow">¶</a></p>
@@ -1583,7 +1609,7 @@ dY0zFqxhugJ8Jo2xo39G7FqUTbwTzAGdpz2lHp6eL1M486XmRgl3uyjj6R_iuzNOA
         </ul>
 <p id="section-4.1-11">For elucidative purposes only, the workload's key, including the private part, is shown below in JWK <span>[<a href="#RFC7517" class="cite xref">RFC7517</a>]</span> format:<a href="#section-4.1-11" class="pilcrow">¶</a></p>
 <span id="name-example-workloads-key"></span><div id="example-caller-jwk">
-<figure id="figure-4">
+<figure id="figure-5">
           <div class="lang-jwk sourcecode" id="section-4.1-12.1">
 <pre>
 {
@@ -1594,14 +1620,14 @@ dY0zFqxhugJ8Jo2xo39G7FqUTbwTzAGdpz2lHp6eL1M486XmRgl3uyjj6R_iuzNOA
 }
 </pre>
 </div>
-<figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
+<figcaption><a href="#figure-5" class="selfRef">Figure 5</a>:
 <a href="#name-example-workloads-key" class="selfRef">Example Workload's Key</a>
           </figcaption></figure>
 </div>
 <p id="section-4.1-13">The afore-exampled WIT is signed with the private key of the Identity Server.
 The public key(s) of the Identity Server need to be known to all workloads in order to verify the signature of the WIT.
 The Identity Server's public key from this example is shown below in JWK <span>[<a href="#RFC7517" class="cite xref">RFC7517</a>]</span> format:<a href="#section-4.1-13" class="pilcrow">¶</a></p>
-<span id="name-example-identity-server-key"></span><figure id="figure-5">
+<span id="name-example-identity-server-key"></span><figure id="figure-6">
           <div class="lang-jwk sourcecode" id="section-4.1-14.1">
 <pre>
 {
@@ -1613,7 +1639,7 @@ The Identity Server's public key from this example is shown below in JWK <span>[
 }
 </pre>
 </div>
-<figcaption><a href="#figure-5" class="selfRef">Figure 5</a>:
+<figcaption><a href="#figure-6" class="selfRef">Figure 6</a>:
 <a href="#name-example-identity-server-key" class="selfRef">Example Identity Server Key</a>
           </figcaption></figure>
 <div id="wit-http-header">
@@ -1622,9 +1648,9 @@ The Identity Server's public key from this example is shown below in JWK <span>[
 <a href="#section-4.1.1" class="section-number selfRef">4.1.1. </a><a href="#name-the-wit-http-header" class="section-name selfRef">The WIT HTTP Header</a>
           </h4>
 <p id="section-4.1.1-1">A WIT is conveyed in an HTTP header field named <code>Workload-Identity-Token</code>.<a href="#section-4.1.1-1" class="pilcrow">¶</a></p>
-<p id="section-4.1.1-2">For those who celebrate, ABNF <span>[<a href="#RFC5234" class="cite xref">RFC5234</a>]</span> for the value of <code>Workload-Identity-Token</code> header field is provided in <a href="#wit-header-abnf" class="auto internal xref">Figure 6</a>:<a href="#section-4.1.1-2" class="pilcrow">¶</a></p>
+<p id="section-4.1.1-2">For those who celebrate, ABNF <span>[<a href="#RFC5234" class="cite xref">RFC5234</a>]</span> for the value of <code>Workload-Identity-Token</code> header field is provided in <a href="#wit-header-abnf" class="auto internal xref">Figure 7</a>:<a href="#section-4.1.1-2" class="pilcrow">¶</a></p>
 <span id="name-workload-identity-token-hea"></span><div id="wit-header-abnf">
-<figure id="figure-6">
+<figure id="figure-7">
             <div class="lang-abnf sourcecode" id="section-4.1.1-3.1">
 <pre>
 ALPHA = %x41-5A / %x61-7A ; A-Z / a-z
@@ -1634,12 +1660,12 @@ JWT =  base64url "." base64url "." base64url
 WIT =  JWT
 </pre>
 </div>
-<figcaption><a href="#figure-6" class="selfRef">Figure 6</a>:
+<figcaption><a href="#figure-7" class="selfRef">Figure 7</a>:
 <a href="#name-workload-identity-token-hea" class="selfRef">Workload-Identity-Token Header Field ABNF</a>
             </figcaption></figure>
 </div>
-<p id="section-4.1.1-4">The following shows the WIT from <a href="#example-wit" class="auto internal xref">Figure 1</a> in an example of a <code>Workload-Identity-Token</code> header field:<a href="#section-4.1.1-4" class="pilcrow">¶</a></p>
-<span id="name-an-example-workload-identity"></span><figure id="figure-7">
+<p id="section-4.1.1-4">The following shows the WIT from <a href="#example-wit" class="auto internal xref">Figure 2</a> in an example of a <code>Workload-Identity-Token</code> header field:<a href="#section-4.1.1-4" class="pilcrow">¶</a></p>
+<span id="name-an-example-workload-identity"></span><figure id="figure-8">
             <div class="lang-http-message sourcecode" id="section-4.1.1-5.1">
 <pre>
 Workload-Identity-Token: eyJ0eXAiOiJ3aW1zZS1pZCtqd3QiLCJhbGciOiJFUzI1
@@ -1652,7 +1678,7 @@ Workload-Identity-Token: eyJ0eXAiOiJ3aW1zZS1pZCtqd3QiLCJhbGciOiJFUzI1
  6eL1M486XmRgl3uyjj6R_iuzNOA
 </pre>
 </div>
-<figcaption><a href="#figure-7" class="selfRef">Figure 7</a>:
+<figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
 <a href="#name-an-example-workload-identity" class="selfRef">An example Workload Identity Token HTTP Header Field</a>
             </figcaption></figure>
 <p id="section-4.1.1-6">Note that per <span>[<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>, header field names are case insensitive;
@@ -1673,17 +1699,17 @@ described in <a href="#wit-http-header" class="auto internal xref">Section 4.1.1
 corresponding to the public key in the WIT. The WPT is sent in the <code>Workload-Proof-Token</code> header field of the request.
 The ABNF syntax of the <code>Workload-Proof-Token</code> header field is:<a href="#section-4.2-1" class="pilcrow">¶</a></p>
 <span id="name-workload-proof-token-header"></span><div id="wpt-header-abnf">
-<figure id="figure-8">
+<figure id="figure-9">
           <div class="lang-abnf sourcecode" id="section-4.2-2.1">
 <pre>
 WPT =  JWT
 </pre>
 </div>
-<figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
+<figcaption><a href="#figure-9" class="selfRef">Figure 9</a>:
 <a href="#name-workload-proof-token-header" class="selfRef">Workload-Proof-Token Header Field ABNF</a>
           </figcaption></figure>
 </div>
-<p id="section-4.2-3">where the <code>JWT</code> projection is defined in <a href="#wit-header-abnf" class="auto internal xref">Figure 6</a>.<a href="#section-4.2-3" class="pilcrow">¶</a></p>
+<p id="section-4.2-3">where the <code>JWT</code> projection is defined in <a href="#wit-header-abnf" class="auto internal xref">Figure 7</a>.<a href="#section-4.2-3" class="pilcrow">¶</a></p>
 <p id="section-4.2-4">A WPT contains the following:<a href="#section-4.2-4" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-4.2-5.1">
@@ -1744,7 +1770,7 @@ WPT =  JWT
         </ul>
 <p id="section-4.2-6">An example WPT might look like the following:<a href="#section-4.2-6" class="pilcrow">¶</a></p>
 <span id="name-example-workload-proof-toke"></span><div id="example-wpt">
-<figure id="figure-9">
+<figure id="figure-10">
           <div class="lang-jwt sourcecode" id="section-4.2-7.1">
 <pre>
 eyJhbGciOiJFZERTQSIsInR5cCI6IndpbXNlLXByb29mK2p3dCJ9.eyJhdGgiOiJDTDR3
@@ -1756,12 +1782,12 @@ bXBBeEJPXzdXLVl1dGNIXzJfZnVGQUZGU1YxUmcifQ.jrUBsDjWMG_FpuhLo3lNC-IBei
 PQXZ4UOuttPdNj8fRmIG4ZDFF9B10y7uGbiNIhbRdpgG_KXEPLHXWnvzLmBA
 </pre>
 </div>
-<figcaption><a href="#figure-9" class="selfRef">Figure 9</a>:
+<figcaption><a href="#figure-10" class="selfRef">Figure 10</a>:
 <a href="#name-example-workload-proof-toke" class="selfRef">Example Workload Proof Token (WPT)</a>
           </figcaption></figure>
 </div>
 <p id="section-4.2-8">The decoded JOSE header of the WPT from the example above is shown here:<a href="#section-4.2-8" class="pilcrow">¶</a></p>
-<span id="name-example-wpt-jose-header"></span><figure id="figure-10">
+<span id="name-example-wpt-jose-header"></span><figure id="figure-11">
           <div class="lang-json sourcecode" id="section-4.2-9.1">
 <pre>
 {
@@ -1770,11 +1796,11 @@ PQXZ4UOuttPdNj8fRmIG4ZDFF9B10y7uGbiNIhbRdpgG_KXEPLHXWnvzLmBA
 }
 </pre>
 </div>
-<figcaption><a href="#figure-10" class="selfRef">Figure 10</a>:
+<figcaption><a href="#figure-11" class="selfRef">Figure 11</a>:
 <a href="#name-example-wpt-jose-header" class="selfRef">Example WPT JOSE Header</a>
           </figcaption></figure>
 <p id="section-4.2-10">The decoded JWT claims of the WPT from the example above are shown here:<a href="#section-4.2-10" class="pilcrow">¶</a></p>
-<span id="name-example-wpt-claims"></span><figure id="figure-11">
+<span id="name-example-wpt-claims"></span><figure id="figure-12">
           <div class="lang-json sourcecode" id="section-4.2-11.1">
 <pre>
 {
@@ -1787,11 +1813,11 @@ PQXZ4UOuttPdNj8fRmIG4ZDFF9B10y7uGbiNIhbRdpgG_KXEPLHXWnvzLmBA
 }
 </pre>
 </div>
-<figcaption><a href="#figure-11" class="selfRef">Figure 11</a>:
+<figcaption><a href="#figure-12" class="selfRef">Figure 12</a>:
 <a href="#name-example-wpt-claims" class="selfRef">Example WPT Claims</a>
           </figcaption></figure>
 <p id="section-4.2-12">An example of an HTTP request with both the WIT and WPT from prior examples is shown below:<a href="#section-4.2-12" class="pilcrow">¶</a></p>
-<span id="name-example-http-request-with-w"></span><figure id="figure-12">
+<span id="name-example-http-request-with-w"></span><figure id="figure-13">
           <div class="lang-http sourcecode" id="section-4.2-13.1">
 <pre>
 =============== NOTE: '\' line wrapping per RFC 8792 ================
@@ -1820,7 +1846,7 @@ dpgG_KXEPLHXWnvzLmBA
 {"do stuff":"please"}
 </pre>
 </div>
-<figcaption><a href="#figure-12" class="selfRef">Figure 12</a>:
+<figcaption><a href="#figure-13" class="selfRef">Figure 13</a>:
 <a href="#name-example-http-request-with-w" class="selfRef">Example HTTP Request with WIT and WPT</a>
           </figcaption></figure>
 <p id="section-4.2-14">To validate the WPT in the request, the recipient <span class="bcp14">MUST</span> ensure the following:<a href="#section-4.2-14" class="pilcrow">¶</a></p>
@@ -1950,8 +1976,8 @@ a recipient <span class="bcp14">MAY</span> reject a message (request or response
 by general purpose implementations of this document.<a href="#section-4.3-13" class="pilcrow">¶</a></p>
 <p id="section-4.3-14"><span class="cref">OPEN ISSUE: do we use the Accept-Signature field to signal that the response must be signed?</span><a href="#section-4.3-14" class="pilcrow">¶</a></p>
 <p id="section-4.3-15">Following is a non-normative example of a signed request and a signed response,
-where the caller is using the keys specified in <a href="#example-caller-jwk" class="auto internal xref">Figure 4</a>.<a href="#section-4.3-15" class="pilcrow">¶</a></p>
-<span id="name-signed-request"></span><figure id="figure-13">
+where the caller is using the keys specified in <a href="#example-caller-jwk" class="auto internal xref">Figure 5</a>.<a href="#section-4.3-15" class="pilcrow">¶</a></p>
+<span id="name-signed-request"></span><figure id="figure-14">
           <div class="lang-http sourcecode" id="section-4.3-16.1">
 <pre>
 =============== NOTE: '\' line wrapping per RFC 8792 ================
@@ -1968,11 +1994,11 @@ Lgo.c2lnbmF0dXJlCg
 
 </pre>
 </div>
-<figcaption><a href="#figure-13" class="selfRef">Figure 13</a>:
+<figcaption><a href="#figure-14" class="selfRef">Figure 14</a>:
 <a href="#name-signed-request" class="selfRef">Signed Request</a>
           </figcaption></figure>
 <p id="section-4.3-17">Assuming that the workload being called has the following keypair:<a href="#section-4.3-17" class="pilcrow">¶</a></p>
-<span id="name-callee-private-key"></span><figure id="figure-14">
+<span id="name-callee-private-key"></span><figure id="figure-15">
           <div class="lang-jwk sourcecode" id="section-4.3-18.1">
 <pre>
 {
@@ -1983,11 +2009,11 @@ Lgo.c2lnbmF0dXJlCg
 }
 </pre>
 </div>
-<figcaption><a href="#figure-14" class="selfRef">Figure 14</a>:
+<figcaption><a href="#figure-15" class="selfRef">Figure 15</a>:
 <a href="#name-callee-private-key" class="selfRef">Callee Private Key</a>
           </figcaption></figure>
 <p id="section-4.3-19">A signed response would be:<a href="#section-4.3-19" class="pilcrow">¶</a></p>
-<span id="name-signed-response"></span><figure id="figure-15">
+<span id="name-signed-response"></span><figure id="figure-16">
           <div class="lang-http sourcecode" id="section-4.3-20.1">
 <pre>
 =============== NOTE: '\' line wrapping per RFC 8792 ================
@@ -2010,7 +2036,7 @@ No ice cream today.
 
 </pre>
 </div>
-<figcaption><a href="#figure-15" class="selfRef">Figure 15</a>:
+<figcaption><a href="#figure-16" class="selfRef">Figure 16</a>:
 <a href="#name-signed-response" class="selfRef">Signed Response</a>
           </figcaption></figure>
 </section>

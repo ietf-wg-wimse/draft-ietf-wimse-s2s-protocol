@@ -154,18 +154,22 @@ Table of Contents
 1.1.  Deployment Architecture and Message Flow
 
    Regardless of the transport between the workloads, we assume the
-   following logical architecture:
+   following logical architecture (numbers refer to the sequence of
+   steps listed below):
 
    +------------+               +------------+
+   |            |      (1)      |            |
+   |            |<=============>|            |
    |            |               |            |
-   |            |               | Workload B |
-   | Workload A |==============>|            |
-   |            |               |   +--------+
-   |            |               |   |  PEP   |
+   | Workload A |      (3)      | Workload B |
+   |            |==============>|            |
+   |            |               |            |
+   |            |      (5)      |   +--------+
+   |            |<==============|   |  PEP   |
    +------------+               +---+--------+
          ^                        ^     ^
-         |                        |     |
-         | +----------------------+     |
+         |            (2)         |     |
+     (2) | +----------------------+     | (4)
          | |                            |
          v v                            v
    +------------+               +------------+
@@ -174,6 +178,8 @@ Table of Contents
    |   Server   |               | (optional) |
    |            |               |            |
    +------------+               +------------+
+
+                      Figure 1: Sequence of Operations
 
    The Identity Server provisions credentials to each of the workloads.
    At least Workload A (and possibly both) must be provisioned with a
@@ -189,20 +195,28 @@ Table of Contents
 
    The high-level message flow is as follows:
 
-   *  Workload A obtains a credential from the Identity Server.  This
-      happens periodically, e.g. once every 24 hours.
+   1.  A transport connection is set up.  In the case of mutual TLS,
+       this includes authentication of both workloads to one another.
+       In the case of application-level security, the TLS connection is
+       typically one-way authenticated, and workload-level
+       authentication does not yet take place.
 
-   *  Workload A makes an HTTP call into Workload B.  This is a regular
-      HTTP request, with the additional protection mechanisms defined
-      below.
+   2.  Workload A (and similarly, Workload B) obtains a credential from
+       the Identity Server.  This happens periodically, e.g. once every
+       24 hours.
 
-   *  Workload B now authenticates Workload A and decides whether to
-      authorize the call.  In certain architectures, Workload B may need
-      to consult with an external server to decide whether to accept the
-      call.
+   3.  Workload A makes an HTTP call into Workload B.  This is a regular
+       HTTP request, with the additional protection mechanisms defined
+       below.
 
-   *  Workload B returns a response to Workload A, which may be an error
-      response or a regular one.
+   4.  In the case of application-level security, Workload B
+       authenticates Workload A (when using mutual TLS, this happened in
+       step 1).  In either case, Workload B decides whether to authorize
+       the call.  In certain architectures, Workload B may need to
+       consult with an external server when making this decision.
+
+   5.  Workload B returns a response to Workload A, which may be an
+       error response or a regular one.
 
 2.  Conventions and Definitions
 
@@ -328,7 +342,7 @@ Table of Contents
    SDFSdFlyTDhjU21URE1oWXRPVVRHNzhjR1RSNWV6ayJ9fX0.rOSUMR8I5WhM5C704l3iV
    dY0zFqxhugJ8Jo2xo39G7FqUTbwTzAGdpz2lHp6eL1M486XmRgl3uyjj6R_iuzNOA
 
-             Figure 1: An example Workload Identity Token (WIT)
+             Figure 2: An example Workload Identity Token (WIT)
 
    The decoded JOSE header of the WIT from the example above is shown
    here:
@@ -339,7 +353,7 @@ Table of Contents
     "kid": "June 5"
    }
 
-                     Figure 2: Example WIT JOSE Header
+                     Figure 3: Example WIT JOSE Header
 
    The decoded JWT claims of the WIT from the example above are shown
    here:
@@ -358,7 +372,7 @@ Table of Contents
     }
    }
 
-                        Figure 3: Example WIT Claims
+                        Figure 4: Example WIT Claims
 
    The claims indicate that the example WIT:
 
@@ -386,7 +400,7 @@ Table of Contents
     "d":"G4lGAYFtFq5rwyjlgSIRznIoCF7MtKDHByyUUZCqLiA"
    }
 
-                      Figure 4: Example Workload's Key
+                      Figure 5: Example Workload's Key
 
    The afore-exampled WIT is signed with the private key of the Identity
    Server.  The public key(s) of the Identity Server need to be known to
@@ -402,7 +416,7 @@ Table of Contents
     "crv":"P-256"
    }
 
-                   Figure 5: Example Identity Server Key
+                   Figure 6: Example Identity Server Key
 
 4.1.1.  The WIT HTTP Header
 
@@ -410,7 +424,7 @@ Table of Contents
    Token.
 
    For those who celebrate, ABNF [RFC5234] for the value of Workload-
-   Identity-Token header field is provided in Figure 6:
+   Identity-Token header field is provided in Figure 7:
 
    ALPHA = %x41-5A / %x61-7A ; A-Z / a-z
    DIGIT = %x30-39 ; 0-9
@@ -418,9 +432,9 @@ Table of Contents
    JWT =  base64url "." base64url "." base64url
    WIT =  JWT
 
-            Figure 6: Workload-Identity-Token Header Field ABNF
+            Figure 7: Workload-Identity-Token Header Field ABNF
 
-   The following shows the WIT from Figure 1 in an example of a
+   The following shows the WIT from Figure 2 in an example of a
    Workload-Identity-Token header field:
 
    Workload-Identity-Token: eyJ0eXAiOiJ3aW1zZS1pZCtqd3QiLCJhbGciOiJFUzI1
@@ -432,7 +446,7 @@ Table of Contents
     6ayJ9fX0.rOSUMR8I5WhM5C704l3iVdY0zFqxhugJ8Jo2xo39G7FqUTbwTzAGdpz2lHp
     6eL1M486XmRgl3uyjj6R_iuzNOA
 
-       Figure 7: An example Workload Identity Token HTTP Header Field
+       Figure 8: An example Workload Identity Token HTTP Header Field
 
    Note that per [RFC9110], header field names are case insensitive;
    thus, Workload-Identity-Token, workload-identity-token, WORKLOAD-
@@ -452,9 +466,9 @@ Table of Contents
 
    WPT =  JWT
 
-              Figure 8: Workload-Proof-Token Header Field ABNF
+              Figure 9: Workload-Proof-Token Header Field ABNF
 
-   where the JWT projection is defined in Figure 6.
+   where the JWT projection is defined in Figure 7.
 
    A WPT contains the following:
 
@@ -519,7 +533,7 @@ Table of Contents
    bXBBeEJPXzdXLVl1dGNIXzJfZnVGQUZGU1YxUmcifQ.jrUBsDjWMG_FpuhLo3lNC-IBei
    PQXZ4UOuttPdNj8fRmIG4ZDFF9B10y7uGbiNIhbRdpgG_KXEPLHXWnvzLmBA
 
-                Figure 9: Example Workload Proof Token (WPT)
+               Figure 10: Example Workload Proof Token (WPT)
 
    The decoded JOSE header of the WPT from the example above is shown
    here:
@@ -529,7 +543,7 @@ Table of Contents
      "typ": "wimse-proof+jwt"
    }
 
-                     Figure 10: Example WPT JOSE Header
+                     Figure 11: Example WPT JOSE Header
 
    The decoded JWT claims of the WPT from the example above are shown
    here:
@@ -543,7 +557,7 @@ Table of Contents
      "wth": "-Ji8TlMNFk3qmzmpAxBO_7W-YutcH_2_fuFAFFSV1Rg"
    }
 
-                       Figure 11: Example WPT Claims
+                       Figure 12: Example WPT Claims
 
    An example of an HTTP request with both the WIT and WPT from prior
    examples is shown below:
@@ -573,7 +587,7 @@ Table of Contents
 
    {"do stuff":"please"}
 
-              Figure 12: Example HTTP Request with WIT and WPT
+              Figure 13: Example HTTP Request with WIT and WPT
 
    To validate the WPT in the request, the recipient MUST ensure the
    following:
@@ -694,7 +708,7 @@ Table of Contents
    // the response must be signed?
 
    Following is a non-normative example of a signed request and a signed
-   response, where the caller is using the keys specified in Figure 4.
+   response, where the caller is using the keys specified in Figure 5.
 
    =============== NOTE: '\' line wrapping per RFC 8792 ================
 
@@ -708,7 +722,7 @@ Table of Contents
    Workload-Identity-Token: aGVhZGVyCg.VGhpcyBpcyBub3QgYSByZWFsIHRva2Vu\
    Lgo.c2lnbmF0dXJlCg
 
-                         Figure 13: Signed Request
+                         Figure 14: Signed Request
 
    Assuming that the workload being called has the following keypair:
 
@@ -719,7 +733,7 @@ Table of Contents
     "d":"fycSKS-iHZ6TC1BNwN6cE0sOBP3-4KgR-eqxNpnyhws"
    }
 
-                       Figure 14: Callee Private Key
+                       Figure 15: Callee Private Key
 
    A signed response would be:
 
@@ -741,7 +755,7 @@ Table of Contents
 
    No ice cream today.
 
-                         Figure 15: Signed Response
+                         Figure 16: Signed Response
 
 4.4.  Comparing the DPoP Inspired Option with Message Signatures
 
