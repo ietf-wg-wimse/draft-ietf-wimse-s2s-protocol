@@ -282,7 +282,8 @@ For those who celebrate, ABNF {{RFC5234}} for the value of `Workload-Identity-To
 ALPHA = %x41-5A / %x61-7A ; A-Z / a-z
 DIGIT = %x30-39 ; 0-9
 base64url = 1*(ALPHA / DIGIT / "-" / "_")
-WIT =  base64url "." base64url "." base64url
+JWT =  base64url "." base64url "." base64url
+WIT =  JWT
 ~~~~
 {: #wit-header-abnf title="Workload-Identity-Token Header Field ABNF"}
 
@@ -310,6 +311,15 @@ This option, inspired by the OAuth DPoP specification {{?RFC9449}}, uses a DPoP-
 the calling workload in the context of the request. The WIMSE Identity Token ({{to-wit}}) is sent in the request as
 described in {{wit-http-header}}. An additional JWT, the Workload Proof Token (WPT), is signed by the private key
 corresponding to the public key in the WIT. The WPT is sent in the `Workload-Proof-Token` header field of the request.
+The ABNF syntax of the `Workload-Proof-Token` header field is:
+
+~~~ abnf
+WPT =  JWT
+~~~~
+{: #wpt-header-abnf title="Workload-Proof-Token Header Field ABNF"}
+
+where the `JWT` projection is defined in {{wit-header-abnf}}.
+
 A WPT contains the following:
 
 * in the JOSE header:
