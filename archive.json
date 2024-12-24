@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-12-22T01:19:22.134079+00:00",
+  "timestamp": "2024-12-24T01:13:38.563931+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -935,7 +935,7 @@
       "id": "I_kwDOLJmm786Oh08f",
       "title": "Define WIMSE URI",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/49",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "NONE",
       "assignees": [
@@ -944,8 +944,8 @@
       "labels": [],
       "body": "Commenting as identity enthusiast as opposed to WIMSE co-chair:\r\n\r\nSection 5 introduces the term \"WIMSE URI\" - if this is defined in the architecture document, it should be referenced. If this is defined in Section 3, perhaps rename as workload identitifier.",
       "createdAt": "2024-07-04T17:09:11Z",
-      "updatedAt": "2024-12-16T01:59:03Z",
-      "closedAt": null,
+      "updatedAt": "2024-12-23T03:11:43Z",
+      "closedAt": "2024-12-23T03:11:43Z",
       "comments": [
         {
           "author": "yaronf",
@@ -6723,24 +6723,26 @@
       "id": "PR_kwDOLJmm786FSdzp",
       "title": "resolve issue 49",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/82",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "jsalowey",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "resolve issue #49 ",
       "createdAt": "2024-12-16T01:56:28Z",
-      "updatedAt": "2024-12-19T16:02:43Z",
+      "updatedAt": "2024-12-23T03:11:42Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "18fe59fa46980891e2fd8f025f85f5c743fece7f",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "issue-49",
       "headRefOid": "ac229b0cef2e7221a71de93727158fc9a4a8f6f4",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2024-12-23T03:11:41Z",
+      "mergedAt": "2024-12-23T03:11:41Z",
+      "mergedBy": "jsalowey",
+      "mergeCommit": {
+        "oid": "165f19011c43b3c2d48fcd060ade1b4299413e4e"
+      },
       "comments": [
         {
           "author": "jsalowey",
@@ -6829,6 +6831,65 @@
           "createdAt": "2024-12-19T18:26:51Z",
           "updatedAt": "2024-12-19T18:26:51Z",
           "comments": []
+        }
+      ]
+    },
+    {
+      "number": 84,
+      "id": "PR_kwDOLJmm786GClW1",
+      "title": "coexistence with bearer tokens",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/84",
+      "state": "OPEN",
+      "author": "jsalowey",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolve with Issue #53 ",
+      "createdAt": "2024-12-23T05:22:19Z",
+      "updatedAt": "2024-12-23T09:35:44Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "165f19011c43b3c2d48fcd060ade1b4299413e4e",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "jsalowey-coexist",
+      "headRefOid": "d9b62cdd5e1310fa15c56d82cf7ff2c42630b494",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm786WN1Gn",
+          "commit": {
+            "abbreviatedOid": "d9b62cd"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2024-12-23T09:06:23Z",
+          "updatedAt": "2024-12-23T09:35:44Z",
+          "comments": [
+            {
+              "originalPosition": 9,
+              "body": "```suggestion\r\nper-caller to allow the workload to reject bearer tokens from callers that support WITs. Once a deployment fully supports WITs, then the use of\r\n```",
+              "createdAt": "2024-12-23T09:06:23Z",
+              "updatedAt": "2024-12-23T09:35:44Z"
+            },
+            {
+              "originalPosition": 16,
+              "body": "This is OK for now, but I think eventually we will want one subsection for coexistence with legacy stuff and another for authorization.",
+              "createdAt": "2024-12-23T09:19:45Z",
+              "updatedAt": "2024-12-23T09:35:44Z"
+            },
+            {
+              "originalPosition": 9,
+              "body": "Suggest to add: Implementations should be careful when implementing such a transition strategy, since the decision which token to prefer is made when the caller's identity has still not been authenticated, and needs to be revalidated following the authentication step.",
+              "createdAt": "2024-12-23T09:35:34Z",
+              "updatedAt": "2024-12-23T09:35:44Z"
+            }
+          ]
         }
       ]
     }
