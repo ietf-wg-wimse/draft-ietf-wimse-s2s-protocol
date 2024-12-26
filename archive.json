@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-12-24T01:13:38.563931+00:00",
+  "timestamp": "2024-12-26T01:13:07.393318+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -420,7 +420,7 @@
       "id": "I_kwDOLJmm786OZdYy",
       "title": "Why ABNF for WIT?",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/32",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -429,8 +429,8 @@
       "labels": [],
       "body": "In Sec. [The WIT HTTP Header](https://www.sheffer.org/wimse-s2s/draft-sheffer-wimse-s2s-protocol.html#name-the-wit-http-header), we define the ABNF even though we say the WIT is a JWT and this completely defines the syntax. IMO the ABNF could actually confuse implementers.",
       "createdAt": "2024-07-03T16:33:37Z",
-      "updatedAt": "2024-12-19T15:31:30Z",
-      "closedAt": null,
+      "updatedAt": "2024-12-24T15:22:24Z",
+      "closedAt": "2024-12-24T15:22:24Z",
       "comments": [
         {
           "author": "bc-pi",
@@ -469,7 +469,7 @@
       "id": "I_kwDOLJmm786Ohja3",
       "title": "Add numbering to Figure in Section 1.1",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/36",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "NONE",
       "assignees": [
@@ -478,8 +478,8 @@
       "labels": [],
       "body": "Commenting as identity enthusiast as opposed to WIMSE co-chair:\r\n\r\nIt will be helpful to add numbering to the Figure in section 1.1 and have that correspond to the message flow description (currently a series of bullet points). ",
       "createdAt": "2024-07-04T16:08:18Z",
-      "updatedAt": "2024-11-21T15:37:56Z",
-      "closedAt": null,
+      "updatedAt": "2024-12-24T15:23:34Z",
+      "closedAt": "2024-12-24T15:23:34Z",
       "comments": []
     },
     {
@@ -6568,24 +6568,26 @@
       "id": "PR_kwDOLJmm786C0emH",
       "title": "Add numbering to high-level sequence",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/80",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Fixes #36.",
       "createdAt": "2024-11-22T14:05:28Z",
-      "updatedAt": "2024-12-19T15:13:08Z",
+      "updatedAt": "2024-12-24T15:23:34Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "ba2577a228ab66ef2bb4dd7ffba24e511bb5295c",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-figure",
       "headRefOid": "b0e09e4736f1780e4e90366c37c20a797ce606a0",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2024-12-24T15:23:33Z",
+      "mergedAt": "2024-12-24T15:23:33Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "cdfe7bd2c08c3ed1fe994db6f73206cebad37b8a"
+      },
       "comments": [],
       "reviews": [
         {
@@ -6799,24 +6801,26 @@
       "id": "PR_kwDOLJmm786F0y-I",
       "title": "Terribly complex ABNF for WPT",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/83",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Closes #32.",
       "createdAt": "2024-12-19T17:53:01Z",
-      "updatedAt": "2024-12-19T18:26:51Z",
+      "updatedAt": "2024-12-24T15:22:23Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "18fe59fa46980891e2fd8f025f85f5c743fece7f",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-abnf",
       "headRefOid": "ba28b19efed81a73dbb3badaea1f1d5753622760",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2024-12-24T15:22:23Z",
+      "mergedAt": "2024-12-24T15:22:23Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "d4b653f78b0cc8880ddc3781b7161872c22b0d62"
+      },
       "comments": [],
       "reviews": [
         {
