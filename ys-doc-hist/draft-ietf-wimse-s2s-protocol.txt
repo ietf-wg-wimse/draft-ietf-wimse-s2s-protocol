@@ -761,10 +761,6 @@ Table of Contents
 
 4.4.  Comparing the DPoP Inspired Option with Message Signatures
 
-
-   // This section is temporarily part of the draft, while we expect the
-   // working group to select one of these options.
-
    The two workload protection options have different strengths and
    weaknesses regarding implementation complexity, extensibility, and
    security.  Here is a summary of the main differences between

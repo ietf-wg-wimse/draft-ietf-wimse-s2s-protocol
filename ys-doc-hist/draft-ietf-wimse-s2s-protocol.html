@@ -2052,49 +2052,45 @@ No ice cream today.
         <h3 id="name-comparing-the-dpop-inspired">
 <a href="#section-4.4" class="section-number selfRef">4.4. </a><a href="#name-comparing-the-dpop-inspired" class="section-name selfRef">Comparing the DPoP Inspired Option with Message Signatures</a>
         </h3>
-<p id="section-4.4-1"><span class="cref">
-This section is temporarily part of the draft, while we expect the working group
-to select one of these options.
-</span><a href="#section-4.4-1" class="pilcrow">¶</a></p>
-<p id="section-4.4-2">The two workload protection options have different strengths and weaknesses regarding implementation
+<p id="section-4.4-1">The two workload protection options have different strengths and weaknesses regarding implementation
 complexity, extensibility, and security.
 Here is a summary of the main differences between
-<a href="#dpop-esque-auth" class="auto internal xref">Section 4.2</a> and <a href="#http-sig-auth" class="auto internal xref">Section 4.3</a>.<a href="#section-4.4-2" class="pilcrow">¶</a></p>
+<a href="#dpop-esque-auth" class="auto internal xref">Section 4.2</a> and <a href="#http-sig-auth" class="auto internal xref">Section 4.3</a>.<a href="#section-4.4-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-4.4-3.1">
-            <p id="section-4.4-3.1.1">The DPoP-inspired solution is less HTTP-specific, making it easier to adapt for
+<li class="normal" id="section-4.4-2.1">
+            <p id="section-4.4-2.1.1">The DPoP-inspired solution is less HTTP-specific, making it easier to adapt for
 other protocols beyond HTTP. This flexibility is particularly valuable for
-asynchronous communication scenarios, such as event-driven systems.<a href="#section-4.4-3.1.1" class="pilcrow">¶</a></p>
+asynchronous communication scenarios, such as event-driven systems.<a href="#section-4.4-2.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-4.4-3.2">
-            <p id="section-4.4-3.2.1">Message Signatures, on the other hand, benefit from an existing HTTP-specific RFC with
+          <li class="normal" id="section-4.4-2.2">
+            <p id="section-4.4-2.2.1">Message Signatures, on the other hand, benefit from an existing HTTP-specific RFC with
 some established implementations. This existing groundwork means that this option could
-be simpler to deploy, to the extent such implementations are available and easily integrated.<a href="#section-4.4-3.2.1" class="pilcrow">¶</a></p>
+be simpler to deploy, to the extent such implementations are available and easily integrated.<a href="#section-4.4-2.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-4.4-3.3">
-            <p id="section-4.4-3.3.1">Given that the WIT (Workload Identity Token) is a type of JWT, the
+          <li class="normal" id="section-4.4-2.3">
+            <p id="section-4.4-2.3.1">Given that the WIT (Workload Identity Token) is a type of JWT, the
 DPoP-inspired approach that also uses JWT is less complex and technology-intensive than Message
 Signatures. In contrast, Message Signatures introduce an additional layer of
-technology, potentially increasing the complexity of the overall system.<a href="#section-4.4-3.3.1" class="pilcrow">¶</a></p>
+technology, potentially increasing the complexity of the overall system.<a href="#section-4.4-2.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-4.4-3.4">
-            <p id="section-4.4-3.4.1">Message Signatures offer superior integrity protection, particularly by mitigating
-message modification by middleboxes. See also <a href="#middleboxes" class="auto internal xref">Section 6.3</a>.<a href="#section-4.4-3.4.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-4.4-2.4">
+            <p id="section-4.4-2.4.1">Message Signatures offer superior integrity protection, particularly by mitigating
+message modification by middleboxes. See also <a href="#middleboxes" class="auto internal xref">Section 6.3</a>.<a href="#section-4.4-2.4.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-4.4-3.5">
-            <p id="section-4.4-3.5.1">A key advantage of Message Signatures is that they support response signing.
+          <li class="normal" id="section-4.4-2.5">
+            <p id="section-4.4-2.5.1">A key advantage of Message Signatures is that they support response signing.
 This opens up the possibility for future decisions about whether to make
 response signing mandatory, allowing for flexibility in the specification
-and/or in specific deployment scenarios.<a href="#section-4.4-3.5.1" class="pilcrow">¶</a></p>
+and/or in specific deployment scenarios.<a href="#section-4.4-2.5.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-4.4-3.6">
-            <p id="section-4.4-3.6.1">In general, Message Signatures provide greater flexibility compared to
+          <li class="normal" id="section-4.4-2.6">
+            <p id="section-4.4-2.6.1">In general, Message Signatures provide greater flexibility compared to
 the DPoP-inspired approach. Future versions of this draft (and subsequent implementations) can decide
 whether specific aspects of message signing, such as coverage of particular fields,
 should be mandatory or optional. Covering more fields will constrain the proof
 so it cannot be easily reused in another context, which is often a security improvement. The DPoP inspired approach could
 be designed to include extensibility to sign other fields, but this would make it closer to
-trying to reinvent Message Signatures.<a href="#section-4.4-3.6.1" class="pilcrow">¶</a></p>
+trying to reinvent Message Signatures.<a href="#section-4.4-2.6.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
