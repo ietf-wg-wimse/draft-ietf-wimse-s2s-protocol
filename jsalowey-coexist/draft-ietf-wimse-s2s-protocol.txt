@@ -795,6 +795,10 @@ Table of Contents
    per-caller to allow the workload to reject bearer tokens from callers
    that support WITs.  Once a deployment fully supports WITs, then the
    use of bearer tokens for identity can be disabled through policy.
+   Implementations should be careful when implementing such a transition
+   strategy, since the decision which token to prefer is made when the
+   caller's identity has still not been authenticated, and needs to be
+   revalidated following the authentication step.
 
    The WIT can also coexist with tokens used to establish security
    context, such as transaction tokens
