@@ -96,7 +96,7 @@ Table of Contents
      4.2.  Option 1: DPoP-Inspired Authentication
      4.3.  Option 2: Authentication Based on HTTP Message Signatures
      4.4.  Comparing the DPoP Inspired Option with Message Signatures
-     4.5.  Coexistence with JWT Bearer Tokens {coexist}
+     4.5.  Coexistence with JWT Bearer Tokens
    5.  Using Mutual TLS for Service To Service Authentication
      5.1.  Server Name Validation
      5.2.  Client Authorization Using the WIMSE Identity
@@ -112,8 +112,9 @@ Table of Contents
      8.1.  Normative References
      8.2.  Informative References
    Appendix A.  Document History
-     A.1.  draft-ietf-wimse-s2s-protocol-01
-     A.2.  draft-ietf-wimse-s2s-protocol-00
+     A.1.  draft-ietf-wimse-s2s-protocol-02
+     A.2.  draft-ietf-wimse-s2s-protocol-01
+     A.3.  draft-ietf-wimse-s2s-protocol-00
    Acknowledgments
    Authors' Addresses
 
@@ -760,10 +761,6 @@ Table of Contents
 
 4.4.  Comparing the DPoP Inspired Option with Message Signatures
 
-
-   // This section is temporarily part of the draft, while we expect the
-   // working group to select one of these options.
-
    The two workload protection options have different strengths and
    weaknesses regarding implementation complexity, extensibility, and
    security.  Here is a summary of the main differences between
@@ -807,7 +804,7 @@ Table of Contents
       fields, but this would make it closer to trying to reinvent
       Message Signatures.
 
-4.5.  Coexistence with JWT Bearer Tokens {coexist}
+4.5.  Coexistence with JWT Bearer Tokens
 
    The WIT and WPT define new HTTP headers.  They can therefore be
    presented along with existing headers used for JWT bearer tokens.
@@ -1134,7 +1131,19 @@ Appendix A.  Document History
 
    // RFC Editor: please remove before publication.
 
-A.1.  draft-ietf-wimse-s2s-protocol-01
+A.1.  draft-ietf-wimse-s2s-protocol-02
+
+   *  Coexistence with bearer tokens.
+
+   *  Improve the architecture diagram.
+
+   *  Some more ABNF.
+
+   *  Clarified identifiers and URIs.
+
+   *  Moved an author to acknowledgments.
+
+A.2.  draft-ietf-wimse-s2s-protocol-01
 
    *  Addressed multiple comments from Pieter.
 
@@ -1149,7 +1158,7 @@ A.1.  draft-ietf-wimse-s2s-protocol-01
    *  Added a section comparing the DPoP-inspired app-level security
       option to the Message Signature-based alternative.
 
-A.2.  draft-ietf-wimse-s2s-protocol-00
+A.3.  draft-ietf-wimse-s2s-protocol-00
 
    *  Initial WG draft, an exact copy of draft-sheffer-wimse-s2s-
       protocol-00
