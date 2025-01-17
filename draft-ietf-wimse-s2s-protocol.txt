@@ -5,12 +5,12 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 27 June 2025                                             Venafi
+Expires: 21 July 2025                                             Venafi
                                                       A. Schwenkschuster
                                                                    SPIRL
                                                               Y. Sheffer
                                                                   Intuit
-                                                        24 December 2024
+                                                         17 January 2025
 
 
                 WIMSE Service to Service Authentication
@@ -66,11 +66,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 27 June 2025.
+   This Internet-Draft will expire on 21 July 2025.
 
 Copyright Notice
 
-   Copyright (c) 2024 IETF Trust and the persons identified as the
+   Copyright (c) 2025 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -96,6 +96,7 @@ Table of Contents
      4.2.  Option 1: DPoP-Inspired Authentication
      4.3.  Option 2: Authentication Based on HTTP Message Signatures
      4.4.  Comparing the DPoP Inspired Option with Message Signatures
+     4.5.  Coexistence with JWT Bearer Tokens {coexist}
    5.  Using Mutual TLS for Service To Service Authentication
      5.1.  Server Name Validation
      5.2.  Client Authorization Using the WIMSE Identity
@@ -806,6 +807,31 @@ Table of Contents
       fields, but this would make it closer to trying to reinvent
       Message Signatures.
 
+4.5.  Coexistence with JWT Bearer Tokens {coexist}
+
+   The WIT and WPT define new HTTP headers.  They can therefore be
+   presented along with existing headers used for JWT bearer tokens.
+   This property allows for transition from mechanisms using identity
+   tokens based on bearer JWTs to proof of possession based WITs.  A
+   workload may implement a policy that accepts both bearer tokens and
+   WITs during a transition period.  This policy may be configurable
+   per-caller to allow the workload to reject bearer tokens from callers
+   that support WITs.  Once a deployment fully supports WITs, then the
+   use of bearer tokens for identity can be disabled through policy.
+   Implementations should be careful when implementing such a transition
+   strategy, since the decision which token to prefer is made when the
+   caller's identity has still not been authenticated, and needs to be
+   revalidated following the authentication step.
+
+   The WIT can also coexist with tokens used to establish security
+   context, such as transaction tokens
+   [I-D.ietf-oauth-transaction-tokens].  In this case a workload's
+   authorization policy may take into account both the sending
+   workload's identity and the information in the context token.  For
+   example, the identity in the WIT may be used to establish which API
+   calls can be made and information in the context token may be used to
+   determine which specific resources can be accessed.
+
 5.  Using Mutual TLS for Service To Service Authentication
 
    As noted in the introduction, for many deployments, transport-level
@@ -1077,17 +1103,17 @@ Table of Contents
    [I-D.ietf-oauth-transaction-tokens]
               Tulshibagwale, A., Fletcher, G., and P. Kasselman,
               "Transaction Tokens", Work in Progress, Internet-Draft,
-              draft-ietf-oauth-transaction-tokens-03, 3 July 2024,
+              draft-ietf-oauth-transaction-tokens-04, 30 December 2024,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              transaction-tokens-03>.
+              transaction-tokens-04>.
 
    [I-D.ietf-wimse-arch]
               Salowey, J. A., Rosomakho, Y., and H. Tschofenig,
               "Workload Identity in a Multi System Environment (WIMSE)
               Architecture", Work in Progress, Internet-Draft, draft-
-              ietf-wimse-arch-02, 21 October 2024,
+              ietf-wimse-arch-03, 7 January 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
-              arch-02>.
+              arch-03>.
 
    [IANA.JOSE.ALGS]
               IANA, "JSON Web Signature and Encryption Algorithms",
