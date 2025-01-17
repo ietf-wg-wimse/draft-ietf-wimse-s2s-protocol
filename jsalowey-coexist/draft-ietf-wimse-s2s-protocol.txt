@@ -5,12 +5,12 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 26 June 2025                                             Venafi
+Expires: 21 July 2025                                             Venafi
                                                       A. Schwenkschuster
                                                                    SPIRL
                                                               Y. Sheffer
                                                                   Intuit
-                                                        23 December 2024
+                                                         17 January 2025
 
 
                 WIMSE Service to Service Authentication
@@ -66,11 +66,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 June 2025.
+   This Internet-Draft will expire on 21 July 2025.
 
 Copyright Notice
 
-   Copyright (c) 2024 IETF Trust and the persons identified as the
+   Copyright (c) 2025 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -792,7 +792,7 @@ Table of Contents
    tokens based on bearer JWTs to proof of possession based WITs.  A
    workload may implement a policy that accepts both bearer tokens and
    WITs during a transition period.  This policy may be configurable
-   per-caller to allow the workload reject bearer tokens from callers
+   per-caller to allow the workload to reject bearer tokens from callers
    that support WITs.  Once a deployment fully supports WITs, then the
    use of bearer tokens for identity can be disabled through policy.
 
@@ -1076,17 +1076,17 @@ Table of Contents
    [I-D.ietf-oauth-transaction-tokens]
               Tulshibagwale, A., Fletcher, G., and P. Kasselman,
               "Transaction Tokens", Work in Progress, Internet-Draft,
-              draft-ietf-oauth-transaction-tokens-03, 3 July 2024,
+              draft-ietf-oauth-transaction-tokens-04, 30 December 2024,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              transaction-tokens-03>.
+              transaction-tokens-04>.
 
    [I-D.ietf-wimse-arch]
               Salowey, J. A., Rosomakho, Y., and H. Tschofenig,
               "Workload Identity in a Multi System Environment (WIMSE)
               Architecture", Work in Progress, Internet-Draft, draft-
-              ietf-wimse-arch-02, 21 October 2024,
+              ietf-wimse-arch-03, 7 January 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
-              arch-02>.
+              arch-03>.
 
    [IANA.JOSE.ALGS]
               IANA, "JSON Web Signature and Encryption Algorithms",
