@@ -529,7 +529,8 @@ The WIT and WPT define new HTTP headers. They can therefore be presented along w
 property allows for transition from mechanisms using identity tokens based on bearer JWTs to proof of possession based WITs.
 A workload may implement a policy that accepts both bearer tokens and WITs during a transition period. This policy may be configurable
 per-caller to allow the workload to reject bearer tokens from callers that support WITs. Once a deployment fully supports WITs, then the use of
-bearer tokens for identity can be disabled through policy.
+bearer tokens for identity can be disabled through policy.  Implementations should be careful when implementing such a transition strategy,
+since the decision which token to prefer is made when the caller's identity has still not been authenticated, and needs to be revalidated following the authentication step.
 
 The WIT can also coexist with tokens used to establish security context, such as transaction tokens {{?I-D.ietf-oauth-transaction-tokens}}. In this case a workload's
 authorization policy may take into account both the sending workload's identity and the information in the context token. For example, the
