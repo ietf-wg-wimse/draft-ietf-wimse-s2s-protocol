@@ -663,7 +663,7 @@ TODO: `Workload-Proof-Token` from {{dpop-esque-auth}}
 * Improve the architecture diagram.
 * Some more ABNF.
 * Clarified identifiers and URIs.
-* Moved an author to acknoledgments.
+* Moved an author to acknowledgments.
 
 ## draft-ietf-wimse-s2s-protocol-01
 
