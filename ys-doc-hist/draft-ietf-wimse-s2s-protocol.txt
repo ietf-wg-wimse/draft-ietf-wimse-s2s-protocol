@@ -1145,7 +1145,7 @@ A.1.  draft-ietf-wimse-s2s-protocol-02
 
    *  Clarified identifiers and URIs.
 
-   *  Moved an author to acknoledgments.
+   *  Moved an author to acknowledgments.
 
 A.2.  draft-ietf-wimse-s2s-protocol-01
 
