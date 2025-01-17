@@ -629,6 +629,14 @@ TODO: `Workload-Proof-Token` from {{dpop-esque-auth}}
 # Document History
 <cref>RFC Editor: please remove before publication.</cref>
 
+## draft-ietf-wimse-s2s-protocol-02
+
+* Coexistence with bearer tokens.
+* Improve the architecture diagram.
+* Some more ABNF.
+* Clarified identifiers and URIs.
+* Moved an author to acknoledgments.
+
 ## draft-ietf-wimse-s2s-protocol-01
 
 * Addressed multiple comments from Pieter.
