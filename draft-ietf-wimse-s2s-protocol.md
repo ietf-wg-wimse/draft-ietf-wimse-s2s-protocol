@@ -542,7 +542,7 @@ so it cannot be easily reused in another context, which is often a security impr
 be designed to include extensibility to sign other fields, but this would make it closer to
 trying to reinvent Message Signatures.
 
-## Coexistence with JWT Bearer Tokens {coexist}
+## Coexistence with JWT Bearer Tokens {#coexist}
 
 The WIT and WPT define new HTTP headers. They can therefore be presented along with existing headers used for JWT bearer tokens. This
 property allows for transition from mechanisms using identity tokens based on bearer JWTs to proof of possession based WITs.
@@ -656,6 +656,14 @@ TODO: `Workload-Proof-Token` from {{dpop-esque-auth}}
 
 # Document History
 <cref>RFC Editor: please remove before publication.</cref>
+
+## draft-ietf-wimse-s2s-protocol-02
+
+* Coexistence with bearer tokens.
+* Improve the architecture diagram.
+* Some more ABNF.
+* Clarified identifiers and URIs.
+* Moved an author to acknoledgments.
 
 ## draft-ietf-wimse-s2s-protocol-01
 
