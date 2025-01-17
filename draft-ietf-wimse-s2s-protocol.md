@@ -503,11 +503,6 @@ A signed response would be:
 
 ## Comparing the DPoP Inspired Option with Message Signatures {#app-level-comparison}
 
-<cref>
-This section is temporarily part of the draft, while we expect the working group
-to select one of these options.
-</cref>
-
 The two workload protection options have different strengths and weaknesses regarding implementation
 complexity, extensibility, and security.
 Here is a summary of the main differences between
