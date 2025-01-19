@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-01-16T01:11:54.131059+00:00",
+  "timestamp": "2025-01-19T01:17:03.631851+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -1098,16 +1098,24 @@
       ],
       "body": "Creating a reference-able & umbrella issue for the choice between the DPoP-inspired and the HTTP Message Signatures approach.\r\n\r\nSection 1:\r\n> For application-level protection we currently propose two alternative solutions, one inspired by DPoP [[RFC9449](https://www.sheffer.org/wimse-s2s/draft-sheffer-wimse-s2s-protocol.html#RFC9449)] in [Section 4.2](https://www.sheffer.org/wimse-s2s/draft-sheffer-wimse-s2s-protocol.html#dpop-esque-auth) and one which is a profile of HTTP Message Signatures [[RFC9421](https://www.sheffer.org/wimse-s2s/draft-sheffer-wimse-s2s-protocol.html#RFC9421)] in [Section 4.3](https://www.sheffer.org/wimse-s2s/draft-sheffer-wimse-s2s-protocol.html#http-sig-auth). The design team believes that we need to pick one of these two alternatives for standardization, once we have understood their pros and cons.",
       "createdAt": "2024-07-15T14:29:19Z",
-      "updatedAt": "2024-07-15T14:29:27Z",
+      "updatedAt": "2025-01-17T20:51:12Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Keeping this issue open. The design team still believes that one option is better than two, but the WG decided otherwise. Hoping to revisit this decision later on.",
+          "createdAt": "2025-01-17T20:51:10Z",
+          "updatedAt": "2025-01-17T20:51:10Z"
+        }
+      ]
     },
     {
       "number": 53,
       "id": "I_kwDOLJmm786P5RPZ",
       "title": "Use of WIT without proof of possession and interop with legacy systems",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/53",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "jsalowey",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -1116,8 +1124,8 @@
       "labels": [],
       "body": "The current draft says that the WIT must not be accepted without proof of possession of the corresponding private key.  This is for security reasons because if you are willing to accept the WIT without proof of possession then the security benefit of the WIT is greatly diminished.  \r\n\r\nThis restriction makes it difficult to integrate a WIT seamlessly into existing applications.  I question whether this could be done securely, but I think we should have the discussion:\r\n1. Is there a sensible policy that would make this OK?  It seems that legacy application would be none the worse off, but application that could handle the WIT would still benefit.  I think there is a difficulty here in that you have client an services sides that might be updated a different times making it more complex.\r\n2. Perhaps there is an alternate form of POP that would be easier.  For example binding to a TLS key or identity.  While this seems attractive, one of the reasons for the WIT is to suport cases where MTLS isn't realistic. \r\n\r\n",
       "createdAt": "2024-07-17T17:27:44Z",
-      "updatedAt": "2024-12-19T15:18:19Z",
-      "closedAt": null,
+      "updatedAt": "2025-01-17T13:18:54Z",
+      "closedAt": "2025-01-17T13:18:54Z",
       "comments": [
         {
           "author": "yaronf",
@@ -4668,7 +4676,7 @@
       "labels": [],
       "body": "So we don't fail id-nits.",
       "createdAt": "2024-07-03T17:00:15Z",
-      "updatedAt": "2024-07-03T17:48:14Z",
+      "updatedAt": "2025-01-17T20:40:28Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "ec0683d91d922b1f381d95a4eab48c99d37c047d",
@@ -6468,7 +6476,7 @@
       "labels": [],
       "body": "Fixes #77 \r\n\r\ncc: @dfeldman \r\n\r\nNote: the relevant changes are in the first commit. Everything else is build process tweaks and fixes from @martinthomson.",
       "createdAt": "2024-11-21T23:00:54Z",
-      "updatedAt": "2024-12-01T08:14:58Z",
+      "updatedAt": "2025-01-17T20:40:21Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "ba2577a228ab66ef2bb4dd7ffba24e511bb5295c",
@@ -6575,7 +6583,7 @@
       "labels": [],
       "body": "Fixes #36.",
       "createdAt": "2024-11-22T14:05:28Z",
-      "updatedAt": "2024-12-24T15:23:34Z",
+      "updatedAt": "2025-01-17T20:40:17Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "ba2577a228ab66ef2bb4dd7ffba24e511bb5295c",
@@ -6690,7 +6698,7 @@
       "labels": [],
       "body": "See title",
       "createdAt": "2024-11-29T10:47:07Z",
-      "updatedAt": "2024-11-29T13:00:56Z",
+      "updatedAt": "2025-01-17T20:41:00Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "ba2577a228ab66ef2bb4dd7ffba24e511bb5295c",
@@ -6843,24 +6851,26 @@
       "id": "PR_kwDOLJmm786GClW1",
       "title": "coexistence with bearer tokens",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/84",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "jsalowey",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Resolve with Issue #53 ",
       "createdAt": "2024-12-23T05:22:19Z",
-      "updatedAt": "2024-12-23T09:35:44Z",
+      "updatedAt": "2025-01-17T13:18:54Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "165f19011c43b3c2d48fcd060ade1b4299413e4e",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "jsalowey-coexist",
-      "headRefOid": "d9b62cdd5e1310fa15c56d82cf7ff2c42630b494",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "8e4983ffbe35d2aaaf564444f8070c3985381193",
+      "closedAt": "2025-01-17T13:18:53Z",
+      "mergedAt": "2025-01-17T13:18:53Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "eb0056fbbe10704a5d0cb7ddb3589a8211999c78"
+      },
       "comments": [],
       "reviews": [
         {
@@ -6894,6 +6904,95 @@
               "updatedAt": "2024-12-23T09:35:44Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786Yhzrr",
+          "commit": {
+            "abbreviatedOid": "8e4983f"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-01-17T13:18:38Z",
+          "updatedAt": "2025-01-17T13:18:38Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 85,
+      "id": "PR_kwDOLJmm786IKFWq",
+      "title": "Doc history - -02",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/85",
+      "state": "CLOSED",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-01-17T13:36:57Z",
+      "updatedAt": "2025-01-17T20:40:16Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "eb0056fbbe10704a5d0cb7ddb3589a8211999c78",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-abnf",
+      "headRefOid": "f601383238a92323539158e3358e8477808ebf16",
+      "closedAt": "2025-01-17T13:37:34Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Sorry, branch mix up",
+          "createdAt": "2025-01-17T13:37:34Z",
+          "updatedAt": "2025-01-17T13:37:34Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 86,
+      "id": "PR_kwDOLJmm786IKJ64",
+      "title": "Doc history for -02",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/86",
+      "state": "MERGED",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-01-17T13:47:22Z",
+      "updatedAt": "2025-01-17T20:40:14Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "eb0056fbbe10704a5d0cb7ddb3589a8211999c78",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-doc-hist",
+      "headRefOid": "6a3d48ad84687e90b5525b484c9c01e046c94a7e",
+      "closedAt": "2025-01-17T18:02:18Z",
+      "mergedAt": "2025-01-17T18:02:18Z",
+      "mergedBy": "jsalowey",
+      "mergeCommit": {
+        "oid": "ab10cbcfacb942f2fa5f090600fa009f84bfa0a2"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm786YkRVM",
+          "commit": {
+            "abbreviatedOid": "6a3d48a"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-01-17T18:02:11Z",
+          "updatedAt": "2025-01-17T18:02:11Z",
+          "comments": []
         }
       ]
     }
