@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-01-23T01:12:00.292055+00:00",
+  "timestamp": "2025-01-26T01:14:09.842118+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -1115,7 +1115,7 @@
       "id": "I_kwDOLJmm786P5RPZ",
       "title": "Use of WIT without proof of possession and interop with legacy systems",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/53",
-      "state": "CLOSED",
+      "state": "OPEN",
       "author": "jsalowey",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -1124,8 +1124,8 @@
       "labels": [],
       "body": "The current draft says that the WIT must not be accepted without proof of possession of the corresponding private key.  This is for security reasons because if you are willing to accept the WIT without proof of possession then the security benefit of the WIT is greatly diminished.  \r\n\r\nThis restriction makes it difficult to integrate a WIT seamlessly into existing applications.  I question whether this could be done securely, but I think we should have the discussion:\r\n1. Is there a sensible policy that would make this OK?  It seems that legacy application would be none the worse off, but application that could handle the WIT would still benefit.  I think there is a difficulty here in that you have client an services sides that might be updated a different times making it more complex.\r\n2. Perhaps there is an alternate form of POP that would be easier.  For example binding to a TLS key or identity.  While this seems attractive, one of the reasons for the WIT is to suport cases where MTLS isn't realistic. \r\n\r\n",
       "createdAt": "2024-07-17T17:27:44Z",
-      "updatedAt": "2025-01-17T13:18:54Z",
-      "closedAt": "2025-01-17T13:18:54Z",
+      "updatedAt": "2025-01-23T15:57:48Z",
+      "closedAt": null,
       "comments": [
         {
           "author": "yaronf",
@@ -1189,6 +1189,20 @@
           "body": "On call decided to add section on co-existance with bearer token JWT",
           "createdAt": "2024-12-19T15:18:18Z",
           "updatedAt": "2024-12-19T15:18:18Z"
+        },
+        {
+          "author": "PieterKas",
+          "authorAssociation": "NONE",
+          "body": "I would like to suggest re-opening this issue as the SPIFFE community considers adoption/integration of WIMSE WITs into the existing eco-system (see https://github.com/spiffe/spiffe/issues/315) to allow input from one of the biggest potential adopter/users of these tokens to share their experiences and insights on how backwards compatibility may be achieved and adoption of WITs be accelerated.",
+          "createdAt": "2025-01-23T15:44:52Z",
+          "updatedAt": "2025-01-23T15:44:52Z"
+        },
+        {
+          "author": "PieterKas",
+          "authorAssociation": "NONE",
+          "body": "An interesting example of a backwards compatibility mode is the DPoP specification (RFC 9449). Section 7.2 (https://datatracker.ietf.org/doc/html/rfc9449#name-compatibility-with-the-bear) specifically calls out a backwards compatibility mode that allows a resource server to accept a bound token without supporting DPoP and treat it as a bearer token. \n",
+          "createdAt": "2025-01-23T15:57:46Z",
+          "updatedAt": "2025-01-23T15:57:46Z"
         }
       ]
     },
@@ -1428,6 +1442,132 @@
       "createdAt": "2024-11-21T15:42:56Z",
       "updatedAt": "2024-12-01T08:14:59Z",
       "closedAt": "2024-12-01T08:14:59Z",
+      "comments": []
+    },
+    {
+      "number": 87,
+      "id": "I_kwDOLJmm786nSu5j",
+      "title": "Simultaneous use of authentication methods",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/87",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Opened as a working group member, not as chair\n\nThe abstract states that:\n\nThese two protocols are compatible, in the sense that a\n   single call chain can have some calls use one protocol and some use\n   the other.  Service A can call Service B with mutual TLS\n   authentication, while the next call from Service B to Service C would\n   be authenticated at the application level.\n\nIs simultaneous use supported as well? For example I may use mutual TLS for workload-to-workload authentication by deploying a service mesh, but also do application layer authentication? ",
+      "createdAt": "2025-01-23T11:52:28Z",
+      "updatedAt": "2025-01-23T11:53:09Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 88,
+      "id": "I_kwDOLJmm786nS028",
+      "title": "Adopting S2S mechanisms for non-HTTP use cases",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/88",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Opened as a working group member, not as chair\n\nThere is considerable interest in using some of the mechanisms such as WIT/WPTs, defined in this draft beyond HTTP (gRPC, Kafka). What guidance can be given to adopters who need to perform workload-to-workload or service-to-service authentication in those environments, or at least encourage them to re-use rather than re-invent some of the mechanisms defined here? For example, a simple sentence along the lines of \"these mechanisms or token formats may be used with other protocols, provided that they define an appropriate protocol binding\". ",
+      "createdAt": "2025-01-23T12:04:26Z",
+      "updatedAt": "2025-01-23T14:20:31Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I'm not sure. This could become a slippery slope, where people will want more and more \"advice\" for protocols that we know nothing about. I would rather stay strictly within scope, i.e. HTTP only.",
+          "createdAt": "2025-01-23T12:52:50Z",
+          "updatedAt": "2025-01-23T12:52:50Z"
+        },
+        {
+          "author": "PieterKas",
+          "authorAssociation": "NONE",
+          "body": "I too am cautious of slippery slopes ;)\n\nPerhaps something as simple as \"the formats and mechanisms may be used with other protocols, defining that use is out of scope of this document\"\n\nThe thing at the back of my mind is that I don't want to tempt innocent identity enthusiasts into inventing another token type when the protocol changes. Just like X.509 is not bound to a single protocol, it would be good to have the door open for other protocol bindings.",
+          "createdAt": "2025-01-23T14:19:49Z",
+          "updatedAt": "2025-01-23T14:20:31Z"
+        }
+      ]
+    },
+    {
+      "number": 89,
+      "id": "I_kwDOLJmm786nS53D",
+      "title": "Trust Domain Definitions",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/89",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Opened as a working group member, not as chair\n\nThe Trust domain definitions in the S2S document and the WIMSE arcchitecture document are identical - this is a great!\n\nPerhaps the S2S document can just reference the trust domain definition in the architecture document to avoid the two accidentally drifting apart?",
+      "createdAt": "2025-01-23T12:14:08Z",
+      "updatedAt": "2025-01-23T12:14:08Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 90,
+      "id": "I_kwDOLJmm786nS8dC",
+      "title": "Workload Identifier Definition",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/90",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Opened as a working group member, not as chair\n\nThe workload identifier definition is very similar to the definition in the WIMSE architecture doc (the architecture doc has a bit more text and clarification). Is it possible to just reference the WIMSE architecture doc instead to avoid diverging definitions?",
+      "createdAt": "2025-01-23T12:19:16Z",
+      "updatedAt": "2025-01-23T12:19:16Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 91,
+      "id": "I_kwDOLJmm786nTCb-",
+      "title": "Editorial: State Required vs Optional claims in WPT",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/91",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Opened as a working group member, not as chair\n\nFrom reading the text the \"ath\", \"tth\" and \"oth\" claims are optional. Consider stating that as part of the claims definition. e.g. \n\n\"- ath: Optional. Hash of the OAuth access token, if present in the request,\n         which might convey end-user identity and authorization context\n         of the request.  The value, as per Section 4.1 of [RFC9449], is\n         the base64url encoding of the SHA-256 hash of the ASCII\n         encoding of the access token's value. ",
+      "createdAt": "2025-01-23T12:30:55Z",
+      "updatedAt": "2025-01-23T14:17:11Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I read the text differently. IMHO the value is not present if there's no access token, but is mandatory if an access token exists. So it's \"conditionally mandatory\" rather than \"optional\".",
+          "createdAt": "2025-01-23T13:05:15Z",
+          "updatedAt": "2025-01-23T13:05:15Z"
+        },
+        {
+          "author": "PieterKas",
+          "authorAssociation": "NONE",
+          "body": "It would be good to have clarification on that - I totally read (or at least wanted to read) it as optional - that is you don't have to include it, even when you have an access token, transaction token or any other kind of token. ",
+          "createdAt": "2025-01-23T14:17:09Z",
+          "updatedAt": "2025-01-23T14:17:09Z"
+        }
+      ]
+    },
+    {
+      "number": 92,
+      "id": "I_kwDOLJmm786nTG1v",
+      "title": "\"iss\" claim matching",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/92",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Opened as working group member, not chair\n\nFrom section 4.2 \"The iss claim of the WPT matches the sub claim of the WIT.  (Note: not sure iss in the WPT is useful or necessary.)\"\n\nIf the purpose of comparing the WPT \"iss\" claim and the WIT \"sub\" claim is to link the signature to the WIT, it seems that verifying the \"wth\" claim would have the same effect as long as the hash calculation includes the WIT \"sub\" claim. \n\nAre there other reasons why the \"iss\" claim should be verified?",
+      "createdAt": "2025-01-23T12:39:24Z",
+      "updatedAt": "2025-01-23T12:39:35Z",
+      "closedAt": null,
       "comments": []
     }
   ],
