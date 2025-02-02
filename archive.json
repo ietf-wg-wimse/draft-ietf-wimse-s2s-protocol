@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-01-30T01:11:06.688299+00:00",
+  "timestamp": "2025-02-02T01:15:34.788716+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -1124,7 +1124,7 @@
       "labels": [],
       "body": "The current draft says that the WIT must not be accepted without proof of possession of the corresponding private key.  This is for security reasons because if you are willing to accept the WIT without proof of possession then the security benefit of the WIT is greatly diminished.  \r\n\r\nThis restriction makes it difficult to integrate a WIT seamlessly into existing applications.  I question whether this could be done securely, but I think we should have the discussion:\r\n1. Is there a sensible policy that would make this OK?  It seems that legacy application would be none the worse off, but application that could handle the WIT would still benefit.  I think there is a difficulty here in that you have client an services sides that might be updated a different times making it more complex.\r\n2. Perhaps there is an alternate form of POP that would be easier.  For example binding to a TLS key or identity.  While this seems attractive, one of the reasons for the WIT is to suport cases where MTLS isn't realistic. \r\n\r\n",
       "createdAt": "2024-07-17T17:27:44Z",
-      "updatedAt": "2025-01-23T15:57:48Z",
+      "updatedAt": "2025-01-30T05:45:25Z",
       "closedAt": null,
       "comments": [
         {
@@ -1203,6 +1203,13 @@
           "body": "An interesting example of a backwards compatibility mode is the DPoP specification (RFC 9449). Section 7.2 (https://datatracker.ietf.org/doc/html/rfc9449#name-compatibility-with-the-bear) specifically calls out a backwards compatibility mode that allows a resource server to accept a bound token without supporting DPoP and treat it as a bearer token. \n",
           "createdAt": "2025-01-23T15:57:46Z",
           "updatedAt": "2025-01-23T15:57:46Z"
+        },
+        {
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "body": "From a security perspective the bearer token and the bound token need to be treated differently so we defined a different token type for it.  This makes the intent clear.  The current definitions allow the coexistence of the two mechanisms for transition.  Workloads will need to be updated to provide the PoP to use the bound token.  I'd like to understand better what is gained by having the same token meet both purposes.  \n\nInstead of making the bound token optionally behave like a bearer token maybe these is a different approach that can be taken.  For example, maybe there is a way though the API to acquire both tokens at the same time.  Workloads will use the existing token in the same way as they do now and when they are upgraded to use the bound token they can find it and use it instead.  ",
+          "createdAt": "2025-01-30T05:45:24Z",
+          "updatedAt": "2025-01-30T05:45:24Z"
         }
       ]
     },
@@ -1456,9 +1463,17 @@
       "labels": [],
       "body": "Opened as a working group member, not as chair\n\nThe abstract states that:\n\nThese two protocols are compatible, in the sense that a\n   single call chain can have some calls use one protocol and some use\n   the other.  Service A can call Service B with mutual TLS\n   authentication, while the next call from Service B to Service C would\n   be authenticated at the application level.\n\nIs simultaneous use supported as well? For example I may use mutual TLS for workload-to-workload authentication by deploying a service mesh, but also do application layer authentication? ",
       "createdAt": "2025-01-23T11:52:28Z",
-      "updatedAt": "2025-01-23T11:53:09Z",
+      "updatedAt": "2025-01-30T15:41:14Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "* We are not sure what are reasonable use cases for this.\n* However we will not forbid it.\n* The only exception being: you must not use different auth method between the same pair of workloads.",
+          "createdAt": "2025-01-30T15:41:13Z",
+          "updatedAt": "2025-01-30T15:41:13Z"
+        }
+      ]
     },
     {
       "number": 88,
@@ -1503,9 +1518,17 @@
       "labels": [],
       "body": "Opened as a working group member, not as chair\n\nThe Trust domain definitions in the S2S document and the WIMSE arcchitecture document are identical - this is a great!\n\nPerhaps the S2S document can just reference the trust domain definition in the architecture document to avoid the two accidentally drifting apart?",
       "createdAt": "2025-01-23T12:14:08Z",
-      "updatedAt": "2025-01-23T12:14:08Z",
+      "updatedAt": "2025-01-30T15:43:36Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Agreed. A point to note is, this would be a normative ref into an Informational doc.",
+          "createdAt": "2025-01-30T15:43:34Z",
+          "updatedAt": "2025-01-30T15:43:34Z"
+        }
+      ]
     },
     {
       "number": 90,
@@ -1519,9 +1542,17 @@
       "labels": [],
       "body": "Opened as a working group member, not as chair\n\nThe workload identifier definition is very similar to the definition in the WIMSE architecture doc (the architecture doc has a bit more text and clarification). Is it possible to just reference the WIMSE architecture doc instead to avoid diverging definitions?",
       "createdAt": "2025-01-23T12:19:16Z",
-      "updatedAt": "2025-01-23T12:19:16Z",
+      "updatedAt": "2025-01-30T15:44:01Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "See #89.",
+          "createdAt": "2025-01-30T15:44:00Z",
+          "updatedAt": "2025-01-30T15:44:00Z"
+        }
+      ]
     },
     {
       "number": 91,
@@ -1535,7 +1566,7 @@
       "labels": [],
       "body": "Opened as a working group member, not as chair\n\nFrom reading the text the \"ath\", \"tth\" and \"oth\" claims are optional. Consider stating that as part of the claims definition. e.g. \n\n\"- ath: Optional. Hash of the OAuth access token, if present in the request,\n         which might convey end-user identity and authorization context\n         of the request.  The value, as per Section 4.1 of [RFC9449], is\n         the base64url encoding of the SHA-256 hash of the ASCII\n         encoding of the access token's value. ",
       "createdAt": "2025-01-23T12:30:55Z",
-      "updatedAt": "2025-01-23T14:17:11Z",
+      "updatedAt": "2025-01-30T15:48:15Z",
       "closedAt": null,
       "comments": [
         {
@@ -1551,6 +1582,13 @@
           "body": "It would be good to have clarification on that - I totally read (or at least wanted to read) it as optional - that is you don't have to include it, even when you have an access token, transaction token or any other kind of token. ",
           "createdAt": "2025-01-23T14:17:09Z",
           "updatedAt": "2025-01-23T14:17:09Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Either way, we need to define verifier handling: if `ath` exists and the access token doesn't and so on.",
+          "createdAt": "2025-01-30T15:48:09Z",
+          "updatedAt": "2025-01-30T15:48:09Z"
         }
       ]
     },
@@ -1566,9 +1604,17 @@
       "labels": [],
       "body": "Opened as working group member, not chair\n\nFrom section 4.2 \"The iss claim of the WPT matches the sub claim of the WIT.  (Note: not sure iss in the WPT is useful or necessary.)\"\n\nIf the purpose of comparing the WPT \"iss\" claim and the WIT \"sub\" claim is to link the signature to the WIT, it seems that verifying the \"wth\" claim would have the same effect as long as the hash calculation includes the WIT \"sub\" claim. \n\nAre there other reasons why the \"iss\" claim should be verified?",
       "createdAt": "2025-01-23T12:39:24Z",
-      "updatedAt": "2025-01-23T12:39:35Z",
+      "updatedAt": "2025-01-30T15:55:35Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "body": "IT seems like the \"iss\" claim does not add anything to the WPT.  The receiver knows what key to use from the WIT.  If the \"iss\" claim is only adding possible ambiguity and not providing any useful information I think we should probably remove it. ",
+          "createdAt": "2025-01-30T15:55:34Z",
+          "updatedAt": "2025-01-30T15:55:34Z"
+        }
+      ]
     }
   ],
   "pulls": [
