@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-02-06T01:13:23.727922+00:00",
+  "timestamp": "2025-02-09T01:16:46.932968+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -1613,6 +1613,30 @@
           "body": "IT seems like the \"iss\" claim does not add anything to the WPT.  The receiver knows what key to use from the WIT.  If the \"iss\" claim is only adding possible ambiguity and not providing any useful information I think we should probably remove it. ",
           "createdAt": "2025-01-30T15:55:34Z",
           "updatedAt": "2025-01-30T15:55:34Z"
+        }
+      ]
+    },
+    {
+      "number": 93,
+      "id": "I_kwDOLJmm786pI7qc",
+      "title": "Comparison to Github Actions ID tokens.",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/93",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "I spent some time analyzing the differences between Github Actions ID tokens and WITs. This can be useful to see how easy migration from existing WIT-style implementations to WITs can be.\n\n## Main observations\n\n|Github|WIT|\n|--|--|\n| Bearer token | Holder of key/proof of possession token |\n| `sub` is not a URI | requires `sub` to be a URI |\n| no `cnf` claim as of today | requires `cnf` claim |\n| use `JWT` as `typ` header | uses `wimse-id+jwt` as typ header |\n\nDetails of the ID token and its claim can be found in the [Github documentation](https://docs.github.com/en/actions/security-for-github-actions/security-hardening-your-deployments/about-security-hardening-with-openid-connect#understanding-the-oidc-token).\n\nI believe the Github Actions environment fits perfectly into WIMSE and maybe we can use existing work and patterns to see how WITs could be adopted.\n\n",
+      "createdAt": "2025-02-07T09:37:13Z",
+      "updatedAt": "2025-02-07T20:43:29Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "In my perception the Github Actions ID tokens are much more analogous to an RFC 7523 JWT authorization grant than a WIT.  \n\nWhat am I not seeing?",
+          "createdAt": "2025-02-07T20:42:12Z",
+          "updatedAt": "2025-02-07T20:43:29Z"
         }
       ]
     }
