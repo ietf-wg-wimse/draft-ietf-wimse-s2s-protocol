@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-02-13T01:13:37.390473+00:00",
+  "timestamp": "2025-02-16T01:19:13.928626+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -52,6 +52,11 @@
       "name": "ietf120",
       "description": "",
       "color": "202A70"
+    },
+    {
+      "name": "ietf122",
+      "description": null,
+      "color": "aaaaaa"
     }
   ],
   "issues": [
@@ -64,27 +69,37 @@
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "ietf122"
+      ],
       "body": "@frumioj has suggested to rename `service` to `workload` in https://github.com/yaronf/wimse-s2s/pull/12.\r\n\r\nThis issue is to track the conversation for the term `service` and document the decision making.",
       "createdAt": "2024-06-13T14:18:00Z",
-      "updatedAt": "2024-06-13T14:18:00Z",
+      "updatedAt": "2025-02-13T15:14:57Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@yaronf Take to the list. Propose to change the title, and provide a PR.",
+          "createdAt": "2025-02-13T15:14:56Z",
+          "updatedAt": "2025-02-13T15:14:56Z"
+        }
+      ]
     },
     {
       "number": 14,
       "id": "I_kwDOLJmm786MJxcd",
       "title": "Issuer claim in Workload ID Tokens",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/14",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Do Workload ID tokens require an `iss` claim or is the issuer implicit as part of the WIMSE URI in the `sub` claim?\r\nAlso, does the `iss` claim add any additional value in scope of this draft aka \"Does this draft work without `iss` claim?\"",
       "createdAt": "2024-06-13T14:56:26Z",
-      "updatedAt": "2024-07-15T16:43:40Z",
-      "closedAt": null,
+      "updatedAt": "2025-02-13T15:19:57Z",
+      "closedAt": "2025-02-13T15:19:56Z",
       "comments": [
         {
           "author": "PieterKas",
@@ -113,6 +128,13 @@
           "body": "@yaronf yes and no in my opinion.\r\nOf course, `cnf` claim is new too, but I believe the complexity in adding the `iss` claim is higher. Existing deployments out there add this claim on their own with custom logic, custom values to achieve federation. Adding this claim as required and being opinionated by it will probably break a lot of them and will make migration hard.\r\n\r\n",
           "createdAt": "2024-07-15T16:43:39Z",
           "updatedAt": "2024-07-15T16:43:39Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Based on recent discussions, there is no expectation of WIT being compatible with SPIFFE JSON-SVID.\n\nAlso, see #92 .",
+          "createdAt": "2025-02-13T15:19:56Z",
+          "updatedAt": "2025-02-13T15:19:56Z"
         }
       ]
     },
@@ -124,13 +146,15 @@
       "state": "OPEN",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "jsalowey"
+      ],
       "labels": [
-        "ietf120"
+        "ietf122"
       ],
       "body": "Examples in the the Message Signatures section do not include an Authorization header. But for a 401 response (which is likely if the workload-to-workload call is disallowed by policy) the spec requires WWW-Authenticate headers to be included. How can we return a 401, or do we need a whole new HTTP status code?",
       "createdAt": "2024-06-13T15:06:05Z",
-      "updatedAt": "2024-07-18T10:18:49Z",
+      "updatedAt": "2025-02-13T15:29:42Z",
       "closedAt": null,
       "comments": []
     },
@@ -142,11 +166,15 @@
       "state": "OPEN",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
-      "labels": [],
+      "assignees": [
+        "bc-pi"
+      ],
+      "labels": [
+        "ietf122"
+      ],
       "body": "The `alg` Message Signature parameter is arguably a vulnerability waiting to happen, because verifiers would trust this field even though they lack context, similarly to the \"none\" issue with JWTs. IMO an algorithm should be strongly bound to a key. Can we make the `alg` field mandatory within the JWK instead?",
       "createdAt": "2024-06-13T16:27:20Z",
-      "updatedAt": "2024-07-15T16:46:32Z",
+      "updatedAt": "2025-02-13T15:50:37Z",
       "closedAt": null,
       "comments": [
         {
@@ -177,16 +205,24 @@
       "id": "I_kwDOLJmm786M8YDo",
       "title": "Tracking keys on Authority ",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/22",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Should the Authority keep track of public keys and make sure 2 Identities don't share it?",
       "createdAt": "2024-06-20T14:44:59Z",
-      "updatedAt": "2024-06-20T14:44:59Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2025-02-13T15:55:01Z",
+      "closedAt": "2025-02-13T15:54:59Z",
+      "comments": [
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Requirements from the Authority are out of scope for this doc.",
+          "createdAt": "2025-02-13T15:54:59Z",
+          "updatedAt": "2025-02-13T15:54:59Z"
+        }
+      ]
     },
     {
       "number": 23,
@@ -1600,11 +1636,15 @@
       "state": "OPEN",
       "author": "PieterKas",
       "authorAssociation": "NONE",
-      "assignees": [],
-      "labels": [],
+      "assignees": [
+        "bc-pi"
+      ],
+      "labels": [
+        "ietf122"
+      ],
       "body": "Opened as working group member, not chair\n\nFrom section 4.2 \"The iss claim of the WPT matches the sub claim of the WIT.  (Note: not sure iss in the WPT is useful or necessary.)\"\n\nIf the purpose of comparing the WPT \"iss\" claim and the WIT \"sub\" claim is to link the signature to the WIT, it seems that verifying the \"wth\" claim would have the same effect as long as the hash calculation includes the WIT \"sub\" claim. \n\nAre there other reasons why the \"iss\" claim should be verified?",
       "createdAt": "2025-01-23T12:39:24Z",
-      "updatedAt": "2025-01-30T15:55:35Z",
+      "updatedAt": "2025-02-13T15:20:50Z",
       "closedAt": null,
       "comments": [
         {
