@@ -9,8 +9,8 @@ Signature: wimse=:NMrMn3xhI6m9PI8mKVfpnH5qFGcEfuFxiCmsB5PJhGjUHT/5J4\
 612EZwRw3V4kU4gGJmO+ER8RC4DM2HKVOYDQ==:
 Signature-Input: wimse=("@status" "workload-identity-token" "content\
 -type" "content-digest" "@method";req "@request-target";req);created\
-=1718295368;expires=1718295670;nonce="abcd2222";tag="wimse-service-t\
-o-service"
+=1718295368;expires=1718295670;nonce="abcd2222";tag="wimse-workload-\
+to-workload"
 Workload-Identity-Token: aGVhZGVyCg.VGhpcyBhaW4ndCBvbmUsIHRvby4K.c2l\
 nbmF0dXJlCg
 
