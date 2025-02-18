@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-02-16T01:19:13.928626+00:00",
+  "timestamp": "2025-02-18T01:13:25.622296+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -1668,7 +1668,7 @@
       "labels": [],
       "body": "I spent some time analyzing the differences between Github Actions ID tokens and WITs. This can be useful to see how easy migration from existing WIT-style implementations to WITs can be.\n\n## Main observations\n\n|Github|WIT|\n|--|--|\n| Bearer token | Holder of key/proof of possession token |\n| `sub` is not a URI | requires `sub` to be a URI |\n| no `cnf` claim as of today | requires `cnf` claim |\n| use `JWT` as `typ` header | uses `wimse-id+jwt` as typ header |\n\nDetails of the ID token and its claim can be found in the [Github documentation](https://docs.github.com/en/actions/security-for-github-actions/security-hardening-your-deployments/about-security-hardening-with-openid-connect#understanding-the-oidc-token).\n\nI believe the Github Actions environment fits perfectly into WIMSE and maybe we can use existing work and patterns to see how WITs could be adopted.\n\n",
       "createdAt": "2025-02-07T09:37:13Z",
-      "updatedAt": "2025-02-07T20:43:29Z",
+      "updatedAt": "2025-02-17T16:19:31Z",
       "closedAt": null,
       "comments": [
         {
@@ -1677,6 +1677,13 @@
           "body": "In my perception the Github Actions ID tokens are much more analogous to an RFC 7523 JWT authorization grant than a WIT.  \n\nWhat am I not seeing?",
           "createdAt": "2025-02-07T20:42:12Z",
           "updatedAt": "2025-02-07T20:43:29Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Good point @bc-pi. \n\nDo you see `JWT authorization grants (RFC 7523)` as a dedicated token flavor or more a set of claim requirements that need to be fulfilled?\n\nThe way I see it is that JWT authorization grants sole purpose is to authenticate to another authorization server to receive an identity from it. I'm not sure if that's the case for Github ID tokens. I can see them being used directly to authenticate to other workloads.",
+          "createdAt": "2025-02-17T16:19:29Z",
+          "updatedAt": "2025-02-17T16:19:29Z"
         }
       ]
     }
