@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-02-18T01:13:25.622296+00:00",
+  "timestamp": "2025-02-20T01:14:04.306714+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -68,13 +68,15 @@
       "state": "OPEN",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "yaronf"
+      ],
       "labels": [
         "ietf122"
       ],
       "body": "@frumioj has suggested to rename `service` to `workload` in https://github.com/yaronf/wimse-s2s/pull/12.\r\n\r\nThis issue is to track the conversation for the term `service` and document the decision making.",
       "createdAt": "2024-06-13T14:18:00Z",
-      "updatedAt": "2025-02-13T15:14:57Z",
+      "updatedAt": "2025-02-18T17:18:06Z",
       "closedAt": null,
       "comments": [
         {
@@ -7250,6 +7252,59 @@
           "createdAt": "2025-01-17T18:02:11Z",
           "updatedAt": "2025-01-17T18:02:11Z",
           "comments": []
+        }
+      ]
+    },
+    {
+      "number": 94,
+      "id": "PR_kwDOLJmm786Loq_S",
+      "title": "Editorial: use Workload instead of Service",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/94",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This is purely editorial, but it changes the document's title and it resets the I-D to version -00. We also probably need to change the repo's name.\r\n\r\nFixes #13.",
+      "createdAt": "2025-02-18T17:35:56Z",
+      "updatedAt": "2025-02-18T22:13:18Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "ab10cbcfacb942f2fa5f090600fa009f84bfa0a2",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-term-workload",
+      "headRefOid": "2762e7e793b70452c26c5408ffb2b07e3d8cd60c",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm786ceMwc",
+          "commit": {
+            "abbreviatedOid": "2762e7e"
+          },
+          "author": "jricher",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "Suggest not changing the draft name of the document, but instead changing the title and term usage within.",
+          "createdAt": "2025-02-18T22:12:17Z",
+          "updatedAt": "2025-02-18T22:13:18Z",
+          "comments": [
+            {
+              "originalPosition": 18,
+              "body": "```suggestion\r\n  latest: \"https://ietf-wg-wimse.github.io/draft-ietf-wimse-s2s-protocol/draft-ietf-wimse-s2s-protocol.html\"\r\n```",
+              "createdAt": "2025-02-18T22:12:17Z",
+              "updatedAt": "2025-02-18T22:13:18Z"
+            },
+            {
+              "originalPosition": 9,
+              "body": "```suggestion\r\ndocname: draft-ietf-wimse-s2s-protocol-latest\r\n```",
+              "createdAt": "2025-02-18T22:12:38Z",
+              "updatedAt": "2025-02-18T22:13:18Z"
+            }
+          ]
         }
       ]
     }
