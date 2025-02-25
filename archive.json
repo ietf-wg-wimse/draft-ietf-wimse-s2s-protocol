@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-02-23T01:19:01.880764+00:00",
+  "timestamp": "2025-02-25T01:15:48.844874+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -1686,6 +1686,30 @@
           "body": "Good point @bc-pi. \n\nDo you see `JWT authorization grants (RFC 7523)` as a dedicated token flavor or more a set of claim requirements that need to be fulfilled?\n\nThe way I see it is that JWT authorization grants sole purpose is to authenticate to another authorization server to receive an identity from it. I'm not sure if that's the case for Github ID tokens. I can see them being used directly to authenticate to other workloads.",
           "createdAt": "2025-02-17T16:19:29Z",
           "updatedAt": "2025-02-17T16:19:29Z"
+        }
+      ]
+    },
+    {
+      "number": 95,
+      "id": "I_kwDOLJmm786rXA7J",
+      "title": "jti Claim",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/95",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "From @sorindumitru, as part of the SPIFFE discussion:\n\nI notice the S2S/W2W spec also specifies that the WIT token has a jti field. I imagine it's for replay protection or some kind of revocation support. This doesn't work well with some SPIFFE implementations (at least SPIRE) because it prefers to cache (and preload) SVIDs and serve the same one to workloads (including to multiple workloads if they have the same SPIFFE ID) while they are valid.\n\nIs the jti field mandatory or could it be made optional in the WIT token?\n\nYaron: currently it is mandatory, as all WIT claims are listed under a MUST clause.\n\n@bc-pi could you provide feedback?",
+      "createdAt": "2025-02-24T13:17:26Z",
+      "updatedAt": "2025-02-24T15:59:40Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I think the jti is more for adit purposes so you can identify a specific token.  I don't think it would have anything to do with replay for the most part since the WIT itself can be used many times.  I think it is a good idea to have a jti.  We could specifically say that it is not for replay. I suppose we could go with a SHOULD unless your deployments does not need to track WIT issuance.",
+          "createdAt": "2025-02-24T15:59:38Z",
+          "updatedAt": "2025-02-24T15:59:38Z"
         }
       ]
     }
