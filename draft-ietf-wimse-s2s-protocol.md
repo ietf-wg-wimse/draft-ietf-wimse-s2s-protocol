@@ -51,6 +51,9 @@ normative:
 
 informative:
   IANA.JOSE.ALGS: IANA.jose_web-signature-encryption-algorithms
+  OpenID.Discovery:
+    title: "OpenID.Discovery"
+    target: https://openid.net/specs/openid-connect-discovery-1_0.html
 
 
 --- abstract
@@ -154,14 +157,14 @@ All terminology in this document follows {{?I-D.ietf-wimse-arch}}.
 
 # Workload Identity {#whimsical-identity}
 
-## Trust Domain
+## Trust Domain {#trust-domain}
 
 A trust domain is a logical grouping of systems that share a common set of security controls and policies. WIMSE certificates and tokens are issued under the authority of a trust domain. Trust domains SHOULD be identified by a fully qualified domain name belonging to the organization defining the trust domain.
 A trust domain maps to one or more trust anchors for validating X.509 certificates and a mechanism to securely obtain a JWK Set {{!RFC7517}} for validating WIMSE WIT tokens. This mapping MUST be obtained through a secure mechanism that ensures the authenticity and integrity of the mapping is fresh and not compromised. This secure mechanism is out of scope for this document.
 
 A single organization may define multiple trust domains for different purposes such as different departments or environments. Each trust domain must have a unique identifier. Workload identifiers are scoped within a trust domain. If two identifiers differ only by trust domain they still refer to two different entities.
 
-## Workload Identifier
+## Workload Identifier {#workload-identifier}
 
 This document defines a workload identifier as a URI {{!RFC3986}}. This URI is used in the subject fields in the certificates and tokens defined later in this document. The URI MUST meet the criteria for the URI type of Subject Alternative Name defined in Section 4.2.1.6 of {{!RFC5280}}.
 
@@ -188,14 +191,14 @@ A comparison of the two alternatives is attempted in {{app-level-comparison}}.
 
 The Workload Identity Token (WIT) is a JWS {{RFC7515}} signed JWT {{RFC7519}} that represents the identity of a workload.
 It is issued by the Identity Server and binds a public key to the workload identity.
-A WIT MUST contain the following:
+A WIT MUST (unless specified differently) contain the following:
 
 * in the JOSE header:
     * `alg`: An identifier for a JWS asymmetric digital signature algorithm
      (registered algorithm identifiers are listed in the IANA JOSE Algorithms registry {{IANA.JOSE.ALGS}}). The value `none` MUST NOT be used.
     * `typ`: the WIT is explicitly typed, as recommended in {{Section 3.11 of RFC8725}}, using the `wimse-id+jwt` media type.
 * in the JWT claims:
-    * `iss`: The issuer of the token, which is the Identity Server, represented by a URI.
+    * `iss`: The issuer of the token, which is the Identity Server, represented by a URI. The `iss` claim is RECOMMENDED but optional, see {{wit-iss-note}} for more.
     * `sub`: The subject of the token, which is the identity of the workload, represented by a URI.
     * `exp`: The expiration time of the token (as defined in {{Section 4.1.4 of RFC7519}}).
       WITs should be refreshed regularly, e.g. on the order of hours.
@@ -313,6 +316,10 @@ Workload-Identity-Token: eyJ0eXAiOiJ3aW1zZS1pZCtqd3QiLCJhbGciOiJFUzI1
 Note that per {{RFC9110}}, header field names are case insensitive;
 thus, `Workload-Identity-Token`, `workload-identity-token`, `WORKLOAD-IDENTITY-TOKEN`,
 etc., are all valid and equivalent header field names. However, case is significant in the header field value.
+
+### A note on `iss` claim and key distribution {#wit-iss-note}
+
+It is RECOMMENDED that the WIT carries an `iss` claim. This specification itself does not make use of a potential `iss` claim but also carries the {{trust-domain}} in the {{workload-identifier}}. Implementations MAY include the `iss` claim in the form of a `https`-URL to facilitate key distribution via {{OpenID.Discovery}} or {{!RFC8414}} but alternative key distributions may make use of the {{trust-domain}} of the {{workload-identifier}} carried in the required `sub` claim.
 
 ## Option 1: DPoP-Inspired Authentication {#dpop-esque-auth}
 
