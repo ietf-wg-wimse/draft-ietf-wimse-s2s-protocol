@@ -659,6 +659,10 @@ TODO: `Workload-Proof-Token` from {{dpop-esque-auth}}
 # Document History
 <cref>RFC Editor: please remove before publication.</cref>
 
+## latest
+
+* Make `iss` claim in WIT optional and add wording about its relation to key distribution.
+
 ## draft-ietf-wimse-s2s-protocol-02
 
 * Coexistence with bearer tokens.
