@@ -20,7 +20,7 @@ venue:
   mail: "wimse@ietf.org"
   arch: "https://mailarchive.ietf.org/arch/browse/wimse/"
   github: "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol"
-  latest: "https://ietf-wg-wimse.github.io/draft-ietf-wimse-w2w-protocol/draft-ietf-wimse-w2w-protocol.html"
+  latest: "https://ietf-wg-wimse.github.io/draft-ietf-wimse-s2s-protocol/draft-ietf-wimse-s2s-protocol.html"
 
 author:
  -
