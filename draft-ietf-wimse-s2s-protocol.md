@@ -654,7 +654,7 @@ TODO: `Workload-Proof-Token` from {{dpop-esque-auth}}
 
 ## latest
 
-* Make `jit` claim in WIT optional.
+* Make `jti` claim in WIT optional.
 
 ## draft-ietf-wimse-s2s-protocol-02
 
