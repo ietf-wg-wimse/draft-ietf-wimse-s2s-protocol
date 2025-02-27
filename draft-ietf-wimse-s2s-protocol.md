@@ -1,6 +1,6 @@
 ---
-title: "WIMSE Service to Service Authentication"
-abbrev: "WIMSE S2S Auth"
+title: "WIMSE Workload to Workload Authentication"
+abbrev: "WIMSE W2W Auth"
 category: std
 
 docname: draft-ietf-wimse-s2s-protocol-latest
@@ -63,8 +63,8 @@ in order to communicate securely. The scope of this protocol is a single HTTP re
 pair. To address the needs of different setups, we propose two protocols,
 one at the application level and one that makes use of trusted TLS transport.
 These two protocols are compatible, in the sense that a single call
-chain can have some calls use one protocol and some use the other. Service A can call
-Service B with mutual TLS authentication, while the next call from Service B to Service C
+chain can have some calls use one protocol and some use the other. Workload A can call
+Workload B with mutual TLS authentication, while the next call from Workload B to Workload C
 would be authenticated at the application level.
 
 --- middle
@@ -74,22 +74,22 @@ would be authenticated at the application level.
 This document defines authentication and authorization in the context of interaction between two workloads.
 This is the core component of the WIMSE architecture {{?I-D.ietf-wimse-arch}}.
 For simplicity, this document focuses on HTTP-based services,
-and the service-to-service call consists of a single HTTP request and its response.
-We define the credentials that both services should possess and how they are used to protect the HTTP exchange.
+and the workload-to-workload call consists of a single HTTP request and its response.
+We define the credentials that both workloads should possess and how they are used to protect the HTTP exchange.
 
 There are multiple deployment styles in use today, and they result in different security properties.
 We propose to address them differently.
 
-* Many use cases have various middleboxes inserted between pairs of services, resulting in a transport layer
+* Many use cases have various middleboxes inserted between pairs of workloads, resulting in a transport layer
 that is not end-to-end encrypted. We propose to address these use cases by protecting the HTTP messages at the application
 level ({{app-level}}).
 
-* The other commonly deployed architecture has a mutual-TLS connection between each pair of services. This setup
+* The other commonly deployed architecture has a mutual-TLS connection between each pair of workloads. This setup
 can be addressed by a simpler solution ({{mutual-tls}}).
 
-It is an explicit goal of this protocol that a service deployment can include both architectures across a multi-chain call.
-In other words, Service A can call Service B with mutual TLS protection,
-while the next call to Service C is protected at the application level.
+It is an explicit goal of this protocol that a workload deployment can include both architectures across a multi-chain call.
+In other words, Workload A can call Workload B with mutual TLS protection,
+while the next call to Workload C is protected at the application level.
 
 For application-level protection we currently propose two alternative solutions, one inspired by DPoP {{?RFC9449}} in {{dpop-esque-auth}} and
 one which is a profile of HTTP Message Signatures {{!RFC9421}} in {{http-sig-auth}}. The design team believes that we need to pick
@@ -148,7 +148,7 @@ In certain architectures, Workload B may need to consult with an external server
 
 # Conventions and Definitions
 
-This document uses "service" and "workload" interchangeably. Otherwise, all terms are as defined by {{?I-D.ietf-wimse-arch}}.
+All terminology in this document follows {{?I-D.ietf-wimse-arch}}.
 
 {::boilerplate bcp14-tagged}
 
@@ -173,7 +173,7 @@ In addition the URI MUST include an authority that identifies the trust domain w
 While the URI encoding rules allow host names to be specified as IP addresses, IP addresses MUST NOT be used to represent trust domains except in the case where they are needed for compatibility with existing naming schemes.
 
 
-# Application Level Service To Service Authentication {#app-level}
+# Application Level Workload To Workload Authentication {#app-level}
 
 As noted in the Introduction, for many deployments communication between workloads cannot use
 end-to-end TLS. For these deployment styles, this document proposes application-level protections.
@@ -387,7 +387,7 @@ The decoded JWT claims of the WPT from the example above are shown here:
 ~~~ json
 {
   "ath": "CL4wjfpRmNf-bdYIbYLnV9d5rMARGwKYE10wUwzC0jI",
-  "aud": "https://service.example.com/path",
+  "aud": "https://workload.example.com/path",
   "exp": 1728658672,
   "iss": "wimse://example.com/specific-workload",
   "jti": "4b42c5f611e2b1cfa1d2c41b3a2fb782",
@@ -457,7 +457,7 @@ For both requests and responses, the following signature parameters MUST be incl
 * `expires` - expiration MUST be short, e.g. on the order of minutes. The WIMSE architecture will provide separate
 mechanisms in support of long-lived compute processes.
 * `nonce`
-* `tag` - the value for implementations of this specification is `wimse-service-to-service`
+* `tag` - the value for implementations of this specification is `wimse-workload-to-workload`
 
 Since the signing key is sent along with the message, the `keyid` parameter SHOULD NOT be used.
 
@@ -551,7 +551,7 @@ authorization policy may take into account both the sending workload's identity 
 identity in the WIT may be used to establish which API calls can be made and information in the context token may be used to determine
 which specific resources can be accessed.
 
-# Using Mutual TLS for Service To Service Authentication {#mutual-tls}
+# Using Mutual TLS for Workload To Workload Authentication {#mutual-tls}
 
 As noted in the introduction, for many deployments, transport-level protection
 of application traffic using TLS is ideal.
