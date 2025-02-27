@@ -5,15 +5,15 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 22 June 2025                                             Venafi
+Expires: 31 August 2025                                           Venafi
                                                       A. Schwenkschuster
                                                                    SPIRL
                                                               Y. Sheffer
                                                                   Intuit
-                                                        19 December 2024
+                                                        27 February 2025
 
 
-                WIMSE Service to Service Authentication
+               WIMSE Workload to Workload Authentication
                   draft-ietf-wimse-s2s-protocol-latest
 
 Abstract
@@ -29,16 +29,16 @@ Abstract
    one at the application level and one that makes use of trusted TLS
    transport.  These two protocols are compatible, in the sense that a
    single call chain can have some calls use one protocol and some use
-   the other.  Service A can call Service B with mutual TLS
-   authentication, while the next call from Service B to Service C would
-   be authenticated at the application level.
+   the other.  Workload A can call Workload B with mutual TLS
+   authentication, while the next call from Workload B to Workload C
+   would be authenticated at the application level.
 
 About This Document
 
    This note is to be removed before publishing as an RFC.
 
    The latest revision of this draft can be found at https://ietf-wg-
-   wimse.github.io/draft-ietf-wimse-s2s-protocol/draft-ietf-wimse-s2s-
+   wimse.github.io/draft-ietf-wimse-w2w-protocol/draft-ietf-wimse-w2w-
    protocol.html.  Status information for this document may be found at
    https://datatracker.ietf.org/doc/draft-ietf-wimse-s2s-protocol/.
 
@@ -66,11 +66,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 22 June 2025.
+   This Internet-Draft will expire on 31 August 2025.
 
 Copyright Notice
 
-   Copyright (c) 2024 IETF Trust and the persons identified as the
+   Copyright (c) 2025 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -90,13 +90,14 @@ Table of Contents
    3.  Workload Identity
      3.1.  Trust Domain
      3.2.  Workload Identifier
-   4.  Application Level Service To Service Authentication
+   4.  Application Level Workload To Workload Authentication
      4.1.  The Workload Identity Token
        4.1.1.  The WIT HTTP Header
      4.2.  Option 1: DPoP-Inspired Authentication
      4.3.  Option 2: Authentication Based on HTTP Message Signatures
      4.4.  Comparing the DPoP Inspired Option with Message Signatures
-   5.  Using Mutual TLS for Service To Service Authentication
+     4.5.  Coexistence with JWT Bearer Tokens
+   5.  Using Mutual TLS for Workload To Workload Authentication
      5.1.  Server Name Validation
      5.2.  Client Authorization Using the WIMSE Identity
    6.  Security Considerations
@@ -111,8 +112,9 @@ Table of Contents
      8.1.  Normative References
      8.2.  Informative References
    Appendix A.  Document History
-     A.1.  draft-ietf-wimse-s2s-protocol-01
-     A.2.  draft-ietf-wimse-s2s-protocol-00
+     A.1.  draft-ietf-wimse-s2s-protocol-02
+     A.2.  draft-ietf-wimse-s2s-protocol-01
+     A.3.  draft-ietf-wimse-s2s-protocol-00
    Acknowledgments
    Authors' Addresses
 
@@ -121,9 +123,9 @@ Table of Contents
    This document defines authentication and authorization in the context
    of interaction between two workloads.  This is the core component of
    the WIMSE architecture [I-D.ietf-wimse-arch].  For simplicity, this
-   document focuses on HTTP-based services, and the service-to-service
+   document focuses on HTTP-based services, and the workload-to-workload
    call consists of a single HTTP request and its response.  We define
-   the credentials that both services should possess and how they are
+   the credentials that both workloads should possess and how they are
    used to protect the HTTP exchange.
 
    There are multiple deployment styles in use today, and they result in
@@ -131,18 +133,19 @@ Table of Contents
    differently.
 
    *  Many use cases have various middleboxes inserted between pairs of
-      services, resulting in a transport layer that is not end-to-end
+      workloads, resulting in a transport layer that is not end-to-end
       encrypted.  We propose to address these use cases by protecting
       the HTTP messages at the application level (Section 4).
 
    *  The other commonly deployed architecture has a mutual-TLS
-      connection between each pair of services.  This setup can be
+      connection between each pair of workloads.  This setup can be
       addressed by a simpler solution (Section 5).
 
-   It is an explicit goal of this protocol that a service deployment can
-   include both architectures across a multi-chain call.  In other
-   words, Service A can call Service B with mutual TLS protection, while
-   the next call to Service C is protected at the application level.
+   It is an explicit goal of this protocol that a workload deployment
+   can include both architectures across a multi-chain call.  In other
+   words, Workload A can call Workload B with mutual TLS protection,
+   while the next call to Workload C is protected at the application
+   level.
 
    For application-level protection we currently propose two alternative
    solutions, one inspired by DPoP [RFC9449] in Section 4.2 and one
@@ -154,18 +157,22 @@ Table of Contents
 1.1.  Deployment Architecture and Message Flow
 
    Regardless of the transport between the workloads, we assume the
-   following logical architecture:
+   following logical architecture (numbers refer to the sequence of
+   steps listed below):
 
    +------------+               +------------+
+   |            |      (1)      |            |
+   |            |<=============>|            |
    |            |               |            |
-   |            |               | Workload B |
-   | Workload A |==============>|            |
-   |            |               |   +--------+
-   |            |               |   |  PEP   |
+   | Workload A |      (3)      | Workload B |
+   |            |==============>|            |
+   |            |               |            |
+   |            |      (5)      |   +--------+
+   |            |<==============|   |  PEP   |
    +------------+               +---+--------+
          ^                        ^     ^
-         |                        |     |
-         | +----------------------+     |
+         |            (2)         |     |
+     (2) | +----------------------+     | (4)
          | |                            |
          v v                            v
    +------------+               +------------+
@@ -174,6 +181,8 @@ Table of Contents
    |   Server   |               | (optional) |
    |            |               |            |
    +------------+               +------------+
+
+                      Figure 1: Sequence of Operations
 
    The Identity Server provisions credentials to each of the workloads.
    At least Workload A (and possibly both) must be provisioned with a
@@ -189,25 +198,32 @@ Table of Contents
 
    The high-level message flow is as follows:
 
-   *  Workload A obtains a credential from the Identity Server.  This
-      happens periodically, e.g. once every 24 hours.
+   1.  A transport connection is set up.  In the case of mutual TLS,
+       this includes authentication of both workloads to one another.
+       In the case of application-level security, the TLS connection is
+       typically one-way authenticated, and workload-level
+       authentication does not yet take place.
 
-   *  Workload A makes an HTTP call into Workload B.  This is a regular
-      HTTP request, with the additional protection mechanisms defined
-      below.
+   2.  Workload A (and similarly, Workload B) obtains a credential from
+       the Identity Server.  This happens periodically, e.g. once every
+       24 hours.
 
-   *  Workload B now authenticates Workload A and decides whether to
-      authorize the call.  In certain architectures, Workload B may need
-      to consult with an external server to decide whether to accept the
-      call.
+   3.  Workload A makes an HTTP call into Workload B.  This is a regular
+       HTTP request, with the additional protection mechanisms defined
+       below.
 
-   *  Workload B returns a response to Workload A, which may be an error
-      response or a regular one.
+   4.  In the case of application-level security, Workload B
+       authenticates Workload A (when using mutual TLS, this happened in
+       step 1).  In either case, Workload B decides whether to authorize
+       the call.  In certain architectures, Workload B may need to
+       consult with an external server when making this decision.
+
+   5.  Workload B returns a response to Workload A, which may be an
+       error response or a regular one.
 
 2.  Conventions and Definitions
 
-   This document uses "service" and "workload" interchangeably.
-   Otherwise, all terms are as defined by [I-D.ietf-wimse-arch].
+   All terminology in this document follows [I-D.ietf-wimse-arch].
 
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
@@ -262,7 +278,7 @@ Table of Contents
    except in the case where they are needed for compatibility with
    existing naming schemes.
 
-4.  Application Level Service To Service Authentication
+4.  Application Level Workload To Workload Authentication
 
    As noted in the Introduction, for many deployments communication
    between workloads cannot use end-to-end TLS.  For these deployment
@@ -328,7 +344,7 @@ Table of Contents
    SDFSdFlyTDhjU21URE1oWXRPVVRHNzhjR1RSNWV6ayJ9fX0.rOSUMR8I5WhM5C704l3iV
    dY0zFqxhugJ8Jo2xo39G7FqUTbwTzAGdpz2lHp6eL1M486XmRgl3uyjj6R_iuzNOA
 
-             Figure 1: An example Workload Identity Token (WIT)
+             Figure 2: An example Workload Identity Token (WIT)
 
    The decoded JOSE header of the WIT from the example above is shown
    here:
@@ -339,7 +355,7 @@ Table of Contents
     "kid": "June 5"
    }
 
-                     Figure 2: Example WIT JOSE Header
+                     Figure 3: Example WIT JOSE Header
 
    The decoded JWT claims of the WIT from the example above are shown
    here:
@@ -358,7 +374,7 @@ Table of Contents
     }
    }
 
-                        Figure 3: Example WIT Claims
+                        Figure 4: Example WIT Claims
 
    The claims indicate that the example WIT:
 
@@ -386,7 +402,7 @@ Table of Contents
     "d":"G4lGAYFtFq5rwyjlgSIRznIoCF7MtKDHByyUUZCqLiA"
    }
 
-                      Figure 4: Example Workload's Key
+                      Figure 5: Example Workload's Key
 
    The afore-exampled WIT is signed with the private key of the Identity
    Server.  The public key(s) of the Identity Server need to be known to
@@ -402,7 +418,7 @@ Table of Contents
     "crv":"P-256"
    }
 
-                   Figure 5: Example Identity Server Key
+                   Figure 6: Example Identity Server Key
 
 4.1.1.  The WIT HTTP Header
 
@@ -410,16 +426,17 @@ Table of Contents
    Token.
 
    For those who celebrate, ABNF [RFC5234] for the value of Workload-
-   Identity-Token header field is provided in Figure 6:
+   Identity-Token header field is provided in Figure 7:
 
    ALPHA = %x41-5A / %x61-7A ; A-Z / a-z
    DIGIT = %x30-39 ; 0-9
    base64url = 1*(ALPHA / DIGIT / "-" / "_")
-   WIT =  base64url "." base64url "." base64url
+   JWT =  base64url "." base64url "." base64url
+   WIT =  JWT
 
-            Figure 6: Workload-Identity-Token Header Field ABNF
+            Figure 7: Workload-Identity-Token Header Field ABNF
 
-   The following shows the WIT from Figure 1 in an example of a
+   The following shows the WIT from Figure 2 in an example of a
    Workload-Identity-Token header field:
 
    Workload-Identity-Token: eyJ0eXAiOiJ3aW1zZS1pZCtqd3QiLCJhbGciOiJFUzI1
@@ -431,7 +448,7 @@ Table of Contents
     6ayJ9fX0.rOSUMR8I5WhM5C704l3iVdY0zFqxhugJ8Jo2xo39G7FqUTbwTzAGdpz2lHp
     6eL1M486XmRgl3uyjj6R_iuzNOA
 
-       Figure 7: An example Workload Identity Token HTTP Header Field
+       Figure 8: An example Workload Identity Token HTTP Header Field
 
    Note that per [RFC9110], header field names are case insensitive;
    thus, Workload-Identity-Token, workload-identity-token, WORKLOAD-
@@ -446,8 +463,16 @@ Table of Contents
    sent in the request as described in Section 4.1.1.  An additional
    JWT, the Workload Proof Token (WPT), is signed by the private key
    corresponding to the public key in the WIT.  The WPT is sent in the
-   Workload-Proof-Token header field of the request.  A WPT contains the
-   following:
+   Workload-Proof-Token header field of the request.  The ABNF syntax of
+   the Workload-Proof-Token header field is:
+
+   WPT =  JWT
+
+              Figure 9: Workload-Proof-Token Header Field ABNF
+
+   where the JWT projection is defined in Figure 7.
+
+   A WPT contains the following:
 
    *  in the JOSE header:
 
@@ -510,7 +535,7 @@ Table of Contents
    bXBBeEJPXzdXLVl1dGNIXzJfZnVGQUZGU1YxUmcifQ.jrUBsDjWMG_FpuhLo3lNC-IBei
    PQXZ4UOuttPdNj8fRmIG4ZDFF9B10y7uGbiNIhbRdpgG_KXEPLHXWnvzLmBA
 
-                Figure 8: Example Workload Proof Token (WPT)
+               Figure 10: Example Workload Proof Token (WPT)
 
    The decoded JOSE header of the WPT from the example above is shown
    here:
@@ -520,21 +545,21 @@ Table of Contents
      "typ": "wimse-proof+jwt"
    }
 
-                     Figure 9: Example WPT JOSE Header
+                     Figure 11: Example WPT JOSE Header
 
    The decoded JWT claims of the WPT from the example above are shown
    here:
 
    {
      "ath": "CL4wjfpRmNf-bdYIbYLnV9d5rMARGwKYE10wUwzC0jI",
-     "aud": "https://service.example.com/path",
+     "aud": "https://workload.example.com/path",
      "exp": 1728658672,
      "iss": "wimse://example.com/specific-workload",
      "jti": "4b42c5f611e2b1cfa1d2c41b3a2fb782",
      "wth": "-Ji8TlMNFk3qmzmpAxBO_7W-YutcH_2_fuFAFFSV1Rg"
    }
 
-                       Figure 10: Example WPT Claims
+                       Figure 12: Example WPT Claims
 
    An example of an HTTP request with both the WIT and WPT from prior
    examples is shown below:
@@ -542,7 +567,7 @@ Table of Contents
    =============== NOTE: '\' line wrapping per RFC 8792 ================
 
    POST /path HTTP/1.1
-   Host: service.example.com
+   Host: workload.example.com
    Content-Type: application/json
    Authorization: Bearer 16_mAd0GiwaZokU26_0902100
    Workload-Identity-Token: eyJ0eXAiOiJ3aW1zZS1pZCtqd3QiLCJhbGciOiJFUzI\
@@ -564,7 +589,7 @@ Table of Contents
 
    {"do stuff":"please"}
 
-              Figure 11: Example HTTP Request with WIT and WPT
+              Figure 13: Example HTTP Request with WIT and WPT
 
    To validate the WPT in the request, the recipient MUST ensure the
    following:
@@ -661,7 +686,7 @@ Table of Contents
    *  nonce
 
    *  tag - the value for implementations of this specification is
-      wimse-service-to-service
+      wimse-workload-to-workload
 
    Since the signing key is sent along with the message, the keyid
    parameter SHOULD NOT be used.
@@ -685,7 +710,7 @@ Table of Contents
    // the response must be signed?
 
    Following is a non-normative example of a signed request and a signed
-   response, where the caller is using the keys specified in Figure 4.
+   response, where the caller is using the keys specified in Figure 5.
 
    =============== NOTE: '\' line wrapping per RFC 8792 ================
 
@@ -695,11 +720,11 @@ Table of Contents
    WmsvKWiY0B1oFZaOtm2FHru+YLjdkqa2WfCQ==:
    Signature-Input: wimse=("@method" "@request-target" "workload-identi\
    ty-token");created=1718291357;expires=1718291657;nonce="abcd1111";ta\
-   g="wimse-service-to-service"
+   g="wimse-workload-to-workload"
    Workload-Identity-Token: aGVhZGVyCg.VGhpcyBpcyBub3QgYSByZWFsIHRva2Vu\
    Lgo.c2lnbmF0dXJlCg
 
-                         Figure 12: Signed Request
+                         Figure 14: Signed Request
 
    Assuming that the workload being called has the following keypair:
 
@@ -710,7 +735,7 @@ Table of Contents
     "d":"fycSKS-iHZ6TC1BNwN6cE0sOBP3-4KgR-eqxNpnyhws"
    }
 
-                       Figure 13: Callee Private Key
+                       Figure 15: Callee Private Key
 
    A signed response would be:
 
@@ -725,20 +750,16 @@ Table of Contents
    612EZwRw3V4kU4gGJmO+ER8RC4DM2HKVOYDQ==:
    Signature-Input: wimse=("@status" "workload-identity-token" "content\
    -type" "content-digest" "@method";req "@request-target";req);created\
-   =1718295368;expires=1718295670;nonce="abcd2222";tag="wimse-service-t\
-   o-service"
+   =1718295368;expires=1718295670;nonce="abcd2222";tag="wimse-workload-\
+   to-workload"
    Workload-Identity-Token: aGVhZGVyCg.VGhpcyBhaW4ndCBvbmUsIHRvby4K.c2l\
    nbmF0dXJlCg
 
    No ice cream today.
 
-                         Figure 14: Signed Response
+                         Figure 16: Signed Response
 
 4.4.  Comparing the DPoP Inspired Option with Message Signatures
-
-
-   // This section is temporarily part of the draft, while we expect the
-   // working group to select one of these options.
 
    The two workload protection options have different strengths and
    weaknesses regarding implementation complexity, extensibility, and
@@ -783,7 +804,32 @@ Table of Contents
       fields, but this would make it closer to trying to reinvent
       Message Signatures.
 
-5.  Using Mutual TLS for Service To Service Authentication
+4.5.  Coexistence with JWT Bearer Tokens
+
+   The WIT and WPT define new HTTP headers.  They can therefore be
+   presented along with existing headers used for JWT bearer tokens.
+   This property allows for transition from mechanisms using identity
+   tokens based on bearer JWTs to proof of possession based WITs.  A
+   workload may implement a policy that accepts both bearer tokens and
+   WITs during a transition period.  This policy may be configurable
+   per-caller to allow the workload to reject bearer tokens from callers
+   that support WITs.  Once a deployment fully supports WITs, then the
+   use of bearer tokens for identity can be disabled through policy.
+   Implementations should be careful when implementing such a transition
+   strategy, since the decision which token to prefer is made when the
+   caller's identity has still not been authenticated, and needs to be
+   revalidated following the authentication step.
+
+   The WIT can also coexist with tokens used to establish security
+   context, such as transaction tokens
+   [I-D.ietf-oauth-transaction-tokens].  In this case a workload's
+   authorization policy may take into account both the sending
+   workload's identity and the information in the context token.  For
+   example, the identity in the WIT may be used to establish which API
+   calls can be made and information in the context token may be used to
+   determine which specific resources can be accessed.
+
+5.  Using Mutual TLS for Workload To Workload Authentication
 
    As noted in the introduction, for many deployments, transport-level
    protection of application traffic using TLS is ideal.
@@ -1054,17 +1100,17 @@ Table of Contents
    [I-D.ietf-oauth-transaction-tokens]
               Tulshibagwale, A., Fletcher, G., and P. Kasselman,
               "Transaction Tokens", Work in Progress, Internet-Draft,
-              draft-ietf-oauth-transaction-tokens-03, 3 July 2024,
+              draft-ietf-oauth-transaction-tokens-04, 30 December 2024,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              transaction-tokens-03>.
+              transaction-tokens-04>.
 
    [I-D.ietf-wimse-arch]
               Salowey, J. A., Rosomakho, Y., and H. Tschofenig,
               "Workload Identity in a Multi System Environment (WIMSE)
               Architecture", Work in Progress, Internet-Draft, draft-
-              ietf-wimse-arch-02, 21 October 2024,
+              ietf-wimse-arch-03, 7 January 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
-              arch-02>.
+              arch-03>.
 
    [IANA.JOSE.ALGS]
               IANA, "JSON Web Signature and Encryption Algorithms",
@@ -1085,7 +1131,19 @@ Appendix A.  Document History
 
    // RFC Editor: please remove before publication.
 
-A.1.  draft-ietf-wimse-s2s-protocol-01
+A.1.  draft-ietf-wimse-s2s-protocol-02
+
+   *  Coexistence with bearer tokens.
+
+   *  Improve the architecture diagram.
+
+   *  Some more ABNF.
+
+   *  Clarified identifiers and URIs.
+
+   *  Moved an author to acknowledgments.
+
+A.2.  draft-ietf-wimse-s2s-protocol-01
 
    *  Addressed multiple comments from Pieter.
 
@@ -1100,7 +1158,7 @@ A.1.  draft-ietf-wimse-s2s-protocol-01
    *  Added a section comparing the DPoP-inspired app-level security
       option to the Message Signature-based alternative.
 
-A.2.  draft-ietf-wimse-s2s-protocol-00
+A.3.  draft-ietf-wimse-s2s-protocol-00
 
    *  Initial WG draft, an exact copy of draft-sheffer-wimse-s2s-
       protocol-00
