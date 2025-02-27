@@ -191,7 +191,7 @@ A comparison of the two alternatives is attempted in {{app-level-comparison}}.
 
 The Workload Identity Token (WIT) is a JWS {{RFC7515}} signed JWT {{RFC7519}} that represents the identity of a workload.
 It is issued by the Identity Server and binds a public key to the workload identity.
-A WIT MUST (unless specified differently) contain the following:
+A WIT MUST (unless otherwise specified) contain the following:
 
 * in the JOSE header:
     * `alg`: An identifier for a JWS asymmetric digital signature algorithm
