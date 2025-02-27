@@ -113,9 +113,10 @@ Table of Contents
      8.1.  Normative References
      8.2.  Informative References
    Appendix A.  Document History
-     A.1.  draft-ietf-wimse-s2s-protocol-02
-     A.2.  draft-ietf-wimse-s2s-protocol-01
-     A.3.  draft-ietf-wimse-s2s-protocol-00
+     A.1.  latest
+     A.2.  draft-ietf-wimse-s2s-protocol-02
+     A.3.  draft-ietf-wimse-s2s-protocol-01
+     A.4.  draft-ietf-wimse-s2s-protocol-00
    Acknowledgments
    Authors' Addresses
 
@@ -1153,7 +1154,12 @@ Appendix A.  Document History
 
    // RFC Editor: please remove before publication.
 
-A.1.  draft-ietf-wimse-s2s-protocol-02
+A.1.  latest
+
+   *  Make iss claim in WIT optional and add wording about its relation
+      to key distribution.
+
+A.2.  draft-ietf-wimse-s2s-protocol-02
 
    *  Coexistence with bearer tokens.
 
@@ -1165,7 +1171,7 @@ A.1.  draft-ietf-wimse-s2s-protocol-02
 
    *  Moved an author to acknowledgments.
 
-A.2.  draft-ietf-wimse-s2s-protocol-01
+A.3.  draft-ietf-wimse-s2s-protocol-01
 
    *  Addressed multiple comments from Pieter.
 
@@ -1180,7 +1186,7 @@ A.2.  draft-ietf-wimse-s2s-protocol-01
    *  Added a section comparing the DPoP-inspired app-level security
       option to the Message Signature-based alternative.
 
-A.3.  draft-ietf-wimse-s2s-protocol-00
+A.4.  draft-ietf-wimse-s2s-protocol-00
 
    *  Initial WG draft, an exact copy of draft-sheffer-wimse-s2s-
       protocol-00
