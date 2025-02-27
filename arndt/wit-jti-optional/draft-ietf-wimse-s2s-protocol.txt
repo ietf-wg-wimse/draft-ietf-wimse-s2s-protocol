@@ -1136,7 +1136,7 @@ Appendix A.  Document History
 
 A.1.  latest
 
-   *  Make jit claim in WIT optional.
+   *  Make jti claim in WIT optional.
 
 A.2.  draft-ietf-wimse-s2s-protocol-02
 
