@@ -5,15 +5,15 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 21 July 2025                                             Venafi
+Expires: 31 August 2025                                           Venafi
                                                       A. Schwenkschuster
                                                                    SPIRL
                                                               Y. Sheffer
                                                                   Intuit
-                                                         17 January 2025
+                                                        27 February 2025
 
 
-                WIMSE Service to Service Authentication
+               WIMSE Workload to Workload Authentication
                   draft-ietf-wimse-s2s-protocol-latest
 
 Abstract
@@ -29,9 +29,9 @@ Abstract
    one at the application level and one that makes use of trusted TLS
    transport.  These two protocols are compatible, in the sense that a
    single call chain can have some calls use one protocol and some use
-   the other.  Service A can call Service B with mutual TLS
-   authentication, while the next call from Service B to Service C would
-   be authenticated at the application level.
+   the other.  Workload A can call Workload B with mutual TLS
+   authentication, while the next call from Workload B to Workload C
+   would be authenticated at the application level.
 
 About This Document
 
@@ -66,7 +66,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 21 July 2025.
+   This Internet-Draft will expire on 31 August 2025.
 
 Copyright Notice
 
@@ -90,14 +90,14 @@ Table of Contents
    3.  Workload Identity
      3.1.  Trust Domain
      3.2.  Workload Identifier
-   4.  Application Level Service To Service Authentication
+   4.  Application Level Workload To Workload Authentication
      4.1.  The Workload Identity Token
        4.1.1.  The WIT HTTP Header
      4.2.  Option 1: DPoP-Inspired Authentication
      4.3.  Option 2: Authentication Based on HTTP Message Signatures
      4.4.  Comparing the DPoP Inspired Option with Message Signatures
      4.5.  Coexistence with JWT Bearer Tokens
-   5.  Using Mutual TLS for Service To Service Authentication
+   5.  Using Mutual TLS for Workload To Workload Authentication
      5.1.  Server Name Validation
      5.2.  Client Authorization Using the WIMSE Identity
    6.  Security Considerations
@@ -123,9 +123,9 @@ Table of Contents
    This document defines authentication and authorization in the context
    of interaction between two workloads.  This is the core component of
    the WIMSE architecture [I-D.ietf-wimse-arch].  For simplicity, this
-   document focuses on HTTP-based services, and the service-to-service
+   document focuses on HTTP-based services, and the workload-to-workload
    call consists of a single HTTP request and its response.  We define
-   the credentials that both services should possess and how they are
+   the credentials that both workloads should possess and how they are
    used to protect the HTTP exchange.
 
    There are multiple deployment styles in use today, and they result in
@@ -133,18 +133,19 @@ Table of Contents
    differently.
 
    *  Many use cases have various middleboxes inserted between pairs of
-      services, resulting in a transport layer that is not end-to-end
+      workloads, resulting in a transport layer that is not end-to-end
       encrypted.  We propose to address these use cases by protecting
       the HTTP messages at the application level (Section 4).
 
    *  The other commonly deployed architecture has a mutual-TLS
-      connection between each pair of services.  This setup can be
+      connection between each pair of workloads.  This setup can be
       addressed by a simpler solution (Section 5).
 
-   It is an explicit goal of this protocol that a service deployment can
-   include both architectures across a multi-chain call.  In other
-   words, Service A can call Service B with mutual TLS protection, while
-   the next call to Service C is protected at the application level.
+   It is an explicit goal of this protocol that a workload deployment
+   can include both architectures across a multi-chain call.  In other
+   words, Workload A can call Workload B with mutual TLS protection,
+   while the next call to Workload C is protected at the application
+   level.
 
    For application-level protection we currently propose two alternative
    solutions, one inspired by DPoP [RFC9449] in Section 4.2 and one
@@ -222,8 +223,7 @@ Table of Contents
 
 2.  Conventions and Definitions
 
-   This document uses "service" and "workload" interchangeably.
-   Otherwise, all terms are as defined by [I-D.ietf-wimse-arch].
+   All terminology in this document follows [I-D.ietf-wimse-arch].
 
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
@@ -278,7 +278,7 @@ Table of Contents
    except in the case where they are needed for compatibility with
    existing naming schemes.
 
-4.  Application Level Service To Service Authentication
+4.  Application Level Workload To Workload Authentication
 
    As noted in the Introduction, for many deployments communication
    between workloads cannot use end-to-end TLS.  For these deployment
@@ -552,7 +552,7 @@ Table of Contents
 
    {
      "ath": "CL4wjfpRmNf-bdYIbYLnV9d5rMARGwKYE10wUwzC0jI",
-     "aud": "https://service.example.com/path",
+     "aud": "https://workload.example.com/path",
      "exp": 1728658672,
      "iss": "wimse://example.com/specific-workload",
      "jti": "4b42c5f611e2b1cfa1d2c41b3a2fb782",
@@ -567,7 +567,7 @@ Table of Contents
    =============== NOTE: '\' line wrapping per RFC 8792 ================
 
    POST /path HTTP/1.1
-   Host: service.example.com
+   Host: workload.example.com
    Content-Type: application/json
    Authorization: Bearer 16_mAd0GiwaZokU26_0902100
    Workload-Identity-Token: eyJ0eXAiOiJ3aW1zZS1pZCtqd3QiLCJhbGciOiJFUzI\
@@ -686,7 +686,7 @@ Table of Contents
    *  nonce
 
    *  tag - the value for implementations of this specification is
-      wimse-service-to-service
+      wimse-workload-to-workload
 
    Since the signing key is sent along with the message, the keyid
    parameter SHOULD NOT be used.
@@ -720,7 +720,7 @@ Table of Contents
    WmsvKWiY0B1oFZaOtm2FHru+YLjdkqa2WfCQ==:
    Signature-Input: wimse=("@method" "@request-target" "workload-identi\
    ty-token");created=1718291357;expires=1718291657;nonce="abcd1111";ta\
-   g="wimse-service-to-service"
+   g="wimse-workload-to-workload"
    Workload-Identity-Token: aGVhZGVyCg.VGhpcyBpcyBub3QgYSByZWFsIHRva2Vu\
    Lgo.c2lnbmF0dXJlCg
 
@@ -750,8 +750,8 @@ Table of Contents
    612EZwRw3V4kU4gGJmO+ER8RC4DM2HKVOYDQ==:
    Signature-Input: wimse=("@status" "workload-identity-token" "content\
    -type" "content-digest" "@method";req "@request-target";req);created\
-   =1718295368;expires=1718295670;nonce="abcd2222";tag="wimse-service-t\
-   o-service"
+   =1718295368;expires=1718295670;nonce="abcd2222";tag="wimse-workload-\
+   to-workload"
    Workload-Identity-Token: aGVhZGVyCg.VGhpcyBhaW4ndCBvbmUsIHRvby4K.c2l\
    nbmF0dXJlCg
 
@@ -829,7 +829,7 @@ Table of Contents
    calls can be made and information in the context token may be used to
    determine which specific resources can be accessed.
 
-5.  Using Mutual TLS for Service To Service Authentication
+5.  Using Mutual TLS for Workload To Workload Authentication
 
    As noted in the introduction, for many deployments, transport-level
    protection of application traffic using TLS is ideal.
