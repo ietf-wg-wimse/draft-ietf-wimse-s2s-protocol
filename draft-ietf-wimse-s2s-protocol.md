@@ -187,7 +187,7 @@ A comparison of the two alternatives is attempted in {{app-level-comparison}}.
 
 The Workload Identity Token (WIT) is a JWS {{RFC7515}} signed JWT {{RFC7519}} that represents the identity of a workload.
 It is issued by the Identity Server and binds a public key to the workload identity.
-A WIT MUST (unless otherwise specified) contain the following:
+A WIT MUST contain the following claims, except where noted:
 
 * in the JOSE header:
     * `alg`: An identifier for a JWS asymmetric digital signature algorithm
@@ -198,7 +198,7 @@ A WIT MUST (unless otherwise specified) contain the following:
     * `sub`: The subject of the token, which is the identity of the workload, represented by a URI.
     * `exp`: The expiration time of the token (as defined in {{Section 4.1.4 of RFC7519}}).
       WITs should be refreshed regularly, e.g. on the order of hours.
-    * `jti`: A unique identifier for the token.
+    * `jti`: A unique identifier for the token. This claim is OPTIONAL. The `jti` claim is frequently useful for auditing issuance of individual WITs or to revoke them, but some token generation environments do not support it.
     * `cnf`: A confirmation claim containing the public key of the workload using the `jwk` member as defined in {{Section 3.2 of RFC7800}}.
      The workload MUST prove possession of the corresponding private key when presenting the WIT to another party, which can be accomplished by using it in conjunction with one of the methods in {{dpop-esque-auth}} or {{http-sig-auth}}. As such, it MUST NOT be used as a bearer token and is not intended for use in the `Authorization` header.
 
@@ -340,8 +340,6 @@ A WPT contains the following:
     * `typ`: the WPT is explicitly typed, as recommended in {{Section 3.11 of RFC8725}},
      using the `application/wimse-proof+jwt` media type.
 * in the JWT claims:
-    * `iss`: The issuer of the token, which is the calling workload, represented by the same value as the `sub` claim
-     of the associated WIT.
     * `aud`: The audience of the token contains the HTTP target URI ({{Section 7.1 of RFC9110}}) of the request
      to which the WPT is attached, without query or fragment parts.
     * `exp`: The expiration time of the WIT (as defined in {{Section 4.1.4 of RFC7519}}). WPT lifetimes MUST be short,
@@ -392,7 +390,6 @@ The decoded JWT claims of the WPT from the example above are shown here:
   "ath": "CL4wjfpRmNf-bdYIbYLnV9d5rMARGwKYE10wUwzC0jI",
   "aud": "https://workload.example.com/path",
   "exp": 1728658672,
-  "iss": "wimse://example.com/specific-workload",
   "jti": "4b42c5f611e2b1cfa1d2c41b3a2fb782",
   "wth": "-Ji8TlMNFk3qmzmpAxBO_7W-YutcH_2_fuFAFFSV1Rg"
 }
@@ -412,7 +409,6 @@ To validate the WPT in the request, the recipient MUST ensure the following:
 * The `Workload-Proof-Token` header field value is a single and well-formed JWT.
 * The WPT signature is valid using the public key from the confirmation claim of the WIT.
 * The `typ` JOSE header parameter of the WPT conveys a media type of `wimse-proof+jwt`.
-* The `iss` claim of the WPT matches the `sub` claim of the WIT. (Note: not sure `iss` in the WPT is useful or necessary.)
 * The `aud` claim of the WPT matches the target URI, or an acceptable alias or normalization thereof, of the HTTP request
  in which the WPT was received, ignoring any query and fragment parts.
 * The `exp` claim is present and conveys a time that has not passed. WPTs with an expiration time unreasonably
@@ -658,6 +654,8 @@ TODO: `Workload-Proof-Token` from {{dpop-esque-auth}}
 ## latest
 
 * Make `iss` claim in WIT optional and add wording about its relation to key distribution.
+* Remove `iss` claim from WPT.
+* Make `jti` claim in WIT optional.
 
 ## draft-ietf-wimse-s2s-protocol-02
 
