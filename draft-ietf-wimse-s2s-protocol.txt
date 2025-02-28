@@ -491,10 +491,6 @@ Table of Contents
 
    *  in the JWT claims:
 
-      -  iss: The issuer of the token, which is the calling workload,
-         represented by the same value as the sub claim of the
-         associated WIT.
-
       -  aud: The audience of the token contains the HTTP target URI
          (Section 7.1 of [RFC9110]) of the request to which the WPT is
          attached, without query or fragment parts.
@@ -559,7 +555,6 @@ Table of Contents
      "ath": "CL4wjfpRmNf-bdYIbYLnV9d5rMARGwKYE10wUwzC0jI",
      "aud": "https://workload.example.com/path",
      "exp": 1728658672,
-     "iss": "wimse://example.com/specific-workload",
      "jti": "4b42c5f611e2b1cfa1d2c41b3a2fb782",
      "wth": "-Ji8TlMNFk3qmzmpAxBO_7W-YutcH_2_fuFAFFSV1Rg"
    }
@@ -610,9 +605,6 @@ Table of Contents
 
    *  The typ JOSE header parameter of the WPT conveys a media type of
       wimse-proof+jwt.
-
-   *  The iss claim of the WPT matches the sub claim of the WIT.  (Note:
-      not sure iss in the WPT is useful or necessary.)
 
    *  The aud claim of the WPT matches the target URI, or an acceptable
       alias or normalization thereof, of the HTTP request in which the
@@ -1137,6 +1129,8 @@ Appendix A.  Document History
    // RFC Editor: please remove before publication.
 
 A.1.  latest
+
+   *  Remove iss claim from WPT.
 
    *  Make jti claim in WIT optional.
 
