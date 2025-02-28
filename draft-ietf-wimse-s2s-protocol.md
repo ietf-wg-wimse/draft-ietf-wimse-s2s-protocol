@@ -51,10 +51,6 @@ normative:
 
 informative:
   IANA.JOSE.ALGS: IANA.jose_web-signature-encryption-algorithms
-  OpenID.Discovery:
-    title: "OpenID.Discovery"
-    target: https://openid.net/specs/openid-connect-discovery-1_0.html
-
 
 --- abstract
 
@@ -319,7 +315,7 @@ etc., are all valid and equivalent header field names. However, case is signific
 
 ### A note on `iss` claim and key distribution {#wit-iss-note}
 
-It is RECOMMENDED that the WIT carries an `iss` claim. This specification itself does not make use of a potential `iss` claim but also carries the trust domain in the workload identifier ({{workload-identifier}}). Implementations MAY include the `iss` claim in the form of a `https` URL to facilitate key distribution via {{OpenID.Discovery}} or {{!RFC8414}} but alternative key distribution methods may make use of the trust domain included in the workload identifier which is carried in the mandatory `sub` claim.
+It is RECOMMENDED that the WIT carries an `iss` claim. This specification itself does not make use of a potential `iss` claim but also carries the trust domain in the workload identifier ({{workload-identifier}}). Implementations MAY include the `iss` claim in the form of a `https` URL to facilitate key distribution via mechanisms like the `jwks_uri` from {{!RFC8414}} but alternative key distribution methods may make use of the trust domain included in the workload identifier which is carried in the mandatory `sub` claim.
 
 ## Option 1: DPoP-Inspired Authentication {#dpop-esque-auth}
 
