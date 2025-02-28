@@ -93,6 +93,7 @@ Table of Contents
    4.  Application Level Workload To Workload Authentication
      4.1.  The Workload Identity Token
        4.1.1.  The WIT HTTP Header
+       4.1.2.  A note on iss claim and key distribution
      4.2.  Option 1: DPoP-Inspired Authentication
      4.3.  Option 2: Authentication Based on HTTP Message Signatures
      4.4.  Comparing the DPoP Inspired Option with Message Signatures
@@ -315,7 +316,8 @@ Table of Contents
    *  in the JWT claims:
 
       -  iss: The issuer of the token, which is the Identity Server,
-         represented by a URI.
+         represented by a URI.  The iss claim is RECOMMENDED but
+         optional, see Section 4.1.2 for more.
 
       -  sub: The subject of the token, which is the identity of the
          workload, represented by a URI.
@@ -459,6 +461,17 @@ Table of Contents
    thus, Workload-Identity-Token, workload-identity-token, WORKLOAD-
    IDENTITY-TOKEN, etc., are all valid and equivalent header field
    names.  However, case is significant in the header field value.
+
+4.1.2.  A note on iss claim and key distribution
+
+   It is RECOMMENDED that the WIT carries an iss claim.  This
+   specification itself does not make use of a potential iss claim but
+   also carries the trust domain in the workload identifier
+   (Section 3.2).  Implementations MAY include the iss claim in the form
+   of a https URL to facilitate key distribution via mechanisms like the
+   jwks_uri from [RFC8414] but alternative key distribution methods may
+   make use of the trust domain included in the workload identifier
+   which is carried in the mandatory sub claim.
 
 4.2.  Option 1: DPoP-Inspired Authentication
 
@@ -1074,6 +1087,11 @@ Table of Contents
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
 
+   [RFC8414]  Jones, M., Sakimura, N., and J. Bradley, "OAuth 2.0
+              Authorization Server Metadata", RFC 8414,
+              DOI 10.17487/RFC8414, June 2018,
+              <https://www.rfc-editor.org/rfc/rfc8414>.
+
    [RFC8725]  Sheffer, Y., Hardt, D., and M. Jones, "JSON Web Token Best
               Current Practices", BCP 225, RFC 8725,
               DOI 10.17487/RFC8725, February 2020,
@@ -1129,6 +1147,9 @@ Appendix A.  Document History
    // RFC Editor: please remove before publication.
 
 A.1.  latest
+
+   *  Make iss claim in WIT optional and add wording about its relation
+      to key distribution.
 
    *  Remove iss claim from WPT.
 
