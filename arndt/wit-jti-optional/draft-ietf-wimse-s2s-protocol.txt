@@ -5,12 +5,12 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 31 August 2025                                           Venafi
+Expires: 1 September 2025                                         Venafi
                                                       A. Schwenkschuster
                                                                    SPIRL
                                                               Y. Sheffer
                                                                   Intuit
-                                                        27 February 2025
+                                                        28 February 2025
 
 
                WIMSE Workload to Workload Authentication
@@ -66,7 +66,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 31 August 2025.
+   This Internet-Draft will expire on 1 September 2025.
 
 Copyright Notice
 
@@ -299,8 +299,8 @@ Table of Contents
    The Workload Identity Token (WIT) is a JWS [RFC7515] signed JWT
    [RFC7519] that represents the identity of a workload.  It is issued
    by the Identity Server and binds a public key to the workload
-   identity.  A WIT MUST (unless otherwise specified) contain the
-   following:
+   identity.  A WIT MUST contain the following claims, except where
+   noted:
 
    *  in the JOSE header:
 
@@ -325,7 +325,9 @@ Table of Contents
          regularly, e.g. on the order of hours.
 
       -  jti: A unique identifier for the token.  This claim is
-         OPTIONAL.
+         OPTIONAL.  The jti claim is frequently useful for auditing
+         issuance of individual WITs or to revoke them, but some token
+         generation environments do not support it.
 
       -  cnf: A confirmation claim containing the public key of the
          workload using the jwk member as defined in Section 3.2 of
