@@ -465,10 +465,10 @@ Table of Contents
    specification itself does not make use of a potential iss claim but
    also carries the trust domain in the workload identifier
    (Section 3.2).  Implementations MAY include the iss claim in the form
-   of a https URL to facilitate key distribution via [OpenID.Discovery]
-   or [RFC8414] but alternative key distribution methods may make use of
-   the trust domain included in the workload identifier which is carried
-   in the mandatory sub claim.
+   of a https URL to facilitate key distribution via mechanisms like the
+   jwks_uri from [RFC8414] but alternative key distribution methods may
+   make use of the trust domain included in the workload identifier
+   which is carried in the mandatory sub claim.
 
 4.2.  Option 1: DPoP-Inspired Authentication
 
@@ -1135,10 +1135,6 @@ Table of Contents
    [IANA.JOSE.ALGS]
               IANA, "JSON Web Signature and Encryption Algorithms",
               <https://www.iana.org/assignments/jose>.
-
-   [OpenID.Discovery]
-              "OpenID.Discovery", n.d., <https://openid.net/specs/
-              openid-connect-discovery-1_0.html>.
 
    [RFC7595]  Thaler, D., Ed., Hansen, T., and T. Hardie, "Guidelines
               and Registration Procedures for URI Schemes", BCP 35,

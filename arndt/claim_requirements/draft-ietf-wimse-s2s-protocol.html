@@ -1703,7 +1703,7 @@ etc., are all valid and equivalent header field names. However, case is signific
           <h4 id="name-a-note-on-iss-claim-and-key">
 <a href="#section-4.1.2" class="section-number selfRef">4.1.2. </a><a href="#name-a-note-on-iss-claim-and-key" class="section-name selfRef">A note on <code>iss</code> claim and key distribution</a>
           </h4>
-<p id="section-4.1.2-1">It is <span class="bcp14">RECOMMENDED</span> that the WIT carries an <code>iss</code> claim. This specification itself does not make use of a potential <code>iss</code> claim but also carries the trust domain in the workload identifier (<a href="#workload-identifier" class="auto internal xref">Section 3.2</a>). Implementations <span class="bcp14">MAY</span> include the <code>iss</code> claim in the form of a <code>https</code> URL to facilitate key distribution via <span>[<a href="#OpenID.Discovery" class="cite xref">OpenID.Discovery</a>]</span> or <span>[<a href="#RFC8414" class="cite xref">RFC8414</a>]</span> but alternative key distribution methods may make use of the trust domain included in the workload identifier which is carried in the mandatory <code>sub</code> claim.<a href="#section-4.1.2-1" class="pilcrow">¶</a></p>
+<p id="section-4.1.2-1">It is <span class="bcp14">RECOMMENDED</span> that the WIT carries an <code>iss</code> claim. This specification itself does not make use of a potential <code>iss</code> claim but also carries the trust domain in the workload identifier (<a href="#workload-identifier" class="auto internal xref">Section 3.2</a>). Implementations <span class="bcp14">MAY</span> include the <code>iss</code> claim in the form of a <code>https</code> URL to facilitate key distribution via mechanisms like the <code>jwks_uri</code> from <span>[<a href="#RFC8414" class="cite xref">RFC8414</a>]</span> but alternative key distribution methods may make use of the trust domain included in the workload identifier which is carried in the mandatory <code>sub</code> claim.<a href="#section-4.1.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2356,10 +2356,6 @@ While a fresh nonce could be included in the PoP, a mechanism for distributing a
 <dt id="IANA.JOSE.ALGS">[IANA.JOSE.ALGS]</dt>
         <dd>
 <span class="refAuthor">IANA</span>, <span class="refTitle">"JSON Web Signature and Encryption Algorithms"</span>, <span>&lt;<a href="https://www.iana.org/assignments/jose">https://www.iana.org/assignments/jose</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="OpenID.Discovery">[OpenID.Discovery]</dt>
-        <dd>
-<span class="refTitle">"OpenID.Discovery"</span>, <span>n.d.</span>, <span>&lt;<a href="https://openid.net/specs/openid-connect-discovery-1_0.html">https://openid.net/specs/openid-connect-discovery-1_0.html</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC7595">[RFC7595]</dt>
         <dd>
