@@ -205,13 +205,13 @@ A WIT MUST contain the following claims, except where noted:
 An example WIT might look like this (all examples, of course, are non-normative and with line breaks and extra space for readability):
 
 ~~~ jwt
-eyJ0eXAiOiJ3aW1zZS1pZCtqd3QiLCJhbGciOiJFUzI1NiIsImtpZCI6Ikp1bmUgNSJ9.
-eyJpc3MiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3RydXN0ZWQtY2VudHJhbC1hdXRob3Jpd
-HkiLCJleHAiOjE3MTc2MTI0NzAsInN1YiI6IndpbXNlOi8vZXhhbXBsZS5jb20vc3BlY2
-lmaWMtd29ya2xvYWQiLCJqdGkiOiJ4LV8xQ1RMMmNjYTNDU0U0Y3diX18iLCJjbmYiOns
-iandrIjp7Imt0eSI6Ik9LUCIsImNydiI6IkVkMjU1MTkiLCJ4IjoiX2FtUkMzWXJZYkho
-SDFSdFlyTDhjU21URE1oWXRPVVRHNzhjR1RSNWV6ayJ9fX0.rOSUMR8I5WhM5C704l3iV
-dY0zFqxhugJ8Jo2xo39G7FqUTbwTzAGdpz2lHp6eL1M486XmRgl3uyjj6R_iuzNOA
+eyJhbGciOiJFUzI1NiIsImtpZCI6Ikp1bmUgNSIsInR5cCI6IndpbXNlLWlkK2p3dCJ9.
+eyJjbmYiOnsiandrIjp7ImNydiI6IkVkMjU1MTkiLCJrdHkiOiJPS1AiLCJ4Ijoiclp3V
+UEwVHJIazRBWEs5MkY2Vll2bUhIWDN4VU0tSUdsck11VkNRaG04VSJ9fSwiZXhwIjoxNz
+QwNzU4MzQ4LCJpYXQiOjE3NDA3NTQ3NDgsImp0aSI6IjRmYzc3ZmNlZjU3MWIzYmIzM2I
+2NzJlYWYyMDRmYWY0Iiwic3ViIjoid2ltc2U6Ly9leGFtcGxlLmNvbS9zcGVjaWZpYy13
+b3JrbG9hZCJ9.j-WlF3bufTwWeVZQntPhlzvSTPwf37-4wfazJZARdHYmW9S_olB5nKEq
+wqTZpIX_LoVVIcyK0VBE7Fa0CMvw2g
 ~~~
 {: #example-wit title="An example Workload Identity Token (WIT)"}
 
@@ -219,9 +219,9 @@ The decoded JOSE header of the WIT from the example above is shown here:
 
 ~~~ json
 {
- "typ": "wimse-id+jwt",
- "alg": "ES256",
- "kid": "June 5"
+  "alg": "ES256",
+  "kid": "June 5",
+  "typ": "wimse-id+jwt"
 }
 ~~~
 {: title="Example WIT JOSE Header"}
@@ -230,17 +230,17 @@ The decoded JWT claims of the WIT from the example above are shown here:
 
 ~~~ json
 {
- "iss": "wimse://example.com/trusted-central-authority",
- "exp": 1717612470,
- "sub": "wimse://example.com/specific-workload",
- "jti": "x-_1CTL2cca3CSE4cwb__",
- "cnf": {
-  "jwk": {
-   "kty": "OKP",
-   "crv": "Ed25519",
-   "x": "_amRC3YrYbHhH1RtYrL8cSmTDMhYtOUTG78cGTR5ezk"
-  }
- }
+  "cnf": {
+    "jwk": {
+      "crv": "Ed25519",
+      "kty": "OKP",
+      "x": "rZwUA0TrHk4AXK92F6VYvmHHX3xUM-IGlrMuVCQhm8U"
+    }
+  },
+  "exp": 1740758348,
+  "iat": 1740754748,
+  "jti": "4fc77fcef571b3bb33b672eaf204faf4",
+  "sub": "wimse://example.com/specific-workload"
 }
 ~~~
 {: title="Example WIT Claims"}
@@ -257,10 +257,10 @@ For elucidative purposes only, the workload's key, including the private part, i
 
 ~~~ jwk
 {
- "kty":"OKP",
- "crv":"Ed25519",
- "x":"_amRC3YrYbHhH1RtYrL8cSmTDMhYtOUTG78cGTR5ezk",
- "d":"G4lGAYFtFq5rwyjlgSIRznIoCF7MtKDHByyUUZCqLiA"
+ "kty": "OKP",
+ "crv": "Ed25519",
+ "x": "rZwUA0TrHk4AXK92F6VYvmHHX3xUM-IGlrMuVCQhm8U",
+ "d": "SFrq2PHwRyUGPbUxLVlNVq6XP4S2iklVo3GIBjlb6ZE"
 }
 ~~~
 {: #example-caller-jwk title="Example Workload's Key"}
@@ -271,11 +271,11 @@ The Identity Server's public key from this example is shown below in JWK {{RFC75
 
 ~~~ jwk
 {
- "kty":"EC",
- "kid":"June 5",
- "x":"kXqnA2Op7hgd4zRMbw0iFcc_hDxUxhojxOFVGjE2gks",
- "y":"n__VndPMR021-59UAs0b9qDTFT-EZtT6xSNs_xFskLo",
- "crv":"P-256"
+ "kty": "EC",
+ "kid": "June 5",
+ "crv": "P-256",
+ "x": "aolos9KoHX-GeIO-TXhVg-D8BBzZtrHWMZt54SVwMQs",
+ "y": "ouPmPL2f9U054ePXiaZ1-VxTvUhXssEbjWO8EAkM96s"
 }
 ~~~
 {: title="Example Identity Server Key"}
@@ -298,14 +298,13 @@ WIT =  JWT
 The following shows the WIT from {{example-wit}} in an example of a `Workload-Identity-Token` header field:
 
 ~~~ http-message
-Workload-Identity-Token: eyJ0eXAiOiJ3aW1zZS1pZCtqd3QiLCJhbGciOiJFUzI1
- NiIsImtpZCI6Ikp1bmUgNSJ9.eyJpc3MiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3RydXN
- 0ZWQtY2VudHJhbC1hdXRob3JpdHkiLCJleHAiOjE3MTc2MTI0NzAsInN1YiI6IndpbXN
- lOi8vZXhhbXBsZS5jb20vc3BlY2lmaWMtd29ya2xvYWQiLCJqdGkiOiJ4LV8xQ1RMMmN
- jYTNDU0U0Y3diX18iLCJjbmYiOnsiandrIjp7Imt0eSI6Ik9LUCIsImNydiI6IkVkMjU
- 1MTkiLCJ4IjoiX2FtUkMzWXJZYkhoSDFSdFlyTDhjU21URE1oWXRPVVRHNzhjR1RSNWV
- 6ayJ9fX0.rOSUMR8I5WhM5C704l3iVdY0zFqxhugJ8Jo2xo39G7FqUTbwTzAGdpz2lHp
- 6eL1M486XmRgl3uyjj6R_iuzNOA
+Workload-Identity-Token: eyJhbGciOiJFUzI1NiIsImtpZCI6Ikp1bmUgNSIsInR5
+cCI6IndpbXNlLWlkK2p3dCJ9.eyJjbmYiOnsiandrIjp7ImNydiI6IkVkMjU1MTkiLCJr
+dHkiOiJPS1AiLCJ4Ijoiclp3VUEwVHJIazRBWEs5MkY2Vll2bUhIWDN4VU0tSUdsck11V
+kNRaG04VSJ9fSwiZXhwIjoxNzQwNzU4MzQ4LCJpYXQiOjE3NDA3NTQ3NDgsImp0aSI6Ij
+RmYzc3ZmNlZjU3MWIzYmIzM2I2NzJlYWYyMDRmYWY0Iiwic3ViIjoid2ltc2U6Ly9leGF
+tcGxlLmNvbS9zcGVjaWZpYy13b3JrbG9hZCJ9.j-WlF3bufTwWeVZQntPhlzvSTPwf37-
+4wfazJZARdHYmW9S_olB5nKEqwqTZpIX_LoVVIcyK0VBE7Fa0CMvw2g
 ~~~
 {: title="An example Workload Identity Token HTTP Header Field"}
 
@@ -365,11 +364,10 @@ An example WPT might look like the following:
 ~~~ jwt
 eyJhbGciOiJFZERTQSIsInR5cCI6IndpbXNlLXByb29mK2p3dCJ9.eyJhdGgiOiJDTDR3
 amZwUm1OZi1iZFlJYllMblY5ZDVyTUFSR3dLWUUxMHdVd3pDMGpJIiwiYXVkIjoiaHR0c
-HM6Ly9zZXJ2aWNlLmV4YW1wbGUuY29tL3BhdGgiLCJleHAiOjE3Mjg2NTg2NzIsImlzcy
-I6IndpbXNlOi8vZXhhbXBsZS5jb20vc3BlY2lmaWMtd29ya2xvYWQiLCJqdGkiOiI0YjQ
-yYzVmNjExZTJiMWNmYTFkMmM0MWIzYTJmYjc4MiIsInd0aCI6Ii1KaThUbE1ORmszcW16
-bXBBeEJPXzdXLVl1dGNIXzJfZnVGQUZGU1YxUmcifQ.jrUBsDjWMG_FpuhLo3lNC-IBei
-PQXZ4UOuttPdNj8fRmIG4ZDFF9B10y7uGbiNIhbRdpgG_KXEPLHXWnvzLmBA
+HM6Ly93b3JrbG9hZC5leGFtcGxlLmNvbS9wYXRoIiwiZXhwIjoxNzQwNzU1MDQ4LCJqdG
+kiOiIwYzc0MDM4NmNhMWRjYWQzN2RlMWI1ZjlkZTFiMDcwNSIsInd0aCI6ImFBMFdfb0Z
+KSzdxVjd6WWhjbXpSMUtPWFZDSGpkMng2YzRzT1FMdkU5MFkifQ.W9RZqieXeD-UgdtbY
+f8ZNkf2_6_6b_kJSfkODQdq3_QDSSGOhVbRAR3qQoOu0SzihiG6HCsGwslfo4WdvnH5AQ
 ~~~
 {: #example-wpt title="Example Workload Proof Token (WPT)"}
 
@@ -389,9 +387,9 @@ The decoded JWT claims of the WPT from the example above are shown here:
 {
   "ath": "CL4wjfpRmNf-bdYIbYLnV9d5rMARGwKYE10wUwzC0jI",
   "aud": "https://workload.example.com/path",
-  "exp": 1728658672,
-  "jti": "4b42c5f611e2b1cfa1d2c41b3a2fb782",
-  "wth": "-Ji8TlMNFk3qmzmpAxBO_7W-YutcH_2_fuFAFFSV1Rg"
+  "exp": 1740755048,
+  "jti": "0c740386ca1dcad37de1b5f9de1b0705",
+  "wth": "aA0W_oFJK7qV7zYhcmzR1KOXVCHjd2x6c4sOQLvE90Y"
 }
 ~~~
 {: title="Example WPT Claims"}
