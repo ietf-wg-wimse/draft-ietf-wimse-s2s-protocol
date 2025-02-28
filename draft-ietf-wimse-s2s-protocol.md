@@ -199,7 +199,7 @@ A WIT MUST contain the following claims, except where noted:
     * `sub`: The subject of the token, which is the identity of the workload, represented by a URI.
     * `exp`: The expiration time of the token (as defined in {{Section 4.1.4 of RFC7519}}).
       WITs should be refreshed regularly, e.g. on the order of hours.
-    * `jti`: A unique identifier for the token. This claim is OPTIONAL. The jti claim is frequently useful for auditing issuance of individual WITs or to revoke them, but some token generation environments do not support it.
+    * `jti`: A unique identifier for the token. This claim is OPTIONAL. The `jti` claim is frequently useful for auditing issuance of individual WITs or to revoke them, but some token generation environments do not support it.
     * `cnf`: A confirmation claim containing the public key of the workload using the `jwk` member as defined in {{Section 3.2 of RFC7800}}.
      The workload MUST prove possession of the corresponding private key when presenting the WIT to another party, which can be accomplished by using it in conjunction with one of the methods in {{dpop-esque-auth}} or {{http-sig-auth}}. As such, it MUST NOT be used as a bearer token and is not intended for use in the `Authorization` header.
 
