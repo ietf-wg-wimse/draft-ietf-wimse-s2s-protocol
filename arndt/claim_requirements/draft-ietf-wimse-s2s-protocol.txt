@@ -300,8 +300,8 @@ Table of Contents
    The Workload Identity Token (WIT) is a JWS [RFC7515] signed JWT
    [RFC7519] that represents the identity of a workload.  It is issued
    by the Identity Server and binds a public key to the workload
-   identity.  A WIT MUST (unless otherwise specified) contain the
-   following:
+   identity.  A WIT MUST contain the following claims, except where
+   noted:
 
    *  in the JOSE header:
 
@@ -326,7 +326,10 @@ Table of Contents
          Section 4.1.4 of [RFC7519]).  WITs should be refreshed
          regularly, e.g. on the order of hours.
 
-      -  jti: A unique identifier for the token.
+      -  jti: A unique identifier for the token.  This claim is
+         OPTIONAL.  The jti claim is frequently useful for auditing
+         issuance of individual WITs or to revoke them, but some token
+         generation environments do not support it.
 
       -  cnf: A confirmation claim containing the public key of the
          workload using the jwk member as defined in Section 3.2 of
@@ -501,10 +504,6 @@ Table of Contents
 
    *  in the JWT claims:
 
-      -  iss: The issuer of the token, which is the calling workload,
-         represented by the same value as the sub claim of the
-         associated WIT.
-
       -  aud: The audience of the token contains the HTTP target URI
          (Section 7.1 of [RFC9110]) of the request to which the WPT is
          attached, without query or fragment parts.
@@ -569,7 +568,6 @@ Table of Contents
      "ath": "CL4wjfpRmNf-bdYIbYLnV9d5rMARGwKYE10wUwzC0jI",
      "aud": "https://workload.example.com/path",
      "exp": 1728658672,
-     "iss": "wimse://example.com/specific-workload",
      "jti": "4b42c5f611e2b1cfa1d2c41b3a2fb782",
      "wth": "-Ji8TlMNFk3qmzmpAxBO_7W-YutcH_2_fuFAFFSV1Rg"
    }
@@ -620,9 +618,6 @@ Table of Contents
 
    *  The typ JOSE header parameter of the WPT conveys a media type of
       wimse-proof+jwt.
-
-   *  The iss claim of the WPT matches the sub claim of the WIT.  (Note:
-      not sure iss in the WPT is useful or necessary.)
 
    *  The aud claim of the WPT matches the target URI, or an acceptable
       alias or normalization thereof, of the HTTP request in which the
@@ -1155,6 +1150,10 @@ A.1.  latest
 
    *  Make iss claim in WIT optional and add wording about its relation
       to key distribution.
+
+   *  Remove iss claim from WPT.
+
+   *  Make jti claim in WIT optional.
 
 A.2.  draft-ietf-wimse-s2s-protocol-02
 
