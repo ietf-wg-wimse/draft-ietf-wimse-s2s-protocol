@@ -319,7 +319,7 @@ etc., are all valid and equivalent header field names. However, case is signific
 
 ### A note on `iss` claim and key distribution {#wit-iss-note}
 
-It is RECOMMENDED that the WIT carries an `iss` claim. This specification itself does not make use of a potential `iss` claim but also carries the {{trust-domain}} in the {{workload-identifier}}. Implementations MAY include the `iss` claim in the form of a `https`-URL to facilitate key distribution via {{OpenID.Discovery}} or {{!RFC8414}} but alternative key distributions may make use of the {{trust-domain}} of the {{workload-identifier}} carried in the required `sub` claim.
+It is RECOMMENDED that the WIT carries an `iss` claim. This specification itself does not make use of a potential `iss` claim but also carries the trust domain in the workload identifier ({{workload-identifier}}). Implementations MAY include the `iss` claim in the form of a `https` URL to facilitate key distribution via {{OpenID.Discovery}} or {{!RFC8414}} but alternative key distribution methods may make use of the trust domain included in the workload identifier which is carried in the mandatory `sub` claim.
 
 ## Option 1: DPoP-Inspired Authentication {#dpop-esque-auth}
 
