@@ -536,6 +536,15 @@ so it cannot be easily reused in another context, which is often a security impr
 be designed to include extensibility to sign other fields, but this would make it closer to
 trying to reinvent Message Signatures.
 
+## Error Conditions
+
+Errors may occur during the processing of the message signature or WPT. If the signature verification fails for any reason,
+such as an invalid signature, an expired validity time window, or a malformed data structure, an error is returned. Typically,
+this will be in response to an API call, so an HTTP status code such as 400 (Bad Request) is appropriate. This response could
+include more details as per {{RFC7807}} and {{RFC9457}}, such as an indicator that the wrong key material or algorithm was used.
+If the WPT or message signature is used for another purpose, such as authentication to start a session, a different response may
+be more appropriate, such as an HTTP status code of 401 (Unauthorized) or 403 (Forbidden).
+
 ## Coexistence with JWT Bearer Tokens {#coexist}
 
 The WIT and WPT define new HTTP headers. They can therefore be presented along with existing headers used for JWT bearer tokens. This
