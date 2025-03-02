@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-02-27T01:15:34.039747+00:00",
+  "timestamp": "2025-03-02T01:19:46.833050+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -65,7 +65,7 @@
       "id": "I_kwDOLJmm786MJa4R",
       "title": "Terminology Workload vs Service",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/13",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -76,8 +76,8 @@
       ],
       "body": "@frumioj has suggested to rename `service` to `workload` in https://github.com/yaronf/wimse-s2s/pull/12.\r\n\r\nThis issue is to track the conversation for the term `service` and document the decision making.",
       "createdAt": "2024-06-13T14:18:00Z",
-      "updatedAt": "2025-02-18T17:18:06Z",
-      "closedAt": null,
+      "updatedAt": "2025-02-27T15:24:14Z",
+      "closedAt": "2025-02-27T15:24:14Z",
       "comments": [
         {
           "author": "yaronf",
@@ -96,12 +96,16 @@
       "state": "CLOSED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
-      "labels": [],
+      "assignees": [
+        "arndt-s"
+      ],
+      "labels": [
+        "ietf122"
+      ],
       "body": "Do Workload ID tokens require an `iss` claim or is the issuer implicit as part of the WIMSE URI in the `sub` claim?\r\nAlso, does the `iss` claim add any additional value in scope of this draft aka \"Does this draft work without `iss` claim?\"",
       "createdAt": "2024-06-13T14:56:26Z",
-      "updatedAt": "2025-02-13T15:19:57Z",
-      "closedAt": "2025-02-13T15:19:56Z",
+      "updatedAt": "2025-02-28T14:22:56Z",
+      "closedAt": "2025-02-28T14:22:56Z",
       "comments": [
         {
           "author": "PieterKas",
@@ -137,6 +141,13 @@
           "body": "Based on recent discussions, there is no expectation of WIT being compatible with SPIFFE JSON-SVID.\n\nAlso, see #92 .",
           "createdAt": "2025-02-13T15:19:56Z",
           "updatedAt": "2025-02-13T15:19:56Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Reopening after call. Make it a SHOULD and add warning re: key discovery.",
+          "createdAt": "2025-02-27T15:44:50Z",
+          "updatedAt": "2025-02-27T15:44:50Z"
         }
       ]
     },
@@ -1156,13 +1167,11 @@
       "state": "OPEN",
       "author": "jsalowey",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [
-        "jsalowey"
-      ],
+      "assignees": [],
       "labels": [],
       "body": "The current draft says that the WIT must not be accepted without proof of possession of the corresponding private key.  This is for security reasons because if you are willing to accept the WIT without proof of possession then the security benefit of the WIT is greatly diminished.  \r\n\r\nThis restriction makes it difficult to integrate a WIT seamlessly into existing applications.  I question whether this could be done securely, but I think we should have the discussion:\r\n1. Is there a sensible policy that would make this OK?  It seems that legacy application would be none the worse off, but application that could handle the WIT would still benefit.  I think there is a difficulty here in that you have client an services sides that might be updated a different times making it more complex.\r\n2. Perhaps there is an alternate form of POP that would be easier.  For example binding to a TLS key or identity.  While this seems attractive, one of the reasons for the WIT is to suport cases where MTLS isn't realistic. \r\n\r\n",
       "createdAt": "2024-07-17T17:27:44Z",
-      "updatedAt": "2025-01-30T05:45:25Z",
+      "updatedAt": "2025-02-27T15:10:16Z",
       "closedAt": null,
       "comments": [
         {
@@ -1329,7 +1338,7 @@
       "id": "I_kwDOLJmm786aUI9I",
       "title": "Remove or make iss claim in WPT optional",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/68",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -1338,8 +1347,8 @@
       "labels": [],
       "body": "Now, `iss` claim in WPT is required and required to match the `sub` claim of the WIT.\r\n\r\nWith the `wth` claim (hash of WIT in WPT) this becomes kind of duplicate and we should consider to either:\r\n\r\n- make the `iss` claim in WPT optional\r\n- remove the `iss` claim from the WPT\r\n- other options ..\r\n",
       "createdAt": "2024-10-15T14:32:16Z",
-      "updatedAt": "2024-12-05T15:55:04Z",
-      "closedAt": null,
+      "updatedAt": "2025-02-27T15:46:58Z",
+      "closedAt": "2025-02-27T15:46:57Z",
       "comments": [
         {
           "author": "yaronf",
@@ -1347,6 +1356,13 @@
           "body": "Decision: remove and forbid `iss`.",
           "createdAt": "2024-12-05T15:55:03Z",
           "updatedAt": "2024-12-05T15:55:03Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Dup of ",
+          "createdAt": "2025-02-27T15:46:57Z",
+          "updatedAt": "2025-02-27T15:46:57Z"
         }
       ]
     },
@@ -1633,21 +1649,21 @@
     {
       "number": 92,
       "id": "I_kwDOLJmm786nTG1v",
-      "title": "\"iss\" claim matching",
+      "title": "\"iss\" claim in WPT matching",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/92",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "NONE",
       "assignees": [
-        "bc-pi"
+        "arndt-s"
       ],
       "labels": [
         "ietf122"
       ],
       "body": "Opened as working group member, not chair\n\nFrom section 4.2 \"The iss claim of the WPT matches the sub claim of the WIT.  (Note: not sure iss in the WPT is useful or necessary.)\"\n\nIf the purpose of comparing the WPT \"iss\" claim and the WIT \"sub\" claim is to link the signature to the WIT, it seems that verifying the \"wth\" claim would have the same effect as long as the hash calculation includes the WIT \"sub\" claim. \n\nAre there other reasons why the \"iss\" claim should be verified?",
       "createdAt": "2025-01-23T12:39:24Z",
-      "updatedAt": "2025-02-13T15:20:50Z",
-      "closedAt": null,
+      "updatedAt": "2025-02-28T14:21:51Z",
+      "closedAt": "2025-02-28T14:21:51Z",
       "comments": [
         {
           "author": "jsalowey",
@@ -1655,6 +1671,13 @@
           "body": "IT seems like the \"iss\" claim does not add anything to the WPT.  The receiver knows what key to use from the WIT.  If the \"iss\" claim is only adding possible ambiguity and not providing any useful information I think we should probably remove it. ",
           "createdAt": "2025-01-30T15:55:34Z",
           "updatedAt": "2025-01-30T15:55:34Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Discussed amongst the authors that `iss` in WPT is not necessary anymore since we have `wth` (the hash of the Workload Identity Token)",
+          "createdAt": "2025-02-27T15:27:03Z",
+          "updatedAt": "2025-02-27T15:27:03Z"
         }
       ]
     },
@@ -1694,15 +1717,19 @@
       "id": "I_kwDOLJmm786rXA7J",
       "title": "jti Claim",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/95",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
-      "labels": [],
+      "assignees": [
+        "arndt-s"
+      ],
+      "labels": [
+        "ietf122"
+      ],
       "body": "From @sorindumitru, as part of the SPIFFE discussion:\n\nI notice the S2S/W2W spec also specifies that the WIT token has a jti field. I imagine it's for replay protection or some kind of revocation support. This doesn't work well with some SPIFFE implementations (at least SPIRE) because it prefers to cache (and preload) SVIDs and serve the same one to workloads (including to multiple workloads if they have the same SPIFFE ID) while they are valid.\n\nIs the jti field mandatory or could it be made optional in the WIT token?\n\nYaron: currently it is mandatory, as all WIT claims are listed under a MUST clause.\n\n@bc-pi could you provide feedback?",
       "createdAt": "2025-02-24T13:17:26Z",
-      "updatedAt": "2025-02-24T15:59:40Z",
-      "closedAt": null,
+      "updatedAt": "2025-02-28T14:18:46Z",
+      "closedAt": "2025-02-28T14:18:46Z",
       "comments": [
         {
           "author": "jsalowey",
@@ -1710,8 +1737,31 @@
           "body": "I think the jti is more for adit purposes so you can identify a specific token.  I don't think it would have anything to do with replay for the most part since the WIT itself can be used many times.  I think it is a good idea to have a jti.  We could specifically say that it is not for replay. I suppose we could go with a SHOULD unless your deployments does not need to track WIT issuance.",
           "createdAt": "2025-02-24T15:59:38Z",
           "updatedAt": "2025-02-24T15:59:38Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Discussed amongst the authors to use `RECOMMENDED` for `jti`. ",
+          "createdAt": "2025-02-27T15:31:30Z",
+          "updatedAt": "2025-02-27T15:31:30Z"
         }
       ]
+    },
+    {
+      "number": 100,
+      "id": "I_kwDOLJmm786sHSKY",
+      "title": "WIT examples in HTTP Message Sig section",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/100",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The two WITs in the HTTP messages are suspiciously short and do not decode. Replace by the examples from Sec. 4.1.",
+      "createdAt": "2025-02-28T16:28:54Z",
+      "updatedAt": "2025-02-28T16:28:54Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -7284,24 +7334,26 @@
       "id": "PR_kwDOLJmm786Loq_S",
       "title": "Editorial: use Workload instead of Service",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/94",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "This is purely editorial, but it changes the document's title and it resets the I-D to version -00. We also probably need to change the repo's name.\r\n\r\nFixes #13.",
       "createdAt": "2025-02-18T17:35:56Z",
-      "updatedAt": "2025-02-18T22:13:18Z",
+      "updatedAt": "2025-02-27T15:24:13Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "ab10cbcfacb942f2fa5f090600fa009f84bfa0a2",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-term-workload",
-      "headRefOid": "2762e7e793b70452c26c5408ffb2b07e3d8cd60c",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "90534d0e1e677a293d93ae1e54cba5728e6adfa6",
+      "closedAt": "2025-02-27T15:24:13Z",
+      "mergedAt": "2025-02-27T15:24:13Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "e0b68d47c67d43a0e8ae6c4d1f36b309cdbb4f14"
+      },
       "comments": [],
       "reviews": [
         {
@@ -7311,10 +7363,10 @@
           },
           "author": "jricher",
           "authorAssociation": "COLLABORATOR",
-          "state": "CHANGES_REQUESTED",
+          "state": "DISMISSED",
           "body": "Suggest not changing the draft name of the document, but instead changing the title and term usage within.",
           "createdAt": "2025-02-18T22:12:17Z",
-          "updatedAt": "2025-02-18T22:13:18Z",
+          "updatedAt": "2025-02-27T15:23:56Z",
           "comments": [
             {
               "originalPosition": 18,
@@ -7329,8 +7381,636 @@
               "updatedAt": "2025-02-18T22:13:18Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786d19Kd",
+          "commit": {
+            "abbreviatedOid": "2762e7e"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-02-27T15:22:03Z",
+          "updatedAt": "2025-02-27T15:22:03Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm786d1-Jl",
+          "commit": {
+            "abbreviatedOid": "90534d0"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-02-27T15:23:21Z",
+          "updatedAt": "2025-02-27T15:23:21Z",
+          "comments": []
         }
       ]
+    },
+    {
+      "number": 96,
+      "id": "PR_kwDOLJmm786M1S-G",
+      "title": "Make WIT iss claim optional and add note about its relation to key distribution",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/96",
+      "state": "MERGED",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "See title. \r\n\r\nResolves #14.",
+      "createdAt": "2025-02-27T17:28:42Z",
+      "updatedAt": "2025-02-28T14:22:55Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "6c7cb0f3a7642f354620f27d4a2f9fdad83e8861",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "arndt/claim_requirements",
+      "headRefOid": "1afc672c04aeb0618fdb52a1a442a2089e11a9db",
+      "closedAt": "2025-02-28T14:22:55Z",
+      "mergedAt": "2025-02-28T14:22:55Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "bc1d511696258eef2ddd23abf96fdef468b83192"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm786d3cxT",
+          "commit": {
+            "abbreviatedOid": "470ac27"
+          },
+          "author": "copilot-pull-request-reviewer",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "## PR Overview\n\nThis PR makes the `iss` claim optional in the Workload Identity Token and adds a note explaining its relation to key distribution. It also adds OpenID.Discovery metadata and updates section headings with explicit anchors.\n- Make `iss` claim optional with an additional note.\n- Introduce OpenID.Discovery metadata.\n- Update section headers with anchor tags.\n\n### Reviewed Changes\n\n| File                                   | Description                                               |\n| -------------------------------------- | --------------------------------------------------------- |\n| draft-ietf-wimse-s2s-protocol.md         | Updates to make the `iss` claim optional and add guidance regarding key distribution; new OpenID.Discovery metadata added. |\n\nCopilot reviewed 1 out of 1 changed files in this pull request and generated no comments.\n\n<details>\n<summary>Comments suppressed due to low confidence (2)</summary>\n\n**draft-ietf-wimse-s2s-protocol.md:194**\n* [nitpick] Consider revising '(unless specified differently)' to '(unless otherwise specified)' for improved clarity and consistency.\n```\nA WIT MUST (unless specified differently) contain the following:\n```\n**draft-ietf-wimse-s2s-protocol.md:201**\n* [nitpick] Consider restructuring the sentence for clarity, for example: 'The `iss` claim is RECOMMENDED but optional; see {{wit-iss-note}} for more details.'\n```\n    * `iss`: The issuer of the token, which is the Identity Server, represented by a URI. The `iss` claim is RECOMMENDED but optional, see {{wit-iss-note}} for more.\n```\n</details>\n\n",
+          "createdAt": "2025-02-27T17:29:13Z",
+          "updatedAt": "2025-02-27T17:29:14Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm786d5mCc",
+          "commit": {
+            "abbreviatedOid": "4e8147b"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2025-02-27T21:27:05Z",
+          "updatedAt": "2025-02-27T21:31:36Z",
+          "comments": [
+            {
+              "originalPosition": 50,
+              "body": "```suggestion\r\nIt is RECOMMENDED that the WIT carries an `iss` claim. This specification itself does not make use of a potential `iss` claim but also carries the trust domain in the workload identifier ({{workload-identifier}}). Implementations MAY include the `iss` claim in the form of a `https` URL to facilitate key distribution via {{OpenID.Discovery}} or {{!RFC8414}} but alternative key distribution methods may make use of the trust domain included in the workload identifier which is carried in the mandatory `sub` claim.\r\n```",
+              "createdAt": "2025-02-27T21:27:05Z",
+              "updatedAt": "2025-02-27T21:31:36Z"
+            },
+            {
+              "originalPosition": 50,
+              "body": "@arndt-s note that {{trust-domain}} translates in \"section XXX\" - it's a reference.",
+              "createdAt": "2025-02-27T21:30:48Z",
+              "updatedAt": "2025-02-27T21:31:36Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786d9ygI",
+          "commit": {
+            "abbreviatedOid": "4e8147b"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-28T09:31:27Z",
+          "updatedAt": "2025-02-28T09:31:27Z",
+          "comments": [
+            {
+              "originalPosition": 50,
+              "body": "Thank you!",
+              "createdAt": "2025-02-28T09:31:27Z",
+              "updatedAt": "2025-02-28T09:31:27Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786d98Th",
+          "commit": {
+            "abbreviatedOid": "4427c2e"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-02-28T09:45:11Z",
+          "updatedAt": "2025-02-28T09:45:11Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm786eARQd",
+          "commit": {
+            "abbreviatedOid": "4427c2e"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-28T14:12:10Z",
+          "updatedAt": "2025-02-28T14:12:10Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "```suggestion\r\n```",
+              "createdAt": "2025-02-28T14:12:10Z",
+              "updatedAt": "2025-02-28T14:12:10Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786eASm6",
+          "commit": {
+            "abbreviatedOid": "4427c2e"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-28T14:14:24Z",
+          "updatedAt": "2025-02-28T14:14:25Z",
+          "comments": [
+            {
+              "originalPosition": 50,
+              "body": "let's keep OIDC out of this and make the RFC8414 statement a little better qualified \r\n```suggestion\r\nIt is RECOMMENDED that the WIT carries an `iss` claim. This specification itself does not make use of a potential `iss` claim but also carries the trust domain in the workload identifier ({{workload-identifier}}). Implementations MAY include the `iss` claim in the form of a `https` URL to facilitate key distribution via mechanisms like the `jwks_uri` from {{!RFC8414}} but alternative key distribution methods may make use of the trust domain included in the workload identifier which is carried in the mandatory `sub` claim.\r\n```",
+              "createdAt": "2025-02-28T14:14:24Z",
+              "updatedAt": "2025-02-28T14:14:25Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786eAXaB",
+          "commit": {
+            "abbreviatedOid": "f1c0515"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-02-28T14:22:01Z",
+          "updatedAt": "2025-02-28T14:22:01Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 97,
+      "id": "PR_kwDOLJmm786M1rng",
+      "title": "Make WIT jti claim optional",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/97",
+      "state": "MERGED",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "See title. Resolves #95.",
+      "createdAt": "2025-02-27T18:23:31Z",
+      "updatedAt": "2025-02-28T14:18:46Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "e0b68d47c67d43a0e8ae6c4d1f36b309cdbb4f14",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "arndt/wit-jti-optional",
+      "headRefOid": "689ccb8737d0674d84b4c1949896349a8ca1f0b1",
+      "closedAt": "2025-02-28T14:18:45Z",
+      "mergedAt": "2025-02-28T14:18:45Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "ce3457db09a1a613daa3cc5de087bb7e17964501"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm786d39CI",
+          "commit": {
+            "abbreviatedOid": "b4a130e"
+          },
+          "author": "copilot-pull-request-reviewer",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "## PR Overview\n\nThis PR clarifies that the Workload Identity Token's (WIT) jti claim is optional as specified in issue #95.  \n- Updated the requirement text to indicate that the jti claim is optional  \n- Updated the document history with a note on making the jti claim optional\n\n### Reviewed Changes\n\n| File                                  | Description                                            |\n| ------------------------------------- | ------------------------------------------------------ |\n| draft-ietf-wimse-s2s-protocol.md        | Updated WIT claim requirement text and document history |\n\nCopilot reviewed 1 out of 1 changed files in this pull request and generated no comments.\n\n<details>\n<summary>Comments suppressed due to low confidence (1)</summary>\n\n**draft-ietf-wimse-s2s-protocol.md:657**\n* There is a typo in the claim name: 'jit' should be corrected to 'jti' to maintain consistency with the rest of the document.\n```\n+* Make `jit` claim in WIT optional.\n```\n</details>\n\n",
+          "createdAt": "2025-02-27T18:23:48Z",
+          "updatedAt": "2025-02-27T18:23:48Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm786d4C9C",
+          "commit": {
+            "abbreviatedOid": "2197ce8"
+          },
+          "author": "copilot-pull-request-reviewer",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "## PR Overview\n\nThis PR makes the Workload Identity Token (WIT) specification more flexible by making the inclusion of the jti claim optional.\n- Updated the normative language to indicate that a WIT MUST (unless otherwise specified) contain the required claims.\n- Clarified that the jti claim is optional.\n- Added a changelog entry summarizing the optional jti claim.\n\n### Reviewed Changes\n\n| File                                    | Description                                             |\n| --------------------------------------- | ------------------------------------------------------- |\n| draft-ietf-wimse-s2s-protocol.md          | Updated normative language and jti claim requirement to clarify that the jti claim is optional. |\n\nCopilot reviewed 1 out of 1 changed files in this pull request and generated 2 comments.\n\n\n",
+          "createdAt": "2025-02-27T18:31:36Z",
+          "updatedAt": "2025-02-27T18:31:36Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "[nitpick] The phrase '(unless otherwise specified)' in a MUST requirement may be ambiguous. Consider defining the conditions under which the full set of claims is required, to avoid misinterpretation.\n```suggestion\nA WIT MUST contain the following claims, except where noted:\n```",
+              "createdAt": "2025-02-27T18:31:36Z",
+              "updatedAt": "2025-02-27T18:31:37Z"
+            },
+            {
+              "originalPosition": 14,
+              "body": "[nitpick] The statement that the 'jti' claim is OPTIONAL could be confusing since it appears in a list introduced by a MUST requirement. Consider rephrasing the requirement or providing additional context to clarify when and why the 'jti' claim may be omitted.\n```suggestion\n\n```",
+              "createdAt": "2025-02-27T18:31:36Z",
+              "updatedAt": "2025-02-27T18:31:37Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786d5qod",
+          "commit": {
+            "abbreviatedOid": "2197ce8"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2025-02-27T21:36:59Z",
+          "updatedAt": "2025-02-27T21:38:16Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "I agree with Copilot (and actually impressed by the level of comments). Maybe add: The `jti` claim is frequently useful for auditing issuance of individual WITs or to revoke them, but some token generation environments do not support it.",
+              "createdAt": "2025-02-27T21:36:59Z",
+              "updatedAt": "2025-02-27T21:38:16Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786d9w7E",
+          "commit": {
+            "abbreviatedOid": "2197ce8"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-28T09:28:44Z",
+          "updatedAt": "2025-02-28T09:28:44Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "Changed & pushed",
+              "createdAt": "2025-02-28T09:28:44Z",
+              "updatedAt": "2025-02-28T09:28:44Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786d996m",
+          "commit": {
+            "abbreviatedOid": "1c2626d"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-28T09:47:55Z",
+          "updatedAt": "2025-02-28T09:47:55Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "```suggestion\r\n    * `jti`: A unique identifier for the token. This claim is OPTIONAL. The `jti` claim is frequently useful for auditing issuance of individual WITs or to revoke them, but some token generation environments do not support it.\r\n```",
+              "createdAt": "2025-02-28T09:47:55Z",
+              "updatedAt": "2025-02-28T09:47:55Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786d9-TV",
+          "commit": {
+            "abbreviatedOid": "689ccb8"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-02-28T09:48:33Z",
+          "updatedAt": "2025-02-28T09:48:33Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm786eAPPb",
+          "commit": {
+            "abbreviatedOid": "689ccb8"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-02-28T14:09:17Z",
+          "updatedAt": "2025-02-28T14:09:17Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 98,
+      "id": "PR_kwDOLJmm786M1ut0",
+      "title": "Remove iss claim from WPT",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/98",
+      "state": "MERGED",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "See title. Resolves #92\r\n",
+      "createdAt": "2025-02-27T18:29:22Z",
+      "updatedAt": "2025-02-28T14:21:50Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "ce3457db09a1a613daa3cc5de087bb7e17964501",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "arndt/remove-wpt-iss",
+      "headRefOid": "1d63a2dc92b0eddc544952c1fb8966fa70ca6eb5",
+      "closedAt": "2025-02-28T14:21:50Z",
+      "mergedAt": "2025-02-28T14:21:50Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "6c7cb0f3a7642f354620f27d4a2f9fdad83e8861"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm786d4CQd",
+          "commit": {
+            "abbreviatedOid": "a72c575"
+          },
+          "author": "copilot-pull-request-reviewer",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "## PR Overview\n\nThis PR removes the \"iss\" claim from the Workload-Proof-Token (WPT) definitions in the specification as per issue #92.  \n- Removes the \"iss\" claim from the JWT claims listing and corresponding validation rules.  \n- Updates the document history to reflect the removal.\n\n### Reviewed Changes\n\n| File                                      | Description                                      |\n| ----------------------------------------- | ------------------------------------------------ |\n| draft-ietf-wimse-s2s-protocol.md            | Removed all references to the \"iss\" claim in JWT claims and validation, and updated the changelog accordingly. |\n\nCopilot reviewed 1 out of 1 changed files in this pull request and generated no comments.\n\n\n",
+          "createdAt": "2025-02-27T18:30:09Z",
+          "updatedAt": "2025-02-27T18:30:09Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm786d4Cyg",
+          "commit": {
+            "abbreviatedOid": "a72c575"
+          },
+          "author": "copilot-pull-request-reviewer",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "## PR Overview\n\nThis PR removes the deprecated \"iss\" claim from the WPT documentation in order to resolve issue #92.  \n- Removed the description of the \"iss\" claim from the JWT claims section.  \n- Removed the \"iss\" example from the decoded JWT claims demonstration.  \n- Updated the document history section to reflect the change.\n\n### Reviewed Changes\n\n| File                                             | Description                                                            |\n| ------------------------------------------------ | ---------------------------------------------------------------------- |\n| draft-ietf-wimse-s2s-protocol.md                   | Removed references to the \"iss\" claim from both the claim list and JWT examples. |\n\nCopilot reviewed 1 out of 1 changed files in this pull request and generated no comments.\n\n<details>\n<summary>Comments suppressed due to low confidence (1)</summary>\n\n**draft-ietf-wimse-s2s-protocol.md:651**\n* [nitpick] Consider capitalizing the section header to '## Latest' for consistency with the other section headings in the document.\n```\n## latest\n```\n</details>\n\n",
+          "createdAt": "2025-02-27T18:31:15Z",
+          "updatedAt": "2025-02-27T18:31:15Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm786d5sFu",
+          "commit": {
+            "abbreviatedOid": "a72c575"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-02-27T21:40:28Z",
+          "updatedAt": "2025-02-27T21:40:28Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm786eAOTR",
+          "commit": {
+            "abbreviatedOid": "a72c575"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-28T14:08:02Z",
+          "updatedAt": "2025-02-28T14:08:02Z",
+          "comments": [
+            {
+              "originalPosition": 13,
+              "body": "do you also want to remove it from the example jwt above (lines ~362-370)? Probably should but I know that starts to pull the thread of if the signature is valid etc.  ",
+              "createdAt": "2025-02-28T14:08:02Z",
+              "updatedAt": "2025-02-28T14:08:02Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786eAVJS",
+          "commit": {
+            "abbreviatedOid": "a72c575"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-28T14:18:29Z",
+          "updatedAt": "2025-02-28T14:18:30Z",
+          "comments": [
+            {
+              "originalPosition": 13,
+              "body": "I'm regenerating the examples in a separate PR. Makes it easier to merge, etc.",
+              "createdAt": "2025-02-28T14:18:29Z",
+              "updatedAt": "2025-02-28T14:18:30Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786eAW0i",
+          "commit": {
+            "abbreviatedOid": "a72c575"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-28T14:21:06Z",
+          "updatedAt": "2025-02-28T14:21:06Z",
+          "comments": [
+            {
+              "originalPosition": 13,
+              "body": "okay, that works too ",
+              "createdAt": "2025-02-28T14:21:06Z",
+              "updatedAt": "2025-02-28T14:21:06Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786eAW8I",
+          "commit": {
+            "abbreviatedOid": "a72c575"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-02-28T14:21:18Z",
+          "updatedAt": "2025-02-28T14:21:18Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 99,
+      "id": "PR_kwDOLJmm786M9Aua",
+      "title": "Fix examples, add generating code",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/99",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "See title",
+      "createdAt": "2025-02-28T15:13:54Z",
+      "updatedAt": "2025-02-28T17:04:42Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "bc1d511696258eef2ddd23abf96fdef468b83192",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "arndt/add-example",
+      "headRefOid": "f182342eff3c0e0d99d7321e20243f7017095887",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm786eBKK5",
+          "commit": {
+            "abbreviatedOid": "f182342"
+          },
+          "author": "copilot-pull-request-reviewer",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "## PR Overview\n\nThis PR updates the examples by adding new token generation code in Go and revising the protocol documentation examples for Workload Identity Tokens (WIT) and Workload Proof Tokens (WPT).  \n- Introduces a complete Go example in examples/main.go that generates keys, signs tokens, and prints the results.  \n- Updates the protocol document (draft-ietf-wimse-s2s-protocol.md) with revised example tokens and headers.\n\n### Reviewed Changes\n\n| File                                   | Description                                                   |\n| -------------------------------------- | ------------------------------------------------------------- |\n| examples/main.go                       | Added code for generating tokens and digital signatures.     |\n| draft-ietf-wimse-s2s-protocol.md         | Updated example JWT tokens and headers in the protocol draft. |\n\nCopilot reviewed 6 out of 6 changed files in this pull request and generated 1 comment.\n\n<details>\n<summary>Comments suppressed due to low confidence (1)</summary>\n\n**examples/main.go:26**\n* [nitpick] The keyID constant is set to 'June 5', which may be unclear as a key identifier; consider using a more descriptive and unambiguous identifier.\n```\nkeyID      = \"June 5\"\n```\n</details>\n\n",
+          "createdAt": "2025-02-28T15:34:38Z",
+          "updatedAt": "2025-02-28T15:34:38Z",
+          "comments": [
+            {
+              "originalPosition": 113,
+              "body": "The Workload-Identity-Token example appears split across multiple lines in the diff. This could lead to copy/paste issues; ensure that the token is presented as a single continuous string per specification.\n```suggestion\nWorkload-Identity-Token: eyJhbGciOiJFUzI1NiIsImtpZCI6Ikp1bmUgNSIsInR5cCI6IndpbXNlLWlkK2p3dCJ9.eyJjbmYiOnsiandrIjp7ImNydiI6IkVkMjU1MTkiLCJrdHkiOiJPS1AiLCJ4Ijoiclp3VUEwVHJIazRBWEs5MkY2Vll2bUhIWDN4VU0tSUdsck11VkNRaG04VSJ9fSwiZXhwIjoxNzQwNzU4MzQ4LCJpYXQiOjE3NDA3NTQ3NDgsImp0aSI6IjRmYzc3ZmNlZjU3MWIzYmIzM2I2NzJlYWYyMDRmYWY0Iiwic3ViIjoid2ltc2U6Ly9leGFtcGxlLmNvbS9zcGVjaWZpYy13b3JrbG9hZCJ9.j-WlF3bufTwWeVZQntPhlzvSTPwf37-4wfazJZARdHYmW9S_olB5nKEqwqTZpIX_LoVVIcyK0VBE7Fa0CMvw2g\n```",
+              "createdAt": "2025-02-28T15:34:38Z",
+              "updatedAt": "2025-02-28T15:34:38Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786eBYPU",
+          "commit": {
+            "abbreviatedOid": "f182342"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-28T15:58:23Z",
+          "updatedAt": "2025-02-28T15:58:23Z",
+          "comments": [
+            {
+              "originalPosition": 113,
+              "body": "Copilot is (almost) right again, and that's why we have `rfcfold.sh`.",
+              "createdAt": "2025-02-28T15:58:23Z",
+              "updatedAt": "2025-02-28T15:58:46Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786eBa26",
+          "commit": {
+            "abbreviatedOid": "f182342"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-28T16:02:55Z",
+          "updatedAt": "2025-02-28T16:02:55Z",
+          "comments": [
+            {
+              "originalPosition": 113,
+              "body": "I tried RFC fold but it adds slashes which makes it even worse IMO.",
+              "createdAt": "2025-02-28T16:02:55Z",
+              "updatedAt": "2025-02-28T16:03:02Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786eBd9v",
+          "commit": {
+            "abbreviatedOid": "f182342"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-28T16:08:00Z",
+          "updatedAt": "2025-02-28T16:08:01Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "Please consider using [PCG](https://pkg.go.dev/math/rand/v2#PCG) instead of a real RNG. It's good enough for our purposes of course, and the main reason it's useful is that it can be seeded, e.g. with a constant value. That means you can rerun it after you make some changes and still get the same results.",
+              "createdAt": "2025-02-28T16:08:01Z",
+              "updatedAt": "2025-02-28T16:08:01Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786eB-26",
+          "commit": {
+            "abbreviatedOid": "f182342"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-28T17:04:41Z",
+          "updatedAt": "2025-02-28T17:04:42Z",
+          "comments": [
+            {
+              "originalPosition": 113,
+              "body": "But we are using it already, in Sec. 4.3. So let's use it here as well (I agree the backslashes are not great, esthetically) and be consistent.",
+              "createdAt": "2025-02-28T17:04:41Z",
+              "updatedAt": "2025-02-28T17:04:42Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 101,
+      "id": "PR_kwDOLJmm786NCwbv",
+      "title": "add error section",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/101",
+      "state": "OPEN",
+      "author": "jsalowey",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves issue #15 ",
+      "createdAt": "2025-03-01T19:44:05Z",
+      "updatedAt": "2025-03-01T19:44:42Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "bc1d511696258eef2ddd23abf96fdef468b83192",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "error-conditions",
+      "headRefOid": "ba6d42ab711fd6152cbdead48172e07d9e771449",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
