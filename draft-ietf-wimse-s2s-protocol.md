@@ -657,11 +657,14 @@ TODO: `Workload-Proof-Token` from {{dpop-esque-auth}}
 # Document History
 <cref>RFC Editor: please remove before publication.</cref>
 
-## latest
+## draft-ietf-wimse-s2s-protocol-03
 
+* Consistently use "workload".
+* Implement comments from the SPIFFE community.
 * Make `iss` claim in WIT optional and add wording about its relation to key distribution.
 * Remove `iss` claim from WPT.
 * Make `jti` claim in WIT optional.
+* Error handling for the application level methods.
 
 ## draft-ietf-wimse-s2s-protocol-02
 
