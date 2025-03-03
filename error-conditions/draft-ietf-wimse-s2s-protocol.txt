@@ -5,12 +5,12 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 2 September 2025                                         Venafi
+Expires: 4 September 2025                                         Venafi
                                                       A. Schwenkschuster
                                                                    SPIRL
                                                               Y. Sheffer
                                                                   Intuit
-                                                            1 March 2025
+                                                            3 March 2025
 
 
                WIMSE Workload to Workload Authentication
@@ -66,7 +66,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 2 September 2025.
+   This Internet-Draft will expire on 4 September 2025.
 
 Copyright Notice
 
@@ -823,10 +823,10 @@ Table of Contents
    data structure, an error is returned.  Typically, this will be in
    response to an API call, so an HTTP status code such as 400 (Bad
    Request) is appropriate.  This response could include more details as
-   per [RFC7807] and [RFC9457], such as an indicator that the wrong key
-   material or algorithm was used.  If the WPT or message signature is
-   used for another purpose, such as authentication to start a session,
-   a different response may be more appropriate, such as an HTTP status
+   per [RFC9457], such as an indicator that the wrong key material or
+   algorithm was used.  If the WPT or message signature is used for
+   another purpose, such as authentication to start a session, a
+   different response may be more appropriate, such as an HTTP status
    code of 401 (Unauthorized) or 403 (Forbidden).
 
 4.6.  Coexistence with JWT Bearer Tokens
