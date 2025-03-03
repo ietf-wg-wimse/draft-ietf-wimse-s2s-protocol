@@ -285,7 +285,7 @@ The Identity Server's public key from this example is shown below in JWK {{RFC75
 
 A WIT is conveyed in an HTTP header field named `Workload-Identity-Token`.
 
-For those who celebrate, ABNF {{RFC5234}} for the value of `Workload-Identity-Token` header field is provided in {{wit-header-abnf}}:
+ABNF {{RFC5234}} for the value of `Workload-Identity-Token` header field is provided in {{wit-header-abnf}}:
 
 ~~~ abnf
 ALPHA = %x41-5A / %x61-7A ; A-Z / a-z
