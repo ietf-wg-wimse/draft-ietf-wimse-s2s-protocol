@@ -2112,9 +2112,7 @@ trying to reinvent Message Signatures.<a href="#section-4.4-2.6.1" class="pilcro
 <p id="section-4.5-1">Errors may occur during the processing of the message signature or WPT. If the signature verification fails for any reason,
 such as an invalid signature, an expired validity time window, or a malformed data structure, an error is returned. Typically,
 this will be in response to an API call, so an HTTP status code such as 400 (Bad Request) is appropriate. This response could
-include more details as per <span>[<a href="#RFC9457" class="cite xref">RFC9457</a>]</span>, such as an indicator that the wrong key material or algorithm was used.
-If the WPT or message signature is used for another purpose, such as authentication to start a session, a different response may
-be more appropriate, such as an HTTP status code of 401 (Unauthorized) or 403 (Forbidden).<a href="#section-4.5-1" class="pilcrow">¶</a></p>
+include more details as per <span>[<a href="#RFC9457" class="cite xref">RFC9457</a>]</span>, such as an indicator that the wrong key material or algorithm was used.<a href="#section-4.5-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="coexist">
