@@ -114,7 +114,7 @@ Table of Contents
      8.1.  Normative References
      8.2.  Informative References
    Appendix A.  Document History
-     A.1.  latest
+     A.1.  draft-ietf-wimse-s2s-protocol-03
      A.2.  draft-ietf-wimse-s2s-protocol-02
      A.3.  draft-ietf-wimse-s2s-protocol-01
      A.4.  draft-ietf-wimse-s2s-protocol-00
@@ -1158,7 +1158,11 @@ Appendix A.  Document History
 
    // RFC Editor: please remove before publication.
 
-A.1.  latest
+A.1.  draft-ietf-wimse-s2s-protocol-03
+
+   *  Consistently use "workload".
+
+   *  Implement comments from the SPIFFE community.
 
    *  Make iss claim in WIT optional and add wording about its relation
       to key distribution.
@@ -1166,6 +1170,8 @@ A.1.  latest
    *  Remove iss claim from WPT.
 
    *  Make jti claim in WIT optional.
+
+   *  Error handling for the application level methods.
 
 A.2.  draft-ietf-wimse-s2s-protocol-02
 
