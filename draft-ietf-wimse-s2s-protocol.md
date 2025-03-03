@@ -544,8 +544,6 @@ Errors may occur during the processing of the message signature or WPT. If the s
 such as an invalid signature, an expired validity time window, or a malformed data structure, an error is returned. Typically,
 this will be in response to an API call, so an HTTP status code such as 400 (Bad Request) is appropriate. This response could
 include more details as per {{RFC9457}}, such as an indicator that the wrong key material or algorithm was used.
-If the WPT or message signature is used for another purpose, such as authentication to start a session, a different response may
-be more appropriate, such as an HTTP status code of 401 (Unauthorized) or 403 (Forbidden).
 
 ## Coexistence with JWT Bearer Tokens {#coexist}
 
