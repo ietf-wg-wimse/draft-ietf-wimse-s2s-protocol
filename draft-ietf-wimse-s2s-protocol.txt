@@ -433,8 +433,8 @@ Table of Contents
    A WIT is conveyed in an HTTP header field named Workload-Identity-
    Token.
 
-   For those who celebrate, ABNF [RFC5234] for the value of Workload-
-   Identity-Token header field is provided in Figure 7:
+   ABNF [RFC5234] for the value of Workload-Identity-Token header field
+   is provided in Figure 7:
 
    ALPHA = %x41-5A / %x61-7A ; A-Z / a-z
    DIGIT = %x30-39 ; 0-9
@@ -1123,9 +1123,9 @@ Table of Contents
    [I-D.ietf-oauth-transaction-tokens]
               Tulshibagwale, A., Fletcher, G., and P. Kasselman,
               "Transaction Tokens", Work in Progress, Internet-Draft,
-              draft-ietf-oauth-transaction-tokens-04, 30 December 2024,
+              draft-ietf-oauth-transaction-tokens-05, 3 March 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              transaction-tokens-04>.
+              transaction-tokens-05>.
 
    [I-D.ietf-wimse-arch]
               Salowey, J. A., Rosomakho, Y., and H. Tschofenig,
