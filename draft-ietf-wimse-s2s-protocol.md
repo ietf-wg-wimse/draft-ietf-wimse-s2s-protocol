@@ -51,7 +51,6 @@ normative:
 
 informative:
   IANA.JOSE.ALGS: IANA.jose_web-signature-encryption-algorithms
-  RFC7807:
   RFC9457:
 
 --- abstract
