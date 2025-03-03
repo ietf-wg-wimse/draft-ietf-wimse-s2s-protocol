@@ -5,12 +5,12 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 1 September 2025                                         Venafi
+Expires: 4 September 2025                                         Venafi
                                                       A. Schwenkschuster
                                                                    SPIRL
                                                               Y. Sheffer
                                                                   Intuit
-                                                        28 February 2025
+                                                            3 March 2025
 
 
                WIMSE Workload to Workload Authentication
@@ -66,7 +66,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 1 September 2025.
+   This Internet-Draft will expire on 4 September 2025.
 
 Copyright Notice
 
@@ -97,7 +97,8 @@ Table of Contents
      4.2.  Option 1: DPoP-Inspired Authentication
      4.3.  Option 2: Authentication Based on HTTP Message Signatures
      4.4.  Comparing the DPoP Inspired Option with Message Signatures
-     4.5.  Coexistence with JWT Bearer Tokens
+     4.5.  Error Conditions
+     4.6.  Coexistence with JWT Bearer Tokens
    5.  Using Mutual TLS for Workload To Workload Authentication
      5.1.  Server Name Validation
      5.2.  Client Authorization Using the WIMSE Identity
@@ -814,7 +815,18 @@ Table of Contents
       fields, but this would make it closer to trying to reinvent
       Message Signatures.
 
-4.5.  Coexistence with JWT Bearer Tokens
+4.5.  Error Conditions
+
+   Errors may occur during the processing of the message signature or
+   WPT.  If the signature verification fails for any reason, such as an
+   invalid signature, an expired validity time window, or a malformed
+   data structure, an error is returned.  Typically, this will be in
+   response to an API call, so an HTTP status code such as 400 (Bad
+   Request) is appropriate.  This response could include more details as
+   per [RFC9457], such as an indicator that the wrong key material or
+   algorithm was used.
+
+4.6.  Coexistence with JWT Bearer Tokens
 
    The WIT and WPT define new HTTP headers.  They can therefore be
    presented along with existing headers used for JWT bearer tokens.
@@ -1123,9 +1135,9 @@ Table of Contents
               Salowey, J. A., Rosomakho, Y., and H. Tschofenig,
               "Workload Identity in a Multi System Environment (WIMSE)
               Architecture", Work in Progress, Internet-Draft, draft-
-              ietf-wimse-arch-03, 7 January 2025,
+              ietf-wimse-arch-04, 2 March 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
-              arch-03>.
+              arch-04>.
 
    [IANA.JOSE.ALGS]
               IANA, "JSON Web Signature and Encryption Algorithms",
@@ -1140,6 +1152,10 @@ Table of Contents
               Jones, M., and D. Waite, "OAuth 2.0 Demonstrating Proof of
               Possession (DPoP)", RFC 9449, DOI 10.17487/RFC9449,
               September 2023, <https://www.rfc-editor.org/rfc/rfc9449>.
+
+   [RFC9457]  Nottingham, M., Wilde, E., and S. Dalal, "Problem Details
+              for HTTP APIs", RFC 9457, DOI 10.17487/RFC9457, July 2023,
+              <https://www.rfc-editor.org/rfc/rfc9457>.
 
 Appendix A.  Document History
 
