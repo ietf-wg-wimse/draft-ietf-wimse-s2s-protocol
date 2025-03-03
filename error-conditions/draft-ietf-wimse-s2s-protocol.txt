@@ -1135,9 +1135,9 @@ Table of Contents
               Salowey, J. A., Rosomakho, Y., and H. Tschofenig,
               "Workload Identity in a Multi System Environment (WIMSE)
               Architecture", Work in Progress, Internet-Draft, draft-
-              ietf-wimse-arch-03, 7 January 2025,
+              ietf-wimse-arch-04, 2 March 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
-              arch-03>.
+              arch-04>.
 
    [IANA.JOSE.ALGS]
               IANA, "JSON Web Signature and Encryption Algorithms",
@@ -1147,10 +1147,6 @@ Table of Contents
               and Registration Procedures for URI Schemes", BCP 35,
               RFC 7595, DOI 10.17487/RFC7595, June 2015,
               <https://www.rfc-editor.org/rfc/rfc7595>.
-
-   [RFC7807]  Nottingham, M. and E. Wilde, "Problem Details for HTTP
-              APIs", RFC 7807, DOI 10.17487/RFC7807, March 2016,
-              <https://www.rfc-editor.org/rfc/rfc7807>.
 
    [RFC9449]  Fett, D., Campbell, B., Bradley, J., Lodderstedt, T.,
               Jones, M., and D. Waite, "OAuth 2.0 Demonstrating Proof of
