@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-03-02T01:19:46.833050+00:00",
+  "timestamp": "2025-03-04T01:16:39.527341+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -167,9 +167,17 @@
       ],
       "body": "Examples in the the Message Signatures section do not include an Authorization header. But for a 401 response (which is likely if the workload-to-workload call is disallowed by policy) the spec requires WWW-Authenticate headers to be included. How can we return a 401, or do we need a whole new HTTP status code?",
       "createdAt": "2024-06-13T15:06:05Z",
-      "updatedAt": "2025-02-13T15:29:42Z",
+      "updatedAt": "2025-03-03T14:04:54Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Keeping this issue open, see @arndt-s comment on #101 .",
+          "createdAt": "2025-03-03T14:04:53Z",
+          "updatedAt": "2025-03-03T14:04:53Z"
+        }
+      ]
     },
     {
       "number": 16,
@@ -1760,6 +1768,22 @@
       "body": "The two WITs in the HTTP messages are suspiciously short and do not decode. Replace by the examples from Sec. 4.1.",
       "createdAt": "2025-02-28T16:28:54Z",
       "updatedAt": "2025-02-28T16:28:54Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 102,
+      "id": "I_kwDOLJmm786sVO8V",
+      "title": "Long lines: consistency",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/102",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "We sometimes use rfcfold.sh and sometimes not, see PR #99.",
+      "createdAt": "2025-03-03T13:23:57Z",
+      "updatedAt": "2025-03-03T13:23:57Z",
       "closedAt": null,
       "comments": []
     }
@@ -7864,24 +7888,26 @@
       "id": "PR_kwDOLJmm786M9Aua",
       "title": "Fix examples, add generating code",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/99",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "See title",
       "createdAt": "2025-02-28T15:13:54Z",
-      "updatedAt": "2025-02-28T17:04:42Z",
+      "updatedAt": "2025-03-03T13:23:04Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "bc1d511696258eef2ddd23abf96fdef468b83192",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "arndt/add-example",
       "headRefOid": "f182342eff3c0e0d99d7321e20243f7017095887",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-03-03T13:23:04Z",
+      "mergedAt": "2025-03-03T13:23:04Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "bd17c3a7575d7d17fc38c0f7f1032d32a5c9ab42"
+      },
       "comments": [],
       "reviews": [
         {
@@ -7983,6 +8009,79 @@
               "updatedAt": "2025-02-28T17:04:42Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786eKkDL",
+          "commit": {
+            "abbreviatedOid": "f182342"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-03-03T09:40:12Z",
+          "updatedAt": "2025-03-03T09:40:12Z",
+          "comments": [
+            {
+              "originalPosition": 113,
+              "body": "I believe this case is different and backslashes add non-whitespace characters in between. Currently one can copy and paste the token into decoding tools that automatically remove whitespace & new line characters from the string. ",
+              "createdAt": "2025-03-03T09:40:12Z",
+              "updatedAt": "2025-03-03T09:40:12Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786eKsCR",
+          "commit": {
+            "abbreviatedOid": "f182342"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-03-03T09:52:16Z",
+          "updatedAt": "2025-03-03T09:52:16Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "While I agree that deterministic results have a benefit:\r\n* math/rand shouldn't be used in crypto. \r\n* math/rand/v2 doesn't implement io.Reader for exactly that reason (see https://go.dev/blog/randv2#problem.read)\r\n* I would worry that this code gets used as reference and insecure code gets copied\r\n* Instead, I would just store the keys in the directory directly (we have private keys in the doc already)\r\n\r\nLet's merge this PR and discuss at our next sync? ",
+              "createdAt": "2025-03-03T09:52:16Z",
+              "updatedAt": "2025-03-03T09:52:16Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786eMpkm",
+          "commit": {
+            "abbreviatedOid": "f182342"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-03-03T13:21:49Z",
+          "updatedAt": "2025-03-03T13:21:49Z",
+          "comments": [
+            {
+              "originalPosition": 113,
+              "body": "I disagree with your point re: rfcfold, but I'll merge anyway and let's discuss.",
+              "createdAt": "2025-03-03T13:21:49Z",
+              "updatedAt": "2025-03-03T13:21:49Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786eMqA1",
+          "commit": {
+            "abbreviatedOid": "f182342"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-03-03T13:22:37Z",
+          "updatedAt": "2025-03-03T13:22:37Z",
+          "comments": []
         }
       ]
     },
@@ -7991,26 +8090,186 @@
       "id": "PR_kwDOLJmm786NCwbv",
       "title": "add error section",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/101",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "jsalowey",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Resolves issue #15 ",
       "createdAt": "2025-03-01T19:44:05Z",
-      "updatedAt": "2025-03-01T19:44:42Z",
+      "updatedAt": "2025-03-03T10:40:21Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "bc1d511696258eef2ddd23abf96fdef468b83192",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "error-conditions",
-      "headRefOid": "ba6d42ab711fd6152cbdead48172e07d9e771449",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "3fed3ce8d4208300535813a60c983e028d1b322a",
+      "closedAt": "2025-03-03T08:15:51Z",
+      "mergedAt": "2025-03-03T08:15:51Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "7a6de70116d7a8f864bca9dd2e5d26dd1b8f9d29"
+      },
+      "comments": [
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I think we should have added some text saying why 401 is not suitable, now it'll leave the reader just guessing.",
+          "createdAt": "2025-03-03T10:40:10Z",
+          "updatedAt": "2025-03-03T10:40:21Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm786eHXSW",
+          "commit": {
+            "abbreviatedOid": "ba6d42a"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2025-03-02T13:49:09Z",
+          "updatedAt": "2025-03-02T13:53:56Z",
+          "comments": [
+            {
+              "originalPosition": 18,
+              "body": "```suggestion\r\ninclude more details as per {{RFC9457}}, such as an indicator that the wrong key material or algorithm was used.\r\n```\r\n\r\nRFC 9457 obsoletes RFC 7807.",
+              "createdAt": "2025-03-02T13:49:10Z",
+              "updatedAt": "2025-03-02T13:53:56Z"
+            },
+            {
+              "originalPosition": 4,
+              "body": "```suggestion\r\n```\r\n\r\nSee below.",
+              "createdAt": "2025-03-02T13:49:42Z",
+              "updatedAt": "2025-03-02T13:53:56Z"
+            },
+            {
+              "originalPosition": 20,
+              "body": "This sentence is problematic IMO for two reasons:\r\n\r\n- We don't define the concept of a \"session\", rather we assume a classic REST model where each request is independent of the others. And of course each WPT or message signature provides workload authentication.\r\n- This still does not address my question in #15 regarding the `Authorization` header.",
+              "createdAt": "2025-03-02T13:53:35Z",
+              "updatedAt": "2025-03-02T13:53:56Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786eIGjU",
+          "commit": {
+            "abbreviatedOid": "ba6d42a"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-03-03T02:01:24Z",
+          "updatedAt": "2025-03-03T02:01:24Z",
+          "comments": [
+            {
+              "originalPosition": 20,
+              "body": "I'm happy to remove that part of the sentence.  I agree that it is problematic.  I don't think we can put anything in the authorization header as we do not use and leave it reserved for another token.  ",
+              "createdAt": "2025-03-03T02:01:24Z",
+              "updatedAt": "2025-03-03T02:01:24Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786eJvn_",
+          "commit": {
+            "abbreviatedOid": "3fed3ce"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-03-03T08:15:41Z",
+          "updatedAt": "2025-03-03T08:15:41Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 103,
+      "id": "PR_kwDOLJmm786NJ6gI",
+      "title": "Document history for -03",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/103",
+      "state": "MERGED",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-03-03T13:41:23Z",
+      "updatedAt": "2025-03-03T13:47:55Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "bd17c3a7575d7d17fc38c0f7f1032d32a5c9ab42",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-hist",
+      "headRefOid": "7cffcd567aacee9d47e6a183795d4a3b8df48c56",
+      "closedAt": "2025-03-03T13:47:55Z",
+      "mergedAt": "2025-03-03T13:47:55Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "028757eba8796ce52a58cca4280370b654d2eeb6"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm786eM14Q",
+          "commit": {
+            "abbreviatedOid": "7cffcd5"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-03-03T13:43:24Z",
+          "updatedAt": "2025-03-03T13:43:24Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 104,
+      "id": "PR_kwDOLJmm786NM_U_",
+      "title": "remove humor",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/104",
+      "state": "MERGED",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "remove \"For those who celebrate\" to avoid future push-back and b/c the context is more of a stretch here than where the text was first used",
+      "createdAt": "2025-03-03T20:00:41Z",
+      "updatedAt": "2025-03-03T22:31:06Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "028757eba8796ce52a58cca4280370b654d2eeb6",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "for-those-who-do-not",
+      "headRefOid": "10319b611b2b68863875e9531c90f93ef056e3c5",
+      "closedAt": "2025-03-03T22:31:06Z",
+      "mergedAt": "2025-03-03T22:31:06Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "c1ef627e1116c761502ae411261d08b6744d98d8"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm786eR6od",
+          "commit": {
+            "abbreviatedOid": "10319b6"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-03-03T22:28:36Z",
+          "updatedAt": "2025-03-03T22:28:36Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
