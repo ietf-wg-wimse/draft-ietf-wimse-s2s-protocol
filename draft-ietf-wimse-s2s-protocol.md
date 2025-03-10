@@ -470,8 +470,6 @@ a recipient MAY reject a message (request or response) if a nonce is repeated.
 To promote interoperability, the `ecdsa-p256-sha256` signing algorithm MUST be implemented
 by general purpose implementations of this document.
 
-<cref>OPEN ISSUE: do we use the Accept-Signature field to signal that the response must be signed?</cref>
-
 Following is a non-normative example of a signed request and a signed response,
 where the caller is using the keys specified in {{example-caller-jwk}}.
 
@@ -593,8 +591,6 @@ A deployment may specify other authorization policies based on the specific deta
 ## WIMSE Identity
 
 The WIMSE Identifier is scoped within an issuer and therefore any sub-components (path portion of Identifier) are only unique within a trust domain defined by the issuer. Using a WIMSE Identifier without taking into account the trust domain could allow one domain to issue tokens to spoof identities in another domain.  Additionally, the trust domain must be tied to an authorized issuer cryptographic trust anchor through some mechanism such as a JWKS or X.509 certificate chain. The association of an issuer, trust domain and a cryptographic trust anchor MUST be communicated securely out of band.
-
-<cref>TODO: Should there be a DNS name to trust domain mapping defined or some other discovery mechanism?</cref>
 
 ## Workload Identity Token and Proof of Possession
 
