@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-03-09T01:07:01.132626+00:00",
+  "timestamp": "2025-03-11T01:17:18.171524+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -1811,7 +1811,7 @@
     {
       "number": 105,
       "id": "I_kwDOLJmm786s5XqE",
-      "title": "Add security consideraiton when multiple workload identities are available",
+      "title": "Add security consideration when multiple workload identities are available",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/105",
       "state": "OPEN",
       "author": "arndt-s",
@@ -1820,9 +1820,72 @@
       "labels": [],
       "body": "If a workload is eligible to multiple identities there's some security gotchas we should highlight in the security considerations:\n\n* if we decide to do `aud==<peer id>` it is important for the workload to only accept identities that are valid for that call.\n",
       "createdAt": "2025-03-06T15:25:05Z",
-      "updatedAt": "2025-03-06T15:25:05Z",
+      "updatedAt": "2025-03-09T18:59:32Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 107,
+      "id": "I_kwDOLJmm786tMAyz",
+      "title": "Use Accept-Signature?",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/107",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "In the Message Signatures option, do we use the `Accept-Signature` field to signal that the response must be signed?",
+      "createdAt": "2025-03-09T18:50:58Z",
+      "updatedAt": "2025-03-09T18:50:58Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 108,
+      "id": "I_kwDOLJmm786tMBCt",
+      "title": "DNS names and trust domains",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/108",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Should there be a DNS name to trust domain mapping defined or some other discovery mechanism?\n\n(Formerly a TODO in the Security Considerations, under the WIMSE Identity subsection)",
+      "createdAt": "2025-03-09T18:52:56Z",
+      "updatedAt": "2025-03-09T18:52:56Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 110,
+      "id": "I_kwDOLJmm786tMBzb",
+      "title": "Replace a bunch of TODOs in the IANA Considerations",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/110",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Note that HTTP header fields are a [unique science](https://www.rfc-editor.org/rfc/rfc9110.html#name-field-extensibility).",
+      "createdAt": "2025-03-09T18:58:49Z",
+      "updatedAt": "2025-03-10T18:24:30Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "jricher",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Wherever possible, please use HTTP Structured Fields as this will be brought up in the HTTP Directorate review. When structured fields are not possible, be clear about the ABNF rules. Most JOSE-encoded values use `token68` as the production rule. ",
+          "createdAt": "2025-03-10T12:28:51Z",
+          "updatedAt": "2025-03-10T12:28:51Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "We've tried to give goodish ABNF at https://datatracker.ietf.org/doc/html/draft-ietf-wimse-s2s-protocol-03#section-4.1.1 and https://datatracker.ietf.org/doc/html/draft-ietf-wimse-s2s-protocol-03#section-4.2 knowing the appetite for HTTP Structured Fields and also that JWS doesn't fit particularly well into any of the SF items. ",
+          "createdAt": "2025-03-10T18:24:29Z",
+          "updatedAt": "2025-03-10T18:24:29Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -7402,7 +7465,7 @@
       "labels": [],
       "body": "This is purely editorial, but it changes the document's title and it resets the I-D to version -00. We also probably need to change the repo's name.\r\n\r\nFixes #13.",
       "createdAt": "2025-02-18T17:35:56Z",
-      "updatedAt": "2025-02-27T15:24:13Z",
+      "updatedAt": "2025-03-09T18:24:36Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "ab10cbcfacb942f2fa5f090600fa009f84bfa0a2",
@@ -8236,7 +8299,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-03-03T13:41:23Z",
-      "updatedAt": "2025-03-03T13:47:55Z",
+      "updatedAt": "2025-03-09T18:24:16Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "bd17c3a7575d7d17fc38c0f7f1032d32a5c9ab42",
@@ -8312,6 +8375,74 @@
           "body": "",
           "createdAt": "2025-03-03T22:28:36Z",
           "updatedAt": "2025-03-03T22:28:36Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 106,
+      "id": "PR_kwDOLJmm786N6FDJ",
+      "title": "Replay protection with jti",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/106",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "- Changed the document's \"subtitle\" (that's only used in paginated text versions).\r\n- Clarified that the WPT's contents (formerly: \"the WPT contains\") are all MUST.\r\n- Replay protection is now SHOULD for both PoP and Message Sig.\r\n\r\nFixes #29.",
+      "createdAt": "2025-03-09T18:46:52Z",
+      "updatedAt": "2025-03-09T18:47:10Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "c1ef627e1116c761502ae411261d08b6744d98d8",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-replay",
+      "headRefOid": "5e24c2c3aa59726cf5df3e1502cc192e89eaac36",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 109,
+      "id": "PR_kwDOLJmm786N6F08",
+      "title": "Remove TODOs, create issues.",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/109",
+      "state": "MERGED",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Created 2 issues to replace in-line TODOs.\r\n\r\nThe only remaining TODOs are in the IANA section.",
+      "createdAt": "2025-03-09T18:55:03Z",
+      "updatedAt": "2025-03-10T20:09:36Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "c1ef627e1116c761502ae411261d08b6744d98d8",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-todo",
+      "headRefOid": "5b857571a243e994486c2d8da39dacb3e4d062b4",
+      "closedAt": "2025-03-10T20:09:30Z",
+      "mergedAt": "2025-03-10T20:09:29Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "ae623ec8565d1962ba8041276becdc025b1ff487"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm786fQVJ3",
+          "commit": {
+            "abbreviatedOid": "5b85757"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-03-10T18:25:21Z",
+          "updatedAt": "2025-03-10T18:25:21Z",
           "comments": []
         }
       ]
