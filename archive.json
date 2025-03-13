@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-03-11T01:17:18.171524+00:00",
+  "timestamp": "2025-03-13T01:17:55.664484+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -1490,7 +1490,7 @@
       "labels": [],
       "body": "This spec should support an Option that builds on secure Workload Transport-layer authentication.  Well-established protocols exist for Workload-to-Workload communication over mutually authenticated TLS 1.3.\r\n\r\nI would like to propose an `Option 3: Transport-layer Proof-of-possession`, with a reference to the TLS credential used in the `cnf` claim of the WIT, based on https://datatracker.ietf.org/doc/html/rfc8705#section-3.1.\r\n\r\n1. _In the section `The Workload Identity Token {#to-wit}`, change the description of `cnf` to the following:_\r\n\r\n* `cnf` : A confirmation claim containing either the public key of the workload OR a cryptographically strong hash of the X.509 certificate conveyed during Transport layer security. \r\n    * The public key `cnf` contains the jwk member as defined in {{Section 3.2 of RFC7800}}. The workload MUST prove possession of the corresponding private key when presenting the WIT to another party, which can be accomplished by using it in conjunction with one of the methods in {{dpop-esque-auth}} or {{http-sig-auth}}. As such, it MUST NOT be used as a bearer token and is not intended for use in the Authorization header.\r\n    * The X.509 certificate hash `cnf` contains the `x5t#S256` hash as described in [Section 3.1](https://datatracker.ietf.org/doc/html/rfc8705#section-3.1) of [[RFC8705](https://datatracker.ietf.org/doc/html/rfc8705)]. When this value is provided, Proof-of-possession is delegated to the Transport-layer. The receiving Workload MUST verify that the `x5t#S256` claim matches the hash of the Client's X.509 Certificate presented at the Transport-layer.\r\n\r\n2. _Add the following sub-section after `Option 2: Authentication Based on HTTP Message Signatures {#http-sig-auth}`:_\r\n\r\n### Option 3: Transport-layer Proof-of-possession\r\n\r\nIn the case where Workload-to-Workload communication is secured by Mutually-authenticated [Transport Layer Security 1.3](https://datatracker.ietf.org/doc/html/rfc8446#section-2), Proof-of-possession is conveyed via each Workload's `CertificateVerify` message. In this case, the Transport-layer guarantees that each Workload has already validated its Peer's Proof-of-possession of the Private Key. Proof-of-possession is conveyed during the TLS 1.3 handshake protocol using each peer's `Certificate` and `CertificateVerify` messages, along with other protocol messages transmitted. The Transport-layer must cache the SHA-256 hash of the validated Client `Certificate` and the first Subject Alternative Name (SAN) URI entry for use at the Application-layer. When the Destination Workload receives a WIT at the Application-layer with `cnf` claim with `x5t#S256` property, it MUST establish Proof-of-possession as follows:\r\n* Validate that the Certificate-bound WIT's `cnf` claim's `x5t#S256` property matches the cached SHA-256 hash of the validated Client Certificate.\r\n* Validate that the WIT's `sub` claim matches the first Subject Alternative Name (SAN) URI entry.\r\n\r\nThe first step proves that the WIT was issued to the holder of the PrivateKey for the X.509 Certificate presented by the client, and that Private Key was used to establish the mTLS session over which the WIT was transmitted. The second step validates that both the X.509 Certificate and the WIT were issued to the same Workload.",
       "createdAt": "2024-10-29T20:07:56Z",
-      "updatedAt": "2025-03-06T16:00:19Z",
+      "updatedAt": "2025-03-12T19:58:06Z",
       "closedAt": null,
       "comments": [
         {
@@ -1513,6 +1513,13 @@
           "body": "@kenmccracken-google picking this up after a couple of months. \n\nDo you have a concrete scenario/use-case where this would be necessary/helpful?",
           "createdAt": "2025-03-06T15:59:10Z",
           "updatedAt": "2025-03-06T15:59:16Z"
+        },
+        {
+          "author": "kenmccracken-google",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Hi @arndt-s , The use-case is I'd like to address is when we have end-to-end mTLS through a proxy, e.g. client->proxy->backend.  I'd like to accomplish two goals:\n\n- reuse the PoP enforcement for the WIT, by referencing the client certificate thumbprint used during the already-established mTLS handshake.\n- forward the WIT through the proxy, to the backend, which may apply application business logic to it.\n\nHere's a use-case diagram\n\n```mermaid\ngraph TD;\n  client-->|mTLS_1+WIT_1|proxy;\n  proxy-->|mTLS_2+WIT_1|backend;\n```\n\n`mTLS_1`: mTLS using the public client's X.509 certificate.\n`WIT_1`: the client's WIT, sent in the `Workload-Identity-Token` header.  \n`mTLS_2` mTLS using the proxy's X.509 certificate.  \n\nWhat I would like to see is a WIT where the workload->proxy (first hop) enforces the WIT's PoP via reference to the X.509 certificate thumbprint used during the mTLS handshake.  In the proxy->backend (second hop), the backend receives the WIT, but trusts that the proxy completed PoP validation.  The forwarded WIT may provide additional security context for the request.  \n\nThe client must be in the proxy's trust bundle map, but may be an externally-deployed workload and may also be in a different trust domain. There is a high degree of trust between the proxy and backend, and they are deployed on secure infrastructure.  Since both the proxy and the backend are trusted services, the backend may trust the proxy's PoP validation.",
+          "createdAt": "2025-03-12T19:51:45Z",
+          "updatedAt": "2025-03-12T19:58:05Z"
         }
       ]
     },
