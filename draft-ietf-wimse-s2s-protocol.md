@@ -657,6 +657,10 @@ TODO: `Workload-Proof-Token` from {{dpop-esque-auth}}
 # Document History
 <cref>RFC Editor: please remove before publication.</cref>
 
+## latest
+
+* Require `cnf.jwk.alg` in WIT which restricts signature algorithm of WPT or http-sig
+
 ## draft-ietf-wimse-s2s-protocol-03
 
 * Consistently use "workload".
