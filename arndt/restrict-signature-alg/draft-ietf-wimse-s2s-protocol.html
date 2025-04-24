@@ -22,19 +22,19 @@ chain can have some calls use one protocol and some use the other. Workload A ca
 Workload B with mutual TLS authentication, while the next call from Workload B to Workload C
 would be authenticated at the application level. 
     " name="description">
-<meta content="xml2rfc 3.27.0" name="generator">
+<meta content="xml2rfc 3.28.1" name="generator">
 <meta content="workload" name="keyword">
 <meta content="identity" name="keyword">
 <meta content="draft-ietf-wimse-s2s-protocol-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.27.0
-    Python 3.12.9
+  xml2rfc 3.28.1
+    Python 3.12.10
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
     intervaltree 3.1.0
-    Jinja2 3.1.5
+    Jinja2 3.1.6
     lxml 5.3.0
-    platformdirs 4.3.6
+    platformdirs 4.3.7
     pycountry 24.6.1
     PyYAML 6.0.2
     requests 2.32.3
@@ -1058,11 +1058,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">WIMSE W2W Auth</td>
-<td class="right">February 2025</td>
+<td class="right">April 2025</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Campbell, et al.</td>
-<td class="center">Expires 31 August 2025</td>
+<td class="center">Expires 26 October 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1075,12 +1075,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-wimse-s2s-protocol-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-02-27" class="published">27 February 2025</time>
+<time datetime="2025-04-24" class="published">24 April 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-08-31">31 August 2025</time></dd>
+<dd class="expires"><time datetime="2025-10-26">26 October 2025</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1152,7 +1152,7 @@ would be authenticated at the application level.<a href="#section-abstract-1" cl
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 31 August 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 26 October 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1212,6 +1212,9 @@ would be authenticated at the application level.<a href="#section-abstract-1" cl
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1.2.1">
                     <p id="section-toc.1-1.4.2.1.2.1.1"><a href="#section-4.1.1" class="auto internal xref">4.1.1</a>.  <a href="#name-the-wit-http-header" class="internal xref">The WIT HTTP Header</a></p>
 </li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1.2.2">
+                    <p id="section-toc.1-1.4.2.1.2.2.1"><a href="#section-4.1.2" class="auto internal xref">4.1.2</a>.  <a href="#name-a-note-on-iss-claim-and-key" class="internal xref">A note on <code>iss</code> claim and key distribution</a></p>
+</li>
                 </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2">
@@ -1224,7 +1227,10 @@ would be authenticated at the application level.<a href="#section-abstract-1" cl
                 <p id="section-toc.1-1.4.2.4.1"><a href="#section-4.4" class="auto internal xref">4.4</a>.  <a href="#name-comparing-the-dpop-inspired" class="internal xref">Comparing the DPoP Inspired Option with Message Signatures</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.5">
-                <p id="section-toc.1-1.4.2.5.1"><a href="#section-4.5" class="auto internal xref">4.5</a>.  <a href="#name-coexistence-with-jwt-bearer" class="internal xref">Coexistence with JWT Bearer Tokens</a></p>
+                <p id="section-toc.1-1.4.2.5.1"><a href="#section-4.5" class="auto internal xref">4.5</a>.  <a href="#name-error-conditions" class="internal xref">Error Conditions</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.6">
+                <p id="section-toc.1-1.4.2.6.1"><a href="#section-4.6" class="auto internal xref">4.6</a>.  <a href="#name-coexistence-with-jwt-bearer" class="internal xref">Coexistence with JWT Bearer Tokens</a></p>
 </li>
             </ul>
 </li>
@@ -1282,13 +1288,16 @@ would be authenticated at the application level.<a href="#section-abstract-1" cl
             <p id="section-toc.1-1.9.1"><a href="#appendix-A" class="auto internal xref">Appendix A</a>.  <a href="#name-document-history" class="internal xref">Document History</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.1">
-                <p id="section-toc.1-1.9.2.1.1"><a href="#appendix-A.1" class="auto internal xref">A.1</a>.  <a href="#name-draft-ietf-wimse-s2s-protoc" class="internal xref">draft-ietf-wimse-s2s-protocol-02</a></p>
+                <p id="section-toc.1-1.9.2.1.1"><a href="#appendix-A.1" class="auto internal xref">A.1</a>.  <a href="#name-draft-ietf-wimse-s2s-protoc" class="internal xref">draft-ietf-wimse-s2s-protocol-03</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.2">
-                <p id="section-toc.1-1.9.2.2.1"><a href="#appendix-A.2" class="auto internal xref">A.2</a>.  <a href="#name-draft-ietf-wimse-s2s-protoco" class="internal xref">draft-ietf-wimse-s2s-protocol-01</a></p>
+                <p id="section-toc.1-1.9.2.2.1"><a href="#appendix-A.2" class="auto internal xref">A.2</a>.  <a href="#name-draft-ietf-wimse-s2s-protoco" class="internal xref">draft-ietf-wimse-s2s-protocol-02</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.3">
-                <p id="section-toc.1-1.9.2.3.1"><a href="#appendix-A.3" class="auto internal xref">A.3</a>.  <a href="#name-draft-ietf-wimse-s2s-protocol" class="internal xref">draft-ietf-wimse-s2s-protocol-00</a></p>
+                <p id="section-toc.1-1.9.2.3.1"><a href="#appendix-A.3" class="auto internal xref">A.3</a>.  <a href="#name-draft-ietf-wimse-s2s-protocol" class="internal xref">draft-ietf-wimse-s2s-protocol-01</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.4">
+                <p id="section-toc.1-1.9.2.4.1"><a href="#appendix-A.4" class="auto internal xref">A.4</a>.  <a href="#name-draft-ietf-wimse-s2s-protocol-" class="internal xref">draft-ietf-wimse-s2s-protocol-00</a></p>
 </li>
             </ul>
 </li>
@@ -1504,7 +1513,7 @@ A comparison of the two alternatives is attempted in <a href="#app-level-compari
         </h3>
 <p id="section-4.1-1">The Workload Identity Token (WIT) is a JWS <span>[<a href="#RFC7515" class="cite xref">RFC7515</a>]</span> signed JWT <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span> that represents the identity of a workload.
 It is issued by the Identity Server and binds a public key to the workload identity.
-A WIT <span class="bcp14">MUST</span> contain the following:<a href="#section-4.1-1" class="pilcrow">¶</a></p>
+A WIT <span class="bcp14">MUST</span> contain the following claims, except where noted:<a href="#section-4.1-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-4.1-2.1">
             <p id="section-4.1-2.1.1">in the JOSE header:<a href="#section-4.1-2.1.1" class="pilcrow">¶</a></p>
@@ -1522,7 +1531,7 @@ A WIT <span class="bcp14">MUST</span> contain the following:<a href="#section-4.
             <p id="section-4.1-2.2.1">in the JWT claims:<a href="#section-4.1-2.2.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-4.1-2.2.2.1">
-                <p id="section-4.1-2.2.2.1.1"><code>iss</code>: The issuer of the token, which is the Identity Server, represented by a URI.<a href="#section-4.1-2.2.2.1.1" class="pilcrow">¶</a></p>
+                <p id="section-4.1-2.2.2.1.1"><code>iss</code>: The issuer of the token, which is the Identity Server, represented by a URI. The <code>iss</code> claim is <span class="bcp14">RECOMMENDED</span> but optional, see <a href="#wit-iss-note" class="auto internal xref">Section 4.1.2</a> for more.<a href="#section-4.1-2.2.2.1.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-4.1-2.2.2.2">
                 <p id="section-4.1-2.2.2.2.1"><code>sub</code>: The subject of the token, which is the identity of the workload, represented by a URI.<a href="#section-4.1-2.2.2.2.1" class="pilcrow">¶</a></p>
@@ -1532,11 +1541,20 @@ A WIT <span class="bcp14">MUST</span> contain the following:<a href="#section-4.
 WITs should be refreshed regularly, e.g. on the order of hours.<a href="#section-4.1-2.2.2.3.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-4.1-2.2.2.4">
-                <p id="section-4.1-2.2.2.4.1"><code>jti</code>: A unique identifier for the token.<a href="#section-4.1-2.2.2.4.1" class="pilcrow">¶</a></p>
+                <p id="section-4.1-2.2.2.4.1"><code>jti</code>: A unique identifier for the token. This claim is <span class="bcp14">OPTIONAL</span>. The <code>jti</code> claim is frequently useful for auditing issuance of individual WITs or to revoke them, but some token generation environments do not support it.<a href="#section-4.1-2.2.2.4.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-4.1-2.2.2.5">
-                <p id="section-4.1-2.2.2.5.1"><code>cnf</code>: A confirmation claim containing the public key of the workload using the <code>jwk</code> member as defined in <span><a href="https://rfc-editor.org/rfc/rfc7800#section-3.2" class="relref">Section 3.2</a> of [<a href="#RFC7800" class="cite xref">RFC7800</a>]</span>.
-   The workload <span class="bcp14">MUST</span> prove possession of the corresponding private key when presenting the WIT to another party, which can be accomplished by using it in conjunction with one of the methods in <a href="#dpop-esque-auth" class="auto internal xref">Section 4.2</a> or <a href="#http-sig-auth" class="auto internal xref">Section 4.3</a>. As such, it <span class="bcp14">MUST NOT</span> be used as a bearer token and is not intended for use in the <code>Authorization</code> header.<a href="#section-4.1-2.2.2.5.1" class="pilcrow">¶</a></p>
+                <p id="section-4.1-2.2.2.5.1"><code>cnf</code>: A confirmation claim referencing the public key of the workload.<a href="#section-4.1-2.2.2.5.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-4.1-2.2.2.5.2.1">
+                    <p id="section-4.1-2.2.2.5.2.1.1"><code>jwk</code>: The public key of the workload as defined in <span><a href="https://rfc-editor.org/rfc/rfc7800#section-3.2" class="relref">Section 3.2</a> of [<a href="#RFC7800" class="cite xref">RFC7800</a>]</span>. The workload <span class="bcp14">MUST</span> prove possession of the corresponding private key when presenting the WIT to another party, which can be accomplished by using it in conjunction with one of the methods in <a href="#dpop-esque-auth" class="auto internal xref">Section 4.2</a> or <a href="#http-sig-auth" class="auto internal xref">Section 4.3</a>. As such, it <span class="bcp14">MUST NOT</span> be used as a bearer token and is not intended for use in the <code>Authorization</code> header.<a href="#section-4.1-2.2.2.5.2.1.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-4.1-2.2.2.5.2.1.2.1">
+                        <p id="section-4.1-2.2.2.5.2.1.2.1.1"><code>alg</code>: The signature algorithmn allowed to be used for the public key. The presented proof (WPT or http-sig) <span class="bcp14">MUST</span> be produced with the algorithmn specified in this field.<a href="#section-4.1-2.2.2.5.2.1.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                    </ul>
+</li>
+                </ul>
 </li>
             </ul>
 </li>
@@ -1546,13 +1564,13 @@ WITs should be refreshed regularly, e.g. on the order of hours.<a href="#section
 <figure id="figure-2">
           <div class="lang-jwt sourcecode" id="section-4.1-4.1">
 <pre>
-eyJ0eXAiOiJ3aW1zZS1pZCtqd3QiLCJhbGciOiJFUzI1NiIsImtpZCI6Ikp1bmUgNSJ9.
-eyJpc3MiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3RydXN0ZWQtY2VudHJhbC1hdXRob3Jpd
-HkiLCJleHAiOjE3MTc2MTI0NzAsInN1YiI6IndpbXNlOi8vZXhhbXBsZS5jb20vc3BlY2
-lmaWMtd29ya2xvYWQiLCJqdGkiOiJ4LV8xQ1RMMmNjYTNDU0U0Y3diX18iLCJjbmYiOns
-iandrIjp7Imt0eSI6Ik9LUCIsImNydiI6IkVkMjU1MTkiLCJ4IjoiX2FtUkMzWXJZYkho
-SDFSdFlyTDhjU21URE1oWXRPVVRHNzhjR1RSNWV6ayJ9fX0.rOSUMR8I5WhM5C704l3iV
-dY0zFqxhugJ8Jo2xo39G7FqUTbwTzAGdpz2lHp6eL1M486XmRgl3uyjj6R_iuzNOA
+eyJhbGciOiJFUzI1NiIsImtpZCI6Ikp1bmUgNSIsInR5cCI6IndpbXNlLWlkK2p3dCJ9.
+eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J2IjoiRWQyNTUxOSIsImt0eSI6I
+k9LUCIsIngiOiIxQ1hYdmZsTl9MVlZzSXNZWHNVdkIwM0ptbEdXZUNIcVFWdW91Q0Y5Mm
+JnIn19LCJleHAiOjE3NDU1MTI1MTAsImlhdCI6MTc0NTUwODkxMCwianRpIjoiYmQyYTd
+iNWJmODU3M2E0MWFkYjRjYmYzY2ZhMDFlMTUiLCJzdWIiOiJ3aW1zZTovL2V4YW1wbGUu
+Y29tL3NwZWNpZmljLXdvcmtsb2FkIn0.xpODXCUhZ2zk-1-W3VEqbqWhBX6_OJIl7vtja
+hgwJStMOCRn6J6is6f5mz-Pi5-Xk6FmV44k48NzulqMDVJbAw
 </pre>
 </div>
 <figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
@@ -1564,9 +1582,9 @@ dY0zFqxhugJ8Jo2xo39G7FqUTbwTzAGdpz2lHp6eL1M486XmRgl3uyjj6R_iuzNOA
           <div class="lang-json sourcecode" id="section-4.1-6.1">
 <pre>
 {
- "typ": "wimse-id+jwt",
- "alg": "ES256",
- "kid": "June 5"
+  "alg": "ES256",
+  "kid": "June 5",
+  "typ": "wimse-id+jwt"
 }
 </pre>
 </div>
@@ -1578,17 +1596,18 @@ dY0zFqxhugJ8Jo2xo39G7FqUTbwTzAGdpz2lHp6eL1M486XmRgl3uyjj6R_iuzNOA
           <div class="lang-json sourcecode" id="section-4.1-8.1">
 <pre>
 {
- "iss": "wimse://example.com/trusted-central-authority",
- "exp": 1717612470,
- "sub": "wimse://example.com/specific-workload",
- "jti": "x-_1CTL2cca3CSE4cwb__",
- "cnf": {
-  "jwk": {
-   "kty": "OKP",
-   "crv": "Ed25519",
-   "x": "_amRC3YrYbHhH1RtYrL8cSmTDMhYtOUTG78cGTR5ezk"
-  }
- }
+  "cnf": {
+    "jwk": {
+      "alg": "EdDSA",
+      "crv": "Ed25519",
+      "kty": "OKP",
+      "x": "1CXXvflN_LVVsIsYXsUvB03JmlGWeCHqQVuouCF92bg"
+    }
+  },
+  "exp": 1745512510,
+  "iat": 1745508910,
+  "jti": "bd2a7b5bf8573a41adb4cbf3cfa01e15",
+  "sub": "wimse://example.com/specific-workload"
 }
 </pre>
 </div>
@@ -1612,6 +1631,9 @@ dY0zFqxhugJ8Jo2xo39G7FqUTbwTzAGdpz2lHp6eL1M486XmRgl3uyjj6R_iuzNOA
           <li class="normal" id="section-4.1-10.5">
             <p id="section-4.1-10.5.1">binds the public key represented by the <code>jwk</code> confirmation method to the workload <code>wimse://example.com/specific-workload</code>.<a href="#section-4.1-10.5.1" class="pilcrow">¶</a></p>
 </li>
+          <li class="normal" id="section-4.1-10.6">
+            <p id="section-4.1-10.6.1">requires the proof to be produced with the <code>EdDSA</code> signature algorithm.<a href="#section-4.1-10.6.1" class="pilcrow">¶</a></p>
+</li>
         </ul>
 <p id="section-4.1-11">For elucidative purposes only, the workload's key, including the private part, is shown below in JWK <span>[<a href="#RFC7517" class="cite xref">RFC7517</a>]</span> format:<a href="#section-4.1-11" class="pilcrow">¶</a></p>
 <span id="name-example-workloads-key"></span><div id="example-caller-jwk">
@@ -1619,10 +1641,10 @@ dY0zFqxhugJ8Jo2xo39G7FqUTbwTzAGdpz2lHp6eL1M486XmRgl3uyjj6R_iuzNOA
           <div class="lang-jwk sourcecode" id="section-4.1-12.1">
 <pre>
 {
- "kty":"OKP",
- "crv":"Ed25519",
- "x":"_amRC3YrYbHhH1RtYrL8cSmTDMhYtOUTG78cGTR5ezk",
- "d":"G4lGAYFtFq5rwyjlgSIRznIoCF7MtKDHByyUUZCqLiA"
+ "kty": "OKP",
+ "crv": "Ed25519",
+ "x": "1CXXvflN_LVVsIsYXsUvB03JmlGWeCHqQVuouCF92bg",
+ "d": "sdLX8yCYKqo_XvGBLn-ZWeKT7llYeeQpgeCaXVxb5kY"
 }
 </pre>
 </div>
@@ -1637,11 +1659,11 @@ The Identity Server's public key from this example is shown below in JWK <span>[
           <div class="lang-jwk sourcecode" id="section-4.1-14.1">
 <pre>
 {
- "kty":"EC",
- "kid":"June 5",
- "x":"kXqnA2Op7hgd4zRMbw0iFcc_hDxUxhojxOFVGjE2gks",
- "y":"n__VndPMR021-59UAs0b9qDTFT-EZtT6xSNs_xFskLo",
- "crv":"P-256"
+ "kty": "EC",
+ "kid": "June 5",
+ "crv": "P-256",
+ "x": "Dy47KDeYao6kOhxSraJeJizjVxHjjo-9NsnrMqLyvOo",
+ "y": "bj3s7bncoSYURzAzF0jBy0JOnnP5-5E11vx5QoYEFgk"
 }
 </pre>
 </div>
@@ -1654,7 +1676,7 @@ The Identity Server's public key from this example is shown below in JWK <span>[
 <a href="#section-4.1.1" class="section-number selfRef">4.1.1. </a><a href="#name-the-wit-http-header" class="section-name selfRef">The WIT HTTP Header</a>
           </h4>
 <p id="section-4.1.1-1">A WIT is conveyed in an HTTP header field named <code>Workload-Identity-Token</code>.<a href="#section-4.1.1-1" class="pilcrow">¶</a></p>
-<p id="section-4.1.1-2">For those who celebrate, ABNF <span>[<a href="#RFC5234" class="cite xref">RFC5234</a>]</span> for the value of <code>Workload-Identity-Token</code> header field is provided in <a href="#wit-header-abnf" class="auto internal xref">Figure 7</a>:<a href="#section-4.1.1-2" class="pilcrow">¶</a></p>
+<p id="section-4.1.1-2">ABNF <span>[<a href="#RFC5234" class="cite xref">RFC5234</a>]</span> for the value of <code>Workload-Identity-Token</code> header field is provided in <a href="#wit-header-abnf" class="auto internal xref">Figure 7</a>:<a href="#section-4.1.1-2" class="pilcrow">¶</a></p>
 <span id="name-workload-identity-token-hea"></span><div id="wit-header-abnf">
 <figure id="figure-7">
             <div class="lang-abnf sourcecode" id="section-4.1.1-3.1">
@@ -1674,14 +1696,13 @@ WIT =  JWT
 <span id="name-an-example-workload-identity"></span><figure id="figure-8">
             <div class="lang-http-message sourcecode" id="section-4.1.1-5.1">
 <pre>
-Workload-Identity-Token: eyJ0eXAiOiJ3aW1zZS1pZCtqd3QiLCJhbGciOiJFUzI1
- NiIsImtpZCI6Ikp1bmUgNSJ9.eyJpc3MiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3RydXN
- 0ZWQtY2VudHJhbC1hdXRob3JpdHkiLCJleHAiOjE3MTc2MTI0NzAsInN1YiI6IndpbXN
- lOi8vZXhhbXBsZS5jb20vc3BlY2lmaWMtd29ya2xvYWQiLCJqdGkiOiJ4LV8xQ1RMMmN
- jYTNDU0U0Y3diX18iLCJjbmYiOnsiandrIjp7Imt0eSI6Ik9LUCIsImNydiI6IkVkMjU
- 1MTkiLCJ4IjoiX2FtUkMzWXJZYkhoSDFSdFlyTDhjU21URE1oWXRPVVRHNzhjR1RSNWV
- 6ayJ9fX0.rOSUMR8I5WhM5C704l3iVdY0zFqxhugJ8Jo2xo39G7FqUTbwTzAGdpz2lHp
- 6eL1M486XmRgl3uyjj6R_iuzNOA
+Workload-Identity-Token: eyJhbGciOiJFUzI1NiIsImtpZCI6Ikp1bmUgNSIsInR5
+cCI6IndpbXNlLWlkK2p3dCJ9.eyJjbmYiOnsiandrIjp7ImNydiI6IkVkMjU1MTkiLCJr
+dHkiOiJPS1AiLCJ4Ijoiclp3VUEwVHJIazRBWEs5MkY2Vll2bUhIWDN4VU0tSUdsck11V
+kNRaG04VSJ9fSwiZXhwIjoxNzQwNzU4MzQ4LCJpYXQiOjE3NDA3NTQ3NDgsImp0aSI6Ij
+RmYzc3ZmNlZjU3MWIzYmIzM2I2NzJlYWYyMDRmYWY0Iiwic3ViIjoid2ltc2U6Ly9leGF
+tcGxlLmNvbS9zcGVjaWZpYy13b3JrbG9hZCJ9.j-WlF3bufTwWeVZQntPhlzvSTPwf37-
+4wfazJZARdHYmW9S_olB5nKEqwqTZpIX_LoVVIcyK0VBE7Fa0CMvw2g
 </pre>
 </div>
 <figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
@@ -1690,6 +1711,14 @@ Workload-Identity-Token: eyJ0eXAiOiJ3aW1zZS1pZCtqd3QiLCJhbGciOiJFUzI1
 <p id="section-4.1.1-6">Note that per <span>[<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>, header field names are case insensitive;
 thus, <code>Workload-Identity-Token</code>, <code>workload-identity-token</code>, <code>WORKLOAD-IDENTITY-TOKEN</code>,
 etc., are all valid and equivalent header field names. However, case is significant in the header field value.<a href="#section-4.1.1-6" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="wit-iss-note">
+<section id="section-4.1.2">
+          <h4 id="name-a-note-on-iss-claim-and-key">
+<a href="#section-4.1.2" class="section-number selfRef">4.1.2. </a><a href="#name-a-note-on-iss-claim-and-key" class="section-name selfRef">A note on <code>iss</code> claim and key distribution</a>
+          </h4>
+<p id="section-4.1.2-1">It is <span class="bcp14">RECOMMENDED</span> that the WIT carries an <code>iss</code> claim. This specification itself does not make use of a potential <code>iss</code> claim but also carries the trust domain in the workload identifier (<a href="#workload-identifier" class="auto internal xref">Section 3.2</a>). Implementations <span class="bcp14">MAY</span> include the <code>iss</code> claim in the form of a <code>https</code> URL to facilitate key distribution via mechanisms like the <code>jwks_uri</code> from <span>[<a href="#RFC8414" class="cite xref">RFC8414</a>]</span> but alternative key distribution methods may make use of the trust domain included in the workload identifier which is carried in the mandatory <code>sub</code> claim.<a href="#section-4.1.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1723,7 +1752,7 @@ WPT =  JWT
 <ul class="normal">
 <li class="normal" id="section-4.2-5.1.2.1">
                 <p id="section-4.2-5.1.2.1.1"><code>alg</code>: An identifier for an appropriate JWS asymmetric digital signature algorithm corresponding to
-   the confirmation key in the associated WIT.<a href="#section-4.2-5.1.2.1.1" class="pilcrow">¶</a></p>
+   the confirmation key in the associated WIT. The value <span class="bcp14">MUST</span> match the <code>alg</code> value of the <code>jwk</code> in the <code>cnf</code> claim of the WIT.<a href="#section-4.2-5.1.2.1.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-4.2-5.1.2.2">
                 <p id="section-4.2-5.1.2.2.1"><code>typ</code>: the WPT is explicitly typed, as recommended in <span><a href="https://rfc-editor.org/rfc/rfc8725#section-3.11" class="relref">Section 3.11</a> of [<a href="#RFC8725" class="cite xref">RFC8725</a>]</span>,
@@ -1735,41 +1764,37 @@ WPT =  JWT
             <p id="section-4.2-5.2.1">in the JWT claims:<a href="#section-4.2-5.2.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-4.2-5.2.2.1">
-                <p id="section-4.2-5.2.2.1.1"><code>iss</code>: The issuer of the token, which is the calling workload, represented by the same value as the <code>sub</code> claim
-   of the associated WIT.<a href="#section-4.2-5.2.2.1.1" class="pilcrow">¶</a></p>
+                <p id="section-4.2-5.2.2.1.1"><code>aud</code>: The audience of the token contains the HTTP target URI (<span><a href="https://rfc-editor.org/rfc/rfc9110#section-7.1" class="relref">Section 7.1</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>) of the request
+   to which the WPT is attached, without query or fragment parts.<a href="#section-4.2-5.2.2.1.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-4.2-5.2.2.2">
-                <p id="section-4.2-5.2.2.2.1"><code>aud</code>: The audience of the token contains the HTTP target URI (<span><a href="https://rfc-editor.org/rfc/rfc9110#section-7.1" class="relref">Section 7.1</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>) of the request
-   to which the WPT is attached, without query or fragment parts.<a href="#section-4.2-5.2.2.2.1" class="pilcrow">¶</a></p>
+                <p id="section-4.2-5.2.2.2.1"><code>exp</code>: The expiration time of the WIT (as defined in <span><a href="https://rfc-editor.org/rfc/rfc7519#section-4.1.4" class="relref">Section 4.1.4</a> of [<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>). WPT lifetimes <span class="bcp14">MUST</span> be short,
+   e.g., on the order of minutes or seconds.<a href="#section-4.2-5.2.2.2.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-4.2-5.2.2.3">
-                <p id="section-4.2-5.2.2.3.1"><code>exp</code>: The expiration time of the WIT (as defined in <span><a href="https://rfc-editor.org/rfc/rfc7519#section-4.1.4" class="relref">Section 4.1.4</a> of [<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>). WPT lifetimes <span class="bcp14">MUST</span> be short,
-   e.g., on the order of minutes or seconds.<a href="#section-4.2-5.2.2.3.1" class="pilcrow">¶</a></p>
+                <p id="section-4.2-5.2.2.3.1"><code>jti</code>: A unique identifier for the token.<a href="#section-4.2-5.2.2.3.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-4.2-5.2.2.4">
-                <p id="section-4.2-5.2.2.4.1"><code>jti</code>: A unique identifier for the token.<a href="#section-4.2-5.2.2.4.1" class="pilcrow">¶</a></p>
+                <p id="section-4.2-5.2.2.4.1"><code>wth</code>: Hash of the Workload Identity Token, defined in <a href="#to-wit" class="auto internal xref">Section 4.1</a>. The value is the base64url encoding of the
+   SHA-256 hash of the ASCII encoding of the token's value.<a href="#section-4.2-5.2.2.4.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-4.2-5.2.2.5">
-                <p id="section-4.2-5.2.2.5.1"><code>wth</code>: Hash of the Workload Identity Token, defined in <a href="#to-wit" class="auto internal xref">Section 4.1</a>. The value is the base64url encoding of the
-   SHA-256 hash of the ASCII encoding of the token's value.<a href="#section-4.2-5.2.2.5.1" class="pilcrow">¶</a></p>
+                <p id="section-4.2-5.2.2.5.1"><code>ath</code>: Hash of the OAuth access token, if present in the request, which might convey end-user identity and
+   authorization context of the request. The value, as per <span><a href="https://rfc-editor.org/rfc/rfc9449#section-4.1" class="relref">Section 4.1</a> of [<a href="#RFC9449" class="cite xref">RFC9449</a>]</span>,
+   is the base64url encoding of the SHA-256 hash of the ASCII encoding of the access token's value.<a href="#section-4.2-5.2.2.5.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-4.2-5.2.2.6">
-                <p id="section-4.2-5.2.2.6.1"><code>ath</code>: Hash of the OAuth access token, if present in the request, which might convey end-user identity and
-   authorization context of the request. The value, as per <span><a href="https://rfc-editor.org/rfc/rfc9449#section-4.1" class="relref">Section 4.1</a> of [<a href="#RFC9449" class="cite xref">RFC9449</a>]</span>,
-   is the base64url encoding of the SHA-256 hash of the ASCII encoding of the access token's value.<a href="#section-4.2-5.2.2.6.1" class="pilcrow">¶</a></p>
-</li>
-              <li class="normal" id="section-4.2-5.2.2.7">
-                <p id="section-4.2-5.2.2.7.1"><code>tth</code>: Hash of the Txn-Token <span>[<a href="#I-D.ietf-oauth-transaction-tokens" class="cite xref">I-D.ietf-oauth-transaction-tokens</a>]</span>, if present in the request,
+                <p id="section-4.2-5.2.2.6.1"><code>tth</code>: Hash of the Txn-Token <span>[<a href="#I-D.ietf-oauth-transaction-tokens" class="cite xref">I-D.ietf-oauth-transaction-tokens</a>]</span>, if present in the request,
    which might convey end-user identity and authorization context of the request. The value <span class="bcp14">MUST</span> be the result of
    a base64url encoding (as defined in <span><a href="https://rfc-editor.org/rfc/rfc7515#section-2" class="relref">Section 2</a> of [<a href="#RFC7515" class="cite xref">RFC7515</a>]</span>) of the SHA-256 hash of
-   the ASCII encoding of the associated token's value.<a href="#section-4.2-5.2.2.7.1" class="pilcrow">¶</a></p>
+   the ASCII encoding of the associated token's value.<a href="#section-4.2-5.2.2.6.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="normal" id="section-4.2-5.2.2.8">
-                <p id="section-4.2-5.2.2.8.1"><code>oth</code>: Hash of any other token in the request that might convey end-user identity and authorization context of the
+              <li class="normal" id="section-4.2-5.2.2.7">
+                <p id="section-4.2-5.2.2.7.1"><code>oth</code>: Hash of any other token in the request that might convey end-user identity and authorization context of the
    request, if such a token exists.
    The value <span class="bcp14">MUST</span> be the result of a base64url encoding (as defined in <span><a href="https://rfc-editor.org/rfc/rfc7515#section-2" class="relref">Section 2</a> of [<a href="#RFC7515" class="cite xref">RFC7515</a>]</span>) of the
    SHA-256 hash of the ASCII encoding of the associated token's value.
-   (Note: this is less than ideal but seems we need something like this for extensibility.)<a href="#section-4.2-5.2.2.8.1" class="pilcrow">¶</a></p>
+   (Note: this is less than ideal but seems we need something like this for extensibility.)<a href="#section-4.2-5.2.2.7.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 </li>
@@ -1781,11 +1806,10 @@ WPT =  JWT
 <pre>
 eyJhbGciOiJFZERTQSIsInR5cCI6IndpbXNlLXByb29mK2p3dCJ9.eyJhdGgiOiJDTDR3
 amZwUm1OZi1iZFlJYllMblY5ZDVyTUFSR3dLWUUxMHdVd3pDMGpJIiwiYXVkIjoiaHR0c
-HM6Ly9zZXJ2aWNlLmV4YW1wbGUuY29tL3BhdGgiLCJleHAiOjE3Mjg2NTg2NzIsImlzcy
-I6IndpbXNlOi8vZXhhbXBsZS5jb20vc3BlY2lmaWMtd29ya2xvYWQiLCJqdGkiOiI0YjQ
-yYzVmNjExZTJiMWNmYTFkMmM0MWIzYTJmYjc4MiIsInd0aCI6Ii1KaThUbE1ORmszcW16
-bXBBeEJPXzdXLVl1dGNIXzJfZnVGQUZGU1YxUmcifQ.jrUBsDjWMG_FpuhLo3lNC-IBei
-PQXZ4UOuttPdNj8fRmIG4ZDFF9B10y7uGbiNIhbRdpgG_KXEPLHXWnvzLmBA
+HM6Ly93b3JrbG9hZC5leGFtcGxlLmNvbS9wYXRoIiwiZXhwIjoxNzQ1NTA5MjEwLCJqdG
+kiOiJlMzI5YmI4Njk2YWE0YWVjYTA0ODg2ZGQ3NmU3OGIyNiIsInd0aCI6InJvN3hGT1N
+HX2pZeG1VV2Z3ZXFrNVgxc2M2TDBzQ2o3NVdLVDkxZ014eFUifQ.oSegRTrBxuQN55oyW
+RK5PnPEZLhgRy0Va7BpxBw-a64E3map15dbDo9ArRcJ8M4Z4QZ829CCppfnuaLIei1bBQ
 </pre>
 </div>
 <figcaption><a href="#figure-10" class="selfRef">Figure 10</a>:
@@ -1812,10 +1836,9 @@ PQXZ4UOuttPdNj8fRmIG4ZDFF9B10y7uGbiNIhbRdpgG_KXEPLHXWnvzLmBA
 {
   "ath": "CL4wjfpRmNf-bdYIbYLnV9d5rMARGwKYE10wUwzC0jI",
   "aud": "https://workload.example.com/path",
-  "exp": 1728658672,
-  "iss": "wimse://example.com/specific-workload",
-  "jti": "4b42c5f611e2b1cfa1d2c41b3a2fb782",
-  "wth": "-Ji8TlMNFk3qmzmpAxBO_7W-YutcH_2_fuFAFFSV1Rg"
+  "exp": 1740755048,
+  "jti": "0c740386ca1dcad37de1b5f9de1b0705",
+  "wth": "aA0W_oFJK7qV7zYhcmzR1KOXVCHjd2x6c4sOQLvE90Y"
 }
 </pre>
 </div>
@@ -1832,22 +1855,20 @@ POST /path HTTP/1.1
 Host: workload.example.com
 Content-Type: application/json
 Authorization: Bearer 16_mAd0GiwaZokU26_0902100
-Workload-Identity-Token: eyJ0eXAiOiJ3aW1zZS1pZCtqd3QiLCJhbGciOiJFUzI\
-1NiIsImtpZCI6Ikp1bmUgNSJ9.eyJpc3MiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3RydX\
-N0ZWQtY2VudHJhbC1hdXRob3JpdHkiLCJleHAiOjE3MTc2MTI0NzAsInN1YiI6IndpbX\
-NlOi8vZXhhbXBsZS5jb20vc3BlY2lmaWMtd29ya2xvYWQiLCJqdGkiOiJ4LV8xQ1RMMm\
-NjYTNDU0U0Y3diX18iLCJjbmYiOnsiandrIjp7Imt0eSI6Ik9LUCIsImNydiI6IkVkMj\
-U1MTkiLCJ4IjoiX2FtUkMzWXJZYkhoSDFSdFlyTDhjU21URE1oWXRPVVRHNzhjR1RSNW\
-V6ayJ9fX0.rOSUMR8I5WhM5C704l3iVdY0zFqxhugJ8Jo2xo39G7FqUTbwTzAGdpz2lH\
-p6eL1M486XmRgl3uyjj6R_iuzNOA
+Workload-Identity-Token: eyJhbGciOiJFUzI1NiIsImtpZCI6Ikp1bmUgNSIsInR\
+5cCI6IndpbXNlLWlkK2p3dCJ9.eyJjbmYiOnsiandrIjp7ImNydiI6IkVkMjU1MTkiLC\
+JrdHkiOiJPS1AiLCJ4Ijoiclp3VUEwVHJIazRBWEs5MkY2Vll2bUhIWDN4VU0tSUdsck\
+11VkNRaG04VSJ9fSwiZXhwIjoxNzQwNzU4MzQ4LCJpYXQiOjE3NDA3NTQ3NDgsImp0aS\
+I6IjRmYzc3ZmNlZjU3MWIzYmIzM2I2NzJlYWYyMDRmYWY0Iiwic3ViIjoid2ltc2U6Ly\
+9leGFtcGxlLmNvbS9zcGVjaWZpYy13b3JrbG9hZCJ9.j-WlF3bufTwWeVZQntPhlzvST\
+Pwf37-4wfazJZARdHYmW9S_olB5nKEqwqTZpIX_LoVVIcyK0VBE7Fa0CMvw2g
 Workload-Proof-Token: eyJhbGciOiJFZERTQSIsInR5cCI6IndpbXNlLXByb29mK2\
 p3dCJ9.eyJhdGgiOiJDTDR3amZwUm1OZi1iZFlJYllMblY5ZDVyTUFSR3dLWUUxMHdVd\
-3pDMGpJIiwiYXVkIjoiaHR0cHM6Ly9zZXJ2aWNlLmV4YW1wbGUuY29tL3BhdGgiLCJle\
-HAiOjE3Mjg2NTg2NzIsImlzcyI6IndpbXNlOi8vZXhhbXBsZS5jb20vc3BlY2lmaWMtd\
-29ya2xvYWQiLCJqdGkiOiI0YjQyYzVmNjExZTJiMWNmYTFkMmM0MWIzYTJmYjc4MiIsI\
-nd0aCI6Ii1KaThUbE1ORmszcW16bXBBeEJPXzdXLVl1dGNIXzJfZnVGQUZGU1YxUmcif\
-Q.jrUBsDjWMG_FpuhLo3lNC-IBeiPQXZ4UOuttPdNj8fRmIG4ZDFF9B10y7uGbiNIhbR\
-dpgG_KXEPLHXWnvzLmBA
+3pDMGpJIiwiYXVkIjoiaHR0cHM6Ly93b3JrbG9hZC5leGFtcGxlLmNvbS9wYXRoIiwiZ\
+XhwIjoxNzQwNzU1MDQ4LCJqdGkiOiIwYzc0MDM4NmNhMWRjYWQzN2RlMWI1ZjlkZTFiM\
+DcwNSIsInd0aCI6ImFBMFdfb0ZKSzdxVjd6WWhjbXpSMUtPWFZDSGpkMng2YzRzT1FMd\
+kU5MFkifQ.W9RZqieXeD-UgdtbYf8ZNkf2_6_6b_kJSfkODQdq3_QDSSGOhVbRAR3qQo\
+Ou0SzihiG6HCsGwslfo4WdvnH5AQ
 
 {"do stuff":"please"}
 </pre>
@@ -1864,13 +1885,13 @@ dpgG_KXEPLHXWnvzLmBA
             <p id="section-4.2-15.2.1">The <code>Workload-Proof-Token</code> header field value is a single and well-formed JWT.<a href="#section-4.2-15.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.2-15.3">
-            <p id="section-4.2-15.3.1">The WPT signature is valid using the public key from the confirmation claim of the WIT.<a href="#section-4.2-15.3.1" class="pilcrow">¶</a></p>
+            <p id="section-4.2-15.3.1">The signature algorithm in the <code>alg</code> JOSE header string-equal matches the <code>alg</code> attribute of the <code>jwk</code> in the <code>cnf</code> claim of the WIT.<a href="#section-4.2-15.3.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.2-15.4">
-            <p id="section-4.2-15.4.1">The <code>typ</code> JOSE header parameter of the WPT conveys a media type of <code>wimse-proof+jwt</code>.<a href="#section-4.2-15.4.1" class="pilcrow">¶</a></p>
+            <p id="section-4.2-15.4.1">The WPT signature is valid using the public key from the confirmation claim of the WIT.<a href="#section-4.2-15.4.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.2-15.5">
-            <p id="section-4.2-15.5.1">The <code>iss</code> claim of the WPT matches the <code>sub</code> claim of the WIT. (Note: not sure <code>iss</code> in the WPT is useful or necessary.)<a href="#section-4.2-15.5.1" class="pilcrow">¶</a></p>
+            <p id="section-4.2-15.5.1">The <code>typ</code> JOSE header parameter of the WPT conveys a media type of <code>wimse-proof+jwt</code>.<a href="#section-4.2-15.5.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.2-15.6">
             <p id="section-4.2-15.6.1">The <code>aud</code> claim of the WPT matches the target URI, or an acceptable alias or normalization thereof, of the HTTP request
@@ -1980,11 +2001,10 @@ To detect message replays,
 a recipient <span class="bcp14">MAY</span> reject a message (request or response) if a nonce is repeated.<a href="#section-4.3-12" class="pilcrow">¶</a></p>
 <p id="section-4.3-13">To promote interoperability, the <code>ecdsa-p256-sha256</code> signing algorithm <span class="bcp14">MUST</span> be implemented
 by general purpose implementations of this document.<a href="#section-4.3-13" class="pilcrow">¶</a></p>
-<p id="section-4.3-14"><span class="cref">OPEN ISSUE: do we use the Accept-Signature field to signal that the response must be signed?</span><a href="#section-4.3-14" class="pilcrow">¶</a></p>
-<p id="section-4.3-15">Following is a non-normative example of a signed request and a signed response,
-where the caller is using the keys specified in <a href="#example-caller-jwk" class="auto internal xref">Figure 5</a>.<a href="#section-4.3-15" class="pilcrow">¶</a></p>
+<p id="section-4.3-14">Following is a non-normative example of a signed request and a signed response,
+where the caller is using the keys specified in <a href="#example-caller-jwk" class="auto internal xref">Figure 5</a>.<a href="#section-4.3-14" class="pilcrow">¶</a></p>
 <span id="name-signed-request"></span><figure id="figure-14">
-          <div class="lang-http sourcecode" id="section-4.3-16.1">
+          <div class="lang-http sourcecode" id="section-4.3-15.1">
 <pre>
 =============== NOTE: '\' line wrapping per RFC 8792 ================
 
@@ -2003,9 +2023,9 @@ Lgo.c2lnbmF0dXJlCg
 <figcaption><a href="#figure-14" class="selfRef">Figure 14</a>:
 <a href="#name-signed-request" class="selfRef">Signed Request</a>
           </figcaption></figure>
-<p id="section-4.3-17">Assuming that the workload being called has the following keypair:<a href="#section-4.3-17" class="pilcrow">¶</a></p>
+<p id="section-4.3-16">Assuming that the workload being called has the following keypair:<a href="#section-4.3-16" class="pilcrow">¶</a></p>
 <span id="name-callee-private-key"></span><figure id="figure-15">
-          <div class="lang-jwk sourcecode" id="section-4.3-18.1">
+          <div class="lang-jwk sourcecode" id="section-4.3-17.1">
 <pre>
 {
  "kty":"OKP",
@@ -2018,9 +2038,9 @@ Lgo.c2lnbmF0dXJlCg
 <figcaption><a href="#figure-15" class="selfRef">Figure 15</a>:
 <a href="#name-callee-private-key" class="selfRef">Callee Private Key</a>
           </figcaption></figure>
-<p id="section-4.3-19">A signed response would be:<a href="#section-4.3-19" class="pilcrow">¶</a></p>
+<p id="section-4.3-18">A signed response would be:<a href="#section-4.3-18" class="pilcrow">¶</a></p>
 <span id="name-signed-response"></span><figure id="figure-16">
-          <div class="lang-http sourcecode" id="section-4.3-20.1">
+          <div class="lang-http sourcecode" id="section-4.3-19.1">
 <pre>
 =============== NOTE: '\' line wrapping per RFC 8792 ================
 
@@ -2095,21 +2115,32 @@ trying to reinvent Message Signatures.<a href="#section-4.4-2.6.1" class="pilcro
         </ul>
 </section>
 </div>
-<div id="coexist">
+<div id="error-conditions">
 <section id="section-4.5">
-        <h3 id="name-coexistence-with-jwt-bearer">
-<a href="#section-4.5" class="section-number selfRef">4.5. </a><a href="#name-coexistence-with-jwt-bearer" class="section-name selfRef">Coexistence with JWT Bearer Tokens</a>
+        <h3 id="name-error-conditions">
+<a href="#section-4.5" class="section-number selfRef">4.5. </a><a href="#name-error-conditions" class="section-name selfRef">Error Conditions</a>
         </h3>
-<p id="section-4.5-1">The WIT and WPT define new HTTP headers. They can therefore be presented along with existing headers used for JWT bearer tokens. This
+<p id="section-4.5-1">Errors may occur during the processing of the message signature or WPT. If the signature verification fails for any reason,
+such as an invalid signature, an expired validity time window, or a malformed data structure, an error is returned. Typically,
+this will be in response to an API call, so an HTTP status code such as 400 (Bad Request) is appropriate. This response could
+include more details as per <span>[<a href="#RFC9457" class="cite xref">RFC9457</a>]</span>, such as an indicator that the wrong key material or algorithm was used.<a href="#section-4.5-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="coexist">
+<section id="section-4.6">
+        <h3 id="name-coexistence-with-jwt-bearer">
+<a href="#section-4.6" class="section-number selfRef">4.6. </a><a href="#name-coexistence-with-jwt-bearer" class="section-name selfRef">Coexistence with JWT Bearer Tokens</a>
+        </h3>
+<p id="section-4.6-1">The WIT and WPT define new HTTP headers. They can therefore be presented along with existing headers used for JWT bearer tokens. This
 property allows for transition from mechanisms using identity tokens based on bearer JWTs to proof of possession based WITs.
 A workload may implement a policy that accepts both bearer tokens and WITs during a transition period. This policy may be configurable
 per-caller to allow the workload to reject bearer tokens from callers that support WITs. Once a deployment fully supports WITs, then the use of
 bearer tokens for identity can be disabled through policy.  Implementations should be careful when implementing such a transition strategy,
-since the decision which token to prefer is made when the caller's identity has still not been authenticated, and needs to be revalidated following the authentication step.<a href="#section-4.5-1" class="pilcrow">¶</a></p>
-<p id="section-4.5-2">The WIT can also coexist with tokens used to establish security context, such as transaction tokens <span>[<a href="#I-D.ietf-oauth-transaction-tokens" class="cite xref">I-D.ietf-oauth-transaction-tokens</a>]</span>. In this case a workload's
+since the decision which token to prefer is made when the caller's identity has still not been authenticated, and needs to be revalidated following the authentication step.<a href="#section-4.6-1" class="pilcrow">¶</a></p>
+<p id="section-4.6-2">The WIT can also coexist with tokens used to establish security context, such as transaction tokens <span>[<a href="#I-D.ietf-oauth-transaction-tokens" class="cite xref">I-D.ietf-oauth-transaction-tokens</a>]</span>. In this case a workload's
 authorization policy may take into account both the sending workload's identity and the information in the context token. For example, the
 identity in the WIT may be used to establish which API calls can be made and information in the context token may be used to determine
-which specific resources can be accessed.<a href="#section-4.5-2" class="pilcrow">¶</a></p>
+which specific resources can be accessed.<a href="#section-4.6-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2165,7 +2196,6 @@ A deployment may specify other authorization policies based on the specific deta
 <a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-wimse-identity" class="section-name selfRef">WIMSE Identity</a>
         </h3>
 <p id="section-6.1-1">The WIMSE Identifier is scoped within an issuer and therefore any sub-components (path portion of Identifier) are only unique within a trust domain defined by the issuer. Using a WIMSE Identifier without taking into account the trust domain could allow one domain to issue tokens to spoof identities in another domain.  Additionally, the trust domain must be tied to an authorized issuer cryptographic trust anchor through some mechanism such as a JWKS or X.509 certificate chain. The association of an issuer, trust domain and a cryptographic trust anchor <span class="bcp14">MUST</span> be communicated securely out of band.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
-<p id="section-6.1-2"><span class="cref">TODO: Should there be a DNS name to trust domain mapping defined or some other discovery mechanism?</span><a href="#section-6.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="workload-identity-token-and-proof-of-possession">
@@ -2302,6 +2332,10 @@ While a fresh nonce could be included in the PoP, a mechanism for distributing a
         <dd>
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="RFC8414">[RFC8414]</dt>
+        <dd>
+<span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Sakimura, N.</span>, and <span class="refAuthor">J. Bradley</span>, <span class="refTitle">"OAuth 2.0 Authorization Server Metadata"</span>, <span class="seriesInfo">RFC 8414</span>, <span class="seriesInfo">DOI 10.17487/RFC8414</span>, <time datetime="2018-06" class="refDate">June 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8414">https://www.rfc-editor.org/rfc/rfc8414</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC8725">[RFC8725]</dt>
         <dd>
 <span class="refAuthor">Sheffer, Y.</span>, <span class="refAuthor">Hardt, D.</span>, and <span class="refAuthor">M. Jones</span>, <span class="refTitle">"JSON Web Token Best Current Practices"</span>, <span class="seriesInfo">BCP 225</span>, <span class="seriesInfo">RFC 8725</span>, <span class="seriesInfo">DOI 10.17487/RFC8725</span>, <time datetime="2020-02" class="refDate">February 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8725">https://www.rfc-editor.org/rfc/rfc8725</a>&gt;</span>. </dd>
@@ -2329,11 +2363,11 @@ While a fresh nonce could be included in the PoP, a mechanism for distributing a
 <dl class="references">
 <dt id="I-D.ietf-oauth-transaction-tokens">[I-D.ietf-oauth-transaction-tokens]</dt>
         <dd>
-<span class="refAuthor">Tulshibagwale, A.</span>, <span class="refAuthor">Fletcher, G.</span>, and <span class="refAuthor">P. Kasselman</span>, <span class="refTitle">"Transaction Tokens"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-transaction-tokens-04</span>, <time datetime="2024-12-30" class="refDate">30 December 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-transaction-tokens-04">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-transaction-tokens-04</a>&gt;</span>. </dd>
+<span class="refAuthor">Tulshibagwale, A.</span>, <span class="refAuthor">Fletcher, G.</span>, and <span class="refAuthor">P. Kasselman</span>, <span class="refTitle">"Transaction Tokens"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-transaction-tokens-05</span>, <time datetime="2025-03-03" class="refDate">3 March 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-transaction-tokens-05">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-transaction-tokens-05</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-wimse-arch">[I-D.ietf-wimse-arch]</dt>
         <dd>
-<span class="refAuthor">Salowey, J. A.</span>, <span class="refAuthor">Rosomakho, Y.</span>, and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"Workload Identity in a Multi System Environment (WIMSE) Architecture"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-arch-03</span>, <time datetime="2025-01-07" class="refDate">7 January 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-03">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-03</a>&gt;</span>. </dd>
+<span class="refAuthor">Salowey, J. A.</span>, <span class="refAuthor">Rosomakho, Y.</span>, and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"Workload Identity in a Multi System Environment (WIMSE) Architecture"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-arch-04</span>, <time datetime="2025-03-02" class="refDate">2 March 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-04">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-04</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="IANA.JOSE.ALGS">[IANA.JOSE.ALGS]</dt>
         <dd>
@@ -2344,8 +2378,12 @@ While a fresh nonce could be included in the PoP, a mechanism for distributing a
 <span class="refAuthor">Thaler, D., Ed.</span>, <span class="refAuthor">Hansen, T.</span>, and <span class="refAuthor">T. Hardie</span>, <span class="refTitle">"Guidelines and Registration Procedures for URI Schemes"</span>, <span class="seriesInfo">BCP 35</span>, <span class="seriesInfo">RFC 7595</span>, <span class="seriesInfo">DOI 10.17487/RFC7595</span>, <time datetime="2015-06" class="refDate">June 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7595">https://www.rfc-editor.org/rfc/rfc7595</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9449">[RFC9449]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Fett, D.</span>, <span class="refAuthor">Campbell, B.</span>, <span class="refAuthor">Bradley, J.</span>, <span class="refAuthor">Lodderstedt, T.</span>, <span class="refAuthor">Jones, M.</span>, and <span class="refAuthor">D. Waite</span>, <span class="refTitle">"OAuth 2.0 Demonstrating Proof of Possession (DPoP)"</span>, <span class="seriesInfo">RFC 9449</span>, <span class="seriesInfo">DOI 10.17487/RFC9449</span>, <time datetime="2023-09" class="refDate">September 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9449">https://www.rfc-editor.org/rfc/rfc9449</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9457">[RFC9457]</dt>
+      <dd>
+<span class="refAuthor">Nottingham, M.</span>, <span class="refAuthor">Wilde, E.</span>, and <span class="refAuthor">S. Dalal</span>, <span class="refTitle">"Problem Details for HTTP APIs"</span>, <span class="seriesInfo">RFC 9457</span>, <span class="seriesInfo">DOI 10.17487/RFC9457</span>, <time datetime="2023-07" class="refDate">July 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9457">https://www.rfc-editor.org/rfc/rfc9457</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -2358,67 +2396,94 @@ While a fresh nonce could be included in the PoP, a mechanism for distributing a
 <a href="#appendix-A" class="section-number selfRef">Appendix A. </a><a href="#name-document-history" class="section-name selfRef">Document History</a>
       </h2>
 <p id="appendix-A-1"><span class="cref">RFC Editor: please remove before publication.</span><a href="#appendix-A-1" class="pilcrow">¶</a></p>
-<div id="draft-ietf-wimse-s2s-protocol-02">
+<div id="draft-ietf-wimse-s2s-protocol-03">
 <section id="appendix-A.1">
         <h3 id="name-draft-ietf-wimse-s2s-protoc">
-<a href="#appendix-A.1" class="section-number selfRef">A.1. </a><a href="#name-draft-ietf-wimse-s2s-protoc" class="section-name selfRef">draft-ietf-wimse-s2s-protocol-02</a>
+<a href="#appendix-A.1" class="section-number selfRef">A.1. </a><a href="#name-draft-ietf-wimse-s2s-protoc" class="section-name selfRef">draft-ietf-wimse-s2s-protocol-03</a>
         </h3>
 <ul class="normal">
 <li class="normal" id="appendix-A.1-1.1">
-            <p id="appendix-A.1-1.1.1">Coexistence with bearer tokens.<a href="#appendix-A.1-1.1.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.1.1">Consistently use "workload".<a href="#appendix-A.1-1.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.2">
-            <p id="appendix-A.1-1.2.1">Improve the architecture diagram.<a href="#appendix-A.1-1.2.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.2.1">Implement comments from the SPIFFE community.<a href="#appendix-A.1-1.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.3">
-            <p id="appendix-A.1-1.3.1">Some more ABNF.<a href="#appendix-A.1-1.3.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.3.1">Make <code>iss</code> claim in WIT optional and add wording about its relation to key distribution.<a href="#appendix-A.1-1.3.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.4">
-            <p id="appendix-A.1-1.4.1">Clarified identifiers and URIs.<a href="#appendix-A.1-1.4.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.4.1">Remove <code>iss</code> claim from WPT.<a href="#appendix-A.1-1.4.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.5">
-            <p id="appendix-A.1-1.5.1">Moved an author to acknowledgments.<a href="#appendix-A.1-1.5.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.5.1">Make <code>jti</code> claim in WIT optional.<a href="#appendix-A.1-1.5.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.1-1.6">
+            <p id="appendix-A.1-1.6.1">Error handling for the application level methods.<a href="#appendix-A.1-1.6.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+</section>
+</div>
+<div id="draft-ietf-wimse-s2s-protocol-02">
+<section id="appendix-A.2">
+        <h3 id="name-draft-ietf-wimse-s2s-protoco">
+<a href="#appendix-A.2" class="section-number selfRef">A.2. </a><a href="#name-draft-ietf-wimse-s2s-protoco" class="section-name selfRef">draft-ietf-wimse-s2s-protocol-02</a>
+        </h3>
+<ul class="normal">
+<li class="normal" id="appendix-A.2-1.1">
+            <p id="appendix-A.2-1.1.1">Coexistence with bearer tokens.<a href="#appendix-A.2-1.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.2-1.2">
+            <p id="appendix-A.2-1.2.1">Improve the architecture diagram.<a href="#appendix-A.2-1.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.2-1.3">
+            <p id="appendix-A.2-1.3.1">Some more ABNF.<a href="#appendix-A.2-1.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.2-1.4">
+            <p id="appendix-A.2-1.4.1">Clarified identifiers and URIs.<a href="#appendix-A.2-1.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.2-1.5">
+            <p id="appendix-A.2-1.5.1">Moved an author to acknowledgments.<a href="#appendix-A.2-1.5.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
 </div>
 <div id="draft-ietf-wimse-s2s-protocol-01">
-<section id="appendix-A.2">
-        <h3 id="name-draft-ietf-wimse-s2s-protoco">
-<a href="#appendix-A.2" class="section-number selfRef">A.2. </a><a href="#name-draft-ietf-wimse-s2s-protoco" class="section-name selfRef">draft-ietf-wimse-s2s-protocol-01</a>
+<section id="appendix-A.3">
+        <h3 id="name-draft-ietf-wimse-s2s-protocol">
+<a href="#appendix-A.3" class="section-number selfRef">A.3. </a><a href="#name-draft-ietf-wimse-s2s-protocol" class="section-name selfRef">draft-ietf-wimse-s2s-protocol-01</a>
         </h3>
 <ul class="normal">
-<li class="normal" id="appendix-A.2-1.1">
-            <p id="appendix-A.2-1.1.1">Addressed multiple comments from Pieter.<a href="#appendix-A.2-1.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-A.3-1.1">
+            <p id="appendix-A.3-1.1.1">Addressed multiple comments from Pieter.<a href="#appendix-A.3-1.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-A.2-1.2">
-            <p id="appendix-A.2-1.2.1">Clarified WIMSE identity concepts, specifically "trust domain"
-and "workload identifier".<a href="#appendix-A.2-1.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-A.3-1.2">
+            <p id="appendix-A.3-1.2.1">Clarified WIMSE identity concepts, specifically "trust domain"
+and "workload identifier".<a href="#appendix-A.3-1.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-A.2-1.3">
-            <p id="appendix-A.2-1.3.1">Much more detail around mTLS, including some normative language.<a href="#appendix-A.2-1.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-A.3-1.3">
+            <p id="appendix-A.3-1.3.1">Much more detail around mTLS, including some normative language.<a href="#appendix-A.3-1.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-A.2-1.4">
-            <p id="appendix-A.2-1.4.1">WIT (the identity token) is now included in the WPT proof of possession.<a href="#appendix-A.2-1.4.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-A.3-1.4">
+            <p id="appendix-A.3-1.4.1">WIT (the identity token) is now included in the WPT proof of possession.<a href="#appendix-A.3-1.4.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-A.2-1.5">
-            <p id="appendix-A.2-1.5.1">Added a section comparing the DPoP-inspired app-level security option to
-the Message Signature-based alternative.<a href="#appendix-A.2-1.5.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-A.3-1.5">
+            <p id="appendix-A.3-1.5.1">Added a section comparing the DPoP-inspired app-level security option to
+the Message Signature-based alternative.<a href="#appendix-A.3-1.5.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
 </div>
 <div id="draft-ietf-wimse-s2s-protocol-00">
-<section id="appendix-A.3">
-        <h3 id="name-draft-ietf-wimse-s2s-protocol">
-<a href="#appendix-A.3" class="section-number selfRef">A.3. </a><a href="#name-draft-ietf-wimse-s2s-protocol" class="section-name selfRef">draft-ietf-wimse-s2s-protocol-00</a>
+<section id="appendix-A.4">
+        <h3 id="name-draft-ietf-wimse-s2s-protocol-">
+<a href="#appendix-A.4" class="section-number selfRef">A.4. </a><a href="#name-draft-ietf-wimse-s2s-protocol-" class="section-name selfRef">draft-ietf-wimse-s2s-protocol-00</a>
         </h3>
 <ul class="normal">
-<li class="normal" id="appendix-A.3-1.1">
-            <p id="appendix-A.3-1.1.1">Initial WG draft, an exact copy of draft-sheffer-wimse-s2s-protocol-00<a href="#appendix-A.3-1.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-A.4-1.1">
+            <p id="appendix-A.4-1.1.1">Initial WG draft, an exact copy of draft-sheffer-wimse-s2s-protocol-00<a href="#appendix-A.4-1.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-A.3-1.2">
-            <p id="appendix-A.3-1.2.1">Added this document history section<a href="#appendix-A.3-1.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-A.4-1.2">
+            <p id="appendix-A.4-1.2.1">Added this document history section<a href="#appendix-A.4-1.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
