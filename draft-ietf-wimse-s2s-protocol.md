@@ -471,6 +471,7 @@ A sender MUST ensure that each nonce it generates is unique, at least among mess
 To detect message replays,
 a recipient MAY reject a message (request or response) if a nonce is repeated.
 
+<!-- What do we do here? -->
 To promote interoperability, the `ecdsa-p256-sha256` signing algorithm MUST be implemented
 by general purpose implementations of this document.
 
