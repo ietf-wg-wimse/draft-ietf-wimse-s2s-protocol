@@ -200,19 +200,20 @@ A WIT MUST contain the following claims, except where noted:
     * `exp`: The expiration time of the token (as defined in {{Section 4.1.4 of RFC7519}}).
       WITs should be refreshed regularly, e.g. on the order of hours.
     * `jti`: A unique identifier for the token. This claim is OPTIONAL. The `jti` claim is frequently useful for auditing issuance of individual WITs or to revoke them, but some token generation environments do not support it.
-    * `cnf`: A confirmation claim containing the public key of the workload using the `jwk` member as defined in {{Section 3.2 of RFC7800}}.
-     The workload MUST prove possession of the corresponding private key when presenting the WIT to another party, which can be accomplished by using it in conjunction with one of the methods in {{dpop-esque-auth}} or {{http-sig-auth}}. As such, it MUST NOT be used as a bearer token and is not intended for use in the `Authorization` header.
+    * `cnf`: A confirmation claim referencing the public key of the workload.
+        * `jwk`: The public key of the workload as defined in {{Section 3.2 of RFC7800}}. The workload MUST prove possession of the corresponding private key when presenting the WIT to another party, which can be accomplished by using it in conjunction with one of the methods in {{dpop-esque-auth}} or {{http-sig-auth}}. As such, it MUST NOT be used as a bearer token and is not intended for use in the `Authorization` header.
+            * `alg`: The signature algorithmn allowed to be used for the public key. The presented proof (WPT or http-sig) MUST be produced with the algorithmn specified in this field.
 
 An example WIT might look like this (all examples, of course, are non-normative and with line breaks and extra space for readability):
 
 ~~~ jwt
 eyJhbGciOiJFUzI1NiIsImtpZCI6Ikp1bmUgNSIsInR5cCI6IndpbXNlLWlkK2p3dCJ9.
-eyJjbmYiOnsiandrIjp7ImNydiI6IkVkMjU1MTkiLCJrdHkiOiJPS1AiLCJ4Ijoiclp3V
-UEwVHJIazRBWEs5MkY2Vll2bUhIWDN4VU0tSUdsck11VkNRaG04VSJ9fSwiZXhwIjoxNz
-QwNzU4MzQ4LCJpYXQiOjE3NDA3NTQ3NDgsImp0aSI6IjRmYzc3ZmNlZjU3MWIzYmIzM2I
-2NzJlYWYyMDRmYWY0Iiwic3ViIjoid2ltc2U6Ly9leGFtcGxlLmNvbS9zcGVjaWZpYy13
-b3JrbG9hZCJ9.j-WlF3bufTwWeVZQntPhlzvSTPwf37-4wfazJZARdHYmW9S_olB5nKEq
-wqTZpIX_LoVVIcyK0VBE7Fa0CMvw2g
+eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J2IjoiRWQyNTUxOSIsImt0eSI6I
+k9LUCIsIngiOiIxQ1hYdmZsTl9MVlZzSXNZWHNVdkIwM0ptbEdXZUNIcVFWdW91Q0Y5Mm
+JnIn19LCJleHAiOjE3NDU1MTI1MTAsImlhdCI6MTc0NTUwODkxMCwianRpIjoiYmQyYTd
+iNWJmODU3M2E0MWFkYjRjYmYzY2ZhMDFlMTUiLCJzdWIiOiJ3aW1zZTovL2V4YW1wbGUu
+Y29tL3NwZWNpZmljLXdvcmtsb2FkIn0.xpODXCUhZ2zk-1-W3VEqbqWhBX6_OJIl7vtja
+hgwJStMOCRn6J6is6f5mz-Pi5-Xk6FmV44k48NzulqMDVJbAw
 ~~~
 {: #example-wit title="An example Workload Identity Token (WIT)"}
 
@@ -233,14 +234,15 @@ The decoded JWT claims of the WIT from the example above are shown here:
 {
   "cnf": {
     "jwk": {
+      "alg": "EdDSA",
       "crv": "Ed25519",
       "kty": "OKP",
-      "x": "rZwUA0TrHk4AXK92F6VYvmHHX3xUM-IGlrMuVCQhm8U"
+      "x": "1CXXvflN_LVVsIsYXsUvB03JmlGWeCHqQVuouCF92bg"
     }
   },
-  "exp": 1740758348,
-  "iat": 1740754748,
-  "jti": "4fc77fcef571b3bb33b672eaf204faf4",
+  "exp": 1745512510,
+  "iat": 1745508910,
+  "jti": "bd2a7b5bf8573a41adb4cbf3cfa01e15",
   "sub": "wimse://example.com/specific-workload"
 }
 ~~~
@@ -253,6 +255,7 @@ The claims indicate that the example WIT:
 * identifies the workload to which the token was issued as `wimse://example.com/specific-workload`.
 * has a unique identifier of `x-_1CTL2cca3CSE4cwb__`.
 * binds the public key represented by the `jwk` confirmation method to the workload `wimse://example.com/specific-workload`.
+* requires the proof to be produced with the `EdDSA` signature algorithm.
 
 For elucidative purposes only, the workload's key, including the private part, is shown below in JWK {{RFC7517}} format:
 
@@ -260,8 +263,8 @@ For elucidative purposes only, the workload's key, including the private part, i
 {
  "kty": "OKP",
  "crv": "Ed25519",
- "x": "rZwUA0TrHk4AXK92F6VYvmHHX3xUM-IGlrMuVCQhm8U",
- "d": "SFrq2PHwRyUGPbUxLVlNVq6XP4S2iklVo3GIBjlb6ZE"
+ "x": "1CXXvflN_LVVsIsYXsUvB03JmlGWeCHqQVuouCF92bg",
+ "d": "sdLX8yCYKqo_XvGBLn-ZWeKT7llYeeQpgeCaXVxb5kY"
 }
 ~~~
 {: #example-caller-jwk title="Example Workload's Key"}
@@ -275,8 +278,8 @@ The Identity Server's public key from this example is shown below in JWK {{RFC75
  "kty": "EC",
  "kid": "June 5",
  "crv": "P-256",
- "x": "aolos9KoHX-GeIO-TXhVg-D8BBzZtrHWMZt54SVwMQs",
- "y": "ouPmPL2f9U054ePXiaZ1-VxTvUhXssEbjWO8EAkM96s"
+ "x": "Dy47KDeYao6kOhxSraJeJizjVxHjjo-9NsnrMqLyvOo",
+ "y": "bj3s7bncoSYURzAzF0jBy0JOnnP5-5E11vx5QoYEFgk"
 }
 ~~~
 {: title="Example Identity Server Key"}
@@ -336,7 +339,7 @@ A WPT contains the following:
 
 * in the JOSE header:
     * `alg`: An identifier for an appropriate JWS asymmetric digital signature algorithm corresponding to
-     the confirmation key in the associated WIT.
+     the confirmation key in the associated WIT. The value MUST match the `alg` value of the `jwk` in the `cnf` claim of the WIT.
     * `typ`: the WPT is explicitly typed, as recommended in {{Section 3.11 of RFC8725}},
      using the `application/wimse-proof+jwt` media type.
 * in the JWT claims:
@@ -365,10 +368,10 @@ An example WPT might look like the following:
 ~~~ jwt
 eyJhbGciOiJFZERTQSIsInR5cCI6IndpbXNlLXByb29mK2p3dCJ9.eyJhdGgiOiJDTDR3
 amZwUm1OZi1iZFlJYllMblY5ZDVyTUFSR3dLWUUxMHdVd3pDMGpJIiwiYXVkIjoiaHR0c
-HM6Ly93b3JrbG9hZC5leGFtcGxlLmNvbS9wYXRoIiwiZXhwIjoxNzQwNzU1MDQ4LCJqdG
-kiOiIwYzc0MDM4NmNhMWRjYWQzN2RlMWI1ZjlkZTFiMDcwNSIsInd0aCI6ImFBMFdfb0Z
-KSzdxVjd6WWhjbXpSMUtPWFZDSGpkMng2YzRzT1FMdkU5MFkifQ.W9RZqieXeD-UgdtbY
-f8ZNkf2_6_6b_kJSfkODQdq3_QDSSGOhVbRAR3qQoOu0SzihiG6HCsGwslfo4WdvnH5AQ
+HM6Ly93b3JrbG9hZC5leGFtcGxlLmNvbS9wYXRoIiwiZXhwIjoxNzQ1NTA5MjEwLCJqdG
+kiOiJlMzI5YmI4Njk2YWE0YWVjYTA0ODg2ZGQ3NmU3OGIyNiIsInd0aCI6InJvN3hGT1N
+HX2pZeG1VV2Z3ZXFrNVgxc2M2TDBzQ2o3NVdLVDkxZ014eFUifQ.oSegRTrBxuQN55oyW
+RK5PnPEZLhgRy0Va7BpxBw-a64E3map15dbDo9ArRcJ8M4Z4QZ829CCppfnuaLIei1bBQ
 ~~~
 {: #example-wpt title="Example Workload Proof Token (WPT)"}
 
@@ -406,6 +409,7 @@ To validate the WPT in the request, the recipient MUST ensure the following:
 
 * There is exactly one `Workload-Proof-Token` header field in the request.
 * The `Workload-Proof-Token` header field value is a single and well-formed JWT.
+* The signature algorithm in the `alg` JOSE header string-equal matches the `alg` attribute of the `jwk` in the `cnf` claim of the WIT.
 * The WPT signature is valid using the public key from the confirmation claim of the WIT.
 * The `typ` JOSE header parameter of the WPT conveys a media type of `wimse-proof+jwt`.
 * The `aud` claim of the WPT matches the target URI, or an acceptable alias or normalization thereof, of the HTTP request
