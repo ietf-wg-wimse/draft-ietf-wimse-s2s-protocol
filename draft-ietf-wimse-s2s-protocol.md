@@ -201,8 +201,8 @@ A WIT MUST contain the following claims, except where noted:
       WITs should be refreshed regularly, e.g. on the order of hours.
     * `jti`: A unique identifier for the token. This claim is OPTIONAL. The `jti` claim is frequently useful for auditing issuance of individual WITs or to revoke them, but some token generation environments do not support it.
     * `cnf`: A confirmation claim referencing the public key of the workload.
-        * `jwk`: The public key of the workload as defined in {{Section 3.2 of RFC7800}}. The workload MUST prove possession of the corresponding private key when presenting the WIT to another party, which can be accomplished by using it in conjunction with one of the methods in {{dpop-esque-auth}} or {{http-sig-auth}}. As such, it MUST NOT be used as a bearer token and is not intended for use in the `Authorization` header.
-            * `alg`: The signature algorithmn allowed to be used for the public key. The presented proof (WPT or http-sig) MUST be produced with the algorithmn specified in this field.
+        * `jwk`: Within the cnf claim, a `jwk` key MUST be present that contains the public key of the workload as defined in {{Section 3.2 of RFC7800}}. The workload MUST prove possession of the corresponding private key when presenting the WIT to another party, which can be accomplished by using it in conjunction with one of the methods in {{dpop-esque-auth}} or {{http-sig-auth}}. As such, it MUST NOT be used as a bearer token and is not intended for use in the `Authorization` header.
+            * `alg`: Within the jwk object, an `alg` field MUST be present that specifies the signature algorithm allowed to be used for the public key. The presented proof (WPT or http-sig) MUST be produced with the algorithm specified in this field.
 
 An example WIT might look like this (all examples, of course, are non-normative and with line breaks and extra space for readability):
 
