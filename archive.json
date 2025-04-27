@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-04-01T01:32:57.767858+00:00",
+  "timestamp": "2025-04-27T01:26:25.747262+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -188,14 +188,14 @@
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
-        "bc-pi"
+        "arndt-s"
       ],
       "labels": [
         "ietf122"
       ],
       "body": "The `alg` Message Signature parameter is arguably a vulnerability waiting to happen, because verifiers would trust this field even though they lack context, similarly to the \"none\" issue with JWTs. IMO an algorithm should be strongly bound to a key. Can we make the `alg` field mandatory within the JWK instead?",
       "createdAt": "2024-06-13T16:27:20Z",
-      "updatedAt": "2025-02-13T15:50:37Z",
+      "updatedAt": "2025-04-24T14:49:43Z",
       "closedAt": null,
       "comments": [
         {
@@ -218,6 +218,13 @@
           "body": "> limit 'cnf' to 'jwk' only\r\n\r\nit is currently https://www.ietf.org/archive/id/draft-sheffer-wimse-s2s-protocol-00.html#section-4.1-2.2.2.5.1 ",
           "createdAt": "2024-07-15T16:46:30Z",
           "updatedAt": "2024-07-15T16:46:30Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "For the WIT, this does not make sense because the `alg` value is mandatory (see RFC 7515).",
+          "createdAt": "2025-04-24T14:40:57Z",
+          "updatedAt": "2025-04-24T14:40:57Z"
         }
       ]
     },
@@ -1430,9 +1437,38 @@
       "labels": [],
       "body": "Should the issuer (iss claim) be a restricted to be under the trust domain? ",
       "createdAt": "2024-10-16T10:33:48Z",
-      "updatedAt": "2025-03-06T15:54:16Z",
+      "updatedAt": "2025-04-25T15:19:49Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Locking the `iss` claim down to the trust domain name restricts either:\n- key discovery (as trust domain name may not be resolvable via DNS)\n- deployment burden (you would need to own DNS in order to deploy a trust domain)",
+          "createdAt": "2025-04-24T14:56:38Z",
+          "updatedAt": "2025-04-24T14:56:38Z"
+        },
+        {
+          "author": "PieterKas",
+          "authorAssociation": "NONE",
+          "body": "Reading this text:\n\n>A note on iss claim and key distribution {#wit-iss-note}\n>\n>It is RECOMMENDED that the WIT carries an iss claim. This specification itself does not make use of a potential iss claim but >also carries the trust domain in the workload identifier ({{workload-identifier}}). Implementations MAY include the iss claim in >the form of a https URL to facilitate key distribution via mechanisms like the jwks_uri from {{!RFC8414}} but alternative key >distribution methods may make use of the trust domain included in the workload identifier which is carried in the mandatory >sub claim.\n\nI think the \"iss\" claim is not indednted to be used to identify the issuer here (issuer is the trust domain), but rather the place where the keys can be recovered from. \n\nIn the OIDC/OAuth worlds, these two things are easy to combine as the issuer is identified through a URL that can be easily resolved. In this spec the issuer is indicated by the trust domain, which cannot be resolved. Using the \"iss\" claim for something other than indicating the issuer is going to be confusing to folks who expect these things to be the same.\n\nSome ideas:\n\n1. Use \"iss\" to indicate the trust domain and create a new claim for key dsicovery (downside not widely deployed).\n2. Use the \"iss\" claim to indicate the trust domain and explain how to map it to a URL if the iss cannot be resolved as a URL (remove scheme identitifer, replace with HTTPS, append ./welnknown etc).",
+          "createdAt": "2025-04-25T13:52:33Z",
+          "updatedAt": "2025-04-25T13:52:33Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Your ideas perfectly align with my comment from above:\n\n> 1. Use \"iss\" to indicate the trust domain and create a new claim for key dsicovery (downside not widely deployed).\n\nWe would need to re-invent the wheel for key discovery. I think that doing this for WIMSE (or at least making it explicit) would be good, but I don't think it should be done as part of W2W.\n\n> 2. Use the \"iss\" claim to indicate the trust domain and explain how to map it to a URL if the iss cannot be resolved as a URL (remove scheme identitifer, replace with HTTPS, append ./welnknown etc).\n\nThis would bring a heavy deployment burden into WIMSE IMO as it would require every deployment of a trust domain own the corresponding DNS name. (No more example.org trust domains, etc.). It also requires some sort of reachability from workloads to issuer via DNS + HTTPS if that makes sense? ",
+          "createdAt": "2025-04-25T14:36:35Z",
+          "updatedAt": "2025-04-25T14:36:35Z"
+        },
+        {
+          "author": "PieterKas",
+          "authorAssociation": "NONE",
+          "body": ">This would bring a heavy deployment burden into WIMSE IMO as it would require every deployment of a trust domain own the >corresponding DNS name. (No more example.org trust domains, etc.). It also requires some sort of reachability from >workloads to issuer via DNS + HTTPS if that makes sense?\n\nOnly if they want to support key distribution.... but I think that will be common enough - perhaps the most interesting innovation from OIDC was key distribution.... \n\nSo... that leaves us with a third option.... (status quo plus a bit of descriptive text - maybe that is not even needed).\n\n3. Allow the \"iss\" to be something other than the trust domain, document the implications of a delta and perhaps add some constraints that will allow the URL to be mapped back to the Trust Domain (e.g. how can I be sure that the URL is pointing to a trust bundle associated with the trust domain - perhaps the ability to verify a credentials using the retrieved key material is enough). ",
+          "createdAt": "2025-04-25T15:19:48Z",
+          "updatedAt": "2025-04-25T15:19:48Z"
+        }
+      ]
     },
     {
       "number": 73,
@@ -1946,6 +1982,22 @@
       "body": "In Section 4.1 there is an example WIT (figure 2). The document then has a correct decoded header and payload which matches the example WIT, but the following explanation doesn't match: https://www.ietf.org/archive/id/draft-ietf-wimse-s2s-protocol-03.html#section-4.1-9\n\n* was issued by an Identity Server known as wimse://example.com/trusted-central-authority.\n* is valid until May 15, 2024 3:28:45 PM GMT-06:00.\n* identifies the workload to which the token was issued as wimse://example.com/specific-workload.\n* has a unique identifier of x-_1CTL2cca3CSE4cwb__.\n* binds the public key represented by the jwk confirmation method to the workload wimse://example.com/specific-workload.\n\nThe errors are:\n\n* Example WIT doesn't have an `iss` claim.\n* Example WIT `exp` = `1740758348` (Fri Feb 28 2025 16:59:08 GMT+0100)\n* Correct\n* Example WIT `jti` = `4fc77fcef571b3bb33b672eaf204faf4`\n* Also correct I think. ",
       "createdAt": "2025-03-27T10:17:22Z",
       "updatedAt": "2025-03-27T10:17:22Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 114,
+      "id": "I_kwDOLJmm786z2wOW",
+      "title": "Security considerations: iss allowlist",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/114",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "If a deployment uses `iss` claim for key distribution it is crucial that a validator enforces allowed issuers via configuration (e.g. allowlist).\nOtherwise, any issuer can pose as a trust domain and tokens are accepted.",
+      "createdAt": "2025-04-24T14:23:03Z",
+      "updatedAt": "2025-04-24T14:23:03Z",
       "closedAt": null,
       "comments": []
     }
@@ -8506,6 +8558,173 @@
           "createdAt": "2025-03-10T18:25:21Z",
           "updatedAt": "2025-03-10T18:25:21Z",
           "comments": []
+        }
+      ]
+    },
+    {
+      "number": 115,
+      "id": "PR_kwDOLJmm786Typy3",
+      "title": "Restrict signature algorithmn via cnf.jwk.alg",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/115",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "See title. Resolves #16",
+      "createdAt": "2025-04-24T15:52:05Z",
+      "updatedAt": "2025-04-25T10:34:07Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "ae623ec8565d1962ba8041276becdc025b1ff487",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "arndt/restrict-signature-alg",
+      "headRefOid": "9461629c9b0423c8af5fdab9d1cf6219b2d398e6",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@strideynet not able to add you as a reviewer.",
+          "createdAt": "2025-04-24T15:55:06Z",
+          "updatedAt": "2025-04-24T15:55:06Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm786mZl6-",
+          "commit": {
+            "abbreviatedOid": "dbbc6c4"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-04-24T15:53:40Z",
+          "updatedAt": "2025-04-24T15:53:40Z",
+          "comments": [
+            {
+              "originalPosition": 116,
+              "body": "@yaronf any ideas? Do we just say it's the one from the WIT? Do we carry it along the headers too?",
+              "createdAt": "2025-04-24T15:53:40Z",
+              "updatedAt": "2025-04-24T15:53:40Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786mcfF5",
+          "commit": {
+            "abbreviatedOid": "dbbc6c4"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2025-04-24T20:57:04Z",
+          "updatedAt": "2025-04-24T21:04:08Z",
+          "comments": [
+            {
+              "originalPosition": 8,
+              "body": "Please say explicitly that `alg` is an attribute of `jwk`, don't just rely on the nested bullet to convey that.",
+              "createdAt": "2025-04-24T20:57:04Z",
+              "updatedAt": "2025-04-24T21:04:08Z"
+            },
+            {
+              "originalPosition": 55,
+              "body": "Shouldn't we add an `alg` field to the two examples below?",
+              "createdAt": "2025-04-24T20:58:50Z",
+              "updatedAt": "2025-04-24T21:04:08Z"
+            },
+            {
+              "originalPosition": 116,
+              "body": "I'm not sure what you're asking: to me this says that implementations must support this specific algorithm. But if the WIT explicitly requests another algorithm, that's totally fine. IOW I'm fine with the text as-is.\r\n\r\nAs a second order consideration, it would be kinda nice if our examples actually used the mandatory algorithm, but that's not strictly necessary.",
+              "createdAt": "2025-04-24T21:03:23Z",
+              "updatedAt": "2025-04-24T21:04:08Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786mfluy",
+          "commit": {
+            "abbreviatedOid": "dbbc6c4"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-04-25T07:58:05Z",
+          "updatedAt": "2025-04-25T07:58:06Z",
+          "comments": [
+            {
+              "originalPosition": 116,
+              "body": "The way I read it (and this could very well be wrong) is that only the ecdsa-p256-sha256 MUST be used for signatures. If this just optional and we want all workloads to be able to recognize it, I would suggest changing the wording from `implemented` to `supported`. ",
+              "createdAt": "2025-04-25T07:58:05Z",
+              "updatedAt": "2025-04-25T07:58:06Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786mfq9q",
+          "commit": {
+            "abbreviatedOid": "dbbc6c4"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-04-25T08:07:19Z",
+          "updatedAt": "2025-04-25T08:07:19Z",
+          "comments": [
+            {
+              "originalPosition": 55,
+              "body": "I don't think the keys in jwk presentation in the next 2 examples represent the workloads public key the way it's included in the WIT. \r\n\r\nDirectly after your comment: Workload private key (we could add alg into it, but its irrelevant)\r\nThe one following: WIT-signing public key (can be a whole different algorithm all-together, here EcDSA compared to workloads EdDSA)",
+              "createdAt": "2025-04-25T08:07:19Z",
+              "updatedAt": "2025-04-25T08:07:19Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786mhEz9",
+          "commit": {
+            "abbreviatedOid": "dbbc6c4"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-04-25T10:29:12Z",
+          "updatedAt": "2025-04-25T10:29:12Z",
+          "comments": [
+            {
+              "originalPosition": 116,
+              "body": "I thought it was clear :-(\r\n\r\nAnyway, I'm fine if you want to change it to \"supported\".",
+              "createdAt": "2025-04-25T10:29:12Z",
+              "updatedAt": "2025-04-25T10:29:12Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786mhHM6",
+          "commit": {
+            "abbreviatedOid": "9461629"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-04-25T10:34:06Z",
+          "updatedAt": "2025-04-25T10:34:07Z",
+          "comments": [
+            {
+              "originalPosition": 55,
+              "body": "I agree.",
+              "createdAt": "2025-04-25T10:34:06Z",
+              "updatedAt": "2025-04-25T10:34:07Z"
+            }
+          ]
         }
       ]
     }
