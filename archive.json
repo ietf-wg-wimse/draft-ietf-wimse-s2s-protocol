@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-04-27T01:26:25.747262+00:00",
+  "timestamp": "2025-04-29T01:22:16.226755+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -8573,7 +8573,7 @@
       "labels": [],
       "body": "See title. Resolves #16",
       "createdAt": "2025-04-24T15:52:05Z",
-      "updatedAt": "2025-04-25T10:34:07Z",
+      "updatedAt": "2025-04-28T17:23:30Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "ae623ec8565d1962ba8041276becdc025b1ff487",
@@ -8723,6 +8723,46 @@
               "body": "I agree.",
               "createdAt": "2025-04-25T10:34:06Z",
               "updatedAt": "2025-04-25T10:34:07Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786m5GHb",
+          "commit": {
+            "abbreviatedOid": "9461629"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-04-28T16:43:00Z",
+          "updatedAt": "2025-04-28T16:43:02Z",
+          "comments": [
+            {
+              "originalPosition": 116,
+              "body": "For the httpsig variant, should we say that:\n- implementations should rely on `WIT.cnf.jwk.alg` for http-sig algorithm, or\n- use `@signature-params: ...;alg=\"rsa-pss-sha512\", or\n- something else?\n\nhttp-sig says:\n> Additionally, while this specification does allow runtime specification of the algorithm using the alg signature parameter, applications are encouraged to use other mechanisms such as static configuration or a higher-protocol-level algorithm specification instead, preventing an attacker from substituting the algorithm specified.",
+              "createdAt": "2025-04-28T16:43:01Z",
+              "updatedAt": "2025-04-28T16:43:02Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786m5igX",
+          "commit": {
+            "abbreviatedOid": "dbbc6c4"
+          },
+          "author": "jricher",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-04-28T17:23:30Z",
+          "updatedAt": "2025-04-28T17:23:30Z",
+          "comments": [
+            {
+              "originalPosition": 116,
+              "body": "If there's a reliable place for an algorithm identifier that's outside the signature itself, we should use that. The claim within the WIT makes sense to me, the only question is whether that's a JOSE alg (seems to be) or an HTTPSig Alg (seems not to be). That just needs to be very clear.",
+              "createdAt": "2025-04-28T17:23:30Z",
+              "updatedAt": "2025-04-28T17:23:30Z"
             }
           ]
         }
