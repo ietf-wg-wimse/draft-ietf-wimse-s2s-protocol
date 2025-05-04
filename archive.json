@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-05-01T01:37:51.910989+00:00",
+  "timestamp": "2025-05-04T01:38:03.090409+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -8580,7 +8580,7 @@
       "labels": [],
       "body": "See title. Resolves #16",
       "createdAt": "2025-04-24T15:52:05Z",
-      "updatedAt": "2025-04-29T08:41:35Z",
+      "updatedAt": "2025-05-01T21:44:18Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "ae623ec8565d1962ba8041276becdc025b1ff487",
@@ -8790,6 +8790,106 @@
               "body": "Updated, please take a look.",
               "createdAt": "2025-04-29T08:41:34Z",
               "updatedAt": "2025-04-29T08:41:35Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786ndnZN",
+          "commit": {
+            "abbreviatedOid": "dbbc6c4"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-01T10:05:42Z",
+          "updatedAt": "2025-05-01T10:05:43Z",
+          "comments": [
+            {
+              "originalPosition": 116,
+              "body": "Agree with Justin. Within the WIT this would be a JOSE alg, and AFAIK there is no normative mapping from JOSE algs to HTTPSig algs. This is a problem but IMO not a showstopper.\r\n\r\nI'm wondering if we should say in Sec. 4.3 that the receiver MUST ignore any incoming `alg` parameter in the signature.",
+              "createdAt": "2025-05-01T10:05:43Z",
+              "updatedAt": "2025-05-01T10:05:43Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786neUkn",
+          "commit": {
+            "abbreviatedOid": "dbbc6c4"
+          },
+          "author": "jricher",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-01T12:58:24Z",
+          "updatedAt": "2025-05-01T12:58:25Z",
+          "comments": [
+            {
+              "originalPosition": 116,
+              "body": "There is not a mapping from a JOSE `alg` value to an HTTPSig `alg` value, however there is a normative mapping from a JOSE alg definition to the HTTPSig process, in https://www.rfc-editor.org/rfc/rfc9421.html#name-json-web-signature-jws-algo and I would recommend that we use this explicitly if we can count on their being a JOSE `alg` in a trusted place. GNAP does something similar since it carries the key in its initial request.",
+              "createdAt": "2025-05-01T12:58:24Z",
+              "updatedAt": "2025-05-01T12:58:25Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786ngUgM",
+          "commit": {
+            "abbreviatedOid": "9461629"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-01T17:13:12Z",
+          "updatedAt": "2025-05-01T17:13:13Z",
+          "comments": [
+            {
+              "originalPosition": 33,
+              "body": "Note for myself from SPIFFE sig-spec: This restricts WIT to be used with JOSE only.",
+              "createdAt": "2025-05-01T17:13:13Z",
+              "updatedAt": "2025-05-01T17:13:13Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786niRkx",
+          "commit": {
+            "abbreviatedOid": "9461629"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-01T21:34:10Z",
+          "updatedAt": "2025-05-01T21:34:10Z",
+          "comments": [
+            {
+              "originalPosition": 33,
+              "body": "Per the pointer that @jricher gave in https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/115/files#r2070242131 to  [RFC9421-3.3.7](https://www.rfc-editor.org/rfc/rfc9421.html#name-json-web-signature-jws-algo) - I don't think it actually does restrict the WIT to be used with JOSE only. No?",
+              "createdAt": "2025-05-01T21:34:10Z",
+              "updatedAt": "2025-05-01T21:34:10Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786niU2T",
+          "commit": {
+            "abbreviatedOid": "9461629"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-01T21:44:18Z",
+          "updatedAt": "2025-05-01T21:44:18Z",
+          "comments": [
+            {
+              "originalPosition": 116,
+              "body": "In this case the alg is coming from the cnf.jwk of the WIT so is trusted as much as anything happening in this context. \r\n\r\n[JWK says its alg](https://www.rfc-editor.org/rfc/rfc7517#section-4.4) should either be registered in the IANA \"JSON Web Signature and Encryption Algorithms\" registry ... or be a value that contains a Collision-Resistant Name\" which kinda suggests you shouldn't use something like ecdsa-p256-sha256 but doesn't outright prohibit it. \r\n\r\nWith that normative mapping from JOSE to HTTPSig that @jricher pointed to, it would probably make the most sense for the WIT to always use JOSE alg values in cnf.jwk.alg because that still allows for either the WPT or HTTPsig proof styles to be used.  ",
+              "createdAt": "2025-05-01T21:44:18Z",
+              "updatedAt": "2025-05-01T21:44:18Z"
             }
           ]
         }
