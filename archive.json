@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-05-04T01:38:03.090409+00:00",
+  "timestamp": "2025-05-06T01:23:09.057573+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -2007,6 +2007,46 @@
       "updatedAt": "2025-04-24T14:23:03Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 116,
+      "id": "I_kwDOLJmm7861QCK0",
+      "title": "Unclear section 4.3 signing material",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/116",
+      "state": "OPEN",
+      "author": "the--dud",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "I find that section 4.3 (https://www.ietf.org/archive/id/draft-ietf-wimse-s2s-protocol-03.html#name-option-2-authentication-bas) is unclear on what signing material to use for signing http message signing. It states \"This option uses the WIMSE Identity Token to sign the request and optionally, the response\".\n\nIn my opinion it's not using the WIT (Workload Identity Token) to sign messages, but it's using the key pair that the workload possesses which is also used for signing the WPT in the dPoP-inspired option 1.\n\nPartly I think the confusing arise because the key pair which the workload is supposed to use for \"Application Level Workload To Workload Authentication\" is not given a name or term, or clearly defined. This concept of the workload-owned key pair should be better defined and expanded upon.\n\nPS: The section also refers to \"WIMSE Identity Token\" which is inconsistent with all other WIMSE documentation. It should be called Workload Identity Token.",
+      "createdAt": "2025-05-05T21:33:20Z",
+      "updatedAt": "2025-05-05T21:34:38Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 117,
+      "id": "I_kwDOLJmm7861Qlta",
+      "title": "Inconsistent use of WIMSE server/client",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/117",
+      "state": "OPEN",
+      "author": "the--dud",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "In section 5. there is consistent usage of the terms \"WIMSE server\" and \"WIMSE client\", however in the rest of the document it simply refers to \"the workload\" implicitly as the originating/sending workload, and the \"WIMSE server\" is often referred to only as \"the recipient\".\n\nWhile I can understand that in the context of mTLS it might be tempting to refer to WIMSE server and client, it confuses the reader when the terms are not consistent.\nPerhaps we should consistently use \"sending workload\"/\"originating workload\" vs \"recipient workload\", or simply \"Workload A\" and \"Workload B\" as used in the illustrations?",
+      "createdAt": "2025-05-05T22:57:48Z",
+      "updatedAt": "2025-05-05T23:01:47Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "the--dud",
+          "authorAssociation": "NONE",
+          "body": "Actually in section 4.6 it also uses the term \"`the sending workload's identity`\"",
+          "createdAt": "2025-05-05T23:01:46Z",
+          "updatedAt": "2025-05-05T23:01:46Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -8580,7 +8620,7 @@
       "labels": [],
       "body": "See title. Resolves #16",
       "createdAt": "2025-04-24T15:52:05Z",
-      "updatedAt": "2025-05-01T21:44:18Z",
+      "updatedAt": "2025-05-05T17:32:41Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "ae623ec8565d1962ba8041276becdc025b1ff487",
@@ -8890,6 +8930,26 @@
               "body": "In this case the alg is coming from the cnf.jwk of the WIT so is trusted as much as anything happening in this context. \r\n\r\n[JWK says its alg](https://www.rfc-editor.org/rfc/rfc7517#section-4.4) should either be registered in the IANA \"JSON Web Signature and Encryption Algorithms\" registry ... or be a value that contains a Collision-Resistant Name\" which kinda suggests you shouldn't use something like ecdsa-p256-sha256 but doesn't outright prohibit it. \r\n\r\nWith that normative mapping from JOSE to HTTPSig that @jricher pointed to, it would probably make the most sense for the WIT to always use JOSE alg values in cnf.jwk.alg because that still allows for either the WPT or HTTPsig proof styles to be used.  ",
               "createdAt": "2025-05-01T21:44:18Z",
               "updatedAt": "2025-05-01T21:44:18Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786n0fql",
+          "commit": {
+            "abbreviatedOid": "9461629"
+          },
+          "author": "jricher",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-05T17:32:41Z",
+          "updatedAt": "2025-05-05T17:32:41Z",
+          "comments": [
+            {
+              "originalPosition": 33,
+              "body": "It would effectively restrict it to use JOSE-defined algs but the HTTPSig RFC at least says how to map a JOSE JWS alg to the HTTPSig primitives (`HTTP_SIGN` and `HTTP_VERIFY`) so for that case you're OK. It doesn't necessarily allow for future usages with other presentation mechanisms but I think that's fine.",
+              "createdAt": "2025-05-05T17:32:41Z",
+              "updatedAt": "2025-05-05T17:32:42Z"
             }
           ]
         }
