@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-05-06T01:23:09.057573+00:00",
+  "timestamp": "2025-05-08T01:24:16.789808+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -2014,13 +2014,13 @@
       "title": "Unclear section 4.3 signing material",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/116",
       "state": "OPEN",
-      "author": "the--dud",
+      "author": "dagdagdag83",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
-      "body": "I find that section 4.3 (https://www.ietf.org/archive/id/draft-ietf-wimse-s2s-protocol-03.html#name-option-2-authentication-bas) is unclear on what signing material to use for signing http message signing. It states \"This option uses the WIMSE Identity Token to sign the request and optionally, the response\".\n\nIn my opinion it's not using the WIT (Workload Identity Token) to sign messages, but it's using the key pair that the workload possesses which is also used for signing the WPT in the dPoP-inspired option 1.\n\nPartly I think the confusing arise because the key pair which the workload is supposed to use for \"Application Level Workload To Workload Authentication\" is not given a name or term, or clearly defined. This concept of the workload-owned key pair should be better defined and expanded upon.\n\nPS: The section also refers to \"WIMSE Identity Token\" which is inconsistent with all other WIMSE documentation. It should be called Workload Identity Token.",
+      "body": "I find that section 4.3 (https://www.ietf.org/archive/id/draft-ietf-wimse-s2s-protocol-03.html#name-option-2-authentication-bas) is unclear on what signing material to use for signing http message signing. It states \"This option uses the WIMSE Identity Token to sign the request and optionally, the response\".\n\nIt's not using the WIT (Workload Identity Token) to sign messages, it's using the key pair that the workload possesses which is also used for signing the WPT in the dPoP-inspired option 1.\n\nPartly I think the confusing arise because the key pair which the workload is supposed to use for \"Application Level Workload To Workload Authentication\" is not given a name or term, or clearly defined. This concept of the workload-owned key pair should be better defined and expanded upon.",
       "createdAt": "2025-05-05T21:33:20Z",
-      "updatedAt": "2025-05-05T21:34:38Z",
+      "updatedAt": "2025-05-07T19:42:53Z",
       "closedAt": null,
       "comments": []
     },
@@ -2047,6 +2047,22 @@
           "updatedAt": "2025-05-05T23:01:46Z"
         }
       ]
+    },
+    {
+      "number": 118,
+      "id": "I_kwDOLJmm7861fi7o",
+      "title": "Usage of terms not consistent",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/118",
+      "state": "OPEN",
+      "author": "dagdagdag83",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "There are two issues with usage of WIMSE/Workload terminology in this document:\n\n1. The usage is not consistent with other WIMSE documents and writings\n3. It over-uses the term WIMSE, when not appropriate or necessary.\n\nExample of 1: It says \"WIMSE Identity Token\" when in other places it uses the more correct term \"Workload Identity Token\".\nExample of 2: It says \"WIMSE workload identity\" when in the context of the document there is no need to specify WIMSE.",
+      "createdAt": "2025-05-07T07:12:25Z",
+      "updatedAt": "2025-05-07T19:37:51Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -8552,7 +8568,7 @@
       "labels": [],
       "body": "- Changed the document's \"subtitle\" (that's only used in paginated text versions).\r\n- Clarified that the WPT's contents (formerly: \"the WPT contains\") are all MUST.\r\n- Replay protection is now SHOULD for both PoP and Message Sig.\r\n\r\nFixes #29.",
       "createdAt": "2025-03-09T18:46:52Z",
-      "updatedAt": "2025-03-09T18:47:10Z",
+      "updatedAt": "2025-05-06T14:21:37Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "c1ef627e1116c761502ae411261d08b6744d98d8",
@@ -8564,7 +8580,128 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm786n5gOn",
+          "commit": {
+            "abbreviatedOid": "5e24c2c"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-06T04:50:21Z",
+          "updatedAt": "2025-05-06T04:50:21Z",
+          "comments": [
+            {
+              "originalPosition": 37,
+              "body": " Do we want to call this section something like \"Validation of the jti claim\"? ",
+              "createdAt": "2025-05-06T04:50:21Z",
+              "updatedAt": "2025-05-06T05:01:36Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786n5gfD",
+          "commit": {
+            "abbreviatedOid": "5e24c2c"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-06T04:51:32Z",
+          "updatedAt": "2025-05-06T04:51:33Z",
+          "comments": [
+            {
+              "originalPosition": 42,
+              "body": "Are there cases where pop replay is allowed or a 'feature'? ",
+              "createdAt": "2025-05-06T04:51:33Z",
+              "updatedAt": "2025-05-06T04:51:33Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786n_b9y",
+          "commit": {
+            "abbreviatedOid": "5e24c2c"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-06T14:05:23Z",
+          "updatedAt": "2025-05-06T14:05:24Z",
+          "comments": [
+            {
+              "originalPosition": 37,
+              "body": "Joe: maybe just \"replay protection\".",
+              "createdAt": "2025-05-06T14:05:24Z",
+              "updatedAt": "2025-05-06T14:05:24Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786n_nlD",
+          "commit": {
+            "abbreviatedOid": "5e24c2c"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-06T14:18:23Z",
+          "updatedAt": "2025-05-06T14:18:23Z",
+          "comments": [
+            {
+              "originalPosition": 22,
+              "body": "Brian: MUST use a unique value.",
+              "createdAt": "2025-05-06T14:18:23Z",
+              "updatedAt": "2025-05-06T14:18:23Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786n_qGe",
+          "commit": {
+            "abbreviatedOid": "5e24c2c"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-06T14:21:23Z",
+          "updatedAt": "2025-05-06T14:21:23Z",
+          "comments": [
+            {
+              "originalPosition": 22,
+              "body": "the sender must use a unique value but the checking on the receiver is optional/recommended ",
+              "createdAt": "2025-05-06T14:21:23Z",
+              "updatedAt": "2025-05-06T14:21:24Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786n_qRt",
+          "commit": {
+            "abbreviatedOid": "5e24c2c"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-06T14:21:36Z",
+          "updatedAt": "2025-05-06T14:21:37Z",
+          "comments": [
+            {
+              "originalPosition": 42,
+              "body": "No, plus reconsider the last sentence: \"not sufficiently scoped\".",
+              "createdAt": "2025-05-06T14:21:36Z",
+              "updatedAt": "2025-05-06T14:21:37Z"
+            }
+          ]
+        }
+      ]
     },
     {
       "number": 109,
@@ -8952,6 +9089,46 @@
               "updatedAt": "2025-05-05T17:32:42Z"
             }
           ]
+        }
+      ]
+    },
+    {
+      "number": 119,
+      "id": "PR_kwDOLJmm786VODzr",
+      "title": "Unified terms workload vs WIMSE",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/119",
+      "state": "OPEN",
+      "author": "dagdagdag83",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "* Unifies \"workload\" vs \"WIMSE\" terminology used in this document with other WIMSE documents, mainly the architecture doc.\r\n* Removes redundant usage of the \"WIMSE\" term.\r\n\r\nResolves #118 ",
+      "createdAt": "2025-05-07T07:19:16Z",
+      "updatedAt": "2025-05-07T18:19:38Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "ae623ec8565d1962ba8041276becdc025b1ff487",
+      "headRepository": "dagdagdag83/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "unified-terms-workload-vs-WIMSE",
+      "headRefOid": "c4362f59ae00ea4086b068c52e9380a5d2ed3284",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm786oQFPe",
+          "commit": {
+            "abbreviatedOid": "c4362f5"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Thanks @dagdagdag83, I agree this is a good cleanup/unification/improvement in terminology usage ",
+          "createdAt": "2025-05-07T18:19:38Z",
+          "updatedAt": "2025-05-07T18:19:38Z",
+          "comments": []
         }
       ]
     }
