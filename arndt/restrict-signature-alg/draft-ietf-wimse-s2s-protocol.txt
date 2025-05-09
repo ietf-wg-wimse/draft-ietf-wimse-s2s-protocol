@@ -5,12 +5,12 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 27 October 2025                                          Venafi
+Expires: 10 November 2025                                         Venafi
                                                       A. Schwenkschuster
                                                                    SPIRL
                                                               Y. Sheffer
                                                                   Intuit
-                                                           25 April 2025
+                                                              9 May 2025
 
 
                WIMSE Workload to Workload Authentication
@@ -66,7 +66,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 27 October 2025.
+   This Internet-Draft will expire on 10 November 2025.
 
 Copyright Notice
 
@@ -345,11 +345,15 @@ Table of Contents
             Section 4.3.  As such, it MUST NOT be used as a bearer token
             and is not intended for use in the Authorization header.
 
-            +  alg: Within the jwk object, an alg field MUST be present
-               that specifies the signature algorithm allowed to be used
-               for the public key.  The presented proof (WPT or http-
-               sig) MUST be produced with the algorithm specified in
-               this field.
+            +  alg: Within the jwk object, an alg field MUST be present.
+               Allowed values are listed in the IANA "JSON Web Signature
+               and Encryption Algorithms" registry established by
+               [RFC7518].  The presented proof (WPT or http-sig) MUST be
+               produced with the algorithm specified in this field.  The
+               value none MUST NOT be used.  Algorithms used in
+               combination with symmetric keys MUST NOT be used.  Also
+               encryption algorithmns MUST NOT be used as this would
+               require additional key distribution outside of the WIT.
 
    An example WIT might look like this (all examples, of course, are
    non-normative and with line breaks and extra space for readability):
@@ -511,7 +515,8 @@ Table of Contents
       -  alg: An identifier for an appropriate JWS asymmetric digital
          signature algorithm corresponding to the confirmation key in
          the associated WIT.  The value MUST match the alg value of the
-         jwk in the cnf claim of the WIT.
+         jwk in the cnf claim of the WIT.  See Section 4.1 for valid
+         values and restrictions.
 
       -  typ: the WPT is explicitly typed, as recommended in
          Section 3.11 of [RFC8725], using the application/wimse-
@@ -1091,6 +1096,10 @@ Table of Contents
    [RFC7517]  Jones, M., "JSON Web Key (JWK)", RFC 7517,
               DOI 10.17487/RFC7517, May 2015,
               <https://www.rfc-editor.org/rfc/rfc7517>.
+
+   [RFC7518]  Jones, M., "JSON Web Algorithms (JWA)", RFC 7518,
+              DOI 10.17487/RFC7518, May 2015,
+              <https://www.rfc-editor.org/rfc/rfc7518>.
 
    [RFC7519]  Jones, M., Bradley, J., and N. Sakimura, "JSON Web Token
               (JWT)", RFC 7519, DOI 10.17487/RFC7519, May 2015,
