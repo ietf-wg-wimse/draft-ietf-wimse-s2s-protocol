@@ -462,7 +462,9 @@ mechanisms in support of long-lived compute processes.
 * `nonce`
 * `tag` - the value for implementations of this specification is `wimse-workload-to-workload`
 
-Since the signing key is sent along with the message, the `keyid` parameter SHOULD NOT be used.
+The following signature parameters in the `Signature-Input` header MUST NOT be used:
+* `keyid` - The signing key is sent along with the message in the WIT. Additionally specifying the id of the key adds confusion.
+* `alg` - The signature algorithm is specified in the `jwk` section of the `cnf` claim in the WIT. See {{to-wit}} for details.
 
 It is RECOMMENDED to include only one signature with the HTTP message.
 If multiple ones are included, then the signature label included in both the `Signature-Input` and `Signature` headers SHOULD
@@ -472,8 +474,7 @@ A sender MUST ensure that each nonce it generates is unique, at least among mess
 To detect message replays,
 a recipient MAY reject a message (request or response) if a nonce is repeated.
 
-<!-- What do we do here? -->
-To promote interoperability, the `ecdsa-p256-sha256` signing algorithm MUST be implemented
+To promote interoperability, the `ES256` JOSE signing algorithm MUST be supported
 by general purpose implementations of this document.
 
 Following is a non-normative example of a signed request and a signed response,
