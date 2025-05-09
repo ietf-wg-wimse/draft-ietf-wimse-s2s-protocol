@@ -1995,14 +1995,16 @@ mechanisms in support of long-lived compute processes.<a href="#section-4.3-9.2.
             <p id="section-4.3-9.4.1"><code>tag</code> - the value for implementations of this specification is <code>wimse-workload-to-workload</code><a href="#section-4.3-9.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-4.3-10">Since the signing key is sent along with the message, the <code>keyid</code> parameter <span class="bcp14">SHOULD NOT</span> be used.<a href="#section-4.3-10" class="pilcrow">¶</a></p>
+<p id="section-4.3-10">The following signature parameters in the <code>Signature-Input</code> header <span class="bcp14">MUST NOT</span> be used:
+* <code>keyid</code> - The signing key is sent along with the message in the WIT. Additionally specifying the id of the key adds confusion.
+* <code>alg</code> - The signature algorithm is specified in the <code>jwk</code> section of the <code>cnf</code> claim in the WIT. See <a href="#to-wit" class="auto internal xref">Section 4.1</a> for details.<a href="#section-4.3-10" class="pilcrow">¶</a></p>
 <p id="section-4.3-11">It is <span class="bcp14">RECOMMENDED</span> to include only one signature with the HTTP message.
 If multiple ones are included, then the signature label included in both the <code>Signature-Input</code> and <code>Signature</code> headers <span class="bcp14">SHOULD</span>
 be <code>wimse</code>.<a href="#section-4.3-11" class="pilcrow">¶</a></p>
 <p id="section-4.3-12">A sender <span class="bcp14">MUST</span> ensure that each nonce it generates is unique, at least among messages sent to the same recipient.
 To detect message replays,
 a recipient <span class="bcp14">MAY</span> reject a message (request or response) if a nonce is repeated.<a href="#section-4.3-12" class="pilcrow">¶</a></p>
-<p id="section-4.3-13">To promote interoperability, the <code>ecdsa-p256-sha256</code> signing algorithm <span class="bcp14">MUST</span> be implemented
+<p id="section-4.3-13">To promote interoperability, the <code>ES256</code> JOSE signing algorithm <span class="bcp14">MUST</span> be supported
 by general purpose implementations of this document.<a href="#section-4.3-13" class="pilcrow">¶</a></p>
 <p id="section-4.3-14">Following is a non-normative example of a signed request and a signed response,
 where the caller is using the keys specified in <a href="#example-caller-jwk" class="auto internal xref">Figure 5</a>.<a href="#section-4.3-14" class="pilcrow">¶</a></p>
