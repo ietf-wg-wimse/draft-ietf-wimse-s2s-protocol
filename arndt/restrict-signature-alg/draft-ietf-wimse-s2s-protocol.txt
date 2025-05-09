@@ -354,6 +354,9 @@ Table of Contents
                combination with symmetric keys MUST NOT be used.  Also
                encryption algorithmns MUST NOT be used as this would
                require additional key distribution outside of the WIT.
+               To promote interoperability, the ES256 signing algorithm
+               SHOULD be supported by general purpose implementations of
+               this document.
 
    An example WIT might look like this (all examples, of course, are
    non-normative and with line breaks and extra space for readability):
@@ -733,9 +736,6 @@ Table of Contents
    among messages sent to the same recipient.  To detect message
    replays, a recipient MAY reject a message (request or response) if a
    nonce is repeated.
-
-   To promote interoperability, the ES256 JOSE signing algorithm MUST be
-   supported by general purpose implementations of this document.
 
    Following is a non-normative example of a signed request and a signed
    response, where the caller is using the keys specified in Figure 5.
