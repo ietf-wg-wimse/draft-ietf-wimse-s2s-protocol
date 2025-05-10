@@ -344,7 +344,7 @@ A WPT MUST contain the following:
      to which the WPT is attached, without query or fragment parts.
     * `exp`: The expiration time of the WIT (as defined in {{Section 4.1.4 of RFC7519}}). WPT lifetimes MUST be short,
      e.g., on the order of minutes or seconds.
-    * `jti`: A unique identifier for the token.
+    * `jti`: An identifier for the token. The value MUST be unique, at least within the scope of the sender.
     * `wth`: Hash of the Workload Identity Token, defined in {{to-wit}}. The value is the base64url encoding of the
      SHA-256 hash of the ASCII encoding of the token's value.
     * `ath`: Hash of the OAuth access token, if present in the request, which might convey end-user identity and
@@ -614,10 +614,13 @@ The proof of possession MUST be time limited. A PoP should only be valid over th
 
 In order to reduce the risk of theft and replay the PoP should have a limited scope. For example, a PoP may be targeted for use with a specific workload and even a specific transaction to reduce the impact of a stolen PoP. In some cases a workload may wish to reuse a PoP for a period of time or have it accepted by multiple target workloads. A careful analysis is warranted to understand the impacts to the system if a PoP is disclosed allowing it to be presented by an attacker along with a captured WIT.
 
-* Binding to a Timestamp or Nonce
+* Replay Protection
 
-A proof of possession includes the `jti` claim that uniquely identifies it, within the scope of a particular sender.
-This SHOULD be used by the receiver to perform basic replay protection against tokens it has already seen. Depending upon the design of the system it may be difficult to synchronize the replay cache across all token validators. In this case, if the PoP is not sufficiently scoped it may be usable with another workload.
+A proof of possession includes the `jti` claim that MUST uniquely identify it, within the scope of a particular sender.
+This claim SHOULD be used by the receiver to perform basic replay protection against tokens it has already seen.
+Depending upon the design of the system it may be difficult to synchronize the replay cache across all token validators.
+If an attacker can somehow influence the identity of the validator (e.g. which cluster member receives the message) then
+replay protection would not be effective.
 
 * Binding to TLS Endpoint
 
