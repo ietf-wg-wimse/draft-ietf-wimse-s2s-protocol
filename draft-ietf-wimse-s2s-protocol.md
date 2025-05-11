@@ -156,8 +156,8 @@ All terminology in this document follows {{?I-D.ietf-wimse-arch}}.
 
 ## Trust Domain {#trust-domain}
 
-A trust domain is a logical grouping of systems that share a common set of security controls and policies. WIMSE certificates and tokens are issued under the authority of a trust domain. Trust domains SHOULD be identified by a fully qualified domain name belonging to the organization defining the trust domain.
-A trust domain maps to one or more trust anchors for validating X.509 certificates and a mechanism to securely obtain a JWK Set {{!RFC7517}} for validating WIMSE WIT tokens. This mapping MUST be obtained through a secure mechanism that ensures the authenticity and integrity of the mapping is fresh and not compromised. This secure mechanism is out of scope for this document.
+A trust domain is a logical grouping of systems that share a common set of security controls and policies. Workload certificates and tokens are issued under the authority of a trust domain. Trust domains SHOULD be identified by a fully qualified domain name belonging to the organization defining the trust domain.
+A trust domain maps to one or more trust anchors for validating X.509 certificates and a mechanism to securely obtain a JWK Set {{!RFC7517}} for validating Workload Identity Tokens. This mapping MUST be obtained through a secure mechanism that ensures the authenticity and integrity of the mapping is fresh and not compromised. This secure mechanism is out of scope for this document.
 
 A single organization may define multiple trust domains for different purposes such as different departments or environments. Each trust domain must have a unique identifier. Workload identifiers are scoped within a trust domain. If two identifiers differ only by trust domain they still refer to two different entities.
 
@@ -320,7 +320,7 @@ It is RECOMMENDED that the WIT carries an `iss` claim. This specification itself
 ## Option 1: DPoP-Inspired Authentication {#dpop-esque-auth}
 
 This option, inspired by the OAuth DPoP specification {{?RFC9449}}, uses a DPoP-like mechanism to authenticate
-the calling workload in the context of the request. The WIMSE Identity Token ({{to-wit}}) is sent in the request as
+the calling workload in the context of the request. The Workload Identity Token ({{to-wit}}) is sent in the request as
 described in {{wit-http-header}}. An additional JWT, the Workload Proof Token (WPT), is signed by the private key
 corresponding to the public key in the WIT. The WPT is sent in the `Workload-Proof-Token` header field of the request.
 The ABNF syntax of the `Workload-Proof-Token` header field is:
@@ -424,7 +424,7 @@ To validate the WPT in the request, the recipient MUST ensure the following:
 
 ## Option 2: Authentication Based on HTTP Message Signatures {#http-sig-auth}
 
-This option uses the WIMSE Identity Token ({{to-wit}}) to sign the request and optionally, the response.
+This option uses the Workload Identity Token ({{to-wit}}) to sign the request and optionally, the response.
 This section defines a profile of the Message Signatures specification {{!RFC9421}}.
 
 The request is signed as per {{RFC9421}}. The following derived components MUST be signed:
@@ -559,38 +559,38 @@ which specific resources can be accessed.
 As noted in the introduction, for many deployments, transport-level protection
 of application traffic using TLS is ideal.
 
-In this solution, the WIMSE workload identity may be carried within an X.509 certificate.
-The WIMSE workload identity MUST be encoded in a SubjectAltName extension of type URI.
-There MUST be only one SubjectAltName extension of type URI in a WIMSE certificate.
-If the workload will act as a TLS server for clients that do not understand WIMSE workload
-identities it is RECOMMENDED that the WIMSE certificate contain a SubjectAltName of type
+In this solution, the workload identity may be carried within an X.509 certificate.
+The workload identity MUST be encoded in a SubjectAltName extension of type URI.
+There MUST be only one SubjectAltName extension of type URI in a workload certificate.
+If the workload will act as a TLS server for clients that do not understand workload
+identities it is RECOMMENDED that the workload certificate contain a SubjectAltName of type
 DNSName with the appropriate DNS names for the server.
 The certificate may contain SubjectAltName extensions of other types.
 
-WIMSE certificates may be used to authenticate both the server and client side of the connections.  When validating a WIMSE certificate, the relying party MUST use the trust anchors configured for the trust domain in the WIMSE identity to validate the peer's certificate.  Other PKIX {{!RFC5280}} path validation rules apply. WIMSE clients and servers MUST validate that the trust domain portion of the WIMSE certificate matches the expected trust domain for the other side of the connection.
+Workload certificates may be used to authenticate both the server and client side of the connections.  When validating a workload certificate, the relying party MUST use the trust anchors configured for the trust domain in the workload identity to validate the peer's certificate.  Other PKIX {{!RFC5280}} path validation rules apply. WIMSE clients and servers MUST validate that the trust domain portion of the workload certificate matches the expected trust domain for the other side of the connection.
 
-Servers wishing to use the WIMSE certificate for authorizing the client MUST require client certificate authentication in the TLS handshake. Other methods of post handshake authentication are not specified by this document.
+Servers wishing to use the workload certificate for authorizing the client MUST require client certificate authentication in the TLS handshake. Other methods of post handshake authentication are not specified by this document.
 
-WIMSE server certificates SHOULD have the `id-kp-serverAuth` extended key usage {{!RFC5280}} field set and WIMSE client certificates SHOULD have the `id-kp-clientAuth` extended key usage field set. A certificate that is used for both client and server connections may have both fields set. This specification does not make any other requirements beyond {{!RFC5280}} on the contents of WIMSE certificates or on the certification authorities that issue WIMSE certificates.
+WIMSE server certificates SHOULD have the `id-kp-serverAuth` extended key usage {{!RFC5280}} field set and WIMSE client certificates SHOULD have the `id-kp-clientAuth` extended key usage field set. A certificate that is used for both client and server connections may have both fields set. This specification does not make any other requirements beyond {{!RFC5280}} on the contents of workload certificates or on the certification authorities that issue workload certificates.
 
 ## Server Name Validation {#server-name}
 
-If the WIMSE client uses a hostname to connect to the server and the server certificate contain a DNS SAN the client MUST perform standard host name validation ({{Section 6.3 of RFC9525}}) unless it is configured with the information necessary to validate the peer's WIMSE identity.
-If the client did not perform standard host name validation then the WIMSE client SHOULD further use the WIMSE workload identifier to validate the server.
-The host portion of the WIMSE workload identifier is NOT treated as a host name as specified in section 6.4 of {{!RFC9525}} but rather as a trust domain. The server identity is encoded in the path portion of the WIMSE workload identifier in a deployment specific way.
-Validating the WIMSE workload identity could be a simple match on the trust domain and path portions of the identifier or validation may be based on the specific details on how the identifier is constructed. The path portion of the WIMSE identifier MUST always be considered in the scope of the trust domain.
+If the WIMSE client uses a hostname to connect to the server and the server certificate contain a DNS SAN the client MUST perform standard host name validation ({{Section 6.3 of RFC9525}}) unless it is configured with the information necessary to validate the peer's workload identity.
+If the client did not perform standard host name validation then the WIMSE client SHOULD further use the workload identifier to validate the server.
+The host portion of the workload identifier is NOT treated as a host name as specified in section 6.4 of {{!RFC9525}} but rather as a trust domain. The server identity is encoded in the path portion of the workload identifier in a deployment specific way.
+Validating the workload identity could be a simple match on the trust domain and path portions of the identifier or validation may be based on the specific details on how the identifier is constructed. The path portion of the WIMSE identifier MUST always be considered in the scope of the trust domain.
 
-## Client Authorization Using the WIMSE Identity {#client-name}
+## Client Authorization Using the Workload Identity {#client-name}
 
-The server application retrieves the WIMSE workload identifier from the client certificate subjectAltName, which in turn is obtained from the TLS layer. The identifier is used in authorization, accounting and auditing.
-For example, the full WIMSE workload identifier may be matched against ACLs to authorize actions requested by the peer and the identifier may be included in log messages to associate actions to the client workload for audit purposes.
-A deployment may specify other authorization policies based on the specific details of how the WIMSE identifier is constructed. The path portion of the WIMSE identifier MUST always be considered in the scope of the trust domain.
+The server application retrieves the workload identifier from the client certificate subjectAltName, which in turn is obtained from the TLS layer. The identifier is used in authorization, accounting and auditing.
+For example, the full workload identifier may be matched against ACLs to authorize actions requested by the peer and the identifier may be included in log messages to associate actions to the client workload for audit purposes.
+A deployment may specify other authorization policies based on the specific details of how the workload identifier is constructed. The path portion of the workload identifier MUST always be considered in the scope of the trust domain.
 
 # Security Considerations
 
-## WIMSE Identity
+## Workload Identity
 
-The WIMSE Identifier is scoped within an issuer and therefore any sub-components (path portion of Identifier) are only unique within a trust domain defined by the issuer. Using a WIMSE Identifier without taking into account the trust domain could allow one domain to issue tokens to spoof identities in another domain.  Additionally, the trust domain must be tied to an authorized issuer cryptographic trust anchor through some mechanism such as a JWKS or X.509 certificate chain. The association of an issuer, trust domain and a cryptographic trust anchor MUST be communicated securely out of band.
+The Workload Identifier is scoped within an issuer and therefore any sub-components (path portion of Identifier) are only unique within a trust domain defined by the issuer. Using a Workload Identifier without taking into account the trust domain could allow one domain to issue tokens to spoof identities in another domain. Additionally, the trust domain must be tied to an authorized issuer cryptographic trust anchor through some mechanism such as a JWKS or X.509 certificate chain. The association of an issuer, trust domain and a cryptographic trust anchor MUST be communicated securely out of band.
 
 ## Workload Identity Token and Proof of Possession
 
@@ -621,13 +621,13 @@ The POP MAY be bound to a transport layer sender such as the client identity of 
 
 ## Middle Boxes {#middleboxes}
 
-In some deployments the WIMSE token and proof of possession may pass through multiple systems. The communication between the systems is over TLS, but the token and PoP are available in the clear at each intermediary.  While the intermediary cannot modify the token or the information within the PoP they can attempt to capture and replay the token or modify the data not protected by the PoP. Mitigations listed in the previous section can be used to provide some protection from middle boxes. Deployments should perform analysis on their situation to determine if it is appropriate to trust and allow traffic to pass through a middle box.
+In some deployments the Workload Identity Token and proof of possession may pass through multiple systems. The communication between the systems is over TLS, but the token and PoP are available in the clear at each intermediary.  While the intermediary cannot modify the token or the information within the PoP they can attempt to capture and replay the token or modify the data not protected by the PoP. Mitigations listed in the previous section can be used to provide some protection from middle boxes. Deployments should perform analysis on their situation to determine if it is appropriate to trust and allow traffic to pass through a middle box.
 
 ## Privacy Considerations
 
 WITs and the proofs of possession may contain private information such as user names or other identities. Care should be taken to prevent the disclosure of this information. The use of TLS helps protect the privacy of WITs and proofs of possession.
 
-WITs and certificates with WIMSE identifiers are typically associated with a workload and not a specific user, however in some deployments the workload may be associated directly to a user. While these are exceptional cases a deployment should evaluate if the disclosure of WITs or certificates can be used to track a user.
+WITs and certificates with workload identifiers are typically associated with a workload and not a specific user, however in some deployments the workload may be associated directly to a user. While these are exceptional cases a deployment should evaluate if the disclosure of WITs or certificates can be used to track a user.
 
 
 # IANA Considerations
