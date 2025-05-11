@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-05-08T01:24:16.789808+00:00",
+  "timestamp": "2025-05-11T01:36:13.711683+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -7000,21 +7000,21 @@
       "id": "PR_kwDOLJmm786BOXw9",
       "title": "Add Option 3 WIT with Authentication Based on the Transport-layer",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/76",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kenmccracken-google",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "In this approach, the WIT refers to the mTLS X.509 Certificate credential for establishing Workload Authentication.\r\nResolves #75",
       "createdAt": "2024-11-07T18:15:44Z",
-      "updatedAt": "2024-11-26T21:09:32Z",
+      "updatedAt": "2025-05-10T11:48:10Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "ba2577a228ab66ef2bb4dd7ffba24e511bb5295c",
       "headRepository": "kenmccracken-google/wimse-s2s",
       "headRefName": "mtls-workload-proof",
       "headRefOid": "1ac0f0f64ef6505dc2e5073ce36efa0eb1be623e",
-      "closedAt": null,
+      "closedAt": "2025-05-10T11:48:09Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
@@ -7053,6 +7053,13 @@
           "body": "I think it's important to allow for an architecture for Service to Service Authentication that utilizes mTLS streams established using X.509 Certificate credentials.\r\n\r\n| The WIT is not an access token. It's a signed token that incorporates workload-specific information (mainly the workload's ID and its public key, but potentially future extensions) and therefore it should normally only be shared between a workload and its immediate neighbors (its successors on the call chain). \r\n\r\nI understood the WIT to be a Workload Identity Token.  I agree it should contain the identity of the workload, represented by a URI, in the \"sub\" claim.  When it comes to proof-of-possession semantics under [RFC 7800, Section 3.1](https://datatracker.ietf.org/doc/html/rfc7800#section-3.1), I think the \"cnf\" claim should be used to identify the proof-of-possession key.  \r\n\r\nIn this context, I think that referencing an X.509 Certificate (that contains the Workload's public key) using \"x5t#S256\" should be an option for \"cnf\", as an alternative to inlining the public key in the \"jwk\" member.\r\n\r\n| As such, there are two options:\r\n| \r\n| The next hop is protected with MTLS (implicitly, there is no middlebox to break TLS security): no need for WIT because the identity information and public key are provided in the certificate.\r\n| The next hop is not protected with MTLS but rather with server-authenticated TLS (and potentially a middlebox): we send the WIT over the network hop, and bind it to a signature or proof-of-possession.\r\n\r\nI think from this description you would classify a proxy as a middlebox.  I think the middlebox proxy may be capable of hop-to-hop mTLS.  In this case, we would have the additional option:\r\n\r\n* next hop is protected with mTLS, and is a middlebox.  The middlebox is a proxy that forwards requests to destination workloads over mTLS.\r\n\r\nIn this architecture, the middlebox must perform proof-of-possession verification of the Workload's private key.  The `Workload-Identity-Token` header can be forwarded intact to the destination Workload.  The destination Workload verifies the identity of the middlebox over mTLS.   \r\n\r\n| By the way, the WIT is \"authenticated\" - it is signed by a trusted party, the server that issued it.\r\n\r\nAgree, I think I wasn't clear in my wording.  You're correct, the WIT is signed by the issuer.  I probably should have said something like:\r\n\r\nI think the Identity Server should issue WITs with a confirmation claim indicating the Workload's public key.  I think recipients of the WIT should require proof-of-possession of the Workload's private key, according to the information in the \"cnf\" claim.  I think the document should support verifying the proof-of-possession of the Workload's private key via one of \r\n1. WPT, as described in [1] Section 4.2.\r\n2. HTTP Message signatures, as described in [1] Section 4.3.\r\n3. mTLS, as described in [3].\r\n\r\nWhen the Identity Server puts an \"x5t#S256\" value in the \"cnf\" claim, the proof-of-posession verification method follows the semantics of [RFC 8705, Section 3.1](https://datatracker.ietf.org/doc/html/rfc8705#name-jwt-certificate-thumbprint-).\r\n\r\n[1] https://datatracker.ietf.org/doc/draft-ietf-wimse-s2s-protocol/01/\r\n[2] https://datatracker.ietf.org/meeting/121/materials/minutes-121-wimse-01\r\n[3] https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/76 \r\n",
           "createdAt": "2024-11-26T17:13:18Z",
           "updatedAt": "2024-11-26T21:09:32Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Closing as outdated. See #75.",
+          "createdAt": "2025-05-10T11:48:09Z",
+          "updatedAt": "2025-05-10T11:48:09Z"
         }
       ],
       "reviews": [
@@ -8568,13 +8575,13 @@
       "labels": [],
       "body": "- Changed the document's \"subtitle\" (that's only used in paginated text versions).\r\n- Clarified that the WPT's contents (formerly: \"the WPT contains\") are all MUST.\r\n- Replay protection is now SHOULD for both PoP and Message Sig.\r\n\r\nFixes #29.",
       "createdAt": "2025-03-09T18:46:52Z",
-      "updatedAt": "2025-05-06T14:21:37Z",
+      "updatedAt": "2025-05-10T12:17:51Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "c1ef627e1116c761502ae411261d08b6744d98d8",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-replay",
-      "headRefOid": "5e24c2c3aa59726cf5df3e1502cc192e89eaac36",
+      "headRefOid": "b65ffd76d6debff96582b04f08936d8d32c2597d",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -8757,13 +8764,13 @@
       "labels": [],
       "body": "See title. Resolves #16",
       "createdAt": "2025-04-24T15:52:05Z",
-      "updatedAt": "2025-05-05T17:32:41Z",
+      "updatedAt": "2025-05-10T12:02:20Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "ae623ec8565d1962ba8041276becdc025b1ff487",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "arndt/restrict-signature-alg",
-      "headRefOid": "9461629c9b0423c8af5fdab9d1cf6219b2d398e6",
+      "headRefOid": "9867b6daccda851e11570f39e8ad6e71d366c28e",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -9089,6 +9096,86 @@
               "updatedAt": "2025-05-05T17:32:42Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786oj2P9",
+          "commit": {
+            "abbreviatedOid": "dbbc6c4"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-09T11:29:20Z",
+          "updatedAt": "2025-05-09T11:29:20Z",
+          "comments": [
+            {
+              "originalPosition": 116,
+              "body": "@yaronf @jricher @bc-pi \r\nI am now restricting it to JOSE alg and forbid using the alg and keyid parameters when using http-sig. This aligns with RFC9421 stating in [Section 3.3.7](https://www.rfc-editor.org/rfc/rfc9421.html#section-3.3.7):\r\n> JSON Web Algorithm (JWA) values from the \"JSON Web Signature and Encryption Algorithms\" registry are not included as signature parameters.\r\n\r\nThe `keyid` one was previously SHOULD NOT, I personally don't see any reason why to include it and believe it would create uncertainty when it's included so I changed this to MUST NOT. \r\n\r\nWhat do you think?",
+              "createdAt": "2025-05-09T11:29:20Z",
+              "updatedAt": "2025-05-09T11:29:20Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786oufid",
+          "commit": {
+            "abbreviatedOid": "9867b6d"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-10T11:59:01Z",
+          "updatedAt": "2025-05-10T11:59:02Z",
+          "comments": [
+            {
+              "originalPosition": 126,
+              "body": "```suggestion\r\n* `alg` - The signature algorithm is specified in the `jwk` section of the `cnf` claim in the WIT. See {{to-wit}} and Sec. 3.3.7 of {{RFC9421}} for details.\r\n```",
+              "createdAt": "2025-05-10T11:59:01Z",
+              "updatedAt": "2025-05-10T11:59:02Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786oufkX",
+          "commit": {
+            "abbreviatedOid": "dbbc6c4"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-10T11:59:45Z",
+          "updatedAt": "2025-05-10T11:59:45Z",
+          "comments": [
+            {
+              "originalPosition": 116,
+              "body": "I'm good with both decisions. Added a review comment to include a reference to Sec. 3.3.7.",
+              "createdAt": "2025-05-10T11:59:45Z",
+              "updatedAt": "2025-05-10T11:59:45Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786oufsF",
+          "commit": {
+            "abbreviatedOid": "9867b6d"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-10T12:02:19Z",
+          "updatedAt": "2025-05-10T12:02:20Z",
+          "comments": [
+            {
+              "originalPosition": 125,
+              "body": "```suggestion\r\n* `keyid` - The signing key is sent along with the message in the WIT. Additionally specifying the key identity would add confusion.\r\n```",
+              "createdAt": "2025-05-10T12:02:19Z",
+              "updatedAt": "2025-05-10T12:02:20Z"
+            }
+          ]
         }
       ]
     },
@@ -9104,13 +9191,13 @@
       "labels": [],
       "body": "* Unifies \"workload\" vs \"WIMSE\" terminology used in this document with other WIMSE documents, mainly the architecture doc.\r\n* Removes redundant usage of the \"WIMSE\" term.\r\n\r\nResolves #118 ",
       "createdAt": "2025-05-07T07:19:16Z",
-      "updatedAt": "2025-05-07T18:19:38Z",
+      "updatedAt": "2025-05-10T18:11:02Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "ae623ec8565d1962ba8041276becdc025b1ff487",
       "headRepository": "dagdagdag83/draft-ietf-wimse-s2s-protocol",
       "headRefName": "unified-terms-workload-vs-WIMSE",
-      "headRefOid": "c4362f59ae00ea4086b068c52e9380a5d2ed3284",
+      "headRefOid": "1af3da4b060751b62fb2e9e6574090224bb59685",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -9129,6 +9216,78 @@
           "createdAt": "2025-05-07T18:19:38Z",
           "updatedAt": "2025-05-07T18:19:38Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm786oueT7",
+          "commit": {
+            "abbreviatedOid": "c4362f5"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2025-05-10T11:37:35Z",
+          "updatedAt": "2025-05-10T11:45:27Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "```suggestion\r\nA trust domain is a logical grouping of systems that share a common set of security controls and policies. Workload certificates and tokens are issued under the authority of a trust domain. Trust domains SHOULD be identified by a fully qualified domain name belonging to the organization defining the trust domain.\r\n```",
+              "createdAt": "2025-05-10T11:37:35Z",
+              "updatedAt": "2025-05-10T11:45:27Z"
+            },
+            {
+              "originalPosition": 5,
+              "body": "I'm not sure about the motivation for removing this paragraph which is (somewhat) normative. Is it appropriately covered in the Architecture doc?\r\n\r\n> A trust domain maps to one or more trust anchors for validating X.509 certificates and a mechanism to securely obtain a JWK Set {{!RFC7517}} for validating WIMSE WIT tokens. This mapping MUST be obtained through a secure mechanism that ensures the authenticity and integrity of the mapping is fresh and not compromised. This secure mechanism is out of scope for this document.",
+              "createdAt": "2025-05-10T11:40:11Z",
+              "updatedAt": "2025-05-10T11:45:27Z"
+            },
+            {
+              "originalPosition": 91,
+              "body": "No, the HTTP Signature option does not include a Workload Proof Token (but is implicitly a proof of possession).",
+              "createdAt": "2025-05-10T11:45:17Z",
+              "updatedAt": "2025-05-10T11:45:27Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786ovf0B",
+          "commit": {
+            "abbreviatedOid": "1af3da4"
+          },
+          "author": "dagdagdag83",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-10T18:09:57Z",
+          "updatedAt": "2025-05-10T18:09:58Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "I didn't remove the paragraphs, I just made changes to it. You can see they are still here: https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/blob/1af3da4b060751b62fb2e9e6574090224bb59685/draft-ietf-wimse-s2s-protocol.md?plain=1#L159-L160",
+              "createdAt": "2025-05-10T18:09:57Z",
+              "updatedAt": "2025-05-10T18:09:58Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786ovgJ-",
+          "commit": {
+            "abbreviatedOid": "c4362f5"
+          },
+          "author": "dagdagdag83",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-10T18:11:02Z",
+          "updatedAt": "2025-05-10T18:11:02Z",
+          "comments": [
+            {
+              "originalPosition": 91,
+              "body": "You're right of course. Reverted to \"proof of possession\" in latest commit.",
+              "createdAt": "2025-05-10T18:11:02Z",
+              "updatedAt": "2025-05-10T18:11:02Z"
+            }
+          ]
         }
       ]
     }
