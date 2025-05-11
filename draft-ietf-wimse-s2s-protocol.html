@@ -22,19 +22,19 @@ chain can have some calls use one protocol and some use the other. Workload A ca
 Workload B with mutual TLS authentication, while the next call from Workload B to Workload C
 would be authenticated at the application level. 
     " name="description">
-<meta content="xml2rfc 3.28.0" name="generator">
+<meta content="xml2rfc 3.28.1" name="generator">
 <meta content="workload" name="keyword">
 <meta content="identity" name="keyword">
 <meta content="draft-ietf-wimse-s2s-protocol-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.28.0
-    Python 3.12.9
+  xml2rfc 3.28.1
+    Python 3.12.10
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
     intervaltree 3.1.0
-    Jinja2 3.1.5
+    Jinja2 3.1.6
     lxml 5.3.0
-    platformdirs 4.3.6
+    platformdirs 4.3.7
     pycountry 24.6.1
     PyYAML 6.0.2
     requests 2.32.3
@@ -1058,11 +1058,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">WIMSE W2W Auth</td>
-<td class="right">March 2025</td>
+<td class="right">May 2025</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Campbell, et al.</td>
-<td class="center">Expires 11 September 2025</td>
+<td class="center">Expires 12 November 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1075,12 +1075,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-wimse-s2s-protocol-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-03-10" class="published">10 March 2025</time>
+<time datetime="2025-05-11" class="published">11 May 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-09-11">11 September 2025</time></dd>
+<dd class="expires"><time datetime="2025-11-12">12 November 2025</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1152,7 +1152,7 @@ would be authenticated at the application level.<a href="#section-abstract-1" cl
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 11 September 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 12 November 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1241,7 +1241,7 @@ would be authenticated at the application level.<a href="#section-abstract-1" cl
                 <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="auto internal xref">5.1</a>.  <a href="#name-server-name-validation" class="internal xref">Server Name Validation</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2">
-                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="auto internal xref">5.2</a>.  <a href="#name-client-authorization-using-" class="internal xref">Client Authorization Using the WIMSE Identity</a></p>
+                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="auto internal xref">5.2</a>.  <a href="#name-client-authorization-using-" class="internal xref">Client Authorization Using the Workload Identity</a></p>
 </li>
             </ul>
 </li>
@@ -1249,7 +1249,7 @@ would be authenticated at the application level.<a href="#section-abstract-1" cl
             <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
-                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-wimse-identity" class="internal xref">WIMSE Identity</a></p>
+                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-workload-identity-2" class="internal xref">Workload Identity</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2">
                 <p id="section-toc.1-1.6.2.2.1"><a href="#section-6.2" class="auto internal xref">6.2</a>.  <a href="#name-workload-identity-token-and" class="internal xref">Workload Identity Token and Proof of Possession</a></p>
@@ -1470,8 +1470,8 @@ appear in all capitals, as shown here.<a href="#section-2-2" class="pilcrow">¶<
         <h3 id="name-trust-domain">
 <a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-trust-domain" class="section-name selfRef">Trust Domain</a>
         </h3>
-<p id="section-3.1-1">A trust domain is a logical grouping of systems that share a common set of security controls and policies. WIMSE certificates and tokens are issued under the authority of a trust domain. Trust domains <span class="bcp14">SHOULD</span> be identified by a fully qualified domain name belonging to the organization defining the trust domain.
-A trust domain maps to one or more trust anchors for validating X.509 certificates and a mechanism to securely obtain a JWK Set <span>[<a href="#RFC7517" class="cite xref">RFC7517</a>]</span> for validating WIMSE WIT tokens. This mapping <span class="bcp14">MUST</span> be obtained through a secure mechanism that ensures the authenticity and integrity of the mapping is fresh and not compromised. This secure mechanism is out of scope for this document.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.1-1">A trust domain is a logical grouping of systems that share a common set of security controls and policies. Workload certificates and tokens are issued under the authority of a trust domain. Trust domains <span class="bcp14">SHOULD</span> be identified by a fully qualified domain name belonging to the organization defining the trust domain.
+A trust domain maps to one or more trust anchors for validating X.509 certificates and a mechanism to securely obtain a JWK Set <span>[<a href="#RFC7517" class="cite xref">RFC7517</a>]</span> for validating Workload Identity Tokens. This mapping <span class="bcp14">MUST</span> be obtained through a secure mechanism that ensures the authenticity and integrity of the mapping is fresh and not compromised. This secure mechanism is out of scope for this document.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
 <p id="section-3.1-2">A single organization may define multiple trust domains for different purposes such as different departments or environments. Each trust domain must have a unique identifier. Workload identifiers are scoped within a trust domain. If two identifiers differ only by trust domain they still refer to two different entities.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1716,7 +1716,7 @@ etc., are all valid and equivalent header field names. However, case is signific
 <a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-option-1-dpop-inspired-auth" class="section-name selfRef">Option 1: DPoP-Inspired Authentication</a>
         </h3>
 <p id="section-4.2-1">This option, inspired by the OAuth DPoP specification <span>[<a href="#RFC9449" class="cite xref">RFC9449</a>]</span>, uses a DPoP-like mechanism to authenticate
-the calling workload in the context of the request. The WIMSE Identity Token (<a href="#to-wit" class="auto internal xref">Section 4.1</a>) is sent in the request as
+the calling workload in the context of the request. The Workload Identity Token (<a href="#to-wit" class="auto internal xref">Section 4.1</a>) is sent in the request as
 described in <a href="#wit-http-header" class="auto internal xref">Section 4.1.1</a>. An additional JWT, the Workload Proof Token (WPT), is signed by the private key
 corresponding to the public key in the WIT. The WPT is sent in the <code>Workload-Proof-Token</code> header field of the request.
 The ABNF syntax of the <code>Workload-Proof-Token</code> header field is:<a href="#section-4.2-1" class="pilcrow">¶</a></p>
@@ -1910,7 +1910,7 @@ Ou0SzihiG6HCsGwslfo4WdvnH5AQ
         <h3 id="name-option-2-authentication-bas">
 <a href="#section-4.3" class="section-number selfRef">4.3. </a><a href="#name-option-2-authentication-bas" class="section-name selfRef">Option 2: Authentication Based on HTTP Message Signatures</a>
         </h3>
-<p id="section-4.3-1">This option uses the WIMSE Identity Token (<a href="#to-wit" class="auto internal xref">Section 4.1</a>) to sign the request and optionally, the response.
+<p id="section-4.3-1">This option uses the Workload Identity Token (<a href="#to-wit" class="auto internal xref">Section 4.1</a>) to sign the request and optionally, the response.
 This section defines a profile of the Message Signatures specification <span>[<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>.<a href="#section-4.3-1" class="pilcrow">¶</a></p>
 <p id="section-4.3-2">The request is signed as per <span>[<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>. The following derived components <span class="bcp14">MUST</span> be signed:<a href="#section-4.3-2" class="pilcrow">¶</a></p>
 <ul class="normal">
@@ -2136,35 +2136,35 @@ which specific resources can be accessed.<a href="#section-4.6-2" class="pilcrow
       </h2>
 <p id="section-5-1">As noted in the introduction, for many deployments, transport-level protection
 of application traffic using TLS is ideal.<a href="#section-5-1" class="pilcrow">¶</a></p>
-<p id="section-5-2">In this solution, the WIMSE workload identity may be carried within an X.509 certificate.
-The WIMSE workload identity <span class="bcp14">MUST</span> be encoded in a SubjectAltName extension of type URI.
-There <span class="bcp14">MUST</span> be only one SubjectAltName extension of type URI in a WIMSE certificate.
-If the workload will act as a TLS server for clients that do not understand WIMSE workload
-identities it is <span class="bcp14">RECOMMENDED</span> that the WIMSE certificate contain a SubjectAltName of type
+<p id="section-5-2">In this solution, the workload identity may be carried within an X.509 certificate.
+The workload identity <span class="bcp14">MUST</span> be encoded in a SubjectAltName extension of type URI.
+There <span class="bcp14">MUST</span> be only one SubjectAltName extension of type URI in a workload certificate.
+If the workload will act as a TLS server for clients that do not understand workload
+identities it is <span class="bcp14">RECOMMENDED</span> that the workload certificate contain a SubjectAltName of type
 DNSName with the appropriate DNS names for the server.
 The certificate may contain SubjectAltName extensions of other types.<a href="#section-5-2" class="pilcrow">¶</a></p>
-<p id="section-5-3">WIMSE certificates may be used to authenticate both the server and client side of the connections.  When validating a WIMSE certificate, the relying party <span class="bcp14">MUST</span> use the trust anchors configured for the trust domain in the WIMSE identity to validate the peer's certificate.  Other PKIX <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span> path validation rules apply. WIMSE clients and servers <span class="bcp14">MUST</span> validate that the trust domain portion of the WIMSE certificate matches the expected trust domain for the other side of the connection.<a href="#section-5-3" class="pilcrow">¶</a></p>
-<p id="section-5-4">Servers wishing to use the WIMSE certificate for authorizing the client <span class="bcp14">MUST</span> require client certificate authentication in the TLS handshake. Other methods of post handshake authentication are not specified by this document.<a href="#section-5-4" class="pilcrow">¶</a></p>
-<p id="section-5-5">WIMSE server certificates <span class="bcp14">SHOULD</span> have the <code>id-kp-serverAuth</code> extended key usage <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span> field set and WIMSE client certificates <span class="bcp14">SHOULD</span> have the <code>id-kp-clientAuth</code> extended key usage field set. A certificate that is used for both client and server connections may have both fields set. This specification does not make any other requirements beyond <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span> on the contents of WIMSE certificates or on the certification authorities that issue WIMSE certificates.<a href="#section-5-5" class="pilcrow">¶</a></p>
+<p id="section-5-3">Workload certificates may be used to authenticate both the server and client side of the connections.  When validating a workload certificate, the relying party <span class="bcp14">MUST</span> use the trust anchors configured for the trust domain in the workload identity to validate the peer's certificate.  Other PKIX <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span> path validation rules apply. WIMSE clients and servers <span class="bcp14">MUST</span> validate that the trust domain portion of the workload certificate matches the expected trust domain for the other side of the connection.<a href="#section-5-3" class="pilcrow">¶</a></p>
+<p id="section-5-4">Servers wishing to use the workload certificate for authorizing the client <span class="bcp14">MUST</span> require client certificate authentication in the TLS handshake. Other methods of post handshake authentication are not specified by this document.<a href="#section-5-4" class="pilcrow">¶</a></p>
+<p id="section-5-5">WIMSE server certificates <span class="bcp14">SHOULD</span> have the <code>id-kp-serverAuth</code> extended key usage <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span> field set and WIMSE client certificates <span class="bcp14">SHOULD</span> have the <code>id-kp-clientAuth</code> extended key usage field set. A certificate that is used for both client and server connections may have both fields set. This specification does not make any other requirements beyond <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span> on the contents of workload certificates or on the certification authorities that issue workload certificates.<a href="#section-5-5" class="pilcrow">¶</a></p>
 <div id="server-name">
 <section id="section-5.1">
         <h3 id="name-server-name-validation">
 <a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-server-name-validation" class="section-name selfRef">Server Name Validation</a>
         </h3>
-<p id="section-5.1-1">If the WIMSE client uses a hostname to connect to the server and the server certificate contain a DNS SAN the client <span class="bcp14">MUST</span> perform standard host name validation (<span><a href="https://rfc-editor.org/rfc/rfc9525#section-6.3" class="relref">Section 6.3</a> of [<a href="#RFC9525" class="cite xref">RFC9525</a>]</span>) unless it is configured with the information necessary to validate the peer's WIMSE identity.
-If the client did not perform standard host name validation then the WIMSE client <span class="bcp14">SHOULD</span> further use the WIMSE workload identifier to validate the server.
-The host portion of the WIMSE workload identifier is NOT treated as a host name as specified in section 6.4 of <span>[<a href="#RFC9525" class="cite xref">RFC9525</a>]</span> but rather as a trust domain. The server identity is encoded in the path portion of the WIMSE workload identifier in a deployment specific way.
-Validating the WIMSE workload identity could be a simple match on the trust domain and path portions of the identifier or validation may be based on the specific details on how the identifier is constructed. The path portion of the WIMSE identifier <span class="bcp14">MUST</span> always be considered in the scope of the trust domain.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
+<p id="section-5.1-1">If the WIMSE client uses a hostname to connect to the server and the server certificate contain a DNS SAN the client <span class="bcp14">MUST</span> perform standard host name validation (<span><a href="https://rfc-editor.org/rfc/rfc9525#section-6.3" class="relref">Section 6.3</a> of [<a href="#RFC9525" class="cite xref">RFC9525</a>]</span>) unless it is configured with the information necessary to validate the peer's workload identity.
+If the client did not perform standard host name validation then the WIMSE client <span class="bcp14">SHOULD</span> further use the workload identifier to validate the server.
+The host portion of the workload identifier is NOT treated as a host name as specified in section 6.4 of <span>[<a href="#RFC9525" class="cite xref">RFC9525</a>]</span> but rather as a trust domain. The server identity is encoded in the path portion of the workload identifier in a deployment specific way.
+Validating the workload identity could be a simple match on the trust domain and path portions of the identifier or validation may be based on the specific details on how the identifier is constructed. The path portion of the WIMSE identifier <span class="bcp14">MUST</span> always be considered in the scope of the trust domain.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="client-name">
 <section id="section-5.2">
         <h3 id="name-client-authorization-using-">
-<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-client-authorization-using-" class="section-name selfRef">Client Authorization Using the WIMSE Identity</a>
+<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-client-authorization-using-" class="section-name selfRef">Client Authorization Using the Workload Identity</a>
         </h3>
-<p id="section-5.2-1">The server application retrieves the WIMSE workload identifier from the client certificate subjectAltName, which in turn is obtained from the TLS layer. The identifier is used in authorization, accounting and auditing.
-For example, the full WIMSE workload identifier may be matched against ACLs to authorize actions requested by the peer and the identifier may be included in log messages to associate actions to the client workload for audit purposes.
-A deployment may specify other authorization policies based on the specific details of how the WIMSE identifier is constructed. The path portion of the WIMSE identifier <span class="bcp14">MUST</span> always be considered in the scope of the trust domain.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
+<p id="section-5.2-1">The server application retrieves the workload identifier from the client certificate subjectAltName, which in turn is obtained from the TLS layer. The identifier is used in authorization, accounting and auditing.
+For example, the full workload identifier may be matched against ACLs to authorize actions requested by the peer and the identifier may be included in log messages to associate actions to the client workload for audit purposes.
+A deployment may specify other authorization policies based on the specific details of how the workload identifier is constructed. The path portion of the workload identifier <span class="bcp14">MUST</span> always be considered in the scope of the trust domain.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2174,12 +2174,12 @@ A deployment may specify other authorization policies based on the specific deta
       <h2 id="name-security-considerations">
 <a href="#section-6" class="section-number selfRef">6. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<div id="wimse-identity">
+<div id="workload-identity">
 <section id="section-6.1">
-        <h3 id="name-wimse-identity">
-<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-wimse-identity" class="section-name selfRef">WIMSE Identity</a>
+        <h3 id="name-workload-identity-2">
+<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-workload-identity-2" class="section-name selfRef">Workload Identity</a>
         </h3>
-<p id="section-6.1-1">The WIMSE Identifier is scoped within an issuer and therefore any sub-components (path portion of Identifier) are only unique within a trust domain defined by the issuer. Using a WIMSE Identifier without taking into account the trust domain could allow one domain to issue tokens to spoof identities in another domain.  Additionally, the trust domain must be tied to an authorized issuer cryptographic trust anchor through some mechanism such as a JWKS or X.509 certificate chain. The association of an issuer, trust domain and a cryptographic trust anchor <span class="bcp14">MUST</span> be communicated securely out of band.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
+<p id="section-6.1-1">The Workload Identifier is scoped within an issuer and therefore any sub-components (path portion of Identifier) are only unique within a trust domain defined by the issuer. Using a Workload Identifier without taking into account the trust domain could allow one domain to issue tokens to spoof identities in another domain. Additionally, the trust domain must be tied to an authorized issuer cryptographic trust anchor through some mechanism such as a JWKS or X.509 certificate chain. The association of an issuer, trust domain and a cryptographic trust anchor <span class="bcp14">MUST</span> be communicated securely out of band.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="workload-identity-token-and-proof-of-possession">
@@ -2228,7 +2228,7 @@ While a fresh nonce could be included in the PoP, a mechanism for distributing a
         <h3 id="name-middle-boxes">
 <a href="#section-6.3" class="section-number selfRef">6.3. </a><a href="#name-middle-boxes" class="section-name selfRef">Middle Boxes</a>
         </h3>
-<p id="section-6.3-1">In some deployments the WIMSE token and proof of possession may pass through multiple systems. The communication between the systems is over TLS, but the token and PoP are available in the clear at each intermediary.  While the intermediary cannot modify the token or the information within the PoP they can attempt to capture and replay the token or modify the data not protected by the PoP. Mitigations listed in the previous section can be used to provide some protection from middle boxes. Deployments should perform analysis on their situation to determine if it is appropriate to trust and allow traffic to pass through a middle box.<a href="#section-6.3-1" class="pilcrow">¶</a></p>
+<p id="section-6.3-1">In some deployments the Workload Identity Token and proof of possession may pass through multiple systems. The communication between the systems is over TLS, but the token and PoP are available in the clear at each intermediary.  While the intermediary cannot modify the token or the information within the PoP they can attempt to capture and replay the token or modify the data not protected by the PoP. Mitigations listed in the previous section can be used to provide some protection from middle boxes. Deployments should perform analysis on their situation to determine if it is appropriate to trust and allow traffic to pass through a middle box.<a href="#section-6.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="privacy-considerations">
@@ -2237,7 +2237,7 @@ While a fresh nonce could be included in the PoP, a mechanism for distributing a
 <a href="#section-6.4" class="section-number selfRef">6.4. </a><a href="#name-privacy-considerations" class="section-name selfRef">Privacy Considerations</a>
         </h3>
 <p id="section-6.4-1">WITs and the proofs of possession may contain private information such as user names or other identities. Care should be taken to prevent the disclosure of this information. The use of TLS helps protect the privacy of WITs and proofs of possession.<a href="#section-6.4-1" class="pilcrow">¶</a></p>
-<p id="section-6.4-2">WITs and certificates with WIMSE identifiers are typically associated with a workload and not a specific user, however in some deployments the workload may be associated directly to a user. While these are exceptional cases a deployment should evaluate if the disclosure of WITs or certificates can be used to track a user.<a href="#section-6.4-2" class="pilcrow">¶</a></p>
+<p id="section-6.4-2">WITs and certificates with workload identifiers are typically associated with a workload and not a specific user, however in some deployments the workload may be associated directly to a user. While these are exceptional cases a deployment should evaluate if the disclosure of WITs or certificates can be used to track a user.<a href="#section-6.4-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
