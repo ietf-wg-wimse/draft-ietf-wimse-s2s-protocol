@@ -5,12 +5,12 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 10 November 2025                                         Venafi
+Expires: 13 November 2025                                         Venafi
                                                       A. Schwenkschuster
                                                                    SPIRL
                                                               Y. Sheffer
                                                                   Intuit
-                                                              9 May 2025
+                                                             12 May 2025
 
 
                WIMSE Workload to Workload Authentication
@@ -66,7 +66,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 10 November 2025.
+   This Internet-Draft will expire on 13 November 2025.
 
 Copyright Notice
 
@@ -355,7 +355,7 @@ Table of Contents
                encryption algorithmns MUST NOT be used as this would
                require additional key distribution outside of the WIT.
                To promote interoperability, the ES256 signing algorithm
-               SHOULD be supported by general purpose implementations of
+               MUST be supported by general purpose implementations of
                this document.
 
    An example WIT might look like this (all examples, of course, are
@@ -723,9 +723,10 @@ Table of Contents
 
    The following signature parameters in the Signature-Input header MUST
    NOT be used: * keyid - The signing key is sent along with the message
-   in the WIT.  Additionally specifying the id of the key adds
+   in the WIT.  Additionally specifying the key identity would add
    confusion. * alg - The signature algorithm is specified in the jwk
-   section of the cnf claim in the WIT.  See Section 4.1 for details.
+   section of the cnf claim in the WIT.  See Section 4.1 and Sec. 3.3.7
+   of [RFC9421] for details.
 
    It is RECOMMENDED to include only one signature with the HTTP
    message.  If multiple ones are included, then the signature label
