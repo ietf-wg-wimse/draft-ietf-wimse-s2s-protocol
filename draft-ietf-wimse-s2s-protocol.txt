@@ -114,10 +114,11 @@ Table of Contents
      8.1.  Normative References
      8.2.  Informative References
    Appendix A.  Document History
-     A.1.  draft-ietf-wimse-s2s-protocol-03
-     A.2.  draft-ietf-wimse-s2s-protocol-02
-     A.3.  draft-ietf-wimse-s2s-protocol-01
-     A.4.  draft-ietf-wimse-s2s-protocol-00
+     A.1.  latest
+     A.2.  draft-ietf-wimse-s2s-protocol-03
+     A.3.  draft-ietf-wimse-s2s-protocol-02
+     A.4.  draft-ietf-wimse-s2s-protocol-01
+     A.5.  draft-ietf-wimse-s2s-protocol-00
    Acknowledgments
    Authors' Addresses
 
@@ -332,25 +333,41 @@ Table of Contents
          issuance of individual WITs or to revoke them, but some token
          generation environments do not support it.
 
-      -  cnf: A confirmation claim containing the public key of the
-         workload using the jwk member as defined in Section 3.2 of
-         [RFC7800].  The workload MUST prove possession of the
-         corresponding private key when presenting the WIT to another
-         party, which can be accomplished by using it in conjunction
-         with one of the methods in Section 4.2 or Section 4.3.  As
-         such, it MUST NOT be used as a bearer token and is not intended
-         for use in the Authorization header.
+      -  cnf: A confirmation claim referencing the public key of the
+         workload.
+
+         o  jwk: Within the cnf claim, a jwk key MUST be present that
+            contains the public key of the workload as defined in
+            Section 3.2 of [RFC7800].  The workload MUST prove
+            possession of the corresponding private key when presenting
+            the WIT to another party, which can be accomplished by using
+            it in conjunction with one of the methods in Section 4.2 or
+            Section 4.3.  As such, it MUST NOT be used as a bearer token
+            and is not intended for use in the Authorization header.
+
+            +  alg: Within the jwk object, an alg field MUST be present.
+               Allowed values are listed in the IANA "JSON Web Signature
+               and Encryption Algorithms" registry established by
+               [RFC7518].  The presented proof (WPT or http-sig) MUST be
+               produced with the algorithm specified in this field.  The
+               value none MUST NOT be used.  Algorithms used in
+               combination with symmetric keys MUST NOT be used.  Also
+               encryption algorithmns MUST NOT be used as this would
+               require additional key distribution outside of the WIT.
+               To promote interoperability, the ES256 signing algorithm
+               MUST be supported by general purpose implementations of
+               this document.
 
    An example WIT might look like this (all examples, of course, are
    non-normative and with line breaks and extra space for readability):
 
    eyJhbGciOiJFUzI1NiIsImtpZCI6Ikp1bmUgNSIsInR5cCI6IndpbXNlLWlkK2p3dCJ9.
-   eyJjbmYiOnsiandrIjp7ImNydiI6IkVkMjU1MTkiLCJrdHkiOiJPS1AiLCJ4Ijoiclp3V
-   UEwVHJIazRBWEs5MkY2Vll2bUhIWDN4VU0tSUdsck11VkNRaG04VSJ9fSwiZXhwIjoxNz
-   QwNzU4MzQ4LCJpYXQiOjE3NDA3NTQ3NDgsImp0aSI6IjRmYzc3ZmNlZjU3MWIzYmIzM2I
-   2NzJlYWYyMDRmYWY0Iiwic3ViIjoid2ltc2U6Ly9leGFtcGxlLmNvbS9zcGVjaWZpYy13
-   b3JrbG9hZCJ9.j-WlF3bufTwWeVZQntPhlzvSTPwf37-4wfazJZARdHYmW9S_olB5nKEq
-   wqTZpIX_LoVVIcyK0VBE7Fa0CMvw2g
+   eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J2IjoiRWQyNTUxOSIsImt0eSI6I
+   k9LUCIsIngiOiIxQ1hYdmZsTl9MVlZzSXNZWHNVdkIwM0ptbEdXZUNIcVFWdW91Q0Y5Mm
+   JnIn19LCJleHAiOjE3NDU1MTI1MTAsImlhdCI6MTc0NTUwODkxMCwianRpIjoiYmQyYTd
+   iNWJmODU3M2E0MWFkYjRjYmYzY2ZhMDFlMTUiLCJzdWIiOiJ3aW1zZTovL2V4YW1wbGUu
+   Y29tL3NwZWNpZmljLXdvcmtsb2FkIn0.xpODXCUhZ2zk-1-W3VEqbqWhBX6_OJIl7vtja
+   hgwJStMOCRn6J6is6f5mz-Pi5-Xk6FmV44k48NzulqMDVJbAw
 
              Figure 2: An example Workload Identity Token (WIT)
 
@@ -371,14 +388,15 @@ Table of Contents
    {
      "cnf": {
        "jwk": {
+         "alg": "EdDSA",
          "crv": "Ed25519",
          "kty": "OKP",
-         "x": "rZwUA0TrHk4AXK92F6VYvmHHX3xUM-IGlrMuVCQhm8U"
+         "x": "1CXXvflN_LVVsIsYXsUvB03JmlGWeCHqQVuouCF92bg"
        }
      },
-     "exp": 1740758348,
-     "iat": 1740754748,
-     "jti": "4fc77fcef571b3bb33b672eaf204faf4",
+     "exp": 1745512510,
+     "iat": 1745508910,
+     "jti": "bd2a7b5bf8573a41adb4cbf3cfa01e15",
      "sub": "wimse://example.com/specific-workload"
    }
 
@@ -400,14 +418,17 @@ Table of Contents
    *  binds the public key represented by the jwk confirmation method to
       the workload wimse://example.com/specific-workload.
 
+   *  requires the proof to be produced with the EdDSA signature
+      algorithm.
+
    For elucidative purposes only, the workload's key, including the
    private part, is shown below in JWK [RFC7517] format:
 
    {
     "kty": "OKP",
     "crv": "Ed25519",
-    "x": "rZwUA0TrHk4AXK92F6VYvmHHX3xUM-IGlrMuVCQhm8U",
-    "d": "SFrq2PHwRyUGPbUxLVlNVq6XP4S2iklVo3GIBjlb6ZE"
+    "x": "1CXXvflN_LVVsIsYXsUvB03JmlGWeCHqQVuouCF92bg",
+    "d": "sdLX8yCYKqo_XvGBLn-ZWeKT7llYeeQpgeCaXVxb5kY"
    }
 
                       Figure 5: Example Workload's Key
@@ -422,8 +443,8 @@ Table of Contents
     "kty": "EC",
     "kid": "June 5",
     "crv": "P-256",
-    "x": "aolos9KoHX-GeIO-TXhVg-D8BBzZtrHWMZt54SVwMQs",
-    "y": "ouPmPL2f9U054ePXiaZ1-VxTvUhXssEbjWO8EAkM96s"
+    "x": "Dy47KDeYao6kOhxSraJeJizjVxHjjo-9NsnrMqLyvOo",
+    "y": "bj3s7bncoSYURzAzF0jBy0JOnnP5-5E11vx5QoYEFgk"
    }
 
                    Figure 6: Example Identity Server Key
@@ -496,7 +517,9 @@ Table of Contents
 
       -  alg: An identifier for an appropriate JWS asymmetric digital
          signature algorithm corresponding to the confirmation key in
-         the associated WIT.
+         the associated WIT.  The value MUST match the alg value of the
+         jwk in the cnf claim of the WIT.  See Section 4.1 for valid
+         values and restrictions.
 
       -  typ: the WPT is explicitly typed, as recommended in
          Section 3.11 of [RFC8725], using the application/wimse-
@@ -544,10 +567,10 @@ Table of Contents
 
    eyJhbGciOiJFZERTQSIsInR5cCI6IndpbXNlLXByb29mK2p3dCJ9.eyJhdGgiOiJDTDR3
    amZwUm1OZi1iZFlJYllMblY5ZDVyTUFSR3dLWUUxMHdVd3pDMGpJIiwiYXVkIjoiaHR0c
-   HM6Ly93b3JrbG9hZC5leGFtcGxlLmNvbS9wYXRoIiwiZXhwIjoxNzQwNzU1MDQ4LCJqdG
-   kiOiIwYzc0MDM4NmNhMWRjYWQzN2RlMWI1ZjlkZTFiMDcwNSIsInd0aCI6ImFBMFdfb0Z
-   KSzdxVjd6WWhjbXpSMUtPWFZDSGpkMng2YzRzT1FMdkU5MFkifQ.W9RZqieXeD-UgdtbY
-   f8ZNkf2_6_6b_kJSfkODQdq3_QDSSGOhVbRAR3qQoOu0SzihiG6HCsGwslfo4WdvnH5AQ
+   HM6Ly93b3JrbG9hZC5leGFtcGxlLmNvbS9wYXRoIiwiZXhwIjoxNzQ1NTA5MjEwLCJqdG
+   kiOiJlMzI5YmI4Njk2YWE0YWVjYTA0ODg2ZGQ3NmU3OGIyNiIsInd0aCI6InJvN3hGT1N
+   HX2pZeG1VV2Z3ZXFrNVgxc2M2TDBzQ2o3NVdLVDkxZ014eFUifQ.oSegRTrBxuQN55oyW
+   RK5PnPEZLhgRy0Va7BpxBw-a64E3map15dbDo9ArRcJ8M4Z4QZ829CCppfnuaLIei1bBQ
 
                Figure 10: Example Workload Proof Token (WPT)
 
@@ -610,6 +633,9 @@ Table of Contents
 
    *  The Workload-Proof-Token header field value is a single and well-
       formed JWT.
+
+   *  The signature algorithm in the alg JOSE header string-equal
+      matches the alg attribute of the jwk in the cnf claim of the WIT.
 
    *  The WPT signature is valid using the public key from the
       confirmation claim of the WIT.
@@ -696,8 +722,12 @@ Table of Contents
    *  tag - the value for implementations of this specification is
       wimse-workload-to-workload
 
-   Since the signing key is sent along with the message, the keyid
-   parameter SHOULD NOT be used.
+   The following signature parameters in the Signature-Input header MUST
+   NOT be used: * keyid - The signing key is sent along with the message
+   in the WIT.  Additionally specifying the key identity would add
+   confusion. * alg - The signature algorithm is specified in the jwk
+   section of the cnf claim in the WIT.  See Section 4.1 and Sec. 3.3.7
+   of [RFC9421] for details.
 
    It is RECOMMENDED to include only one signature with the HTTP
    message.  If multiple ones are included, then the signature label
@@ -708,10 +738,6 @@ Table of Contents
    among messages sent to the same recipient.  To detect message
    replays, a recipient SHOULD reject a message (request or response) if
    a nonce generated by a certain peer is seen more than once.
-
-   To promote interoperability, the ecdsa-p256-sha256 signing algorithm
-   MUST be implemented by general purpose implementations of this
-   document.
 
    Following is a non-normative example of a signed request and a signed
    response, where the caller is using the keys specified in Figure 5.
@@ -1073,6 +1099,10 @@ Table of Contents
               DOI 10.17487/RFC7517, May 2015,
               <https://www.rfc-editor.org/rfc/rfc7517>.
 
+   [RFC7518]  Jones, M., "JSON Web Algorithms (JWA)", RFC 7518,
+              DOI 10.17487/RFC7518, May 2015,
+              <https://www.rfc-editor.org/rfc/rfc7518>.
+
    [RFC7519]  Jones, M., Bradley, J., and N. Sakimura, "JSON Web Token
               (JWT)", RFC 7519, DOI 10.17487/RFC7519, May 2015,
               <https://www.rfc-editor.org/rfc/rfc7519>.
@@ -1149,7 +1179,12 @@ Appendix A.  Document History
 
    // RFC Editor: please remove before publication.
 
-A.1.  draft-ietf-wimse-s2s-protocol-03
+A.1.  latest
+
+   *  Require cnf.jwk.alg in WIT which restricts signature algorithm of
+      WPT or http-sig
+
+A.2.  draft-ietf-wimse-s2s-protocol-03
 
    *  Consistently use "workload".
 
@@ -1164,7 +1199,7 @@ A.1.  draft-ietf-wimse-s2s-protocol-03
 
    *  Error handling for the application level methods.
 
-A.2.  draft-ietf-wimse-s2s-protocol-02
+A.3.  draft-ietf-wimse-s2s-protocol-02
 
    *  Coexistence with bearer tokens.
 
@@ -1176,7 +1211,7 @@ A.2.  draft-ietf-wimse-s2s-protocol-02
 
    *  Moved an author to acknowledgments.
 
-A.3.  draft-ietf-wimse-s2s-protocol-01
+A.4.  draft-ietf-wimse-s2s-protocol-01
 
    *  Addressed multiple comments from Pieter.
 
@@ -1191,7 +1226,7 @@ A.3.  draft-ietf-wimse-s2s-protocol-01
    *  Added a section comparing the DPoP-inspired app-level security
       option to the Message Signature-based alternative.
 
-A.4.  draft-ietf-wimse-s2s-protocol-00
+A.5.  draft-ietf-wimse-s2s-protocol-00
 
    *  Initial WG draft, an exact copy of draft-sheffer-wimse-s2s-
       protocol-00
