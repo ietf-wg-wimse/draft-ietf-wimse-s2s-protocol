@@ -660,9 +660,11 @@ TODO: `Workload-Proof-Token` from {{dpop-esque-auth}}
 # Document History
 <cref>RFC Editor: please remove before publication.</cref>
 
-## latest
+## draft-ietf-wimse-s2s-protocol-04
 
-* Require `cnf.jwk.alg` in WIT which restricts signature algorithm of WPT or http-sig
+* Require `cnf.jwk.alg` in WIT which restricts signature algorithm of WPT or HTTP-Sig.
+* Replay protection as a SHOULD for both WPT and HTTP-Sig.
+* Consolidate terminology with the Architecture draft.
 
 ## draft-ietf-wimse-s2s-protocol-03
 
