@@ -66,7 +66,8 @@ func generateExamples() error {
 		ExpiresAt: now.Add(witTTL).Unix(),
 		Cnf: cnf{
 			JWK: jose.JSONWebKey{
-				Key: wlKeyPub,
+				Key:       wlKeyPub,
+				Algorithm: string(wlAlg),
 			},
 		},
 	}
