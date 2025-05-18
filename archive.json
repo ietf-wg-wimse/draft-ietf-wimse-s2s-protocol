@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-05-13T01:24:55.840625+00:00",
+  "timestamp": "2025-05-18T01:37:27.378577+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -184,7 +184,7 @@
       "id": "I_kwDOLJmm786MKhpF",
       "title": "\"Alg\" as a Message Signature parameter and as a JWK parameter",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/16",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -195,8 +195,8 @@
       ],
       "body": "The `alg` Message Signature parameter is arguably a vulnerability waiting to happen, because verifiers would trust this field even though they lack context, similarly to the \"none\" issue with JWTs. IMO an algorithm should be strongly bound to a key. Can we make the `alg` field mandatory within the JWK instead?",
       "createdAt": "2024-06-13T16:27:20Z",
-      "updatedAt": "2025-04-24T14:49:43Z",
-      "closedAt": null,
+      "updatedAt": "2025-05-17T10:17:33Z",
+      "closedAt": "2025-05-17T10:17:33Z",
       "comments": [
         {
           "author": "PieterKas",
@@ -444,7 +444,7 @@
       "id": "I_kwDOLJmm786OElKQ",
       "title": "Replay protection",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/29",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -453,8 +453,8 @@
       "labels": [],
       "body": "Ensure that the replay protection for the DPoP solution (using the `jti` claim of the WPT) is equivalent to the replay protection for Message Signatures (using the nonce).",
       "createdAt": "2024-07-01T11:17:54Z",
-      "updatedAt": "2025-03-06T15:51:55Z",
-      "closedAt": null,
+      "updatedAt": "2025-05-17T10:16:38Z",
+      "closedAt": "2025-05-17T10:16:38Z",
       "comments": [
         {
           "author": "arndt-s",
@@ -778,7 +778,7 @@
       "id": "I_kwDOLJmm786OhuZS",
       "title": "Freshness of Workload Proof Tokens ",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/43",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "NONE",
       "assignees": [],
@@ -787,8 +787,8 @@
       ],
       "body": "Commenting as identity enthusiast as opposed to WIMSE co-chair\r\n\r\nDPoP includes a mechanism that allows verifiers to specify a nonce that should be used in the next proof. It achieves this by returning a nonce as part of the response to a request (either as an error or as part of the HTPP 200 response). It adds an extra call, but is efficient after that with a fresh nonce provided in each response. Although including these nonces may preclude pre-computation and re-use of proofs, it may be required for high assurance applications and may be made optional, similar to how this mechanism was made options for DPoP.",
       "createdAt": "2024-07-04T16:45:25Z",
-      "updatedAt": "2024-07-11T17:11:27Z",
-      "closedAt": null,
+      "updatedAt": "2025-05-17T10:04:48Z",
+      "closedAt": "2025-05-17T10:04:46Z",
       "comments": [
         {
           "author": "yaronf",
@@ -803,6 +803,13 @@
           "body": "Challenge response would limit the use cases to synchronous calls. Asynchronous deployments such as message brokers would not be able to implement this.",
           "createdAt": "2024-07-11T14:57:53Z",
           "updatedAt": "2024-07-11T17:11:27Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Closing as Won't Fix. See #29 for the current replay protection mechanism using a nonce.",
+          "createdAt": "2025-05-17T10:04:46Z",
+          "updatedAt": "2025-05-17T10:04:46Z"
         }
       ]
     },
@@ -8598,24 +8605,26 @@
       "id": "PR_kwDOLJmm786N6FDJ",
       "title": "Replay protection with jti",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/106",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "- Changed the document's \"subtitle\" (that's only used in paginated text versions).\r\n- Clarified that the WPT's contents (formerly: \"the WPT contains\") are all MUST.\r\n- Replay protection is now SHOULD for both PoP and Message Sig.\r\n\r\nFixes #29.",
       "createdAt": "2025-03-09T18:46:52Z",
-      "updatedAt": "2025-05-12T09:33:08Z",
+      "updatedAt": "2025-05-17T10:16:55Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "c1ef627e1116c761502ae411261d08b6744d98d8",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-replay",
       "headRefOid": "b65ffd76d6debff96582b04f08936d8d32c2597d",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-05-17T10:16:38Z",
+      "mergedAt": "2025-05-17T10:16:38Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "1f80a67bd61e566d6ee5b3fa1dc25512650a512a"
+      },
       "comments": [],
       "reviews": [
         {
@@ -8800,24 +8809,26 @@
       "id": "PR_kwDOLJmm786Typy3",
       "title": "Restrict signature algorithmn via cnf.jwk.alg",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/115",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "See title. Resolves #16",
       "createdAt": "2025-04-24T15:52:05Z",
-      "updatedAt": "2025-05-12T09:02:44Z",
+      "updatedAt": "2025-05-17T10:17:32Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "ae623ec8565d1962ba8041276becdc025b1ff487",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "arndt/restrict-signature-alg",
       "headRefOid": "1bc9c21cdec68a0c1bdec6b6ffe402622b2f0fee",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-05-17T10:17:32Z",
+      "mergedAt": "2025-05-17T10:17:32Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "d19055a80b783e2c6e54de6efb3359a174747a21"
+      },
       "comments": [
         {
           "author": "arndt-s",
@@ -9259,6 +9270,19 @@
               "updatedAt": "2025-05-12T09:01:37Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786pxG7N",
+          "commit": {
+            "abbreviatedOid": "1bc9c21"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-05-17T09:58:13Z",
+          "updatedAt": "2025-05-17T09:58:13Z",
+          "comments": []
         }
       ]
     },
@@ -9388,6 +9412,32 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 120,
+      "id": "PR_kwDOLJmm786Wj3P0",
+      "title": "Document history - -04",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/120",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-05-17T10:28:06Z",
+      "updatedAt": "2025-05-17T10:28:40Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "d19055a80b783e2c6e54de6efb3359a174747a21",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-hist-04",
+      "headRefOid": "a934f838cfcae13fc0e44532b240aadc924f19f4",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
