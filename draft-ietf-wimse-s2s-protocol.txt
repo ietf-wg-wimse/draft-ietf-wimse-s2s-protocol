@@ -723,11 +723,14 @@ Table of Contents
       wimse-workload-to-workload
 
    The following signature parameters in the Signature-Input header MUST
-   NOT be used: * keyid - The signing key is sent along with the message
-   in the WIT.  Additionally specifying the key identity would add
-   confusion. * alg - The signature algorithm is specified in the jwk
-   section of the cnf claim in the WIT.  See Section 4.1 and Sec. 3.3.7
-   of [RFC9421] for details.
+   NOT be used:
+
+   *  keyid - The signing key is sent along with the message in the WIT.
+      Additionally specifying the key identity would add confusion.
+
+   *  alg - The signature algorithm is specified in the jwk section of
+      the cnf claim in the WIT.  See Section 4.1 and Sec. 3.3.7 of
+      [RFC9421] for details.
 
    It is RECOMMENDED to include only one signature with the HTTP
    message.  If multiple ones are included, then the signature label
