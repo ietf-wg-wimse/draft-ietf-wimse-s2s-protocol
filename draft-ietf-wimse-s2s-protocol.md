@@ -463,6 +463,7 @@ mechanisms in support of long-lived compute processes.
 * `tag` - the value for implementations of this specification is `wimse-workload-to-workload`
 
 The following signature parameters in the `Signature-Input` header MUST NOT be used:
+
 * `keyid` - The signing key is sent along with the message in the WIT. Additionally specifying the key identity would add confusion.
 * `alg` - The signature algorithm is specified in the `jwk` section of the `cnf` claim in the WIT. See {{to-wit}} and Sec. 3.3.7 of {{RFC9421}} for details.
 
