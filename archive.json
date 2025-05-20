@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-05-18T01:37:27.378577+00:00",
+  "timestamp": "2025-05-20T01:25:48.948282+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -9418,26 +9418,84 @@
       "id": "PR_kwDOLJmm786Wj3P0",
       "title": "Document history - -04",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/120",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-05-17T10:28:06Z",
-      "updatedAt": "2025-05-17T10:28:40Z",
+      "updatedAt": "2025-05-19T20:39:13Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "d19055a80b783e2c6e54de6efb3359a174747a21",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-hist-04",
       "headRefOid": "a934f838cfcae13fc0e44532b240aadc924f19f4",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-05-19T20:39:05Z",
+      "mergedAt": "2025-05-19T20:39:05Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "6bd50da97238d015d93da1b0a094e10dcc191c0c"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm786p3PlW",
+          "commit": {
+            "abbreviatedOid": "a934f83"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-05-19T08:11:13Z",
+          "updatedAt": "2025-05-19T08:11:13Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 121,
+      "id": "PR_kwDOLJmm786WyQtj",
+      "title": "Fix formatting",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/121",
+      "state": "MERGED",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fix formatting mistake (but will publish -04 regardless).",
+      "createdAt": "2025-05-19T20:51:02Z",
+      "updatedAt": "2025-05-19T20:52:48Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "6bd50da97238d015d93da1b0a094e10dcc191c0c",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-typo",
+      "headRefOid": "ba7f06a05a936b4274380a8ebb2bd0b1d86de4ca",
+      "closedAt": "2025-05-19T20:52:47Z",
+      "mergedAt": "2025-05-19T20:52:47Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "9c85b74fbfe63e6edf1b5b09c3a588ca9bbda7a6"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm786p_Z8B",
+          "commit": {
+            "abbreviatedOid": "ba7f06a"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-05-19T20:52:23Z",
+          "updatedAt": "2025-05-19T20:52:23Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
