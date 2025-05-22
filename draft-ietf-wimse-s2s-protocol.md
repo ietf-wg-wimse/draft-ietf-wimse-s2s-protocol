@@ -51,6 +51,7 @@ normative:
   RFC9110:
 
 informative:
+  IANA.HTTP.FIELDS: IANA.http-fields
   IANA.JOSE.ALGS: IANA.jose_web-signature-encryption-algorithms
   IANA.JWT.CLAIMS: IANA.jwt_claims
   IANA.MEDIA.TYPES: IANA.media-types
@@ -637,7 +638,10 @@ IANA is requested to add the following entries to the "JSON Web Token Claims" re
 
 IANA is requested to register the following entries to the "Media Types" registry {{IANA.MEDIA.TYPES}}:
 
-### application/wimse-id+jwt
+* application/wimse-id+jwt, per {{iana-wit}}.
+* application/wimse-proof+jwt, per {{iana-wpt}}.
+
+### application/wimse-id+jwt {#iana-wit}
 
 Type name: application
 
@@ -682,7 +686,7 @@ Author: See the Authors' Addresses section of RFC XXX.
 
 Change controller: Internet Engineering Task Force (iesg@ietf.org).
 
-### application/wimse-proof+jwt
+### application/wimse-proof+jwt {#iana-wpt}
 
 Type name: application
 
@@ -728,9 +732,26 @@ Change controller: Internet Engineering Task Force (iesg@ietf.org).
 
 ## Hypertext Transfer Protocol (HTTP) Field Name Registration
 
-TODO: `Workload-Identity-Token` from {{wit-http-header}}
+IANA is requested to register the following entries to the "Hypertext Transfer Protocol (HTTP) Field Name Registry" {{IANA.HTTP.FIELDS}}:
 
-TODO: `Workload-Proof-Token` from {{dpop-esque-auth}}
+* `Workload-Identity-Token`, per {{iana-wit-field}}.
+* `Workload-Proof-Token`, per {{iana-wpt-field}}.
+
+### Workload-Identity-Token {#iana-wit-field}
+
+* Field Name: Workload-Identity-Token
+* Status: permanent
+* Structured Type: N/A
+* Specification Document: RFC XXX, {{wit-http-header}}
+* Comments: see reference above for an ABNF syntax of this field
+
+### Workload-Proof-Token {#iana-wpt-field}
+
+* Field Name: Workload-Proof-Token
+* Status: permanent
+* Structured Type: N/A
+* Specification Document: RFC XXX, {{dpop-esque-auth}}
+* Comments: see reference above for an ABNF syntax of this field
 
 --- back
 
