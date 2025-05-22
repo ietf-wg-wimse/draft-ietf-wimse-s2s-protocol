@@ -52,6 +52,8 @@ normative:
 
 informative:
   IANA.JOSE.ALGS: IANA.jose_web-signature-encryption-algorithms
+  IANA.JWT.CLAIMS: IANA.jwt_claims
+  IANA.MEDIA.TYPES: IANA.media-types
   RFC9457:
 
 --- abstract
@@ -620,15 +622,109 @@ WITs and certificates with workload identifiers are typically associated with a 
 
 # IANA Considerations
 
-TODO: maybe a URI Scheme registration of `wimse` in [URI schemes](https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml) per {{?RFC7595}} but it's only being used in an example right now and might not even be appropriate. Or maybe use an ietf URI scheme a la [URN Namespace for IETF Use](https://www.iana.org/assignments/params/params.xhtml) somehow. Or maybe nothing. Or maybe something else.
+## JSON Web Token Claims
 
-TODO: `tth`, `wth` and maybe `oth` claim in [JSON Web Token Claims Registry](https://www.iana.org/assignments/jwt/jwt.xhtml)
+IANA is requested to add the following entries to the "JSON Web Token Claims" registry {{IANA.JWT.CLAIMS}}:
+
+| Claim Name | Claim Description | Change Controller | Reference |
+|------------|-------------------|-------------------|-----------|
+| tth | Transaction Token hash | IESG | RFC XXX, {{dpop-esque-auth}} |
+| wth | Workload Identity Token hash | IESG | RFC XXX, {{dpop-esque-auth}} |
+| oth | Other Token hash | IESG | RFC XXX, {{dpop-esque-auth}} |
+
 
 ## Media Type Registration
 
-TODO: `application/wimse-id+jwt` or appropriately bikeshedded media type name (despite my ongoing unease with using media types for typing JWTs) in [Media Types](https://www.iana.org/assignments/media-types/media-types.xhtml).
+IANA is requested to register the following entries to the "Media Types" registry {{IANA.MEDIA.TYPES}}:
 
-TODO: `application/wimse-proof+jwt` ...
+### application/wimse-id+jwt
+
+Type name: application
+
+Subtype name: wimse-id+jwt
+
+Required parameters: N/A
+
+Optional parameters: N/A
+
+Encoding considerations: Encoding considerations are identical to those specified for the "application/jwt" media type. See [RFC7519].
+
+Security considerations: See the Security Considerations section of RFC XXX.
+
+Interoperability considerations: N/A
+
+Published specification: RFC XXX, {{to-wit}}.
+
+Applications that use this media type: Identity servers that vend Workload Identity Tokens, and Workloads that
+use these tokens to authenticate to each other.
+
+Fragment identifier considerations: N/A
+
+Additional information:
+
+Deprecated alias names for this type: N/A
+
+Magic number(s): N/A
+
+File extension(s): None
+
+Macintosh file type code(s): N/A
+
+Person & email address to contact for further information:
+
+See the Authors' Addresses section of RFC XXX.
+
+Intended usage: COMMON
+
+Restrictions on usage: N/A
+
+Author: See the Authors' Addresses section of RFC XXX.
+
+Change controller: Internet Engineering Task Force (iesg@ietf.org).
+
+### application/wimse-proof+jwt
+
+Type name: application
+
+Subtype name: wimse-proof+jwt
+
+Required parameters: N/A
+
+Optional parameters: N/A
+
+Encoding considerations: Encoding considerations are identical to those specified for the "application/jwt" media type. See [RFC7519].
+
+Security considerations: See the Security Considerations section of RFC XXX.
+
+Interoperability considerations: N/A
+
+Published specification: RFC XXX, {{dpop-esque-auth}}.
+
+Applications that use this media type: Workloads that use these tokens to integrity-protect messages in the WIMSE workload-to-workload protocol.
+
+Fragment identifier considerations: N/A
+
+Additional information:
+
+Deprecated alias names for this type: N/A
+
+Magic number(s): N/A
+
+File extension(s): None
+
+Macintosh file type code(s): N/A
+
+Person & email address to contact for further information:
+
+See the Authors' Addresses section of RFC XXX.
+
+Intended usage: COMMON
+
+Restrictions on usage: N/A
+
+Author: See the Authors' Addresses section of RFC XXX.
+
+Change controller: Internet Engineering Task Force (iesg@ietf.org).
 
 ## Hypertext Transfer Protocol (HTTP) Field Name Registration
 
