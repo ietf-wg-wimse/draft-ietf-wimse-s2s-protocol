@@ -110,6 +110,8 @@ Table of Contents
        6.2.1.  application/wimse-id+jwt
        6.2.2.  application/wimse-proof+jwt
      6.3.  Hypertext Transfer Protocol (HTTP) Field Name Registration
+       6.3.1.  Workload-Identity-Token
+       6.3.2.  Workload-Proof-Token
    7.  References
      7.1.  Normative References
      7.2.  Informative References
@@ -1025,6 +1027,10 @@ Table of Contents
    IANA is requested to register the following entries to the "Media
    Types" registry [IANA.MEDIA.TYPES]:
 
+   *  application/wimse-id+jwt, per Section 6.2.1.
+
+   *  application/wimse-proof+jwt, per Section 6.2.2.
+
 6.2.1.  application/wimse-id+jwt
 
    Type name: application
@@ -1123,9 +1129,36 @@ Table of Contents
 
 6.3.  Hypertext Transfer Protocol (HTTP) Field Name Registration
 
-   TODO: Workload-Identity-Token from Section 3.1.1
+   IANA is requested to register the following entries to the "Hypertext
+   Transfer Protocol (HTTP) Field Name Registry" [IANA.HTTP.FIELDS]:
 
-   TODO: Workload-Proof-Token from Section 3.2
+   *  Workload-Identity-Token, per Section 6.3.1.
+
+   *  Workload-Proof-Token, per Section 6.3.2.
+
+6.3.1.  Workload-Identity-Token
+
+   *  Field Name: Workload-Identity-Token
+
+   *  Status: permanent
+
+   *  Structured Type: N/A
+
+   *  Specification Document: RFC XXX, Section 3.1.1
+
+   *  Comments: see reference above for an ABNF syntax of this field
+
+6.3.2.  Workload-Proof-Token
+
+   *  Field Name: Workload-Proof-Token
+
+   *  Status: permanent
+
+   *  Structured Type: N/A
+
+   *  Specification Document: RFC XXX, Section 3.2
+
+   *  Comments: see reference above for an ABNF syntax of this field
 
 7.  References
 
@@ -1211,6 +1244,10 @@ Table of Contents
               ietf-wimse-arch-04, 2 March 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
               arch-04>.
+
+   [IANA.HTTP.FIELDS]
+              IANA, "Hypertext Transfer Protocol (HTTP) Field Name
+              Registry", <https://www.iana.org/assignments/http-fields>.
 
    [IANA.JOSE.ALGS]
               IANA, "JSON Web Signature and Encryption Algorithms",
