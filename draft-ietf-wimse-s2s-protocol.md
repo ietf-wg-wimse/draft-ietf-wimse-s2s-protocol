@@ -96,6 +96,13 @@ For application-level protection we currently propose two alternative solutions,
 one which is a profile of HTTP Message Signatures {{!RFC9421}} in {{http-sig-auth}}. The design team believes that we need to pick
 one of these two alternatives for standardization, once we have understood their pros and cons.
 
+## Extending This Protocol to Other Use Cases
+
+The protocol defined here is narrowly scoped, targeting only HTTP-based request/response services. To secure workloads communicating over other
+transports, new protocol bindings will need to be defined. We note though that this protocol is designed to allow some level
+of reuse. In particular, we expect that the Workload Identity Token (WIT) construct will be reusable in other settings. The Workload Proof Token
+(WPT) may be adaptable with some changes to different environments.
+
 ## Deployment Architecture and Message Flow
 
 Regardless of the transport between the workloads, we assume the following logical architecture
@@ -182,7 +189,7 @@ A WIT MUST contain the following claims, except where noted:
     * `jti`: A unique identifier for the token. This claim is OPTIONAL. The `jti` claim is frequently useful for auditing issuance of individual WITs or to revoke them, but some token generation environments do not support it.
     * `cnf`: A confirmation claim referencing the public key of the workload.
         * `jwk`: Within the cnf claim, a `jwk` key MUST be present that contains the public key of the workload as defined in {{Section 3.2 of RFC7800}}. The workload MUST prove possession of the corresponding private key when presenting the WIT to another party, which can be accomplished by using it in conjunction with one of the methods in {{dpop-esque-auth}} or {{http-sig-auth}}. As such, it MUST NOT be used as a bearer token and is not intended for use in the `Authorization` header.
-            * `alg`: Within the jwk object, an `alg` field MUST be present. Allowed values are listed in the IANA "JSON Web Signature and Encryption Algorithms" registry established by {{RFC7518}}. The presented proof (WPT or http-sig) MUST be produced with the algorithm specified in this field. The value `none` MUST NOT be used. Algorithms used in combination with symmetric keys MUST NOT be used. Also encryption algorithmns MUST NOT be used as this would require additional key distribution outside of the WIT. To promote interoperability, the `ES256` signing algorithm MUST be supported by general purpose implementations of this document.
+            * `alg`: Within the jwk object, an `alg` field MUST be present. Allowed values are listed in the IANA "JSON Web Signature and Encryption Algorithms" registry established by {{RFC7518}}. The presented proof (WPT or http-sig) MUST be produced with the algorithm specified in this field. The value `none` MUST NOT be used. Algorithms used in combination with symmetric keys MUST NOT be used. Also encryption algorithms MUST NOT be used as this would require additional key distribution outside of the WIT. To promote interoperability, the `ES256` signing algorithm MUST be supported by general purpose implementations of this document.
 
 An example WIT might look like this (all examples, of course, are non-normative and with line breaks and extra space for readability):
 

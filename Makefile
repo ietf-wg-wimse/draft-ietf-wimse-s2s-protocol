@@ -16,3 +16,6 @@ endif
 
 generate-includes: 
 	find ./includes/*.txt -maxdepth 1 -type f -exec includes/rfcfold.sh -i {} -o {}.out \;
+
+spell:
+	aspell --list < draft*.md | sort | uniq | less
