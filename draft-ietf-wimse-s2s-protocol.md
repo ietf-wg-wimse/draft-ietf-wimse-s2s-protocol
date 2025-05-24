@@ -434,6 +434,9 @@ If the response is signed, the following components MUST be signed:
 * `Content-Digest` if it exists
 * `Workload-Identity-Token`
 
+To ensure the message is fully integrity-protected, if the request or response includes a message body, the sender MUST include
+(and the receiver MUST verify) a Content-Digest header.
+
 For both requests and responses, the following signature parameters MUST be included:
 
 * `created`
@@ -644,6 +647,7 @@ TODO: `Workload-Proof-Token` from {{dpop-esque-auth}}
 ## latest
 
 * Removed the entire Workload Identity section which is now covered in the Architecture document.
+* Content-Digest is mandatory with HTTP-Sig.
 
 ## draft-ietf-wimse-s2s-protocol-04
 
