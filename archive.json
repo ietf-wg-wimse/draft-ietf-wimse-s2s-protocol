@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-05-22T01:24:31.161435+00:00",
+  "timestamp": "2025-05-25T01:39:45.004672+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -1322,7 +1322,7 @@
       "id": "I_kwDOLJmm786QveZD",
       "title": "Self-signed WITs",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/54",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kenmccracken-google",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [
@@ -1332,8 +1332,8 @@
       "labels": [],
       "body": "In \"Section 4.1.  The Workload Identity Token\", the spec states: \r\n\r\n`It is issued by the Identity Server and binds a public key to the workload identity.`\r\n\r\nCould we relax this to allow for self-signed WITs as well?\r\n\r\nSelf-signed WITs could reduce potential load on the Identity Server, and mitigate availability concerns on this centralized issuer.   These WITs would be signed by the Workload's Private Key.  To validate the WIT signature, we could build on the X.509 certificate credentials that have already been distributed to Workloads.  All we would need is to convey the chain to a Trust Anchor via the [x5c](https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.6) claim.\r\n\r\nIn Section 6.1 WIMSE Identity, the spec states:\r\n\r\n`The association\r\n   of an issuer, trust domain and a cryptographic trust root MUST be\r\n   communicated securely out of band.`\r\n\r\nIf we already have machinery to distribute Trust Anchors for a Trust Domain out of band, the certificate chain can be validated against an appropriate Trust Anchor. ",
       "createdAt": "2024-07-24T19:55:59Z",
-      "updatedAt": "2025-05-20T14:41:21Z",
-      "closedAt": null,
+      "updatedAt": "2025-05-23T21:00:37Z",
+      "closedAt": "2025-05-23T21:00:36Z",
       "comments": [
         {
           "author": "yaronf",
@@ -1390,6 +1390,13 @@
           "body": "I've proposed an alternate approach to conveying the Proof-of-possession based on Transport-layer security in Issue #75 ",
           "createdAt": "2024-10-29T20:16:28Z",
           "updatedAt": "2024-10-29T20:17:06Z"
+        },
+        {
+          "author": "kenmccracken-google",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Seems #75 is closed, so closing this as well.",
+          "createdAt": "2025-05-23T21:00:36Z",
+          "updatedAt": "2025-05-23T21:00:36Z"
         }
       ]
     },
@@ -1998,13 +2005,15 @@
       "state": "OPEN",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "yaronf"
+      ],
       "labels": [
         "small"
       ],
       "body": "Note that HTTP header fields are a [unique science](https://www.rfc-editor.org/rfc/rfc9110.html#name-field-extensibility).",
       "createdAt": "2025-03-09T18:58:49Z",
-      "updatedAt": "2025-05-20T14:25:15Z",
+      "updatedAt": "2025-05-22T15:25:03Z",
       "closedAt": null,
       "comments": [
         {
@@ -2020,6 +2029,13 @@
           "body": "We've tried to give goodish ABNF at https://datatracker.ietf.org/doc/html/draft-ietf-wimse-s2s-protocol-03#section-4.1.1 and https://datatracker.ietf.org/doc/html/draft-ietf-wimse-s2s-protocol-03#section-4.2 knowing the appetite for HTTP Structured Fields and also that JWS doesn't fit particularly well into any of the SF items. ",
           "createdAt": "2025-03-10T18:24:29Z",
           "updatedAt": "2025-03-10T18:24:29Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Created a new issue #123 for the `wimse` URI scheme.",
+          "createdAt": "2025-05-22T15:25:02Z",
+          "updatedAt": "2025-05-22T15:25:02Z"
         }
       ]
     },
@@ -2177,6 +2193,22 @@
       "createdAt": "2025-05-07T07:12:25Z",
       "updatedAt": "2025-05-11T19:28:50Z",
       "closedAt": "2025-05-11T19:28:50Z",
+      "comments": []
+    },
+    {
+      "number": 123,
+      "id": "I_kwDOLJmm7863zm-9",
+      "title": "\"wimse\" URI scheme",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/123",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "While working on #110 (IANA considerations):\n\nWe went back and forth on this one. I think we need to register a `wimse` [URI scheme](https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml), so people can use it for service identities if they don't want the baggage that comes with `https`. This is assuming that there will be at least *some* people that implement WIMSE without SPIFFE.\n\nAlso, we use a `wimse` scheme at least once in the text.\n\nOriginal text:\n\n> TODO: maybe a URI Scheme registration of `wimse` in [URI schemes](https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml) per {{?RFC7595}} but it's only being used in an example right now and might not even be appropriate. Or maybe use an ietf URI scheme a la [URN Namespace for IETF Use](https://www.iana.org/assignments/params/params.xhtml) somehow. Or maybe nothing. Or maybe something else.",
+      "createdAt": "2025-05-22T15:22:57Z",
+      "updatedAt": "2025-05-22T15:27:21Z",
+      "closedAt": null,
       "comments": []
     }
   ],
@@ -9616,6 +9648,110 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 124,
+      "id": "PR_kwDOLJmm786XQ3A3",
+      "title": "IANA Considerations",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/124",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Closes #110.",
+      "createdAt": "2025-05-22T17:05:05Z",
+      "updatedAt": "2025-05-22T17:06:29Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "9b70e85ceec2c0de9754e2b110803311983fc35d",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-110",
+      "headRefOid": "767da0a9ec93a82eade1023365a68fadeab94105",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 125,
+      "id": "PR_kwDOLJmm786XXESi",
+      "title": "Clarification on conditional claims",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/125",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Editorial. Closes #91.",
+      "createdAt": "2025-05-23T10:00:23Z",
+      "updatedAt": "2025-05-24T13:42:40Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "9b70e85ceec2c0de9754e2b110803311983fc35d",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-91",
+      "headRefOid": "02941ef3fb5eb1b06e9ceb48987e10ee3c780388",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 126,
+      "id": "PR_kwDOLJmm786Xc6Kf",
+      "title": "Extending beyond the HTTP use case",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/126",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fixes #88.",
+      "createdAt": "2025-05-23T21:18:31Z",
+      "updatedAt": "2025-05-24T13:42:25Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "9b70e85ceec2c0de9754e2b110803311983fc35d",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-88",
+      "headRefOid": "260bdb8d153ce1d9bd771f8650910447596f025b",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 127,
+      "id": "PR_kwDOLJmm786Xf-z4",
+      "title": "Content-Digest with HTTP-Sig",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/127",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fixes #23.",
+      "createdAt": "2025-05-24T13:41:24Z",
+      "updatedAt": "2025-05-24T13:41:51Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "9b70e85ceec2c0de9754e2b110803311983fc35d",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-23",
+      "headRefOid": "19badfb79c09c73381e78744bb091fa467ef03e3",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
