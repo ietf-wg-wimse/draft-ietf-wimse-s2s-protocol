@@ -1,0 +1,10 @@
+=============== NOTE: '\' line wrapping per RFC 8792 ================
+
+Workload-Identity-Token: eyJhbGciOiJFUzI1NiIsImtpZCI6Ikp1bmUgNSIsInR\
+5cCI6IndpbXNlLWlkK2p3dCJ9.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3\
+J2IjoiRWQyNTUxOSIsImt0eSI6Ik9LUCIsIngiOiIxQ1hYdmZsTl9MVlZzSXNZWHNVdk\
+IwM0ptbEdXZUNIcVFWdW91Q0Y5MmJnIn19LCJleHAiOjE3NDU1MTI1MTAsImlhdCI6MT\
+c0NTUwODkxMCwianRpIjoiYmQyYTdiNWJmODU3M2E0MWFkYjRjYmYzY2ZhMDFlMTUiLC\
+JzdWIiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3NwZWNpZmljLXdvcmtsb2FkIn0.xpODXC\
+UhZ2zk-1-W3VEqbqWhBX6_OJIl7vtjahgwJStMOCRn6J6is6f5mz-Pi5-Xk6FmV44k48\
+NzulqMDVJbAw

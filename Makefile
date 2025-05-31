@@ -15,4 +15,5 @@ endif
 endif
 
 generate-includes: 
+	cd includes; ./make-wit-header.sh
 	find ./includes/*.txt -maxdepth 1 -type f -exec includes/rfcfold.sh -i {} -o {}.out \;
