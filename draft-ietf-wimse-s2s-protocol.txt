@@ -5,12 +5,12 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 22 November 2025                                         Venafi
+Expires: 7 December 2025                                          Venafi
                                                       A. Schwenkschuster
                                                                    SPIRL
                                                               Y. Sheffer
                                                                   Intuit
-                                                             21 May 2025
+                                                             5 June 2025
 
 
                WIMSE Workload to Workload Authentication
@@ -66,7 +66,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 22 November 2025.
+   This Internet-Draft will expire on 7 December 2025.
 
 Copyright Notice
 
@@ -85,7 +85,8 @@ Copyright Notice
 Table of Contents
 
    1.  Introduction
-     1.1.  Deployment Architecture and Message Flow
+     1.1.  Extending This Protocol to Other Use Cases
+     1.2.  Deployment Architecture and Message Flow
    2.  Conventions and Definitions
    3.  Application Level Workload To Workload Authentication
      3.1.  The Workload Identity Token
@@ -156,7 +157,18 @@ Table of Contents
    these two alternatives for standardization, once we have understood
    their pros and cons.
 
-1.1.  Deployment Architecture and Message Flow
+1.1.  Extending This Protocol to Other Use Cases
+
+   The protocol defined here is narrowly scoped, targeting only HTTP-
+   based request/response services.  To secure workloads communicating
+   over other transports, new protocol bindings will need to be defined.
+   We note though that this protocol is designed to allow some level of
+   reuse.  In particular, we expect that the Workload Identity Token
+   (WIT) construct will be reusable in other settings.  The Workload
+   Proof Token (WPT) may be adaptable with some changes to different
+   environments.
+
+1.2.  Deployment Architecture and Message Flow
 
    Regardless of the transport between the workloads, we assume the
    following logical architecture (numbers refer to the sequence of
@@ -304,7 +316,7 @@ Table of Contents
                produced with the algorithm specified in this field.  The
                value none MUST NOT be used.  Algorithms used in
                combination with symmetric keys MUST NOT be used.  Also
-               encryption algorithmns MUST NOT be used as this would
+               encryption algorithms MUST NOT be used as this would
                require additional key distribution outside of the WIT.
                To promote interoperability, the ES256 signing algorithm
                MUST be supported by general purpose implementations of
