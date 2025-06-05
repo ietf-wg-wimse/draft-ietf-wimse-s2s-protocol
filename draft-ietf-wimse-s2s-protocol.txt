@@ -322,16 +322,17 @@ Table of Contents
                MUST be supported by general purpose implementations of
                this document.
 
-   An example WIT might look like this (all examples, of course, are
-   non-normative and with line breaks and extra space for readability):
+   An example WIT might look like this:
 
-   eyJhbGciOiJFUzI1NiIsImtpZCI6Ikp1bmUgNSIsInR5cCI6IndpbXNlLWlkK2p3dCJ9.
-   eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J2IjoiRWQyNTUxOSIsImt0eSI6I
-   k9LUCIsIngiOiIxQ1hYdmZsTl9MVlZzSXNZWHNVdkIwM0ptbEdXZUNIcVFWdW91Q0Y5Mm
-   JnIn19LCJleHAiOjE3NDU1MTI1MTAsImlhdCI6MTc0NTUwODkxMCwianRpIjoiYmQyYTd
-   iNWJmODU3M2E0MWFkYjRjYmYzY2ZhMDFlMTUiLCJzdWIiOiJ3aW1zZTovL2V4YW1wbGUu
-   Y29tL3NwZWNpZmljLXdvcmtsb2FkIn0.xpODXCUhZ2zk-1-W3VEqbqWhBX6_OJIl7vtja
-   hgwJStMOCRn6J6is6f5mz-Pi5-Xk6FmV44k48NzulqMDVJbAw
+   =============== NOTE: '\' line wrapping per RFC 8792 ================
+
+   eyJhbGciOiJFUzI1NiIsImtpZCI6Ikp1bmUgNSIsInR5cCI6IndpbXNlLWlkK2p3dCJ9\
+   .eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J2IjoiRWQyNTUxOSIsImt0eSI\
+   6Ik9LUCIsIngiOiIxQ1hYdmZsTl9MVlZzSXNZWHNVdkIwM0ptbEdXZUNIcVFWdW91Q0Y\
+   5MmJnIn19LCJleHAiOjE3NDU1MTI1MTAsImlhdCI6MTc0NTUwODkxMCwianRpIjoiYmQ\
+   yYTdiNWJmODU3M2E0MWFkYjRjYmYzY2ZhMDFlMTUiLCJzdWIiOiJ3aW1zZTovL2V4YW1\
+   wbGUuY29tL3NwZWNpZmljLXdvcmtsb2FkIn0.xpODXCUhZ2zk-1-W3VEqbqWhBX6_OJI\
+   l7vtjahgwJStMOCRn6J6is6f5mz-Pi5-Xk6FmV44k48NzulqMDVJbAw
 
              Figure 2: An example Workload Identity Token (WIT)
 
@@ -432,13 +433,16 @@ Table of Contents
    The following shows the WIT from Figure 2 in an example of a
    Workload-Identity-Token header field:
 
-   Workload-Identity-Token: eyJhbGciOiJFUzI1NiIsImtpZCI6Ikp1bmUgNSIsInR5
-   cCI6IndpbXNlLWlkK2p3dCJ9.eyJjbmYiOnsiandrIjp7ImNydiI6IkVkMjU1MTkiLCJr
-   dHkiOiJPS1AiLCJ4Ijoiclp3VUEwVHJIazRBWEs5MkY2Vll2bUhIWDN4VU0tSUdsck11V
-   kNRaG04VSJ9fSwiZXhwIjoxNzQwNzU4MzQ4LCJpYXQiOjE3NDA3NTQ3NDgsImp0aSI6Ij
-   RmYzc3ZmNlZjU3MWIzYmIzM2I2NzJlYWYyMDRmYWY0Iiwic3ViIjoid2ltc2U6Ly9leGF
-   tcGxlLmNvbS9zcGVjaWZpYy13b3JrbG9hZCJ9.j-WlF3bufTwWeVZQntPhlzvSTPwf37-
-   4wfazJZARdHYmW9S_olB5nKEqwqTZpIX_LoVVIcyK0VBE7Fa0CMvw2g
+   =============== NOTE: '\' line wrapping per RFC 8792 ================
+
+   Workload-Identity-Token: eyJhbGciOiJFUzI1NiIsImtpZCI6Ikp1bmUgNSIsInR\
+   5cCI6IndpbXNlLWlkK2p3dCJ9.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3\
+   J2IjoiRWQyNTUxOSIsImt0eSI6Ik9LUCIsIngiOiIxQ1hYdmZsTl9MVlZzSXNZWHNVdk\
+   IwM0ptbEdXZUNIcVFWdW91Q0Y5MmJnIn19LCJleHAiOjE3NDU1MTI1MTAsImlhdCI6MT\
+   c0NTUwODkxMCwianRpIjoiYmQyYTdiNWJmODU3M2E0MWFkYjRjYmYzY2ZhMDFlMTUiLC\
+   JzdWIiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3NwZWNpZmljLXdvcmtsb2FkIn0.xpODXC\
+   UhZ2zk-1-W3VEqbqWhBX6_OJIl7vtjahgwJStMOCRn6J6is6f5mz-Pi5-Xk6FmV44k48\
+   NzulqMDVJbAw
 
        Figure 8: An example Workload Identity Token HTTP Header Field
 
@@ -530,12 +534,15 @@ Table of Contents
 
    An example WPT might look like the following:
 
-   eyJhbGciOiJFZERTQSIsInR5cCI6IndpbXNlLXByb29mK2p3dCJ9.eyJhdGgiOiJDTDR3
-   amZwUm1OZi1iZFlJYllMblY5ZDVyTUFSR3dLWUUxMHdVd3pDMGpJIiwiYXVkIjoiaHR0c
-   HM6Ly93b3JrbG9hZC5leGFtcGxlLmNvbS9wYXRoIiwiZXhwIjoxNzQ1NTA5MjEwLCJqdG
-   kiOiJlMzI5YmI4Njk2YWE0YWVjYTA0ODg2ZGQ3NmU3OGIyNiIsInd0aCI6InJvN3hGT1N
-   HX2pZeG1VV2Z3ZXFrNVgxc2M2TDBzQ2o3NVdLVDkxZ014eFUifQ.oSegRTrBxuQN55oyW
-   RK5PnPEZLhgRy0Va7BpxBw-a64E3map15dbDo9ArRcJ8M4Z4QZ829CCppfnuaLIei1bBQ
+   =============== NOTE: '\' line wrapping per RFC 8792 ================
+
+   eyJhbGciOiJFZERTQSIsInR5cCI6IndpbXNlLXByb29mK2p3dCJ9.eyJhdGgiOiJDTDR\
+   3amZwUm1OZi1iZFlJYllMblY5ZDVyTUFSR3dLWUUxMHdVd3pDMGpJIiwiYXVkIjoiaHR\
+   0cHM6Ly93b3JrbG9hZC5leGFtcGxlLmNvbS9wYXRoIiwiZXhwIjoxNzQ1NTA5MjEwLCJ\
+   qdGkiOiJlMzI5YmI4Njk2YWE0YWVjYTA0ODg2ZGQ3NmU3OGIyNiIsInd0aCI6InJvN3h\
+   GT1NHX2pZeG1VV2Z3ZXFrNVgxc2M2TDBzQ2o3NVdLVDkxZ014eFUifQ.oSegRTrBxuQN\
+   55oyWRK5PnPEZLhgRy0Va7BpxBw-a64E3map15dbDo9ArRcJ8M4Z4QZ829CCppfnuaLI\
+   ei1bBQ
 
                Figure 10: Example Workload Proof Token (WPT)
 
