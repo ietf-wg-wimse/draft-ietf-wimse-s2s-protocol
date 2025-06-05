@@ -673,6 +673,10 @@ Table of Contents
 
    *  Workload-Identity-Token
 
+   To ensure the message is fully integrity-protected, if the request or
+   response includes a message body, the sender MUST include (and the
+   receiver MUST verify) a Content-Digest header.
+
    For both requests and responses, the following signature parameters
    MUST be included:
 
@@ -1146,6 +1150,8 @@ A.1.  latest
 
    *  Removed the entire Workload Identity section which is now covered
       in the Architecture document.
+
+   *  Content-Digest is mandatory with HTTP-Sig.
 
 A.2.  draft-ietf-wimse-s2s-protocol-04
 

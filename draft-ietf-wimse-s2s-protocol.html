@@ -1952,41 +1952,43 @@ This section defines a profile of the Message Signatures specification <span>[<a
             <p id="section-3.3-7.6.1"><code>Workload-Identity-Token</code><a href="#section-3.3-7.6.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-3.3-8">For both requests and responses, the following signature parameters <span class="bcp14">MUST</span> be included:<a href="#section-3.3-8" class="pilcrow">¶</a></p>
+<p id="section-3.3-8">To ensure the message is fully integrity-protected, if the request or response includes a message body, the sender <span class="bcp14">MUST</span> include
+(and the receiver <span class="bcp14">MUST</span> verify) a Content-Digest header.<a href="#section-3.3-8" class="pilcrow">¶</a></p>
+<p id="section-3.3-9">For both requests and responses, the following signature parameters <span class="bcp14">MUST</span> be included:<a href="#section-3.3-9" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-3.3-9.1">
-            <p id="section-3.3-9.1.1"><code>created</code><a href="#section-3.3-9.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-3.3-10.1">
+            <p id="section-3.3-10.1.1"><code>created</code><a href="#section-3.3-10.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.3-9.2">
-            <p id="section-3.3-9.2.1"><code>expires</code> - expiration <span class="bcp14">MUST</span> be short, e.g. on the order of minutes. The WIMSE architecture will provide separate
-mechanisms in support of long-lived compute processes.<a href="#section-3.3-9.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-3.3-10.2">
+            <p id="section-3.3-10.2.1"><code>expires</code> - expiration <span class="bcp14">MUST</span> be short, e.g. on the order of minutes. The WIMSE architecture will provide separate
+mechanisms in support of long-lived compute processes.<a href="#section-3.3-10.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.3-9.3">
-            <p id="section-3.3-9.3.1"><code>nonce</code><a href="#section-3.3-9.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-3.3-10.3">
+            <p id="section-3.3-10.3.1"><code>nonce</code><a href="#section-3.3-10.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.3-9.4">
-            <p id="section-3.3-9.4.1"><code>tag</code> - the value for implementations of this specification is <code>wimse-workload-to-workload</code><a href="#section-3.3-9.4.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-3.3-10.4">
+            <p id="section-3.3-10.4.1"><code>tag</code> - the value for implementations of this specification is <code>wimse-workload-to-workload</code><a href="#section-3.3-10.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-3.3-10">The following signature parameters in the <code>Signature-Input</code> header <span class="bcp14">MUST NOT</span> be used:<a href="#section-3.3-10" class="pilcrow">¶</a></p>
+<p id="section-3.3-11">The following signature parameters in the <code>Signature-Input</code> header <span class="bcp14">MUST NOT</span> be used:<a href="#section-3.3-11" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-3.3-11.1">
-            <p id="section-3.3-11.1.1"><code>keyid</code> - The signing key is sent along with the message in the WIT. Additionally specifying the key identity would add confusion.<a href="#section-3.3-11.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-3.3-12.1">
+            <p id="section-3.3-12.1.1"><code>keyid</code> - The signing key is sent along with the message in the WIT. Additionally specifying the key identity would add confusion.<a href="#section-3.3-12.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.3-11.2">
-            <p id="section-3.3-11.2.1"><code>alg</code> - The signature algorithm is specified in the <code>jwk</code> section of the <code>cnf</code> claim in the WIT. See <a href="#to-wit" class="auto internal xref">Section 3.1</a> and Sec. 3.3.7 of <span>[<a href="#RFC9421" class="cite xref">RFC9421</a>]</span> for details.<a href="#section-3.3-11.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-3.3-12.2">
+            <p id="section-3.3-12.2.1"><code>alg</code> - The signature algorithm is specified in the <code>jwk</code> section of the <code>cnf</code> claim in the WIT. See <a href="#to-wit" class="auto internal xref">Section 3.1</a> and Sec. 3.3.7 of <span>[<a href="#RFC9421" class="cite xref">RFC9421</a>]</span> for details.<a href="#section-3.3-12.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-3.3-12">It is <span class="bcp14">RECOMMENDED</span> to include only one signature with the HTTP message.
+<p id="section-3.3-13">It is <span class="bcp14">RECOMMENDED</span> to include only one signature with the HTTP message.
 If multiple ones are included, then the signature label included in both the <code>Signature-Input</code> and <code>Signature</code> headers <span class="bcp14">SHOULD</span>
-be <code>wimse</code>.<a href="#section-3.3-12" class="pilcrow">¶</a></p>
-<p id="section-3.3-13">A sender <span class="bcp14">MUST</span> ensure that each nonce it generates is unique, at least among messages sent to the same recipient.
+be <code>wimse</code>.<a href="#section-3.3-13" class="pilcrow">¶</a></p>
+<p id="section-3.3-14">A sender <span class="bcp14">MUST</span> ensure that each nonce it generates is unique, at least among messages sent to the same recipient.
 To detect message replays,
-a recipient <span class="bcp14">SHOULD</span> reject a message (request or response) if a nonce generated by a certain peer is seen more than once.<a href="#section-3.3-13" class="pilcrow">¶</a></p>
-<p id="section-3.3-14">Following is a non-normative example of a signed request and a signed response,
-where the caller is using the keys specified in <a href="#example-caller-jwk" class="auto internal xref">Figure 5</a>.<a href="#section-3.3-14" class="pilcrow">¶</a></p>
+a recipient <span class="bcp14">SHOULD</span> reject a message (request or response) if a nonce generated by a certain peer is seen more than once.<a href="#section-3.3-14" class="pilcrow">¶</a></p>
+<p id="section-3.3-15">Following is a non-normative example of a signed request and a signed response,
+where the caller is using the keys specified in <a href="#example-caller-jwk" class="auto internal xref">Figure 5</a>.<a href="#section-3.3-15" class="pilcrow">¶</a></p>
 <span id="name-signed-request"></span><figure id="figure-14">
-          <div class="lang-http sourcecode" id="section-3.3-15.1">
+          <div class="lang-http sourcecode" id="section-3.3-16.1">
 <pre>
 =============== NOTE: '\' line wrapping per RFC 8792 ================
 
@@ -2005,9 +2007,9 @@ Lgo.c2lnbmF0dXJlCg
 <figcaption><a href="#figure-14" class="selfRef">Figure 14</a>:
 <a href="#name-signed-request" class="selfRef">Signed Request</a>
           </figcaption></figure>
-<p id="section-3.3-16">Assuming that the workload being called has the following keypair:<a href="#section-3.3-16" class="pilcrow">¶</a></p>
+<p id="section-3.3-17">Assuming that the workload being called has the following keypair:<a href="#section-3.3-17" class="pilcrow">¶</a></p>
 <span id="name-callee-private-key"></span><figure id="figure-15">
-          <div class="lang-jwk sourcecode" id="section-3.3-17.1">
+          <div class="lang-jwk sourcecode" id="section-3.3-18.1">
 <pre>
 {
  "kty":"OKP",
@@ -2020,9 +2022,9 @@ Lgo.c2lnbmF0dXJlCg
 <figcaption><a href="#figure-15" class="selfRef">Figure 15</a>:
 <a href="#name-callee-private-key" class="selfRef">Callee Private Key</a>
           </figcaption></figure>
-<p id="section-3.3-18">A signed response would be:<a href="#section-3.3-18" class="pilcrow">¶</a></p>
+<p id="section-3.3-19">A signed response would be:<a href="#section-3.3-19" class="pilcrow">¶</a></p>
 <span id="name-signed-response"></span><figure id="figure-16">
-          <div class="lang-http sourcecode" id="section-3.3-19.1">
+          <div class="lang-http sourcecode" id="section-3.3-20.1">
 <pre>
 =============== NOTE: '\' line wrapping per RFC 8792 ================
 
@@ -2389,6 +2391,9 @@ replay protection would not be effective.<a href="#section-5.2-9" class="pilcrow
 <ul class="normal">
 <li class="normal" id="appendix-A.1-1.1">
             <p id="appendix-A.1-1.1.1">Removed the entire Workload Identity section which is now covered in the Architecture document.<a href="#appendix-A.1-1.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.1-1.2">
+            <p id="appendix-A.1-1.2.1">Content-Digest is mandatory with HTTP-Sig.<a href="#appendix-A.1-1.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
