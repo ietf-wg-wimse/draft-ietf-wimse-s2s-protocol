@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-06-01T01:49:05.154612+00:00",
+  "timestamp": "2025-06-08T01:41:46.664239+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -262,7 +262,7 @@
       "id": "I_kwDOLJmm786NMniL",
       "title": "Content-Digest field in the Message Sig section",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/23",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -271,8 +271,8 @@
       ],
       "body": "Must be mandatory, at least for POST requests.",
       "createdAt": "2024-06-23T21:21:47Z",
-      "updatedAt": "2025-05-20T14:47:53Z",
-      "closedAt": null,
+      "updatedAt": "2025-06-05T13:57:57Z",
+      "closedAt": "2025-06-05T13:57:57Z",
       "comments": []
     },
     {
@@ -389,7 +389,7 @@
       "labels": [],
       "body": "Current text: \"The `aud` claim of the WPT matches the target URI, or an acceptable alias or normalization thereof, of the HTTP request\".\r\n\r\n@yaronf: Man, what's a poor implementer to do with \"an acceptable alias or normalization thereof\"?\r\n\r\n@bc-pi: Whatever they need to do to get shit to work in the case there are proxies in the middle that rewrite the path or even host. I agree that the language is less than ideal but think some allowance is needed.\r\n\r\nhttps://github.com/yaronf/wimse-s2s/pull/19/files#r1648137394 for more context ",
       "createdAt": "2024-06-26T16:42:02Z",
-      "updatedAt": "2024-07-15T16:21:01Z",
+      "updatedAt": "2025-06-05T13:51:19Z",
       "closedAt": null,
       "comments": [
         {
@@ -405,6 +405,20 @@
           "body": "> Do we need audience if we have a good proof of possession coverage via other claims? \ud83e\udd14\r\n\r\nAudience is, to the best of my always limited understanding, an integral part of that proof of possession coverage. No?",
           "createdAt": "2024-07-15T16:20:52Z",
           "updatedAt": "2024-07-15T16:21:01Z"
+        },
+        {
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Yes, omitting the audience would degrade the security of the WIT and WPT.   Perhaps we can say something like:\n\n\"The audience SHOULD match the target URI.  However, there may be some normalization, rewriting or other process that requires the audience to be set to a different value that is defined by local policy. \"  ",
+          "createdAt": "2025-06-05T04:59:04Z",
+          "updatedAt": "2025-06-05T04:59:04Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I can live with this language.",
+          "createdAt": "2025-06-05T13:51:18Z",
+          "updatedAt": "2025-06-05T13:51:18Z"
         }
       ]
     },
@@ -1681,7 +1695,7 @@
       "id": "I_kwDOLJmm786nS028",
       "title": "Adopting S2S mechanisms for non-HTTP use cases",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/88",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "NONE",
       "assignees": [],
@@ -1690,8 +1704,8 @@
       ],
       "body": "Opened as a working group member, not as chair\n\nThere is considerable interest in using some of the mechanisms such as WIT/WPTs, defined in this draft beyond HTTP (gRPC, Kafka). What guidance can be given to adopters who need to perform workload-to-workload or service-to-service authentication in those environments, or at least encourage them to re-use rather than re-invent some of the mechanisms defined here? For example, a simple sentence along the lines of \"these mechanisms or token formats may be used with other protocols, provided that they define an appropriate protocol binding\". ",
       "createdAt": "2025-01-23T12:04:26Z",
-      "updatedAt": "2025-05-20T14:35:03Z",
-      "closedAt": null,
+      "updatedAt": "2025-06-05T13:57:01Z",
+      "closedAt": "2025-06-05T13:57:01Z",
       "comments": [
         {
           "author": "yaronf",
@@ -1936,7 +1950,7 @@
       "id": "I_kwDOLJmm786sVO8V",
       "title": "Long lines: consistency",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/102",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -1945,8 +1959,8 @@
       ],
       "body": "We sometimes use rfcfold.sh and sometimes not, see PR #99.",
       "createdAt": "2025-03-03T13:23:57Z",
-      "updatedAt": "2025-05-20T14:25:49Z",
-      "closedAt": null,
+      "updatedAt": "2025-06-05T13:59:37Z",
+      "closedAt": "2025-06-05T13:59:37Z",
       "comments": []
     },
     {
@@ -9687,7 +9701,7 @@
       "labels": [],
       "body": "Editorial. Closes #91.",
       "createdAt": "2025-05-23T10:00:23Z",
-      "updatedAt": "2025-05-24T13:42:40Z",
+      "updatedAt": "2025-06-05T13:05:58Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "9b70e85ceec2c0de9754e2b110803311983fc35d",
@@ -9699,85 +9713,174 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm786syP5T",
+          "commit": {
+            "abbreviatedOid": "02941ef"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-06-05T04:45:52Z",
+          "updatedAt": "2025-06-05T04:45:52Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "do we need to define what to do if there is more than one token that can fit in the oth claim?",
+              "createdAt": "2025-06-05T04:45:52Z",
+              "updatedAt": "2025-06-05T04:45:52Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786s3nbT",
+          "commit": {
+            "abbreviatedOid": "02941ef"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-06-05T13:05:58Z",
+          "updatedAt": "2025-06-05T13:05:58Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "We could say something like, if there are multiple tokens they should be joined with colons as the separator, but I'm not sure this should be in scope: the whole `oth` things is basically an extension point.\r\n\r\nAlso, we would need to define an ordering between the tokens.",
+              "createdAt": "2025-06-05T13:05:58Z",
+              "updatedAt": "2025-06-05T13:05:58Z"
+            }
+          ]
+        }
+      ]
     },
     {
       "number": 126,
       "id": "PR_kwDOLJmm786Xc6Kf",
       "title": "Extending beyond the HTTP use case",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/126",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Fixes #88.",
       "createdAt": "2025-05-23T21:18:31Z",
-      "updatedAt": "2025-05-24T13:42:25Z",
+      "updatedAt": "2025-06-05T13:56:59Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "9b70e85ceec2c0de9754e2b110803311983fc35d",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-88",
       "headRefOid": "260bdb8d153ce1d9bd771f8650910447596f025b",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-06-05T13:56:59Z",
+      "mergedAt": "2025-06-05T13:56:59Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "d476a188b9be5d1a42f980f7bcc1014381740126"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm786syRW8",
+          "commit": {
+            "abbreviatedOid": "260bdb8"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-06-05T04:48:33Z",
+          "updatedAt": "2025-06-05T04:48:33Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 127,
       "id": "PR_kwDOLJmm786Xf-z4",
       "title": "Content-Digest with HTTP-Sig",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/127",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Fixes #23.",
       "createdAt": "2025-05-24T13:41:24Z",
-      "updatedAt": "2025-05-24T13:41:51Z",
+      "updatedAt": "2025-06-05T13:57:56Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "9b70e85ceec2c0de9754e2b110803311983fc35d",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-23",
       "headRefOid": "19badfb79c09c73381e78744bb091fa467ef03e3",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-06-05T13:57:56Z",
+      "mergedAt": "2025-06-05T13:57:56Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "0afe6c70e5e506978a607e7bcc91ad636c23b431"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm786syR1Z",
+          "commit": {
+            "abbreviatedOid": "19badfb"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-06-05T04:49:56Z",
+          "updatedAt": "2025-06-05T04:49:56Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 128,
       "id": "PR_kwDOLJmm786YY5LO",
       "title": "More long lines with rfcfold",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/128",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Close #102 \r\n\r\nAs usual we commit both the source .txt files and the generated .txt.out files.",
       "createdAt": "2025-05-31T12:03:32Z",
-      "updatedAt": "2025-05-31T12:03:32Z",
+      "updatedAt": "2025-06-05T13:59:36Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "9b70e85ceec2c0de9754e2b110803311983fc35d",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-102",
       "headRefOid": "627d403013e09efda55a3e348c6169a7b10e7eb5",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-06-05T13:59:36Z",
+      "mergedAt": "2025-06-05T13:59:36Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "52a49c28d6bb24e980711362ce0727d0811ce653"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm786sySNK",
+          "commit": {
+            "abbreviatedOid": "627d403"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-06-05T04:51:01Z",
+          "updatedAt": "2025-06-05T04:51:01Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
