@@ -1799,10 +1799,11 @@ WPT =  JWT
             </ul>
 </li>
         </ul>
-<p id="section-3.2-6">An example WPT might look like the following:<a href="#section-3.2-6" class="pilcrow">¶</a></p>
+<p id="section-3.2-6">To clarify: the <code>ath</code>, <code>tth</code> and <code>oth</code> claims are each mandatory if the respective token is included in the request.<a href="#section-3.2-6" class="pilcrow">¶</a></p>
+<p id="section-3.2-7">An example WPT might look like the following:<a href="#section-3.2-7" class="pilcrow">¶</a></p>
 <span id="name-example-workload-proof-toke"></span><div id="example-wpt">
 <figure id="figure-10">
-          <div class="lang-jwt sourcecode" id="section-3.2-7.1">
+          <div class="lang-jwt sourcecode" id="section-3.2-8.1">
 <pre>
 =============== NOTE: '\' line wrapping per RFC 8792 ================
 
@@ -1819,9 +1820,9 @@ ei1bBQ
 <a href="#name-example-workload-proof-toke" class="selfRef">Example Workload Proof Token (WPT)</a>
           </figcaption></figure>
 </div>
-<p id="section-3.2-8">The decoded JOSE header of the WPT from the example above is shown here:<a href="#section-3.2-8" class="pilcrow">¶</a></p>
+<p id="section-3.2-9">The decoded JOSE header of the WPT from the example above is shown here:<a href="#section-3.2-9" class="pilcrow">¶</a></p>
 <span id="name-example-wpt-jose-header"></span><figure id="figure-11">
-          <div class="lang-json sourcecode" id="section-3.2-9.1">
+          <div class="lang-json sourcecode" id="section-3.2-10.1">
 <pre>
 {
   "alg": "EdDSA",
@@ -1832,9 +1833,9 @@ ei1bBQ
 <figcaption><a href="#figure-11" class="selfRef">Figure 11</a>:
 <a href="#name-example-wpt-jose-header" class="selfRef">Example WPT JOSE Header</a>
           </figcaption></figure>
-<p id="section-3.2-10">The decoded JWT claims of the WPT from the example above are shown here:<a href="#section-3.2-10" class="pilcrow">¶</a></p>
+<p id="section-3.2-11">The decoded JWT claims of the WPT from the example above are shown here:<a href="#section-3.2-11" class="pilcrow">¶</a></p>
 <span id="name-example-wpt-claims"></span><figure id="figure-12">
-          <div class="lang-json sourcecode" id="section-3.2-11.1">
+          <div class="lang-json sourcecode" id="section-3.2-12.1">
 <pre>
 {
   "ath": "CL4wjfpRmNf-bdYIbYLnV9d5rMARGwKYE10wUwzC0jI",
@@ -1848,9 +1849,9 @@ ei1bBQ
 <figcaption><a href="#figure-12" class="selfRef">Figure 12</a>:
 <a href="#name-example-wpt-claims" class="selfRef">Example WPT Claims</a>
           </figcaption></figure>
-<p id="section-3.2-12">An example of an HTTP request with both the WIT and WPT from prior examples is shown below:<a href="#section-3.2-12" class="pilcrow">¶</a></p>
+<p id="section-3.2-13">An example of an HTTP request with both the WIT and WPT from prior examples is shown below:<a href="#section-3.2-13" class="pilcrow">¶</a></p>
 <span id="name-example-http-request-with-w"></span><figure id="figure-13">
-          <div class="lang-http sourcecode" id="section-3.2-13.1">
+          <div class="lang-http sourcecode" id="section-3.2-14.1">
 <pre>
 =============== NOTE: '\' line wrapping per RFC 8792 ================
 
@@ -1879,47 +1880,47 @@ Ou0SzihiG6HCsGwslfo4WdvnH5AQ
 <figcaption><a href="#figure-13" class="selfRef">Figure 13</a>:
 <a href="#name-example-http-request-with-w" class="selfRef">Example HTTP Request with WIT and WPT</a>
           </figcaption></figure>
-<p id="section-3.2-14">To validate the WPT in the request, the recipient <span class="bcp14">MUST</span> ensure the following:<a href="#section-3.2-14" class="pilcrow">¶</a></p>
+<p id="section-3.2-15">To validate the WPT in the request, the recipient <span class="bcp14">MUST</span> ensure the following:<a href="#section-3.2-15" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-3.2-15.1">
-            <p id="section-3.2-15.1.1">There is exactly one <code>Workload-Proof-Token</code> header field in the request.<a href="#section-3.2-15.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-3.2-16.1">
+            <p id="section-3.2-16.1.1">There is exactly one <code>Workload-Proof-Token</code> header field in the request.<a href="#section-3.2-16.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.2-15.2">
-            <p id="section-3.2-15.2.1">The <code>Workload-Proof-Token</code> header field value is a single and well-formed JWT.<a href="#section-3.2-15.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-3.2-16.2">
+            <p id="section-3.2-16.2.1">The <code>Workload-Proof-Token</code> header field value is a single and well-formed JWT.<a href="#section-3.2-16.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.2-15.3">
-            <p id="section-3.2-15.3.1">The signature algorithm in the <code>alg</code> JOSE header string-equal matches the <code>alg</code> attribute of the <code>jwk</code> in the <code>cnf</code> claim of the WIT.<a href="#section-3.2-15.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-3.2-16.3">
+            <p id="section-3.2-16.3.1">The signature algorithm in the <code>alg</code> JOSE header string-equal matches the <code>alg</code> attribute of the <code>jwk</code> in the <code>cnf</code> claim of the WIT.<a href="#section-3.2-16.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.2-15.4">
-            <p id="section-3.2-15.4.1">The WPT signature is valid using the public key from the confirmation claim of the WIT.<a href="#section-3.2-15.4.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-3.2-16.4">
+            <p id="section-3.2-16.4.1">The WPT signature is valid using the public key from the confirmation claim of the WIT.<a href="#section-3.2-16.4.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.2-15.5">
-            <p id="section-3.2-15.5.1">The <code>typ</code> JOSE header parameter of the WPT conveys a media type of <code>wimse-proof+jwt</code>.<a href="#section-3.2-15.5.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-3.2-16.5">
+            <p id="section-3.2-16.5.1">The <code>typ</code> JOSE header parameter of the WPT conveys a media type of <code>wimse-proof+jwt</code>.<a href="#section-3.2-16.5.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.2-15.6">
-            <p id="section-3.2-15.6.1">The <code>aud</code> claim of the WPT matches the target URI, or an acceptable alias or normalization thereof, of the HTTP request
- in which the WPT was received, ignoring any query and fragment parts.<a href="#section-3.2-15.6.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-3.2-16.6">
+            <p id="section-3.2-16.6.1">The <code>aud</code> claim of the WPT matches the target URI, or an acceptable alias or normalization thereof, of the HTTP request
+ in which the WPT was received, ignoring any query and fragment parts.<a href="#section-3.2-16.6.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.2-15.7">
-            <p id="section-3.2-15.7.1">The <code>exp</code> claim is present and conveys a time that has not passed. WPTs with an expiration time unreasonably
- far in the future <span class="bcp14">SHOULD</span> be rejected.<a href="#section-3.2-15.7.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-3.2-16.7">
+            <p id="section-3.2-16.7.1">The <code>exp</code> claim is present and conveys a time that has not passed. WPTs with an expiration time unreasonably
+ far in the future <span class="bcp14">SHOULD</span> be rejected.<a href="#section-3.2-16.7.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.2-15.8">
-            <p id="section-3.2-15.8.1">The <code>wth</code> claim is present and matches the hash of the token value conveyed in the <code>Workload-Identity-Token</code> header.<a href="#section-3.2-15.8.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-3.2-16.8">
+            <p id="section-3.2-16.8.1">The <code>wth</code> claim is present and matches the hash of the token value conveyed in the <code>Workload-Identity-Token</code> header.<a href="#section-3.2-16.8.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.2-15.9">
-            <p id="section-3.2-15.9.1">It is <span class="bcp14">RECOMMENDED</span> to check that the value of the <code>jti</code> claim has not been used before in the time window in which the
- respective WPT would be considered valid.<a href="#section-3.2-15.9.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-3.2-16.9">
+            <p id="section-3.2-16.9.1">It is <span class="bcp14">RECOMMENDED</span> to check that the value of the <code>jti</code> claim has not been used before in the time window in which the
+ respective WPT would be considered valid.<a href="#section-3.2-16.9.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.2-15.10">
-            <p id="section-3.2-15.10.1">If presented in conjunction with an OAuth access token, the value of the <code>ath</code> claim matches the hash of that token's value.<a href="#section-3.2-15.10.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-3.2-16.10">
+            <p id="section-3.2-16.10.1">If presented in conjunction with an OAuth access token, the value of the <code>ath</code> claim matches the hash of that token's value.<a href="#section-3.2-16.10.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.2-15.11">
-            <p id="section-3.2-15.11.1">If presented in conjunction with a Txn-Token, the value of the <code>tth</code> claim matches the hash of that token's value.<a href="#section-3.2-15.11.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-3.2-16.11">
+            <p id="section-3.2-16.11.1">If presented in conjunction with a Txn-Token, the value of the <code>tth</code> claim matches the hash of that token's value.<a href="#section-3.2-16.11.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.2-15.12">
-            <p id="section-3.2-15.12.1">If presented in conjunction with a token conveying end-user identity or authorization context, the value of
- the <code>oth</code> claim matches the hash of that token's value.<a href="#section-3.2-15.12.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-3.2-16.12">
+            <p id="section-3.2-16.12.1">If presented in conjunction with a token conveying end-user identity or authorization context, the value of
+ the <code>oth</code> claim matches the hash of that token's value.<a href="#section-3.2-16.12.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>

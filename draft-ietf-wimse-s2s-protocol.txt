@@ -537,6 +537,9 @@ Table of Contents
          token's value.  (Note: this is less than ideal but seems we
          need something like this for extensibility.)
 
+   To clarify: the ath, tth and oth claims are each mandatory if the
+   respective token is included in the request.
+
    An example WPT might look like the following:
 
    =============== NOTE: '\' line wrapping per RFC 8792 ================
