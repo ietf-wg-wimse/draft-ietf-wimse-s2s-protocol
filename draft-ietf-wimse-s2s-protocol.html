@@ -28,7 +28,7 @@ would be authenticated at the application level.
 <meta content="draft-ietf-wimse-s2s-protocol-latest" name="ietf.draft">
 <!-- Generator version information:
   xml2rfc 3.28.1
-    Python 3.12.10
+    Python 3.12.11
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
     intervaltree 3.1.0
@@ -37,7 +37,7 @@ would be authenticated at the application level.
     platformdirs 4.3.8
     pycountry 24.6.1
     PyYAML 6.0.2
-    requests 2.32.3
+    requests 2.32.4
     setuptools 80.9.0
     wcwidth 0.2.13
 -->
@@ -1062,7 +1062,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Campbell, et al.</td>
-<td class="center">Expires 7 December 2025</td>
+<td class="center">Expires 19 December 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1075,12 +1075,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-wimse-s2s-protocol-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-06-05" class="published">5 June 2025</time>
+<time datetime="2025-06-17" class="published">17 June 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-12-07">7 December 2025</time></dd>
+<dd class="expires"><time datetime="2025-12-19">19 December 2025</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1152,7 +1152,7 @@ would be authenticated at the application level.<a href="#section-abstract-1" cl
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 7 December 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 19 December 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1258,10 +1258,29 @@ would be authenticated at the application level.<a href="#section-abstract-1" cl
             <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
-                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-media-type-registration" class="internal xref">Media Type Registration</a></p>
+                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-json-web-token-claims" class="internal xref">JSON Web Token Claims</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2">
-                <p id="section-toc.1-1.6.2.2.1"><a href="#section-6.2" class="auto internal xref">6.2</a>.  <a href="#name-hypertext-transfer-protocol" class="internal xref">Hypertext Transfer Protocol (HTTP) Field Name Registration</a></p>
+                <p id="section-toc.1-1.6.2.2.1"><a href="#section-6.2" class="auto internal xref">6.2</a>.  <a href="#name-media-type-registration" class="internal xref">Media Type Registration</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2.2.1">
+                    <p id="section-toc.1-1.6.2.2.2.1.1"><a href="#section-6.2.1" class="auto internal xref">6.2.1</a>.  <a href="#name-application-wimse-idjwt" class="internal xref">application/wimse-id+jwt</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2.2.2">
+                    <p id="section-toc.1-1.6.2.2.2.2.1"><a href="#section-6.2.2" class="auto internal xref">6.2.2</a>.  <a href="#name-application-wimse-proofjwt" class="internal xref">application/wimse-proof+jwt</a></p>
+</li>
+                </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.3">
+                <p id="section-toc.1-1.6.2.3.1"><a href="#section-6.3" class="auto internal xref">6.3</a>.  <a href="#name-hypertext-transfer-protocol" class="internal xref">Hypertext Transfer Protocol (HTTP) Field Name Registration</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.3.2.1">
+                    <p id="section-toc.1-1.6.2.3.2.1.1"><a href="#section-6.3.1" class="auto internal xref">6.3.1</a>.  <a href="#name-workload-identity-token" class="internal xref">Workload-Identity-Token</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.3.2.2">
+                    <p id="section-toc.1-1.6.2.3.2.2.1"><a href="#section-6.3.2" class="auto internal xref">6.3.2</a>.  <a href="#name-workload-proof-token" class="internal xref">Workload-Proof-Token</a></p>
+</li>
+                </ul>
 </li>
             </ul>
 </li>
@@ -2258,24 +2277,183 @@ replay protection would not be effective.<a href="#section-5.2-9" class="pilcrow
       <h2 id="name-iana-considerations">
 <a href="#section-6" class="section-number selfRef">6. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
-<p id="section-6-1">TODO: maybe a URI Scheme registration of <code>wimse</code> in <a href="https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml">URI schemes</a> per <span>[<a href="#RFC7595" class="cite xref">RFC7595</a>]</span> but it's only being used in an example right now and might not even be appropriate. Or maybe use an ietf URI scheme a la <a href="https://www.iana.org/assignments/params/params.xhtml">URN Namespace for IETF Use</a> somehow. Or maybe nothing. Or maybe something else.<a href="#section-6-1" class="pilcrow">¶</a></p>
-<p id="section-6-2">TODO: <code>tth</code>, <code>wth</code> and maybe <code>oth</code> claim in <a href="https://www.iana.org/assignments/jwt/jwt.xhtml">JSON Web Token Claims Registry</a><a href="#section-6-2" class="pilcrow">¶</a></p>
-<div id="media-type-registration">
+<div id="json-web-token-claims">
 <section id="section-6.1">
-        <h3 id="name-media-type-registration">
-<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-media-type-registration" class="section-name selfRef">Media Type Registration</a>
+        <h3 id="name-json-web-token-claims">
+<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-json-web-token-claims" class="section-name selfRef">JSON Web Token Claims</a>
         </h3>
-<p id="section-6.1-1">TODO: <code>application/wimse-id+jwt</code> or appropriately bikeshedded media type name (despite my ongoing unease with using media types for typing JWTs) in <a href="https://www.iana.org/assignments/media-types/media-types.xhtml">Media Types</a>.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
-<p id="section-6.1-2">TODO: <code>application/wimse-proof+jwt</code> ...<a href="#section-6.1-2" class="pilcrow">¶</a></p>
+<p id="section-6.1-1">IANA is requested to add the following entries to the "JSON Web Token Claims" registry <span>[<a href="#IANA.JWT.CLAIMS" class="cite xref">IANA.JWT.CLAIMS</a>]</span>:<a href="#section-6.1-1" class="pilcrow">¶</a></p>
+<table class="center" id="table-1">
+          <caption><a href="#table-1" class="selfRef">Table 1</a></caption>
+<thead>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1">Claim Name</th>
+              <th class="text-left" rowspan="1" colspan="1">Claim Description</th>
+              <th class="text-left" rowspan="1" colspan="1">Change Controller</th>
+              <th class="text-left" rowspan="1" colspan="1">Reference</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">tth</td>
+              <td class="text-left" rowspan="1" colspan="1">Transaction Token hash</td>
+              <td class="text-left" rowspan="1" colspan="1">IESG</td>
+              <td class="text-left" rowspan="1" colspan="1">RFC XXX, <a href="#dpop-esque-auth" class="auto internal xref">Section 3.2</a>
+</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">wth</td>
+              <td class="text-left" rowspan="1" colspan="1">Workload Identity Token hash</td>
+              <td class="text-left" rowspan="1" colspan="1">IESG</td>
+              <td class="text-left" rowspan="1" colspan="1">RFC XXX, <a href="#dpop-esque-auth" class="auto internal xref">Section 3.2</a>
+</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">oth</td>
+              <td class="text-left" rowspan="1" colspan="1">Other Token hash</td>
+              <td class="text-left" rowspan="1" colspan="1">IESG</td>
+              <td class="text-left" rowspan="1" colspan="1">RFC XXX, <a href="#dpop-esque-auth" class="auto internal xref">Section 3.2</a>
+</td>
+            </tr>
+          </tbody>
+        </table>
+</section>
+</div>
+<div id="media-type-registration">
+<section id="section-6.2">
+        <h3 id="name-media-type-registration">
+<a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-media-type-registration" class="section-name selfRef">Media Type Registration</a>
+        </h3>
+<p id="section-6.2-1">IANA is requested to register the following entries to the "Media Types" registry <span>[<a href="#IANA.MEDIA.TYPES" class="cite xref">IANA.MEDIA.TYPES</a>]</span>:<a href="#section-6.2-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-6.2-2.1">
+            <p id="section-6.2-2.1.1">application/wimse-id+jwt, per <a href="#iana-wit" class="auto internal xref">Section 6.2.1</a>.<a href="#section-6.2-2.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-6.2-2.2">
+            <p id="section-6.2-2.2.1">application/wimse-proof+jwt, per <a href="#iana-wpt" class="auto internal xref">Section 6.2.2</a>.<a href="#section-6.2-2.2.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<div id="iana-wit">
+<section id="section-6.2.1">
+          <h4 id="name-application-wimse-idjwt">
+<a href="#section-6.2.1" class="section-number selfRef">6.2.1. </a><a href="#name-application-wimse-idjwt" class="section-name selfRef">application/wimse-id+jwt</a>
+          </h4>
+<p id="section-6.2.1-1">Type name: application<a href="#section-6.2.1-1" class="pilcrow">¶</a></p>
+<p id="section-6.2.1-2">Subtype name: wimse-id+jwt<a href="#section-6.2.1-2" class="pilcrow">¶</a></p>
+<p id="section-6.2.1-3">Required parameters: N/A<a href="#section-6.2.1-3" class="pilcrow">¶</a></p>
+<p id="section-6.2.1-4">Optional parameters: N/A<a href="#section-6.2.1-4" class="pilcrow">¶</a></p>
+<p id="section-6.2.1-5">Encoding considerations: Encoding considerations are identical to those specified for the "application/jwt" media type. See <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>.<a href="#section-6.2.1-5" class="pilcrow">¶</a></p>
+<p id="section-6.2.1-6">Security considerations: See the Security Considerations section of RFC XXX.<a href="#section-6.2.1-6" class="pilcrow">¶</a></p>
+<p id="section-6.2.1-7">Interoperability considerations: N/A<a href="#section-6.2.1-7" class="pilcrow">¶</a></p>
+<p id="section-6.2.1-8">Published specification: RFC XXX, <a href="#to-wit" class="auto internal xref">Section 3.1</a>.<a href="#section-6.2.1-8" class="pilcrow">¶</a></p>
+<p id="section-6.2.1-9">Applications that use this media type: Identity servers that vend Workload Identity Tokens, and Workloads that
+use these tokens to authenticate to each other.<a href="#section-6.2.1-9" class="pilcrow">¶</a></p>
+<p id="section-6.2.1-10">Fragment identifier considerations: N/A<a href="#section-6.2.1-10" class="pilcrow">¶</a></p>
+<p id="section-6.2.1-11">Additional information:<a href="#section-6.2.1-11" class="pilcrow">¶</a></p>
+<p id="section-6.2.1-12">Deprecated alias names for this type: N/A<a href="#section-6.2.1-12" class="pilcrow">¶</a></p>
+<p id="section-6.2.1-13">Magic number(s): N/A<a href="#section-6.2.1-13" class="pilcrow">¶</a></p>
+<p id="section-6.2.1-14">File extension(s): None<a href="#section-6.2.1-14" class="pilcrow">¶</a></p>
+<p id="section-6.2.1-15">Macintosh file type code(s): N/A<a href="#section-6.2.1-15" class="pilcrow">¶</a></p>
+<p id="section-6.2.1-16">Person &amp; email address to contact for further information:<a href="#section-6.2.1-16" class="pilcrow">¶</a></p>
+<p id="section-6.2.1-17">See the Authors' Addresses section of RFC XXX.<a href="#section-6.2.1-17" class="pilcrow">¶</a></p>
+<p id="section-6.2.1-18">Intended usage: COMMON<a href="#section-6.2.1-18" class="pilcrow">¶</a></p>
+<p id="section-6.2.1-19">Restrictions on usage: N/A<a href="#section-6.2.1-19" class="pilcrow">¶</a></p>
+<p id="section-6.2.1-20">Author: See the Authors' Addresses section of RFC XXX.<a href="#section-6.2.1-20" class="pilcrow">¶</a></p>
+<p id="section-6.2.1-21">Change controller: Internet Engineering Task Force (iesg@ietf.org).<a href="#section-6.2.1-21" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="iana-wpt">
+<section id="section-6.2.2">
+          <h4 id="name-application-wimse-proofjwt">
+<a href="#section-6.2.2" class="section-number selfRef">6.2.2. </a><a href="#name-application-wimse-proofjwt" class="section-name selfRef">application/wimse-proof+jwt</a>
+          </h4>
+<p id="section-6.2.2-1">Type name: application<a href="#section-6.2.2-1" class="pilcrow">¶</a></p>
+<p id="section-6.2.2-2">Subtype name: wimse-proof+jwt<a href="#section-6.2.2-2" class="pilcrow">¶</a></p>
+<p id="section-6.2.2-3">Required parameters: N/A<a href="#section-6.2.2-3" class="pilcrow">¶</a></p>
+<p id="section-6.2.2-4">Optional parameters: N/A<a href="#section-6.2.2-4" class="pilcrow">¶</a></p>
+<p id="section-6.2.2-5">Encoding considerations: Encoding considerations are identical to those specified for the "application/jwt" media type. See <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>.<a href="#section-6.2.2-5" class="pilcrow">¶</a></p>
+<p id="section-6.2.2-6">Security considerations: See the Security Considerations section of RFC XXX.<a href="#section-6.2.2-6" class="pilcrow">¶</a></p>
+<p id="section-6.2.2-7">Interoperability considerations: N/A<a href="#section-6.2.2-7" class="pilcrow">¶</a></p>
+<p id="section-6.2.2-8">Published specification: RFC XXX, <a href="#dpop-esque-auth" class="auto internal xref">Section 3.2</a>.<a href="#section-6.2.2-8" class="pilcrow">¶</a></p>
+<p id="section-6.2.2-9">Applications that use this media type: Workloads that use these tokens to integrity-protect messages in the WIMSE workload-to-workload protocol.<a href="#section-6.2.2-9" class="pilcrow">¶</a></p>
+<p id="section-6.2.2-10">Fragment identifier considerations: N/A<a href="#section-6.2.2-10" class="pilcrow">¶</a></p>
+<p id="section-6.2.2-11">Additional information:<a href="#section-6.2.2-11" class="pilcrow">¶</a></p>
+<p id="section-6.2.2-12">Deprecated alias names for this type: N/A<a href="#section-6.2.2-12" class="pilcrow">¶</a></p>
+<p id="section-6.2.2-13">Magic number(s): N/A<a href="#section-6.2.2-13" class="pilcrow">¶</a></p>
+<p id="section-6.2.2-14">File extension(s): None<a href="#section-6.2.2-14" class="pilcrow">¶</a></p>
+<p id="section-6.2.2-15">Macintosh file type code(s): N/A<a href="#section-6.2.2-15" class="pilcrow">¶</a></p>
+<p id="section-6.2.2-16">Person &amp; email address to contact for further information:<a href="#section-6.2.2-16" class="pilcrow">¶</a></p>
+<p id="section-6.2.2-17">See the Authors' Addresses section of RFC XXX.<a href="#section-6.2.2-17" class="pilcrow">¶</a></p>
+<p id="section-6.2.2-18">Intended usage: COMMON<a href="#section-6.2.2-18" class="pilcrow">¶</a></p>
+<p id="section-6.2.2-19">Restrictions on usage: N/A<a href="#section-6.2.2-19" class="pilcrow">¶</a></p>
+<p id="section-6.2.2-20">Author: See the Authors' Addresses section of RFC XXX.<a href="#section-6.2.2-20" class="pilcrow">¶</a></p>
+<p id="section-6.2.2-21">Change controller: Internet Engineering Task Force (iesg@ietf.org).<a href="#section-6.2.2-21" class="pilcrow">¶</a></p>
+</section>
+</div>
 </section>
 </div>
 <div id="hypertext-transfer-protocol-http-field-name-registration">
-<section id="section-6.2">
+<section id="section-6.3">
         <h3 id="name-hypertext-transfer-protocol">
-<a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-hypertext-transfer-protocol" class="section-name selfRef">Hypertext Transfer Protocol (HTTP) Field Name Registration</a>
+<a href="#section-6.3" class="section-number selfRef">6.3. </a><a href="#name-hypertext-transfer-protocol" class="section-name selfRef">Hypertext Transfer Protocol (HTTP) Field Name Registration</a>
         </h3>
-<p id="section-6.2-1">TODO: <code>Workload-Identity-Token</code> from <a href="#wit-http-header" class="auto internal xref">Section 3.1.1</a><a href="#section-6.2-1" class="pilcrow">¶</a></p>
-<p id="section-6.2-2">TODO: <code>Workload-Proof-Token</code> from <a href="#dpop-esque-auth" class="auto internal xref">Section 3.2</a><a href="#section-6.2-2" class="pilcrow">¶</a></p>
+<p id="section-6.3-1">IANA is requested to register the following entries to the "Hypertext Transfer Protocol (HTTP) Field Name Registry" <span>[<a href="#IANA.HTTP.FIELDS" class="cite xref">IANA.HTTP.FIELDS</a>]</span>:<a href="#section-6.3-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-6.3-2.1">
+            <p id="section-6.3-2.1.1"><code>Workload-Identity-Token</code>, per <a href="#iana-wit-field" class="auto internal xref">Section 6.3.1</a>.<a href="#section-6.3-2.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-6.3-2.2">
+            <p id="section-6.3-2.2.1"><code>Workload-Proof-Token</code>, per <a href="#iana-wpt-field" class="auto internal xref">Section 6.3.2</a>.<a href="#section-6.3-2.2.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<div id="iana-wit-field">
+<section id="section-6.3.1">
+          <h4 id="name-workload-identity-token">
+<a href="#section-6.3.1" class="section-number selfRef">6.3.1. </a><a href="#name-workload-identity-token" class="section-name selfRef">Workload-Identity-Token</a>
+          </h4>
+<ul class="normal">
+<li class="normal" id="section-6.3.1-1.1">
+              <p id="section-6.3.1-1.1.1">Field Name: Workload-Identity-Token<a href="#section-6.3.1-1.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-6.3.1-1.2">
+              <p id="section-6.3.1-1.2.1">Status: permanent<a href="#section-6.3.1-1.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-6.3.1-1.3">
+              <p id="section-6.3.1-1.3.1">Structured Type: N/A<a href="#section-6.3.1-1.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-6.3.1-1.4">
+              <p id="section-6.3.1-1.4.1">Specification Document: RFC XXX, <a href="#wit-http-header" class="auto internal xref">Section 3.1.1</a><a href="#section-6.3.1-1.4.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-6.3.1-1.5">
+              <p id="section-6.3.1-1.5.1">Comments: see reference above for an ABNF syntax of this field<a href="#section-6.3.1-1.5.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+</section>
+</div>
+<div id="iana-wpt-field">
+<section id="section-6.3.2">
+          <h4 id="name-workload-proof-token">
+<a href="#section-6.3.2" class="section-number selfRef">6.3.2. </a><a href="#name-workload-proof-token" class="section-name selfRef">Workload-Proof-Token</a>
+          </h4>
+<ul class="normal">
+<li class="normal" id="section-6.3.2-1.1">
+              <p id="section-6.3.2-1.1.1">Field Name: Workload-Proof-Token<a href="#section-6.3.2-1.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-6.3.2-1.2">
+              <p id="section-6.3.2-1.2.1">Status: permanent<a href="#section-6.3.2-1.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-6.3.2-1.3">
+              <p id="section-6.3.2-1.3.1">Structured Type: N/A<a href="#section-6.3.2-1.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-6.3.2-1.4">
+              <p id="section-6.3.2-1.4.1">Specification Document: RFC XXX, <a href="#dpop-esque-auth" class="auto internal xref">Section 3.2</a><a href="#section-6.3.2-1.4.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-6.3.2-1.5">
+              <p id="section-6.3.2-1.5.1">Comments: see reference above for an ABNF syntax of this field<a href="#section-6.3.2-1.5.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+</section>
+</div>
 </section>
 </div>
 </section>
@@ -2364,13 +2542,21 @@ replay protection would not be effective.<a href="#section-5.2-9" class="pilcrow
         <dd>
 <span class="refAuthor">Salowey, J. A.</span>, <span class="refAuthor">Rosomakho, Y.</span>, and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"Workload Identity in a Multi System Environment (WIMSE) Architecture"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-arch-04</span>, <time datetime="2025-03-02" class="refDate">2 March 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-04">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-04</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="IANA.HTTP.FIELDS">[IANA.HTTP.FIELDS]</dt>
+        <dd>
+<span class="refAuthor">IANA</span>, <span class="refTitle">"Hypertext Transfer Protocol (HTTP) Field Name Registry"</span>, <span>&lt;<a href="https://www.iana.org/assignments/http-fields">https://www.iana.org/assignments/http-fields</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="IANA.JOSE.ALGS">[IANA.JOSE.ALGS]</dt>
         <dd>
 <span class="refAuthor">IANA</span>, <span class="refTitle">"JSON Web Signature and Encryption Algorithms"</span>, <span>&lt;<a href="https://www.iana.org/assignments/jose">https://www.iana.org/assignments/jose</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="RFC7595">[RFC7595]</dt>
+<dt id="IANA.JWT.CLAIMS">[IANA.JWT.CLAIMS]</dt>
         <dd>
-<span class="refAuthor">Thaler, D., Ed.</span>, <span class="refAuthor">Hansen, T.</span>, and <span class="refAuthor">T. Hardie</span>, <span class="refTitle">"Guidelines and Registration Procedures for URI Schemes"</span>, <span class="seriesInfo">BCP 35</span>, <span class="seriesInfo">RFC 7595</span>, <span class="seriesInfo">DOI 10.17487/RFC7595</span>, <time datetime="2015-06" class="refDate">June 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7595">https://www.rfc-editor.org/rfc/rfc7595</a>&gt;</span>. </dd>
+<span class="refAuthor">IANA</span>, <span class="refTitle">"JSON Web Token Claims"</span>, <span>&lt;<a href="https://www.iana.org/assignments/jwt">https://www.iana.org/assignments/jwt</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="IANA.MEDIA.TYPES">[IANA.MEDIA.TYPES]</dt>
+        <dd>
+<span class="refAuthor">IANA</span>, <span class="refTitle">"Media Types"</span>, <span>&lt;<a href="https://www.iana.org/assignments/media-types">https://www.iana.org/assignments/media-types</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9449">[RFC9449]</dt>
         <dd>

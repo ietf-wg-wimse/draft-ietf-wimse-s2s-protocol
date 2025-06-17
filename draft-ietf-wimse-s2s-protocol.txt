@@ -5,12 +5,12 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 7 December 2025                                          Venafi
+Expires: 19 December 2025                                         Venafi
                                                       A. Schwenkschuster
                                                                    SPIRL
                                                               Y. Sheffer
                                                                   Intuit
-                                                             5 June 2025
+                                                            17 June 2025
 
 
                WIMSE Workload to Workload Authentication
@@ -66,7 +66,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 7 December 2025.
+   This Internet-Draft will expire on 19 December 2025.
 
 Copyright Notice
 
@@ -106,8 +106,13 @@ Table of Contents
      5.3.  Middle Boxes
      5.4.  Privacy Considerations
    6.  IANA Considerations
-     6.1.  Media Type Registration
-     6.2.  Hypertext Transfer Protocol (HTTP) Field Name Registration
+     6.1.  JSON Web Token Claims
+     6.2.  Media Type Registration
+       6.2.1.  application/wimse-id+jwt
+       6.2.2.  application/wimse-proof+jwt
+     6.3.  Hypertext Transfer Protocol (HTTP) Field Name Registration
+       6.3.1.  Workload-Identity-Token
+       6.3.2.  Workload-Proof-Token
    7.  References
      7.1.  Normative References
      7.2.  Informative References
@@ -1020,30 +1025,163 @@ Table of Contents
 
 6.  IANA Considerations
 
-   TODO: maybe a URI Scheme registration of wimse in URI schemes
-   (https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml) per
-   [RFC7595] but it's only being used in an example right now and might
-   not even be appropriate.  Or maybe use an ietf URI scheme a la URN
-   Namespace for IETF Use (https://www.iana.org/assignments/params/
-   params.xhtml) somehow.  Or maybe nothing.  Or maybe something else.
+6.1.  JSON Web Token Claims
 
-   TODO: tth, wth and maybe oth claim in JSON Web Token Claims Registry
-   (https://www.iana.org/assignments/jwt/jwt.xhtml)
+   IANA is requested to add the following entries to the "JSON Web Token
+   Claims" registry [IANA.JWT.CLAIMS]:
 
-6.1.  Media Type Registration
+   +============+===================+===================+=============+
+   | Claim Name | Claim Description | Change Controller | Reference   |
+   +============+===================+===================+=============+
+   | tth        | Transaction Token | IESG              | RFC XXX,    |
+   |            | hash              |                   | Section 3.2 |
+   +------------+-------------------+-------------------+-------------+
+   | wth        | Workload Identity | IESG              | RFC XXX,    |
+   |            | Token hash        |                   | Section 3.2 |
+   +------------+-------------------+-------------------+-------------+
+   | oth        | Other Token hash  | IESG              | RFC XXX,    |
+   |            |                   |                   | Section 3.2 |
+   +------------+-------------------+-------------------+-------------+
 
-   TODO: application/wimse-id+jwt or appropriately bikeshedded media
-   type name (despite my ongoing unease with using media types for
-   typing JWTs) in Media Types (https://www.iana.org/assignments/media-
-   types/media-types.xhtml).
+                                 Table 1
 
-   TODO: application/wimse-proof+jwt ...
+6.2.  Media Type Registration
 
-6.2.  Hypertext Transfer Protocol (HTTP) Field Name Registration
+   IANA is requested to register the following entries to the "Media
+   Types" registry [IANA.MEDIA.TYPES]:
 
-   TODO: Workload-Identity-Token from Section 3.1.1
+   *  application/wimse-id+jwt, per Section 6.2.1.
 
-   TODO: Workload-Proof-Token from Section 3.2
+   *  application/wimse-proof+jwt, per Section 6.2.2.
+
+6.2.1.  application/wimse-id+jwt
+
+   Type name: application
+
+   Subtype name: wimse-id+jwt
+
+   Required parameters: N/A
+
+   Optional parameters: N/A
+
+   Encoding considerations: Encoding considerations are identical to
+   those specified for the "application/jwt" media type.  See [RFC7519].
+
+   Security considerations: See the Security Considerations section of
+   RFC XXX.
+
+   Interoperability considerations: N/A
+
+   Published specification: RFC XXX, Section 3.1.
+
+   Applications that use this media type: Identity servers that vend
+   Workload Identity Tokens, and Workloads that use these tokens to
+   authenticate to each other.
+
+   Fragment identifier considerations: N/A
+
+   Additional information:
+
+   Deprecated alias names for this type: N/A
+
+   Magic number(s): N/A
+
+   File extension(s): None
+
+   Macintosh file type code(s): N/A
+
+   Person & email address to contact for further information:
+
+   See the Authors' Addresses section of RFC XXX.
+
+   Intended usage: COMMON
+
+   Restrictions on usage: N/A
+
+   Author: See the Authors' Addresses section of RFC XXX.
+
+   Change controller: Internet Engineering Task Force (iesg@ietf.org).
+
+6.2.2.  application/wimse-proof+jwt
+
+   Type name: application
+
+   Subtype name: wimse-proof+jwt
+
+   Required parameters: N/A
+
+   Optional parameters: N/A
+
+   Encoding considerations: Encoding considerations are identical to
+   those specified for the "application/jwt" media type.  See [RFC7519].
+
+   Security considerations: See the Security Considerations section of
+   RFC XXX.
+
+   Interoperability considerations: N/A
+
+   Published specification: RFC XXX, Section 3.2.
+
+   Applications that use this media type: Workloads that use these
+   tokens to integrity-protect messages in the WIMSE workload-to-
+   workload protocol.
+
+   Fragment identifier considerations: N/A
+
+   Additional information:
+
+   Deprecated alias names for this type: N/A
+
+   Magic number(s): N/A
+
+   File extension(s): None
+
+   Macintosh file type code(s): N/A
+
+   Person & email address to contact for further information:
+
+   See the Authors' Addresses section of RFC XXX.
+
+   Intended usage: COMMON
+
+   Restrictions on usage: N/A
+
+   Author: See the Authors' Addresses section of RFC XXX.
+
+   Change controller: Internet Engineering Task Force (iesg@ietf.org).
+
+6.3.  Hypertext Transfer Protocol (HTTP) Field Name Registration
+
+   IANA is requested to register the following entries to the "Hypertext
+   Transfer Protocol (HTTP) Field Name Registry" [IANA.HTTP.FIELDS]:
+
+   *  Workload-Identity-Token, per Section 6.3.1.
+
+   *  Workload-Proof-Token, per Section 6.3.2.
+
+6.3.1.  Workload-Identity-Token
+
+   *  Field Name: Workload-Identity-Token
+
+   *  Status: permanent
+
+   *  Structured Type: N/A
+
+   *  Specification Document: RFC XXX, Section 3.1.1
+
+   *  Comments: see reference above for an ABNF syntax of this field
+
+6.3.2.  Workload-Proof-Token
+
+   *  Field Name: Workload-Proof-Token
+
+   *  Status: permanent
+
+   *  Structured Type: N/A
+
+   *  Specification Document: RFC XXX, Section 3.2
+
+   *  Comments: see reference above for an ABNF syntax of this field
 
 7.  References
 
@@ -1130,14 +1268,21 @@ Table of Contents
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
               arch-04>.
 
+   [IANA.HTTP.FIELDS]
+              IANA, "Hypertext Transfer Protocol (HTTP) Field Name
+              Registry", <https://www.iana.org/assignments/http-fields>.
+
    [IANA.JOSE.ALGS]
               IANA, "JSON Web Signature and Encryption Algorithms",
               <https://www.iana.org/assignments/jose>.
 
-   [RFC7595]  Thaler, D., Ed., Hansen, T., and T. Hardie, "Guidelines
-              and Registration Procedures for URI Schemes", BCP 35,
-              RFC 7595, DOI 10.17487/RFC7595, June 2015,
-              <https://www.rfc-editor.org/rfc/rfc7595>.
+   [IANA.JWT.CLAIMS]
+              IANA, "JSON Web Token Claims",
+              <https://www.iana.org/assignments/jwt>.
+
+   [IANA.MEDIA.TYPES]
+              IANA, "Media Types",
+              <https://www.iana.org/assignments/media-types>.
 
    [RFC9449]  Fett, D., Campbell, B., Bradley, J., Lodderstedt, T.,
               Jones, M., and D. Waite, "OAuth 2.0 Demonstrating Proof of
