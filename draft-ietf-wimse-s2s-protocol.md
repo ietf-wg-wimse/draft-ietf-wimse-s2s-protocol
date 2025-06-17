@@ -342,6 +342,8 @@ A WPT MUST contain the following:
      SHA-256 hash of the ASCII encoding of the associated token's value.
      (Note: this is less than ideal but seems we need something like this for extensibility.)
 
+To clarify: the `ath`, `tth` and `oth` claims are each mandatory if the respective token is included in the request.
+
 An example WPT might look like the following:
 
 ~~~ jwt
