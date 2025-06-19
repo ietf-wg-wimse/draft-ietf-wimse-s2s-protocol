@@ -753,10 +753,12 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 # Document History
 <cref>RFC Editor: please remove before publication.</cref>
 
-## latest
+## draft-ietf-wimse-s2s-protocol-05
 
 * Removed the entire Workload Identity section which is now covered in the Architecture document.
 * Content-Digest is mandatory with HTTP-Sig.
+* Some wording on extending the protocol beyond HTTP.
+* IANA considerations.
 
 ## draft-ietf-wimse-s2s-protocol-04
 
