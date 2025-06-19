@@ -5,12 +5,12 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 19 December 2025                                         Venafi
+Expires: 21 December 2025                                         Venafi
                                                       A. Schwenkschuster
                                                                    SPIRL
                                                               Y. Sheffer
                                                                   Intuit
-                                                            17 June 2025
+                                                            19 June 2025
 
 
                WIMSE Workload to Workload Authentication
@@ -66,7 +66,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 19 December 2025.
+   This Internet-Draft will expire on 21 December 2025.
 
 Copyright Notice
 
@@ -117,7 +117,7 @@ Table of Contents
      7.1.  Normative References
      7.2.  Informative References
    Appendix A.  Document History
-     A.1.  latest
+     A.1.  draft-ietf-wimse-s2s-protocol-05
      A.2.  draft-ietf-wimse-s2s-protocol-04
      A.3.  draft-ietf-wimse-s2s-protocol-03
      A.4.  draft-ietf-wimse-s2s-protocol-02
@@ -1301,12 +1301,16 @@ Appendix A.  Document History
 
    // RFC Editor: please remove before publication.
 
-A.1.  latest
+A.1.  draft-ietf-wimse-s2s-protocol-05
 
    *  Removed the entire Workload Identity section which is now covered
       in the Architecture document.
 
    *  Content-Digest is mandatory with HTTP-Sig.
+
+   *  Some wording on extending the protocol beyond HTTP.
+
+   *  IANA considerations.
 
 A.2.  draft-ietf-wimse-s2s-protocol-04
 
