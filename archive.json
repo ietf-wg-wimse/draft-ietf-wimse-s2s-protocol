@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-06-08T01:41:46.664239+00:00",
+  "timestamp": "2025-06-19T01:27:17.882334+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -1784,7 +1784,7 @@
       "id": "I_kwDOLJmm786nTCb-",
       "title": "Editorial: State Required vs Optional claims in WPT",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/91",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "NONE",
       "assignees": [],
@@ -1793,8 +1793,8 @@
       ],
       "body": "Opened as a working group member, not as chair\n\nFrom reading the text the \"ath\", \"tth\" and \"oth\" claims are optional. Consider stating that as part of the claims definition. e.g. \n\n\"- ath: Optional. Hash of the OAuth access token, if present in the request,\n         which might convey end-user identity and authorization context\n         of the request.  The value, as per Section 4.1 of [RFC9449], is\n         the base64url encoding of the SHA-256 hash of the ASCII\n         encoding of the access token's value. ",
       "createdAt": "2025-01-23T12:30:55Z",
-      "updatedAt": "2025-05-20T14:28:22Z",
-      "closedAt": null,
+      "updatedAt": "2025-06-17T14:21:30Z",
+      "closedAt": "2025-06-17T14:21:29Z",
       "comments": [
         {
           "author": "yaronf",
@@ -2016,7 +2016,7 @@
       "id": "I_kwDOLJmm786tMBzb",
       "title": "Replace a bunch of TODOs in the IANA Considerations",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/110",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -2027,8 +2027,8 @@
       ],
       "body": "Note that HTTP header fields are a [unique science](https://www.rfc-editor.org/rfc/rfc9110.html#name-field-extensibility).",
       "createdAt": "2025-03-09T18:58:49Z",
-      "updatedAt": "2025-05-22T15:25:03Z",
-      "closedAt": null,
+      "updatedAt": "2025-06-17T14:14:42Z",
+      "closedAt": "2025-06-17T14:14:42Z",
       "comments": [
         {
           "author": "jricher",
@@ -2222,6 +2222,22 @@
       "body": "While working on #110 (IANA considerations):\n\nWe went back and forth on this one. I think we need to register a `wimse` [URI scheme](https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml), so people can use it for service identities if they don't want the baggage that comes with `https`. This is assuming that there will be at least *some* people that implement WIMSE without SPIFFE.\n\nAlso, we use a `wimse` scheme at least once in the text.\n\nOriginal text:\n\n> TODO: maybe a URI Scheme registration of `wimse` in [URI schemes](https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml) per {{?RFC7595}} but it's only being used in an example right now and might not even be appropriate. Or maybe use an ietf URI scheme a la [URN Namespace for IETF Use](https://www.iana.org/assignments/params/params.xhtml) somehow. Or maybe nothing. Or maybe something else.",
       "createdAt": "2025-05-22T15:22:57Z",
       "updatedAt": "2025-05-22T15:27:21Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 129,
+      "id": "I_kwDOLJmm7867-Yf-",
+      "title": "Multiple oth tokens",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/129",
+      "state": "OPEN",
+      "author": "jsalowey",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "If there are multiple tokens in the request it may be necessary to handle multiple tokens in the oth claim in the WPT.  Do we need to handle this case?  If so how? Token contcantenation, include header, ordering ...? ",
+      "createdAt": "2025-06-17T14:20:04Z",
+      "updatedAt": "2025-06-17T14:20:04Z",
       "closedAt": null,
       "comments": []
     }
@@ -9668,50 +9684,68 @@
       "id": "PR_kwDOLJmm786XQ3A3",
       "title": "IANA Considerations",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/124",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Closes #110.\r\n\r\nSee also #123, still open.",
       "createdAt": "2025-05-22T17:05:05Z",
-      "updatedAt": "2025-05-31T12:08:54Z",
+      "updatedAt": "2025-06-17T14:14:41Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "9b70e85ceec2c0de9754e2b110803311983fc35d",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-110",
       "headRefOid": "767da0a9ec93a82eade1023365a68fadeab94105",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-06-17T14:14:41Z",
+      "mergedAt": "2025-06-17T14:14:41Z",
+      "mergedBy": "jsalowey",
+      "mergeCommit": {
+        "oid": "479156524a740346aadec029642dc84d016abc84"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm786u_bvs",
+          "commit": {
+            "abbreviatedOid": "767da0a"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-06-17T14:14:26Z",
+          "updatedAt": "2025-06-17T14:14:26Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 125,
       "id": "PR_kwDOLJmm786XXESi",
       "title": "Clarification on conditional claims",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/125",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Editorial. Closes #91.",
       "createdAt": "2025-05-23T10:00:23Z",
-      "updatedAt": "2025-06-05T13:05:58Z",
+      "updatedAt": "2025-06-17T14:21:28Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "9b70e85ceec2c0de9754e2b110803311983fc35d",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-91",
       "headRefOid": "02941ef3fb5eb1b06e9ceb48987e10ee3c780388",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-06-17T14:21:28Z",
+      "mergedAt": "2025-06-17T14:21:28Z",
+      "mergedBy": "jsalowey",
+      "mergeCommit": {
+        "oid": "162ee3cb49c313b9a39009282af481e4d2803416"
+      },
       "comments": [],
       "reviews": [
         {
@@ -9753,6 +9787,39 @@
               "updatedAt": "2025-06-05T13:05:58Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786u_hd3",
+          "commit": {
+            "abbreviatedOid": "02941ef"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-06-17T14:20:45Z",
+          "updatedAt": "2025-06-17T14:20:45Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "Open issue #129 ",
+              "createdAt": "2025-06-17T14:20:45Z",
+              "updatedAt": "2025-06-17T14:20:45Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786u_h9s",
+          "commit": {
+            "abbreviatedOid": "02941ef"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-06-17T14:21:19Z",
+          "updatedAt": "2025-06-17T14:21:19Z",
+          "comments": []
         }
       ]
     },
@@ -9878,6 +9945,59 @@
           "body": "",
           "createdAt": "2025-06-05T04:51:01Z",
           "updatedAt": "2025-06-05T04:51:01Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 130,
+      "id": "PR_kwDOLJmm786bILip",
+      "title": "Doc history -05",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/130",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Preparing for publication.",
+      "createdAt": "2025-06-18T18:42:34Z",
+      "updatedAt": "2025-06-18T22:18:48Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "162ee3cb49c313b9a39009282af481e4d2803416",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-prep-05",
+      "headRefOid": "4b2219a91fd6fdea138e8139699180e45dbd98a0",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm786vQwJk",
+          "commit": {
+            "abbreviatedOid": "4b2219a"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-06-18T19:15:59Z",
+          "updatedAt": "2025-06-18T19:15:59Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm786vSbGc",
+          "commit": {
+            "abbreviatedOid": "4b2219a"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-06-18T22:18:48Z",
+          "updatedAt": "2025-06-18T22:18:48Z",
           "comments": []
         }
       ]
