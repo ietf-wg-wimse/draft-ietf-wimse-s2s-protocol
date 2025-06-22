@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-06-19T01:27:17.882334+00:00",
+  "timestamp": "2025-06-22T01:42:42.829086+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -2221,9 +2221,31 @@
       "labels": [],
       "body": "While working on #110 (IANA considerations):\n\nWe went back and forth on this one. I think we need to register a `wimse` [URI scheme](https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml), so people can use it for service identities if they don't want the baggage that comes with `https`. This is assuming that there will be at least *some* people that implement WIMSE without SPIFFE.\n\nAlso, we use a `wimse` scheme at least once in the text.\n\nOriginal text:\n\n> TODO: maybe a URI Scheme registration of `wimse` in [URI schemes](https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml) per {{?RFC7595}} but it's only being used in an example right now and might not even be appropriate. Or maybe use an ietf URI scheme a la [URN Namespace for IETF Use](https://www.iana.org/assignments/params/params.xhtml) somehow. Or maybe nothing. Or maybe something else.",
       "createdAt": "2025-05-22T15:22:57Z",
-      "updatedAt": "2025-05-22T15:27:21Z",
+      "updatedAt": "2025-06-20T16:58:59Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "dagdagdag83",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Might it be more appropriate if the architecture document defines the  wimse URI scheme? Seeing as it already has an extensive section on the Workload Identifier, and it also references using SPIFFE IDs.\n\nhttps://ietf-wg-wimse.github.io/draft-ietf-wimse-arch/draft-ietf-wimse-arch.html#name-workload-identifier\n> The scheme and scheme specific part are not defined by this specification. An example of an identifier format that conforms to this definition is [SPIFFE ID](https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md).\n\nI'm just wondering if it would feel a bit like a \"side-loading\" for the S2S document to define and register the wimse URI scheme? Or asked differently, why should this be defined in the S2S document instead of the architecture document?",
+          "createdAt": "2025-06-19T20:03:38Z",
+          "updatedAt": "2025-06-19T20:03:38Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@dagdagdag83 The problem with this suggestion is that the architecture doc is Informational, which makes it awkward for it to define protocol elements in the IANA section. @jsalowey might have more insight on that.",
+          "createdAt": "2025-06-20T03:11:40Z",
+          "updatedAt": "2025-06-20T03:11:40Z"
+        },
+        {
+          "author": "dagdagdag83",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I see, I didn't consider that. Thanks for the clarification @yaronf!\n",
+          "createdAt": "2025-06-20T16:58:59Z",
+          "updatedAt": "2025-06-20T16:58:59Z"
+        }
+      ]
     },
     {
       "number": 129,
@@ -2238,6 +2260,22 @@
       "body": "If there are multiple tokens in the request it may be necessary to handle multiple tokens in the oth claim in the WPT.  Do we need to handle this case?  If so how? Token contcantenation, include header, ordering ...? ",
       "createdAt": "2025-06-17T14:20:04Z",
       "updatedAt": "2025-06-17T14:20:04Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 131,
+      "id": "I_kwDOLJmm7868azEn",
+      "title": "Add definition for Workload Identity Certificate",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/131",
+      "state": "OPEN",
+      "author": "dagdagdag83",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Spawned from comment by @jsalowey on https://github.com/ietf-wg-wimse/draft-ietf-wimse-arch/pull/87#pullrequestreview-2943706790\n\nWe should formally define the term \"Workload Certificate\", same as we do in section \"The Workload Identity Token\" for WIT.\n\nRelates to https://github.com/ietf-wg-wimse/draft-ietf-wimse-arch/pull/87",
+      "createdAt": "2025-06-19T19:06:39Z",
+      "updatedAt": "2025-06-19T19:22:40Z",
       "closedAt": null,
       "comments": []
     }
@@ -9954,24 +9992,26 @@
       "id": "PR_kwDOLJmm786bILip",
       "title": "Doc history -05",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/130",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Preparing for publication.",
       "createdAt": "2025-06-18T18:42:34Z",
-      "updatedAt": "2025-06-18T22:18:48Z",
+      "updatedAt": "2025-06-19T16:11:52Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "162ee3cb49c313b9a39009282af481e4d2803416",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-prep-05",
       "headRefOid": "4b2219a91fd6fdea138e8139699180e45dbd98a0",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-06-19T16:11:52Z",
+      "mergedAt": "2025-06-19T16:11:52Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "f16d20ffd15de1cc547ee53ddbff86f377e49fd0"
+      },
       "comments": [],
       "reviews": [
         {
@@ -10001,6 +10041,32 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 132,
+      "id": "PR_kwDOLJmm786bTckC",
+      "title": "Add Workload Identity Certificate definition",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/132",
+      "state": "OPEN",
+      "author": "dagdagdag83",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "* Add section \"The Workload Identity Certificate\"\r\n* Added section \"Workload Identity Certificate Validation\"\r\n* Made section \"Server Name Validation\" a sub-section of the above mentioned new section.\r\n\r\nResolves #131 ",
+      "createdAt": "2025-06-19T19:22:44Z",
+      "updatedAt": "2025-06-19T19:22:44Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "f16d20ffd15de1cc547ee53ddbff86f377e49fd0",
+      "headRepository": "dagdagdag83/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "Add-definition-for-Workload-Certificate",
+      "headRefOid": "af786452d24a69f731a1c6455235ecaf981a4ed1",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
