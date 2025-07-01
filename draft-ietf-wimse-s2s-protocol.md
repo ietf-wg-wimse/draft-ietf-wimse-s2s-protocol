@@ -322,8 +322,9 @@ A WPT MUST contain the following:
     * `typ`: the WPT is explicitly typed, as recommended in {{Section 3.11 of RFC8725}},
      using the `application/wimse-proof+jwt` media type.
 * in the JWT claims:
-    * `aud`: The audience of the token contains the HTTP target URI ({{Section 7.1 of RFC9110}}) of the request
-     to which the WPT is attached, without query or fragment parts.
+    * `aud`: The audience SHOULD contain the HTTP target URI ({{Section 7.1 of RFC9110}}) of the request
+     to which the WPT is attached, without query or fragment parts. However, there may be some normalization,
+    rewriting or other process that requires the audience to be set to a deployment-specific value.
     * `exp`: The expiration time of the WIT (as defined in {{Section 4.1.4 of RFC7519}}). WPT lifetimes MUST be short,
      e.g., on the order of minutes or seconds.
     * `jti`: An identifier for the token. The value MUST be unique, at least within the scope of the sender.
