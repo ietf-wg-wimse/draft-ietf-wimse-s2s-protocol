@@ -543,7 +543,7 @@ As noted in the introduction, for many deployments, transport-level protection o
 
 ## The Workload Identity Certificate {#to-wic}
 
-The Workload Identity Certificate is an X.509 certificate. The workload identity MUST be encoded in a SubjectAltName extension of type URI. There MUST be only one SubjectAltName extension of type URI in a workload certificate. If the workload will act as a TLS server for clients that do not understand workload identities it is RECOMMENDED that the workload certificate contain a SubjectAltName of type DNSName with the appropriate DNS names for the server. The certificate may contain SubjectAltName extensions of other types. 
+The Workload Identity Certificate is an X.509 certificate. The workload identity MUST be encoded in a SubjectAltName extension of type URI. There MUST be only one SubjectAltName extension of type URI in a workload certificate. If the workload will act as a TLS server for clients that do not understand workload identities it is RECOMMENDED that the workload certificate contain a SubjectAltName of type DNSName with the appropriate DNS names for the server. The certificate MAY contain SubjectAltName extensions of other types.
 
 ## Workload Identity Certificate Validation {#wic-validation}
 
