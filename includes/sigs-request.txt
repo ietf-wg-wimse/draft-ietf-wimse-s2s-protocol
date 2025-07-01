@@ -1,6 +1,6 @@
 GET /gimme-ice-cream?flavor=vanilla HTTP/1.1
 Host: example.com
 Signature: wimse=:K4dfGnguF5f1L4DKBSp5XeFXosLGj8Y9fiUX06rL/wdOF+x3zTWmsvKWiY0B1oFZaOtm2FHru+YLjdkqa2WfCQ==:
-Signature-Input: wimse=("@method" "@request-target" "workload-identity-token");created=1718291357;expires=1718291657;nonce="abcd1111";tag="wimse-service-to-service"
+Signature-Input: wimse=("@method" "@request-target" "workload-identity-token");created=1718291357;expires=1718291657;nonce="abcd1111";tag="wimse-workload-to-workload"
 Workload-Identity-Token: aGVhZGVyCg.VGhpcyBpcyBub3QgYSByZWFsIHRva2VuLgo.c2lnbmF0dXJlCg
 
