@@ -503,9 +503,11 @@ Table of Contents
 
    *  in the JWT claims:
 
-      -  aud: The audience of the token contains the HTTP target URI
+      -  aud: The audience SHOULD contain the HTTP target URI
          (Section 7.1 of [RFC9110]) of the request to which the WPT is
-         attached, without query or fragment parts.
+         attached, without query or fragment parts.  However, there may
+         be some normalization, rewriting or other process that requires
+         the audience to be set to a deployment-specific value.
 
       -  exp: The expiration time of the WIT (as defined in
          Section 4.1.4 of [RFC7519]).  WPT lifetimes MUST be short,

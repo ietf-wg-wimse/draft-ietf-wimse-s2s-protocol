@@ -1772,8 +1772,9 @@ WPT =  JWT
             <p id="section-3.2-5.2.1">in the JWT claims:<a href="#section-3.2-5.2.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.2-5.2.2.1">
-                <p id="section-3.2-5.2.2.1.1"><code>aud</code>: The audience of the token contains the HTTP target URI (<span><a href="https://rfc-editor.org/rfc/rfc9110#section-7.1" class="relref">Section 7.1</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>) of the request
-   to which the WPT is attached, without query or fragment parts.<a href="#section-3.2-5.2.2.1.1" class="pilcrow">¶</a></p>
+                <p id="section-3.2-5.2.2.1.1"><code>aud</code>: The audience <span class="bcp14">SHOULD</span> contain the HTTP target URI (<span><a href="https://rfc-editor.org/rfc/rfc9110#section-7.1" class="relref">Section 7.1</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>) of the request
+   to which the WPT is attached, without query or fragment parts. However, there may be some normalization,
+  rewriting or other process that requires the audience to be set to a deployment-specific value.<a href="#section-3.2-5.2.2.1.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-3.2-5.2.2.2">
                 <p id="section-3.2-5.2.2.2.1"><code>exp</code>: The expiration time of the WIT (as defined in <span><a href="https://rfc-editor.org/rfc/rfc7519#section-4.1.4" class="relref">Section 4.1.4</a> of [<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>). WPT lifetimes <span class="bcp14">MUST</span> be short,
