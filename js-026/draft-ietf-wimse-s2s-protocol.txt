@@ -501,10 +501,6 @@ Table of Contents
 
    *  in the JWT claims:
 
-      -  iss: The issuer of the token, which is the calling workload,
-         represented by the same value as the sub claim of the
-         associated WIT.
-
       -  aud: The audience SHOULD contain the HTTP target URI
          (Section 7.1 of [RFC9110]) of the request to which the WPT is
          attached, without query or fragment parts.  However, there may

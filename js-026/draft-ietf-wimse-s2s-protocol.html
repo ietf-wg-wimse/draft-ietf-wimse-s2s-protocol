@@ -1764,42 +1764,38 @@ WPT =  JWT
             <p id="section-3.2-5.2.1">in the JWT claims:<a href="#section-3.2-5.2.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.2-5.2.2.1">
-                <p id="section-3.2-5.2.2.1.1"><code>iss</code>: The issuer of the token, which is the calling workload, represented by the same value as the <code>sub</code> claim
-   of the associated WIT.<a href="#section-3.2-5.2.2.1.1" class="pilcrow">¶</a></p>
+                <p id="section-3.2-5.2.2.1.1"><code>aud</code>: The audience <span class="bcp14">SHOULD</span> contain the HTTP target URI (<span><a href="https://rfc-editor.org/rfc/rfc9110#section-7.1" class="relref">Section 7.1</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>) of the request
+   to which the WPT is attached, without query or fragment parts. However, there may be some normalization,
+  rewriting or other process that requires the audience to be set to a different value that is defined by local policy.<a href="#section-3.2-5.2.2.1.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-3.2-5.2.2.2">
-                <p id="section-3.2-5.2.2.2.1"><code>aud</code>: The audience <span class="bcp14">SHOULD</span> contain the HTTP target URI (<span><a href="https://rfc-editor.org/rfc/rfc9110#section-7.1" class="relref">Section 7.1</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>) of the request
-   to which the WPT is attached, without query or fragment parts. However, there may be some normalization,
-  rewriting or other process that requires the audience to be set to a different value that is defined by local policy.<a href="#section-3.2-5.2.2.2.1" class="pilcrow">¶</a></p>
+                <p id="section-3.2-5.2.2.2.1"><code>exp</code>: The expiration time of the WIT (as defined in <span><a href="https://rfc-editor.org/rfc/rfc7519#section-4.1.4" class="relref">Section 4.1.4</a> of [<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>). WPT lifetimes <span class="bcp14">MUST</span> be short,
+   e.g., on the order of minutes or seconds.<a href="#section-3.2-5.2.2.2.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-3.2-5.2.2.3">
-                <p id="section-3.2-5.2.2.3.1"><code>exp</code>: The expiration time of the WIT (as defined in <span><a href="https://rfc-editor.org/rfc/rfc7519#section-4.1.4" class="relref">Section 4.1.4</a> of [<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>). WPT lifetimes <span class="bcp14">MUST</span> be short,
-   e.g., on the order of minutes or seconds.<a href="#section-3.2-5.2.2.3.1" class="pilcrow">¶</a></p>
+                <p id="section-3.2-5.2.2.3.1"><code>jti</code>: An identifier for the token. The value <span class="bcp14">MUST</span> be unique, at least within the scope of the sender.<a href="#section-3.2-5.2.2.3.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-3.2-5.2.2.4">
-                <p id="section-3.2-5.2.2.4.1"><code>jti</code>: An identifier for the token. The value <span class="bcp14">MUST</span> be unique, at least within the scope of the sender.<a href="#section-3.2-5.2.2.4.1" class="pilcrow">¶</a></p>
+                <p id="section-3.2-5.2.2.4.1"><code>wth</code>: Hash of the Workload Identity Token, defined in <a href="#to-wit" class="auto internal xref">Section 3.1</a>. The value is the base64url encoding of the
+   SHA-256 hash of the ASCII encoding of the token's value.<a href="#section-3.2-5.2.2.4.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-3.2-5.2.2.5">
-                <p id="section-3.2-5.2.2.5.1"><code>wth</code>: Hash of the Workload Identity Token, defined in <a href="#to-wit" class="auto internal xref">Section 3.1</a>. The value is the base64url encoding of the
-   SHA-256 hash of the ASCII encoding of the token's value.<a href="#section-3.2-5.2.2.5.1" class="pilcrow">¶</a></p>
+                <p id="section-3.2-5.2.2.5.1"><code>ath</code>: Hash of the OAuth access token, if present in the request, which might convey end-user identity and
+   authorization context of the request. The value, as per <span><a href="https://rfc-editor.org/rfc/rfc9449#section-4.1" class="relref">Section 4.1</a> of [<a href="#RFC9449" class="cite xref">RFC9449</a>]</span>,
+   is the base64url encoding of the SHA-256 hash of the ASCII encoding of the access token's value.<a href="#section-3.2-5.2.2.5.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-3.2-5.2.2.6">
-                <p id="section-3.2-5.2.2.6.1"><code>ath</code>: Hash of the OAuth access token, if present in the request, which might convey end-user identity and
-   authorization context of the request. The value, as per <span><a href="https://rfc-editor.org/rfc/rfc9449#section-4.1" class="relref">Section 4.1</a> of [<a href="#RFC9449" class="cite xref">RFC9449</a>]</span>,
-   is the base64url encoding of the SHA-256 hash of the ASCII encoding of the access token's value.<a href="#section-3.2-5.2.2.6.1" class="pilcrow">¶</a></p>
-</li>
-              <li class="normal" id="section-3.2-5.2.2.7">
-                <p id="section-3.2-5.2.2.7.1"><code>tth</code>: Hash of the Txn-Token <span>[<a href="#I-D.ietf-oauth-transaction-tokens" class="cite xref">I-D.ietf-oauth-transaction-tokens</a>]</span>, if present in the request,
+                <p id="section-3.2-5.2.2.6.1"><code>tth</code>: Hash of the Txn-Token <span>[<a href="#I-D.ietf-oauth-transaction-tokens" class="cite xref">I-D.ietf-oauth-transaction-tokens</a>]</span>, if present in the request,
    which might convey end-user identity and authorization context of the request. The value <span class="bcp14">MUST</span> be the result of
    a base64url encoding (as defined in <span><a href="https://rfc-editor.org/rfc/rfc7515#section-2" class="relref">Section 2</a> of [<a href="#RFC7515" class="cite xref">RFC7515</a>]</span>) of the SHA-256 hash of
-   the ASCII encoding of the associated token's value.<a href="#section-3.2-5.2.2.7.1" class="pilcrow">¶</a></p>
+   the ASCII encoding of the associated token's value.<a href="#section-3.2-5.2.2.6.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="normal" id="section-3.2-5.2.2.8">
-                <p id="section-3.2-5.2.2.8.1"><code>oth</code>: Hash of any other token in the request that might convey end-user identity and authorization context of the
+              <li class="normal" id="section-3.2-5.2.2.7">
+                <p id="section-3.2-5.2.2.7.1"><code>oth</code>: Hash of any other token in the request that might convey end-user identity and authorization context of the
    request, if such a token exists.
    The value <span class="bcp14">MUST</span> be the result of a base64url encoding (as defined in <span><a href="https://rfc-editor.org/rfc/rfc7515#section-2" class="relref">Section 2</a> of [<a href="#RFC7515" class="cite xref">RFC7515</a>]</span>) of the
    SHA-256 hash of the ASCII encoding of the associated token's value.
-   (Note: this is less than ideal but seems we need something like this for extensibility.)<a href="#section-3.2-5.2.2.8.1" class="pilcrow">¶</a></p>
+   (Note: this is less than ideal but seems we need something like this for extensibility.)<a href="#section-3.2-5.2.2.7.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 </li>
