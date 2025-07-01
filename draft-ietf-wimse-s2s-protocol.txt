@@ -966,7 +966,7 @@ Table of Contents
    to gain an advantage.  In order to prevent this the token and proof
    of possession MUST be sent over a secure, server authenticated TLS
    connection unless a secure channel is provided by some other
-   mechanisms.  Host name validation according to Section 4 MUST be
+   mechanisms.  Host name validation according to Section 4.2.1 MUST be
    performed.  The WIT itself is not usable without a proof of
    possession.
 

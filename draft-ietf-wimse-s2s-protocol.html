@@ -2238,7 +2238,7 @@ A deployment may specify other authorization policies based on the specific deta
         </ul>
 <p id="section-5.2-3">An attacker observing or intercepting the communication channel can view the token and its proof of possession and attempt to replay it to gain an advantage. In order to prevent this the
 token and proof of possession <span class="bcp14">MUST</span> be sent over a secure, server authenticated TLS connection unless a secure channel is provided by some other mechanisms. Host name validation according
-to <a href="#mutual-tls" class="auto internal xref">Section 4</a> <span class="bcp14">MUST</span> be performed. The WIT itself is not usable without a proof of possession.<a href="#section-5.2-3" class="pilcrow">¶</a></p>
+to <a href="#server-name" class="auto internal xref">Section 4.2.1</a> <span class="bcp14">MUST</span> be performed. The WIT itself is not usable without a proof of possession.<a href="#section-5.2-3" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.2-4.1">
             <p id="section-5.2-4.1.1">Limiting Proof of Possession Lifespan<a href="#section-5.2-4.1.1" class="pilcrow">¶</a></p>
