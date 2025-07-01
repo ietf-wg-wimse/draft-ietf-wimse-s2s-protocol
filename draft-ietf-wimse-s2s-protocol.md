@@ -539,16 +539,13 @@ which specific resources can be accessed.
 
 # Using Mutual TLS for Workload To Workload Authentication {#mutual-tls}
 
-As noted in the introduction, for many deployments, transport-level protection
-of application traffic using TLS is ideal.
+As noted in the introduction, for many deployments, transport-level protection of application traffic using TLS is ideal.
 
-In this solution, the workload identity may be carried within an X.509 certificate.
-The workload identity MUST be encoded in a SubjectAltName extension of type URI.
-There MUST be only one SubjectAltName extension of type URI in a workload certificate.
-If the workload will act as a TLS server for clients that do not understand workload
-identities it is RECOMMENDED that the workload certificate contain a SubjectAltName of type
-DNSName with the appropriate DNS names for the server.
-The certificate may contain SubjectAltName extensions of other types.
+## The Workload Identity Certificate {#to-wic}
+
+The Workload Identity Certificate is an X.509 certificate. The workload identity MUST be encoded in a SubjectAltName extension of type URI. There MUST be only one SubjectAltName extension of type URI in a workload certificate. If the workload will act as a TLS server for clients that do not understand workload identities it is RECOMMENDED that the workload certificate contain a SubjectAltName of type DNSName with the appropriate DNS names for the server. The certificate MAY contain SubjectAltName extensions of other types.
+
+## Workload Identity Certificate Validation {#wic-validation}
 
 Workload certificates may be used to authenticate both the server and client side of the connections.  When validating a workload certificate, the relying party MUST use the trust anchors configured for the trust domain in the workload identity to validate the peer's certificate.  Other PKIX {{!RFC5280}} path validation rules apply. WIMSE clients and servers MUST validate that the trust domain portion of the workload certificate matches the expected trust domain for the other side of the connection.
 
@@ -556,7 +553,7 @@ Servers wishing to use the workload certificate for authorizing the client MUST 
 
 WIMSE server certificates SHOULD have the `id-kp-serverAuth` extended key usage {{!RFC5280}} field set and WIMSE client certificates SHOULD have the `id-kp-clientAuth` extended key usage field set. A certificate that is used for both client and server connections may have both fields set. This specification does not make any other requirements beyond {{!RFC5280}} on the contents of workload certificates or on the certification authorities that issue workload certificates.
 
-## Server Name Validation {#server-name}
+### Server Name Validation {#server-name}
 
 If the WIMSE client uses a hostname to connect to the server and the server certificate contain a DNS SAN the client MUST perform standard host name validation ({{Section 6.3 of RFC9525}}) unless it is configured with the information necessary to validate the peer's workload identity.
 If the client did not perform standard host name validation then the WIMSE client SHOULD further use the workload identifier to validate the server.
