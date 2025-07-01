@@ -98,8 +98,10 @@ Table of Contents
      3.5.  Error Conditions
      3.6.  Coexistence with JWT Bearer Tokens
    4.  Using Mutual TLS for Workload To Workload Authentication
-     4.1.  Server Name Validation
-     4.2.  Client Authorization Using the Workload Identity
+     4.1.  The Workload Identity Certificate
+     4.2.  Workload Identity Certificate Validation
+       4.2.1.  Server Name Validation
+     4.3.  Client Authorization Using the Workload Identity
    5.  Security Considerations
      5.1.  Workload Identity
      5.2.  Workload Identity Token and Proof of Possession
@@ -862,15 +864,18 @@ Table of Contents
    As noted in the introduction, for many deployments, transport-level
    protection of application traffic using TLS is ideal.
 
-   In this solution, the workload identity may be carried within an
-   X.509 certificate.  The workload identity MUST be encoded in a
-   SubjectAltName extension of type URI.  There MUST be only one
-   SubjectAltName extension of type URI in a workload certificate.  If
-   the workload will act as a TLS server for clients that do not
-   understand workload identities it is RECOMMENDED that the workload
-   certificate contain a SubjectAltName of type DNSName with the
-   appropriate DNS names for the server.  The certificate may contain
-   SubjectAltName extensions of other types.
+4.1.  The Workload Identity Certificate
+
+   The Workload Identity Certificate is an X.509 certificate.  The
+   workload identity MUST be encoded in a SubjectAltName extension of
+   type URI.  There MUST be only one SubjectAltName extension of type
+   URI in a workload certificate.  If the workload will act as a TLS
+   server for clients that do not understand workload identities it is
+   RECOMMENDED that the workload certificate contain a SubjectAltName of
+   type DNSName with the appropriate DNS names for the server.  The
+   certificate MAY contain SubjectAltName extensions of other types.
+
+4.2.  Workload Identity Certificate Validation
 
    Workload certificates may be used to authenticate both the server and
    client side of the connections.  When validating a workload
@@ -895,7 +900,7 @@ Table of Contents
    certificates or on the certification authorities that issue workload
    certificates.
 
-4.1.  Server Name Validation
+4.2.1.  Server Name Validation
 
    If the WIMSE client uses a hostname to connect to the server and the
    server certificate contain a DNS SAN the client MUST perform standard
@@ -913,7 +918,7 @@ Table of Contents
    identifier is constructed.  The path portion of the WIMSE identifier
    MUST always be considered in the scope of the trust domain.
 
-4.2.  Client Authorization Using the Workload Identity
+4.3.  Client Authorization Using the Workload Identity
 
    The server application retrieves the workload identifier from the
    client certificate subjectAltName, which in turn is obtained from the
