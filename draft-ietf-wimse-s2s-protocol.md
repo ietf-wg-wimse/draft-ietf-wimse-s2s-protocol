@@ -322,8 +322,6 @@ A WPT MUST contain the following:
     * `typ`: the WPT is explicitly typed, as recommended in {{Section 3.11 of RFC8725}},
      using the `application/wimse-proof+jwt` media type.
 * in the JWT claims:
-    * `iss`: The issuer of the token, which is the calling workload, represented by the same value as the `sub` claim
-     of the associated WIT.
     * `aud`: The audience SHOULD contain the HTTP target URI ({{Section 7.1 of RFC9110}}) of the request
      to which the WPT is attached, without query or fragment parts. However, there may be some normalization,
     rewriting or other process that requires the audience to be set to a different value that is defined by local policy.
