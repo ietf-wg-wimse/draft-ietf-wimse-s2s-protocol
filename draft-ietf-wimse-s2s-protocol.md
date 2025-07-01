@@ -29,8 +29,8 @@ author:
     email: bcampbell@pingidentity.com
  -
     fullname: "Joe Salowey"
-    organization: Venafi
-    email: joe.salowey@gmail.com
+    organization: CyberArk
+    email: joe@salowey.net
  -
     fullname: "Arndt Schwenkschuster"
     organization: SPIRL
