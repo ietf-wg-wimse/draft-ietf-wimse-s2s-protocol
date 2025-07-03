@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-06-22T01:42:42.829086+00:00",
+  "timestamp": "2025-07-03T01:27:43.637899+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -434,7 +434,7 @@
       "labels": [],
       "body": "The WIT URI appears in the subject of a cert and token, but shouild it also be used for the issuer of the token and the CA subject name of a certificate.   ",
       "createdAt": "2024-06-29T23:30:57Z",
-      "updatedAt": "2024-07-04T15:49:46Z",
+      "updatedAt": "2025-07-01T03:41:43Z",
       "closedAt": null,
       "comments": [
         {
@@ -457,6 +457,13 @@
           "body": "Commenting as an identity enthusiast as opposed to chair:\r\n\r\nI like the idea of using the same identifier format for all entities, but I do wonder if that is necessary. For a Bring Your own PKI scenario it may not be possible to change the issuer identifier for the CA, and the aud laim may correspond to the aud claim in the access token instead of some other workload identity (not sure those are constrained to aud).",
           "createdAt": "2024-07-04T15:49:45Z",
           "updatedAt": "2024-07-04T15:49:45Z"
+        },
+        {
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "body": "SO what I think I was saying was that the _**Workload URI**_  appears in the subject of the.  Should we be using the workload URIs for the issuers and CAs as well.  \n\nTHis seems not required to me at this point.  So I suggest we close this issue. ",
+          "createdAt": "2025-07-01T03:41:43Z",
+          "updatedAt": "2025-07-01T03:41:43Z"
         }
       ]
     },
@@ -500,7 +507,7 @@
       ],
       "body": "And in general consolidate the Workload Identity section with the architecture I-D, or possibly remove the section altogether.",
       "createdAt": "2024-07-03T16:26:58Z",
-      "updatedAt": "2025-05-20T14:46:17Z",
+      "updatedAt": "2025-07-01T03:55:27Z",
       "closedAt": null,
       "comments": [
         {
@@ -509,6 +516,13 @@
           "body": "Commenting as an identity enthusiast as opposed to WIMSE co-chair:\r\n\r\nSection 3 should be renamed as Workload Identifier since the section is all about defining the workload identifier format. I found it useful to have the definition of the identifier format here, but agree that it should not be at odds with the architecture documents definition. @joe-venafi it may make sense to have only one definition - if it is in the architecture document, it would be sifficinet to reduce this section to simply reference the definition of a workload identifier in the architecture doc.",
           "createdAt": "2024-07-04T15:45:53Z",
           "updatedAt": "2024-07-04T15:45:53Z"
+        },
+        {
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "body": "YEs we should just reference a specific document, but it looks like there may be a separate identifier document.  Let's hold off on this for a bit. ",
+          "createdAt": "2025-07-01T03:55:27Z",
+          "updatedAt": "2025-07-01T03:55:27Z"
         }
       ]
     },
@@ -2259,23 +2273,54 @@
       "labels": [],
       "body": "If there are multiple tokens in the request it may be necessary to handle multiple tokens in the oth claim in the WPT.  Do we need to handle this case?  If so how? Token contcantenation, include header, ordering ...? ",
       "createdAt": "2025-06-17T14:20:04Z",
-      "updatedAt": "2025-06-17T14:20:04Z",
+      "updatedAt": "2025-07-01T14:54:19Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "the oth claim is not a great construct, as I've admitted previously, that I'd like to do differently (though not sure how exactly).\n\nThere was some talk at some point about making it an object with simple name to hash pairs. But IIRC that got bogged down in how much to make it look like HTTP sig.\n\nI maintain that a simple name/hash would be sufficient. ",
+          "createdAt": "2025-07-01T14:24:20Z",
+          "updatedAt": "2025-07-01T14:24:20Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "a simple set of name/hash pairs would be sufficient for a lot of cases and allow for more than one extra token but only one per name and then not have to deal with ordering ",
+          "createdAt": "2025-07-01T14:50:59Z",
+          "updatedAt": "2025-07-01T14:54:19Z"
+        }
+      ]
     },
     {
       "number": 131,
       "id": "I_kwDOLJmm7868azEn",
       "title": "Add definition for Workload Identity Certificate",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/131",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "dagdagdag83",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Spawned from comment by @jsalowey on https://github.com/ietf-wg-wimse/draft-ietf-wimse-arch/pull/87#pullrequestreview-2943706790\n\nWe should formally define the term \"Workload Certificate\", same as we do in section \"The Workload Identity Token\" for WIT.\n\nRelates to https://github.com/ietf-wg-wimse/draft-ietf-wimse-arch/pull/87",
       "createdAt": "2025-06-19T19:06:39Z",
-      "updatedAt": "2025-06-19T19:22:40Z",
+      "updatedAt": "2025-07-01T14:49:43Z",
+      "closedAt": "2025-07-01T14:49:43Z",
+      "comments": []
+    },
+    {
+      "number": 136,
+      "id": "I_kwDOLJmm786-TCvu",
+      "title": "Collect implementations",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/136",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "We want to collect implementations of the S2S protocol according to https://datatracker.ietf.org/doc/rfc7942/.",
+      "createdAt": "2025-07-01T14:11:20Z",
+      "updatedAt": "2025-07-01T14:11:26Z",
       "closedAt": null,
       "comments": []
     }
@@ -10047,26 +10092,227 @@
       "id": "PR_kwDOLJmm786bTckC",
       "title": "Add Workload Identity Certificate definition",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/132",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "dagdagdag83",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "* Add section \"The Workload Identity Certificate\"\r\n* Added section \"Workload Identity Certificate Validation\"\r\n* Made section \"Server Name Validation\" a sub-section of the above mentioned new section.\r\n\r\nResolves #131 ",
       "createdAt": "2025-06-19T19:22:44Z",
-      "updatedAt": "2025-06-19T19:22:44Z",
+      "updatedAt": "2025-07-01T14:49:42Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "f16d20ffd15de1cc547ee53ddbff86f377e49fd0",
       "headRepository": "dagdagdag83/draft-ietf-wimse-s2s-protocol",
       "headRefName": "Add-definition-for-Workload-Certificate",
-      "headRefOid": "af786452d24a69f731a1c6455235ecaf981a4ed1",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "739444fdee162443721f0cf5e0f0a55f7255961a",
+      "closedAt": "2025-07-01T14:49:42Z",
+      "mergedAt": "2025-07-01T14:49:42Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "a0d6b87595623cca755901658985fb4887e89ee7"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm786xXegP",
+          "commit": {
+            "abbreviatedOid": "af78645"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-07-01T14:26:24Z",
+          "updatedAt": "2025-07-01T14:26:24Z",
+          "comments": [
+            {
+              "originalPosition": 17,
+              "body": "```suggestion\r\nThe Workload Identity Certificate is an X.509 certificate. The workload identity MUST be encoded in a SubjectAltName extension of type URI. There MUST be only one SubjectAltName extension of type URI in a workload certificate. If the workload will act as a TLS server for clients that do not understand workload identities it is RECOMMENDED that the workload certificate contain a SubjectAltName of type DNSName with the appropriate DNS names for the server. The certificate MAY contain SubjectAltName extensions of other types.\r\n```",
+              "createdAt": "2025-07-01T14:26:24Z",
+              "updatedAt": "2025-07-01T14:26:54Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786xX2vZ",
+          "commit": {
+            "abbreviatedOid": "739444f"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-07-01T14:49:30Z",
+          "updatedAt": "2025-07-01T14:49:30Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm786xX2wa",
+          "commit": {
+            "abbreviatedOid": "739444f"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "I like it! Thank you @dagdagdag83 ",
+          "createdAt": "2025-07-01T14:49:31Z",
+          "updatedAt": "2025-07-01T14:49:31Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 133,
+      "id": "PR_kwDOLJmm786czjKQ",
+      "title": "Address issue #26",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/133",
+      "state": "MERGED",
+      "author": "jsalowey",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "address issue #26 ",
+      "createdAt": "2025-07-01T03:43:39Z",
+      "updatedAt": "2025-07-01T14:50:08Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "60bac5ed11a12f0720d756747d21afc2e9ef94c7",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "js-026",
+      "headRefOid": "f6eea56d38d71d666e053f2b3573dcc45181310f",
+      "closedAt": "2025-07-01T14:50:08Z",
+      "mergedAt": "2025-07-01T14:50:08Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "7a9cf5f2fab2481e8ef81290141d6c3c4d1b8fae"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm786xXYfr",
+          "commit": {
+            "abbreviatedOid": "f6eea56"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-07-01T14:23:14Z",
+          "updatedAt": "2025-07-01T14:23:14Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 134,
+      "id": "PR_kwDOLJmm786czlQ7",
+      "title": "fix my email address",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/134",
+      "state": "MERGED",
+      "author": "jsalowey",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-07-01T03:50:11Z",
+      "updatedAt": "2025-07-01T07:59:13Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "f16d20ffd15de1cc547ee53ddbff86f377e49fd0",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "fix-email",
+      "headRefOid": "7d8244c34b97ac386f634aa9fd74b3b12223edd8",
+      "closedAt": "2025-07-01T07:59:13Z",
+      "mergedAt": "2025-07-01T07:59:13Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "60bac5ed11a12f0720d756747d21afc2e9ef94c7"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm786xRHkp",
+          "commit": {
+            "abbreviatedOid": "7d8244c"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-07-01T07:59:04Z",
+          "updatedAt": "2025-07-01T07:59:04Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 135,
+      "id": "PR_kwDOLJmm786czqvD",
+      "title": "Address issue 069 - host name validation",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/135",
+      "state": "MERGED",
+      "author": "jsalowey",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-07-01T04:07:51Z",
+      "updatedAt": "2025-07-01T14:50:00Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "f16d20ffd15de1cc547ee53ddbff86f377e49fd0",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "issue-069",
+      "headRefOid": "584c6231c13d240655efb47188d0a1e486f2bcd6",
+      "closedAt": "2025-07-01T14:49:59Z",
+      "mergedAt": "2025-07-01T14:49:59Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "e6e0d07863a4ba74f3acc999cb1fea860c3539ce"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm786xXKYo",
+          "commit": {
+            "abbreviatedOid": "584c623"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-07-01T14:13:24Z",
+          "updatedAt": "2025-07-01T14:13:24Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm786xXKc9",
+          "commit": {
+            "abbreviatedOid": "584c623"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-07-01T14:13:26Z",
+          "updatedAt": "2025-07-01T14:13:26Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm786xXKko",
+          "commit": {
+            "abbreviatedOid": "584c623"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-07-01T14:13:30Z",
+          "updatedAt": "2025-07-01T14:13:30Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
