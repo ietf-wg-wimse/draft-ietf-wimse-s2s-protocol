@@ -247,28 +247,33 @@ Table of Contents
 
    The specific format of workload identifiers (see
    [I-D.ietf-wimse-arch]) is set by local policy for each deployment,
-   and this choice has several implications.  Pre-WIMSE, many current
-   use cases don't allow for fully granular authentication.  For
-   instance, with mutual TLS, there's often no clear way to map a
-   Request URI to the SubjectAltName value in the server certificate.
-   This means the client can only verify if the certificate is valid
-   within a trust domain, not if it's tied to a specific workload.
+   and this choice has several implications.
+
+   Prior to WIMSE, many use cases did not allow for fully granular
+   authentication in containerized runtime platforms.  For instance,
+   with mutual TLS, there's often no clear way to map the request's
+   external access reference (e.g., Kubernetes Ingress path, service
+   name, or host header) to the SubjectAltName value in the server
+   certificate.  This means that the client could only verify if the
+   server certificate is valid within a trust domain, not if it's tied
+   to a specific workload.
 
    To enable mutual and granular authentication between workloads, two
    things must be in place:
 
    *  Each workload must know its own identifier.
 
-   *  There needs to be a two-way mapping between the Request URI used
-      to access a workload and its workload identifier.
+   *  There needs to be an explicit mapping from the external handle
+      used to access a workload (such as an Ingress path or service DNS
+      name) to its workload identifier.
 
    Once these conditions are met, the methods described in this document
    can be used for the caller and callee to mutually authenticate.
 
    Implementations MUST allow for defining this mapping between the
-   Request URI and the workload identifier (e.g., through callback
-   functions).  Deployments SHOULD use these features to establish a
-   consistent set of identifiers within their environment.
+   workload's access path and the workload identifier (e.g., through
+   callback functions).  Deployments SHOULD use these features to
+   establish a consistent set of identifiers within their environment.
 
 2.  Conventions and Definitions
 
