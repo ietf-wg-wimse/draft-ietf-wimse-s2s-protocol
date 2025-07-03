@@ -157,6 +157,29 @@ In either case, Workload B decides whether to authorize the call.
 In certain architectures, Workload B may need to consult with an external server when making this decision.
 5. Workload B returns a response to Workload A, which may be an error response or a regular one.
 
+## Workload Identifiers and Authentication Granularity {#granular-auth}
+
+The specific format of workload identifiers (see {{I-D.ietf-wimse-arch}}) is set by local policy for each deployment,
+and this choice has several implications.
+
+Prior to WIMSE, many use cases did not allow for fully granular authentication in containerized runtime platforms.
+For instance, with mutual TLS,
+there's often no clear way to map the request's external access reference
+(e.g., Kubernetes Ingress path, service name, or host header)
+to the SubjectAltName value in the server certificate. This means that the client could only verify
+if the server certificate is valid within a trust domain, not if it's tied to a specific workload.
+
+To enable mutual and granular authentication between workloads, two things must be in place:
+
+- Each workload must know its own identifier.
+- There needs to be an explicit mapping from the external handle used to access a workload (such as an Ingress path or service DNS name)
+to its workload identifier.
+
+Once these conditions are met, the methods described in this document can be used for the caller and callee to mutually authenticate.
+
+Implementations MUST allow for defining this mapping between the workload's access path and the workload identifier (e.g., through
+callback functions). Deployments SHOULD use these features to establish a consistent set of identifiers within their environment.
+
 # Conventions and Definitions
 
 All terminology in this document follows {{?I-D.ietf-wimse-arch}}.
@@ -186,7 +209,7 @@ A WIT MUST contain the following claims, except where noted:
     * `typ`: the WIT is explicitly typed, as recommended in {{Section 3.11 of RFC8725}}, using the `wimse-id+jwt` media type.
 * in the JWT claims:
     * `iss`: The issuer of the token, which is the Identity Server, represented by a URI. The `iss` claim is RECOMMENDED but optional, see {{wit-iss-note}} for more.
-    * `sub`: The subject of the token, which is the identity of the workload, represented by a URI. See {{I-D.ietf-wimse-arch}} for details of the Workload Identifier.
+    * `sub`: The subject of the token, which is the identity of the workload, represented by a URI. See {{I-D.ietf-wimse-arch}} for details of the Workload Identifier. And see {{granular-auth}} for security implications of these identifiers.
     * `exp`: The expiration time of the token (as defined in {{Section 4.1.4 of RFC7519}}).
       WITs should be refreshed regularly, e.g. on the order of hours.
     * `jti`: A unique identifier for the token. This claim is OPTIONAL. The `jti` claim is frequently useful for auditing issuance of individual WITs or to revoke them, but some token generation environments do not support it.
@@ -325,6 +348,7 @@ A WPT MUST contain the following:
     * `aud`: The audience SHOULD contain the HTTP target URI ({{Section 7.1 of RFC9110}}) of the request
      to which the WPT is attached, without query or fragment parts. However, there may be some normalization,
     rewriting or other process that requires the audience to be set to a deployment-specific value.
+    See also {{granular-auth}} for more details.
     * `exp`: The expiration time of the WIT (as defined in {{Section 4.1.4 of RFC7519}}). WPT lifetimes MUST be short,
      e.g., on the order of minutes or seconds.
     * `jti`: An identifier for the token. The value MUST be unique, at least within the scope of the sender.
@@ -390,7 +414,8 @@ To validate the WPT in the request, the recipient MUST ensure the following:
 * The WPT signature is valid using the public key from the confirmation claim of the WIT.
 * The `typ` JOSE header parameter of the WPT conveys a media type of `wimse-proof+jwt`.
 * The `aud` claim of the WPT matches the target URI, or an acceptable alias or normalization thereof, of the HTTP request
- in which the WPT was received, ignoring any query and fragment parts.
+ in which the WPT was received, ignoring any query and fragment parts. See also {{granular-auth}} for implementation advice
+ on this verification check.
 * The `exp` claim is present and conveys a time that has not passed. WPTs with an expiration time unreasonably
  far in the future SHOULD be rejected.
 * The `wth` claim is present and matches the hash of the token value conveyed in the `Workload-Identity-Token` header.
@@ -560,12 +585,14 @@ If the WIMSE client uses a hostname to connect to the server and the server cert
 If the client did not perform standard host name validation then the WIMSE client SHOULD further use the workload identifier to validate the server.
 The host portion of the workload identifier is NOT treated as a host name as specified in section 6.4 of {{!RFC9525}} but rather as a trust domain. The server identity is encoded in the path portion of the workload identifier in a deployment specific way.
 Validating the workload identity could be a simple match on the trust domain and path portions of the identifier or validation may be based on the specific details on how the identifier is constructed. The path portion of the WIMSE identifier MUST always be considered in the scope of the trust domain.
+In most cases it is preferable to validate the entire workload identifier, see {{granular-auth}} for additional implementation advice.
 
 ## Client Authorization Using the Workload Identity {#client-name}
 
 The server application retrieves the workload identifier from the client certificate subjectAltName, which in turn is obtained from the TLS layer. The identifier is used in authorization, accounting and auditing.
 For example, the full workload identifier may be matched against ACLs to authorize actions requested by the peer and the identifier may be included in log messages to associate actions to the client workload for audit purposes.
 A deployment may specify other authorization policies based on the specific details of how the workload identifier is constructed. The path portion of the workload identifier MUST always be considered in the scope of the trust domain.
+See {{granular-auth}} on additional security implications of workload identifiers.
 
 # Security Considerations
 
