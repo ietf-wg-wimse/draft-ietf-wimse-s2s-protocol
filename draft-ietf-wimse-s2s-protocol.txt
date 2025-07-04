@@ -5,12 +5,12 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 4 January 2026                                         CyberArk
+Expires: 5 January 2026                                         CyberArk
                                                       A. Schwenkschuster
                                                                    SPIRL
                                                               Y. Sheffer
                                                                   Intuit
-                                                             3 July 2025
+                                                             4 July 2025
 
 
                WIMSE Workload to Workload Authentication
@@ -66,7 +66,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 4 January 2026.
+   This Internet-Draft will expire on 5 January 2026.
 
 Copyright Notice
 
@@ -120,12 +120,13 @@ Table of Contents
      7.1.  Normative References
      7.2.  Informative References
    Appendix A.  Document History
-     A.1.  draft-ietf-wimse-s2s-protocol-05
-     A.2.  draft-ietf-wimse-s2s-protocol-04
-     A.3.  draft-ietf-wimse-s2s-protocol-03
-     A.4.  draft-ietf-wimse-s2s-protocol-02
-     A.5.  draft-ietf-wimse-s2s-protocol-01
-     A.6.  draft-ietf-wimse-s2s-protocol-00
+     A.1.  draft-ietf-wimse-s2s-protocol-06
+     A.2.  draft-ietf-wimse-s2s-protocol-05
+     A.3.  draft-ietf-wimse-s2s-protocol-04
+     A.4.  draft-ietf-wimse-s2s-protocol-03
+     A.5.  draft-ietf-wimse-s2s-protocol-02
+     A.6.  draft-ietf-wimse-s2s-protocol-01
+     A.7.  draft-ietf-wimse-s2s-protocol-00
    Acknowledgments
    Authors' Addresses
 
@@ -1347,7 +1348,14 @@ Appendix A.  Document History
 
    // RFC Editor: please remove before publication.
 
-A.1.  draft-ietf-wimse-s2s-protocol-05
+A.1.  draft-ietf-wimse-s2s-protocol-06
+
+   *  Explicit definition of the Workload Identity Certificate.
+
+   *  Definition of the validation of workload identifiers as part of
+      workload authentication.  Still work in progress.
+
+A.2.  draft-ietf-wimse-s2s-protocol-05
 
    *  Removed the entire Workload Identity section which is now covered
       in the Architecture document.
@@ -1358,7 +1366,7 @@ A.1.  draft-ietf-wimse-s2s-protocol-05
 
    *  IANA considerations.
 
-A.2.  draft-ietf-wimse-s2s-protocol-04
+A.3.  draft-ietf-wimse-s2s-protocol-04
 
    *  Require cnf.jwk.alg in WIT which restricts signature algorithm of
       WPT or HTTP-Sig.
@@ -1367,7 +1375,7 @@ A.2.  draft-ietf-wimse-s2s-protocol-04
 
    *  Consolidate terminology with the Architecture draft.
 
-A.3.  draft-ietf-wimse-s2s-protocol-03
+A.4.  draft-ietf-wimse-s2s-protocol-03
 
    *  Consistently use "workload".
 
@@ -1382,7 +1390,7 @@ A.3.  draft-ietf-wimse-s2s-protocol-03
 
    *  Error handling for the application level methods.
 
-A.4.  draft-ietf-wimse-s2s-protocol-02
+A.5.  draft-ietf-wimse-s2s-protocol-02
 
    *  Coexistence with bearer tokens.
 
@@ -1394,7 +1402,7 @@ A.4.  draft-ietf-wimse-s2s-protocol-02
 
    *  Moved an author to acknowledgments.
 
-A.5.  draft-ietf-wimse-s2s-protocol-01
+A.6.  draft-ietf-wimse-s2s-protocol-01
 
    *  Addressed multiple comments from Pieter.
 
@@ -1409,7 +1417,7 @@ A.5.  draft-ietf-wimse-s2s-protocol-01
    *  Added a section comparing the DPoP-inspired app-level security
       option to the Message Signature-based alternative.
 
-A.6.  draft-ietf-wimse-s2s-protocol-00
+A.7.  draft-ietf-wimse-s2s-protocol-00
 
    *  Initial WG draft, an exact copy of draft-sheffer-wimse-s2s-
       protocol-00
