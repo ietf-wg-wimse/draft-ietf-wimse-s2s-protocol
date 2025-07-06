@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-07-03T01:27:43.637899+00:00",
+  "timestamp": "2025-07-06T01:43:26.861406+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -382,15 +382,15 @@
       "id": "I_kwDOLJmm786NnBl5",
       "title": "Verifying the \"aud\" claim of a WPT",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/26",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Current text: \"The `aud` claim of the WPT matches the target URI, or an acceptable alias or normalization thereof, of the HTTP request\".\r\n\r\n@yaronf: Man, what's a poor implementer to do with \"an acceptable alias or normalization thereof\"?\r\n\r\n@bc-pi: Whatever they need to do to get shit to work in the case there are proxies in the middle that rewrite the path or even host. I agree that the language is less than ideal but think some allowance is needed.\r\n\r\nhttps://github.com/yaronf/wimse-s2s/pull/19/files#r1648137394 for more context ",
       "createdAt": "2024-06-26T16:42:02Z",
-      "updatedAt": "2025-06-05T13:51:19Z",
-      "closedAt": null,
+      "updatedAt": "2025-07-03T11:43:57Z",
+      "closedAt": "2025-07-03T11:43:57Z",
       "comments": [
         {
           "author": "arndt-s",
@@ -419,6 +419,13 @@
           "body": "I can live with this language.",
           "createdAt": "2025-06-05T13:51:18Z",
           "updatedAt": "2025-06-05T13:51:18Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Resolved by #133.",
+          "createdAt": "2025-07-03T11:43:57Z",
+          "updatedAt": "2025-07-03T11:43:57Z"
         }
       ]
     },
@@ -10310,6 +10317,163 @@
           "body": "",
           "createdAt": "2025-07-01T14:13:30Z",
           "updatedAt": "2025-07-01T14:13:30Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 137,
+      "id": "PR_kwDOLJmm786dQe7w",
+      "title": "Granular authentication",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/137",
+      "state": "MERGED",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-07-03T12:08:01Z",
+      "updatedAt": "2025-07-03T22:07:37Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "7a9cf5f2fab2481e8ef81290141d6c3c4d1b8fae",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-granular-auth",
+      "headRefOid": "35cc9be06037fc6021922ddd7b14436def3b738d",
+      "closedAt": "2025-07-03T22:07:37Z",
+      "mergedAt": "2025-07-03T22:07:37Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "6a763285fda52c85a06249d4b8bfde6b3c8bddcd"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm786xze5U",
+          "commit": {
+            "abbreviatedOid": "41b5c03"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-07-03T12:55:45Z",
+          "updatedAt": "2025-07-03T12:55:45Z",
+          "comments": [
+            {
+              "originalPosition": 9,
+              "body": "```This means the client can only verify if the certificate is valid within a trust domain, not if it's tied to a specific workload.```\n\nThe URI SAN ties a certificate to a specific workload. ",
+              "createdAt": "2025-07-03T12:55:45Z",
+              "updatedAt": "2025-07-03T12:55:46Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786xzhug",
+          "commit": {
+            "abbreviatedOid": "41b5c03"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-07-03T12:59:06Z",
+          "updatedAt": "2025-07-03T12:59:06Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "What's the two-way here? Isn't a request URI -> workload identifier enough? \n\nHowever, there needs to be differentiation between whether it's a client or a server situation.\n\n`/hello` -> `wimse://example.org/my-workload` \ncould mean that:\n- A: my-workload is authenticated to serve `/hello`\n- B: my-workload is authenticated to call `/hello`\n\n",
+              "createdAt": "2025-07-03T12:59:06Z",
+              "updatedAt": "2025-07-03T12:59:06Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786x1LCz",
+          "commit": {
+            "abbreviatedOid": "41b5c03"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-07-03T14:52:09Z",
+          "updatedAt": "2025-07-03T14:52:10Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "Workload1 - GET /hello -> Workload2\n\nWorkload1 mapping:\n/hello -> Workload2\n\nWorkload2 mapping:\n/hello -> Workload1",
+              "createdAt": "2025-07-03T14:52:09Z",
+              "updatedAt": "2025-07-03T14:52:10Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786x1QSf",
+          "commit": {
+            "abbreviatedOid": "41b5c03"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-07-03T14:57:28Z",
+          "updatedAt": "2025-07-03T14:57:28Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm786x2eIq",
+          "commit": {
+            "abbreviatedOid": "35cc9be"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-07-03T16:31:18Z",
+          "updatedAt": "2025-07-03T16:31:18Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 138,
+      "id": "PR_kwDOLJmm786dWAQ-",
+      "title": "Prep for -06",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/138",
+      "state": "MERGED",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-07-03T22:18:52Z",
+      "updatedAt": "2025-07-04T09:31:14Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "6a763285fda52c85a06249d4b8bfde6b3c8bddcd",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-prep-06",
+      "headRefOid": "70bd6941a1dff1b6e882fb6b71548e753d66618a",
+      "closedAt": "2025-07-04T09:29:55Z",
+      "mergedAt": "2025-07-04T09:29:54Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "2be8adadba54d6924dce1b7fb3e0fec918b88664"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm786x_yHL",
+          "commit": {
+            "abbreviatedOid": "70bd694"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-07-04T09:28:41Z",
+          "updatedAt": "2025-07-04T09:28:41Z",
           "comments": []
         }
       ]
