@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-07-06T01:43:26.861406+00:00",
+  "timestamp": "2025-07-15T01:44:05.949059+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -2086,9 +2086,17 @@
       "labels": [],
       "body": "Should we support versioning to facilitate future changes? For example:\n\n* Have the `typ` header for the WPT be `wimse-proof-v1+jwt`.\n* Have the `tag` field in Message Sig be `wimse-workload-to-workload-v1`\n\nAnd maybe also:\n\n* Have the `typ` header for WIT be `wimse-id-v1+jwt`",
       "createdAt": "2025-03-13T14:36:30Z",
-      "updatedAt": "2025-03-13T14:36:30Z",
+      "updatedAt": "2025-07-14T23:23:56Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "It could be implicitly versioned as 1 with the existing typ and tag values and the expectation that future changes define new values, possibly including a v2 or something, if needed. Also #139 after looking at this. \n ",
+          "createdAt": "2025-07-14T23:19:50Z",
+          "updatedAt": "2025-07-14T23:23:56Z"
+        }
+      ]
     },
     {
       "number": 112,
@@ -2098,13 +2106,11 @@
       "state": "OPEN",
       "author": "sorindumitru",
       "authorAssociation": "NONE",
-      "assignees": [
-        "bc-pi"
-      ],
+      "assignees": [],
       "labels": [],
       "body": "During the SPIFFE side of WIMSE discussions we talked about having the ability of the WPT signer (the workload) to add additional claims inside the token. There's nothing preventing the workload from doing this, so to allow better interoperability of implementations it would be good if there was some prescribed way of doing this.\n\nThe main use case for this would be to further scope down the token to a specific request. For example in the case of HTTP this could take the form of `htm` and `htu` field or even a field for a kind of signature. The WPT could then be treated as a sort of protocol agnostic token that can be adapted to various protocols. We could even specify standard ways of doing it for things such as HTTP.\n\nThe same fields could also be used in other non-protocol specific ways. For example for a CI use case a validator could validate that the token comes from a CI worker and then from the additional claims it can determine which jobs it was running.\n\nThis is currently somewhat weakly specified by the standard through the `oth` field. A workload could include a token with the additional fields and binding by including the hash of it in `oth`. To me that seems like a roundabout way of doing it where we pay the extra price of encoding the information in this way and sending more bytes on the wire without getting any other benefits. It would be nice if we could just include the additional claims as a sub-object in a claim.\n\nAnother way of getting this extra claims is through transaction tokens. This forces the workload the leave aside the benefits of WIT/WPT, including in process signing of WPTs, and resort to talking to a 3rd party to get an extra token signed. For information that is mostly relevant to a point to point communication (e.g. I'm calling this RPC with this information), it would be much more useful if the workload could include that information in the token when creating the WPT.",
       "createdAt": "2025-03-14T15:58:54Z",
-      "updatedAt": "2025-05-20T14:26:29Z",
+      "updatedAt": "2025-07-14T22:37:27Z",
       "closedAt": null,
       "comments": [
         {
@@ -2113,6 +2119,20 @@
           "body": "In general it's very risky to use \"extension\" claims to describe additional security constraints. The culture around JSON is: if you don't understand a field it's OK to simply ignore it. So there's nothing to ensure the sender's constraints will be enforced by the recipient.\n\nAn ugly way to deal with this problem is to add a `critical` claim (a map) and require that any such claims be included in it. So:\n\n```\n\"critical\":{\n    \"htm\":...\n    \"htu\":...\n}\n```",
           "createdAt": "2025-05-11T17:17:19Z",
           "updatedAt": "2025-05-11T17:18:04Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> During the SPIFFE side of WIMSE discussions we talked about having the ability of the WPT signer (the workload) to add additional claims inside the token. There's nothing preventing the workload from doing this, so to allow better interoperability of implementations it would be good if there was some prescribed way of doing this.\n\nI'm not sure what doing it would mean or what would be prescribed.  As you said, additional claims can be added to the WPT (although there was talk at one point about discouraging or prohibiting it). But I think interoperability would be achieved from saying what the claim(s) are and what behavior or processing is expected/required.  Do you have a more concrete proposal for what might go into the document for this?\n\n> \n> The main use case for this would be to further scope down the token to a specific request. For example in the case of HTTP this could take the form of `htm` and `htu` field or even a field for a kind of signature. The WPT could then be treated as a sort of protocol agnostic token that can be adapted to various protocols. We could even specify standard ways of doing it for things such as HTTP.\n\nThe audience claim is intended to scope the WIT to a particular request (with hopefully reasonable accounting for tradeoffs of complexity and verbosity to how tightly scoped it is). \n\n> \n> The same fields could also be used in other non-protocol specific ways. For example for a CI use case a validator could validate that the token comes from a CI worker and then from the additional claims it can determine which jobs it was running.\n\nIHMO the WPT is just a form of point-to-point authentication and those kinds or application specific stuff should stay at the application layer. \n\n> \n> This is currently somewhat weakly specified by the standard through the `oth` field. A workload could include a token with the additional fields and binding by including the hash of it in `oth`. To me that seems like a roundabout way of doing it where we pay the extra price of encoding the information in this way and sending more bytes on the wire without getting any other benefits. It would be nice if we could just include the additional claims as a sub-object in a claim.\n\nThis isn't what I'd imagined `oth` to be useful for. And I don't think I understand what putting stuff in a different token would accomplish vs including stuff directly in the WPT. \n\n\n> \n> Another way of getting this extra claims is through transaction tokens. This forces the workload the leave aside the benefits of WIT/WPT, including in process signing of WPTs, and resort to talking to a 3rd party to get an extra token signed. For information that is mostly relevant to a point to point communication (e.g. I'm calling this RPC with this information), it would be much more useful if the workload could include that information in the token when creating the WPT.\n\nWIT/WPT can be used in conjunction with transaction tokens. A particular architecture could trust certain WPT issuers (likely something like gateway nodes) as transaction token issuers too and not need a 3rd party call out. But the WPT isn't intended to carry RPC data. \n\n",
+          "createdAt": "2025-07-14T22:31:22Z",
+          "updatedAt": "2025-07-14T22:31:22Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> An ugly way to deal with this problem is to add a `critical` claim (a map) and require that any such claims be included in it. \n\nOr something like the https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.11 \"crit\" header, which https://openid.net/specs/openid-federation-1_0-43.html#name-crit-critical-claim is aspiring to define and register a claim for. But that's an awkward place to try and define a general purpose claim and profiles still have to profile it or it doesn't do anything. \n\n",
+          "createdAt": "2025-07-14T22:37:08Z",
+          "updatedAt": "2025-07-14T22:37:08Z"
         }
       ]
     },
@@ -2328,6 +2348,22 @@
       "body": "We want to collect implementations of the S2S protocol according to https://datatracker.ietf.org/doc/rfc7942/.",
       "createdAt": "2025-07-01T14:11:20Z",
       "updatedAt": "2025-07-01T14:11:26Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 139,
+      "id": "I_kwDOLJmm787Aii2p",
+      "title": "better [media] typ[e] values?",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/139",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "wimse-id+jwt and wimse-proof+jwt could be just wit+jwt and wpt+jwt\n\n",
+      "createdAt": "2025-07-14T23:23:02Z",
+      "updatedAt": "2025-07-14T23:23:02Z",
       "closedAt": null,
       "comments": []
     }
