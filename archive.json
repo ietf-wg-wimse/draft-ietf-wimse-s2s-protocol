@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-07-15T01:44:05.949059+00:00",
+  "timestamp": "2025-07-17T01:41:36.308419+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -2086,7 +2086,7 @@
       "labels": [],
       "body": "Should we support versioning to facilitate future changes? For example:\n\n* Have the `typ` header for the WPT be `wimse-proof-v1+jwt`.\n* Have the `tag` field in Message Sig be `wimse-workload-to-workload-v1`\n\nAnd maybe also:\n\n* Have the `typ` header for WIT be `wimse-id-v1+jwt`",
       "createdAt": "2025-03-13T14:36:30Z",
-      "updatedAt": "2025-07-14T23:23:56Z",
+      "updatedAt": "2025-07-15T17:06:02Z",
       "closedAt": null,
       "comments": [
         {
@@ -2095,6 +2095,27 @@
           "body": "It could be implicitly versioned as 1 with the existing typ and tag values and the expectation that future changes define new values, possibly including a v2 or something, if needed. Also #139 after looking at this. \n ",
           "createdAt": "2025-07-14T23:19:50Z",
           "updatedAt": "2025-07-14T23:23:56Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "It's probably easier to define today where the \"v1\" falls, while there's an active working group, Architecture draft etc., than defer it to the future.",
+          "createdAt": "2025-07-15T10:49:18Z",
+          "updatedAt": "2025-07-15T10:49:18Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "The flip side is that that future need may not materialize but if it does, deferring it allows that future the flexibility to do it however makes the most sense. ",
+          "createdAt": "2025-07-15T11:29:50Z",
+          "updatedAt": "2025-07-15T11:29:50Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Indeed.",
+          "createdAt": "2025-07-15T17:06:02Z",
+          "updatedAt": "2025-07-15T17:06:02Z"
         }
       ]
     },
@@ -2300,7 +2321,7 @@
       "labels": [],
       "body": "If there are multiple tokens in the request it may be necessary to handle multiple tokens in the oth claim in the WPT.  Do we need to handle this case?  If so how? Token contcantenation, include header, ordering ...? ",
       "createdAt": "2025-06-17T14:20:04Z",
-      "updatedAt": "2025-07-01T14:54:19Z",
+      "updatedAt": "2025-07-15T11:18:32Z",
       "closedAt": null,
       "comments": [
         {
@@ -2316,6 +2337,13 @@
           "body": "a simple set of name/hash pairs would be sufficient for a lot of cases and allow for more than one extra token but only one per name and then not have to deal with ordering ",
           "createdAt": "2025-07-01T14:50:59Z",
           "updatedAt": "2025-07-01T14:54:19Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "prior related issues #39 and #25 ",
+          "createdAt": "2025-07-15T11:18:32Z",
+          "updatedAt": "2025-07-15T11:18:32Z"
         }
       ]
     },
