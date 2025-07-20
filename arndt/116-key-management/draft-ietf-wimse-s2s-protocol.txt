@@ -5,12 +5,12 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 21 December 2025                                         Venafi
+Expires: 21 January 2026                                        CyberArk
                                                       A. Schwenkschuster
                                                                    SPIRL
                                                               Y. Sheffer
                                                                   Intuit
-                                                            19 June 2025
+                                                            20 July 2025
 
 
                WIMSE Workload to Workload Authentication
@@ -66,7 +66,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 21 December 2025.
+   This Internet-Draft will expire on 21 January 2026.
 
 Copyright Notice
 
@@ -87,6 +87,7 @@ Table of Contents
    1.  Introduction
      1.1.  Extending This Protocol to Other Use Cases
      1.2.  Deployment Architecture and Message Flow
+     1.3.  Workload Identifiers and Authentication Granularity
    2.  Conventions and Definitions
    3.  Application Level Workload To Workload Authentication
      3.1.  The Workload Identity Token
@@ -98,13 +99,16 @@ Table of Contents
      3.5.  Error Conditions
      3.6.  Coexistence with JWT Bearer Tokens
    4.  Using Mutual TLS for Workload To Workload Authentication
-     4.1.  Server Name Validation
-     4.2.  Client Authorization Using the Workload Identity
+     4.1.  The Workload Identity Certificate
+     4.2.  Workload Identity Certificate Validation
+       4.2.1.  Server Name Validation
+     4.3.  Client Authorization Using the Workload Identity
    5.  Security Considerations
      5.1.  Workload Identity
      5.2.  Workload Identity Token and Proof of Possession
-     5.3.  Middle Boxes
-     5.4.  Privacy Considerations
+     5.3.  Workload Identity Key Management
+     5.4.  Middle Boxes
+     5.5.  Privacy Considerations
    6.  IANA Considerations
      6.1.  JSON Web Token Claims
      6.2.  Media Type Registration
@@ -117,12 +121,13 @@ Table of Contents
      7.1.  Normative References
      7.2.  Informative References
    Appendix A.  Document History
-     A.1.  draft-ietf-wimse-s2s-protocol-05
-     A.2.  draft-ietf-wimse-s2s-protocol-04
-     A.3.  draft-ietf-wimse-s2s-protocol-03
-     A.4.  draft-ietf-wimse-s2s-protocol-02
-     A.5.  draft-ietf-wimse-s2s-protocol-01
-     A.6.  draft-ietf-wimse-s2s-protocol-00
+     A.1.  draft-ietf-wimse-s2s-protocol-06
+     A.2.  draft-ietf-wimse-s2s-protocol-05
+     A.3.  draft-ietf-wimse-s2s-protocol-04
+     A.4.  draft-ietf-wimse-s2s-protocol-03
+     A.5.  draft-ietf-wimse-s2s-protocol-02
+     A.6.  draft-ietf-wimse-s2s-protocol-01
+     A.7.  draft-ietf-wimse-s2s-protocol-00
    Acknowledgments
    Authors' Addresses
 
@@ -240,6 +245,38 @@ Table of Contents
    5.  Workload B returns a response to Workload A, which may be an
        error response or a regular one.
 
+1.3.  Workload Identifiers and Authentication Granularity
+
+   The specific format of workload identifiers (see
+   [I-D.ietf-wimse-arch]) is set by local policy for each deployment,
+   and this choice has several implications.
+
+   Prior to WIMSE, many use cases did not allow for fully granular
+   authentication in containerized runtime platforms.  For instance,
+   with mutual TLS, there's often no clear way to map the request's
+   external access reference (e.g., Kubernetes Ingress path, service
+   name, or host header) to the SubjectAltName value in the server
+   certificate.  This means that the client could only verify if the
+   server certificate is valid within a trust domain, not if it's tied
+   to a specific workload.
+
+   To enable mutual and granular authentication between workloads, two
+   things must be in place:
+
+   *  Each workload must know its own identifier.
+
+   *  There needs to be an explicit mapping from the external handle
+      used to access a workload (such as an Ingress path or service DNS
+      name) to its workload identifier.
+
+   Once these conditions are met, the methods described in this document
+   can be used for the caller and callee to mutually authenticate.
+
+   Implementations MUST allow for defining this mapping between the
+   workload's access path and the workload identifier (e.g., through
+   callback functions).  Deployments SHOULD use these features to
+   establish a consistent set of identifiers within their environment.
+
 2.  Conventions and Definitions
 
    All terminology in this document follows [I-D.ietf-wimse-arch].
@@ -270,8 +307,9 @@ Table of Contents
    The Workload Identity Token (WIT) is a JWS [RFC7515] signed JWT
    [RFC7519] that represents the identity of a workload.  It is issued
    by the Identity Server and binds a public key to the workload
-   identity.  A WIT MUST contain the following claims, except where
-   noted:
+   identity.  See Section 5.3 for security considerations.
+
+   A WIT MUST contain the following claims, except where noted:
 
    *  in the JOSE header:
 
@@ -291,7 +329,8 @@ Table of Contents
 
       -  sub: The subject of the token, which is the identity of the
          workload, represented by a URI.  See [I-D.ietf-wimse-arch] for
-         details of the Workload Identifier.
+         details of the Workload Identifier.  And see Section 1.3 for
+         security implications of these identifiers.
 
       -  exp: The expiration time of the token (as defined in
          Section 4.1.4 of [RFC7519]).  WITs should be refreshed
@@ -501,9 +540,12 @@ Table of Contents
 
    *  in the JWT claims:
 
-      -  aud: The audience of the token contains the HTTP target URI
+      -  aud: The audience SHOULD contain the HTTP target URI
          (Section 7.1 of [RFC9110]) of the request to which the WPT is
-         attached, without query or fragment parts.
+         attached, without query or fragment parts.  However, there may
+         be some normalization, rewriting or other process that requires
+         the audience to be set to a deployment-specific value.  See
+         also Section 1.3 for more details.
 
       -  exp: The expiration time of the WIT (as defined in
          Section 4.1.4 of [RFC7519]).  WPT lifetimes MUST be short,
@@ -625,7 +667,8 @@ Table of Contents
 
    *  The aud claim of the WPT matches the target URI, or an acceptable
       alias or normalization thereof, of the HTTP request in which the
-      WPT was received, ignoring any query and fragment parts.
+      WPT was received, ignoring any query and fragment parts.  See also
+      Section 1.3 for implementation advice on this verification check.
 
    *  The exp claim is present and conveys a time that has not passed.
       WPTs with an expiration time unreasonably far in the future SHOULD
@@ -650,9 +693,11 @@ Table of Contents
 
 3.3.  Option 2: Authentication Based on HTTP Message Signatures
 
-   This option uses the Workload Identity Token (Section 3.1) to sign
-   the request and optionally, the response.  This section defines a
-   profile of the Message Signatures specification [RFC9421].
+   This option uses the Workload Identity Token (Section 3.1) and the
+   private key associated with its public key, to sign the request and
+   optionally, the response.  See Section 5.3 for security
+   considerations.  This section defines a profile of the Message
+   Signatures specification [RFC9421].
 
    The request is signed as per [RFC9421].  The following derived
    components MUST be signed:
@@ -725,6 +770,13 @@ Table of Contents
    among messages sent to the same recipient.  To detect message
    replays, a recipient SHOULD reject a message (request or response) if
    a nonce generated by a certain peer is seen more than once.
+
+   Implementors need to be aware that the WIT is extracted from the
+   message before the message signature is validated.  Recipients of
+   signed HTTP messages MUST validate the signature and content of the
+   WIT before validating the HTTP message signature.  They MUST ensure
+   that the message is not processed further before it has been fully
+   validated.
 
    Following is a non-normative example of a signed request and a signed
    response, where the caller is using the keys specified in Figure 5.
@@ -802,7 +854,7 @@ Table of Contents
 
    *  Message Signatures offer superior integrity protection,
       particularly by mitigating message modification by middleboxes.
-      See also Section 5.3.
+      See also Section 5.4.
 
    *  A key advantage of Message Signatures is that they support
       response signing.  This opens up the possibility for future
@@ -862,15 +914,18 @@ Table of Contents
    As noted in the introduction, for many deployments, transport-level
    protection of application traffic using TLS is ideal.
 
-   In this solution, the workload identity may be carried within an
-   X.509 certificate.  The workload identity MUST be encoded in a
-   SubjectAltName extension of type URI.  There MUST be only one
-   SubjectAltName extension of type URI in a workload certificate.  If
-   the workload will act as a TLS server for clients that do not
-   understand workload identities it is RECOMMENDED that the workload
-   certificate contain a SubjectAltName of type DNSName with the
-   appropriate DNS names for the server.  The certificate may contain
-   SubjectAltName extensions of other types.
+4.1.  The Workload Identity Certificate
+
+   The Workload Identity Certificate is an X.509 certificate.  The
+   workload identity MUST be encoded in a SubjectAltName extension of
+   type URI.  There MUST be only one SubjectAltName extension of type
+   URI in a workload certificate.  If the workload will act as a TLS
+   server for clients that do not understand workload identities it is
+   RECOMMENDED that the workload certificate contain a SubjectAltName of
+   type DNSName with the appropriate DNS names for the server.  The
+   certificate MAY contain SubjectAltName extensions of other types.
+
+4.2.  Workload Identity Certificate Validation
 
    Workload certificates may be used to authenticate both the server and
    client side of the connections.  When validating a workload
@@ -895,7 +950,7 @@ Table of Contents
    certificates or on the certification authorities that issue workload
    certificates.
 
-4.1.  Server Name Validation
+4.2.1.  Server Name Validation
 
    If the WIMSE client uses a hostname to connect to the server and the
    server certificate contain a DNS SAN the client MUST perform standard
@@ -911,9 +966,11 @@ Table of Contents
    simple match on the trust domain and path portions of the identifier
    or validation may be based on the specific details on how the
    identifier is constructed.  The path portion of the WIMSE identifier
-   MUST always be considered in the scope of the trust domain.
+   MUST always be considered in the scope of the trust domain.  In most
+   cases it is preferable to validate the entire workload identifier,
+   see Section 1.3 for additional implementation advice.
 
-4.2.  Client Authorization Using the Workload Identity
+4.3.  Client Authorization Using the Workload Identity
 
    The server application retrieves the workload identifier from the
    client certificate subjectAltName, which in turn is obtained from the
@@ -925,7 +982,8 @@ Table of Contents
    other authorization policies based on the specific details of how the
    workload identifier is constructed.  The path portion of the workload
    identifier MUST always be considered in the scope of the trust
-   domain.
+   domain.  See Section 1.3 on additional security implications of
+   workload identifiers.
 
 5.  Security Considerations
 
@@ -961,7 +1019,7 @@ Table of Contents
    to gain an advantage.  In order to prevent this the token and proof
    of possession MUST be sent over a secure, server authenticated TLS
    connection unless a secure channel is provided by some other
-   mechanisms.  Host name validation according to Section 4 MUST be
+   mechanisms.  Host name validation according to Section 4.2.1 MUST be
    performed.  The WIT itself is not usable without a proof of
    possession.
 
@@ -1000,7 +1058,22 @@ Table of Contents
    identity of a TLS session or TLS channel binding parameters.  The
    mechanisms for binding are outside the scope of this specification.
 
-5.3.  Middle Boxes
+5.3.  Workload Identity Key Management
+
+   Both the Workload Identity Token and the Workload Identity
+   Certificate carry a public key.  The corresponding private key:
+
+   *  MUST be kept private
+
+   *  MUST be individual for each Workload Identifier (see
+      [I-D.ietf-wimse-arch])
+
+   *  MUST NOT be used once the credential is expired
+
+   *  SHOULD be re-generated for each new Workload Identity Token or
+      Certificate.
+
+5.4.  Middle Boxes
 
    In some deployments the Workload Identity Token and proof of
    possession may pass through multiple systems.  The communication
@@ -1013,7 +1086,7 @@ Table of Contents
    perform analysis on their situation to determine if it is appropriate
    to trust and allow traffic to pass through a middle box.
 
-5.4.  Privacy Considerations
+5.5.  Privacy Considerations
 
    WITs and the proofs of possession may contain private information
    such as user names or other identities.  Care should be taken to
@@ -1267,9 +1340,9 @@ Table of Contents
               Salowey, J. A., Rosomakho, Y., and H. Tschofenig,
               "Workload Identity in a Multi System Environment (WIMSE)
               Architecture", Work in Progress, Internet-Draft, draft-
-              ietf-wimse-arch-04, 2 March 2025,
+              ietf-wimse-arch-05, 7 July 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
-              arch-04>.
+              arch-05>.
 
    [IANA.HTTP.FIELDS]
               IANA, "Hypertext Transfer Protocol (HTTP) Field Name
@@ -1301,7 +1374,14 @@ Appendix A.  Document History
 
    // RFC Editor: please remove before publication.
 
-A.1.  draft-ietf-wimse-s2s-protocol-05
+A.1.  draft-ietf-wimse-s2s-protocol-06
+
+   *  Explicit definition of the Workload Identity Certificate.
+
+   *  Definition of the validation of workload identifiers as part of
+      workload authentication.  Still work in progress.
+
+A.2.  draft-ietf-wimse-s2s-protocol-05
 
    *  Removed the entire Workload Identity section which is now covered
       in the Architecture document.
@@ -1312,7 +1392,7 @@ A.1.  draft-ietf-wimse-s2s-protocol-05
 
    *  IANA considerations.
 
-A.2.  draft-ietf-wimse-s2s-protocol-04
+A.3.  draft-ietf-wimse-s2s-protocol-04
 
    *  Require cnf.jwk.alg in WIT which restricts signature algorithm of
       WPT or HTTP-Sig.
@@ -1321,7 +1401,7 @@ A.2.  draft-ietf-wimse-s2s-protocol-04
 
    *  Consolidate terminology with the Architecture draft.
 
-A.3.  draft-ietf-wimse-s2s-protocol-03
+A.4.  draft-ietf-wimse-s2s-protocol-03
 
    *  Consistently use "workload".
 
@@ -1336,7 +1416,7 @@ A.3.  draft-ietf-wimse-s2s-protocol-03
 
    *  Error handling for the application level methods.
 
-A.4.  draft-ietf-wimse-s2s-protocol-02
+A.5.  draft-ietf-wimse-s2s-protocol-02
 
    *  Coexistence with bearer tokens.
 
@@ -1348,7 +1428,7 @@ A.4.  draft-ietf-wimse-s2s-protocol-02
 
    *  Moved an author to acknowledgments.
 
-A.5.  draft-ietf-wimse-s2s-protocol-01
+A.6.  draft-ietf-wimse-s2s-protocol-01
 
    *  Addressed multiple comments from Pieter.
 
@@ -1363,7 +1443,7 @@ A.5.  draft-ietf-wimse-s2s-protocol-01
    *  Added a section comparing the DPoP-inspired app-level security
       option to the Message Signature-based alternative.
 
-A.6.  draft-ietf-wimse-s2s-protocol-00
+A.7.  draft-ietf-wimse-s2s-protocol-00
 
    *  Initial WG draft, an exact copy of draft-sheffer-wimse-s2s-
       protocol-00
@@ -1386,8 +1466,8 @@ Authors' Addresses
 
 
    Joe Salowey
-   Venafi
-   Email: joe.salowey@gmail.com
+   CyberArk
+   Email: joe@salowey.net
 
 
    Arndt Schwenkschuster
