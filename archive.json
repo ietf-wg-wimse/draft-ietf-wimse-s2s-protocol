@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-07-20T01:49:13.873385+00:00",
+  "timestamp": "2025-07-22T01:41:52.844413+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -805,7 +805,7 @@
       "labels": [],
       "body": "Commenting as identity enthusiast as opposed to WIMSE co-chair.\r\n\r\nIt would be beneficial for readers, as well as future attempts at formal analysis, to have a section that explicitly defines the security goals for this draft. ",
       "createdAt": "2024-07-04T16:39:51Z",
-      "updatedAt": "2024-07-11T21:55:41Z",
+      "updatedAt": "2025-07-20T15:21:18Z",
       "closedAt": null,
       "comments": [
         {
@@ -814,6 +814,13 @@
           "body": "Hard to disagree with this. But also hard to actually do it (speaking for myself anyway). Do you have any pointers to places elsewhere where this has been done well? ",
           "createdAt": "2024-07-11T21:55:40Z",
           "updatedAt": "2024-07-11T21:55:40Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Some notes from a discussion between authors on this topic:\n- Authenticate client to the server (WPT), some offer server to client in addition (TLS, mTLS, http-sig)\n- Some offer confidentiality (mTLS) and full-integrity (mTLS, http-sig), some only \"very limited\"-integrity (WPT, only security headers of the request)\n- Provide protection against replay attacks\n- Protect against token theft (WIT exposed)",
+          "createdAt": "2025-07-20T15:21:18Z",
+          "updatedAt": "2025-07-20T15:21:18Z"
         }
       ]
     },
@@ -1212,7 +1219,7 @@
     {
       "number": 52,
       "id": "I_kwDOLJmm786PlL3g",
-      "title": "DPoP-inspired vs Message Signatures",
+      "title": "WPT vs Message Signatures",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/52",
       "state": "OPEN",
       "author": "arndt-s",
@@ -1223,7 +1230,7 @@
       ],
       "body": "Creating a reference-able & umbrella issue for the choice between the DPoP-inspired and the HTTP Message Signatures approach.\r\n\r\nSection 1:\r\n> For application-level protection we currently propose two alternative solutions, one inspired by DPoP [[RFC9449](https://www.sheffer.org/wimse-s2s/draft-sheffer-wimse-s2s-protocol.html#RFC9449)] in [Section 4.2](https://www.sheffer.org/wimse-s2s/draft-sheffer-wimse-s2s-protocol.html#dpop-esque-auth) and one which is a profile of HTTP Message Signatures [[RFC9421](https://www.sheffer.org/wimse-s2s/draft-sheffer-wimse-s2s-protocol.html#RFC9421)] in [Section 4.3](https://www.sheffer.org/wimse-s2s/draft-sheffer-wimse-s2s-protocol.html#http-sig-auth). The design team believes that we need to pick one of these two alternatives for standardization, once we have understood their pros and cons.",
       "createdAt": "2024-07-15T14:29:19Z",
-      "updatedAt": "2025-01-17T20:51:12Z",
+      "updatedAt": "2025-07-20T15:22:33Z",
       "closedAt": null,
       "comments": [
         {
@@ -2021,16 +2028,24 @@
       "id": "I_kwDOLJmm786tMBCt",
       "title": "DNS names and trust domains",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/108",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Should there be a DNS name to trust domain mapping defined or some other discovery mechanism?\n\n(Formerly a TODO in the Security Considerations, under the WIMSE Identity subsection)",
       "createdAt": "2025-03-09T18:52:56Z",
-      "updatedAt": "2025-03-09T18:52:56Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2025-07-20T14:42:06Z",
+      "closedAt": "2025-07-20T14:42:06Z",
+      "comments": [
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Closing this as it's covered by the architecture draft.",
+          "createdAt": "2025-07-20T14:42:06Z",
+          "updatedAt": "2025-07-20T14:42:06Z"
+        }
+      ]
     },
     {
       "number": 110,
@@ -2086,7 +2101,7 @@
       "labels": [],
       "body": "Should we support versioning to facilitate future changes? For example:\n\n* Have the `typ` header for the WPT be `wimse-proof-v1+jwt`.\n* Have the `tag` field in Message Sig be `wimse-workload-to-workload-v1`\n\nAnd maybe also:\n\n* Have the `typ` header for WIT be `wimse-id-v1+jwt`",
       "createdAt": "2025-03-13T14:36:30Z",
-      "updatedAt": "2025-07-15T17:06:02Z",
+      "updatedAt": "2025-07-21T12:58:31Z",
       "closedAt": null,
       "comments": [
         {
@@ -2116,13 +2131,48 @@
           "body": "Indeed.",
           "createdAt": "2025-07-15T17:06:02Z",
           "updatedAt": "2025-07-15T17:06:02Z"
+        },
+        {
+          "author": "dagdagdag83",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I once read that architecture is about making decisions as late as possible. Stuck with me \ud83d\udc4d",
+          "createdAt": "2025-07-20T08:04:53Z",
+          "updatedAt": "2025-07-20T08:04:53Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Will be in IETF 123 slides, keeping it open for now.",
+          "createdAt": "2025-07-20T14:34:40Z",
+          "updatedAt": "2025-07-20T14:34:40Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Are you in Madrid for IETF 123 @dagdagdag83? I've seen @arndt-s already so I know he is. ",
+          "createdAt": "2025-07-21T11:00:12Z",
+          "updatedAt": "2025-07-21T11:00:12Z"
+        },
+        {
+          "author": "dagdagdag83",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@bc-pi I really wish I was, I desperately wanted to go but it didn't fit my schedual this time. Maybe next time.\n\nI will join remotely for the 24th however, because I'm presenting something with Pieter on the oauth slot that day. But sadly not in person this time! ",
+          "createdAt": "2025-07-21T12:46:10Z",
+          "updatedAt": "2025-07-21T12:46:10Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> Maybe next time.\n\nThere's a lovely [photo of Montreal](https://www.ietf.org/media/images/48386545121_90a82ca4ef_k.max-4000x4000.jpg) on the [124 page](https://www.ietf.org/meeting/124/) to help entice you to come to the November meeting :)  ",
+          "createdAt": "2025-07-21T12:58:31Z",
+          "updatedAt": "2025-07-21T12:58:31Z"
         }
       ]
     },
     {
       "number": 112,
       "id": "I_kwDOLJmm786uFUdi",
-      "title": "Additional claims in WPT",
+      "title": "Additional claims in WPT & WIT",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/112",
       "state": "OPEN",
       "author": "sorindumitru",
@@ -2131,7 +2181,7 @@
       "labels": [],
       "body": "During the SPIFFE side of WIMSE discussions we talked about having the ability of the WPT signer (the workload) to add additional claims inside the token. There's nothing preventing the workload from doing this, so to allow better interoperability of implementations it would be good if there was some prescribed way of doing this.\n\nThe main use case for this would be to further scope down the token to a specific request. For example in the case of HTTP this could take the form of `htm` and `htu` field or even a field for a kind of signature. The WPT could then be treated as a sort of protocol agnostic token that can be adapted to various protocols. We could even specify standard ways of doing it for things such as HTTP.\n\nThe same fields could also be used in other non-protocol specific ways. For example for a CI use case a validator could validate that the token comes from a CI worker and then from the additional claims it can determine which jobs it was running.\n\nThis is currently somewhat weakly specified by the standard through the `oth` field. A workload could include a token with the additional fields and binding by including the hash of it in `oth`. To me that seems like a roundabout way of doing it where we pay the extra price of encoding the information in this way and sending more bytes on the wire without getting any other benefits. It would be nice if we could just include the additional claims as a sub-object in a claim.\n\nAnother way of getting this extra claims is through transaction tokens. This forces the workload the leave aside the benefits of WIT/WPT, including in process signing of WPTs, and resort to talking to a 3rd party to get an extra token signed. For information that is mostly relevant to a point to point communication (e.g. I'm calling this RPC with this information), it would be much more useful if the workload could include that information in the token when creating the WPT.",
       "createdAt": "2025-03-14T15:58:54Z",
-      "updatedAt": "2025-07-18T12:18:42Z",
+      "updatedAt": "2025-07-21T16:51:44Z",
       "closedAt": null,
       "comments": [
         {
@@ -2161,6 +2211,34 @@
           "body": "@bc-pi As far as I'm concerned we could copy the `crit` claim as defined by OpenID. Which by the way is only analogous but not really related to the `crit` header parameter (sorry for nitpicking).\n\nDeeper into the rabbit hole: the `crit` claim in OpenID Federation is on a long list of claims that are supposed to be IANA-registered. I still don't see it in the IANA registry, maybe because the doc is still in draft form. Draft 43... Once the claim is registered, maybe we could reuse it as. But OTOH, there's no way ever it can be registered as a \"critical claim\" because that would apply to any existing JWTs - so I don't know what the OpenID folks have in mind. ",
           "createdAt": "2025-07-18T12:18:42Z",
           "updatedAt": "2025-07-18T12:18:42Z"
+        },
+        {
+          "author": "dagdagdag83",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I agree it's crucial we remember that WIT/WPT have a specific purpose. They are workload identity credentials. \n\nIt's perfectly valid, and should probably be encouraged, to use these flows with additional tokens. Be it transaction tokens, oauth tokens or whatever you want want.\nI think these tokens are useful, and often required, to provide **authorization context**. \n\nA workload identity is primarily about authenticating the workload, but a transaction or flow also needs authorization context. Be that an incoming external request to one of your api, an AI agent or a service calling an API, or whatever. \nIMO it's important that we keep it very clear what workload identity in context of WIMSE is and isn't. ",
+          "createdAt": "2025-07-20T08:03:13Z",
+          "updatedAt": "2025-07-20T08:03:13Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "We also need to talk about additional claims in the WIT.",
+          "createdAt": "2025-07-20T14:26:45Z",
+          "updatedAt": "2025-07-20T14:35:10Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> We also need to talk about additional claims in the WIT.\n\nYou are probably right that we need to talk about this but, as I've alluded to here and in other forums, I'm a bit unsure what it is we are actually talking about.  ",
+          "createdAt": "2025-07-21T11:04:02Z",
+          "updatedAt": "2025-07-21T11:04:02Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@bc-pi Is it allowed/recommended to add claims to the WIT beyond those we have explicitly listed? Claims from the IANA registry, claims that you just invented. What should a recipient do when they encounter such claims?",
+          "createdAt": "2025-07-21T16:51:44Z",
+          "updatedAt": "2025-07-21T16:51:44Z"
         }
       ]
     },
@@ -2208,11 +2286,13 @@
       "state": "OPEN",
       "author": "dagdagdag83",
       "authorAssociation": "CONTRIBUTOR",
-      "assignees": [],
+      "assignees": [
+        "arndt-s"
+      ],
       "labels": [],
       "body": "I find that section 4.3 (https://www.ietf.org/archive/id/draft-ietf-wimse-s2s-protocol-03.html#name-option-2-authentication-bas) is unclear on what signing material to use for signing http message signing. It states \"This option uses the WIMSE Identity Token to sign the request and optionally, the response\".\n\nIt's not using the WIT (Workload Identity Token) to sign messages, it's using the key pair that the workload possesses which is also used for signing the WPT in the dPoP-inspired option 1.\n\nPartly I think the confusing arise because the key pair which the workload is supposed to use for \"Application Level Workload To Workload Authentication\" is not given a name or term, or clearly defined. This concept of the workload-owned key pair should be better defined and expanded upon.",
       "createdAt": "2025-05-05T21:33:20Z",
-      "updatedAt": "2025-05-11T22:42:58Z",
+      "updatedAt": "2025-07-20T14:17:09Z",
       "closedAt": null,
       "comments": [
         {
@@ -2228,6 +2308,13 @@
           "body": "Thanks, and I agree about your point that if you define it, we need to deal with it.\nBut I think we should deal with it. IMO it's worse to have something implicit that can cause issues in implementation.\n\nI raised another related issue about this https://github.com/ietf-wg-wimse/draft-ietf-wimse-arch/issues/85\n\nBut maybe we can be a bit lax on defining the life cycle. Maybe we can state that this object has a life cycle and implementers needs to be aware. Usually organizations will (should) have robust policies for key material life cycle management. It's not like we need to say \"rotate every x months\", because it depends on the context and policies of the organisation. ",
           "createdAt": "2025-05-11T22:39:15Z",
           "updatedAt": "2025-05-11T22:42:56Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "IETF 123 discussion amongst authors:\n\n[x] We need to work on a separate section in the security considerations that talks about the private key and how it's supposed to be generated, rotated & handled. We don't think there's much value in defining a Workload Identity Key and the security consideration section suffices.\n\n[x] We also need to add wording to the beginning to 3.3 as highlighted in this issue. \n\n[x] In addition to that we should add wording to 3.3 to warn implementors that the message needs to be processed (at least accessing the headers) before the integrity can be validated, which is directly intuitive. ",
+          "createdAt": "2025-07-20T13:35:35Z",
+          "updatedAt": "2025-07-20T14:06:11Z"
         }
       ]
     },
@@ -10546,6 +10633,85 @@
           "createdAt": "2025-07-04T09:28:41Z",
           "updatedAt": "2025-07-04T09:28:41Z",
           "comments": []
+        }
+      ]
+    },
+    {
+      "number": 140,
+      "id": "PR_kwDOLJmm786fvLEt",
+      "title": "Add key management security considerations",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/140",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves #116",
+      "createdAt": "2025-07-20T14:11:56Z",
+      "updatedAt": "2025-07-20T14:11:56Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "2be8adadba54d6924dce1b7fb3e0fec918b88664",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "arndt/116-key-management",
+      "headRefOid": "f4405c3b50c6d1bc8675acefca3b03d76332082d",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 141,
+      "id": "PR_kwDOLJmm786fvRtu",
+      "title": "Add Accept-Signature wording",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/141",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves #107 ",
+      "createdAt": "2025-07-20T14:59:36Z",
+      "updatedAt": "2025-07-20T15:00:01Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "2be8adadba54d6924dce1b7fb3e0fec918b88664",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "arndt/accept-singnature",
+      "headRefOid": "4d2f645666fae26fba9adbd8a0f49aea956c9ce7",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm78609roK",
+          "commit": {
+            "abbreviatedOid": "4d2f645"
+          },
+          "author": "copilot-pull-request-reviewer",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "## Pull Request Overview\n\nThis PR adds clarification about the `Accept-Signature` header usage in the WIMSE S2S protocol specification. The change addresses issue #107 by documenting when and how the `Accept-Signature` header should be used.\n\n- Adds specification text clarifying that `Accept-Signature` header is optional for both client and server\n- Documents the requirement that when the header is sent, it must include specific header components\n\n\n\n",
+          "createdAt": "2025-07-20T15:00:00Z",
+          "updatedAt": "2025-07-20T15:00:00Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "The phrase \"header components listed above\" is ambiguous. Consider specifying exactly which header components are required or providing a more specific reference to avoid confusion.\n```suggestion\nEither client or server MAY send an `Accept-Signature` header, but is not required to do so. When this header is sent, it MUST include the `nonce` and `tag` header components.\n```",
+              "createdAt": "2025-07-20T15:00:00Z",
+              "updatedAt": "2025-07-20T15:00:01Z"
+            },
+            {
+              "originalPosition": 4,
+              "body": "[nitpick] The sentence structure is redundant. 'MAY send... but is not required to do so' is redundant since MAY already implies optional behavior in RFC specifications. Consider simplifying to 'Either client or server MAY send an `Accept-Signature` header.'\n```suggestion\nEither client or server MAY send an `Accept-Signature` header. When this header is sent, it MUST include the header components listed above.\n```",
+              "createdAt": "2025-07-20T15:00:00Z",
+              "updatedAt": "2025-07-20T15:00:01Z"
+            }
+          ]
         }
       ]
     }
