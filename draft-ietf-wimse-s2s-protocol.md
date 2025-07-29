@@ -1,6 +1,6 @@
 ---
-title: "WIMSE Workload to Workload Authentication"
-abbrev: "WIMSE Workload to Workload"
+title: "WIMSE Workload-to-Workload Authentication"
+abbrev: "WIMSE Workload-to-Workload"
 category: std
 
 docname: draft-ietf-wimse-s2s-protocol-latest
@@ -186,7 +186,7 @@ All terminology in this document follows {{?I-D.ietf-wimse-arch}}.
 
 {::boilerplate bcp14-tagged}
 
-# Application Level Workload To Workload Authentication {#app-level}
+# Application Level Workload-to-Workload Authentication {#app-level}
 
 As noted in the Introduction, for many deployments communication between workloads cannot use
 end-to-end TLS. For these deployment styles, this document proposes application-level protections.
@@ -563,7 +563,7 @@ authorization policy may take into account both the sending workload's identity 
 identity in the WIT may be used to establish which API calls can be made and information in the context token may be used to determine
 which specific resources can be accessed.
 
-# Using Mutual TLS for Workload To Workload Authentication {#mutual-tls}
+# Using Mutual TLS for Workload-to-Workload Authentication {#mutual-tls}
 
 As noted in the introduction, for many deployments, transport-level protection of application traffic using TLS is ideal.
 
