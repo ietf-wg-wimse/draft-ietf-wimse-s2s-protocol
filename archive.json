@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-07-24T01:42:01.176365+00:00",
+  "timestamp": "2025-07-29T01:53:32.779981+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -2181,7 +2181,7 @@
       "labels": [],
       "body": "During the SPIFFE side of WIMSE discussions we talked about having the ability of the WPT signer (the workload) to add additional claims inside the token. There's nothing preventing the workload from doing this, so to allow better interoperability of implementations it would be good if there was some prescribed way of doing this.\n\nThe main use case for this would be to further scope down the token to a specific request. For example in the case of HTTP this could take the form of `htm` and `htu` field or even a field for a kind of signature. The WPT could then be treated as a sort of protocol agnostic token that can be adapted to various protocols. We could even specify standard ways of doing it for things such as HTTP.\n\nThe same fields could also be used in other non-protocol specific ways. For example for a CI use case a validator could validate that the token comes from a CI worker and then from the additional claims it can determine which jobs it was running.\n\nThis is currently somewhat weakly specified by the standard through the `oth` field. A workload could include a token with the additional fields and binding by including the hash of it in `oth`. To me that seems like a roundabout way of doing it where we pay the extra price of encoding the information in this way and sending more bytes on the wire without getting any other benefits. It would be nice if we could just include the additional claims as a sub-object in a claim.\n\nAnother way of getting this extra claims is through transaction tokens. This forces the workload the leave aside the benefits of WIT/WPT, including in process signing of WPTs, and resort to talking to a 3rd party to get an extra token signed. For information that is mostly relevant to a point to point communication (e.g. I'm calling this RPC with this information), it would be much more useful if the workload could include that information in the token when creating the WPT.",
       "createdAt": "2025-03-14T15:58:54Z",
-      "updatedAt": "2025-07-21T16:51:44Z",
+      "updatedAt": "2025-07-28T19:17:11Z",
       "closedAt": null,
       "comments": [
         {
@@ -2239,6 +2239,13 @@
           "body": "@bc-pi Is it allowed/recommended to add claims to the WIT beyond those we have explicitly listed? Claims from the IANA registry, claims that you just invented. What should a recipient do when they encounter such claims?",
           "createdAt": "2025-07-21T16:51:44Z",
           "updatedAt": "2025-07-21T16:51:44Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> [@bc-pi](https://github.com/bc-pi) Is it allowed/recommended to add claims to the WIT beyond those we have explicitly listed? \n\nAllowed? Yes. \nRecommended? If there's a compelling reason to do so. \n\n> Claims from the IANA registry, claims that you just invented.\n\nSure. Either. \n\n> What should a recipient do when they encounter such claims?\n\nPer JWT itself, ignore unless the claim is understood. \n\n",
+          "createdAt": "2025-07-28T19:17:11Z",
+          "updatedAt": "2025-07-28T19:17:11Z"
         }
       ]
     },
