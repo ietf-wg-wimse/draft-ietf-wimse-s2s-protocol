@@ -1058,11 +1058,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">WIMSE Workload-to-Workload</td>
-<td class="right">July 2025</td>
+<td class="right">August 2025</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Campbell, et al.</td>
-<td class="center">Expires 30 January 2026</td>
+<td class="center">Expires 4 February 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1075,12 +1075,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-wimse-s2s-protocol-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-07-29" class="published">29 July 2025</time>
+<time datetime="2025-08-03" class="published">3 August 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-01-30">30 January 2026</time></dd>
+<dd class="expires"><time datetime="2026-02-04">4 February 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1152,7 +1152,7 @@ would be authenticated at the application level.<a href="#section-abstract-1" cl
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 30 January 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 4 February 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1655,22 +1655,19 @@ l7vtjahgwJStMOCRn6J6is6f5mz-Pi5-Xk6FmV44k48NzulqMDVJbAw
 <p id="section-3.1-9">The claims indicate that the example WIT:<a href="#section-3.1-9" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.1-10.1">
-            <p id="section-3.1-10.1.1">was issued by an Identity Server known as <code>wimse://example.com/trusted-central-authority</code>.<a href="#section-3.1-10.1.1" class="pilcrow">¶</a></p>
+            <p id="section-3.1-10.1.1">is valid until Thu Apr 24 2025 16:35:10 GMT (represented as NumericDate <span><a href="https://rfc-editor.org/rfc/rfc7519#section-2" class="relref">Section 2</a> of [<a href="#RFC7519" class="cite xref">RFC7519</a>]</span> value <code>1745512510</code>).<a href="#section-3.1-10.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.1-10.2">
-            <p id="section-3.1-10.2.1">is valid until May 15, 2024 3:28:45 PM GMT-06:00 (represented as NumericDate <span><a href="https://rfc-editor.org/rfc/rfc7519#section-2" class="relref">Section 2</a> of [<a href="#RFC7519" class="cite xref">RFC7519</a>]</span> value <code>1717612470</code>).<a href="#section-3.1-10.2.1" class="pilcrow">¶</a></p>
+            <p id="section-3.1-10.2.1">identifies the workload to which the token was issued as <code>wimse://example.com/specific-workload</code>.<a href="#section-3.1-10.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.1-10.3">
-            <p id="section-3.1-10.3.1">identifies the workload to which the token was issued as <code>wimse://example.com/specific-workload</code>.<a href="#section-3.1-10.3.1" class="pilcrow">¶</a></p>
+            <p id="section-3.1-10.3.1">has a unique identifier of <code>bd2a7b5bf8573a41adb4cbf3cfa01e15</code>.<a href="#section-3.1-10.3.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.1-10.4">
-            <p id="section-3.1-10.4.1">has a unique identifier of <code>x-_1CTL2cca3CSE4cwb__</code>.<a href="#section-3.1-10.4.1" class="pilcrow">¶</a></p>
+            <p id="section-3.1-10.4.1">binds the public key represented by the <code>jwk</code> confirmation method to the workload <code>wimse://example.com/specific-workload</code>.<a href="#section-3.1-10.4.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.1-10.5">
-            <p id="section-3.1-10.5.1">binds the public key represented by the <code>jwk</code> confirmation method to the workload <code>wimse://example.com/specific-workload</code>.<a href="#section-3.1-10.5.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-3.1-10.6">
-            <p id="section-3.1-10.6.1">requires the proof to be produced with the <code>EdDSA</code> signature algorithm.<a href="#section-3.1-10.6.1" class="pilcrow">¶</a></p>
+            <p id="section-3.1-10.5.1">requires the proof to be produced with the <code>EdDSA</code> signature algorithm.<a href="#section-3.1-10.5.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-3.1-11">For elucidative purposes only, the workload's key, including the private part, is shown below in JWK <span>[<a href="#RFC7517" class="cite xref">RFC7517</a>]</span> format:<a href="#section-3.1-11" class="pilcrow">¶</a></p>

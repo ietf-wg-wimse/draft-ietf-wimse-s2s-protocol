@@ -5,12 +5,12 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 30 January 2026                                        CyberArk
+Expires: 4 February 2026                                        CyberArk
                                                       A. Schwenkschuster
                                                                    SPIRL
                                                               Y. Sheffer
                                                                   Intuit
-                                                            29 July 2025
+                                                           3 August 2025
 
 
                WIMSE Workload-to-Workload Authentication
@@ -66,7 +66,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 30 January 2026.
+   This Internet-Draft will expire on 4 February 2026.
 
 Copyright Notice
 
@@ -411,16 +411,13 @@ Table of Contents
 
    The claims indicate that the example WIT:
 
-   *  was issued by an Identity Server known as wimse://example.com/
-      trusted-central-authority.
-
-   *  is valid until May 15, 2024 3:28:45 PM GMT-06:00 (represented as
-      NumericDate Section 2 of [RFC7519] value 1717612470).
+   *  is valid until Thu Apr 24 2025 16:35:10 GMT (represented as
+      NumericDate Section 2 of [RFC7519] value 1745512510).
 
    *  identifies the workload to which the token was issued as
       wimse://example.com/specific-workload.
 
-   *  has a unique identifier of x-_1CTL2cca3CSE4cwb__.
+   *  has a unique identifier of bd2a7b5bf8573a41adb4cbf3cfa01e15.
 
    *  binds the public key represented by the jwk confirmation method to
       the workload wimse://example.com/specific-workload.
