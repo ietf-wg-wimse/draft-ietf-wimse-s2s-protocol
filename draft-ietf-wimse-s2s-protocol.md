@@ -257,10 +257,9 @@ The decoded JWT claims of the WIT from the example above are shown here:
 
 The claims indicate that the example WIT:
 
-* was issued by an Identity Server known as `wimse://example.com/trusted-central-authority`.
-* is valid until May 15, 2024 3:28:45 PM GMT-06:00 (represented as NumericDate {{Section 2 of RFC7519}} value `1717612470`).
+* is valid until Thu Apr 24 2025 16:35:10 GMT (represented as NumericDate {{Section 2 of RFC7519}} value `1745512510`).
 * identifies the workload to which the token was issued as `wimse://example.com/specific-workload`.
-* has a unique identifier of `x-_1CTL2cca3CSE4cwb__`.
+* has a unique identifier of `bd2a7b5bf8573a41adb4cbf3cfa01e15`.
 * binds the public key represented by the `jwk` confirmation method to the workload `wimse://example.com/specific-workload`.
 * requires the proof to be produced with the `EdDSA` signature algorithm.
 
