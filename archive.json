@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-08-03T01:51:12.621992+00:00",
+  "timestamp": "2025-08-05T01:46:32.917919+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -2272,7 +2272,7 @@
       "id": "I_kwDOLJmm786v-Zya",
       "title": "Example WIT doesn't match explanation",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/113",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "dagdagdag83",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
@@ -2281,8 +2281,8 @@
       ],
       "body": "In Section 4.1 there is an example WIT (figure 2). The document then has a correct decoded header and payload which matches the example WIT, but the following explanation doesn't match: https://www.ietf.org/archive/id/draft-ietf-wimse-s2s-protocol-03.html#section-4.1-9\n\n* was issued by an Identity Server known as wimse://example.com/trusted-central-authority.\n* is valid until May 15, 2024 3:28:45 PM GMT-06:00.\n* identifies the workload to which the token was issued as wimse://example.com/specific-workload.\n* has a unique identifier of x-_1CTL2cca3CSE4cwb__.\n* binds the public key represented by the jwk confirmation method to the workload wimse://example.com/specific-workload.\n\nThe errors are:\n\n* Example WIT doesn't have an `iss` claim.\n* Example WIT `exp` = `1740758348` (Fri Feb 28 2025 16:59:08 GMT+0100)\n* Correct\n* Example WIT `jti` = `4fc77fcef571b3bb33b672eaf204faf4`\n* Also correct I think. ",
       "createdAt": "2025-03-27T10:17:22Z",
-      "updatedAt": "2025-05-20T14:23:53Z",
-      "closedAt": null,
+      "updatedAt": "2025-08-03T15:18:36Z",
+      "closedAt": "2025-08-03T15:18:36Z",
       "comments": []
     },
     {
@@ -11022,6 +11022,48 @@
       "mergeCommit": null,
       "comments": [],
       "reviews": []
+    },
+    {
+      "number": 145,
+      "id": "PR_kwDOLJmm786h4WCR",
+      "title": "Correct example WIT details",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/145",
+      "state": "MERGED",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Closes #113.",
+      "createdAt": "2025-08-03T09:56:59Z",
+      "updatedAt": "2025-08-03T15:18:35Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "1184084fa0feea4f9c1fe6d36221cb119b96bf56",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-113",
+      "headRefOid": "1ecf2a71cdd853e50b78ff966560ba3563702ad0",
+      "closedAt": "2025-08-03T15:18:35Z",
+      "mergedAt": "2025-08-03T15:18:35Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "8b1a163d38399e544d695d7a204055d6e047c698"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm7863tiys",
+          "commit": {
+            "abbreviatedOid": "1ecf2a7"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-08-03T13:13:34Z",
+          "updatedAt": "2025-08-03T13:13:34Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
