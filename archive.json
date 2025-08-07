@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-08-05T01:46:32.917919+00:00",
+  "timestamp": "2025-08-07T01:44:58.831393+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -1969,9 +1969,17 @@
       ],
       "body": "The two WITs in the HTTP messages are suspiciously short and do not decode. Replace by the examples from Sec. 4.1.",
       "createdAt": "2025-02-28T16:28:54Z",
-      "updatedAt": "2025-05-20T14:28:07Z",
+      "updatedAt": "2025-08-06T15:00:44Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Moreover, they are the same for the request and the response, so for both servers.",
+          "createdAt": "2025-08-06T15:00:44Z",
+          "updatedAt": "2025-08-06T15:00:44Z"
+        }
+      ]
     },
     {
       "number": 102,
@@ -11064,6 +11072,32 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 146,
+      "id": "PR_kwDOLJmm786iZTNk",
+      "title": "Clarify DPoP and middle boxes",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/146",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves #70.",
+      "createdAt": "2025-08-06T14:06:21Z",
+      "updatedAt": "2025-08-06T14:06:38Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "8b1a163d38399e544d695d7a204055d6e047c698",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-70",
+      "headRefOid": "cc39033b43cab3aad296502b018743d9bbe0d73e",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
