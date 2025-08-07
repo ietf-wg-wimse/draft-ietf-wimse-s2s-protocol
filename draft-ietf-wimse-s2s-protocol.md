@@ -1,6 +1,6 @@
 ---
-title: "WIMSE Workload to Workload Authentication"
-abbrev: "WIMSE Workload to Workload"
+title: "WIMSE Workload-to-Workload Authentication"
+abbrev: "WIMSE Workload-to-Workload"
 category: std
 
 docname: draft-ietf-wimse-s2s-protocol-latest
@@ -186,7 +186,7 @@ All terminology in this document follows {{?I-D.ietf-wimse-arch}}.
 
 {::boilerplate bcp14-tagged}
 
-# Application Level Workload To Workload Authentication {#app-level}
+# Application Level Workload-to-Workload Authentication {#app-level}
 
 As noted in the Introduction, for many deployments communication between workloads cannot use
 end-to-end TLS. For these deployment styles, this document proposes application-level protections.
@@ -258,10 +258,9 @@ The decoded JWT claims of the WIT from the example above are shown here:
 
 The claims indicate that the example WIT:
 
-* was issued by an Identity Server known as `wimse://example.com/trusted-central-authority`.
-* is valid until May 15, 2024 3:28:45 PM GMT-06:00 (represented as NumericDate {{Section 2 of RFC7519}} value `1717612470`).
+* is valid until Thu Apr 24 2025 16:35:10 GMT (represented as NumericDate {{Section 2 of RFC7519}} value `1745512510`).
 * identifies the workload to which the token was issued as `wimse://example.com/specific-workload`.
-* has a unique identifier of `x-_1CTL2cca3CSE4cwb__`.
+* has a unique identifier of `bd2a7b5bf8573a41adb4cbf3cfa01e15`.
 * binds the public key represented by the `jwk` confirmation method to the workload `wimse://example.com/specific-workload`.
 * requires the proof to be produced with the `EdDSA` signature algorithm.
 
@@ -482,6 +481,8 @@ a recipient SHOULD reject a message (request or response) if a nonce generated b
 
 Implementors need to be aware that the WIT is extracted from the message before the message signature is validated. Recipients of signed HTTP messages MUST validate the signature and content of the WIT before validating the HTTP message signature. They MUST ensure that the message is not processed further before it has been fully validated.
 
+Either client or server MAY send an `Accept-Signature` header, but is not required to do so. When this header is sent, it MUST include the header components listed above.
+
 Following is a non-normative example of a signed request and a signed response,
 where the caller is using the keys specified in {{example-caller-jwk}}.
 
@@ -566,7 +567,7 @@ authorization policy may take into account both the sending workload's identity 
 identity in the WIT may be used to establish which API calls can be made and information in the context token may be used to determine
 which specific resources can be accessed.
 
-# Using Mutual TLS for Workload To Workload Authentication {#mutual-tls}
+# Using Mutual TLS for Workload-to-Workload Authentication {#mutual-tls}
 
 As noted in the introduction, for many deployments, transport-level protection of application traffic using TLS is ideal.
 
