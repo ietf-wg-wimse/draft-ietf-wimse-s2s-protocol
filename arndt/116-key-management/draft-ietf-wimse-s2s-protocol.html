@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta content="Common,Latin" name="scripts">
 <meta content="initial-scale=1.0" name="viewport">
-<title>WIMSE Workload to Workload Authentication</title>
+<title>WIMSE Workload-to-Workload Authentication</title>
 <meta content="Brian Campbell" name="author">
 <meta content="Joe Salowey" name="author">
 <meta content="Arndt Schwenkschuster" name="author">
@@ -1057,12 +1057,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <table class="ears">
 <thead><tr>
 <td class="left">Internet-Draft</td>
-<td class="center">WIMSE Workload to Workload</td>
-<td class="right">July 2025</td>
+<td class="center">WIMSE Workload-to-Workload</td>
+<td class="right">August 2025</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Campbell, et al.</td>
-<td class="center">Expires 21 January 2026</td>
+<td class="center">Expires 8 February 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1075,12 +1075,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-wimse-s2s-protocol-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-07-20" class="published">20 July 2025</time>
+<time datetime="2025-08-07" class="published">7 August 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-01-21">21 January 2026</time></dd>
+<dd class="expires"><time datetime="2026-02-08">8 February 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1102,7 +1102,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </dd>
 </dl>
 </div>
-<h1 id="title">WIMSE Workload to Workload Authentication</h1>
+<h1 id="title">WIMSE Workload-to-Workload Authentication</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
 <p id="section-abstract-1">The WIMSE architecture defines authentication and authorization for software workloads
@@ -1152,7 +1152,7 @@ would be authenticated at the application level.<a href="#section-abstract-1" cl
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 21 January 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 8 February 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1199,7 +1199,7 @@ would be authenticated at the application level.<a href="#section-abstract-1" cl
             <p id="section-toc.1-1.2.1"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-conventions-and-definitions" class="internal xref">Conventions and Definitions</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
-            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-application-level-workload-" class="internal xref">Application Level Workload To Workload Authentication</a></p>
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-application-level-workload-" class="internal xref">Application Level Workload-to-Workload Authentication</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
                 <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-the-workload-identity-token" class="internal xref">The Workload Identity Token</a></p>
@@ -1230,7 +1230,7 @@ would be authenticated at the application level.<a href="#section-abstract-1" cl
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
-            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-using-mutual-tls-for-worklo" class="internal xref">Using Mutual TLS for Workload To Workload Authentication</a></p>
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-using-mutual-tls-for-worklo" class="internal xref">Using Mutual TLS for Workload-to-Workload Authentication</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1">
                 <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="auto internal xref">4.1</a>.  <a href="#name-the-workload-identity-certi" class="internal xref">The Workload Identity Certificate</a></p>
@@ -1536,7 +1536,7 @@ appear in all capitals, as shown here.<a href="#section-2-2" class="pilcrow">¶<
 <div id="app-level">
 <section id="section-3">
       <h2 id="name-application-level-workload-">
-<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-application-level-workload-" class="section-name selfRef">Application Level Workload To Workload Authentication</a>
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-application-level-workload-" class="section-name selfRef">Application Level Workload-to-Workload Authentication</a>
       </h2>
 <p id="section-3-1">As noted in the Introduction, for many deployments communication between workloads cannot use
 end-to-end TLS. For these deployment styles, this document proposes application-level protections.<a href="#section-3-1" class="pilcrow">¶</a></p>
@@ -1658,22 +1658,19 @@ l7vtjahgwJStMOCRn6J6is6f5mz-Pi5-Xk6FmV44k48NzulqMDVJbAw
 <p id="section-3.1-10">The claims indicate that the example WIT:<a href="#section-3.1-10" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.1-11.1">
-            <p id="section-3.1-11.1.1">was issued by an Identity Server known as <code>wimse://example.com/trusted-central-authority</code>.<a href="#section-3.1-11.1.1" class="pilcrow">¶</a></p>
+            <p id="section-3.1-11.1.1">is valid until Thu Apr 24 2025 16:35:10 GMT (represented as NumericDate <span><a href="https://rfc-editor.org/rfc/rfc7519#section-2" class="relref">Section 2</a> of [<a href="#RFC7519" class="cite xref">RFC7519</a>]</span> value <code>1745512510</code>).<a href="#section-3.1-11.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.1-11.2">
-            <p id="section-3.1-11.2.1">is valid until May 15, 2024 3:28:45 PM GMT-06:00 (represented as NumericDate <span><a href="https://rfc-editor.org/rfc/rfc7519#section-2" class="relref">Section 2</a> of [<a href="#RFC7519" class="cite xref">RFC7519</a>]</span> value <code>1717612470</code>).<a href="#section-3.1-11.2.1" class="pilcrow">¶</a></p>
+            <p id="section-3.1-11.2.1">identifies the workload to which the token was issued as <code>wimse://example.com/specific-workload</code>.<a href="#section-3.1-11.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.1-11.3">
-            <p id="section-3.1-11.3.1">identifies the workload to which the token was issued as <code>wimse://example.com/specific-workload</code>.<a href="#section-3.1-11.3.1" class="pilcrow">¶</a></p>
+            <p id="section-3.1-11.3.1">has a unique identifier of <code>bd2a7b5bf8573a41adb4cbf3cfa01e15</code>.<a href="#section-3.1-11.3.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.1-11.4">
-            <p id="section-3.1-11.4.1">has a unique identifier of <code>x-_1CTL2cca3CSE4cwb__</code>.<a href="#section-3.1-11.4.1" class="pilcrow">¶</a></p>
+            <p id="section-3.1-11.4.1">binds the public key represented by the <code>jwk</code> confirmation method to the workload <code>wimse://example.com/specific-workload</code>.<a href="#section-3.1-11.4.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.1-11.5">
-            <p id="section-3.1-11.5.1">binds the public key represented by the <code>jwk</code> confirmation method to the workload <code>wimse://example.com/specific-workload</code>.<a href="#section-3.1-11.5.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-3.1-11.6">
-            <p id="section-3.1-11.6.1">requires the proof to be produced with the <code>EdDSA</code> signature algorithm.<a href="#section-3.1-11.6.1" class="pilcrow">¶</a></p>
+            <p id="section-3.1-11.5.1">requires the proof to be produced with the <code>EdDSA</code> signature algorithm.<a href="#section-3.1-11.5.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-3.1-12">For elucidative purposes only, the workload's key, including the private part, is shown below in JWK <span>[<a href="#RFC7517" class="cite xref">RFC7517</a>]</span> format:<a href="#section-3.1-12" class="pilcrow">¶</a></p>
@@ -2062,10 +2059,11 @@ be <code>wimse</code>.<a href="#section-3.3-13" class="pilcrow">¶</a></p>
 To detect message replays,
 a recipient <span class="bcp14">SHOULD</span> reject a message (request or response) if a nonce generated by a certain peer is seen more than once.<a href="#section-3.3-14" class="pilcrow">¶</a></p>
 <p id="section-3.3-15">Implementors need to be aware that the WIT is extracted from the message before the message signature is validated. Recipients of signed HTTP messages <span class="bcp14">MUST</span> validate the signature and content of the WIT before validating the HTTP message signature. They <span class="bcp14">MUST</span> ensure that the message is not processed further before it has been fully validated.<a href="#section-3.3-15" class="pilcrow">¶</a></p>
-<p id="section-3.3-16">Following is a non-normative example of a signed request and a signed response,
-where the caller is using the keys specified in <a href="#example-caller-jwk" class="auto internal xref">Figure 5</a>.<a href="#section-3.3-16" class="pilcrow">¶</a></p>
+<p id="section-3.3-16">Either client or server <span class="bcp14">MAY</span> send an <code>Accept-Signature</code> header, but is not required to do so. When this header is sent, it <span class="bcp14">MUST</span> include the header components listed above.<a href="#section-3.3-16" class="pilcrow">¶</a></p>
+<p id="section-3.3-17">Following is a non-normative example of a signed request and a signed response,
+where the caller is using the keys specified in <a href="#example-caller-jwk" class="auto internal xref">Figure 5</a>.<a href="#section-3.3-17" class="pilcrow">¶</a></p>
 <span id="name-signed-request"></span><figure id="figure-14">
-          <div class="lang-http sourcecode" id="section-3.3-17.1">
+          <div class="lang-http sourcecode" id="section-3.3-18.1">
 <pre>
 =============== NOTE: '\' line wrapping per RFC 8792 ================
 
@@ -2084,9 +2082,9 @@ Lgo.c2lnbmF0dXJlCg
 <figcaption><a href="#figure-14" class="selfRef">Figure 14</a>:
 <a href="#name-signed-request" class="selfRef">Signed Request</a>
           </figcaption></figure>
-<p id="section-3.3-18">Assuming that the workload being called has the following keypair:<a href="#section-3.3-18" class="pilcrow">¶</a></p>
+<p id="section-3.3-19">Assuming that the workload being called has the following keypair:<a href="#section-3.3-19" class="pilcrow">¶</a></p>
 <span id="name-callee-private-key"></span><figure id="figure-15">
-          <div class="lang-jwk sourcecode" id="section-3.3-19.1">
+          <div class="lang-jwk sourcecode" id="section-3.3-20.1">
 <pre>
 {
  "kty":"OKP",
@@ -2099,9 +2097,9 @@ Lgo.c2lnbmF0dXJlCg
 <figcaption><a href="#figure-15" class="selfRef">Figure 15</a>:
 <a href="#name-callee-private-key" class="selfRef">Callee Private Key</a>
           </figcaption></figure>
-<p id="section-3.3-20">A signed response would be:<a href="#section-3.3-20" class="pilcrow">¶</a></p>
+<p id="section-3.3-21">A signed response would be:<a href="#section-3.3-21" class="pilcrow">¶</a></p>
 <span id="name-signed-response"></span><figure id="figure-16">
-          <div class="lang-http sourcecode" id="section-3.3-21.1">
+          <div class="lang-http sourcecode" id="section-3.3-22.1">
 <pre>
 =============== NOTE: '\' line wrapping per RFC 8792 ================
 
@@ -2209,7 +2207,7 @@ which specific resources can be accessed.<a href="#section-3.6-2" class="pilcrow
 <div id="mutual-tls">
 <section id="section-4">
       <h2 id="name-using-mutual-tls-for-worklo">
-<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-using-mutual-tls-for-worklo" class="section-name selfRef">Using Mutual TLS for Workload To Workload Authentication</a>
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-using-mutual-tls-for-worklo" class="section-name selfRef">Using Mutual TLS for Workload-to-Workload Authentication</a>
       </h2>
 <p id="section-4-1">As noted in the introduction, for many deployments, transport-level protection of application traffic using TLS is ideal.<a href="#section-4-1" class="pilcrow">¶</a></p>
 <div id="to-wic">
@@ -2617,7 +2615,7 @@ use these tokens to authenticate to each other.<a href="#section-6.2.1-9" class=
 <dl class="references">
 <dt id="I-D.ietf-oauth-transaction-tokens">[I-D.ietf-oauth-transaction-tokens]</dt>
         <dd>
-<span class="refAuthor">Tulshibagwale, A.</span>, <span class="refAuthor">Fletcher, G.</span>, and <span class="refAuthor">P. Kasselman</span>, <span class="refTitle">"Transaction Tokens"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-transaction-tokens-05</span>, <time datetime="2025-03-03" class="refDate">3 March 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-transaction-tokens-05">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-transaction-tokens-05</a>&gt;</span>. </dd>
+<span class="refAuthor">Tulshibagwale, A.</span>, <span class="refAuthor">Fletcher, G.</span>, and <span class="refAuthor">P. Kasselman</span>, <span class="refTitle">"Transaction Tokens"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-transaction-tokens-06</span>, <time datetime="2025-07-28" class="refDate">28 July 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-transaction-tokens-06">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-transaction-tokens-06</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-wimse-arch">[I-D.ietf-wimse-arch]</dt>
         <dd>
