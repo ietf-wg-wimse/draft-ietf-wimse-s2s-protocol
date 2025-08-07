@@ -2,9 +2,9 @@ HTTP/1.1 404 Not Found
 Connection: close
 Content-Digest: sha-256=:47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=:
 Content-Type: text/plain
-Signature: wimse=:NMrMn3xhI6m9PI8mKVfpnH5qFGcEfuFxiCmsB5PJhGjUHT/5J4612EZwRw3V4kU4gGJmO+ER8RC4DM2HKVOYDQ==:
-Signature-Input: wimse=("@status" "workload-identity-token" "content-type" "content-digest" "@method";req "@request-target";req);created=1718295368;expires=1718295670;nonce="abcd2222";tag="wimse-workload-to-workload"
-Workload-Identity-Token: aGVhZGVyCg.VGhpcyBhaW4ndCBvbmUsIHRvby4K.c2lnbmF0dXJlCg
+Signature: wimse=:VF67jS45IwMoWo1NIzYrQZVwp9sAuzBvi6PMKELwn2E3vyFOSNtfGUlU8wgX2NN/Qm0ybd5z6VBoRz4dvYakDg==:
+Signature-Input: wimse=("@status" "workload-identity-token" "content-type" "content-digest" "@method";req "@request-target";req);created=1754556967;expires=1754557269;nonce="abcd2222";tag="wimse-service-to-service"
+Workload-Identity-Token: eyJhbGciOiJFZERTQSIsImtpZCI6Imlzc3Vlci1rZXkiLCJ0eXAiOiJ3aW1zZS1pZCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1iLWtleSIsImt0eSI6Ik9LUCIsIngiOiJaTTg1dlZRcENfX1JIRElfY0xkQ0JHUTRBRlBHUENFQ0JoNzQ0dExfdVdrIn19LCJleHAiOjE3NTQ1NTcyNjksImlhdCI6MTc1NDU1Njk2OSwiaXNzIjoiaHR0cHM6Ly9leGFtcGxlLmNvbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc1NDU1Njk2NzU2OTU4MzAwMCIsInN1YiI6IndpbXNlOi8vZXhhbXBsZS5jb20vc3ZjQiJ9.XPWoc9JEJMXFExZG247Cg7EyyZ5FiTaO9lxOtJTiMG5y0nhyWg83_6ZWV-iuVYjbZcloyHMOXe6SCHLjmbAnDA
 
 No ice cream today.
 

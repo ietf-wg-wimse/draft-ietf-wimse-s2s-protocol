@@ -494,12 +494,7 @@ where the caller is using the keys specified in {{example-caller-jwk}}.
 Assuming that the workload being called has the following keypair:
 
 ~~~ jwk
-{
- "kty":"OKP",
- "crv":"Ed25519",
- "x":"CfaY1XX-aHJpenRP8ATm3yGlbcKA_treqOfwKrilwyg",
- "d":"fycSKS-iHZ6TC1BNwN6cE0sOBP3-4KgR-eqxNpnyhws"
-}
+{::include includes/sigs-svcb-jwk.txt}
 ~~~
 {: title="Callee Private Key"}
 
