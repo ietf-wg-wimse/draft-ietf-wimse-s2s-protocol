@@ -55,6 +55,7 @@ informative:
   IANA.JOSE.ALGS: IANA.jose_web-signature-encryption-algorithms
   IANA.JWT.CLAIMS: IANA.jwt_claims
   IANA.MEDIA.TYPES: IANA.media-types
+  IANA.URI.SCHEMES: IANA.uri-schemes
   RFC9457:
 
 --- abstract
@@ -217,6 +218,12 @@ A WIT MUST contain the following claims, except where noted:
     * `cnf`: A confirmation claim referencing the public key of the workload.
         * `jwk`: Within the cnf claim, a `jwk` key MUST be present that contains the public key of the workload as defined in {{Section 3.2 of RFC7800}}. The workload MUST prove possession of the corresponding private key when presenting the WIT to another party, which can be accomplished by using it in conjunction with one of the methods in {{dpop-esque-auth}} or {{http-sig-auth}}. As such, it MUST NOT be used as a bearer token and is not intended for use in the `Authorization` header.
             * `alg`: Within the jwk object, an `alg` field MUST be present. Allowed values are listed in the IANA "JSON Web Signature and Encryption Algorithms" registry established by {{RFC7518}}. The presented proof (WPT or http-sig) MUST be produced with the algorithm specified in this field. The value `none` MUST NOT be used. Algorithms used in combination with symmetric keys MUST NOT be used. Also encryption algorithms MUST NOT be used as this would require additional key distribution outside of the WIT. To promote interoperability, the `ES256` signing algorithm MUST be supported by general purpose implementations of this document.
+
+As noted in {{I-D.ietf-wimse-arch}}, a workload identifier is a URI with a trust domain component.
+The runtime environment often determines which
+URI scheme is used, e.g. if SPIFFE is used to authenticate workloads, it mandates "spiffe" URIs.
+However for those deployments where this is not the case, this document ({{iana-uri}})
+defines the "wimse" URI scheme which can be used by any deployment that implements this protocol.
 
 An example WIT might look like this:
 
@@ -785,6 +792,22 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 * Structured Type: N/A
 * Specification Document: RFC XXX, {{dpop-esque-auth}}
 * Comments: see reference above for an ABNF syntax of this field
+
+## URI Scheme Registration {#iana-uri}
+
+IANA is requested to register the "wimse" scheme to the "URI Schemes" registry {{IANA.URI.SCHEMES}}:
+
+* Scheme name: wimse
+
+* Status: permanent
+
+* Applications/protocols that use this scheme name: the WIMSE workload-to-workload authentication protocol.
+
+* Contact: IETF Chair <chair@ietf.org>
+
+* Change controller: IESG <iesg@ietf.org>
+
+* References: {{app-level}} of this document (RFC XXX).
 
 --- back
 
