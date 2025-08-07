@@ -2069,19 +2069,19 @@ where the caller is using the keys specified in <a href="#example-caller-jwk" cl
 
 GET /gimme-ice-cream?flavor=vanilla HTTP/1.1
 Host: example.com
-Signature: wimse=:MdBUKqikdxI1oYY2Vy7HdsE1R3nTJouEWrzgayU/nWte+0No+U\
-dFj5DE8hEY7WWrGwGVlktWgIkrGkyHNcZUCQ==:
+Signature: wimse=:zyR2W7QeUEYwGT8q+jU5HyEiPhC4iiBJlAfwu6otL+kXBYOMVl\
+ZEfGDnTlQiYmUWQMyu69811lIDWbCK42yWCw==:
 Signature-Input: wimse=("@method" "@request-target" "workload-identi\
-ty-token");created=1754556967;expires=1754557267;nonce="abcd1111";ta\
-g="wimse-service-to-service"
+ty-token");created=1754558248;expires=1754558548;nonce="abcd1111";ta\
+g="wimse-workload-to-workload"
 Workload-Identity-Token: eyJhbGciOiJFZERTQSIsImtpZCI6Imlzc3Vlci1rZXk\
 iLCJ0eXAiOiJ3aW1zZS1pZCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNB\
 IiwiY3J2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1hLWtleSIsImt0eSI6Ik9LUCIsIngi\
-OiJTYkY5MmtDRmY0OFAtZFlOS00zNFAydXVvMWVtZmQ4Z3RoWEVVZjJHNkEwIn19LCJl\
-eHAiOjE3NTQ1NTcyNjcsImlhdCI6MTc1NDU1Njk2NywiaXNzIjoiaHR0cHM6Ly9leGFt\
-cGxlLmNvbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc1NDU1Njk2NzU2OTM5NjAwMCIsInN1\
-YiI6IndpbXNlOi8vZXhhbXBsZS5jb20vc3ZjQSJ9.hKruovNSYAPwFKnPQwadk4g5SbT\
-amCDyuQQJ6aF1_W65UpdBXPMESTeh3mPewfEF_IQS87ZeztVa5Bw5ScXSAQ
+OiJEUEhDOFdKaTZ3WEttN3BpRVdXRDRQdHBiTUdJMUcyOXVTMFl5MnNmQk5zIn19LCJl\
+eHAiOjE3NTQ1NTg1NDgsImlhdCI6MTc1NDU1ODI0OCwiaXNzIjoiaHR0cHM6Ly9leGFt\
+cGxlLmNvbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc1NDU1ODI0ODQwMjQ5NjAwMCIsInN1\
+YiI6IndpbXNlOi8vZXhhbXBsZS5jb20vc3ZjQSJ9.OAPARpluzH34v4bhCtPovuOvTsx\
+cVbAV9WSqFlbiKdNvfEVN4uRNQSRs7ePfMIJB2uqgX71XjBFH433nDzJZBQ
 
 </pre>
 </div>
@@ -2095,10 +2095,10 @@ amCDyuQQJ6aF1_W65UpdBXPMESTeh3mPewfEF_IQS87ZeztVa5Bw5ScXSAQ
 {
   "alg": "EdDSA",
   "crv": "Ed25519",
-  "d": "YNZCew3BdfpQPczBPJq2p7e2TOI9DFYaDKD2_udHgbY",
+  "d": "JlNJxsZl_PC00EkoRUQbtCrzDtZ5vhFN_6qWtwghttY",
   "kid": "svc-b-key",
   "kty": "OKP",
-  "x": "ZM85vVQpC__RHDI_cLdCBGQ4AFPGPCECBh744tL_uWk"
+  "x": "gz2aSJE-g9w1rbgJiNps4Gb8IPk50k5oJUEbLDusayc"
 }
 </pre>
 </div>
@@ -2111,25 +2111,27 @@ amCDyuQQJ6aF1_W65UpdBXPMESTeh3mPewfEF_IQS87ZeztVa5Bw5ScXSAQ
 <pre>
 =============== NOTE: '\' line wrapping per RFC 8792 ================
 
+Response:
+
 HTTP/1.1 404 Not Found
 Connection: close
 Content-Digest: sha-256=:47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU\
 =:
 Content-Type: text/plain
-Signature: wimse=:VF67jS45IwMoWo1NIzYrQZVwp9sAuzBvi6PMKELwn2E3vyFOSN\
-tfGUlU8wgX2NN/Qm0ybd5z6VBoRz4dvYakDg==:
+Signature: wimse=:WAjxziuCiYRqCzetetDwaTS7Ka9yMwB+dAHVJPw3VkUH+c8c4A\
+5BKrCsPlD/ymy+7PgwXl3y3mVdaD4ww7WqDA==:
 Signature-Input: wimse=("@status" "workload-identity-token" "content\
 -type" "content-digest" "@method";req "@request-target";req);created\
-=1754556967;expires=1754557269;nonce="abcd2222";tag="wimse-service-t\
-o-service"
+=1754558248;expires=1754558550;nonce="abcd2222";tag="wimse-workload-\
+to-workload"
 Workload-Identity-Token: eyJhbGciOiJFZERTQSIsImtpZCI6Imlzc3Vlci1rZXk\
 iLCJ0eXAiOiJ3aW1zZS1pZCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNB\
 IiwiY3J2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1iLWtleSIsImt0eSI6Ik9LUCIsIngi\
-OiJaTTg1dlZRcENfX1JIRElfY0xkQ0JHUTRBRlBHUENFQ0JoNzQ0dExfdVdrIn19LCJl\
-eHAiOjE3NTQ1NTcyNjksImlhdCI6MTc1NDU1Njk2OSwiaXNzIjoiaHR0cHM6Ly9leGFt\
-cGxlLmNvbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc1NDU1Njk2NzU2OTU4MzAwMCIsInN1\
-YiI6IndpbXNlOi8vZXhhbXBsZS5jb20vc3ZjQiJ9.XPWoc9JEJMXFExZG247Cg7EyyZ5\
-FiTaO9lxOtJTiMG5y0nhyWg83_6ZWV-iuVYjbZcloyHMOXe6SCHLjmbAnDA
+OiJnejJhU0pFLWc5dzFyYmdKaU5wczRHYjhJUGs1MGs1b0pVRWJMRHVzYXljIn19LCJl\
+eHAiOjE3NTQ1NTg1NTAsImlhdCI6MTc1NDU1ODI1MCwiaXNzIjoiaHR0cHM6Ly9leGFt\
+cGxlLmNvbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc1NDU1ODI0ODQwMjY4MTAwMCIsInN1\
+YiI6IndpbXNlOi8vZXhhbXBsZS5jb20vc3ZjQiJ9.yJ4gGQ1DQBX0E9Xp5fIgj6Ucpf9\
+LI_gHnhURZxqu6atT-3hpbFTgw4rd-6knM7-HClok4b6N2ViZaEDcz6IMCg
 
 No ice cream today.
 
