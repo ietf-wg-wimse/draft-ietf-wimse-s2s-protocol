@@ -219,7 +219,7 @@ A WIT MUST contain the following claims, except where noted:
             * `alg`: Within the jwk object, an `alg` field MUST be present. Allowed values are listed in the IANA "JSON Web Signature and Encryption Algorithms" registry established by {{RFC7518}}. The presented proof (WPT or http-sig) MUST be produced with the algorithm specified in this field. The value `none` MUST NOT be used. Algorithms used in combination with symmetric keys MUST NOT be used. Also encryption algorithms MUST NOT be used as this would require additional key distribution outside of the WIT. To promote interoperability, the `ES256` signing algorithm MUST be supported by general purpose implementations of this document.
 
 As noted in {{I-D.ietf-wimse-arch}}, a workload identifier is a URI with a trust domain component.
- The runtime environment often determines which
+The runtime environment often determines which
 URI scheme is used, e.g. if SPIFFE is used to authenticate workloads, it mandates "spiffe" URIs.
 However for those deployments where this is not the case, this document ({{iana-uri}})
 defines the "wimse" URI scheme which can be used by any deployment that implements this protocol.
