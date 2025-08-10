@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-08-07T01:44:58.831393+00:00",
+  "timestamp": "2025-08-10T01:48:00.633568+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -2316,7 +2316,7 @@
       "id": "I_kwDOLJmm7861QCK0",
       "title": "Unclear section 4.3 signing material",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/116",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "dagdagdag83",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [
@@ -2325,8 +2325,8 @@
       "labels": [],
       "body": "I find that section 4.3 (https://www.ietf.org/archive/id/draft-ietf-wimse-s2s-protocol-03.html#name-option-2-authentication-bas) is unclear on what signing material to use for signing http message signing. It states \"This option uses the WIMSE Identity Token to sign the request and optionally, the response\".\n\nIt's not using the WIT (Workload Identity Token) to sign messages, it's using the key pair that the workload possesses which is also used for signing the WPT in the dPoP-inspired option 1.\n\nPartly I think the confusing arise because the key pair which the workload is supposed to use for \"Application Level Workload To Workload Authentication\" is not given a name or term, or clearly defined. This concept of the workload-owned key pair should be better defined and expanded upon.",
       "createdAt": "2025-05-05T21:33:20Z",
-      "updatedAt": "2025-07-20T14:17:09Z",
-      "closedAt": null,
+      "updatedAt": "2025-08-07T08:29:21Z",
+      "closedAt": "2025-08-07T08:29:21Z",
       "comments": [
         {
           "author": "yaronf",
@@ -2543,7 +2543,7 @@
       "labels": [],
       "body": "We want to collect implementations of the S2S protocol according to https://datatracker.ietf.org/doc/rfc7942/.",
       "createdAt": "2025-07-01T14:11:20Z",
-      "updatedAt": "2025-08-02T18:28:23Z",
+      "updatedAt": "2025-08-07T13:58:32Z",
       "closedAt": null,
       "comments": [
         {
@@ -2552,6 +2552,20 @@
           "body": "\ud83e\udd97 \ud83e\udd97 \ud83e\udd97\n",
           "createdAt": "2025-08-02T18:28:22Z",
           "updatedAt": "2025-08-02T18:28:22Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> \ud83e\udd97 \ud83e\udd97 \ud83e\udd97\n\n@bc-pi ?",
+          "createdAt": "2025-08-07T10:50:41Z",
+          "updatedAt": "2025-08-07T10:50:41Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> AI Overview\n> The \ud83e\udd97 emoji represents a cricket, an insect known for its chirping sound. It can be used to represent the insect itself or, more commonly, to indicate silence or a lack of response, similar to the phrase \"getting crickets\". \n",
+          "createdAt": "2025-08-07T13:58:31Z",
+          "updatedAt": "2025-08-07T13:58:31Z"
         }
       ]
     },
@@ -10767,24 +10781,26 @@
       "id": "PR_kwDOLJmm786fvLEt",
       "title": "Add key management security considerations",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/140",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Resolves #116",
       "createdAt": "2025-07-20T14:11:56Z",
-      "updatedAt": "2025-07-29T09:23:37Z",
+      "updatedAt": "2025-08-07T08:29:20Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
-      "baseRefOid": "2be8adadba54d6924dce1b7fb3e0fec918b88664",
+      "baseRefOid": "8b1a163d38399e544d695d7a204055d6e047c698",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "arndt/116-key-management",
-      "headRefOid": "f4405c3b50c6d1bc8675acefca3b03d76332082d",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "d26075920bb5a88cae31dec2f7b4da7df53fb8e3",
+      "closedAt": "2025-08-07T08:29:20Z",
+      "mergedAt": "2025-08-07T08:29:20Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "b3de336af6c2d92ba01090f8fb6a3359bea107cf"
+      },
       "comments": [],
       "reviews": [
         {
@@ -11017,13 +11033,13 @@
       "labels": [],
       "body": "Resolves #123.",
       "createdAt": "2025-07-29T18:42:39Z",
-      "updatedAt": "2025-07-29T18:43:23Z",
+      "updatedAt": "2025-08-07T08:41:16Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "1184084fa0feea4f9c1fe6d36221cb119b96bf56",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-123",
-      "headRefOid": "093eb0fe0da739bb93b7c1984bf46fc5e28a930b",
+      "headRefOid": "41a8e15ff1a1cab5f149f55b9ab1917effe0d313",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -11092,6 +11108,32 @@
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-70",
       "headRefOid": "cc39033b43cab3aad296502b018743d9bbe0d73e",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 147,
+      "id": "PR_kwDOLJmm786ii3zt",
+      "title": "Use correct WITs in HTTP Sig examples",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/147",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves #100.",
+      "createdAt": "2025-08-07T09:09:46Z",
+      "updatedAt": "2025-08-07T09:23:53Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "b3de336af6c2d92ba01090f8fb6a3359bea107cf",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-100",
+      "headRefOid": "2bfd115865520eb6e8997808aad0430168509cad",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
