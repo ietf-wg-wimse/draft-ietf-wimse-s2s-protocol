@@ -798,11 +798,14 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 # Document History
 <cref>RFC Editor: please remove before publication.</cref>
 
+## draft-ietf-wimse-s2s-protocol-07
+
+* Rework the WPT's oth claim
+
 ## draft-ietf-wimse-s2s-protocol-06
 
 * Explicit definition of the Workload Identity Certificate.
 * Definition of the validation of workload identifiers as part of workload authentication. Still work in progress.
-* Rework the WPT's oth claim
 
 ## draft-ietf-wimse-s2s-protocol-05
 
