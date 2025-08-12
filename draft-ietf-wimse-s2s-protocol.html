@@ -2345,7 +2345,10 @@ replay protection would not be effective.<a href="#section-5.2-9" class="pilcrow
         <h3 id="name-middle-boxes">
 <a href="#section-5.4" class="section-number selfRef">5.4. </a><a href="#name-middle-boxes" class="section-name selfRef">Middle Boxes</a>
         </h3>
-<p id="section-5.4-1">In some deployments the Workload Identity Token and proof of possession may pass through multiple systems. The communication between the systems is over TLS, but the token and PoP are available in the clear at each intermediary.  While the intermediary cannot modify the token or the information within the PoP they can attempt to capture and replay the token or modify the data not protected by the PoP. Mitigations listed in the previous section can be used to provide some protection from middle boxes. Deployments should perform analysis on their situation to determine if it is appropriate to trust and allow traffic to pass through a middle box.<a href="#section-5.4-1" class="pilcrow">¶</a></p>
+<p id="section-5.4-1">In some deployments the Workload Identity Token and proof of possession may pass through multiple systems. The communication between the systems is over TLS, but the token and PoP are available in the clear at each intermediary.  While the intermediary cannot modify the token or the information within the PoP they can attempt to capture and replay the token or modify the data not protected by the PoP.<a href="#section-5.4-1" class="pilcrow">¶</a></p>
+<p id="section-5.4-2">Mitigations listed in <a href="#app-level" class="auto internal xref">Section 3</a> can be used to provide some protection from middle boxes.
+However we note that the DPoP-inspired solution (<a href="#dpop-esque-auth" class="auto internal xref">Section 3.2</a>) does not protect major portions of the request and response and therefore does not provide protection from an actively malicious middle box.
+Deployments should perform analysis on their situation to determine if it is appropriate to trust and allow traffic to pass through a middle box.<a href="#section-5.4-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="privacy-considerations">

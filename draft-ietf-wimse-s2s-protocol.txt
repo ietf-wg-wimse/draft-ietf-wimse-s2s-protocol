@@ -1091,10 +1091,15 @@ Table of Contents
    in the clear at each intermediary.  While the intermediary cannot
    modify the token or the information within the PoP they can attempt
    to capture and replay the token or modify the data not protected by
-   the PoP.  Mitigations listed in the previous section can be used to
-   provide some protection from middle boxes.  Deployments should
-   perform analysis on their situation to determine if it is appropriate
-   to trust and allow traffic to pass through a middle box.
+   the PoP.
+
+   Mitigations listed in Section 3 can be used to provide some
+   protection from middle boxes.  However we note that the DPoP-inspired
+   solution (Section 3.2) does not protect major portions of the request
+   and response and therefore does not provide protection from an
+   actively malicious middle box.  Deployments should perform analysis
+   on their situation to determine if it is appropriate to trust and
+   allow traffic to pass through a middle box.
 
 5.5.  Privacy Considerations
 
