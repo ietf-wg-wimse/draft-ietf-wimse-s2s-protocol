@@ -1,6 +1,6 @@
-# WIMSE Service to Service Authentication
+# WIMSE Workload-to-Workload Authentication
 
-This is the working area for the IETF [WIMSE Working Group](https://datatracker.ietf.org/wg/wimse/documents/) Internet-Draft, "WIMSE Service to Service Authentication".
+This is the working area for the IETF [WIMSE Working Group](https://datatracker.ietf.org/wg/wimse/documents/) Internet-Draft, "WIMSE Workload-to-Workload Authentication".
 
 * [Editor's Copy](https://ietf-wg-wimse.github.io/draft-ietf-wimse-s2s-protocol/#go.draft-ietf-wimse-s2s-protocol.html)
 * [Datatracker Page](https://datatracker.ietf.org/doc/draft-ietf-wimse-s2s-protocol)
