@@ -652,7 +652,11 @@ Both the Workload Identity Token and the Workload Identity Certificate carry a p
 
 ## Middle Boxes {#middleboxes}
 
-In some deployments the Workload Identity Token and proof of possession may pass through multiple systems. The communication between the systems is over TLS, but the token and PoP are available in the clear at each intermediary.  While the intermediary cannot modify the token or the information within the PoP they can attempt to capture and replay the token or modify the data not protected by the PoP. Mitigations listed in the previous section can be used to provide some protection from middle boxes. Deployments should perform analysis on their situation to determine if it is appropriate to trust and allow traffic to pass through a middle box.
+In some deployments the Workload Identity Token and proof of possession may pass through multiple systems. The communication between the systems is over TLS, but the token and PoP are available in the clear at each intermediary.  While the intermediary cannot modify the token or the information within the PoP they can attempt to capture and replay the token or modify the data not protected by the PoP.
+
+Mitigations listed in {{app-level}} can be used to provide some protection from middle boxes.
+However we note that the DPoP-inspired solution ({{dpop-esque-auth}}) does not protect major portions of the request and response and therefore does not provide protection from an actively malicious middle box.
+Deployments should perform analysis on their situation to determine if it is appropriate to trust and allow traffic to pass through a middle box.
 
 ## Privacy Considerations
 
