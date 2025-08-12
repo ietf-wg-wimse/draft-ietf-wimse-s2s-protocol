@@ -5,12 +5,12 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 8 February 2026                                        CyberArk
+Expires: 13 February 2026                                       CyberArk
                                                       A. Schwenkschuster
                                                                    SPIRL
                                                               Y. Sheffer
                                                                   Intuit
-                                                           7 August 2025
+                                                          12 August 2025
 
 
                WIMSE Workload-to-Workload Authentication
@@ -66,7 +66,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 8 February 2026.
+   This Internet-Draft will expire on 13 February 2026.
 
 Copyright Notice
 
@@ -117,6 +117,7 @@ Table of Contents
      6.3.  Hypertext Transfer Protocol (HTTP) Field Name Registration
        6.3.1.  Workload-Identity-Token
        6.3.2.  Workload-Proof-Token
+     6.4.  URI Scheme Registration
    7.  References
      7.1.  Normative References
      7.2.  Informative References
@@ -365,6 +366,14 @@ Table of Contents
                To promote interoperability, the ES256 signing algorithm
                MUST be supported by general purpose implementations of
                this document.
+
+   As noted in [I-D.ietf-wimse-arch], a workload identifier is a URI
+   with a trust domain component.  The runtime environment often
+   determines which URI scheme is used, e.g. if SPIFFE is used to
+   authenticate workloads, it mandates "spiffe" URIs.  However for those
+   deployments where this is not the case, this document (Section 6.4)
+   defines the "wimse" URI scheme which can be used by any deployment
+   that implements this protocol.
 
    An example WIT might look like this:
 
@@ -1260,6 +1269,24 @@ Table of Contents
 
    *  Comments: see reference above for an ABNF syntax of this field
 
+6.4.  URI Scheme Registration
+
+   IANA is requested to register the "wimse" scheme to the "URI Schemes"
+   registry [IANA.URI.SCHEMES]:
+
+   *  Scheme name: wimse
+
+   *  Status: permanent
+
+   *  Applications/protocols that use this scheme name: the WIMSE
+      workload-to-workload authentication protocol.
+
+   *  Contact: IETF Chair chair@ietf.org (mailto:chair@ietf.org)
+
+   *  Change controller: IESG iesg@ietf.org (mailto:iesg@ietf.org)
+
+   *  References: Section 3 of this document (RFC XXX).
+
 7.  References
 
 7.1.  Normative References
@@ -1360,6 +1387,10 @@ Table of Contents
    [IANA.MEDIA.TYPES]
               IANA, "Media Types",
               <https://www.iana.org/assignments/media-types>.
+
+   [IANA.URI.SCHEMES]
+              IANA, "Uniform Resource Identifier (URI) Schemes",
+              <https://www.iana.org/assignments/uri-schemes>.
 
    [RFC9449]  Fett, D., Campbell, B., Bradley, J., Lodderstedt, T.,
               Jones, M., and D. Waite, "OAuth 2.0 Demonstrating Proof of
