@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-08-10T01:48:00.633568+00:00",
+  "timestamp": "2025-08-12T01:26:34.531961+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -2454,7 +2454,7 @@
       "labels": [],
       "body": "If there are multiple tokens in the request it may be necessary to handle multiple tokens in the oth claim in the WPT.  Do we need to handle this case?  If so how? Token contcantenation, include header, ordering ...? ",
       "createdAt": "2025-06-17T14:20:04Z",
-      "updatedAt": "2025-07-29T17:35:37Z",
+      "updatedAt": "2025-08-11T20:30:58Z",
       "closedAt": null,
       "comments": [
         {
@@ -2512,6 +2512,13 @@
           "body": "The editors (some of them anyway) discussed this issue today with consideration for what we thought we heard at the Madrid meeting. After circling for a bit we landed on going with more or less what was proposed on slide 8 and really more 9 of https://datatracker.ietf.org/meeting/123/materials/slides-123-wimse-slides-123-wimse-workload-to-workload-draft-00.pdf with the addition of some wording requiring that if a receiver sees an entry in the oth that it doesn't understand, it must reject the WPT.  ",
           "createdAt": "2025-07-29T17:35:37Z",
           "updatedAt": "2025-07-29T17:35:37Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> sees an entry in the oth that it doesn't understand, it must reject the WPT\n\nI think it was Johnnie Cochran who said, \"if the implementation don't get it, you must reject the WPT!\" ",
+          "createdAt": "2025-08-11T20:30:58Z",
+          "updatedAt": "2025-08-11T20:30:58Z"
         }
       ]
     },
@@ -2585,9 +2592,17 @@
       ],
       "body": "wimse-id+jwt and wimse-proof+jwt could be just wit+jwt and wpt+jwt\n\n",
       "createdAt": "2025-07-14T23:23:02Z",
-      "updatedAt": "2025-07-29T14:37:24Z",
+      "updatedAt": "2025-08-11T22:09:36Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "though marked as `small`, it doesn't seem small to do with #147 outstanding ",
+          "createdAt": "2025-08-11T22:09:36Z",
+          "updatedAt": "2025-08-11T22:09:36Z"
+        }
+      ]
     },
     {
       "number": 142,
@@ -11134,6 +11149,58 @@
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-100",
       "headRefOid": "2bfd115865520eb6e8997808aad0430168509cad",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 148,
+      "id": "PR_kwDOLJmm786jHZd9",
+      "title": "update 'Service to Service' to 'Workload-to-Workload' in readme",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/148",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-08-11T19:15:39Z",
+      "updatedAt": "2025-08-11T22:03:14Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "b3de336af6c2d92ba01090f8fb6a3359bea107cf",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "s2w",
+      "headRefOid": "810ddeb537f77b13d3dab673fc55082795487228",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 149,
+      "id": "PR_kwDOLJmm786jI6af",
+      "title": "Rework the WPT's oth claim",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/149",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "to fix #129 and the prior was \"less than ideal\" ",
+      "createdAt": "2025-08-11T22:02:00Z",
+      "updatedAt": "2025-08-11T22:03:00Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "b3de336af6c2d92ba01090f8fb6a3359bea107cf",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "oth-rework",
+      "headRefOid": "c75bcf478d84781369fad39981c600b6434dc6ed",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
