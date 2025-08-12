@@ -365,7 +365,9 @@ A WPT MUST contain the following:
      request. The value is a JSON object with a key-value pair for each such token. For each, in the absence of an
      application profile specifying details, the key corresponds to the header field name containing the token,
      and the value is the base64url encoding of the SHA-256 hash of the ASCII bytes of the header field value with any
-     leading or trailing spaces removed. Header fields occurring multiple times in the request are not supported by default.
+     leading or trailing spaces removed. The header field name MUST be normalized by converting
+     it to all lower case.
+     Header fields occurring multiple times in the request are not supported by default.
      An application profile may specify different behavior for a key, such as
      using a different hash algorithm or means of locating the token in the request.
 
