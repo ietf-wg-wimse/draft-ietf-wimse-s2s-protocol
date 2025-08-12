@@ -2077,13 +2077,19 @@ where the caller is using the keys specified in <a href="#example-caller-jwk" cl
 
 GET /gimme-ice-cream?flavor=vanilla HTTP/1.1
 Host: example.com
-Signature: wimse=:K4dfGnguF5f1L4DKBSp5XeFXosLGj8Y9fiUX06rL/wdOF+x3zT\
-WmsvKWiY0B1oFZaOtm2FHru+YLjdkqa2WfCQ==:
+Signature: wimse=:zyR2W7QeUEYwGT8q+jU5HyEiPhC4iiBJlAfwu6otL+kXBYOMVl\
+ZEfGDnTlQiYmUWQMyu69811lIDWbCK42yWCw==:
 Signature-Input: wimse=("@method" "@request-target" "workload-identi\
-ty-token");created=1718291357;expires=1718291657;nonce="abcd1111";ta\
+ty-token");created=1754558248;expires=1754558548;nonce="abcd1111";ta\
 g="wimse-workload-to-workload"
-Workload-Identity-Token: aGVhZGVyCg.VGhpcyBpcyBub3QgYSByZWFsIHRva2Vu\
-Lgo.c2lnbmF0dXJlCg
+Workload-Identity-Token: eyJhbGciOiJFZERTQSIsImtpZCI6Imlzc3Vlci1rZXk\
+iLCJ0eXAiOiJ3aW1zZS1pZCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNB\
+IiwiY3J2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1hLWtleSIsImt0eSI6Ik9LUCIsIngi\
+OiJEUEhDOFdKaTZ3WEttN3BpRVdXRDRQdHBiTUdJMUcyOXVTMFl5MnNmQk5zIn19LCJl\
+eHAiOjE3NTQ1NTg1NDgsImlhdCI6MTc1NDU1ODI0OCwiaXNzIjoiaHR0cHM6Ly9leGFt\
+cGxlLmNvbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc1NDU1ODI0ODQwMjQ5NjAwMCIsInN1\
+YiI6IndpbXNlOi8vZXhhbXBsZS5jb20vc3ZjQSJ9.OAPARpluzH34v4bhCtPovuOvTsx\
+cVbAV9WSqFlbiKdNvfEVN4uRNQSRs7ePfMIJB2uqgX71XjBFH433nDzJZBQ
 
 </pre>
 </div>
@@ -2095,10 +2101,12 @@ Lgo.c2lnbmF0dXJlCg
           <div class="lang-jwk sourcecode" id="section-3.3-20.1">
 <pre>
 {
- "kty":"OKP",
- "crv":"Ed25519",
- "x":"CfaY1XX-aHJpenRP8ATm3yGlbcKA_treqOfwKrilwyg",
- "d":"fycSKS-iHZ6TC1BNwN6cE0sOBP3-4KgR-eqxNpnyhws"
+  "alg": "EdDSA",
+  "crv": "Ed25519",
+  "d": "JlNJxsZl_PC00EkoRUQbtCrzDtZ5vhFN_6qWtwghttY",
+  "kid": "svc-b-key",
+  "kty": "OKP",
+  "x": "gz2aSJE-g9w1rbgJiNps4Gb8IPk50k5oJUEbLDusayc"
 }
 </pre>
 </div>
@@ -2111,19 +2119,27 @@ Lgo.c2lnbmF0dXJlCg
 <pre>
 =============== NOTE: '\' line wrapping per RFC 8792 ================
 
+Response:
+
 HTTP/1.1 404 Not Found
 Connection: close
 Content-Digest: sha-256=:47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU\
 =:
 Content-Type: text/plain
-Signature: wimse=:NMrMn3xhI6m9PI8mKVfpnH5qFGcEfuFxiCmsB5PJhGjUHT/5J4\
-612EZwRw3V4kU4gGJmO+ER8RC4DM2HKVOYDQ==:
+Signature: wimse=:WAjxziuCiYRqCzetetDwaTS7Ka9yMwB+dAHVJPw3VkUH+c8c4A\
+5BKrCsPlD/ymy+7PgwXl3y3mVdaD4ww7WqDA==:
 Signature-Input: wimse=("@status" "workload-identity-token" "content\
 -type" "content-digest" "@method";req "@request-target";req);created\
-=1718295368;expires=1718295670;nonce="abcd2222";tag="wimse-workload-\
+=1754558248;expires=1754558550;nonce="abcd2222";tag="wimse-workload-\
 to-workload"
-Workload-Identity-Token: aGVhZGVyCg.VGhpcyBhaW4ndCBvbmUsIHRvby4K.c2l\
-nbmF0dXJlCg
+Workload-Identity-Token: eyJhbGciOiJFZERTQSIsImtpZCI6Imlzc3Vlci1rZXk\
+iLCJ0eXAiOiJ3aW1zZS1pZCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNB\
+IiwiY3J2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1iLWtleSIsImt0eSI6Ik9LUCIsIngi\
+OiJnejJhU0pFLWc5dzFyYmdKaU5wczRHYjhJUGs1MGs1b0pVRWJMRHVzYXljIn19LCJl\
+eHAiOjE3NTQ1NTg1NTAsImlhdCI6MTc1NDU1ODI1MCwiaXNzIjoiaHR0cHM6Ly9leGFt\
+cGxlLmNvbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc1NDU1ODI0ODQwMjY4MTAwMCIsInN1\
+YiI6IndpbXNlOi8vZXhhbXBsZS5jb20vc3ZjQiJ9.yJ4gGQ1DQBX0E9Xp5fIgj6Ucpf9\
+LI_gHnhURZxqu6atT-3hpbFTgw4rd-6knM7-HClok4b6N2ViZaEDcz6IMCg
 
 No ice cream today.
 
