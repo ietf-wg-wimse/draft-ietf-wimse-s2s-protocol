@@ -356,25 +356,30 @@ A WPT MUST contain the following:
      to which the WPT is attached, without query or fragment parts. However, there may be some normalization,
     rewriting or other process that requires the audience to be set to a deployment-specific value.
     See also {{granular-auth}} for more details.
-    * `exp`: The expiration time of the WIT (as defined in {{Section 4.1.4 of RFC7519}}). WPT lifetimes MUST be short,
+    * `exp`: The expiration time of the WPT (as defined in {{Section 4.1.4 of RFC7519}}). WPT lifetimes MUST be short,
      e.g., on the order of minutes or seconds.
     * `jti`: An identifier for the token. The value MUST be unique, at least within the scope of the sender.
     * `wth`: Hash of the Workload Identity Token, defined in {{to-wit}}. The value is the base64url encoding of the
-     SHA-256 hash of the ASCII encoding of the token's value.
-    * `ath`: Hash of the OAuth access token, if present in the request, which might convey end-user identity and
+     SHA-256 hash of the ASCII encoding of the WIT's value.
+    * `ath`: Hash of the OAuth access token, if present in the request, which might convey end-user identity and/or
      authorization context of the request. The value, as per {{Section 4.1 of RFC9449}},
      is the base64url encoding of the SHA-256 hash of the ASCII encoding of the access token's value.
     * `tth`: Hash of the Txn-Token {{?I-D.ietf-oauth-transaction-tokens}}, if present in the request,
-     which might convey end-user identity and authorization context of the request. The value MUST be the result of
+     which might convey end-user identity and/or authorization context of the request. The value MUST be the result of
      a base64url encoding (as defined in {{Section 2 of RFC7515}}) of the SHA-256 hash of
      the ASCII encoding of the associated token's value.
-    * `oth`: Hash of any other token in the request that might convey end-user identity and authorization context of the
-     request, if such a token exists.
-     The value MUST be the result of a base64url encoding (as defined in {{Section 2 of RFC7515}}) of the
-     SHA-256 hash of the ASCII encoding of the associated token's value.
-     (Note: this is less than ideal but seems we need something like this for extensibility.)
+    * `oth`: Hash(es) of other token(s) in the request that convey end-user identity and/or authorization context of the
+     request. The value is a JSON object with a key-value pair for each such token. For each, in the absence of an
+     application profile specifying details, the key corresponds to the header field name containing the token,
+     and the value is the base64url encoding of the SHA-256 hash of the ASCII bytes of the header field value with any
+     leading or trailing spaces removed. The header field name MUST be normalized by converting
+     it to all lower case.
+     Header fields occurring multiple times in the request are not supported by default.
+     An application profile may specify different behavior for a key, such as
+     using a different hash algorithm or means of locating the token in the request.
 
-To clarify: the `ath`, `tth` and `oth` claims are each mandatory if the respective token is included in the request.
+
+To clarify: the `ath`, `tth` and `oth` claims are each mandatory if the respective tokens are included in the request.
 
 An example WPT might look like the following:
 
@@ -432,6 +437,10 @@ To validate the WPT in the request, the recipient MUST ensure the following:
 * If presented in conjunction with a Txn-Token, the value of the `tth` claim matches the hash of that token's value.
 * If presented in conjunction with a token conveying end-user identity or authorization context, the value of
  the `oth` claim matches the hash of that token's value.
+* If the `oth` claim is present, verify the hashes of all tokens listed in the `oth` claim per the default behavior
+ defined in {{dpop-esque-auth}} or as specified by an application specific profile. If the `oth` claim contains entries
+ that are not understood by the recipient, the WPT MUST be rejected. Conversely, additional tokens not covered by
+ the `oth` claim MUST NOT be used by the recipient to make authorization decisions.
 
 
 
@@ -668,9 +677,9 @@ IANA is requested to add the following entries to the "JSON Web Token Claims" re
 
 | Claim Name | Claim Description | Change Controller | Reference |
 |------------|-------------------|-------------------|-----------|
-| tth | Transaction Token hash | IESG | RFC XXX, {{dpop-esque-auth}} |
-| wth | Workload Identity Token hash | IESG | RFC XXX, {{dpop-esque-auth}} |
-| oth | Other Token hash | IESG | RFC XXX, {{dpop-esque-auth}} |
+| tth | Transaction Token hash | IETF | RFC XXX, {{dpop-esque-auth}} |
+| wth | Workload Identity Token hash | IETF | RFC XXX, {{dpop-esque-auth}} |
+| oth | Other Tokens hashes | IETF | RFC XXX, {{dpop-esque-auth}} |
 
 
 ## Media Type Registration
@@ -812,6 +821,10 @@ IANA is requested to register the "wimse" scheme to the "URI Schemes" registry {
 
 # Document History
 <cref>RFC Editor: please remove before publication.</cref>
+
+## draft-ietf-wimse-s2s-protocol-07
+
+* Rework the WPT's oth claim
 
 ## draft-ietf-wimse-s2s-protocol-06
 
