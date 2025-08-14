@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-08-12T01:26:34.531961+00:00",
+  "timestamp": "2025-08-14T01:28:09.271283+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -172,7 +172,7 @@
       ],
       "body": "Examples in the the Message Signatures section do not include an Authorization header. But for a 401 response (which is likely if the workload-to-workload call is disallowed by policy) the spec requires WWW-Authenticate headers to be included. How can we return a 401, or do we need a whole new HTTP status code?",
       "createdAt": "2024-06-13T15:06:05Z",
-      "updatedAt": "2025-03-03T14:04:54Z",
+      "updatedAt": "2025-08-12T14:41:59Z",
       "closedAt": null,
       "comments": [
         {
@@ -181,6 +181,13 @@
           "body": "Keeping this issue open, see @arndt-s comment on #101 .",
           "createdAt": "2025-03-03T14:04:53Z",
           "updatedAt": "2025-03-03T14:04:53Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Discussed in our weekly call to add the reason to section `3.5 Error Condition` why we don't recommend 401. (WWW-authenticate + response with Authentication header)",
+          "createdAt": "2025-08-12T14:41:59Z",
+          "updatedAt": "2025-08-12T14:41:59Z"
         }
       ]
     },
@@ -1496,7 +1503,7 @@
       "id": "I_kwDOLJmm786acMYL",
       "title": "Middleboxes and PoP mitigations",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/70",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -1505,8 +1512,8 @@
       ],
       "body": "Sec. 6.3 states that \"Mitigations listed in the previous section can be used to provide some protection from middle boxes.\" I don't think any of the mitigations is Sec. 6.2 are effective against a middlebox that replaces a part of the message not covered by PoP.\r\n\r\n@jsalowey ",
       "createdAt": "2024-10-16T08:30:22Z",
-      "updatedAt": "2025-05-20T16:35:47Z",
-      "closedAt": null,
+      "updatedAt": "2025-08-12T14:11:09Z",
+      "closedAt": "2025-08-12T14:11:09Z",
       "comments": [
         {
           "author": "arndt-s",
@@ -1522,7 +1529,7 @@
       "id": "I_kwDOLJmm786adg3o",
       "title": "Relationship between Trust domain and iss claim",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/72",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "NONE",
       "assignees": [
@@ -1531,8 +1538,8 @@
       "labels": [],
       "body": "Should the issuer (iss claim) be a restricted to be under the trust domain? ",
       "createdAt": "2024-10-16T10:33:48Z",
-      "updatedAt": "2025-04-25T15:19:49Z",
-      "closedAt": null,
+      "updatedAt": "2025-08-12T14:31:46Z",
+      "closedAt": "2025-08-12T14:31:46Z",
       "comments": [
         {
           "author": "arndt-s",
@@ -1561,6 +1568,13 @@
           "body": ">This would bring a heavy deployment burden into WIMSE IMO as it would require every deployment of a trust domain own the >corresponding DNS name. (No more example.org trust domains, etc.). It also requires some sort of reachability from >workloads to issuer via DNS + HTTPS if that makes sense?\n\nOnly if they want to support key distribution.... but I think that will be common enough - perhaps the most interesting innovation from OIDC was key distribution.... \n\nSo... that leaves us with a third option.... (status quo plus a bit of descriptive text - maybe that is not even needed).\n\n3. Allow the \"iss\" to be something other than the trust domain, document the implications of a delta and perhaps add some constraints that will allow the URL to be mapped back to the Trust Domain (e.g. how can I be sure that the URL is pointing to a trust bundle associated with the trust domain - perhaps the ability to verify a credentials using the retrieved key material is enough). ",
           "createdAt": "2025-04-25T15:19:48Z",
           "updatedAt": "2025-04-25T15:19:48Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Resolved via https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/96 where we add a section about key distribution. Also related to #14",
+          "createdAt": "2025-08-12T14:31:46Z",
+          "updatedAt": "2025-08-12T14:31:46Z"
         }
       ]
     },
@@ -1706,7 +1720,7 @@
       "labels": [],
       "body": "Opened as a working group member, not as chair\n\nThe abstract states that:\n\nThese two protocols are compatible, in the sense that a\n   single call chain can have some calls use one protocol and some use\n   the other.  Service A can call Service B with mutual TLS\n   authentication, while the next call from Service B to Service C would\n   be authenticated at the application level.\n\nIs simultaneous use supported as well? For example I may use mutual TLS for workload-to-workload authentication by deploying a service mesh, but also do application layer authentication? ",
       "createdAt": "2025-01-23T11:52:28Z",
-      "updatedAt": "2025-01-30T15:41:14Z",
+      "updatedAt": "2025-08-12T15:12:35Z",
       "closedAt": null,
       "comments": [
         {
@@ -1715,6 +1729,20 @@
           "body": "* We are not sure what are reasonable use cases for this.\n* However we will not forbid it.\n* The only exception being: you must not use different auth method between the same pair of workloads.",
           "createdAt": "2025-01-30T15:41:13Z",
           "updatedAt": "2025-01-30T15:41:13Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Also add an explanation why doing both MTLS and one of the app-leve methods inside one another is dangerous, as a SHOULD NOT.\n\nCurrently we are not sure that it's OK to use the same public key to sign both an HTTP-Sig and a WPT. Not enough differentiation at the signature level.",
+          "createdAt": "2025-08-12T15:01:43Z",
+          "updatedAt": "2025-08-12T15:01:43Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "To the last point, we believe that the first character (\"{\" or not) differentiates between a signed JWT and a signed HTTP-Sig [list of components](https://www.rfc-editor.org/rfc/rfc9421#name-http-fields).",
+          "createdAt": "2025-08-12T15:12:35Z",
+          "updatedAt": "2025-08-12T15:12:35Z"
         }
       ]
     },
@@ -1960,7 +1988,7 @@
       "id": "I_kwDOLJmm786sHSKY",
       "title": "WIT examples in HTTP Message Sig section",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/100",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -1969,8 +1997,8 @@
       ],
       "body": "The two WITs in the HTTP messages are suspiciously short and do not decode. Replace by the examples from Sec. 4.1.",
       "createdAt": "2025-02-28T16:28:54Z",
-      "updatedAt": "2025-08-06T15:00:44Z",
-      "closedAt": null,
+      "updatedAt": "2025-08-12T14:13:00Z",
+      "closedAt": "2025-08-12T14:13:00Z",
       "comments": [
         {
           "author": "yaronf",
@@ -2403,7 +2431,7 @@
       "id": "I_kwDOLJmm7863zm-9",
       "title": "\"wimse\" URI scheme",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/123",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -2414,8 +2442,8 @@
       ],
       "body": "While working on #110 (IANA considerations):\n\nWe went back and forth on this one. I think we need to register a `wimse` [URI scheme](https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml), so people can use it for service identities if they don't want the baggage that comes with `https`. This is assuming that there will be at least *some* people that implement WIMSE without SPIFFE.\n\nAlso, we use a `wimse` scheme at least once in the text.\n\nOriginal text:\n\n> TODO: maybe a URI Scheme registration of `wimse` in [URI schemes](https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml) per {{?RFC7595}} but it's only being used in an example right now and might not even be appropriate. Or maybe use an ietf URI scheme a la [URN Namespace for IETF Use](https://www.iana.org/assignments/params/params.xhtml) somehow. Or maybe nothing. Or maybe something else.",
       "createdAt": "2025-05-22T15:22:57Z",
-      "updatedAt": "2025-07-29T14:40:50Z",
-      "closedAt": null,
+      "updatedAt": "2025-08-12T14:07:24Z",
+      "closedAt": "2025-08-12T14:07:24Z",
       "comments": [
         {
           "author": "dagdagdag83",
@@ -2445,7 +2473,7 @@
       "id": "I_kwDOLJmm7867-Yf-",
       "title": "Multiple oth tokens",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/129",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "jsalowey",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -2454,8 +2482,8 @@
       "labels": [],
       "body": "If there are multiple tokens in the request it may be necessary to handle multiple tokens in the oth claim in the WPT.  Do we need to handle this case?  If so how? Token contcantenation, include header, ordering ...? ",
       "createdAt": "2025-06-17T14:20:04Z",
-      "updatedAt": "2025-08-11T20:30:58Z",
-      "closedAt": null,
+      "updatedAt": "2025-08-12T14:23:03Z",
+      "closedAt": "2025-08-12T14:23:03Z",
       "comments": [
         {
           "author": "bc-pi",
@@ -2550,7 +2578,7 @@
       "labels": [],
       "body": "We want to collect implementations of the S2S protocol according to https://datatracker.ietf.org/doc/rfc7942/.",
       "createdAt": "2025-07-01T14:11:20Z",
-      "updatedAt": "2025-08-07T13:58:32Z",
+      "updatedAt": "2025-08-12T14:25:27Z",
       "closedAt": null,
       "comments": [
         {
@@ -2573,6 +2601,13 @@
           "body": "> AI Overview\n> The \ud83e\udd97 emoji represents a cricket, an insect known for its chirping sound. It can be used to represent the insect itself or, more commonly, to indicate silence or a lack of response, similar to the phrase \"getting crickets\". \n",
           "createdAt": "2025-08-07T13:58:31Z",
           "updatedAt": "2025-08-07T13:58:31Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Template https://datatracker.ietf.org/doc/html/rfc7942#section-2",
+          "createdAt": "2025-08-12T14:25:27Z",
+          "updatedAt": "2025-08-12T14:25:27Z"
         }
       ]
     },
@@ -2592,7 +2627,7 @@
       ],
       "body": "wimse-id+jwt and wimse-proof+jwt could be just wit+jwt and wpt+jwt\n\n",
       "createdAt": "2025-07-14T23:23:02Z",
-      "updatedAt": "2025-08-11T22:09:36Z",
+      "updatedAt": "2025-08-12T08:38:14Z",
       "closedAt": null,
       "comments": [
         {
@@ -2601,6 +2636,13 @@
           "body": "though marked as `small`, it doesn't seem small to do with #147 outstanding ",
           "createdAt": "2025-08-11T22:09:36Z",
           "updatedAt": "2025-08-11T22:09:36Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Don't worry about #147. Cursor will change the code in no time \ud83d\ude03 \n\nBut note that we have two code bases that generate WITs now.",
+          "createdAt": "2025-08-12T08:38:14Z",
+          "updatedAt": "2025-08-12T08:38:14Z"
         }
       ]
     },
@@ -2641,6 +2683,30 @@
           "body": "Wow. I\u2019m just gonna let ChatGPT sit over there in its happy little corner. If someone wants me to quote chapter and verse of CMOS for the hyphenation, I can, but suffice to say, yes, the hyphenation should be there. It\u2019s not the most important part of the spec, mind you, but it\u2019s a nice detail to get right.",
           "createdAt": "2025-07-22T21:26:36Z",
           "updatedAt": "2025-07-22T21:26:36Z"
+        }
+      ]
+    },
+    {
+      "number": 150,
+      "id": "I_kwDOLJmm787Fh3qR",
+      "title": "Include \"oth\" in WPT examples",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/150",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Per the recent definition in #149.\n\nBrian: let's consider that as a separate PR. and perhaps a separate example. I'd prefer to not clutter the main example",
+      "createdAt": "2025-08-12T12:22:40Z",
+      "updatedAt": "2025-08-12T14:52:04Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/149/files#r2269193849 is the specific comment thread in that PR ",
+          "createdAt": "2025-08-12T14:52:04Z",
+          "updatedAt": "2025-08-12T14:52:04Z"
         }
       ]
     }
@@ -11037,7 +11103,7 @@
       "id": "PR_kwDOLJmm786hOvU7",
       "title": "URI Scheme registration",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/144",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -11048,19 +11114,48 @@
       "labels": [],
       "body": "Resolves #123.",
       "createdAt": "2025-07-29T18:42:39Z",
-      "updatedAt": "2025-08-07T08:41:16Z",
+      "updatedAt": "2025-08-12T14:07:23Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "1184084fa0feea4f9c1fe6d36221cb119b96bf56",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-123",
       "headRefOid": "41a8e15ff1a1cab5f149f55b9ab1917effe0d313",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-08-12T14:07:23Z",
+      "mergedAt": "2025-08-12T14:07:23Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "b9e52758c42fee48601fbb1c7a6d6ebb67f07a98"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm7865a4IX",
+          "commit": {
+            "abbreviatedOid": "41a8e15"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "LGTM",
+          "createdAt": "2025-08-12T14:06:58Z",
+          "updatedAt": "2025-08-12T14:06:58Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm7865a4Tg",
+          "commit": {
+            "abbreviatedOid": "41a8e15"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-08-12T14:07:06Z",
+          "updatedAt": "2025-08-12T14:07:06Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 145,
@@ -11109,98 +11204,310 @@
       "id": "PR_kwDOLJmm786iZTNk",
       "title": "Clarify DPoP and middle boxes",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/146",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Resolves #70.",
       "createdAt": "2025-08-06T14:06:21Z",
-      "updatedAt": "2025-08-06T14:06:38Z",
+      "updatedAt": "2025-08-12T14:11:08Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "8b1a163d38399e544d695d7a204055d6e047c698",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-70",
       "headRefOid": "cc39033b43cab3aad296502b018743d9bbe0d73e",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-08-12T14:11:08Z",
+      "mergedAt": "2025-08-12T14:11:07Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "5c1fcba77d1e3aeeef7eaebe58bbb64cab0927d3"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm7865a9go",
+          "commit": {
+            "abbreviatedOid": "cc39033"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "no objection",
+          "createdAt": "2025-08-12T14:10:53Z",
+          "updatedAt": "2025-08-12T14:10:53Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm7865a9uo",
+          "commit": {
+            "abbreviatedOid": "cc39033"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "LGTM, we'll go deeper into integrity protection when defining the security goals.",
+          "createdAt": "2025-08-12T14:11:02Z",
+          "updatedAt": "2025-08-12T14:11:02Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 147,
       "id": "PR_kwDOLJmm786ii3zt",
       "title": "Use correct WITs in HTTP Sig examples",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/147",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Resolves #100.",
       "createdAt": "2025-08-07T09:09:46Z",
-      "updatedAt": "2025-08-07T09:23:53Z",
+      "updatedAt": "2025-08-12T14:12:59Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "b3de336af6c2d92ba01090f8fb6a3359bea107cf",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-100",
       "headRefOid": "2bfd115865520eb6e8997808aad0430168509cad",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-08-12T14:12:59Z",
+      "mergedAt": "2025-08-12T14:12:59Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "b0f7e2fa96030df5acd247f46bec2e08e54ff5e4"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm7865ayX0",
+          "commit": {
+            "abbreviatedOid": "2bfd115"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-08-12T14:02:32Z",
+          "updatedAt": "2025-08-12T14:02:32Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm7865bAQJ",
+          "commit": {
+            "abbreviatedOid": "2bfd115"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-08-12T14:12:53Z",
+          "updatedAt": "2025-08-12T14:12:53Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 148,
       "id": "PR_kwDOLJmm786jHZd9",
       "title": "update 'Service to Service' to 'Workload-to-Workload' in readme",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/148",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-08-11T19:15:39Z",
-      "updatedAt": "2025-08-11T22:03:14Z",
+      "updatedAt": "2025-08-12T09:05:54Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "b3de336af6c2d92ba01090f8fb6a3359bea107cf",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "s2w",
       "headRefOid": "810ddeb537f77b13d3dab673fc55082795487228",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-08-12T09:05:54Z",
+      "mergedAt": "2025-08-12T09:05:53Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "8d09c4830c947692bc0a4591abf82d8b3c41ceb3"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm7865VCqh",
+          "commit": {
+            "abbreviatedOid": "810ddeb"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-08-12T08:42:46Z",
+          "updatedAt": "2025-08-12T08:42:46Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm7865VQzr",
+          "commit": {
+            "abbreviatedOid": "810ddeb"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-08-12T08:55:56Z",
+          "updatedAt": "2025-08-12T08:55:56Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 149,
       "id": "PR_kwDOLJmm786jI6af",
       "title": "Rework the WPT's oth claim",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/149",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "to fix #129 and the prior was \"less than ideal\" ",
       "createdAt": "2025-08-11T22:02:00Z",
-      "updatedAt": "2025-08-11T22:03:00Z",
+      "updatedAt": "2025-08-12T14:23:02Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "b3de336af6c2d92ba01090f8fb6a3359bea107cf",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "oth-rework",
-      "headRefOid": "c75bcf478d84781369fad39981c600b6434dc6ed",
+      "headRefOid": "1905fb7f8ec3e633846791814a2b41ba198c880c",
+      "closedAt": "2025-08-12T14:23:02Z",
+      "mergedAt": "2025-08-12T14:23:02Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "44dde15f2daceaa4760cf7fef69125226524af4d"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm7865VWP-",
+          "commit": {
+            "abbreviatedOid": "c75bcf4"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2025-08-12T09:01:20Z",
+          "updatedAt": "2025-08-12T09:05:05Z",
+          "comments": [
+            {
+              "originalPosition": 29,
+              "body": "```suggestion\n     leading or trailing spaces removed. The header field name MUST be normalized by converting\n     it to all lower case.\n     Header fields occurring multiple times in the request are not supported by default.\n```",
+              "createdAt": "2025-08-12T09:01:21Z",
+              "updatedAt": "2025-08-12T09:05:05Z"
+            },
+            {
+              "originalPosition": 35,
+              "body": "We need to add an `oth` to the sample WPT, maybe as a separate PR.",
+              "createdAt": "2025-08-12T09:03:19Z",
+              "updatedAt": "2025-08-12T09:05:05Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm7865YeO4",
+          "commit": {
+            "abbreviatedOid": "1905fb7"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-08-12T12:03:34Z",
+          "updatedAt": "2025-08-12T12:03:34Z",
+          "comments": [
+            {
+              "originalPosition": 35,
+              "body": "let's consider that as a separate PR. and perhaps a separate example. I'd prefer to not clutter the main example",
+              "createdAt": "2025-08-12T12:03:34Z",
+              "updatedAt": "2025-08-12T12:03:34Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm7865ZC7R",
+          "commit": {
+            "abbreviatedOid": "c75bcf4"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-08-12T12:23:10Z",
+          "updatedAt": "2025-08-12T12:23:10Z",
+          "comments": [
+            {
+              "originalPosition": 35,
+              "body": "Sure. #150.",
+              "createdAt": "2025-08-12T12:23:10Z",
+              "updatedAt": "2025-08-12T12:23:10Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm7865bLQP",
+          "commit": {
+            "abbreviatedOid": "1905fb7"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-08-12T14:20:02Z",
+          "updatedAt": "2025-08-12T14:20:02Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm7865bLzS",
+          "commit": {
+            "abbreviatedOid": "1905fb7"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-08-12T14:20:27Z",
+          "updatedAt": "2025-08-12T14:20:27Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 151,
+      "id": "PR_kwDOLJmm786jhp5z",
+      "title": "Additional (non-standard) claims in WIT and WPT",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/151",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [
+        "jsalowey",
+        "arndt-s",
+        "bc-pi"
+      ],
+      "labels": [],
+      "body": "Closes #112.\r\n\r\nThis is *not* exactly what we discussed, but it looks consistent to me. Please review.",
+      "createdAt": "2025-08-13T17:03:17Z",
+      "updatedAt": "2025-08-13T17:03:17Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "44dde15f2daceaa4760cf7fef69125226524af4d",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-112",
+      "headRefOid": "590558b337fe64bfe1eec4d7e99fba4ee6ed6009",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
