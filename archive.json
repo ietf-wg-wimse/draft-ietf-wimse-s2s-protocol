@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-08-14T01:28:09.271283+00:00",
+  "timestamp": "2025-08-17T01:42:29.008463+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -2694,11 +2694,13 @@
       "state": "OPEN",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "arndt-s"
+      ],
       "labels": [],
       "body": "Per the recent definition in #149.\n\nBrian: let's consider that as a separate PR. and perhaps a separate example. I'd prefer to not clutter the main example",
       "createdAt": "2025-08-12T12:22:40Z",
-      "updatedAt": "2025-08-12T14:52:04Z",
+      "updatedAt": "2025-08-14T11:20:39Z",
       "closedAt": null,
       "comments": [
         {
