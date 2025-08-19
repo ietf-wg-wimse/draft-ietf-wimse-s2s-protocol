@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-08-17T01:42:29.008463+00:00",
+  "timestamp": "2025-08-19T01:24:32.142804+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -11503,7 +11503,7 @@
       "labels": [],
       "body": "Closes #112.\r\n\r\nThis is *not* exactly what we discussed, but it looks consistent to me. Please review.",
       "createdAt": "2025-08-13T17:03:17Z",
-      "updatedAt": "2025-08-13T17:03:17Z",
+      "updatedAt": "2025-08-18T21:24:51Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "44dde15f2daceaa4760cf7fef69125226524af4d",
@@ -11515,7 +11515,74 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm7866i8iZ",
+          "commit": {
+            "abbreviatedOid": "590558b"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-08-18T20:01:37Z",
+          "updatedAt": "2025-08-18T20:01:37Z",
+          "comments": [
+            {
+              "originalPosition": 12,
+              "body": "the `crit` header parameter allows for other header parameters to be marked as critical. It has nothing to do with claims. ",
+              "createdAt": "2025-08-18T20:01:37Z",
+              "updatedAt": "2025-08-18T20:01:37Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm7866i9I3",
+          "commit": {
+            "abbreviatedOid": "590558b"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "the `crit` header parameter allows for other header parameters to be marked as critical. It has nothing to do with claims.",
+          "createdAt": "2025-08-18T20:02:14Z",
+          "updatedAt": "2025-08-18T20:02:14Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm7866i9o2",
+          "commit": {
+            "abbreviatedOid": "590558b"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "You need to leave a comment indicating the requested changes. ",
+          "createdAt": "2025-08-18T20:02:54Z",
+          "updatedAt": "2025-08-18T20:02:54Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm7866kDoL",
+          "commit": {
+            "abbreviatedOid": "590558b"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-08-18T21:24:51Z",
+          "updatedAt": "2025-08-18T21:24:51Z",
+          "comments": [
+            {
+              "originalPosition": 12,
+              "body": "maybe just :\r\n```suggestion\r\n```",
+              "createdAt": "2025-08-18T21:24:51Z",
+              "updatedAt": "2025-08-18T22:33:00Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
