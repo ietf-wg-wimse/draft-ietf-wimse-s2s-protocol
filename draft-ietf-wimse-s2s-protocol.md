@@ -329,11 +329,9 @@ etc., are all valid and equivalent header field names. However, case is signific
 The WIT is a JSON structure and therefore can be trivially extended by adding more claims than are defined in the current specification.
 This, however, could result in interoperability issues, which the following rules are addressing.
 
-* Deployers may freely add claims to the WIT beyond those defined here, in closed environments.
+* Deployers may freely add claims to the WIT beyond those defined here, in closed environments. Such claims SHOULD be collision-resistant, such as `example.com/myclaim`.
 * A recipient that does not understand such claims MUST ignore them, as per Sec. 4 of {{RFC7519}}.
-* If these claims are security-critical, implementations SHOULD include them in the `crit` header parameter (Sec. 4.11 of {{RFC7515}}), to enable interoperability and forward compatibility. JOSE defines `crit` as a header parameter, not a claim, and we note
-that support for it is not universal.
-* Outside of closed environments, new claims must be registered with IANA {{IANA.JWT.CLAIMS}} before they can be used.
+* Outside of closed environments, new claims MUST be registered with IANA {{IANA.JWT.CLAIMS}} before they can be used.
 
 ### A note on `iss` claim and key distribution {#wit-iss-note}
 
