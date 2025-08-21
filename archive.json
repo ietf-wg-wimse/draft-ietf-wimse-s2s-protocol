@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-08-19T01:24:32.142804+00:00",
+  "timestamp": "2025-08-21T01:21:39.216988+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -11503,13 +11503,13 @@
       "labels": [],
       "body": "Closes #112.\r\n\r\nThis is *not* exactly what we discussed, but it looks consistent to me. Please review.",
       "createdAt": "2025-08-13T17:03:17Z",
-      "updatedAt": "2025-08-18T21:24:51Z",
+      "updatedAt": "2025-08-20T17:33:27Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "44dde15f2daceaa4760cf7fef69125226524af4d",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-112",
-      "headRefOid": "590558b337fe64bfe1eec4d7e99fba4ee6ed6009",
+      "headRefOid": "3525e607c01db884158b06ac269edf8a401497e1",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -11579,6 +11579,66 @@
               "body": "maybe just :\r\n```suggestion\r\n```",
               "createdAt": "2025-08-18T21:24:51Z",
               "updatedAt": "2025-08-18T22:33:00Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm7867AzQQ",
+          "commit": {
+            "abbreviatedOid": "3525e60"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-08-20T17:09:15Z",
+          "updatedAt": "2025-08-20T17:09:15Z",
+          "comments": [
+            {
+              "originalPosition": 11,
+              "body": "seems like these rules are not aligned with similar content from RFC 7519 itself, which doesn't seem good ",
+              "createdAt": "2025-08-20T17:09:15Z",
+              "updatedAt": "2025-08-20T17:09:15Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm7867BBhz",
+          "commit": {
+            "abbreviatedOid": "3525e60"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-08-20T17:26:23Z",
+          "updatedAt": "2025-08-20T17:26:23Z",
+          "comments": [
+            {
+              "originalPosition": 11,
+              "body": "@bc-pi In what way?",
+              "createdAt": "2025-08-20T17:26:23Z",
+              "updatedAt": "2025-08-20T17:26:23Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm7867BGfQ",
+          "commit": {
+            "abbreviatedOid": "3525e60"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-08-20T17:33:27Z",
+          "updatedAt": "2025-08-20T17:33:27Z",
+          "comments": [
+            {
+              "originalPosition": 11,
+              "body": "the whole public/private/retested thing in sec 4 https://datatracker.ietf.org/doc/html/rfc7519#section-4 either says the same thing (though I don't think so) and doesn't need to be said or says something different wihout giving rational ",
+              "createdAt": "2025-08-20T17:33:27Z",
+              "updatedAt": "2025-08-20T17:33:27Z"
             }
           ]
         }
