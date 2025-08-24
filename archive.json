@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-08-21T01:21:39.216988+00:00",
+  "timestamp": "2025-08-24T01:39:00.968220+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -11503,7 +11503,7 @@
       "labels": [],
       "body": "Closes #112.\r\n\r\nThis is *not* exactly what we discussed, but it looks consistent to me. Please review.",
       "createdAt": "2025-08-13T17:03:17Z",
-      "updatedAt": "2025-08-20T17:33:27Z",
+      "updatedAt": "2025-08-21T13:22:37Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "44dde15f2daceaa4760cf7fef69125226524af4d",
@@ -11639,6 +11639,26 @@
               "body": "the whole public/private/retested thing in sec 4 https://datatracker.ietf.org/doc/html/rfc7519#section-4 either says the same thing (though I don't think so) and doesn't need to be said or says something different wihout giving rational ",
               "createdAt": "2025-08-20T17:33:27Z",
               "updatedAt": "2025-08-20T17:33:27Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm7867Ms0l",
+          "commit": {
+            "abbreviatedOid": "3525e60"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-08-21T13:22:37Z",
+          "updatedAt": "2025-08-21T13:22:37Z",
+          "comments": [
+            {
+              "originalPosition": 11,
+              "body": "This is an attempt to distill Sec. 4 into something that's consistent, understandable, and actually works. Some of the text in Sec. 4 is just mind blowing:\r\n>  None of the claims defined below are intended to be mandatory to use or implement in all cases, but rather they provide a starting point for a set of useful, interoperable claims.\r\n\r\nSo I can use the \"sub\" claim to mean \"date of expiration\" and that would be legit, because why not.\r\n\r\n> Unlike Public Claim Names, Private Claim Names are subject to collision and _should be used with caution_.\r\n\r\nThis provides zero guidance IMO.",
+              "createdAt": "2025-08-21T13:22:37Z",
+              "updatedAt": "2025-08-21T13:34:01Z"
             }
           ]
         }
