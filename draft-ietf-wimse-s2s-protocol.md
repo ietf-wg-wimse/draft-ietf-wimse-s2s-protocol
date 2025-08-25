@@ -257,7 +257,7 @@ The decoded JWT claims of the WIT from the example above are shown here:
   },
   "exp": 1745512510,
   "iat": 1745508910,
-  "jti": "bd2a7b5bf8573a41adb4cbf3cfa01e15",
+  "jti": "x-_1CTL2cca3CSE4cwb_l",
   "sub": "wimse://example.com/specific-workload"
 }
 ~~~
@@ -267,7 +267,7 @@ The claims indicate that the example WIT:
 
 * is valid until Thu Apr 24 2025 16:35:10 GMT (represented as NumericDate {{Section 2 of RFC7519}} value `1745512510`).
 * identifies the workload to which the token was issued as `wimse://example.com/specific-workload`.
-* has a unique identifier of `bd2a7b5bf8573a41adb4cbf3cfa01e15`.
+* has a unique identifier of `x-_1CTL2cca3CSE4cwb_l`.
 * binds the public key represented by the `jwk` confirmation method to the workload `wimse://example.com/specific-workload`.
 * requires the proof to be produced with the `EdDSA` signature algorithm.
 
@@ -292,8 +292,8 @@ The Identity Server's public key from this example is shown below in JWK {{RFC75
  "kty": "EC",
  "kid": "June 5",
  "crv": "P-256",
- "x": "Dy47KDeYao6kOhxSraJeJizjVxHjjo-9NsnrMqLyvOo",
- "y": "bj3s7bncoSYURzAzF0jBy0JOnnP5-5E11vx5QoYEFgk"
+ "x": "kXqnA2Op7hgd4zRMbw0iFcc_hDxUxhojxOFVGjE2gks",
+ "y": "n__VndPMR021-59UAs0b9qDTFT-EZtT6xSNs_xFskLo"
 }
 ~~~
 {: title="Example Identity Server Key"}
