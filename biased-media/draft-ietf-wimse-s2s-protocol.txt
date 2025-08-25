@@ -5,12 +5,12 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 23 January 2026                                        CyberArk
+Expires: 26 February 2026                                       CyberArk
                                                       A. Schwenkschuster
                                                                    SPIRL
                                                               Y. Sheffer
                                                                   Intuit
-                                                            22 July 2025
+                                                          25 August 2025
 
 
                WIMSE Workload-to-Workload Authentication
@@ -66,7 +66,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 23 January 2026.
+   This Internet-Draft will expire on 26 February 2026.
 
 Copyright Notice
 
@@ -106,27 +106,30 @@ Table of Contents
    5.  Security Considerations
      5.1.  Workload Identity
      5.2.  Workload Identity Token and Proof of Possession
-     5.3.  Middle Boxes
-     5.4.  Privacy Considerations
+     5.3.  Workload Identity Key Management
+     5.4.  Middle Boxes
+     5.5.  Privacy Considerations
    6.  IANA Considerations
      6.1.  JSON Web Token Claims
      6.2.  Media Type Registration
-       6.2.1.  application/wimse-id+jwt
-       6.2.2.  application/wimse-proof+jwt
+       6.2.1.  application/wit+jwt
+       6.2.2.  application/wpt+jwt
      6.3.  Hypertext Transfer Protocol (HTTP) Field Name Registration
        6.3.1.  Workload-Identity-Token
        6.3.2.  Workload-Proof-Token
+     6.4.  URI Scheme Registration
    7.  References
      7.1.  Normative References
      7.2.  Informative References
    Appendix A.  Document History
-     A.1.  draft-ietf-wimse-s2s-protocol-06
-     A.2.  draft-ietf-wimse-s2s-protocol-05
-     A.3.  draft-ietf-wimse-s2s-protocol-04
-     A.4.  draft-ietf-wimse-s2s-protocol-03
-     A.5.  draft-ietf-wimse-s2s-protocol-02
-     A.6.  draft-ietf-wimse-s2s-protocol-01
-     A.7.  draft-ietf-wimse-s2s-protocol-00
+     A.1.  draft-ietf-wimse-s2s-protocol-07
+     A.2.  draft-ietf-wimse-s2s-protocol-06
+     A.3.  draft-ietf-wimse-s2s-protocol-05
+     A.4.  draft-ietf-wimse-s2s-protocol-04
+     A.5.  draft-ietf-wimse-s2s-protocol-03
+     A.6.  draft-ietf-wimse-s2s-protocol-02
+     A.7.  draft-ietf-wimse-s2s-protocol-01
+     A.8.  draft-ietf-wimse-s2s-protocol-00
    Acknowledgments
    Authors' Addresses
 
@@ -306,8 +309,9 @@ Table of Contents
    The Workload Identity Token (WIT) is a JWS [RFC7515] signed JWT
    [RFC7519] that represents the identity of a workload.  It is issued
    by the Identity Server and binds a public key to the workload
-   identity.  A WIT MUST contain the following claims, except where
-   noted:
+   identity.  See Section 5.3 for security considerations.
+
+   A WIT MUST contain the following claims, except where noted:
 
    *  in the JOSE header:
 
@@ -317,7 +321,7 @@ Table of Contents
          none MUST NOT be used.
 
       -  typ: the WIT is explicitly typed, as recommended in
-         Section 3.11 of [RFC8725], using the wimse-id+jwt media type.
+         Section 3.11 of [RFC8725], using the wit+jwt media type.
 
    *  in the JWT claims:
 
@@ -364,17 +368,25 @@ Table of Contents
                MUST be supported by general purpose implementations of
                this document.
 
+   As noted in [I-D.ietf-wimse-arch], a workload identifier is a URI
+   with a trust domain component.  The runtime environment often
+   determines which URI scheme is used, e.g. if SPIFFE is used to
+   authenticate workloads, it mandates "spiffe" URIs.  However for those
+   deployments where this is not the case, this document (Section 6.4)
+   defines the "wimse" URI scheme which can be used by any deployment
+   that implements this protocol.
+
    An example WIT might look like this:
 
    =============== NOTE: '\' line wrapping per RFC 8792 ================
 
-   eyJhbGciOiJFUzI1NiIsImtpZCI6Ikp1bmUgNSIsInR5cCI6IndpbXNlLWlkK2p3dCJ9\
-   .eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J2IjoiRWQyNTUxOSIsImt0eSI\
-   6Ik9LUCIsIngiOiIxQ1hYdmZsTl9MVlZzSXNZWHNVdkIwM0ptbEdXZUNIcVFWdW91Q0Y\
-   5MmJnIn19LCJleHAiOjE3NDU1MTI1MTAsImlhdCI6MTc0NTUwODkxMCwianRpIjoiYmQ\
-   yYTdiNWJmODU3M2E0MWFkYjRjYmYzY2ZhMDFlMTUiLCJzdWIiOiJ3aW1zZTovL2V4YW1\
-   wbGUuY29tL3NwZWNpZmljLXdvcmtsb2FkIn0.xpODXCUhZ2zk-1-W3VEqbqWhBX6_OJI\
-   l7vtjahgwJStMOCRn6J6is6f5mz-Pi5-Xk6FmV44k48NzulqMDVJbAw
+   eyJhbGciOiJFUzI1NiIsImtpZCI6Ikp1bmUgNSIsInR5cCI6IndpdCtqd3QifQ.eyJjb\
+   mYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J2IjoiRWQyNTUxOSIsImt0eSI6Ik9LU\
+   CIsIngiOiIxQ1hYdmZsTl9MVlZzSXNZWHNVdkIwM0ptbEdXZUNIcVFWdW91Q0Y5MmJnI\
+   n19LCJleHAiOjE3NDU1MTI1MTAsImlhdCI6MTc0NTUwODkxMCwianRpIjoieC1fMUNUT\
+   DJjY2EzQ1NFNGN3Yl9sIiwic3ViIjoid2ltc2U6Ly9leGFtcGxlLmNvbS9zcGVjaWZpY\
+   y13b3JrbG9hZCJ9.6KraSQUxWdl9dxFQ3Fj6dPY0Vi88OkwFwZpAIOhLeq6AbXAnLLQg\
+   Op8U9UDGcBuYF3KiNv6oKQD1ZWAzrMZOJw
 
              Figure 2: An example Workload Identity Token (WIT)
 
@@ -384,7 +396,7 @@ Table of Contents
    {
      "alg": "ES256",
      "kid": "June 5",
-     "typ": "wimse-id+jwt"
+     "typ": "wit+jwt"
    }
 
                      Figure 3: Example WIT JOSE Header
@@ -403,7 +415,7 @@ Table of Contents
      },
      "exp": 1745512510,
      "iat": 1745508910,
-     "jti": "bd2a7b5bf8573a41adb4cbf3cfa01e15",
+     "jti": "x-_1CTL2cca3CSE4cwb_l",
      "sub": "wimse://example.com/specific-workload"
    }
 
@@ -411,16 +423,13 @@ Table of Contents
 
    The claims indicate that the example WIT:
 
-   *  was issued by an Identity Server known as wimse://example.com/
-      trusted-central-authority.
-
-   *  is valid until May 15, 2024 3:28:45 PM GMT-06:00 (represented as
-      NumericDate Section 2 of [RFC7519] value 1717612470).
+   *  is valid until Thu Apr 24 2025 16:35:10 GMT (represented as
+      NumericDate Section 2 of [RFC7519] value 1745512510).
 
    *  identifies the workload to which the token was issued as
       wimse://example.com/specific-workload.
 
-   *  has a unique identifier of x-_1CTL2cca3CSE4cwb__.
+   *  has a unique identifier of x-_1CTL2cca3CSE4cwb_l.
 
    *  binds the public key represented by the jwk confirmation method to
       the workload wimse://example.com/specific-workload.
@@ -450,8 +459,8 @@ Table of Contents
     "kty": "EC",
     "kid": "June 5",
     "crv": "P-256",
-    "x": "Dy47KDeYao6kOhxSraJeJizjVxHjjo-9NsnrMqLyvOo",
-    "y": "bj3s7bncoSYURzAzF0jBy0JOnnP5-5E11vx5QoYEFgk"
+    "x": "kXqnA2Op7hgd4zRMbw0iFcc_hDxUxhojxOFVGjE2gks",
+    "y": "n__VndPMR021-59UAs0b9qDTFT-EZtT6xSNs_xFskLo"
    }
 
                    Figure 6: Example Identity Server Key
@@ -478,13 +487,12 @@ Table of Contents
    =============== NOTE: '\' line wrapping per RFC 8792 ================
 
    Workload-Identity-Token: eyJhbGciOiJFUzI1NiIsImtpZCI6Ikp1bmUgNSIsInR\
-   5cCI6IndpbXNlLWlkK2p3dCJ9.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3\
-   J2IjoiRWQyNTUxOSIsImt0eSI6Ik9LUCIsIngiOiIxQ1hYdmZsTl9MVlZzSXNZWHNVdk\
-   IwM0ptbEdXZUNIcVFWdW91Q0Y5MmJnIn19LCJleHAiOjE3NDU1MTI1MTAsImlhdCI6MT\
-   c0NTUwODkxMCwianRpIjoiYmQyYTdiNWJmODU3M2E0MWFkYjRjYmYzY2ZhMDFlMTUiLC\
-   JzdWIiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3NwZWNpZmljLXdvcmtsb2FkIn0.xpODXC\
-   UhZ2zk-1-W3VEqbqWhBX6_OJIl7vtjahgwJStMOCRn6J6is6f5mz-Pi5-Xk6FmV44k48\
-   NzulqMDVJbAw
+   5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J2Ijoi\
+   RWQyNTUxOSIsImt0eSI6Ik9LUCIsIngiOiIxQ1hYdmZsTl9MVlZzSXNZWHNVdkIwM0pt\
+   bEdXZUNIcVFWdW91Q0Y5MmJnIn19LCJleHAiOjE3NDU1MTI1MTAsImlhdCI6MTc0NTUw\
+   ODkxMCwianRpIjoieC1fMUNUTDJjY2EzQ1NFNGN3Yl9sIiwic3ViIjoid2ltc2U6Ly9l\
+   eGFtcGxlLmNvbS9zcGVjaWZpYy13b3JrbG9hZCJ9.6KraSQUxWdl9dxFQ3Fj6dPY0Vi8\
+   8OkwFwZpAIOhLeq6AbXAnLLQgOp8U9UDGcBuYF3KiNv6oKQD1ZWAzrMZOJw
 
        Figure 8: An example Workload Identity Token HTTP Header Field
 
@@ -533,8 +541,8 @@ Table of Contents
          values and restrictions.
 
       -  typ: the WPT is explicitly typed, as recommended in
-         Section 3.11 of [RFC8725], using the application/wimse-
-         proof+jwt media type.
+         Section 3.11 of [RFC8725], using the application/wpt+jwt media
+         type.
 
    *  in the JWT claims:
 
@@ -545,7 +553,7 @@ Table of Contents
          the audience to be set to a deployment-specific value.  See
          also Section 1.3 for more details.
 
-      -  exp: The expiration time of the WIT (as defined in
+      -  exp: The expiration time of the WPT (as defined in
          Section 4.1.4 of [RFC7519]).  WPT lifetimes MUST be short,
          e.g., on the order of minutes or seconds.
 
@@ -554,43 +562,49 @@ Table of Contents
 
       -  wth: Hash of the Workload Identity Token, defined in
          Section 3.1.  The value is the base64url encoding of the
-         SHA-256 hash of the ASCII encoding of the token's value.
+         SHA-256 hash of the ASCII encoding of the WIT's value.
 
       -  ath: Hash of the OAuth access token, if present in the request,
-         which might convey end-user identity and authorization context
-         of the request.  The value, as per Section 4.1 of [RFC9449], is
-         the base64url encoding of the SHA-256 hash of the ASCII
-         encoding of the access token's value.
+         which might convey end-user identity and/or authorization
+         context of the request.  The value, as per Section 4.1 of
+         [RFC9449], is the base64url encoding of the SHA-256 hash of the
+         ASCII encoding of the access token's value.
 
       -  tth: Hash of the Txn-Token [I-D.ietf-oauth-transaction-tokens],
          if present in the request, which might convey end-user identity
-         and authorization context of the request.  The value MUST be
+         and/or authorization context of the request.  The value MUST be
          the result of a base64url encoding (as defined in Section 2 of
          [RFC7515]) of the SHA-256 hash of the ASCII encoding of the
          associated token's value.
 
-      -  oth: Hash of any other token in the request that might convey
-         end-user identity and authorization context of the request, if
-         such a token exists.  The value MUST be the result of a
-         base64url encoding (as defined in Section 2 of [RFC7515]) of
-         the SHA-256 hash of the ASCII encoding of the associated
-         token's value.  (Note: this is less than ideal but seems we
-         need something like this for extensibility.)
+      -  oth: Hash(es) of other token(s) in the request that convey end-
+         user identity and/or authorization context of the request.  The
+         value is a JSON object with a key-value pair for each such
+         token.  For each, in the absence of an application profile
+         specifying details, the key corresponds to the header field
+         name containing the token, and the value is the base64url
+         encoding of the SHA-256 hash of the ASCII bytes of the header
+         field value with any leading or trailing spaces removed.  The
+         header field name MUST be normalized by converting it to all
+         lower case.  Header fields occurring multiple times in the
+         request are not supported by default.  An application profile
+         may specify different behavior for a key, such as using a
+         different hash algorithm or means of locating the token in the
+         request.
 
    To clarify: the ath, tth and oth claims are each mandatory if the
-   respective token is included in the request.
+   respective tokens are included in the request.
 
    An example WPT might look like the following:
 
    =============== NOTE: '\' line wrapping per RFC 8792 ================
 
-   eyJhbGciOiJFZERTQSIsInR5cCI6IndpbXNlLXByb29mK2p3dCJ9.eyJhdGgiOiJDTDR\
-   3amZwUm1OZi1iZFlJYllMblY5ZDVyTUFSR3dLWUUxMHdVd3pDMGpJIiwiYXVkIjoiaHR\
-   0cHM6Ly93b3JrbG9hZC5leGFtcGxlLmNvbS9wYXRoIiwiZXhwIjoxNzQ1NTA5MjEwLCJ\
-   qdGkiOiJlMzI5YmI4Njk2YWE0YWVjYTA0ODg2ZGQ3NmU3OGIyNiIsInd0aCI6InJvN3h\
-   GT1NHX2pZeG1VV2Z3ZXFrNVgxc2M2TDBzQ2o3NVdLVDkxZ014eFUifQ.oSegRTrBxuQN\
-   55oyWRK5PnPEZLhgRy0Va7BpxBw-a64E3map15dbDo9ArRcJ8M4Z4QZ829CCppfnuaLI\
-   ei1bBQ
+   eyJhbGciOiJFZERTQSIsInR5cCI6IndwdCtqd3QifQ.eyJhdGgiOiJDTDR3amZwUm1OZ\
+   i1iZFlJYllMblY5ZDVyTUFSR3dLWUUxMHdVd3pDMGpJIiwiYXVkIjoiaHR0cHM6Ly93b\
+   3JrbG9hZC5leGFtcGxlLmNvbS9wYXRoIiwiZXhwIjoxNzQ1NTEwMDE2LCJqdGkiOiJfX\
+   2J3YzRFU0MzYWNjMkxUQzEtX3giLCJ3dGgiOiJBYVlVZkMzNEQxZGkyRnhRTHBpSUpKN\
+   1NnOFZaNm84T0Nkd1NmOUlUb0xnIn0.PI7d9AcYhLoEgPgbJvcM132lkBKnM1NXU-5hZ\
+   UzVTIyj2dRJaTLFs6e5NYv5gg6AqcV7NvkYCwfgMgWasWQzCA
 
                Figure 10: Example Workload Proof Token (WPT)
 
@@ -599,7 +613,7 @@ Table of Contents
 
    {
      "alg": "EdDSA",
-     "typ": "wimse-proof+jwt"
+     "typ": "wpt+jwt"
    }
 
                      Figure 11: Example WPT JOSE Header
@@ -627,19 +641,19 @@ Table of Contents
    Content-Type: application/json
    Authorization: Bearer 16_mAd0GiwaZokU26_0902100
    Workload-Identity-Token: eyJhbGciOiJFUzI1NiIsImtpZCI6Ikp1bmUgNSIsInR\
-   5cCI6IndpbXNlLWlkK2p3dCJ9.eyJjbmYiOnsiandrIjp7ImNydiI6IkVkMjU1MTkiLC\
-   JrdHkiOiJPS1AiLCJ4Ijoiclp3VUEwVHJIazRBWEs5MkY2Vll2bUhIWDN4VU0tSUdsck\
-   11VkNRaG04VSJ9fSwiZXhwIjoxNzQwNzU4MzQ4LCJpYXQiOjE3NDA3NTQ3NDgsImp0aS\
-   I6IjRmYzc3ZmNlZjU3MWIzYmIzM2I2NzJlYWYyMDRmYWY0Iiwic3ViIjoid2ltc2U6Ly\
-   9leGFtcGxlLmNvbS9zcGVjaWZpYy13b3JrbG9hZCJ9.j-WlF3bufTwWeVZQntPhlzvST\
-   Pwf37-4wfazJZARdHYmW9S_olB5nKEqwqTZpIX_LoVVIcyK0VBE7Fa0CMvw2g
-   Workload-Proof-Token: eyJhbGciOiJFZERTQSIsInR5cCI6IndpbXNlLXByb29mK2\
-   p3dCJ9.eyJhdGgiOiJDTDR3amZwUm1OZi1iZFlJYllMblY5ZDVyTUFSR3dLWUUxMHdVd\
-   3pDMGpJIiwiYXVkIjoiaHR0cHM6Ly93b3JrbG9hZC5leGFtcGxlLmNvbS9wYXRoIiwiZ\
-   XhwIjoxNzQwNzU1MDQ4LCJqdGkiOiIwYzc0MDM4NmNhMWRjYWQzN2RlMWI1ZjlkZTFiM\
-   DcwNSIsInd0aCI6ImFBMFdfb0ZKSzdxVjd6WWhjbXpSMUtPWFZDSGpkMng2YzRzT1FMd\
-   kU5MFkifQ.W9RZqieXeD-UgdtbYf8ZNkf2_6_6b_kJSfkODQdq3_QDSSGOhVbRAR3qQo\
-   Ou0SzihiG6HCsGwslfo4WdvnH5AQ
+   5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J2Ijoi\
+   RWQyNTUxOSIsImt0eSI6Ik9LUCIsIngiOiIxQ1hYdmZsTl9MVlZzSXNZWHNVdkIwM0pt\
+   bEdXZUNIcVFWdW91Q0Y5MmJnIn19LCJleHAiOjE3NDU1MTI1MTAsImlhdCI6MTc0NTUw\
+   ODkxMCwianRpIjoieC1fMUNUTDJjY2EzQ1NFNGN3Yl9sIiwic3ViIjoid2ltc2U6Ly9l\
+   eGFtcGxlLmNvbS9zcGVjaWZpYy13b3JrbG9hZCJ9.6KraSQUxWdl9dxFQ3Fj6dPY0Vi8\
+   8OkwFwZpAIOhLeq6AbXAnLLQgOp8U9UDGcBuYF3KiNv6oKQD1ZWAzrMZOJw
+   Workload-Proof-Token: eyJhbGciOiJFZERTQSIsInR5cCI6IndwdCtqd3QifQ.eyJ\
+   hdGgiOiJDTDR3amZwUm1OZi1iZFlJYllMblY5ZDVyTUFSR3dLWUUxMHdVd3pDMGpJIiw\
+   iYXVkIjoiaHR0cHM6Ly93b3JrbG9hZC5leGFtcGxlLmNvbS9wYXRoIiwiZXhwIjoxNzQ\
+   1NTEwMDE2LCJqdGkiOiJfX2J3YzRFU0MzYWNjMkxUQzEtX3giLCJ3dGgiOiJBYVlVZkM\
+   zNEQxZGkyRnhRTHBpSUpKN1NnOFZaNm84T0Nkd1NmOUlUb0xnIn0.PI7d9AcYhLoEgPg\
+   bJvcM132lkBKnM1NXU-5hZUzVTIyj2dRJaTLFs6e5NYv5gg6AqcV7NvkYCwfgMgWasWQ\
+   zCA
 
    {"do stuff":"please"}
 
@@ -661,7 +675,7 @@ Table of Contents
       confirmation claim of the WIT.
 
    *  The typ JOSE header parameter of the WPT conveys a media type of
-      wimse-proof+jwt.
+      wpt+jwt.
 
    *  The aud claim of the WPT matches the target URI, or an acceptable
       alias or normalization thereof, of the HTTP request in which the
@@ -689,11 +703,21 @@ Table of Contents
       identity or authorization context, the value of the oth claim
       matches the hash of that token's value.
 
+   *  If the oth claim is present, verify the hashes of all tokens
+      listed in the oth claim per the default behavior defined in
+      Section 3.2 or as specified by an application specific profile.
+      If the oth claim contains entries that are not understood by the
+      recipient, the WPT MUST be rejected.  Conversely, additional
+      tokens not covered by the oth claim MUST NOT be used by the
+      recipient to make authorization decisions.
+
 3.3.  Option 2: Authentication Based on HTTP Message Signatures
 
-   This option uses the Workload Identity Token (Section 3.1) to sign
-   the request and optionally, the response.  This section defines a
-   profile of the Message Signatures specification [RFC9421].
+   This option uses the Workload Identity Token (Section 3.1) and the
+   private key associated with its public key, to sign the request and
+   optionally, the response.  See Section 5.3 for security
+   considerations.  This section defines a profile of the Message
+   Signatures specification [RFC9421].
 
    The request is signed as per [RFC9421].  The following derived
    components MUST be signed:
@@ -767,6 +791,17 @@ Table of Contents
    replays, a recipient SHOULD reject a message (request or response) if
    a nonce generated by a certain peer is seen more than once.
 
+   Implementors need to be aware that the WIT is extracted from the
+   message before the message signature is validated.  Recipients of
+   signed HTTP messages MUST validate the signature and content of the
+   WIT before validating the HTTP message signature.  They MUST ensure
+   that the message is not processed further before it has been fully
+   validated.
+
+   Either client or server MAY send an Accept-Signature header, but is
+   not required to do so.  When this header is sent, it MUST include the
+   header components listed above.
+
    Following is a non-normative example of a signed request and a signed
    response, where the caller is using the keys specified in Figure 5.
 
@@ -774,23 +809,31 @@ Table of Contents
 
    GET /gimme-ice-cream?flavor=vanilla HTTP/1.1
    Host: example.com
-   Signature: wimse=:K4dfGnguF5f1L4DKBSp5XeFXosLGj8Y9fiUX06rL/wdOF+x3zT\
-   WmsvKWiY0B1oFZaOtm2FHru+YLjdkqa2WfCQ==:
+   Signature: wimse=:zyR2W7QeUEYwGT8q+jU5HyEiPhC4iiBJlAfwu6otL+kXBYOMVl\
+   ZEfGDnTlQiYmUWQMyu69811lIDWbCK42yWCw==:
    Signature-Input: wimse=("@method" "@request-target" "workload-identi\
-   ty-token");created=1718291357;expires=1718291657;nonce="abcd1111";ta\
+   ty-token");created=1754558248;expires=1754558548;nonce="abcd1111";ta\
    g="wimse-workload-to-workload"
-   Workload-Identity-Token: aGVhZGVyCg.VGhpcyBpcyBub3QgYSByZWFsIHRva2Vu\
-   Lgo.c2lnbmF0dXJlCg
+   Workload-Identity-Token: eyJhbGciOiJFZERTQSIsImtpZCI6Imlzc3Vlci1rZXk\
+   iLCJ0eXAiOiJ3aW1zZS1pZCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNB\
+   IiwiY3J2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1hLWtleSIsImt0eSI6Ik9LUCIsIngi\
+   OiJEUEhDOFdKaTZ3WEttN3BpRVdXRDRQdHBiTUdJMUcyOXVTMFl5MnNmQk5zIn19LCJl\
+   eHAiOjE3NTQ1NTg1NDgsImlhdCI6MTc1NDU1ODI0OCwiaXNzIjoiaHR0cHM6Ly9leGFt\
+   cGxlLmNvbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc1NDU1ODI0ODQwMjQ5NjAwMCIsInN1\
+   YiI6IndpbXNlOi8vZXhhbXBsZS5jb20vc3ZjQSJ9.OAPARpluzH34v4bhCtPovuOvTsx\
+   cVbAV9WSqFlbiKdNvfEVN4uRNQSRs7ePfMIJB2uqgX71XjBFH433nDzJZBQ
 
                          Figure 14: Signed Request
 
    Assuming that the workload being called has the following keypair:
 
    {
-    "kty":"OKP",
-    "crv":"Ed25519",
-    "x":"CfaY1XX-aHJpenRP8ATm3yGlbcKA_treqOfwKrilwyg",
-    "d":"fycSKS-iHZ6TC1BNwN6cE0sOBP3-4KgR-eqxNpnyhws"
+     "alg": "EdDSA",
+     "crv": "Ed25519",
+     "d": "JlNJxsZl_PC00EkoRUQbtCrzDtZ5vhFN_6qWtwghttY",
+     "kid": "svc-b-key",
+     "kty": "OKP",
+     "x": "gz2aSJE-g9w1rbgJiNps4Gb8IPk50k5oJUEbLDusayc"
    }
 
                        Figure 15: Callee Private Key
@@ -799,19 +842,27 @@ Table of Contents
 
    =============== NOTE: '\' line wrapping per RFC 8792 ================
 
+   Response:
+
    HTTP/1.1 404 Not Found
    Connection: close
    Content-Digest: sha-256=:47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU\
    =:
    Content-Type: text/plain
-   Signature: wimse=:NMrMn3xhI6m9PI8mKVfpnH5qFGcEfuFxiCmsB5PJhGjUHT/5J4\
-   612EZwRw3V4kU4gGJmO+ER8RC4DM2HKVOYDQ==:
+   Signature: wimse=:WAjxziuCiYRqCzetetDwaTS7Ka9yMwB+dAHVJPw3VkUH+c8c4A\
+   5BKrCsPlD/ymy+7PgwXl3y3mVdaD4ww7WqDA==:
    Signature-Input: wimse=("@status" "workload-identity-token" "content\
    -type" "content-digest" "@method";req "@request-target";req);created\
-   =1718295368;expires=1718295670;nonce="abcd2222";tag="wimse-workload-\
+   =1754558248;expires=1754558550;nonce="abcd2222";tag="wimse-workload-\
    to-workload"
-   Workload-Identity-Token: aGVhZGVyCg.VGhpcyBhaW4ndCBvbmUsIHRvby4K.c2l\
-   nbmF0dXJlCg
+   Workload-Identity-Token: eyJhbGciOiJFZERTQSIsImtpZCI6Imlzc3Vlci1rZXk\
+   iLCJ0eXAiOiJ3aW1zZS1pZCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNB\
+   IiwiY3J2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1iLWtleSIsImt0eSI6Ik9LUCIsIngi\
+   OiJnejJhU0pFLWc5dzFyYmdKaU5wczRHYjhJUGs1MGs1b0pVRWJMRHVzYXljIn19LCJl\
+   eHAiOjE3NTQ1NTg1NTAsImlhdCI6MTc1NDU1ODI1MCwiaXNzIjoiaHR0cHM6Ly9leGFt\
+   cGxlLmNvbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc1NDU1ODI0ODQwMjY4MTAwMCIsInN1\
+   YiI6IndpbXNlOi8vZXhhbXBsZS5jb20vc3ZjQiJ9.yJ4gGQ1DQBX0E9Xp5fIgj6Ucpf9\
+   LI_gHnhURZxqu6atT-3hpbFTgw4rd-6knM7-HClok4b6N2ViZaEDcz6IMCg
 
    No ice cream today.
 
@@ -843,7 +894,7 @@ Table of Contents
 
    *  Message Signatures offer superior integrity protection,
       particularly by mitigating message modification by middleboxes.
-      See also Section 5.3.
+      See also Section 5.4.
 
    *  A key advantage of Message Signatures is that they support
       response signing.  This opens up the possibility for future
@@ -1047,7 +1098,22 @@ Table of Contents
    identity of a TLS session or TLS channel binding parameters.  The
    mechanisms for binding are outside the scope of this specification.
 
-5.3.  Middle Boxes
+5.3.  Workload Identity Key Management
+
+   Both the Workload Identity Token and the Workload Identity
+   Certificate carry a public key.  The corresponding private key:
+
+   *  MUST be kept private
+
+   *  MUST be individual for each Workload Identifier (see
+      [I-D.ietf-wimse-arch])
+
+   *  MUST NOT be used once the credential is expired
+
+   *  SHOULD be re-generated for each new Workload Identity Token or
+      Certificate.
+
+5.4.  Middle Boxes
 
    In some deployments the Workload Identity Token and proof of
    possession may pass through multiple systems.  The communication
@@ -1055,12 +1121,17 @@ Table of Contents
    in the clear at each intermediary.  While the intermediary cannot
    modify the token or the information within the PoP they can attempt
    to capture and replay the token or modify the data not protected by
-   the PoP.  Mitigations listed in the previous section can be used to
-   provide some protection from middle boxes.  Deployments should
-   perform analysis on their situation to determine if it is appropriate
-   to trust and allow traffic to pass through a middle box.
+   the PoP.
 
-5.4.  Privacy Considerations
+   Mitigations listed in Section 3 can be used to provide some
+   protection from middle boxes.  However we note that the DPoP-inspired
+   solution (Section 3.2) does not protect major portions of the request
+   and response and therefore does not provide protection from an
+   actively malicious middle box.  Deployments should perform analysis
+   on their situation to determine if it is appropriate to trust and
+   allow traffic to pass through a middle box.
+
+5.5.  Privacy Considerations
 
    WITs and the proofs of possession may contain private information
    such as user names or other identities.  Care should be taken to
@@ -1083,14 +1154,14 @@ Table of Contents
    +============+===================+===================+=============+
    | Claim Name | Claim Description | Change Controller | Reference   |
    +============+===================+===================+=============+
-   | tth        | Transaction Token | IESG              | RFC XXX,    |
+   | tth        | Transaction Token | IETF              | RFC XXX,    |
    |            | hash              |                   | Section 3.2 |
    +------------+-------------------+-------------------+-------------+
-   | wth        | Workload Identity | IESG              | RFC XXX,    |
+   | wth        | Workload Identity | IETF              | RFC XXX,    |
    |            | Token hash        |                   | Section 3.2 |
    +------------+-------------------+-------------------+-------------+
-   | oth        | Other Token hash  | IESG              | RFC XXX,    |
-   |            |                   |                   | Section 3.2 |
+   | oth        | Other Tokens      | IETF              | RFC XXX,    |
+   |            | hashes            |                   | Section 3.2 |
    +------------+-------------------+-------------------+-------------+
 
                                  Table 1
@@ -1100,15 +1171,15 @@ Table of Contents
    IANA is requested to register the following entries to the "Media
    Types" registry [IANA.MEDIA.TYPES]:
 
-   *  application/wimse-id+jwt, per Section 6.2.1.
+   *  application/wit+jwt, per Section 6.2.1.
 
-   *  application/wimse-proof+jwt, per Section 6.2.2.
+   *  application/wpt+jwt, per Section 6.2.2.
 
-6.2.1.  application/wimse-id+jwt
+6.2.1.  application/wit+jwt
 
    Type name: application
 
-   Subtype name: wimse-id+jwt
+   Subtype name: wit+jwt
 
    Required parameters: N/A
 
@@ -1152,11 +1223,11 @@ Table of Contents
 
    Change controller: Internet Engineering Task Force (iesg@ietf.org).
 
-6.2.2.  application/wimse-proof+jwt
+6.2.2.  application/wpt+jwt
 
    Type name: application
 
-   Subtype name: wimse-proof+jwt
+   Subtype name: wpt+jwt
 
    Required parameters: N/A
 
@@ -1233,6 +1304,24 @@ Table of Contents
 
    *  Comments: see reference above for an ABNF syntax of this field
 
+6.4.  URI Scheme Registration
+
+   IANA is requested to register the "wimse" scheme to the "URI Schemes"
+   registry [IANA.URI.SCHEMES]:
+
+   *  Scheme name: wimse
+
+   *  Status: permanent
+
+   *  Applications/protocols that use this scheme name: the WIMSE
+      workload-to-workload authentication protocol.
+
+   *  Contact: IETF Chair chair@ietf.org (mailto:chair@ietf.org)
+
+   *  Change controller: IESG iesg@ietf.org (mailto:iesg@ietf.org)
+
+   *  References: Section 3 of this document (RFC XXX).
+
 7.  References
 
 7.1.  Normative References
@@ -1306,9 +1395,9 @@ Table of Contents
    [I-D.ietf-oauth-transaction-tokens]
               Tulshibagwale, A., Fletcher, G., and P. Kasselman,
               "Transaction Tokens", Work in Progress, Internet-Draft,
-              draft-ietf-oauth-transaction-tokens-05, 3 March 2025,
+              draft-ietf-oauth-transaction-tokens-06, 28 July 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              transaction-tokens-05>.
+              transaction-tokens-06>.
 
    [I-D.ietf-wimse-arch]
               Salowey, J. A., Rosomakho, Y., and H. Tschofenig,
@@ -1334,6 +1423,10 @@ Table of Contents
               IANA, "Media Types",
               <https://www.iana.org/assignments/media-types>.
 
+   [IANA.URI.SCHEMES]
+              IANA, "Uniform Resource Identifier (URI) Schemes",
+              <https://www.iana.org/assignments/uri-schemes>.
+
    [RFC9449]  Fett, D., Campbell, B., Bradley, J., Lodderstedt, T.,
               Jones, M., and D. Waite, "OAuth 2.0 Demonstrating Proof of
               Possession (DPoP)", RFC 9449, DOI 10.17487/RFC9449,
@@ -1348,14 +1441,18 @@ Appendix A.  Document History
 
    // RFC Editor: please remove before publication.
 
-A.1.  draft-ietf-wimse-s2s-protocol-06
+A.1.  draft-ietf-wimse-s2s-protocol-07
+
+   *  Rework the WPT's oth claim
+
+A.2.  draft-ietf-wimse-s2s-protocol-06
 
    *  Explicit definition of the Workload Identity Certificate.
 
    *  Definition of the validation of workload identifiers as part of
       workload authentication.  Still work in progress.
 
-A.2.  draft-ietf-wimse-s2s-protocol-05
+A.3.  draft-ietf-wimse-s2s-protocol-05
 
    *  Removed the entire Workload Identity section which is now covered
       in the Architecture document.
@@ -1366,7 +1463,7 @@ A.2.  draft-ietf-wimse-s2s-protocol-05
 
    *  IANA considerations.
 
-A.3.  draft-ietf-wimse-s2s-protocol-04
+A.4.  draft-ietf-wimse-s2s-protocol-04
 
    *  Require cnf.jwk.alg in WIT which restricts signature algorithm of
       WPT or HTTP-Sig.
@@ -1375,7 +1472,7 @@ A.3.  draft-ietf-wimse-s2s-protocol-04
 
    *  Consolidate terminology with the Architecture draft.
 
-A.4.  draft-ietf-wimse-s2s-protocol-03
+A.5.  draft-ietf-wimse-s2s-protocol-03
 
    *  Consistently use "workload".
 
@@ -1390,7 +1487,7 @@ A.4.  draft-ietf-wimse-s2s-protocol-03
 
    *  Error handling for the application level methods.
 
-A.5.  draft-ietf-wimse-s2s-protocol-02
+A.6.  draft-ietf-wimse-s2s-protocol-02
 
    *  Coexistence with bearer tokens.
 
@@ -1402,7 +1499,7 @@ A.5.  draft-ietf-wimse-s2s-protocol-02
 
    *  Moved an author to acknowledgments.
 
-A.6.  draft-ietf-wimse-s2s-protocol-01
+A.7.  draft-ietf-wimse-s2s-protocol-01
 
    *  Addressed multiple comments from Pieter.
 
@@ -1417,7 +1514,7 @@ A.6.  draft-ietf-wimse-s2s-protocol-01
    *  Added a section comparing the DPoP-inspired app-level security
       option to the Message Signature-based alternative.
 
-A.7.  draft-ietf-wimse-s2s-protocol-00
+A.8.  draft-ietf-wimse-s2s-protocol-00
 
    *  Initial WG draft, an exact copy of draft-sheffer-wimse-s2s-
       protocol-00
