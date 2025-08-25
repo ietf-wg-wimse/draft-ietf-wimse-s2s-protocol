@@ -208,7 +208,7 @@ A WIT MUST contain the following claims, except where noted:
 * in the JOSE header:
     * `alg`: An identifier for a JWS asymmetric digital signature algorithm
      (registered algorithm identifiers are listed in the IANA JOSE Algorithms registry {{IANA.JOSE.ALGS}}). The value `none` MUST NOT be used.
-    * `typ`: the WIT is explicitly typed, as recommended in {{Section 3.11 of RFC8725}}, using the `wimse-id+jwt` media type.
+    * `typ`: the WIT is explicitly typed, as recommended in {{Section 3.11 of RFC8725}}, using the `wit+jwt` media type.
 * in the JWT claims:
     * `iss`: The issuer of the token, which is the Identity Server, represented by a URI. The `iss` claim is RECOMMENDED but optional, see {{wit-iss-note}} for more.
     * `sub`: The subject of the token, which is the identity of the workload, represented by a URI. See {{I-D.ietf-wimse-arch}} for details of the Workload Identifier. And see {{granular-auth}} for security implications of these identifiers.
@@ -238,7 +238,7 @@ The decoded JOSE header of the WIT from the example above is shown here:
 {
   "alg": "ES256",
   "kid": "June 5",
-  "typ": "wimse-id+jwt"
+  "typ": "wit+jwt"
 }
 ~~~
 {: title="Example WIT JOSE Header"}
@@ -350,7 +350,7 @@ A WPT MUST contain the following:
     * `alg`: An identifier for an appropriate JWS asymmetric digital signature algorithm corresponding to
      the confirmation key in the associated WIT. The value MUST match the `alg` value of the `jwk` in the `cnf` claim of the WIT. See {{to-wit}} for valid values and restrictions.
     * `typ`: the WPT is explicitly typed, as recommended in {{Section 3.11 of RFC8725}},
-     using the `application/wimse-proof+jwt` media type.
+     using the `application/wpt+jwt` media type.
 * in the JWT claims:
     * `aud`: The audience SHOULD contain the HTTP target URI ({{Section 7.1 of RFC9110}}) of the request
      to which the WPT is attached, without query or fragment parts. However, there may be some normalization,
@@ -393,7 +393,7 @@ The decoded JOSE header of the WPT from the example above is shown here:
 ~~~ json
 {
   "alg": "EdDSA",
-  "typ": "wimse-proof+jwt"
+  "typ": "wpt+jwt"
 }
 ~~~
 {: title="Example WPT JOSE Header"}
@@ -424,7 +424,7 @@ To validate the WPT in the request, the recipient MUST ensure the following:
 * The `Workload-Proof-Token` header field value is a single and well-formed JWT.
 * The signature algorithm in the `alg` JOSE header string-equal matches the `alg` attribute of the `jwk` in the `cnf` claim of the WIT.
 * The WPT signature is valid using the public key from the confirmation claim of the WIT.
-* The `typ` JOSE header parameter of the WPT conveys a media type of `wimse-proof+jwt`.
+* The `typ` JOSE header parameter of the WPT conveys a media type of `wpt+jwt`.
 * The `aud` claim of the WPT matches the target URI, or an acceptable alias or normalization thereof, of the HTTP request
  in which the WPT was received, ignoring any query and fragment parts. See also {{granular-auth}} for implementation advice
  on this verification check.
@@ -686,14 +686,14 @@ IANA is requested to add the following entries to the "JSON Web Token Claims" re
 
 IANA is requested to register the following entries to the "Media Types" registry {{IANA.MEDIA.TYPES}}:
 
-* application/wimse-id+jwt, per {{iana-wit}}.
-* application/wimse-proof+jwt, per {{iana-wpt}}.
+* application/wit+jwt, per {{iana-wit}}.
+* application/wpt+jwt, per {{iana-wpt}}.
 
-### application/wimse-id+jwt {#iana-wit}
+### application/wit+jwt {#iana-wit}
 
 Type name: application
 
-Subtype name: wimse-id+jwt
+Subtype name: wit+jwt
 
 Required parameters: N/A
 
@@ -734,11 +734,11 @@ Author: See the Authors' Addresses section of RFC XXX.
 
 Change controller: Internet Engineering Task Force (iesg@ietf.org).
 
-### application/wimse-proof+jwt {#iana-wpt}
+### application/wpt+jwt {#iana-wpt}
 
 Type name: application
 
-Subtype name: wimse-proof+jwt
+Subtype name: wpt+jwt
 
 Required parameters: N/A
 
