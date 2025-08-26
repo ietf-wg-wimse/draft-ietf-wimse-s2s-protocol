@@ -562,7 +562,10 @@ trying to reinvent Message Signatures.
 Errors may occur during the processing of the message signature or WPT. If the signature verification fails for any reason,
 such as an invalid signature, an expired validity time window, or a malformed data structure, an error is returned. Typically,
 this will be in response to an API call, so an HTTP status code such as 400 (Bad Request) is appropriate. This response could
-include more details as per {{RFC9457}}, such as an indicator that the wrong key material or algorithm was used.
+include more details as per {{RFC9457}}, such as an indicator that the wrong key material or algorithm was used.  The use of HTTP
+status code 401 is NOT RECOMMENDED for this purpose because it requires a WWW-Authenticate with acceptable http auth mechanisms in
+the error response and an associated Authorization header in the subsequent request. The use of these headers for the WIT or WPT is not compatible
+with this specification.
 
 ## Coexistence with JWT Bearer Tokens {#coexist}
 
