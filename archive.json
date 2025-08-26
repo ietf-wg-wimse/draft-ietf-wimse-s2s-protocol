@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-08-24T01:39:00.968220+00:00",
+  "timestamp": "2025-08-26T01:23:20.619703+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -2711,6 +2711,22 @@
           "updatedAt": "2025-08-12T14:52:04Z"
         }
       ]
+    },
+    {
+      "number": 153,
+      "id": "I_kwDOLJmm787H4c4_",
+      "title": "flesh out Acknowledgments",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/153",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-08-25T23:09:54Z",
+      "updatedAt": "2025-08-25T23:09:54Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -11503,7 +11519,7 @@
       "labels": [],
       "body": "Closes #112.\r\n\r\nThis is *not* exactly what we discussed, but it looks consistent to me. Please review.",
       "createdAt": "2025-08-13T17:03:17Z",
-      "updatedAt": "2025-08-21T13:22:37Z",
+      "updatedAt": "2025-08-25T19:28:20Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "44dde15f2daceaa4760cf7fef69125226524af4d",
@@ -11661,8 +11677,54 @@
               "updatedAt": "2025-08-21T13:34:01Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786762lt",
+          "commit": {
+            "abbreviatedOid": "3525e60"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-08-25T19:28:20Z",
+          "updatedAt": "2025-08-25T19:28:20Z",
+          "comments": [
+            {
+              "originalPosition": 11,
+              "body": "Some of the text in 7519 is definitely less than ideal but I don't read this as an accurate distillation thereof. ",
+              "createdAt": "2025-08-25T19:28:20Z",
+              "updatedAt": "2025-08-25T19:28:20Z"
+            }
+          ]
         }
       ]
+    },
+    {
+      "number": 152,
+      "id": "PR_kwDOLJmm786lTEIu",
+      "title": "update the [media]typ[e] values",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/152",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "for #139\r\n\r\nchange wimse-id+jwt and wimse-proof+jwt to wit+jwt and wpt+jwt respectively \r\n \r\nupdate examples/main.go and try to make things that don't need to change not change\r\n\r\nstill todo is the http sig part(s)",
+      "createdAt": "2025-08-25T23:05:48Z",
+      "updatedAt": "2025-08-25T23:08:50Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "44dde15f2daceaa4760cf7fef69125226524af4d",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "biased-media",
+      "headRefOid": "0fe9c3794ac40f3c6b88fa472e2cd8a50aac2f3e",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
