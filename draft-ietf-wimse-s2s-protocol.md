@@ -500,7 +500,8 @@ Implementors need to be aware that the WIT is extracted from the message before 
 Either client or server MAY send an `Accept-Signature` header, but is not required to do so. When this header is sent, it MUST include the header components listed above.
 
 Following is a non-normative example of a signed request and a signed response,
-where the caller is using the keys specified in {{example-caller-jwk}}.
+where the caller is using the keys specified in {{example-caller-jwk}}
+(it is actually using a different key but that'll need to be fixed later).
 
 ~~~ http
 {::include includes/sigs-request.txt.out}
