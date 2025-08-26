@@ -803,7 +803,9 @@ Table of Contents
    header components listed above.
 
    Following is a non-normative example of a signed request and a signed
-   response, where the caller is using the keys specified in Figure 5.
+   response, where the caller is using the keys specified in Figure 5
+   (it is actually using a different key but that'll need to be fixed
+   later).
 
    =============== NOTE: '\' line wrapping per RFC 8792 ================
 
@@ -830,10 +832,10 @@ Table of Contents
    {
      "alg": "EdDSA",
      "crv": "Ed25519",
-     "d": "JlNJxsZl_PC00EkoRUQbtCrzDtZ5vhFN_6qWtwghttY",
+     "d": "6oQCl9NHN4jHymcFPc5SEy3AXUEH5UnBKJ2JBC6rkdw",
      "kid": "svc-b-key",
      "kty": "OKP",
-     "x": "gz2aSJE-g9w1rbgJiNps4Gb8IPk50k5oJUEbLDusayc"
+     "x": "bd5UWUtOgbgSYj9e499_k5sjWASpARfL5RJ5ySDPbnY"
    }
 
                        Figure 15: Callee Private Key
