@@ -5,12 +5,12 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 13 February 2026                                       CyberArk
+Expires: 27 February 2026                                       CyberArk
                                                       A. Schwenkschuster
                                                                    SPIRL
                                                               Y. Sheffer
                                                                   Intuit
-                                                          12 August 2025
+                                                          26 August 2025
 
 
                WIMSE Workload-to-Workload Authentication
@@ -66,7 +66,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 13 February 2026.
+   This Internet-Draft will expire on 27 February 2026.
 
 Copyright Notice
 
@@ -924,7 +924,12 @@ Table of Contents
    response to an API call, so an HTTP status code such as 400 (Bad
    Request) is appropriate.  This response could include more details as
    per [RFC9457], such as an indicator that the wrong key material or
-   algorithm was used.
+   algorithm was used.  The use of HTTP status code 401 is NOT
+   RECOMMENDED for this purpose because it requires a WWW-Authenticate
+   with acceptable http auth mechanisms in the error response and an
+   associated Authorization header in the subsequent request.  The use
+   of these headers for the WIT or WPT is not compatible with this
+   specification.
 
 3.6.  Coexistence with JWT Bearer Tokens
 
@@ -1062,8 +1067,8 @@ Table of Contents
    of possession MUST be sent over a secure, server authenticated TLS
    connection unless a secure channel is provided by some other
    mechanisms.  Host name validation according to Section 4.2.1 MUST be
-   performed.  The WIT itself is not usable without a proof of
-   possession.
+   performed by the client.  The WIT itself is not usable without a
+   proof of possession.
 
    *  Limiting Proof of Possession Lifespan
 
