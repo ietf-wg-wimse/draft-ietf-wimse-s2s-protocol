@@ -228,38 +228,21 @@ defines the "wimse" URI scheme which can be used by any deployment that implemen
 An example WIT might look like this:
 
 ~~~ jwt
-{::include includes/wit.txt.out}
+{::include includes/thin-wit.txt.out}
 ~~~
 {: #example-wit title="An example Workload Identity Token (WIT)"}
 
 The decoded JOSE header of the WIT from the example above is shown here:
 
 ~~~ json
-{
-  "alg": "ES256",
-  "kid": "June 5",
-  "typ": "wimse-id+jwt"
-}
+{::include includes/thin-wit-header.txt.out}
 ~~~
 {: title="Example WIT JOSE Header"}
 
 The decoded JWT claims of the WIT from the example above are shown here:
 
 ~~~ json
-{
-  "cnf": {
-    "jwk": {
-      "alg": "EdDSA",
-      "crv": "Ed25519",
-      "kty": "OKP",
-      "x": "1CXXvflN_LVVsIsYXsUvB03JmlGWeCHqQVuouCF92bg"
-    }
-  },
-  "exp": 1745512510,
-  "iat": 1745508910,
-  "jti": "bd2a7b5bf8573a41adb4cbf3cfa01e15",
-  "sub": "wimse://example.com/specific-workload"
-}
+{::include includes/thin-wit-claims.txt.out}
 ~~~
 {: title="Example WIT Claims"}
 
@@ -274,12 +257,7 @@ The claims indicate that the example WIT:
 For elucidative purposes only, the workload's key, including the private part, is shown below in JWK {{RFC7517}} format:
 
 ~~~ jwk
-{
- "kty": "OKP",
- "crv": "Ed25519",
- "x": "1CXXvflN_LVVsIsYXsUvB03JmlGWeCHqQVuouCF92bg",
- "d": "sdLX8yCYKqo_XvGBLn-ZWeKT7llYeeQpgeCaXVxb5kY"
-}
+{::include includes/workload-key.txt.out}
 ~~~
 {: #example-caller-jwk title="Example Workload's Key"}
 
@@ -288,13 +266,7 @@ The public key(s) of the Identity Server need to be known to all workloads in or
 The Identity Server's public key from this example is shown below in JWK {{RFC7517}} format:
 
 ~~~ jwk
-{
- "kty": "EC",
- "kid": "June 5",
- "crv": "P-256",
- "x": "Dy47KDeYao6kOhxSraJeJizjVxHjjo-9NsnrMqLyvOo",
- "y": "bj3s7bncoSYURzAzF0jBy0JOnnP5-5E11vx5QoYEFgk"
-}
+{::include includes/signer-key.txt.out}
 ~~~
 {: title="Example Identity Server Key"}
 
@@ -316,7 +288,7 @@ WIT =  JWT
 The following shows the WIT from {{example-wit}} in an example of a `Workload-Identity-Token` header field:
 
 ~~~ http-message
-{::include includes/wit-header.txt.out}
+{::include includes/thin-wit-request.txt.out}
 ~~~
 {: title="An example Workload Identity Token HTTP Header Field"}
 
@@ -384,37 +356,28 @@ To clarify: the `ath`, `tth` and `oth` claims are each mandatory if the respecti
 An example WPT might look like the following:
 
 ~~~ jwt
-{::include includes/wpt.txt.out}
+{::include includes/thin-wpt.txt.out}
 ~~~
 {: #example-wpt title="Example Workload Proof Token (WPT)"}
 
 The decoded JOSE header of the WPT from the example above is shown here:
 
 ~~~ json
-{
-  "alg": "EdDSA",
-  "typ": "wimse-proof+jwt"
-}
+{::include includes/thin-wpt-header.txt.out}
 ~~~
 {: title="Example WPT JOSE Header"}
 
 The decoded JWT claims of the WPT from the example above are shown here:
 
 ~~~ json
-{
-  "ath": "CL4wjfpRmNf-bdYIbYLnV9d5rMARGwKYE10wUwzC0jI",
-  "aud": "https://workload.example.com/path",
-  "exp": 1740755048,
-  "jti": "0c740386ca1dcad37de1b5f9de1b0705",
-  "wth": "aA0W_oFJK7qV7zYhcmzR1KOXVCHjd2x6c4sOQLvE90Y"
-}
+{::include includes/thin-wpt-claims.txt.out}
 ~~~
 {: title="Example WPT Claims"}
 
 An example of an HTTP request with both the WIT and WPT from prior examples is shown below:
 
 ~~~ http
-{::include includes/wpt-request.txt.out}
+{::include includes/thin-wpt-request.txt.out}
 ~~~
 {: title="Example HTTP Request with WIT and WPT"}
 
@@ -503,21 +466,21 @@ Following is a non-normative example of a signed request and a signed response,
 where the caller is using the keys specified in {{example-caller-jwk}}.
 
 ~~~ http
-{::include includes/sigs-request.txt.out}
+{::include includes/thin-sigs-request.txt.out}
 ~~~
 {: title="Signed Request"}
 
 Assuming that the workload being called has the following keypair:
 
 ~~~ jwk
-{::include includes/sigs-svcb-jwk.txt}
+{::include includes/workload-key.txt.out}
 ~~~
 {: title="Callee Private Key"}
 
 A signed response would be:
 
 ~~~ http
-{::include includes/sigs-response.txt.out}
+{::include includes/thin-sigs-response.txt.out}
 ~~~
 {: title="Signed Response"}
 
@@ -875,6 +838,39 @@ the Message Signature-based alternative.
 
 * Initial WG draft, an exact copy of draft-sheffer-wimse-s2s-protocol-00
 * Added this document history section
+
+# Examples
+
+## Workload Proof Token
+
+The following example shows the full version of a Workload Identity Token
+and corresponding Workload Proof Token including all the claims mentioned
+in this specification. The signing material is the same as the examples in
+the main part of this document.
+
+The Workload Identity Token:
+
+~~~
+{::include includes/full-wit.txt.out}
+~~~
+{: #full-example-wit title="Workload Identity Token (WIT) with all claims"}
+
+~~~ json
+{::include includes/full-wit-claims.txt.out}
+~~~
+{: #full-example-wit-decoded title="Decoded claims of the Workload Identity Token"}
+
+~~~
+{::include includes/full-wpt.txt.out}
+~~~
+{: #full-example-wpt title="Workload Proof Token (WPT) with all claims"}
+
+and it's decoded claims
+
+~~~ json
+{::include includes/full-wpt-claims.txt.out}
+~~~
+{: #full-example-wpt-decoded title="Decoded claims of the Workload Proof Token"}
 
 # Acknowledgments
 {:numbered="false"}

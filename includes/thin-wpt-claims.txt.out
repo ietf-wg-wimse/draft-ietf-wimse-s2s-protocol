@@ -1,0 +1,5 @@
+{
+  "aud": "https://workload.example.com/path",
+  "exp": 1751889900,
+  "jti": "ba843ee8d63e8c4ffe1cebea546d8fac"
+}
