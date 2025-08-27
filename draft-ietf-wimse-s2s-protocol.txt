@@ -5,12 +5,12 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 27 February 2026                                       CyberArk
+Expires: 28 February 2026                                       CyberArk
                                                       A. Schwenkschuster
                                                                    SPIRL
                                                               Y. Sheffer
                                                                   Intuit
-                                                          26 August 2025
+                                                          27 August 2025
 
 
                WIMSE Workload-to-Workload Authentication
@@ -66,7 +66,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 27 February 2026.
+   This Internet-Draft will expire on 28 February 2026.
 
 Copyright Notice
 
@@ -92,7 +92,8 @@ Table of Contents
    3.  Application Level Workload-to-Workload Authentication
      3.1.  The Workload Identity Token
        3.1.1.  The WIT HTTP Header
-       3.1.2.  A note on iss claim and key distribution
+       3.1.2.  Including Additional Claims
+       3.1.3.  A note on iss claim and key distribution
      3.2.  Option 1: DPoP-Inspired Authentication
      3.3.  Option 2: Authentication Based on HTTP Message Signatures
      3.4.  Comparing the DPoP Inspired Option with Message Signatures
@@ -327,7 +328,7 @@ Table of Contents
 
       -  iss: The issuer of the token, which is the Identity Server,
          represented by a URI.  The iss claim is RECOMMENDED but
-         optional, see Section 3.1.2 for more.
+         optional, see Section 3.1.3 for more.
 
       -  sub: The subject of the token, which is the identity of the
          workload, represented by a URI.  See [I-D.ietf-wimse-arch] for
@@ -502,7 +503,27 @@ Table of Contents
    IDENTITY-TOKEN, etc., are all valid and equivalent header field
    names.  However, case is significant in the header field value.
 
-3.1.2.  A note on iss claim and key distribution
+3.1.2.  Including Additional Claims
+
+   The WIT contains JSON structures and therefore can be trivially
+   extended by adding more claims beyond those defined in the current
+   specification.  This, however, could result in interoperability
+   issues, which the following rules are addressing.
+
+   *  To ensure interoperability in WIMSE environments, the use of
+      Private claim names (Sec. 4.3 of [RFC7519]) is NOT RECOMMENDED.
+
+   *  In closed environments, deployers MAY freely add claims to the
+      WIT.  Such claims SHOULD be collision-resistant, such as
+      example.com/myclaim.
+
+   *  A recipient that does not understand such claims MUST ignore them,
+      as per Sec. 4 of [RFC7519].
+
+   *  Outside of closed environments, new claims MUST be registered with
+      IANA [IANA.JWT.CLAIMS] before they can be used.
+
+3.1.3.  A note on iss claim and key distribution
 
    It is RECOMMENDED that the WIT carries an iss claim.  This
    specification itself does not make use of a potential iss claim but
@@ -595,6 +616,9 @@ Table of Contents
 
    To clarify: the ath, tth and oth claims are each mandatory if the
    respective tokens are included in the request.
+
+   The rules for using non-standard claims in WPTs are similar to the
+   rules for WITs, Section 3.1.2.
 
    An example WPT might look like the following:
 

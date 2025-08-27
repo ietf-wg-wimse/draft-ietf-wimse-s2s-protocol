@@ -1062,7 +1062,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Campbell, et al.</td>
-<td class="center">Expires 27 February 2026</td>
+<td class="center">Expires 28 February 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1075,12 +1075,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-wimse-s2s-protocol-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-08-26" class="published">26 August 2025</time>
+<time datetime="2025-08-27" class="published">27 August 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-02-27">27 February 2026</time></dd>
+<dd class="expires"><time datetime="2026-02-28">28 February 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1152,7 +1152,7 @@ would be authenticated at the application level.<a href="#section-abstract-1" cl
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 27 February 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 28 February 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1208,7 +1208,10 @@ would be authenticated at the application level.<a href="#section-abstract-1" cl
                     <p id="section-toc.1-1.3.2.1.2.1.1"><a href="#section-3.1.1" class="auto internal xref">3.1.1</a>.  <a href="#name-the-wit-http-header" class="internal xref">The WIT HTTP Header</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.2">
-                    <p id="section-toc.1-1.3.2.1.2.2.1"><a href="#section-3.1.2" class="auto internal xref">3.1.2</a>.  <a href="#name-a-note-on-iss-claim-and-key" class="internal xref">A note on <code>iss</code> claim and key distribution</a></p>
+                    <p id="section-toc.1-1.3.2.1.2.2.1"><a href="#section-3.1.2" class="auto internal xref">3.1.2</a>.  <a href="#name-including-additional-claims" class="internal xref">Including Additional Claims</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.3">
+                    <p id="section-toc.1-1.3.2.1.2.3.1"><a href="#section-3.1.3" class="auto internal xref">3.1.3</a>.  <a href="#name-a-note-on-iss-claim-and-key" class="internal xref">A note on <code>iss</code> claim and key distribution</a></p>
 </li>
                 </ul>
 </li>
@@ -1576,7 +1579,7 @@ It is issued by the Identity Server and binds a public key to the workload ident
             <p id="section-3.1-3.2.1">in the JWT claims:<a href="#section-3.1-3.2.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.1-3.2.2.1">
-                <p id="section-3.1-3.2.2.1.1"><code>iss</code>: The issuer of the token, which is the Identity Server, represented by a URI. The <code>iss</code> claim is <span class="bcp14">RECOMMENDED</span> but optional, see <a href="#wit-iss-note" class="auto internal xref">Section 3.1.2</a> for more.<a href="#section-3.1-3.2.2.1.1" class="pilcrow">¶</a></p>
+                <p id="section-3.1-3.2.2.1.1"><code>iss</code>: The issuer of the token, which is the Identity Server, represented by a URI. The <code>iss</code> claim is <span class="bcp14">RECOMMENDED</span> but optional, see <a href="#wit-iss-note" class="auto internal xref">Section 3.1.3</a> for more.<a href="#section-3.1-3.2.2.1.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-3.1-3.2.2.2">
                 <p id="section-3.1-3.2.2.2.1"><code>sub</code>: The subject of the token, which is the identity of the workload, represented by a URI. See <span>[<a href="#I-D.ietf-wimse-arch" class="cite xref">I-D.ietf-wimse-arch</a>]</span> for details of the Workload Identifier. And see <a href="#granular-auth" class="auto internal xref">Section 1.3</a> for security implications of these identifiers.<a href="#section-3.1-3.2.2.2.1" class="pilcrow">¶</a></p>
@@ -1765,13 +1768,36 @@ thus, <code>Workload-Identity-Token</code>, <code>workload-identity-token</code>
 etc., are all valid and equivalent header field names. However, case is significant in the header field value.<a href="#section-3.1.1-6" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="wit-iss-note">
+<div id="add-claims">
 <section id="section-3.1.2">
-          <h4 id="name-a-note-on-iss-claim-and-key">
-<a href="#section-3.1.2" class="section-number selfRef">3.1.2. </a><a href="#name-a-note-on-iss-claim-and-key" class="section-name selfRef">A note on <code>iss</code> claim and key distribution</a>
+          <h4 id="name-including-additional-claims">
+<a href="#section-3.1.2" class="section-number selfRef">3.1.2. </a><a href="#name-including-additional-claims" class="section-name selfRef">Including Additional Claims</a>
           </h4>
-<p id="section-3.1.2-1">It is <span class="bcp14">RECOMMENDED</span> that the WIT carries an <code>iss</code> claim. This specification itself does not make use of a potential <code>iss</code> claim but also carries the trust domain in the workload identifier (see <span>[<a href="#I-D.ietf-wimse-arch" class="cite xref">I-D.ietf-wimse-arch</a>]</span> for a definition
-of the identifier and related rules). Implementations <span class="bcp14">MAY</span> include the <code>iss</code> claim in the form of a <code>https</code> URL to facilitate key distribution via mechanisms like the <code>jwks_uri</code> from <span>[<a href="#RFC8414" class="cite xref">RFC8414</a>]</span> but alternative key distribution methods may make use of the trust domain included in the workload identifier which is carried in the mandatory <code>sub</code> claim.<a href="#section-3.1.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.1.2-1">The WIT contains JSON structures and therefore can be trivially extended by adding more claims beyond those defined in the current specification.
+This, however, could result in interoperability issues, which the following rules are addressing.<a href="#section-3.1.2-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.1.2-2.1">
+              <p id="section-3.1.2-2.1.1">To ensure interoperability in WIMSE environments, the use of Private claim names (Sec. 4.3 of <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>) is <span class="bcp14">NOT RECOMMENDED</span>.<a href="#section-3.1.2-2.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3.1.2-2.2">
+              <p id="section-3.1.2-2.2.1">In closed environments, deployers <span class="bcp14">MAY</span> freely add claims to the WIT. Such claims <span class="bcp14">SHOULD</span> be collision-resistant, such as <code>example.com/myclaim</code>.<a href="#section-3.1.2-2.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3.1.2-2.3">
+              <p id="section-3.1.2-2.3.1">A recipient that does not understand such claims <span class="bcp14">MUST</span> ignore them, as per Sec. 4 of <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>.<a href="#section-3.1.2-2.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3.1.2-2.4">
+              <p id="section-3.1.2-2.4.1">Outside of closed environments, new claims <span class="bcp14">MUST</span> be registered with IANA <span>[<a href="#IANA.JWT.CLAIMS" class="cite xref">IANA.JWT.CLAIMS</a>]</span> before they can be used.<a href="#section-3.1.2-2.4.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+</section>
+</div>
+<div id="wit-iss-note">
+<section id="section-3.1.3">
+          <h4 id="name-a-note-on-iss-claim-and-key">
+<a href="#section-3.1.3" class="section-number selfRef">3.1.3. </a><a href="#name-a-note-on-iss-claim-and-key" class="section-name selfRef">A note on <code>iss</code> claim and key distribution</a>
+          </h4>
+<p id="section-3.1.3-1">It is <span class="bcp14">RECOMMENDED</span> that the WIT carries an <code>iss</code> claim. This specification itself does not make use of a potential <code>iss</code> claim but also carries the trust domain in the workload identifier (see <span>[<a href="#I-D.ietf-wimse-arch" class="cite xref">I-D.ietf-wimse-arch</a>]</span> for a definition
+of the identifier and related rules). Implementations <span class="bcp14">MAY</span> include the <code>iss</code> claim in the form of a <code>https</code> URL to facilitate key distribution via mechanisms like the <code>jwks_uri</code> from <span>[<a href="#RFC8414" class="cite xref">RFC8414</a>]</span> but alternative key distribution methods may make use of the trust domain included in the workload identifier which is carried in the mandatory <code>sub</code> claim.<a href="#section-3.1.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1859,10 +1885,11 @@ WPT =  JWT
 </li>
         </ul>
 <p id="section-3.2-6">To clarify: the <code>ath</code>, <code>tth</code> and <code>oth</code> claims are each mandatory if the respective tokens are included in the request.<a href="#section-3.2-6" class="pilcrow">¶</a></p>
-<p id="section-3.2-7">An example WPT might look like the following:<a href="#section-3.2-7" class="pilcrow">¶</a></p>
+<p id="section-3.2-7">The rules for using non-standard claims in WPTs are similar to the rules for WITs, <a href="#add-claims" class="auto internal xref">Section 3.1.2</a>.<a href="#section-3.2-7" class="pilcrow">¶</a></p>
+<p id="section-3.2-8">An example WPT might look like the following:<a href="#section-3.2-8" class="pilcrow">¶</a></p>
 <span id="name-example-workload-proof-toke"></span><div id="example-wpt">
 <figure id="figure-10">
-          <div class="lang-jwt sourcecode" id="section-3.2-8.1">
+          <div class="lang-jwt sourcecode" id="section-3.2-9.1">
 <pre>
 =============== NOTE: '\' line wrapping per RFC 8792 ================
 
@@ -1879,9 +1906,9 @@ ei1bBQ
 <a href="#name-example-workload-proof-toke" class="selfRef">Example Workload Proof Token (WPT)</a>
           </figcaption></figure>
 </div>
-<p id="section-3.2-9">The decoded JOSE header of the WPT from the example above is shown here:<a href="#section-3.2-9" class="pilcrow">¶</a></p>
+<p id="section-3.2-10">The decoded JOSE header of the WPT from the example above is shown here:<a href="#section-3.2-10" class="pilcrow">¶</a></p>
 <span id="name-example-wpt-jose-header"></span><figure id="figure-11">
-          <div class="lang-json sourcecode" id="section-3.2-10.1">
+          <div class="lang-json sourcecode" id="section-3.2-11.1">
 <pre>
 {
   "alg": "EdDSA",
@@ -1892,9 +1919,9 @@ ei1bBQ
 <figcaption><a href="#figure-11" class="selfRef">Figure 11</a>:
 <a href="#name-example-wpt-jose-header" class="selfRef">Example WPT JOSE Header</a>
           </figcaption></figure>
-<p id="section-3.2-11">The decoded JWT claims of the WPT from the example above are shown here:<a href="#section-3.2-11" class="pilcrow">¶</a></p>
+<p id="section-3.2-12">The decoded JWT claims of the WPT from the example above are shown here:<a href="#section-3.2-12" class="pilcrow">¶</a></p>
 <span id="name-example-wpt-claims"></span><figure id="figure-12">
-          <div class="lang-json sourcecode" id="section-3.2-12.1">
+          <div class="lang-json sourcecode" id="section-3.2-13.1">
 <pre>
 {
   "ath": "CL4wjfpRmNf-bdYIbYLnV9d5rMARGwKYE10wUwzC0jI",
@@ -1908,9 +1935,9 @@ ei1bBQ
 <figcaption><a href="#figure-12" class="selfRef">Figure 12</a>:
 <a href="#name-example-wpt-claims" class="selfRef">Example WPT Claims</a>
           </figcaption></figure>
-<p id="section-3.2-13">An example of an HTTP request with both the WIT and WPT from prior examples is shown below:<a href="#section-3.2-13" class="pilcrow">¶</a></p>
+<p id="section-3.2-14">An example of an HTTP request with both the WIT and WPT from prior examples is shown below:<a href="#section-3.2-14" class="pilcrow">¶</a></p>
 <span id="name-example-http-request-with-w"></span><figure id="figure-13">
-          <div class="lang-http sourcecode" id="section-3.2-14.1">
+          <div class="lang-http sourcecode" id="section-3.2-15.1">
 <pre>
 =============== NOTE: '\' line wrapping per RFC 8792 ================
 
@@ -1939,54 +1966,54 @@ Ou0SzihiG6HCsGwslfo4WdvnH5AQ
 <figcaption><a href="#figure-13" class="selfRef">Figure 13</a>:
 <a href="#name-example-http-request-with-w" class="selfRef">Example HTTP Request with WIT and WPT</a>
           </figcaption></figure>
-<p id="section-3.2-15">To validate the WPT in the request, the recipient <span class="bcp14">MUST</span> ensure the following:<a href="#section-3.2-15" class="pilcrow">¶</a></p>
+<p id="section-3.2-16">To validate the WPT in the request, the recipient <span class="bcp14">MUST</span> ensure the following:<a href="#section-3.2-16" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-3.2-16.1">
-            <p id="section-3.2-16.1.1">There is exactly one <code>Workload-Proof-Token</code> header field in the request.<a href="#section-3.2-16.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-3.2-17.1">
+            <p id="section-3.2-17.1.1">There is exactly one <code>Workload-Proof-Token</code> header field in the request.<a href="#section-3.2-17.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.2-16.2">
-            <p id="section-3.2-16.2.1">The <code>Workload-Proof-Token</code> header field value is a single and well-formed JWT.<a href="#section-3.2-16.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-3.2-17.2">
+            <p id="section-3.2-17.2.1">The <code>Workload-Proof-Token</code> header field value is a single and well-formed JWT.<a href="#section-3.2-17.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.2-16.3">
-            <p id="section-3.2-16.3.1">The signature algorithm in the <code>alg</code> JOSE header string-equal matches the <code>alg</code> attribute of the <code>jwk</code> in the <code>cnf</code> claim of the WIT.<a href="#section-3.2-16.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-3.2-17.3">
+            <p id="section-3.2-17.3.1">The signature algorithm in the <code>alg</code> JOSE header string-equal matches the <code>alg</code> attribute of the <code>jwk</code> in the <code>cnf</code> claim of the WIT.<a href="#section-3.2-17.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.2-16.4">
-            <p id="section-3.2-16.4.1">The WPT signature is valid using the public key from the confirmation claim of the WIT.<a href="#section-3.2-16.4.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-3.2-17.4">
+            <p id="section-3.2-17.4.1">The WPT signature is valid using the public key from the confirmation claim of the WIT.<a href="#section-3.2-17.4.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.2-16.5">
-            <p id="section-3.2-16.5.1">The <code>typ</code> JOSE header parameter of the WPT conveys a media type of <code>wimse-proof+jwt</code>.<a href="#section-3.2-16.5.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-3.2-17.5">
+            <p id="section-3.2-17.5.1">The <code>typ</code> JOSE header parameter of the WPT conveys a media type of <code>wimse-proof+jwt</code>.<a href="#section-3.2-17.5.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.2-16.6">
-            <p id="section-3.2-16.6.1">The <code>aud</code> claim of the WPT matches the target URI, or an acceptable alias or normalization thereof, of the HTTP request
+          <li class="normal" id="section-3.2-17.6">
+            <p id="section-3.2-17.6.1">The <code>aud</code> claim of the WPT matches the target URI, or an acceptable alias or normalization thereof, of the HTTP request
  in which the WPT was received, ignoring any query and fragment parts. See also <a href="#granular-auth" class="auto internal xref">Section 1.3</a> for implementation advice
- on this verification check.<a href="#section-3.2-16.6.1" class="pilcrow">¶</a></p>
+ on this verification check.<a href="#section-3.2-17.6.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.2-16.7">
-            <p id="section-3.2-16.7.1">The <code>exp</code> claim is present and conveys a time that has not passed. WPTs with an expiration time unreasonably
- far in the future <span class="bcp14">SHOULD</span> be rejected.<a href="#section-3.2-16.7.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-3.2-17.7">
+            <p id="section-3.2-17.7.1">The <code>exp</code> claim is present and conveys a time that has not passed. WPTs with an expiration time unreasonably
+ far in the future <span class="bcp14">SHOULD</span> be rejected.<a href="#section-3.2-17.7.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.2-16.8">
-            <p id="section-3.2-16.8.1">The <code>wth</code> claim is present and matches the hash of the token value conveyed in the <code>Workload-Identity-Token</code> header.<a href="#section-3.2-16.8.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-3.2-17.8">
+            <p id="section-3.2-17.8.1">The <code>wth</code> claim is present and matches the hash of the token value conveyed in the <code>Workload-Identity-Token</code> header.<a href="#section-3.2-17.8.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.2-16.9">
-            <p id="section-3.2-16.9.1">It is <span class="bcp14">RECOMMENDED</span> to check that the value of the <code>jti</code> claim has not been used before in the time window in which the
- respective WPT would be considered valid.<a href="#section-3.2-16.9.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-3.2-17.9">
+            <p id="section-3.2-17.9.1">It is <span class="bcp14">RECOMMENDED</span> to check that the value of the <code>jti</code> claim has not been used before in the time window in which the
+ respective WPT would be considered valid.<a href="#section-3.2-17.9.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.2-16.10">
-            <p id="section-3.2-16.10.1">If presented in conjunction with an OAuth access token, the value of the <code>ath</code> claim matches the hash of that token's value.<a href="#section-3.2-16.10.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-3.2-17.10">
+            <p id="section-3.2-17.10.1">If presented in conjunction with an OAuth access token, the value of the <code>ath</code> claim matches the hash of that token's value.<a href="#section-3.2-17.10.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.2-16.11">
-            <p id="section-3.2-16.11.1">If presented in conjunction with a Txn-Token, the value of the <code>tth</code> claim matches the hash of that token's value.<a href="#section-3.2-16.11.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-3.2-17.11">
+            <p id="section-3.2-17.11.1">If presented in conjunction with a Txn-Token, the value of the <code>tth</code> claim matches the hash of that token's value.<a href="#section-3.2-17.11.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.2-16.12">
-            <p id="section-3.2-16.12.1">If presented in conjunction with a token conveying end-user identity or authorization context, the value of
- the <code>oth</code> claim matches the hash of that token's value.<a href="#section-3.2-16.12.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-3.2-17.12">
+            <p id="section-3.2-17.12.1">If presented in conjunction with a token conveying end-user identity or authorization context, the value of
+ the <code>oth</code> claim matches the hash of that token's value.<a href="#section-3.2-17.12.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.2-16.13">
-            <p id="section-3.2-16.13.1">If the <code>oth</code> claim is present, verify the hashes of all tokens listed in the <code>oth</code> claim per the default behavior
+          <li class="normal" id="section-3.2-17.13">
+            <p id="section-3.2-17.13.1">If the <code>oth</code> claim is present, verify the hashes of all tokens listed in the <code>oth</code> claim per the default behavior
  defined in <a href="#dpop-esque-auth" class="auto internal xref">Section 3.2</a> or as specified by an application specific profile. If the <code>oth</code> claim contains entries
  that are not understood by the recipient, the WPT <span class="bcp14">MUST</span> be rejected. Conversely, additional tokens not covered by
- the <code>oth</code> claim <span class="bcp14">MUST NOT</span> be used by the recipient to make authorization decisions.<a href="#section-3.2-16.13.1" class="pilcrow">¶</a></p>
+ the <code>oth</code> claim <span class="bcp14">MUST NOT</span> be used by the recipient to make authorization decisions.<a href="#section-3.2-17.13.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
