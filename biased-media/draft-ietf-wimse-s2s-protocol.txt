@@ -5,12 +5,12 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 27 February 2026                                       CyberArk
+Expires: 28 February 2026                                       CyberArk
                                                       A. Schwenkschuster
                                                                    SPIRL
                                                               Y. Sheffer
                                                                   Intuit
-                                                          26 August 2025
+                                                          27 August 2025
 
 
                WIMSE Workload-to-Workload Authentication
@@ -66,7 +66,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 27 February 2026.
+   This Internet-Draft will expire on 28 February 2026.
 
 Copyright Notice
 
@@ -804,8 +804,8 @@ Table of Contents
 
    Following is a non-normative example of a signed request and a signed
    response, where the caller is using the keys specified in Figure 5
-   (it is actually using a different key but that'll need to be fixed
-   later).
+   (TODO: it is actually using a different key but that'll need to be
+   fixed later).
 
    =============== NOTE: '\' line wrapping per RFC 8792 ================
 
