@@ -1,0 +1,10 @@
+{
+  "aud": "https://workload.example.com/path",
+  "exp": 1751889900,
+  "jti": "71e796a2dc2dc25a5b74b2e129705e27",
+  "ath": "CL4wjfpRmNf-bdYIbYLnV9d5rMARGwKYE10wUwzC0jI",
+  "tth": "AR5PzyYXtG9u5oBrw6rejz75mUTiMoOkiXHGCqeqCyY",
+  "oth": {
+    "X-Session-Token": "9PA7bUYRfLk5WY8Th78ppICZLDAbNo9C6mF8svB9bTw"
+  }
+}

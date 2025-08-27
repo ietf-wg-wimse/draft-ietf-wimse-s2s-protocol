@@ -1,0 +1,13 @@
+{
+  "exp": 1751893200,
+  "iat": 1751889600,
+  "sub": "wimse://example.com/specific-workload",
+  "cnf": {
+    "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "alg": "EdDSA",
+      "x": "RqRAXyOd4T6dsFvdcGzLMpwLGaniiAyeUr_hlmQcuHY"
+    }
+  }
+}

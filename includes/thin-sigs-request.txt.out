@@ -1,0 +1,16 @@
+=============== NOTE: '\' line wrapping per RFC 8792 ================
+
+GET /gimme-ice-cream?flavor=vanilla HTTP/1.1
+Host: example.com
+Signature: wimse=:TBZ2flihKpF+86j6hWz6OF01mgxE9iHVoj1DaosPtBDi88EhN3\
+31FZXseTIOC6mMaSwvxkI/IH64MlPDfXvwDw==:
+Signature-Input: wimse=("@method" "@request-target" "workload-identi\
+ty-token");created=1756286204;expires=1756286264;nonce="abcd1111";ta\
+g="wimse-workload-to-workload"
+Workload-Identity-Token: eyJhbGciOiJFUzI1NiIsImtpZCI6Ikp1bmUgNSIsInR\
+5cCI6IndpbXNlLWlkK2p3dCJ9.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3\
+J2IjoiRWQyNTUxOSIsImt0eSI6Ik9LUCIsIngiOiJScVJBWHlPZDRUNmRzRnZkY0d6TE\
+1wd0xHYW5paUF5ZVVyX2hsbVFjdUhZIn19LCJleHAiOjE3NTE4OTMyMDAsImlhdCI6MT\
+c1MTg4OTYwMCwic3ViIjoid2ltc2U6Ly9leGFtcGxlLmNvbS9zcGVjaWZpYy13b3JrbG\
+9hZCJ9.5jXrfn5pXED7JabpudqsShaXJiK64z1Chs3soiGSgpGFG7em4fRDO8Zpa2k_P\
+4SS7sx7i9AmQyn4NIc5A5JfLA

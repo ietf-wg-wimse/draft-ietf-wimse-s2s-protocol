@@ -1,0 +1,4 @@
+{
+  "alg": "EdDSA",
+  "typ": "wimse-proof+jwt"
+}

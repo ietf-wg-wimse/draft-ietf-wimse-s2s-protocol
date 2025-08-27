@@ -14,8 +14,8 @@ else
 endif
 endif
 
-generate-includes: 
-	cd includes; ./make-wit-header.sh
+generate-includes: $(LIBDIR)/main.mk
+	cd ./examples; go run .; cd ../
 	find ./includes/*.txt -maxdepth 1 -type f -exec includes/rfcfold.sh -i {} -o {}.out \;
 
 spell:

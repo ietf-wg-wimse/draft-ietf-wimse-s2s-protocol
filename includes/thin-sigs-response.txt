@@ -1,0 +1,9 @@
+HTTP/1.1 404 Not Found
+Connection: close
+Content-Digest: sha-256=:47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=:
+Content-Type: text/plain
+Signature: wimse=:/oBuwy4UzI755oNNdGNbEpDhTX6Ak9kPhXJyvwmcaTQhkCVSu/DeGutsg1A1qRrk7Yz/UOKKd6IbwSujY/9/DA==:
+Signature-Input: wimse=("@status" "workload-identity-token" "content-type" "content-digest" "@method";req "@request-target";req);created=1756286204;expires=1756286264;nonce="abcd2222";tag="wimse-workload-to-workload"
+Workload-Identity-Token: eyJhbGciOiJFUzI1NiIsImtpZCI6Ikp1bmUgNSIsInR5cCI6IndpbXNlLWlkK2p3dCJ9.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J2IjoiRWQyNTUxOSIsImt0eSI6Ik9LUCIsIngiOiJScVJBWHlPZDRUNmRzRnZkY0d6TE1wd0xHYW5paUF5ZVVyX2hsbVFjdUhZIn19LCJleHAiOjE3NTE4OTMyMDAsImlhdCI6MTc1MTg4OTYwMCwic3ViIjoid2ltc2U6Ly9leGFtcGxlLmNvbS9zcGVjaWZpYy13b3JrbG9hZCJ9.5jXrfn5pXED7JabpudqsShaXJiK64z1Chs3soiGSgpGFG7em4fRDO8Zpa2k_P4SS7sx7i9AmQyn4NIc5A5JfLA
+
+No ice cream today.
