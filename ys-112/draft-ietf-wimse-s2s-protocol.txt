@@ -505,8 +505,8 @@ Table of Contents
 
 3.1.2.  Including Additional Claims
 
-   The WIT is a JSON structure and therefore can be trivially extended
-   by adding more claims beyond those defined in the current
+   The WIT contains JSON structures and therefore can be trivially
+   extended by adding more claims beyond those defined in the current
    specification.  This, however, could result in interoperability
    issues, which the following rules are addressing.
 
