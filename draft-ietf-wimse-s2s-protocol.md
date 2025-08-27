@@ -324,6 +324,16 @@ Note that per {{RFC9110}}, header field names are case insensitive;
 thus, `Workload-Identity-Token`, `workload-identity-token`, `WORKLOAD-IDENTITY-TOKEN`,
 etc., are all valid and equivalent header field names. However, case is significant in the header field value.
 
+### Including Additional Claims {#add-claims}
+
+The WIT contains JSON structures and therefore can be trivially extended by adding more claims beyond those defined in the current specification.
+This, however, could result in interoperability issues, which the following rules are addressing.
+
+* To ensure interoperability in WIMSE environments, the use of Private claim names (Sec. 4.3 of {{RFC7519}}) is NOT RECOMMENDED.
+* In closed environments, deployers MAY freely add claims to the WIT. Such claims SHOULD be collision-resistant, such as `example.com/myclaim`.
+* A recipient that does not understand such claims MUST ignore them, as per Sec. 4 of {{RFC7519}}.
+* Outside of closed environments, new claims MUST be registered with IANA {{IANA.JWT.CLAIMS}} before they can be used.
+
 ### A note on `iss` claim and key distribution {#wit-iss-note}
 
 It is RECOMMENDED that the WIT carries an `iss` claim. This specification itself does not make use of a potential `iss` claim but also carries the trust domain in the workload identifier (see {{I-D.ietf-wimse-arch}} for a definition
@@ -380,6 +390,8 @@ A WPT MUST contain the following:
 
 
 To clarify: the `ath`, `tth` and `oth` claims are each mandatory if the respective tokens are included in the request.
+
+The rules for using non-standard claims in WPTs are similar to the rules for WITs, {{add-claims}}.
 
 An example WPT might look like the following:
 
