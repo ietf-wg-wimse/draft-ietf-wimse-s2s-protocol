@@ -326,7 +326,7 @@ etc., are all valid and equivalent header field names. However, case is signific
 
 ### Including Additional Claims {#add-claims}
 
-The WIT is a JSON structure and therefore can be trivially extended by adding more claims beyond those defined in the current specification.
+The WIT contains JSON structures and therefore can be trivially extended by adding more claims beyond those defined in the current specification.
 This, however, could result in interoperability issues, which the following rules are addressing.
 
 * To ensure interoperability in WIMSE environments, the use of Private claim names (Sec. 4.3 of {{RFC7519}}) is NOT RECOMMENDED.
