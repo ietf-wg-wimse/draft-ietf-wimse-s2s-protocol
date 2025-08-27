@@ -5,12 +5,12 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 21 February 2026                                       CyberArk
+Expires: 28 February 2026                                       CyberArk
                                                       A. Schwenkschuster
                                                                    SPIRL
                                                               Y. Sheffer
                                                                   Intuit
-                                                          20 August 2025
+                                                          27 August 2025
 
 
                WIMSE Workload-to-Workload Authentication
@@ -66,7 +66,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 21 February 2026.
+   This Internet-Draft will expire on 28 February 2026.
 
 Copyright Notice
 
@@ -506,13 +506,16 @@ Table of Contents
 3.1.2.  Including Additional Claims
 
    The WIT is a JSON structure and therefore can be trivially extended
-   by adding more claims than are defined in the current specification.
-   This, however, could result in interoperability issues, which the
-   following rules are addressing.
+   by adding more claims beyond those defined in the current
+   specification.  This, however, could result in interoperability
+   issues, which the following rules are addressing.
 
-   *  Deployers may freely add claims to the WIT beyond those defined
-      here, in closed environments.  Such claims SHOULD be collision-
-      resistant, such as example.com/myclaim.
+   *  To ensure interoperability in WIMSE environments, the use of
+      Private claim names (Sec. 4.3 of [RFC7519]) is NOT RECOMMENDED.
+
+   *  In closed environments, deployers MAY freely add claims to the
+      WIT.  Such claims SHOULD be collision-resistant, such as
+      example.com/myclaim.
 
    *  A recipient that does not understand such claims MUST ignore them,
       as per Sec. 4 of [RFC7519].
