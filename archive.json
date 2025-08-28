@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-08-26T01:23:20.619703+00:00",
+  "timestamp": "2025-08-28T01:20:13.135859+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -161,7 +161,7 @@
       "id": "I_kwDOLJmm786MJ3dY",
       "title": "Authorization header and error responses",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/15",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -172,8 +172,8 @@
       ],
       "body": "Examples in the the Message Signatures section do not include an Authorization header. But for a 401 response (which is likely if the workload-to-workload call is disallowed by policy) the spec requires WWW-Authenticate headers to be included. How can we return a 401, or do we need a whole new HTTP status code?",
       "createdAt": "2024-06-13T15:06:05Z",
-      "updatedAt": "2025-08-12T14:41:59Z",
-      "closedAt": null,
+      "updatedAt": "2025-08-26T14:13:13Z",
+      "closedAt": "2025-08-26T14:13:13Z",
       "comments": [
         {
           "author": "yaronf",
@@ -441,15 +441,15 @@
       "id": "I_kwDOLJmm786N-o8k",
       "title": "Workload identity URI in other fields",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/28",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "jsalowey",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "The WIT URI appears in the subject of a cert and token, but shouild it also be used for the issuer of the token and the CA subject name of a certificate.   ",
       "createdAt": "2024-06-29T23:30:57Z",
-      "updatedAt": "2025-07-01T03:41:43Z",
-      "closedAt": null,
+      "updatedAt": "2025-08-26T14:22:07Z",
+      "closedAt": "2025-08-26T14:22:07Z",
       "comments": [
         {
           "author": "yaronf",
@@ -1487,15 +1487,15 @@
       "id": "I_kwDOLJmm786acFHI",
       "title": "Host name validation when WIT is used",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/69",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Sec. 6, 1st bullet has \"Host name validation according to Section 5 MUST be performed.\" I think server-only \"standard\" TLS validation is sufficient to mitigate this threat, but this text implies that client host name validation is also needed.\r\n\r\ncc: @jsalowey ",
       "createdAt": "2024-10-16T08:18:19Z",
-      "updatedAt": "2024-10-16T08:25:54Z",
-      "closedAt": null,
+      "updatedAt": "2025-08-26T14:14:12Z",
+      "closedAt": "2025-08-26T14:14:12Z",
       "comments": []
     },
     {
@@ -2217,7 +2217,7 @@
       "id": "I_kwDOLJmm786uFUdi",
       "title": "Additional claims in WPT & WIT",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/112",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "sorindumitru",
       "authorAssociation": "NONE",
       "assignees": [
@@ -2228,8 +2228,8 @@
       ],
       "body": "During the SPIFFE side of WIMSE discussions we talked about having the ability of the WPT signer (the workload) to add additional claims inside the token. There's nothing preventing the workload from doing this, so to allow better interoperability of implementations it would be good if there was some prescribed way of doing this.\n\nThe main use case for this would be to further scope down the token to a specific request. For example in the case of HTTP this could take the form of `htm` and `htu` field or even a field for a kind of signature. The WPT could then be treated as a sort of protocol agnostic token that can be adapted to various protocols. We could even specify standard ways of doing it for things such as HTTP.\n\nThe same fields could also be used in other non-protocol specific ways. For example for a CI use case a validator could validate that the token comes from a CI worker and then from the additional claims it can determine which jobs it was running.\n\nThis is currently somewhat weakly specified by the standard through the `oth` field. A workload could include a token with the additional fields and binding by including the hash of it in `oth`. To me that seems like a roundabout way of doing it where we pay the extra price of encoding the information in this way and sending more bytes on the wire without getting any other benefits. It would be nice if we could just include the additional claims as a sub-object in a claim.\n\nAnother way of getting this extra claims is through transaction tokens. This forces the workload the leave aside the benefits of WIT/WPT, including in process signing of WPTs, and resort to talking to a 3rd party to get an extra token signed. For information that is mostly relevant to a point to point communication (e.g. I'm calling this RPC with this information), it would be much more useful if the workload could include that information in the token when creating the WPT.",
       "createdAt": "2025-03-14T15:58:54Z",
-      "updatedAt": "2025-07-29T14:55:14Z",
-      "closedAt": null,
+      "updatedAt": "2025-08-27T22:31:23Z",
+      "closedAt": "2025-08-27T22:31:23Z",
       "comments": [
         {
           "author": "yaronf",
@@ -2725,6 +2725,24 @@
       "body": "",
       "createdAt": "2025-08-25T23:09:54Z",
       "updatedAt": "2025-08-25T23:09:54Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 156,
+      "id": "I_kwDOLJmm787IBlvj",
+      "title": "Remove reference to WIT",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/156",
+      "state": "OPEN",
+      "author": "jsalowey",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [
+        "jsalowey"
+      ],
+      "labels": [],
+      "body": "Remove reference to WIT in first bullet of section 5.2 as it is extraneous",
+      "createdAt": "2025-08-26T14:19:26Z",
+      "updatedAt": "2025-08-26T14:19:29Z",
       "closedAt": null,
       "comments": []
     }
@@ -11508,7 +11526,7 @@
       "id": "PR_kwDOLJmm786jhp5z",
       "title": "Additional (non-standard) claims in WIT and WPT",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/151",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -11517,19 +11535,21 @@
         "bc-pi"
       ],
       "labels": [],
-      "body": "Closes #112.\r\n\r\nThis is *not* exactly what we discussed, but it looks consistent to me. Please review.",
+      "body": "Closes #112.",
       "createdAt": "2025-08-13T17:03:17Z",
-      "updatedAt": "2025-08-25T19:28:20Z",
+      "updatedAt": "2025-08-27T22:31:22Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "44dde15f2daceaa4760cf7fef69125226524af4d",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-112",
-      "headRefOid": "3525e607c01db884158b06ac269edf8a401497e1",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "ec55fa7efe3e1f8cd27b7f1f4bc111027f371349",
+      "closedAt": "2025-08-27T22:31:22Z",
+      "mergedAt": "2025-08-27T22:31:22Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "95ddc76f6c1c142e118ab1d42bc97f57c08b9b38"
+      },
       "comments": [],
       "reviews": [
         {
@@ -11697,6 +11717,99 @@
               "updatedAt": "2025-08-25T19:28:20Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm7868HI6J",
+          "commit": {
+            "abbreviatedOid": "3525e60"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-08-26T14:42:51Z",
+          "updatedAt": "2025-08-26T14:42:51Z",
+          "comments": [
+            {
+              "originalPosition": 11,
+              "body": "Rephrase in terms of Private claim names. such as \"Private Claim names are NOT RECOMMENDED because of interop issues\" ",
+              "createdAt": "2025-08-26T14:42:51Z",
+              "updatedAt": "2025-08-26T14:42:51Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm7868JCDn",
+          "commit": {
+            "abbreviatedOid": "3525e60"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-08-26T16:41:55Z",
+          "updatedAt": "2025-08-26T16:41:56Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "the WIT is not a JSON structure. it contains some JSON but is not JSON ",
+              "createdAt": "2025-08-26T16:41:56Z",
+              "updatedAt": "2025-08-26T16:41:56Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm7868dJCR",
+          "commit": {
+            "abbreviatedOid": "3525e60"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-08-27T21:06:32Z",
+          "updatedAt": "2025-08-27T21:06:32Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "github says this is outdated but who is it to day what's in style or not? ",
+              "createdAt": "2025-08-27T21:06:32Z",
+              "updatedAt": "2025-08-27T21:06:32Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm7868dJ7K",
+          "commit": {
+            "abbreviatedOid": "d2d9795"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-08-27T21:08:23Z",
+          "updatedAt": "2025-08-27T21:08:24Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "```suggestion\r\nThe WIT contains JSON structures and therefore can be trivially extended by adding more claims beyond those defined in the current specification.\r\n```",
+              "createdAt": "2025-08-27T21:08:24Z",
+              "updatedAt": "2025-08-27T21:08:24Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm7868dfyM",
+          "commit": {
+            "abbreviatedOid": "ec55fa7"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-08-27T21:48:15Z",
+          "updatedAt": "2025-08-27T21:48:15Z",
+          "comments": []
         }
       ]
     },
@@ -11710,21 +11823,367 @@
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
-      "body": "for #139\r\n\r\nchange wimse-id+jwt and wimse-proof+jwt to wit+jwt and wpt+jwt respectively \r\n \r\nupdate examples/main.go and try to make things that don't need to change not change\r\n\r\nstill todo is the http sig part(s)",
+      "body": "for #139\r\n\r\nchange wimse-id+jwt and wimse-proof+jwt to wit+jwt and wpt+jwt respectively \r\n \r\nupdate examples/main.go and try to make things that don't need to change not change\r\n\r\nupdated the typ value in WITs of http sigs ",
       "createdAt": "2025-08-25T23:05:48Z",
-      "updatedAt": "2025-08-25T23:08:50Z",
+      "updatedAt": "2025-08-27T11:04:12Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "44dde15f2daceaa4760cf7fef69125226524af4d",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "biased-media",
-      "headRefOid": "0fe9c3794ac40f3c6b88fa472e2cd8a50aac2f3e",
+      "headRefOid": "503d21e1e04665fbb8599ad3261f0a9180346c68",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm7868OA45",
+          "commit": {
+            "abbreviatedOid": "b4eb757"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-08-27T00:34:56Z",
+          "updatedAt": "2025-08-27T00:36:04Z",
+          "comments": [
+            {
+              "originalPosition": 80,
+              "body": "```suggestion\n(TODO: it is actually using a different key but that'll need to be fixed later).\n```",
+              "createdAt": "2025-08-27T00:34:57Z",
+              "updatedAt": "2025-08-27T00:36:04Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 154,
+      "id": "PR_kwDOLJmm786lUqbc",
+      "title": "add reason to not use 401",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/154",
+      "state": "MERGED",
+      "author": "jsalowey",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "addresses issue #15 ",
+      "createdAt": "2025-08-26T03:29:01Z",
+      "updatedAt": "2025-08-26T12:52:43Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "44dde15f2daceaa4760cf7fef69125226524af4d",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "err-code",
+      "headRefOid": "0c6fe5f51072dd4265b20813a54d54de9864b4c9",
+      "closedAt": "2025-08-26T12:52:42Z",
+      "mergedAt": "2025-08-26T12:52:42Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "96b04e42ccb4fcc370f2245aab8ae74e69ef81d0"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm7868D3c_",
+          "commit": {
+            "abbreviatedOid": "0c6fe5f"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-08-26T11:11:15Z",
+          "updatedAt": "2025-08-26T11:11:15Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm7868EceZ",
+          "commit": {
+            "abbreviatedOid": "0c6fe5f"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "good enough ",
+          "createdAt": "2025-08-26T11:49:08Z",
+          "updatedAt": "2025-08-26T11:49:08Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 155,
+      "id": "PR_kwDOLJmm786lUv2a",
+      "title": "clarify hostname validation pertains to client",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/155",
+      "state": "MERGED",
+      "author": "jsalowey",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "addresses issue #69 ",
+      "createdAt": "2025-08-26T03:43:10Z",
+      "updatedAt": "2025-08-26T12:52:49Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "44dde15f2daceaa4760cf7fef69125226524af4d",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "hostname-server",
+      "headRefOid": "2d92735aab579811380b7c31d39483eda85cc391",
+      "closedAt": "2025-08-26T12:52:49Z",
+      "mergedAt": "2025-08-26T12:52:49Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "bc9062b6e841d66da6a9db792ca03d24ab612fd2"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm7868D4LG",
+          "commit": {
+            "abbreviatedOid": "2d92735"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-08-26T11:12:20Z",
+          "updatedAt": "2025-08-26T11:12:20Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm7868Ec4d",
+          "commit": {
+            "abbreviatedOid": "2d92735"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-08-26T11:49:35Z",
+          "updatedAt": "2025-08-26T11:49:35Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 157,
+      "id": "PR_kwDOLJmm786lkLAa",
+      "title": "Add full example (incl. oth) and deterministic examples",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/157",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-08-27T09:19:07Z",
+      "updatedAt": "2025-08-27T22:53:18Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "bc9062b6e841d66da6a9db792ca03d24ab612fd2",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "arndt/add-oth-example",
+      "headRefOid": "0b1f926956f5896e9ae012f9fc2c2f6a4c73b3ee",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thanks @arndt-s, there's a lot of good work in here. But some other stuff too. You told me yesterday not to worry about it but I'm nonetheless worried. ",
+          "createdAt": "2025-08-27T22:35:26Z",
+          "updatedAt": "2025-08-27T22:35:26Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm7868d-_G",
+          "commit": {
+            "abbreviatedOid": "0b1f926"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-08-27T22:38:05Z",
+          "updatedAt": "2025-08-27T22:38:06Z",
+          "comments": [
+            {
+              "originalPosition": 377,
+              "body": "rather than key generation, why not just use already known keys?",
+              "createdAt": "2025-08-27T22:38:06Z",
+              "updatedAt": "2025-08-27T22:38:06Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm7868eCn-",
+          "commit": {
+            "abbreviatedOid": "0b1f926"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-08-27T22:41:13Z",
+          "updatedAt": "2025-08-27T22:41:14Z",
+          "comments": [
+            {
+              "originalPosition": 151,
+              "body": "this time will be out of sync with the other times, if it's not already ",
+              "createdAt": "2025-08-27T22:41:14Z",
+              "updatedAt": "2025-08-27T22:43:28Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm7868eEQT",
+          "commit": {
+            "abbreviatedOid": "0b1f926"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-08-27T22:42:53Z",
+          "updatedAt": "2025-08-27T22:42:54Z",
+          "comments": [
+            {
+              "originalPosition": 149,
+              "body": "hex encoding of 128 bits of deterministic random data is needed for a jti but \"abcd2222\" is good enough? ",
+              "createdAt": "2025-08-27T22:42:53Z",
+              "updatedAt": "2025-08-27T22:42:54Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm7868eHuI",
+          "commit": {
+            "abbreviatedOid": "0b1f926"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-08-27T22:47:20Z",
+          "updatedAt": "2025-08-27T22:47:20Z",
+          "comments": [
+            {
+              "originalPosition": 222,
+              "body": "hex is subjectively aesthetically objectionable and objectively inefficient from a size/space usage ",
+              "createdAt": "2025-08-27T22:47:20Z",
+              "updatedAt": "2025-08-27T22:47:20Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm7868eIHa",
+          "commit": {
+            "abbreviatedOid": "0b1f926"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-08-27T22:47:56Z",
+          "updatedAt": "2025-08-27T22:47:56Z",
+          "comments": [
+            {
+              "originalPosition": 184,
+              "body": "why? WHY? ",
+              "createdAt": "2025-08-27T22:47:56Z",
+              "updatedAt": "2025-08-27T22:47:56Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm7868eIZn",
+          "commit": {
+            "abbreviatedOid": "0b1f926"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-08-27T22:48:21Z",
+          "updatedAt": "2025-08-27T22:48:21Z",
+          "comments": [
+            {
+              "originalPosition": 183,
+              "body": "exp and iat are just numbers and could be just numbers ",
+              "createdAt": "2025-08-27T22:48:21Z",
+              "updatedAt": "2025-08-27T22:48:21Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm7868eJ7R",
+          "commit": {
+            "abbreviatedOid": "0b1f926"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-08-27T22:50:35Z",
+          "updatedAt": "2025-08-27T22:50:35Z",
+          "comments": [
+            {
+              "originalPosition": 38,
+              "body": "pretty sure this introduces or reintroduces inconsistencies between example content and text down a few lines but probably/maybe other places too",
+              "createdAt": "2025-08-27T22:50:35Z",
+              "updatedAt": "2025-08-27T22:50:35Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm7868eK4T",
+          "commit": {
+            "abbreviatedOid": "0b1f926"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-08-27T22:51:58Z",
+          "updatedAt": "2025-08-27T22:51:58Z",
+          "comments": [
+            {
+              "originalPosition": 27,
+              "body": "this isn't Apr 24 2025 ",
+              "createdAt": "2025-08-27T22:51:58Z",
+              "updatedAt": "2025-08-27T22:51:59Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm7868eLzH",
+          "commit": {
+            "abbreviatedOid": "0b1f926"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-08-27T22:53:18Z",
+          "updatedAt": "2025-08-27T22:53:18Z",
+          "comments": [
+            {
+              "originalPosition": 33,
+              "body": "this is nice for the signature values but overkill IMO for key generation and random string values ",
+              "createdAt": "2025-08-27T22:53:18Z",
+              "updatedAt": "2025-08-27T22:53:18Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
