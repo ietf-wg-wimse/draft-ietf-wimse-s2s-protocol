@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-08-28T01:20:13.135859+00:00",
+  "timestamp": "2025-08-31T01:25:11.063151+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -11982,7 +11982,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-08-27T09:19:07Z",
-      "updatedAt": "2025-08-27T22:53:18Z",
+      "updatedAt": "2025-08-30T12:15:57Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "bc9062b6e841d66da6a9db792ca03d24ab612fd2",
@@ -12000,6 +12000,13 @@
           "body": "Thanks @arndt-s, there's a lot of good work in here. But some other stuff too. You told me yesterday not to worry about it but I'm nonetheless worried. ",
           "createdAt": "2025-08-27T22:35:26Z",
           "updatedAt": "2025-08-27T22:35:26Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I appreciate the idea behind the minimal and full examples but worry that you end up with no examples that are reflective of a likely real case. ",
+          "createdAt": "2025-08-30T12:15:57Z",
+          "updatedAt": "2025-08-30T12:15:57Z"
         }
       ],
       "reviews": [
@@ -12180,6 +12187,26 @@
               "body": "this is nice for the signature values but overkill IMO for key generation and random string values ",
               "createdAt": "2025-08-27T22:53:18Z",
               "updatedAt": "2025-08-27T22:53:18Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm7868oeyy",
+          "commit": {
+            "abbreviatedOid": "0b1f926"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-08-28T12:50:38Z",
+          "updatedAt": "2025-08-28T12:50:38Z",
+          "comments": [
+            {
+              "originalPosition": 49,
+              "body": "this is, without question, not a valid transaction token ",
+              "createdAt": "2025-08-28T12:50:38Z",
+              "updatedAt": "2025-08-28T12:50:38Z"
             }
           ]
         }
