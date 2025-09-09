@@ -3,27 +3,23 @@ package main
 import (
 	"crypto/ecdsa"
 	"crypto/ed25519"
-	"crypto/elliptic"
-	"crypto/rand"
 	"crypto/sha256"
 	"encoding/base64"
-	"encoding/hex"
 	"encoding/json"
 	"fmt"
-	"time"
 
 	"github.com/go-jose/go-jose/v4"
 	"github.com/go-jose/go-jose/v4/jwt"
 )
 
 const (
-	witJWTType = "wimse-id+jwt"
-	wptJWTType = "wimse-proof+jwt"
+	witJWTType = "wit+jwt"
+	wptJWTType = "wpt+jwt"
+	witIat     = 1745508910
+	witExp     = 1745512510
+	wptExp     = 1745510016
 	subject    = "wimse://example.com/specific-workload"
 	audience   = "https://workload.example.com/path"
-	witTTL     = time.Hour
-	wptTTL     = 5 * time.Minute
-	keyID      = "June 5"
 	rawAT      = "16_mAd0GiwaZokU26_0902100" // arbitrary example
 )
 
@@ -34,36 +30,53 @@ func main() {
 }
 
 func generateExamples() error {
-	now := time.Now()
-
 	wlAlg := jose.EdDSA
-	wlKeyPub, wlKeyPriv, err := ed25519.GenerateKey(rand.Reader)
+
+	wlJwkJson :=
+        `{
+          "kty": "OKP",
+          "crv": "Ed25519",
+          "x": "1CXXvflN_LVVsIsYXsUvB03JmlGWeCHqQVuouCF92bg",
+          "d": "sdLX8yCYKqo_XvGBLn-ZWeKT7llYeeQpgeCaXVxb5kY"
+         }`
+
+    wlJwk, err := parseJWK(wlJwkJson)
+    if err != nil {
+        return fmt.Errorf("failed to parse wl JWK: %w", err)
+    }
+
+    wlKeyPriv := wlJwk.Key.(ed25519.PrivateKey)
+    wlKeyPub := wlJwk.Public().Key
+
+    signerJwkJson :=
+        `{
+           "kty": "EC",
+           "kid": "June 5",
+           "crv": "P-256",
+           "x": "kXqnA2Op7hgd4zRMbw0iFcc_hDxUxhojxOFVGjE2gks",
+           "y": "n__VndPMR021-59UAs0b9qDTFT-EZtT6xSNs_xFskLo",
+           "d": "NRHs9bfMUcF49AV_NIoeh3UGopW4AXZLfv5G2px1WcY"
+          }`
+
+    signerJwk, err := parseJWK(signerJwkJson)
 	if err != nil {
-		return fmt.Errorf("failed to generate wl key: %w", err)
+		return fmt.Errorf("failed to parse authority key: %w", err)
 	}
 
-	keySign, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
-	if err != nil {
-		return fmt.Errorf("failed to generate authority key: %w", err)
-	}
+    keySign := signerJwk.Key.(*ecdsa.PrivateKey)
 
 	keySigner, err := jose.NewSigner(jose.SigningKey{Algorithm: jose.ES256, Key: keySign}, (&jose.SignerOptions{}).
 		WithType(witJWTType).
-		WithHeader("kid", keyID))
+		WithHeader("kid", signerJwk.KeyID))
 	if err != nil {
 		return fmt.Errorf("failed to create WIT signer: %w", err)
 	}
 
-	witJTI, err := generateJTI()
-	if err != nil {
-		return fmt.Errorf("failed to generate jti: %w", err)
-	}
-
 	wit := witClaims{
-		Id:        witJTI,
+		Id:        "x-_1CTL2cca3CSE4cwb_l",
 		Subject:   subject,
-		IssuedAt:  now.Unix(),
-		ExpiresAt: now.Add(witTTL).Unix(),
+		IssuedAt:  witIat,
+		ExpiresAt: witExp,
 		Cnf: cnf{
 			JWK: jose.JSONWebKey{
 				Key:       wlKeyPub,
@@ -76,15 +89,10 @@ func generateExamples() error {
 		return fmt.Errorf("failed to sign WIT: %w", err)
 	}
 
-	wptJTI, err := generateJTI()
-	if err != nil {
-		return fmt.Errorf("failed to generate jti: %w", err)
-	}
-
 	wpt := wptClaims{
-		Id:        wptJTI,
+		Id:        "__bwc4ESC3acc2LTC1-_x",
 		Aud:       audience,
-		ExpiresAt: now.Add(wptTTL).Unix(),
+		ExpiresAt: wptExp,
 		Wth:       base64UrlEncTokenHash(witEnc),
 		Ath:       base64UrlEncTokenHash(rawAT),
 	}
@@ -111,7 +119,7 @@ func generateExamples() error {
 
 	signerPubJwk := jose.JSONWebKey{
 		Key:   keySign.Public(),
-		KeyID: keyID,
+		KeyID: signerJwk.KeyID,
 	}
 	if signerPubJwkStr, err := json.MarshalIndent(signerPubJwk, "", " "); err == nil {
 		fmt.Printf("Signer public key: %s\n", signerPubJwkStr)
@@ -142,14 +150,6 @@ type cnf struct {
 	JWK jose.JSONWebKey `json:"jwk"`
 }
 
-func generateJTI() (string, error) {
-	b := make([]byte, 16)
-	if _, err := rand.Read(b); err != nil {
-		return "", err
-	}
-	return hex.EncodeToString(b), nil
-}
-
 func base64UrlEncTokenHash(raw string) string {
 	if raw == "" {
 		return ""
@@ -159,4 +159,15 @@ func base64UrlEncTokenHash(raw string) string {
 	h.Write([]byte(raw))
 
 	return base64.URLEncoding.WithPadding(base64.NoPadding).EncodeToString(h.Sum(nil))
+}
+
+func parseJWK(jwkJSON string) (jwk jose.JSONWebKey, err error) {
+	err = json.Unmarshal([]byte(jwkJSON), &jwk)
+	if err != nil {
+		return jwk, fmt.Errorf("unmarshal JWK: %w", err)
+	}
+	if !jwk.Valid() {
+		return jwk, fmt.Errorf("invalid JWK")
+	}
+	return jwk, nil
 }
