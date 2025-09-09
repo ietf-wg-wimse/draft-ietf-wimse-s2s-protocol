@@ -5,12 +5,12 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 28 February 2026                                       CyberArk
+Expires: 13 March 2026                                          CyberArk
                                                       A. Schwenkschuster
                                                                    SPIRL
                                                               Y. Sheffer
                                                                   Intuit
-                                                          27 August 2025
+                                                        9 September 2025
 
 
                WIMSE Workload-to-Workload Authentication
@@ -66,7 +66,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 28 February 2026.
+   This Internet-Draft will expire on 13 March 2026.
 
 Copyright Notice
 
@@ -113,8 +113,8 @@ Table of Contents
    6.  IANA Considerations
      6.1.  JSON Web Token Claims
      6.2.  Media Type Registration
-       6.2.1.  application/wimse-id+jwt
-       6.2.2.  application/wimse-proof+jwt
+       6.2.1.  application/wit+jwt
+       6.2.2.  application/wpt+jwt
      6.3.  Hypertext Transfer Protocol (HTTP) Field Name Registration
        6.3.1.  Workload-Identity-Token
        6.3.2.  Workload-Proof-Token
@@ -322,7 +322,7 @@ Table of Contents
          none MUST NOT be used.
 
       -  typ: the WIT is explicitly typed, as recommended in
-         Section 3.11 of [RFC8725], using the wimse-id+jwt media type.
+         Section 3.11 of [RFC8725], using the wit+jwt media type.
 
    *  in the JWT claims:
 
@@ -381,13 +381,13 @@ Table of Contents
 
    =============== NOTE: '\' line wrapping per RFC 8792 ================
 
-   eyJhbGciOiJFUzI1NiIsImtpZCI6Ikp1bmUgNSIsInR5cCI6IndpbXNlLWlkK2p3dCJ9\
-   .eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J2IjoiRWQyNTUxOSIsImt0eSI\
-   6Ik9LUCIsIngiOiIxQ1hYdmZsTl9MVlZzSXNZWHNVdkIwM0ptbEdXZUNIcVFWdW91Q0Y\
-   5MmJnIn19LCJleHAiOjE3NDU1MTI1MTAsImlhdCI6MTc0NTUwODkxMCwianRpIjoiYmQ\
-   yYTdiNWJmODU3M2E0MWFkYjRjYmYzY2ZhMDFlMTUiLCJzdWIiOiJ3aW1zZTovL2V4YW1\
-   wbGUuY29tL3NwZWNpZmljLXdvcmtsb2FkIn0.xpODXCUhZ2zk-1-W3VEqbqWhBX6_OJI\
-   l7vtjahgwJStMOCRn6J6is6f5mz-Pi5-Xk6FmV44k48NzulqMDVJbAw
+   eyJhbGciOiJFUzI1NiIsImtpZCI6Ikp1bmUgNSIsInR5cCI6IndpdCtqd3QifQ.eyJjb\
+   mYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J2IjoiRWQyNTUxOSIsImt0eSI6Ik9LU\
+   CIsIngiOiIxQ1hYdmZsTl9MVlZzSXNZWHNVdkIwM0ptbEdXZUNIcVFWdW91Q0Y5MmJnI\
+   n19LCJleHAiOjE3NDU1MTI1MTAsImlhdCI6MTc0NTUwODkxMCwianRpIjoieC1fMUNUT\
+   DJjY2EzQ1NFNGN3Yl9sIiwic3ViIjoid2ltc2U6Ly9leGFtcGxlLmNvbS9zcGVjaWZpY\
+   y13b3JrbG9hZCJ9.6KraSQUxWdl9dxFQ3Fj6dPY0Vi88OkwFwZpAIOhLeq6AbXAnLLQg\
+   Op8U9UDGcBuYF3KiNv6oKQD1ZWAzrMZOJw
 
              Figure 2: An example Workload Identity Token (WIT)
 
@@ -397,7 +397,7 @@ Table of Contents
    {
      "alg": "ES256",
      "kid": "June 5",
-     "typ": "wimse-id+jwt"
+     "typ": "wit+jwt"
    }
 
                      Figure 3: Example WIT JOSE Header
@@ -416,7 +416,7 @@ Table of Contents
      },
      "exp": 1745512510,
      "iat": 1745508910,
-     "jti": "bd2a7b5bf8573a41adb4cbf3cfa01e15",
+     "jti": "x-_1CTL2cca3CSE4cwb_l",
      "sub": "wimse://example.com/specific-workload"
    }
 
@@ -430,7 +430,7 @@ Table of Contents
    *  identifies the workload to which the token was issued as
       wimse://example.com/specific-workload.
 
-   *  has a unique identifier of bd2a7b5bf8573a41adb4cbf3cfa01e15.
+   *  has a unique identifier of x-_1CTL2cca3CSE4cwb_l.
 
    *  binds the public key represented by the jwk confirmation method to
       the workload wimse://example.com/specific-workload.
@@ -460,8 +460,8 @@ Table of Contents
     "kty": "EC",
     "kid": "June 5",
     "crv": "P-256",
-    "x": "Dy47KDeYao6kOhxSraJeJizjVxHjjo-9NsnrMqLyvOo",
-    "y": "bj3s7bncoSYURzAzF0jBy0JOnnP5-5E11vx5QoYEFgk"
+    "x": "kXqnA2Op7hgd4zRMbw0iFcc_hDxUxhojxOFVGjE2gks",
+    "y": "n__VndPMR021-59UAs0b9qDTFT-EZtT6xSNs_xFskLo"
    }
 
                    Figure 6: Example Identity Server Key
@@ -488,13 +488,12 @@ Table of Contents
    =============== NOTE: '\' line wrapping per RFC 8792 ================
 
    Workload-Identity-Token: eyJhbGciOiJFUzI1NiIsImtpZCI6Ikp1bmUgNSIsInR\
-   5cCI6IndpbXNlLWlkK2p3dCJ9.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3\
-   J2IjoiRWQyNTUxOSIsImt0eSI6Ik9LUCIsIngiOiIxQ1hYdmZsTl9MVlZzSXNZWHNVdk\
-   IwM0ptbEdXZUNIcVFWdW91Q0Y5MmJnIn19LCJleHAiOjE3NDU1MTI1MTAsImlhdCI6MT\
-   c0NTUwODkxMCwianRpIjoiYmQyYTdiNWJmODU3M2E0MWFkYjRjYmYzY2ZhMDFlMTUiLC\
-   JzdWIiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3NwZWNpZmljLXdvcmtsb2FkIn0.xpODXC\
-   UhZ2zk-1-W3VEqbqWhBX6_OJIl7vtjahgwJStMOCRn6J6is6f5mz-Pi5-Xk6FmV44k48\
-   NzulqMDVJbAw
+   5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J2Ijoi\
+   RWQyNTUxOSIsImt0eSI6Ik9LUCIsIngiOiIxQ1hYdmZsTl9MVlZzSXNZWHNVdkIwM0pt\
+   bEdXZUNIcVFWdW91Q0Y5MmJnIn19LCJleHAiOjE3NDU1MTI1MTAsImlhdCI6MTc0NTUw\
+   ODkxMCwianRpIjoieC1fMUNUTDJjY2EzQ1NFNGN3Yl9sIiwic3ViIjoid2ltc2U6Ly9l\
+   eGFtcGxlLmNvbS9zcGVjaWZpYy13b3JrbG9hZCJ9.6KraSQUxWdl9dxFQ3Fj6dPY0Vi8\
+   8OkwFwZpAIOhLeq6AbXAnLLQgOp8U9UDGcBuYF3KiNv6oKQD1ZWAzrMZOJw
 
        Figure 8: An example Workload Identity Token HTTP Header Field
 
@@ -563,8 +562,8 @@ Table of Contents
          values and restrictions.
 
       -  typ: the WPT is explicitly typed, as recommended in
-         Section 3.11 of [RFC8725], using the application/wimse-
-         proof+jwt media type.
+         Section 3.11 of [RFC8725], using the application/wpt+jwt media
+         type.
 
    *  in the JWT claims:
 
@@ -624,13 +623,12 @@ Table of Contents
 
    =============== NOTE: '\' line wrapping per RFC 8792 ================
 
-   eyJhbGciOiJFZERTQSIsInR5cCI6IndpbXNlLXByb29mK2p3dCJ9.eyJhdGgiOiJDTDR\
-   3amZwUm1OZi1iZFlJYllMblY5ZDVyTUFSR3dLWUUxMHdVd3pDMGpJIiwiYXVkIjoiaHR\
-   0cHM6Ly93b3JrbG9hZC5leGFtcGxlLmNvbS9wYXRoIiwiZXhwIjoxNzQ1NTA5MjEwLCJ\
-   qdGkiOiJlMzI5YmI4Njk2YWE0YWVjYTA0ODg2ZGQ3NmU3OGIyNiIsInd0aCI6InJvN3h\
-   GT1NHX2pZeG1VV2Z3ZXFrNVgxc2M2TDBzQ2o3NVdLVDkxZ014eFUifQ.oSegRTrBxuQN\
-   55oyWRK5PnPEZLhgRy0Va7BpxBw-a64E3map15dbDo9ArRcJ8M4Z4QZ829CCppfnuaLI\
-   ei1bBQ
+   eyJhbGciOiJFZERTQSIsInR5cCI6IndwdCtqd3QifQ.eyJhdGgiOiJDTDR3amZwUm1OZ\
+   i1iZFlJYllMblY5ZDVyTUFSR3dLWUUxMHdVd3pDMGpJIiwiYXVkIjoiaHR0cHM6Ly93b\
+   3JrbG9hZC5leGFtcGxlLmNvbS9wYXRoIiwiZXhwIjoxNzQ1NTEwMDE2LCJqdGkiOiJfX\
+   2J3YzRFU0MzYWNjMkxUQzEtX3giLCJ3dGgiOiJBYVlVZkMzNEQxZGkyRnhRTHBpSUpKN\
+   1NnOFZaNm84T0Nkd1NmOUlUb0xnIn0.PI7d9AcYhLoEgPgbJvcM132lkBKnM1NXU-5hZ\
+   UzVTIyj2dRJaTLFs6e5NYv5gg6AqcV7NvkYCwfgMgWasWQzCA
 
                Figure 10: Example Workload Proof Token (WPT)
 
@@ -639,7 +637,7 @@ Table of Contents
 
    {
      "alg": "EdDSA",
-     "typ": "wimse-proof+jwt"
+     "typ": "wpt+jwt"
    }
 
                      Figure 11: Example WPT JOSE Header
@@ -667,19 +665,19 @@ Table of Contents
    Content-Type: application/json
    Authorization: Bearer 16_mAd0GiwaZokU26_0902100
    Workload-Identity-Token: eyJhbGciOiJFUzI1NiIsImtpZCI6Ikp1bmUgNSIsInR\
-   5cCI6IndpbXNlLWlkK2p3dCJ9.eyJjbmYiOnsiandrIjp7ImNydiI6IkVkMjU1MTkiLC\
-   JrdHkiOiJPS1AiLCJ4Ijoiclp3VUEwVHJIazRBWEs5MkY2Vll2bUhIWDN4VU0tSUdsck\
-   11VkNRaG04VSJ9fSwiZXhwIjoxNzQwNzU4MzQ4LCJpYXQiOjE3NDA3NTQ3NDgsImp0aS\
-   I6IjRmYzc3ZmNlZjU3MWIzYmIzM2I2NzJlYWYyMDRmYWY0Iiwic3ViIjoid2ltc2U6Ly\
-   9leGFtcGxlLmNvbS9zcGVjaWZpYy13b3JrbG9hZCJ9.j-WlF3bufTwWeVZQntPhlzvST\
-   Pwf37-4wfazJZARdHYmW9S_olB5nKEqwqTZpIX_LoVVIcyK0VBE7Fa0CMvw2g
-   Workload-Proof-Token: eyJhbGciOiJFZERTQSIsInR5cCI6IndpbXNlLXByb29mK2\
-   p3dCJ9.eyJhdGgiOiJDTDR3amZwUm1OZi1iZFlJYllMblY5ZDVyTUFSR3dLWUUxMHdVd\
-   3pDMGpJIiwiYXVkIjoiaHR0cHM6Ly93b3JrbG9hZC5leGFtcGxlLmNvbS9wYXRoIiwiZ\
-   XhwIjoxNzQwNzU1MDQ4LCJqdGkiOiIwYzc0MDM4NmNhMWRjYWQzN2RlMWI1ZjlkZTFiM\
-   DcwNSIsInd0aCI6ImFBMFdfb0ZKSzdxVjd6WWhjbXpSMUtPWFZDSGpkMng2YzRzT1FMd\
-   kU5MFkifQ.W9RZqieXeD-UgdtbYf8ZNkf2_6_6b_kJSfkODQdq3_QDSSGOhVbRAR3qQo\
-   Ou0SzihiG6HCsGwslfo4WdvnH5AQ
+   5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J2Ijoi\
+   RWQyNTUxOSIsImt0eSI6Ik9LUCIsIngiOiIxQ1hYdmZsTl9MVlZzSXNZWHNVdkIwM0pt\
+   bEdXZUNIcVFWdW91Q0Y5MmJnIn19LCJleHAiOjE3NDU1MTI1MTAsImlhdCI6MTc0NTUw\
+   ODkxMCwianRpIjoieC1fMUNUTDJjY2EzQ1NFNGN3Yl9sIiwic3ViIjoid2ltc2U6Ly9l\
+   eGFtcGxlLmNvbS9zcGVjaWZpYy13b3JrbG9hZCJ9.6KraSQUxWdl9dxFQ3Fj6dPY0Vi8\
+   8OkwFwZpAIOhLeq6AbXAnLLQgOp8U9UDGcBuYF3KiNv6oKQD1ZWAzrMZOJw
+   Workload-Proof-Token: eyJhbGciOiJFZERTQSIsInR5cCI6IndwdCtqd3QifQ.eyJ\
+   hdGgiOiJDTDR3amZwUm1OZi1iZFlJYllMblY5ZDVyTUFSR3dLWUUxMHdVd3pDMGpJIiw\
+   iYXVkIjoiaHR0cHM6Ly93b3JrbG9hZC5leGFtcGxlLmNvbS9wYXRoIiwiZXhwIjoxNzQ\
+   1NTEwMDE2LCJqdGkiOiJfX2J3YzRFU0MzYWNjMkxUQzEtX3giLCJ3dGgiOiJBYVlVZkM\
+   zNEQxZGkyRnhRTHBpSUpKN1NnOFZaNm84T0Nkd1NmOUlUb0xnIn0.PI7d9AcYhLoEgPg\
+   bJvcM132lkBKnM1NXU-5hZUzVTIyj2dRJaTLFs6e5NYv5gg6AqcV7NvkYCwfgMgWasWQ\
+   zCA
 
    {"do stuff":"please"}
 
@@ -701,7 +699,7 @@ Table of Contents
       confirmation claim of the WIT.
 
    *  The typ JOSE header parameter of the WPT conveys a media type of
-      wimse-proof+jwt.
+      wpt+jwt.
 
    *  The aud claim of the WPT matches the target URI, or an acceptable
       alias or normalization thereof, of the HTTP request in which the
@@ -829,7 +827,9 @@ Table of Contents
    header components listed above.
 
    Following is a non-normative example of a signed request and a signed
-   response, where the caller is using the keys specified in Figure 5.
+   response, where the caller is using the keys specified in Figure 5
+   (TODO: it is actually using a different key but that'll need to be
+   fixed later).
 
    =============== NOTE: '\' line wrapping per RFC 8792 ================
 
@@ -856,10 +856,10 @@ Table of Contents
    {
      "alg": "EdDSA",
      "crv": "Ed25519",
-     "d": "JlNJxsZl_PC00EkoRUQbtCrzDtZ5vhFN_6qWtwghttY",
+     "d": "6oQCl9NHN4jHymcFPc5SEy3AXUEH5UnBKJ2JBC6rkdw",
      "kid": "svc-b-key",
      "kty": "OKP",
-     "x": "gz2aSJE-g9w1rbgJiNps4Gb8IPk50k5oJUEbLDusayc"
+     "x": "bd5UWUtOgbgSYj9e499_k5sjWASpARfL5RJ5ySDPbnY"
    }
 
                        Figure 15: Callee Private Key
@@ -1202,15 +1202,15 @@ Table of Contents
    IANA is requested to register the following entries to the "Media
    Types" registry [IANA.MEDIA.TYPES]:
 
-   *  application/wimse-id+jwt, per Section 6.2.1.
+   *  application/wit+jwt, per Section 6.2.1.
 
-   *  application/wimse-proof+jwt, per Section 6.2.2.
+   *  application/wpt+jwt, per Section 6.2.2.
 
-6.2.1.  application/wimse-id+jwt
+6.2.1.  application/wit+jwt
 
    Type name: application
 
-   Subtype name: wimse-id+jwt
+   Subtype name: wit+jwt
 
    Required parameters: N/A
 
@@ -1254,11 +1254,11 @@ Table of Contents
 
    Change controller: Internet Engineering Task Force (iesg@ietf.org).
 
-6.2.2.  application/wimse-proof+jwt
+6.2.2.  application/wpt+jwt
 
    Type name: application
 
-   Subtype name: wimse-proof+jwt
+   Subtype name: wpt+jwt
 
    Required parameters: N/A
 
