@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-08-31T01:25:11.063151+00:00",
+  "timestamp": "2025-09-09T01:19:52.536529+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -1586,15 +1586,25 @@
       "state": "OPEN",
       "author": "PieterKas",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "jsalowey"
+      ],
       "labels": [
         "small"
       ],
       "body": "Section 5.1 uses normative text about extended key usage for WIMSE server  vs WIMSE client certificates. These concepts are not formally defined and a short paragraph clarifying what is meant by a WIMSE server vs WIMSE client certificate (e.g. WIMSE Client Certificates: WIMSE certificates used for client authentication, WIMSE Server Certificates: WIMSE certificates used for server authentication).\r\n\r\n",
       "createdAt": "2024-10-17T14:16:30Z",
-      "updatedAt": "2025-05-20T14:38:04Z",
+      "updatedAt": "2025-09-07T22:42:22Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "body": "PR #158",
+          "createdAt": "2025-09-07T22:42:22Z",
+          "updatedAt": "2025-09-07T22:42:22Z"
+        }
+      ]
     },
     {
       "number": 74,
@@ -2742,9 +2752,17 @@
       "labels": [],
       "body": "Remove reference to WIT in first bullet of section 5.2 as it is extraneous",
       "createdAt": "2025-08-26T14:19:26Z",
-      "updatedAt": "2025-08-26T14:19:29Z",
+      "updatedAt": "2025-09-07T22:48:45Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "body": "PR #159 ",
+          "createdAt": "2025-09-07T22:48:45Z",
+          "updatedAt": "2025-09-07T22:48:45Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -12209,6 +12227,119 @@
               "updatedAt": "2025-08-28T12:50:38Z"
             }
           ]
+        }
+      ]
+    },
+    {
+      "number": 158,
+      "id": "PR_kwDOLJmm786nRjju",
+      "title": "address issue 73 workload identity certificate",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/158",
+      "state": "OPEN",
+      "author": "jsalowey",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Remove WIMSE client and server terms as we do not use them anywhere else. close issue #73 ",
+      "createdAt": "2025-09-07T22:41:27Z",
+      "updatedAt": "2025-09-08T23:46:56Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "95ddc76f6c1c142e118ab1d42bc97f57c08b9b38",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "issue-73",
+      "headRefOid": "f15cfb6fc62b10541206e1680a5f291369836b5a",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm786-jLYz",
+          "commit": {
+            "abbreviatedOid": "f15cfb6"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-09-08T14:49:07Z",
+          "updatedAt": "2025-09-08T14:49:07Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm786-pTFd",
+          "commit": {
+            "abbreviatedOid": "f15cfb6"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-09-08T23:46:55Z",
+          "updatedAt": "2025-09-08T23:46:56Z",
+          "comments": [
+            {
+              "originalPosition": 21,
+              "body": "```suggestion\nIf the WIMSE client uses a hostname to connect to the server and the server certificate contain a DNS SAN the client MUST perform standard host name validation ({{Section 6.3 of RFC9525}}) unless it is configured with the additional information necessary to perform alternate validation of the peer's workload identity.\n```",
+              "createdAt": "2025-09-08T23:46:55Z",
+              "updatedAt": "2025-09-08T23:46:56Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 159,
+      "id": "PR_kwDOLJmm786nRkQy",
+      "title": "Issue 156",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/159",
+      "state": "OPEN",
+      "author": "jsalowey",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Removes  extraneous sentence. closes issue 156",
+      "createdAt": "2025-09-07T22:47:38Z",
+      "updatedAt": "2025-09-08T23:49:45Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "95ddc76f6c1c142e118ab1d42bc97f57c08b9b38",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "issue-156",
+      "headRefOid": "5a1ca7e7ba958a4d794a68c17fed3234ca455a52",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm786-jL9D",
+          "commit": {
+            "abbreviatedOid": "5a1ca7e"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-09-08T14:49:44Z",
+          "updatedAt": "2025-09-08T14:49:44Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm786-pUKI",
+          "commit": {
+            "abbreviatedOid": "5a1ca7e"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-09-08T23:49:45Z",
+          "updatedAt": "2025-09-08T23:49:45Z",
+          "comments": []
         }
       ]
     }
