@@ -841,6 +841,7 @@ IANA is requested to register the "wimse" scheme to the "URI Schemes" registry {
 ## draft-ietf-wimse-s2s-protocol-07
 
 * Rework the WPT's oth claim
+* update the [media]typ[e] values
 
 ## draft-ietf-wimse-s2s-protocol-06
 
