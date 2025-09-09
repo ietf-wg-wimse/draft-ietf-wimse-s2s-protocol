@@ -1091,8 +1091,7 @@ Table of Contents
    of possession MUST be sent over a secure, server authenticated TLS
    connection unless a secure channel is provided by some other
    mechanisms.  Host name validation according to Section 4.2.1 MUST be
-   performed by the client.  The WIT itself is not usable without a
-   proof of possession.
+   performed by the client.
 
    *  Limiting Proof of Possession Lifespan
 
