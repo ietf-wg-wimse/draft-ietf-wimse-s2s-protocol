@@ -5,12 +5,12 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 11 March 2026                                          CyberArk
+Expires: 13 March 2026                                          CyberArk
                                                       A. Schwenkschuster
                                                                    SPIRL
                                                               Y. Sheffer
                                                                   Intuit
-                                                        7 September 2025
+                                                        9 September 2025
 
 
                WIMSE Workload-to-Workload Authentication
@@ -66,7 +66,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 11 March 2026.
+   This Internet-Draft will expire on 13 March 2026.
 
 Copyright Notice
 
@@ -1029,8 +1029,8 @@ Table of Contents
    server certificate contain a DNS SAN the client MUST perform standard
    host name validation (Section 6.3 of [RFC9525]) unless it is
    configured with the additional information necessary to perform
-   alternate validation the peer's workload identity.  If the client did
-   not perform standard host name validation then the WIMSE client
+   alternate validation of the peer's workload identity.  If the client
+   did not perform standard host name validation then the WIMSE client
    SHOULD further use the workload identifier to validate the server.
    The host portion of the workload identifier is NOT treated as a host
    name as specified in section 6.4 of [RFC9525] but rather as a trust
