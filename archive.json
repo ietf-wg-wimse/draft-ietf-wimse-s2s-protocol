@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-09-09T01:19:52.536529+00:00",
+  "timestamp": "2025-09-11T01:19:12.869564+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -2626,7 +2626,7 @@
       "id": "I_kwDOLJmm787Aii2p",
       "title": "better [media] typ[e] values?",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/139",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -2637,8 +2637,8 @@
       ],
       "body": "wimse-id+jwt and wimse-proof+jwt could be just wit+jwt and wpt+jwt\n\n",
       "createdAt": "2025-07-14T23:23:02Z",
-      "updatedAt": "2025-08-12T08:38:14Z",
-      "closedAt": null,
+      "updatedAt": "2025-09-09T16:52:34Z",
+      "closedAt": "2025-09-09T16:52:34Z",
       "comments": [
         {
           "author": "bc-pi",
@@ -2653,6 +2653,13 @@
           "body": "Don't worry about #147. Cursor will change the code in no time \ud83d\ude03 \n\nBut note that we have two code bases that generate WITs now.",
           "createdAt": "2025-08-12T08:38:14Z",
           "updatedAt": "2025-08-12T08:38:14Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "#152 ",
+          "createdAt": "2025-09-09T16:52:34Z",
+          "updatedAt": "2025-09-09T16:52:34Z"
         }
       ]
     },
@@ -11836,24 +11843,26 @@
       "id": "PR_kwDOLJmm786lTEIu",
       "title": "update the [media]typ[e] values",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/152",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "for #139\r\n\r\nchange wimse-id+jwt and wimse-proof+jwt to wit+jwt and wpt+jwt respectively \r\n \r\nupdate examples/main.go and try to make things that don't need to change not change\r\n\r\nupdated the typ value in WITs of http sigs ",
       "createdAt": "2025-08-25T23:05:48Z",
-      "updatedAt": "2025-08-27T11:04:12Z",
+      "updatedAt": "2025-09-09T16:48:19Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "44dde15f2daceaa4760cf7fef69125226524af4d",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "biased-media",
       "headRefOid": "503d21e1e04665fbb8599ad3261f0a9180346c68",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-09-09T16:48:18Z",
+      "mergedAt": "2025-09-09T16:48:18Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "880bf0301f7246a2a273f52e59a076f6b6987232"
+      },
       "comments": [],
       "reviews": [
         {
@@ -11875,6 +11884,19 @@
               "updatedAt": "2025-08-27T00:36:04Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm786-216V",
+          "commit": {
+            "abbreviatedOid": "503d21e"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-09-09T15:01:15Z",
+          "updatedAt": "2025-09-09T15:01:15Z",
+          "comments": []
         }
       ]
     },
@@ -11993,21 +12015,21 @@
       "id": "PR_kwDOLJmm786lkLAa",
       "title": "Add full example (incl. oth) and deterministic examples",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/157",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-08-27T09:19:07Z",
-      "updatedAt": "2025-08-30T12:15:57Z",
+      "updatedAt": "2025-09-09T15:01:38Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "bc9062b6e841d66da6a9db792ca03d24ab612fd2",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "arndt/add-oth-example",
       "headRefOid": "0b1f926956f5896e9ae012f9fc2c2f6a4c73b3ee",
-      "closedAt": null,
+      "closedAt": "2025-09-09T15:01:37Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
@@ -12025,6 +12047,13 @@
           "body": "I appreciate the idea behind the minimal and full examples but worry that you end up with no examples that are reflective of a likely real case. ",
           "createdAt": "2025-08-30T12:15:57Z",
           "updatedAt": "2025-08-30T12:15:57Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Closing this for another try once the other code update is merged.",
+          "createdAt": "2025-09-09T15:01:37Z",
+          "updatedAt": "2025-09-09T15:01:37Z"
         }
       ],
       "reviews": [
@@ -12242,13 +12271,13 @@
       "labels": [],
       "body": "Remove WIMSE client and server terms as we do not use them anywhere else. close issue #73 ",
       "createdAt": "2025-09-07T22:41:27Z",
-      "updatedAt": "2025-09-08T23:46:56Z",
+      "updatedAt": "2025-09-09T16:51:35Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "95ddc76f6c1c142e118ab1d42bc97f57c08b9b38",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "issue-73",
-      "headRefOid": "f15cfb6fc62b10541206e1680a5f291369836b5a",
+      "headRefOid": "640063a7eabe99b40ba3d0d66ff247184c08162a",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -12295,24 +12324,26 @@
       "id": "PR_kwDOLJmm786nRkQy",
       "title": "Issue 156",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/159",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "jsalowey",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Removes  extraneous sentence. closes issue 156",
       "createdAt": "2025-09-07T22:47:38Z",
-      "updatedAt": "2025-09-08T23:49:45Z",
+      "updatedAt": "2025-09-09T16:50:46Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "95ddc76f6c1c142e118ab1d42bc97f57c08b9b38",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "issue-156",
       "headRefOid": "5a1ca7e7ba958a4d794a68c17fed3234ca455a52",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-09-09T16:50:46Z",
+      "mergedAt": "2025-09-09T16:50:46Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "4aabcef732e7c2c6980e1e8265dfb949558ef63f"
+      },
       "comments": [],
       "reviews": [
         {
@@ -12342,6 +12373,32 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 160,
+      "id": "PR_kwDOLJmm786nphm1",
+      "title": "Add update the [media]typ[e] values to history for -07",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/160",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "forgotten in #152 ",
+      "createdAt": "2025-09-09T17:01:31Z",
+      "updatedAt": "2025-09-09T17:02:40Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "4aabcef732e7c2c6980e1e8265dfb949558ef63f",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "history-for-six-seven",
+      "headRefOid": "c3e2c22ef1aae6e39a75f0df0866acfe6165e139",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
