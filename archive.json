@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-09-16T01:17:04.802229+00:00",
+  "timestamp": "2025-09-18T01:16:56.972512+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -1583,7 +1583,7 @@
       "id": "I_kwDOLJmm786aqskw",
       "title": "define WIMSE Server and WIMSE Client certificates",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/73",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "NONE",
       "assignees": [
@@ -1594,8 +1594,8 @@
       ],
       "body": "Section 5.1 uses normative text about extended key usage for WIMSE server  vs WIMSE client certificates. These concepts are not formally defined and a short paragraph clarifying what is meant by a WIMSE server vs WIMSE client certificate (e.g. WIMSE Client Certificates: WIMSE certificates used for client authentication, WIMSE Server Certificates: WIMSE certificates used for server authentication).\r\n\r\n",
       "createdAt": "2024-10-17T14:16:30Z",
-      "updatedAt": "2025-09-07T22:42:22Z",
-      "closedAt": null,
+      "updatedAt": "2025-09-17T18:41:41Z",
+      "closedAt": "2025-09-17T18:41:41Z",
       "comments": [
         {
           "author": "jsalowey",
@@ -2750,7 +2750,7 @@
       "id": "I_kwDOLJmm787IBlvj",
       "title": "Remove reference to WIT",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/156",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "jsalowey",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -2759,8 +2759,8 @@
       "labels": [],
       "body": "Remove reference to WIT in first bullet of section 5.2 as it is extraneous",
       "createdAt": "2025-08-26T14:19:26Z",
-      "updatedAt": "2025-09-07T22:48:45Z",
-      "closedAt": null,
+      "updatedAt": "2025-09-17T11:24:24Z",
+      "closedAt": "2025-09-17T11:24:24Z",
       "comments": [
         {
           "author": "jsalowey",
@@ -2783,7 +2783,151 @@
       "labels": [],
       "body": "The document has several references to the WIMSE architecture document for the definition of the Workload Identifier. However, we also have a new document defining the workload identifier. We need to resolve which document defines the workload identifier and then have it defined properly in there, which in turn may necessitate an update to this document. ",
       "createdAt": "2025-09-16T01:08:00Z",
-      "updatedAt": "2025-09-16T01:08:00Z",
+      "updatedAt": "2025-09-17T11:54:06Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@jsalowey is an author on both https://datatracker.ietf.org/doc/draft-ietf-wimse-arch/ and https://datatracker.ietf.org/doc/draft-rosomakho-wimse-identifier/ so he might be able to articulate the situation better. But I believe the intent it to reconcile the Workload Identifier definition somehow between those two documents and have W2W reference whichever emerges as the authoritative one. #31 kinda touches on this. At present though, the workload identifier document is an individual internet draft with all the standing and authority thereby conferred (see, for example, https://datatracker.ietf.org/doc/html/draft-abr-twitter-reply-00). ",
+          "createdAt": "2025-09-17T11:54:06Z",
+          "updatedAt": "2025-09-17T11:54:06Z"
+        }
+      ]
+    },
+    {
+      "number": 162,
+      "id": "I_kwDOLJmm787L2Nx4",
+      "title": "Workload Identifier: Service or Instance ?",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/162",
+      "state": "OPEN",
+      "author": "fandreas",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Section 1.3 (Workload Identifiers and Authentication Granularity) is not entirely clear in how it views workload identifiers as it relates to identifying a specific instance of a workload versus a \"service\", which may consist of multiple instances that come and go: \n\n<quote>\nPrior to WIMSE, many use cases did not allow for fully granular authentication in containerized runtime platforms. For instance, with mutual TLS, there's often no clear way to map the request's external access reference (e.g., Kubernetes Ingress path, service name, or host header) to the SubjectAltName value in the server certificate. This means that the client could only verify if the server certificate is valid within a trust domain, not if it's tied to a specific workload.\n\nTo enable mutual and granular authentication between workloads, two things must be in place:\n- Each workload must know its own identifier.\n- There needs to be an explicit mapping from the external handle used to access a workload (such as an Ingress path or service DNS name) to its workload identifier.\n</quote>\n\nThe above text suggests that the workload identifier is for a specific instance, however either should be possible (with the most common use case expected to be a \"service\" rather than an \"instance\"). ",
+      "createdAt": "2025-09-16T01:22:39Z",
+      "updatedAt": "2025-09-16T01:22:39Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 163,
+      "id": "I_kwDOLJmm787L2Peg",
+      "title": "Inconsistent Decoding examples",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/163",
+      "state": "OPEN",
+      "author": "fandreas",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Some of the decoded examples do not align with the corresponding encoded representation. For example, the text after Figure 4 does not align with Figure 4 itself or the encoded token in Figure 2. ",
+      "createdAt": "2025-09-16T01:27:32Z",
+      "updatedAt": "2025-09-17T11:41:46Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Many (hopefully all?) of the inconsistencies were addressed as part of https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/152/files ",
+          "createdAt": "2025-09-17T11:41:46Z",
+          "updatedAt": "2025-09-17T11:41:46Z"
+        }
+      ]
+    },
+    {
+      "number": 164,
+      "id": "I_kwDOLJmm787L2Vsc",
+      "title": "iss claim in WIT",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/164",
+      "state": "OPEN",
+      "author": "fandreas",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "The \"Workload Identity Token\" Section (3.1) says the iss claim is \"The issuer of the token, which is the Identity Server, represented by a URI. The iss claim is RECOMMENDED but optional\"\n\nThe example in Figure 2-4 does not include an \"iss\" claim, however the text after Figure 4 says that the claims indicate that \"the example WIT was issued by an Identity Server known as....\" (this refer to the -06 version; current editor's copy seems to have removed this). \n\nSection 3.1.2 (\"A note on iss claim and key distribution\") then says \"It is RECOMMENDED that the WIT carries an iss claim. This specification itself does not make use of a potential iss claim but also carries the trust domain in the workload identifier\". \n\n\n1) If the iss claim is recommended, then why is its use not specified and shown in the examples ? \n\n2) There seems to be an implicit statement that the issuer must be the same as the trust domain in the workload identifier, however why is that, especially in lieu of the RECOMMENDED part above ? \n\n",
+      "createdAt": "2025-09-16T01:42:52Z",
+      "updatedAt": "2025-09-16T01:42:52Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 165,
+      "id": "I_kwDOLJmm787L2W9_",
+      "title": "WPT exp claim",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/165",
+      "state": "OPEN",
+      "author": "fandreas",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Section 3.2 (\"Option 1: DPoP-Inspired Authentication\") says the \"exp\" claim provides the expiration of the WIT. Shouldn't it be the expiration time of the WPT itself ? \n\n",
+      "createdAt": "2025-09-16T01:46:55Z",
+      "updatedAt": "2025-09-17T11:35:41Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "yeah, that was fixed while doing https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/149/files#diff-46cb70551722a2e150975b52b1845c31bbebdb3f8e476f7263e7ce3981ff5c2fR352 ",
+          "createdAt": "2025-09-17T11:35:41Z",
+          "updatedAt": "2025-09-17T11:35:41Z"
+        }
+      ]
+    },
+    {
+      "number": 166,
+      "id": "I_kwDOLJmm787L2YTl",
+      "title": "WPT jti claim",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/166",
+      "state": "OPEN",
+      "author": "fandreas",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Section 3.2 (\"Option 1: DPoP-Inspired Authentication\") says the \"jti\" value \"MUST be unique, at least within the scope of the sender. Unique across what and how does the receiver interpret that ? Is it based on the workload identifier, in which case we again need to consider workload instances versus \"services\", with potentially multiple instances. ",
+      "createdAt": "2025-09-16T01:50:54Z",
+      "updatedAt": "2025-09-16T01:50:54Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 167,
+      "id": "I_kwDOLJmm787L2ahK",
+      "title": "WPT oth claim - mechanism is underspecified.",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/167",
+      "state": "OPEN",
+      "author": "fandreas",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Section 3.2 (\"Option 1: DPoP-Inspired Authentication\") defines the \"oth\" claim as \"Hash of any other token in the request that might convey end-user identity and authorization context of the request, if such a token exists.\". \n\nThe mechanism is under-specified and unlikely to be interoperable. It seems the editor's working copy of the document is addressing this though. \n\n\n\n ",
+      "createdAt": "2025-09-16T01:57:15Z",
+      "updatedAt": "2025-09-17T00:20:19Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Yeah, https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/149/files endeavors to address that ",
+          "createdAt": "2025-09-17T00:20:19Z",
+          "updatedAt": "2025-09-17T00:20:19Z"
+        }
+      ]
+    },
+    {
+      "number": 168,
+      "id": "I_kwDOLJmm787L2fdh",
+      "title": "WPT jti validation",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/168",
+      "state": "OPEN",
+      "author": "fandreas",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Open 1 (DPoP-inspired) says that \"It is RECOMMENDED to check that the value of the jti claim has not been used before in the time window in which the respective WPT would be considered valid.\"\n\nWhat is the scope/context in which this check should be made ? Elsewhere, it was suggested that the jti only needed to be unique within the sender scope (albeit it was not entirely clear what constitutes the sender scope). ",
+      "createdAt": "2025-09-16T02:08:50Z",
+      "updatedAt": "2025-09-16T02:08:50Z",
       "closedAt": null,
       "comments": []
     }
@@ -12280,24 +12424,26 @@
       "id": "PR_kwDOLJmm786nRjju",
       "title": "address issue 73 workload identity certificate",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/158",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "jsalowey",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Remove WIMSE client and server terms as we do not use them anywhere else. close issue #73 ",
       "createdAt": "2025-09-07T22:41:27Z",
-      "updatedAt": "2025-09-09T16:51:35Z",
+      "updatedAt": "2025-09-17T18:41:08Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "95ddc76f6c1c142e118ab1d42bc97f57c08b9b38",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "issue-73",
       "headRefOid": "640063a7eabe99b40ba3d0d66ff247184c08162a",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-09-17T18:41:08Z",
+      "mergedAt": "2025-09-17T18:41:08Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "cf26f72ef2ffc5f59e7e087b34877f264821c6fd"
+      },
       "comments": [],
       "reviews": [
         {
@@ -12332,6 +12478,19 @@
               "updatedAt": "2025-09-08T23:46:56Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787A3bgV",
+          "commit": {
+            "abbreviatedOid": "640063a"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-09-17T18:40:49Z",
+          "updatedAt": "2025-09-17T18:40:49Z",
+          "comments": []
         }
       ]
     },
@@ -12395,26 +12554,42 @@
       "id": "PR_kwDOLJmm786nphm1",
       "title": "Add update the [media]typ[e] values to history for -07",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/160",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "forgotten in #152 ",
       "createdAt": "2025-09-09T17:01:31Z",
-      "updatedAt": "2025-09-09T17:02:40Z",
+      "updatedAt": "2025-09-17T14:23:01Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "4aabcef732e7c2c6980e1e8265dfb949558ef63f",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "history-for-six-seven",
       "headRefOid": "c3e2c22ef1aae6e39a75f0df0866acfe6165e139",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-09-17T14:23:01Z",
+      "mergedAt": "2025-09-17T14:23:01Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "f2a3cb1d8540b67273c9dbd5e585c31491a673b3"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm787AzjW2",
+          "commit": {
+            "abbreviatedOid": "c3e2c22"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-09-17T14:22:49Z",
+          "updatedAt": "2025-09-17T14:22:49Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
