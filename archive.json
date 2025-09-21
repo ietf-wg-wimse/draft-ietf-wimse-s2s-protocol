@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-09-18T01:16:56.972512+00:00",
+  "timestamp": "2025-09-21T01:25:25.172151+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -2807,9 +2807,24 @@
       "labels": [],
       "body": "Section 1.3 (Workload Identifiers and Authentication Granularity) is not entirely clear in how it views workload identifiers as it relates to identifying a specific instance of a workload versus a \"service\", which may consist of multiple instances that come and go: \n\n<quote>\nPrior to WIMSE, many use cases did not allow for fully granular authentication in containerized runtime platforms. For instance, with mutual TLS, there's often no clear way to map the request's external access reference (e.g., Kubernetes Ingress path, service name, or host header) to the SubjectAltName value in the server certificate. This means that the client could only verify if the server certificate is valid within a trust domain, not if it's tied to a specific workload.\n\nTo enable mutual and granular authentication between workloads, two things must be in place:\n- Each workload must know its own identifier.\n- There needs to be an explicit mapping from the external handle used to access a workload (such as an Ingress path or service DNS name) to its workload identifier.\n</quote>\n\nThe above text suggests that the workload identifier is for a specific instance, however either should be possible (with the most common use case expected to be a \"service\" rather than an \"instance\"). ",
       "createdAt": "2025-09-16T01:22:39Z",
-      "updatedAt": "2025-09-16T01:22:39Z",
+      "updatedAt": "2025-09-19T20:59:20Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "You are right that we are not entirely clear on the scope of workload identifiers. However I would defer this decision to the Architecture document which [defines](https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-05#name-conventions-and-definitions) the terms \"workload\" and \"workload identifier\". That document seems to hint at the more granular definition, i.e. that the identifier refers to an instance, but it could also be clarified IMO. \n\n> A workload is a running instance of software executing for a specific purpose.",
+          "createdAt": "2025-09-19T15:33:41Z",
+          "updatedAt": "2025-09-19T15:33:41Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I'd say that the intent is that a workload identifier can represent either a specific instance of a workload versus a \"service\" or \"class\" of workload. The choice is left to the implementation/deployment. To the extent that's not coming though in the text, we should look at fixing. ",
+          "createdAt": "2025-09-19T20:59:20Z",
+          "updatedAt": "2025-09-19T20:59:20Z"
+        }
+      ]
     },
     {
       "number": 163,
@@ -2847,9 +2862,17 @@
       "labels": [],
       "body": "The \"Workload Identity Token\" Section (3.1) says the iss claim is \"The issuer of the token, which is the Identity Server, represented by a URI. The iss claim is RECOMMENDED but optional\"\n\nThe example in Figure 2-4 does not include an \"iss\" claim, however the text after Figure 4 says that the claims indicate that \"the example WIT was issued by an Identity Server known as....\" (this refer to the -06 version; current editor's copy seems to have removed this). \n\nSection 3.1.2 (\"A note on iss claim and key distribution\") then says \"It is RECOMMENDED that the WIT carries an iss claim. This specification itself does not make use of a potential iss claim but also carries the trust domain in the workload identifier\". \n\n\n1) If the iss claim is recommended, then why is its use not specified and shown in the examples ? \n\n2) There seems to be an implicit statement that the issuer must be the same as the trust domain in the workload identifier, however why is that, especially in lieu of the RECOMMENDED part above ? \n\n",
       "createdAt": "2025-09-16T01:42:52Z",
-      "updatedAt": "2025-09-16T01:42:52Z",
+      "updatedAt": "2025-09-19T20:19:11Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> 1. If the iss claim is recommended, then why is its use not specified and shown in the examples ?\n\nThings get out of sync or can even vary based on differing ideas/opinions of who ever does the piece of the thing at the time. This does certainly suggest that some improvements in treatment of `iss` are needed. \n\n> 2. There seems to be an implicit statement that the issuer must be the same as the trust domain in the workload identifier, however why is that, especially in lieu of the RECOMMENDED part above ?\n\nI'm not sure how to answer this or even what the question is. But that probably only underscores the need for some improvements.",
+          "createdAt": "2025-09-19T20:18:50Z",
+          "updatedAt": "2025-09-19T20:19:11Z"
+        }
+      ]
     },
     {
       "number": 165,
@@ -2887,9 +2910,17 @@
       "labels": [],
       "body": "Section 3.2 (\"Option 1: DPoP-Inspired Authentication\") says the \"jti\" value \"MUST be unique, at least within the scope of the sender. Unique across what and how does the receiver interpret that ? Is it based on the workload identifier, in which case we again need to consider workload instances versus \"services\", with potentially multiple instances. ",
       "createdAt": "2025-09-16T01:50:54Z",
-      "updatedAt": "2025-09-16T01:50:54Z",
+      "updatedAt": "2025-09-19T21:22:25Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "The core definition of jti is a bit difficult https://datatracker.ietf.org/doc/html/rfc7519#section-4.1.7 and one could even argue that \"within the scope of the sender\" isn't in the spirit of the \"collisions MUST be prevented among values produced by different issuers as well\" but maybe I'm reading too much or too little into it. Practically, just put 128 bits of random data in there (base64url encoding 16 random bytes works fine for such) on the issuer side. On the receiver side check prior use locally for all WPTs or qualified by the sender if worried about false positive rejections by senders using too short jtis or some kind of distributed check if you worried about cross instance reply for some reason. \n\nI don't know how to say all that in the draft text itself. Or if it even made any sense.\n\nProbably the text should just say to put at least that much random data in there and that you can just check that jti values haven't been seen previously in the time window of validity and the scope of that check can be whatever seems appropriate. \n\nI don't think instances vs \"services\" factors into it. But maybe I'm missing something. \n\n",
+          "createdAt": "2025-09-19T21:22:25Z",
+          "updatedAt": "2025-09-19T21:22:25Z"
+        }
+      ]
     },
     {
       "number": 167,
@@ -2927,9 +2958,17 @@
       "labels": [],
       "body": "Open 1 (DPoP-inspired) says that \"It is RECOMMENDED to check that the value of the jti claim has not been used before in the time window in which the respective WPT would be considered valid.\"\n\nWhat is the scope/context in which this check should be made ? Elsewhere, it was suggested that the jti only needed to be unique within the sender scope (albeit it was not entirely clear what constitutes the sender scope). ",
       "createdAt": "2025-09-16T02:08:50Z",
-      "updatedAt": "2025-09-16T02:08:50Z",
+      "updatedAt": "2025-09-19T21:22:37Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "The core definition of jti is a bit difficult https://datatracker.ietf.org/doc/html/rfc7519#section-4.1.7 and one could even argue that \"within the scope of the sender\" isn't in the spirit of the \"collisions MUST be prevented among values produced by different issuers as well\" but maybe I'm reading too much or too little into it. Practically, just put 128 bits of random data in there (base64url encoding 16 random bytes works fine for such) on the issuer side. On the receiver side check prior use locally for all WPTs or qualified by the sender if worried about false positive rejections by senders using too short jtis or some kind of distributed check if you worried about cross instance reply for some reason.\n\nI don't know how to say all that in the draft text itself. Or if it even made any sense.\n\nProbably the text should just say to put at least that much random data in there and that you can just check that jti values haven't been seen previously in the time window of validity and the scope of that check can be whatever seems appropriate.\n\nI don't think instances vs \"services\" factors into it. But maybe I'm missing something.",
+          "createdAt": "2025-09-19T21:22:37Z",
+          "updatedAt": "2025-09-19T21:22:37Z"
+        }
+      ]
     }
   ],
   "pulls": [
