@@ -609,6 +609,22 @@ For example, the full workload identifier may be matched against ACLs to authori
 A deployment may specify other authorization policies based on the specific details of how the workload identifier is constructed. The path portion of the workload identifier MUST always be considered in the scope of the trust domain.
 See {{granular-auth}} on additional security implications of workload identifiers.
 
+# Implementation Status
+
+SPIFFE (Standard)
+
+* Organization: CNCF
+* Maturity: WIT beta, WIC is compabtible with the X509-SVID and widely used.
+* Coverage: WIT, WIC
+* Contact: SPIFFE sig-spec community
+
+SPIRL
+
+* Organization: SPIRL
+* Maturity: WIT/WPT alpha, WIC production
+* Coverage: WIT, WIC, WPT
+* Contact: arndt@spirl.com
+
 # Security Considerations
 
 ## Workload Identity
