@@ -5,12 +5,12 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 21 March 2026                                          CyberArk
+Expires: 29 March 2026                                          CyberArk
                                                       A. Schwenkschuster
                                                                    SPIRL
                                                               Y. Sheffer
                                                                   Intuit
-                                                       17 September 2025
+                                                       25 September 2025
 
 
                WIMSE Workload-to-Workload Authentication
@@ -66,7 +66,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 21 March 2026.
+   This Internet-Draft will expire on 29 March 2026.
 
 Copyright Notice
 
@@ -104,24 +104,25 @@ Table of Contents
      4.2.  Workload Identity Certificate Validation
        4.2.1.  Server Name Validation
      4.3.  Client Authorization Using the Workload Identity
-   5.  Security Considerations
-     5.1.  Workload Identity
-     5.2.  Workload Identity Token and Proof of Possession
-     5.3.  Workload Identity Key Management
-     5.4.  Middle Boxes
-     5.5.  Privacy Considerations
-   6.  IANA Considerations
-     6.1.  JSON Web Token Claims
-     6.2.  Media Type Registration
-       6.2.1.  application/wit+jwt
-       6.2.2.  application/wpt+jwt
-     6.3.  Hypertext Transfer Protocol (HTTP) Field Name Registration
-       6.3.1.  Workload-Identity-Token
-       6.3.2.  Workload-Proof-Token
-     6.4.  URI Scheme Registration
-   7.  References
-     7.1.  Normative References
-     7.2.  Informative References
+   5.  Implementation Status
+   6.  Security Considerations
+     6.1.  Workload Identity
+     6.2.  Workload Identity Token and Proof of Possession
+     6.3.  Workload Identity Key Management
+     6.4.  Middle Boxes
+     6.5.  Privacy Considerations
+   7.  IANA Considerations
+     7.1.  JSON Web Token Claims
+     7.2.  Media Type Registration
+       7.2.1.  application/wit+jwt
+       7.2.2.  application/wpt+jwt
+     7.3.  Hypertext Transfer Protocol (HTTP) Field Name Registration
+       7.3.1.  Workload-Identity-Token
+       7.3.2.  Workload-Proof-Token
+     7.4.  URI Scheme Registration
+   8.  References
+     8.1.  Normative References
+     8.2.  Informative References
    Appendix A.  Document History
      A.1.  draft-ietf-wimse-s2s-protocol-07
      A.2.  draft-ietf-wimse-s2s-protocol-06
@@ -310,7 +311,7 @@ Table of Contents
    The Workload Identity Token (WIT) is a JWS [RFC7515] signed JWT
    [RFC7519] that represents the identity of a workload.  It is issued
    by the Identity Server and binds a public key to the workload
-   identity.  See Section 5.3 for security considerations.
+   identity.  See Section 6.3 for security considerations.
 
    A WIT MUST contain the following claims, except where noted:
 
@@ -373,7 +374,7 @@ Table of Contents
    with a trust domain component.  The runtime environment often
    determines which URI scheme is used, e.g. if SPIFFE is used to
    authenticate workloads, it mandates "spiffe" URIs.  However for those
-   deployments where this is not the case, this document (Section 6.4)
+   deployments where this is not the case, this document (Section 7.4)
    defines the "wimse" URI scheme which can be used by any deployment
    that implements this protocol.
 
@@ -739,7 +740,7 @@ Table of Contents
 
    This option uses the Workload Identity Token (Section 3.1) and the
    private key associated with its public key, to sign the request and
-   optionally, the response.  See Section 5.3 for security
+   optionally, the response.  See Section 6.3 for security
    considerations.  This section defines a profile of the Message
    Signatures specification [RFC9421].
 
@@ -920,7 +921,7 @@ Table of Contents
 
    *  Message Signatures offer superior integrity protection,
       particularly by mitigating message modification by middleboxes.
-      See also Section 5.4.
+      See also Section 6.4.
 
    *  A key advantage of Message Signatures is that they support
       response signing.  This opens up the possibility for future
@@ -1059,9 +1060,77 @@ Table of Contents
    domain.  See Section 1.3 on additional security implications of
    workload identifiers.
 
-5.  Security Considerations
+5.  Implementation Status
 
-5.1.  Workload Identity
+
+   // Note to RFC Editor: please remove this section, as well as the
+   // reference to RFC 7942, before publication.  This section records
+   the status of known implementations of the protocol defined by this
+   specification at the time of posting of this Internet-Draft, and is
+   based on a proposal described in [RFC7942].  The description of
+   implementations in this section is intended to assist the IETF in its
+   decision processes in progressing drafts to RFCs.  Please note that
+   the listing of any individual implementation here does not imply
+   endorsement by the IETF.  Furthermore, no effort has been spent to
+   verify the information presented here that was supplied by IETF
+   contributors.  This is not intended as, and must not be construed to
+   be, a catalog of available implementations or their features.
+   Readers are advised to note that other implementations may exist.
+
+   According to RFC 7942, "this will allow reviewers and working groups
+   to assign due consideration to documents that have the benefit of
+   running code, which may serve as evidence of valuable experimentation
+   and feedback that have made the implemented protocols more mature.
+   It is up to the individual working groups to use this information as
+   they see fit".
+
+   SPIFFE (Standard)
+
+   *  Organization: CNCF
+
+   *  Maturity:
+
+      -  Workload Identity Certificate: fully compatible with the
+         X509-SVID and widely used.
+
+      -  Workload Identity Token: beta
+
+   *  Coverage: Workload Identity Certificate, WIT
+
+   *  Contact: SPIFFE sig-spec community
+      (https://github.com/spiffe/spiffe/tree/main/community/sig-spec)
+
+   SPIRL
+
+   *  Organization: SPIRL
+
+   *  Maturity:
+
+      -  Workload Identity Certificate: production
+
+      -  Workload Identity Token/Workload Proof Token: alpha
+
+   *  Coverage: Workload Identity Certificate, WIT, WPT
+
+   *  Contact: arndt@spirl.com
+
+   Teleport - Machine & Workload Identity
+
+   *  Organization: Teleport
+
+   *  Maturity:
+
+      -  Workload Identity Certificate: production
+
+      -  Workload Identity Token/Workload Proof Token: research
+
+   *  Coverage: Workload Identity Certificate
+
+   *  Contact: noah@goteleport.com
+
+6.  Security Considerations
+
+6.1.  Workload Identity
 
    The Workload Identifier is scoped within an issuer and therefore any
    sub-components (path portion of Identifier) are only unique within a
@@ -1073,7 +1142,7 @@ Table of Contents
    certificate chain.  The association of an issuer, trust domain and a
    cryptographic trust anchor MUST be communicated securely out of band.
 
-5.2.  Workload Identity Token and Proof of Possession
+6.2.  Workload Identity Token and Proof of Possession
 
    The Workload Identity Token (WIT) is bound to a secret cryptographic
    key and is always presented with a proof of possession as described
@@ -1131,7 +1200,7 @@ Table of Contents
    identity of a TLS session or TLS channel binding parameters.  The
    mechanisms for binding are outside the scope of this specification.
 
-5.3.  Workload Identity Key Management
+6.3.  Workload Identity Key Management
 
    Both the Workload Identity Token and the Workload Identity
    Certificate carry a public key.  The corresponding private key:
@@ -1146,7 +1215,7 @@ Table of Contents
    *  SHOULD be re-generated for each new Workload Identity Token or
       Certificate.
 
-5.4.  Middle Boxes
+6.4.  Middle Boxes
 
    In some deployments the Workload Identity Token and proof of
    possession may pass through multiple systems.  The communication
@@ -1164,7 +1233,7 @@ Table of Contents
    on their situation to determine if it is appropriate to trust and
    allow traffic to pass through a middle box.
 
-5.5.  Privacy Considerations
+6.5.  Privacy Considerations
 
    WITs and the proofs of possession may contain private information
    such as user names or other identities.  Care should be taken to
@@ -1177,9 +1246,9 @@ Table of Contents
    these are exceptional cases a deployment should evaluate if the
    disclosure of WITs or certificates can be used to track a user.
 
-6.  IANA Considerations
+7.  IANA Considerations
 
-6.1.  JSON Web Token Claims
+7.1.  JSON Web Token Claims
 
    IANA is requested to add the following entries to the "JSON Web Token
    Claims" registry [IANA.JWT.CLAIMS]:
@@ -1199,16 +1268,16 @@ Table of Contents
 
                                  Table 1
 
-6.2.  Media Type Registration
+7.2.  Media Type Registration
 
    IANA is requested to register the following entries to the "Media
    Types" registry [IANA.MEDIA.TYPES]:
 
-   *  application/wit+jwt, per Section 6.2.1.
+   *  application/wit+jwt, per Section 7.2.1.
 
-   *  application/wpt+jwt, per Section 6.2.2.
+   *  application/wpt+jwt, per Section 7.2.2.
 
-6.2.1.  application/wit+jwt
+7.2.1.  application/wit+jwt
 
    Type name: application
 
@@ -1256,7 +1325,7 @@ Table of Contents
 
    Change controller: Internet Engineering Task Force (iesg@ietf.org).
 
-6.2.2.  application/wpt+jwt
+7.2.2.  application/wpt+jwt
 
    Type name: application
 
@@ -1304,16 +1373,16 @@ Table of Contents
 
    Change controller: Internet Engineering Task Force (iesg@ietf.org).
 
-6.3.  Hypertext Transfer Protocol (HTTP) Field Name Registration
+7.3.  Hypertext Transfer Protocol (HTTP) Field Name Registration
 
    IANA is requested to register the following entries to the "Hypertext
    Transfer Protocol (HTTP) Field Name Registry" [IANA.HTTP.FIELDS]:
 
-   *  Workload-Identity-Token, per Section 6.3.1.
+   *  Workload-Identity-Token, per Section 7.3.1.
 
-   *  Workload-Proof-Token, per Section 6.3.2.
+   *  Workload-Proof-Token, per Section 7.3.2.
 
-6.3.1.  Workload-Identity-Token
+7.3.1.  Workload-Identity-Token
 
    *  Field Name: Workload-Identity-Token
 
@@ -1325,7 +1394,7 @@ Table of Contents
 
    *  Comments: see reference above for an ABNF syntax of this field
 
-6.3.2.  Workload-Proof-Token
+7.3.2.  Workload-Proof-Token
 
    *  Field Name: Workload-Proof-Token
 
@@ -1337,7 +1406,7 @@ Table of Contents
 
    *  Comments: see reference above for an ABNF syntax of this field
 
-6.4.  URI Scheme Registration
+7.4.  URI Scheme Registration
 
    IANA is requested to register the "wimse" scheme to the "URI Schemes"
    registry [IANA.URI.SCHEMES]:
@@ -1355,9 +1424,9 @@ Table of Contents
 
    *  References: Section 3 of this document (RFC XXX).
 
-7.  References
+8.  References
 
-7.1.  Normative References
+8.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -1396,6 +1465,11 @@ Table of Contents
               RFC 7800, DOI 10.17487/RFC7800, April 2016,
               <https://www.rfc-editor.org/rfc/rfc7800>.
 
+   [RFC7942]  Sheffer, Y. and A. Farrel, "Improving Awareness of Running
+              Code: The Implementation Status Section", BCP 205,
+              RFC 7942, DOI 10.17487/RFC7942, July 2016,
+              <https://www.rfc-editor.org/rfc/rfc7942>.
+
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
@@ -1423,7 +1497,7 @@ Table of Contents
               RFC 9525, DOI 10.17487/RFC9525, November 2023,
               <https://www.rfc-editor.org/rfc/rfc9525>.
 
-7.2.  Informative References
+8.2.  Informative References
 
    [I-D.ietf-oauth-transaction-tokens]
               Tulshibagwale, A., Fletcher, G., and P. Kasselman,
