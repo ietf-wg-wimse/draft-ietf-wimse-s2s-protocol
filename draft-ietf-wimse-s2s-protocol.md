@@ -625,6 +625,12 @@ SPIRL
 * Coverage: WIT, WIC, WPT
 * Contact: arndt@spirl.com
 
+Teleport - Machine & Workload Identity
+
+* Organization: Teleport
+* Maturity: WIC production, WIT/WPT research
+* Coverage: WIC
+* Contact: noah@goteleport.com
 # Security Considerations
 
 ## Workload Identity
