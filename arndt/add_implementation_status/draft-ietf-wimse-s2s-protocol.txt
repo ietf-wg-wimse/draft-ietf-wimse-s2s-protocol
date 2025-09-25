@@ -1066,6 +1066,7 @@ Table of Contents
    *  Coverage: Workload Identity Certificate, WIT
 
    *  Contact: SPIFFE sig-spec community
+      (https://github.com/spiffe/spiffe/tree/main/community/sig-spec)
 
    SPIRL
 
