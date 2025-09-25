@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-09-23T01:17:56.788832+00:00",
+  "timestamp": "2025-09-25T01:19:01.241553+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -2810,11 +2810,13 @@
       "state": "OPEN",
       "author": "fandreas",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "jsalowey"
+      ],
       "labels": [],
       "body": "Section 1.3 (Workload Identifiers and Authentication Granularity) is not entirely clear in how it views workload identifiers as it relates to identifying a specific instance of a workload versus a \"service\", which may consist of multiple instances that come and go: \n\n<quote>\nPrior to WIMSE, many use cases did not allow for fully granular authentication in containerized runtime platforms. For instance, with mutual TLS, there's often no clear way to map the request's external access reference (e.g., Kubernetes Ingress path, service name, or host header) to the SubjectAltName value in the server certificate. This means that the client could only verify if the server certificate is valid within a trust domain, not if it's tied to a specific workload.\n\nTo enable mutual and granular authentication between workloads, two things must be in place:\n- Each workload must know its own identifier.\n- There needs to be an explicit mapping from the external handle used to access a workload (such as an Ingress path or service DNS name) to its workload identifier.\n</quote>\n\nThe above text suggests that the workload identifier is for a specific instance, however either should be possible (with the most common use case expected to be a \"service\" rather than an \"instance\"). ",
       "createdAt": "2025-09-16T01:22:39Z",
-      "updatedAt": "2025-09-22T22:00:15Z",
+      "updatedAt": "2025-09-23T14:29:28Z",
       "closedAt": null,
       "comments": [
         {
@@ -2876,7 +2878,7 @@
       "labels": [],
       "body": "The \"Workload Identity Token\" Section (3.1) says the iss claim is \"The issuer of the token, which is the Identity Server, represented by a URI. The iss claim is RECOMMENDED but optional\"\n\nThe example in Figure 2-4 does not include an \"iss\" claim, however the text after Figure 4 says that the claims indicate that \"the example WIT was issued by an Identity Server known as....\" (this refer to the -06 version; current editor's copy seems to have removed this). \n\nSection 3.1.2 (\"A note on iss claim and key distribution\") then says \"It is RECOMMENDED that the WIT carries an iss claim. This specification itself does not make use of a potential iss claim but also carries the trust domain in the workload identifier\". \n\n\n1) If the iss claim is recommended, then why is its use not specified and shown in the examples ? \n\n2) There seems to be an implicit statement that the issuer must be the same as the trust domain in the workload identifier, however why is that, especially in lieu of the RECOMMENDED part above ? \n\n",
       "createdAt": "2025-09-16T01:42:52Z",
-      "updatedAt": "2025-09-22T21:53:50Z",
+      "updatedAt": "2025-09-24T20:23:18Z",
       "closedAt": null,
       "comments": [
         {
@@ -2892,6 +2894,20 @@
           "body": "Regarding my second point:\n> There seems to be an implicit statement that the issuer must be the same as the trust domain in the workload identifier, however why is that, especially in lieu of the RECOMMENDED part above ?\n\nThe workload identifier includes a trust domain as part of the identifier. The question is whether the issuer of the Workload Identity Token MUST be the same as the trust domain indicated in the workload identifier. Section 3.1.3 seems to suggest so: \n\n>[3.1.3. ](https://ietf-wg-wimse.github.io/draft-ietf-wimse-s2s-protocol/draft-ietf-wimse-s2s-protocol.html#section-3.1.3)[A note on iss claim and key distribution](https://ietf-wg-wimse.github.io/draft-ietf-wimse-s2s-protocol/draft-ietf-wimse-s2s-protocol.html#name-a-note-on-iss-claim-and-key)\nIt is RECOMMENDED that the WIT carries an iss claim. This specification itself does not make use of a potential iss claim but also carries the trust domain in the workload identifier (see [[I-D.ietf-wimse-arch](https://ietf-wg-wimse.github.io/draft-ietf-wimse-s2s-protocol/draft-ietf-wimse-s2s-protocol.html#I-D.ietf-wimse-arch)] for a definition of the identifier and related rules). Implementations MAY include the iss claim in the form of a https URL to facilitate key distribution via mechanisms like the jwks_uri from [[RFC8414](https://ietf-wg-wimse.github.io/draft-ietf-wimse-s2s-protocol/draft-ietf-wimse-s2s-protocol.html#RFC8414)] but alternative key distribution methods may make use of the trust domain included in the workload identifier which is carried in the mandatory sub claim.\n\nHowever, it's not obvious to me that the notion of a trust domain as currently defined is the same as an issuer (nor should it be I believe). Conversely, if they are indeed intended to be the same, then why would we need the iss claim, and what should we do if the two don't match ? \n",
           "createdAt": "2025-09-22T21:53:50Z",
           "updatedAt": "2025-09-22T21:53:50Z"
+        },
+        {
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I think the intention is that the issuer claim is to be used for auditing purposes and may include an identifier for the specific token issuer that issued the token.  That server MUST be part of the trust domain.  The document doesn't restrict the format of the identifier, but if it is s identifier format defined by WIMSE then the trust domain in the identifier must match the trust domain of the issued token.  ",
+          "createdAt": "2025-09-24T16:01:41Z",
+          "updatedAt": "2025-09-24T16:01:41Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Must be part of the trust domain -> must be authoritative for the trust domain (I find the former wording meaningless, to me the \"trust domain\" os the group of workloads that are all provisioned from one source of trust; the issuer may or may not be such a workload).",
+          "createdAt": "2025-09-24T20:23:18Z",
+          "updatedAt": "2025-09-24T20:23:18Z"
         }
       ]
     },
@@ -3002,6 +3018,56 @@
           "body": "I think this is being addressed by https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/166 but will leave open here for now. ",
           "createdAt": "2025-09-22T22:15:58Z",
           "updatedAt": "2025-09-22T22:15:58Z"
+        }
+      ]
+    },
+    {
+      "number": 169,
+      "id": "I_kwDOLJmm787NX83X",
+      "title": "Indicate the iss is recommended for auditing purposes",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/169",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "See title",
+      "createdAt": "2025-09-23T14:48:00Z",
+      "updatedAt": "2025-09-24T16:08:58Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "body": "The iss claim is optional and MAY be included for auditing purposes to provide the identifier of the specific server that issued the token.  The identifier format is not specified, but if it is an identifier that conforms to the WIMSE specifications then it MUST indicate a trust domain that is the same as the subject of the token.  The iss claim MUST NOT be used to directly look up JWKS or other trust anchor information used to validate the WIT. ",
+          "createdAt": "2025-09-24T16:08:58Z",
+          "updatedAt": "2025-09-24T16:08:58Z"
+        }
+      ]
+    },
+    {
+      "number": 170,
+      "id": "I_kwDOLJmm787NX90P",
+      "title": "Create section about trust anchors",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/170",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [
+        "jsalowey"
+      ],
+      "labels": [],
+      "body": "We currently don't talk about where the trust anchor comes from and what data is used to identify those. We believe this should be added on a high level. The exact provisioning is out of scope.",
+      "createdAt": "2025-09-23T14:48:53Z",
+      "updatedAt": "2025-09-24T15:56:55Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "body": "# Establishing Trust Anchors\n\nThis specification expects that trust anchors used for the validation of Workload Identity Certificates and Workload Identity Tokens are associated with the trust domain and are provisioned with other trust domain information to the workloads. This specification does not define a means for discovering trust anchor information.  In particular, the issuer claim MUST NOT be used to directly look up trust anchor information such as a JWKS. ",
+          "createdAt": "2025-09-24T15:56:55Z",
+          "updatedAt": "2025-09-24T15:56:55Z"
         }
       ]
     }
@@ -12662,6 +12728,87 @@
           "createdAt": "2025-09-17T14:22:49Z",
           "updatedAt": "2025-09-17T14:22:49Z",
           "comments": []
+        }
+      ]
+    },
+    {
+      "number": 171,
+      "id": "PR_kwDOLJmm786qRKvc",
+      "title": "Add implementation status section",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/171",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Add implementation status according to RFC 7942",
+      "createdAt": "2025-09-24T11:40:39Z",
+      "updatedAt": "2025-09-24T13:20:17Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "cf26f72ef2ffc5f59e7e087b34877f264821c6fd",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "arndt/add_implementation_status",
+      "headRefOid": "75914441a11e3770ee3e8998fac1ad6bfa21a727",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I don't think the acronym `WIC` is used anywhere else in the document? ",
+          "createdAt": "2025-09-24T12:39:40Z",
+          "updatedAt": "2025-09-24T12:39:40Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm787CeF9L",
+          "commit": {
+            "abbreviatedOid": "7591444"
+          },
+          "author": "strideynet",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-09-24T12:31:07Z",
+          "updatedAt": "2025-09-24T12:31:50Z",
+          "comments": [
+            {
+              "originalPosition": 19,
+              "body": "```suggestion\r\n\r\nTeleport - Machine & Workload Identity\r\n\r\n* Organization: Teleport\r\n* Maturity: WIC production, WIT/WPT research\r\n* Coverage: WIC\r\n* Contact: noah@goteleport.com\r\n```",
+              "createdAt": "2025-09-24T12:31:07Z",
+              "updatedAt": "2025-09-24T12:31:50Z"
+            },
+            {
+              "originalPosition": 9,
+              "body": "```suggestion\r\n* Maturity: WIT beta, WIC is compatible with the X509-SVID and widely used.\r\n```",
+              "createdAt": "2025-09-24T12:31:18Z",
+              "updatedAt": "2025-09-24T12:31:50Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787Ce6It",
+          "commit": {
+            "abbreviatedOid": "7591444"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-09-24T13:20:17Z",
+          "updatedAt": "2025-09-24T13:20:17Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\n<cref>Note to RFC Editor: please remove this section, as well as the reference to RFC 7942, before publication.</cref>\nThis section records the status of known implementations of the protocol defined by this specification at the time of posting of this Internet-Draft, and is based on a proposal described in {{?RFC 7942}}. The description of implementations in this section is intended to assist the IETF in its decision processes in progressing drafts to RFCs.  Please note that the listing of any individual implementation here does not imply endorsement by the IETF.  Furthermore, no effort has been spent to verify the information presented here that was supplied by IETF contributors. This is not intended as, and must not be construed to be, a catalog of available implementations or their features.  Readers are advised to note that other implementations may exist.\n\nAccording to RFC 7942, \"this will allow reviewers and working groups to assign due consideration to documents that have the benefit of running code, which may serve as evidence of valuable experimentation and feedback that have made the implemented protocols more mature.  It is up to the individual working groups to use this information as they see fit\".\n```\n\nBoilerplate copied from RFC 7942.",
+              "createdAt": "2025-09-24T13:20:17Z",
+              "updatedAt": "2025-09-24T13:20:17Z"
+            }
+          ]
         }
       ]
     }
