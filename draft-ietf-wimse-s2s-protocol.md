@@ -623,7 +623,7 @@ SPIFFE (Standard)
     * Workload Identity Certificate: fully compatible with the X509-SVID and widely used.
     * Workload Identity Token: beta
 * Coverage: Workload Identity Certificate, WIT
-* Contact: SPIFFE sig-spec community (https://github.com/spiffe/spiffe/tree/main/community/sig-spec)
+* Contact: [SPIFFE sig-spec community](https://github.com/spiffe/spiffe/tree/main/community/sig-spec)
 
 SPIRL
 
