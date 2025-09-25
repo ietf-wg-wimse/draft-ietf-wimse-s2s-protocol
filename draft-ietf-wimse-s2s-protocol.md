@@ -625,6 +625,41 @@ For example, the full workload identifier may be matched against ACLs to authori
 A deployment may specify other authorization policies based on the specific details of how the workload identifier is constructed. The path portion of the workload identifier MUST always be considered in the scope of the trust domain.
 See {{granular-auth}} on additional security implications of workload identifiers.
 
+# Implementation Status
+
+<cref>Note to RFC Editor: please remove this section, as well as the reference to RFC 7942, before publication.</cref>
+This section records the status of known implementations of the protocol defined by this specification at the time of posting of this Internet-Draft, and is based on a proposal described in {{!RFC7942}}. The description of implementations in this section is intended to assist the IETF in its decision processes in progressing drafts to RFCs.  Please note that the listing of any individual implementation here does not imply endorsement by the IETF.  Furthermore, no effort has been spent to verify the information presented here that was supplied by IETF contributors. This is not intended as, and must not be construed to be, a catalog of available implementations or their features.  Readers are advised to note that other implementations may exist.
+
+According to RFC 7942, "this will allow reviewers and working groups to assign due consideration to documents that have the benefit of running code, which may serve as evidence of valuable experimentation and feedback that have made the implemented protocols more mature.  It is up to the individual working groups to use this information as they see fit".
+
+SPIFFE (Standard)
+
+* Organization: CNCF
+* Maturity:
+    * Workload Identity Certificate: fully compatible with the X509-SVID and widely used.
+    * Workload Identity Token: beta
+* Coverage: Workload Identity Certificate, WIT
+* Contact: [SPIFFE sig-spec community](https://github.com/spiffe/spiffe/tree/main/community/sig-spec)
+
+SPIRL
+
+* Organization: SPIRL
+* Maturity:
+    * Workload Identity Certificate: production
+    * Workload Identity Token/Workload Proof Token: alpha
+* Coverage: Workload Identity Certificate, WIT, WPT
+* Contact: arndt@spirl.com
+
+Teleport - Machine & Workload Identity
+
+* Organization: Teleport
+* Maturity:
+    * Workload Identity Certificate: production
+    * Workload Identity Token/Workload Proof Token: research
+* Coverage: Workload Identity Certificate
+* Contact: noah@goteleport.com
+
+
 # Security Considerations
 
 ## Workload Identity
