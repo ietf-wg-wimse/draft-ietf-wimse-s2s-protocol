@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-09-25T01:19:01.241553+00:00",
+  "timestamp": "2025-09-28T01:26:11.078294+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -2588,7 +2588,7 @@
       "labels": [],
       "body": "We want to collect implementations of the S2S protocol according to https://datatracker.ietf.org/doc/rfc7942/.",
       "createdAt": "2025-07-01T14:11:20Z",
-      "updatedAt": "2025-08-12T14:25:27Z",
+      "updatedAt": "2025-09-25T11:50:51Z",
       "closedAt": null,
       "comments": [
         {
@@ -2618,6 +2618,27 @@
           "body": "Template https://datatracker.ietf.org/doc/html/rfc7942#section-2",
           "createdAt": "2025-08-12T14:25:27Z",
           "updatedAt": "2025-08-12T14:25:27Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "specific section & initial implementations cohort got added in #171 ",
+          "createdAt": "2025-09-25T09:07:16Z",
+          "updatedAt": "2025-09-25T09:07:16Z"
+        },
+        {
+          "author": "dagdagdag83",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I lead a recent charge to implement a modern workload identity approach at Signicat. I blogged about it too https://www.signicat.com/blog/introducing-swim-signicat-workload-identity-in-mesh.\n\nIn my opinion its a practical and somewhat novel approach, and it implements many of the ideas and philosophy from WIMSE, and even specifically from the s2s document.\n\nIt's running in production right now on our main platform; thousands of customers, around 500K daily authentications/signings, and issuing around 2,5 million tokens per day.",
+          "createdAt": "2025-09-25T10:12:14Z",
+          "updatedAt": "2025-09-25T10:12:14Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@dagdagdag83 It's good to hear that you're running a large scale service auth solution in production, and in fact you may want to share your experience and learnings with the working group. However, the _Implementation Status_ section of an Internet Draft is there to support **the draft** by listing partial or full implementations of the specified protocol.",
+          "createdAt": "2025-09-25T11:50:51Z",
+          "updatedAt": "2025-09-25T11:50:51Z"
         }
       ]
     },
@@ -3033,7 +3054,7 @@
       "labels": [],
       "body": "See title",
       "createdAt": "2025-09-23T14:48:00Z",
-      "updatedAt": "2025-09-24T16:08:58Z",
+      "updatedAt": "2025-09-25T10:22:25Z",
       "closedAt": null,
       "comments": [
         {
@@ -3042,6 +3063,13 @@
           "body": "The iss claim is optional and MAY be included for auditing purposes to provide the identifier of the specific server that issued the token.  The identifier format is not specified, but if it is an identifier that conforms to the WIMSE specifications then it MUST indicate a trust domain that is the same as the subject of the token.  The iss claim MUST NOT be used to directly look up JWKS or other trust anchor information used to validate the WIT. ",
           "createdAt": "2025-09-24T16:08:58Z",
           "updatedAt": "2025-09-24T16:08:58Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> but if it is an identifier that conforms to the WIMSE specifications then it MUST indicate a trust domain that is the same as the subject of the token. \n\nWhat WIMSE specification do we refer here?",
+          "createdAt": "2025-09-25T10:22:25Z",
+          "updatedAt": "2025-09-25T10:22:25Z"
         }
       ]
     },
@@ -3070,6 +3098,86 @@
           "updatedAt": "2025-09-24T15:56:55Z"
         }
       ]
+    },
+    {
+      "number": 172,
+      "id": "I_kwDOLJmm787ODEl1",
+      "title": "X-Forwarded-Host & aud claim",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/172",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Can workloads use the \u201cX-Forwarded-For\u201d header to help validating the \u201caud\u201d of the WPT? I believe not and that we should mention/prohibit that in the spec. ",
+      "createdAt": "2025-09-26T10:29:19Z",
+      "updatedAt": "2025-09-26T10:31:33Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "For clarity: the assumption is that this header is added by the proxy/middlebox, and therefore it's not protected and cannot be protected.",
+          "createdAt": "2025-09-26T10:31:33Z",
+          "updatedAt": "2025-09-26T10:31:33Z"
+        }
+      ]
+    },
+    {
+      "number": 173,
+      "id": "I_kwDOLJmm787ODhSC",
+      "title": "Unclear text about mapping of identifiers",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/173",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Sec. 1.3 defines a mapping from the Request URI to the WIMSE ID, but then the MUST statement at the bottom requires a mapping \"between\" these two, which can be read as a bidirectional mapping.",
+      "createdAt": "2025-09-26T10:56:13Z",
+      "updatedAt": "2025-09-26T10:56:13Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 174,
+      "id": "I_kwDOLJmm787ODlu-",
+      "title": "Endpoint-level granularity",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/174",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "From a discussion with @strideynet:\n\nIf you want different endpoints to have different access policies, then you need to go granular.\n\nPerhaps this intention could be stated more explicitly ? I think most people will be familiar with cases where aud is purely the hostname/scheme of the service you are connecting to - and that there isn't a level of granularity beneath that. It'd be good to call that out that this additional granularity binds the WPT to a specific endpoint/RPC rather than just a specific target host.\n\nThis seems to belong in Sec. 1.3, \"Workload Identifiers and Authentication Granularity\".",
+      "createdAt": "2025-09-26T11:00:35Z",
+      "updatedAt": "2025-09-26T11:06:38Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "strideynet",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Yes - for wider context here - I am looking into how WPT could be used with non-HTTP protocols.\n\nTypically, when I have seen the `aud` claim used, it only identifies the host that a request is being made to - and not the individual RPC/endpoint upon that host. After reading the spec a few times, I inferred that the intention of the authors was that the WPT should be bound with even further granularity (e.g `aud: https://example.com/v1/foo` rather than just `aud: https://example.com`) which reduces the extent to which a stolen WPT could be reused or redirect to complete a different action than originally intended. \n\nThis in general seems like a good/positive thing - but - I think could be stated more explicitly within the spec. Especially when considering the WPT for protocols that do not have a clear definition of \"endpoint\" - it may be interesting to state more generally that a higher level of granularity than just the target service is desired.\n\n",
+          "createdAt": "2025-09-26T11:06:38Z",
+          "updatedAt": "2025-09-26T11:06:38Z"
+        }
+      ]
+    },
+    {
+      "number": 175,
+      "id": "I_kwDOLJmm787ODom_",
+      "title": "Back to \"aud\"",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/175",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "* When using mTLS, the SubjectAltName is a WIMSE ID. The assumption is that both peers know each other's ID and can validate the incoming certs.\n* Sec. 1.3 is about mapping from Request URI (which is known to the client by definition) to the target's WIMSE ID.\n\nAnd yet we still specified the `aud` claim of the WPT (Sec. 3.2) as the Request URI. Both points above point towards `aud` as the WIMSE ID.",
+      "createdAt": "2025-09-26T11:03:20Z",
+      "updatedAt": "2025-09-26T11:03:20Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -12736,24 +12844,26 @@
       "id": "PR_kwDOLJmm786qRKvc",
       "title": "Add implementation status section",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/171",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Add implementation status according to RFC 7942",
       "createdAt": "2025-09-24T11:40:39Z",
-      "updatedAt": "2025-09-24T13:20:17Z",
+      "updatedAt": "2025-09-25T09:05:05Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "cf26f72ef2ffc5f59e7e087b34877f264821c6fd",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "arndt/add_implementation_status",
-      "headRefOid": "75914441a11e3770ee3e8998fac1ad6bfa21a727",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "3fd1abe5f2c616606c39ac9a559f38c4c882997e",
+      "closedAt": "2025-09-25T09:04:39Z",
+      "mergedAt": "2025-09-25T09:04:39Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "51a2408c1c9bc490394bb7633b78b385277a7fe2"
+      },
       "comments": [
         {
           "author": "bc-pi",
@@ -12770,7 +12880,7 @@
             "abbreviatedOid": "7591444"
           },
           "author": "strideynet",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2025-09-24T12:31:07Z",
@@ -12809,6 +12919,39 @@
               "updatedAt": "2025-09-24T13:20:17Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787CtBr-",
+          "commit": {
+            "abbreviatedOid": "da75dd5"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-09-25T08:56:10Z",
+          "updatedAt": "2025-09-25T08:56:11Z",
+          "comments": [
+            {
+              "originalPosition": 18,
+              "body": "Can we give this URL as a contact? Unless you know SPIFFE, it's really hard to find... \n\nhttps://github.com/spiffe/spiffe",
+              "createdAt": "2025-09-25T08:56:11Z",
+              "updatedAt": "2025-09-25T08:56:11Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787CtCJh",
+          "commit": {
+            "abbreviatedOid": "da75dd5"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-09-25T08:56:32Z",
+          "updatedAt": "2025-09-25T08:56:32Z",
+          "comments": []
         }
       ]
     }
