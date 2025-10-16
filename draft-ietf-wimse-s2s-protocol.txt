@@ -5,12 +5,12 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 29 March 2026                                          CyberArk
+Expires: 19 April 2026                                          CyberArk
                                                       A. Schwenkschuster
                                                                    SPIRL
                                                               Y. Sheffer
                                                                   Intuit
-                                                       25 September 2025
+                                                         16 October 2025
 
 
                WIMSE Workload-to-Workload Authentication
@@ -66,7 +66,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 29 March 2026.
+   This Internet-Draft will expire on 19 April 2026.
 
 Copyright Notice
 
@@ -1510,9 +1510,9 @@ Table of Contents
               Salowey, J. A., Rosomakho, Y., and H. Tschofenig,
               "Workload Identity in a Multi System Environment (WIMSE)
               Architecture", Work in Progress, Internet-Draft, draft-
-              ietf-wimse-arch-05, 7 July 2025,
+              ietf-wimse-arch-06, 30 September 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
-              arch-05>.
+              arch-06>.
 
    [IANA.HTTP.FIELDS]
               IANA, "Hypertext Transfer Protocol (HTTP) Field Name
@@ -1550,9 +1550,21 @@ Appendix A.  Document History
 
 A.1.  draft-ietf-wimse-s2s-protocol-07
 
-   *  Rework the WPT's oth claim
+   *  Rework the WPT's oth claim.
 
-   *  update the [media]typ[e] values
+   *  update the media types.
+
+   *  Discuss extensibility of WIT and WPT.
+
+   *  Clarify error handling, specifically why not HTTP 401.
+
+   *  Correct the code examples.
+
+   *  Add registration request content for a wimse URI scheme.
+
+   *  New section on key management.
+
+   *  Use of the Accept-Signature header.
 
 A.2.  draft-ietf-wimse-s2s-protocol-06
 
