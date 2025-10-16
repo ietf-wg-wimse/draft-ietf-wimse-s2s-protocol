@@ -875,8 +875,14 @@ IANA is requested to register the "wimse" scheme to the "URI Schemes" registry {
 
 ## draft-ietf-wimse-s2s-protocol-07
 
-* Rework the WPT's oth claim
-* update the [media]typ[e] values
+* Rework the WPT's `oth` claim.
+* update the media types.
+* Discuss extensibility of WIT and WPT.
+* Clarify error handling, specifically why not HTTP 401.
+* Correct the code examples.
+* Add registration request content for a `wimse` URI scheme.
+* New section on key management.
+* Use of the `Accept-Signature` header.
 
 ## draft-ietf-wimse-s2s-protocol-06
 
