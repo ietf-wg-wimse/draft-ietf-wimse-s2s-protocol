@@ -1560,7 +1560,7 @@ A.1.  draft-ietf-wimse-s2s-protocol-07
 
    *  Correct the code examples.
 
-   *  Register the wimse URI scheme.
+   *  Add registration request content for a wimse URI scheme.
 
    *  New section on key management.
 
