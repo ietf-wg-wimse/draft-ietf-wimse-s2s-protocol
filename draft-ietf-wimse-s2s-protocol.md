@@ -880,7 +880,7 @@ IANA is requested to register the "wimse" scheme to the "URI Schemes" registry {
 * Discuss extensibility of WIT and WPT.
 * Clarify error handling, specifically why not HTTP 401.
 * Correct the code examples.
-* Register the `wimse` URI scheme.
+* Add registration request content for a `wimse` URI scheme.
 * New section on key management.
 * Use of the `Accept-Signature` header.
 
