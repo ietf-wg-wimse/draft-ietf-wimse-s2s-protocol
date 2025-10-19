@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-09-28T01:26:11.078294+00:00",
+  "timestamp": "2025-10-19T01:36:53.486892+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -12952,6 +12952,88 @@
           "createdAt": "2025-09-25T08:56:32Z",
           "updatedAt": "2025-09-25T08:56:32Z",
           "comments": []
+        }
+      ]
+    },
+    {
+      "number": 176,
+      "id": "PR_kwDOLJmm786uEzfs",
+      "title": "Prep for -07",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/176",
+      "state": "MERGED",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Doc history for -07, the starting point for the new document structure.",
+      "createdAt": "2025-10-16T12:23:18Z",
+      "updatedAt": "2025-10-16T13:58:20Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "51a2408c1c9bc490394bb7633b78b385277a7fe2",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-prep-07",
+      "headRefOid": "12c42dba8ed1cd01782f526f3e04ed1fe1c870a1",
+      "closedAt": "2025-10-16T13:58:20Z",
+      "mergedAt": "2025-10-16T13:58:20Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "5958651d2e6728a7de709091fb678d3c73f6b582"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm787HXPYM",
+          "commit": {
+            "abbreviatedOid": "175d388"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-10-16T13:08:09Z",
+          "updatedAt": "2025-10-16T13:08:09Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm787HX81u",
+          "commit": {
+            "abbreviatedOid": "175d388"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-16T13:45:34Z",
+          "updatedAt": "2025-10-16T13:45:34Z",
+          "comments": [
+            {
+              "originalPosition": 11,
+              "body": "```suggestion\n* Add registration request content for a `wimse` URI scheme.\n```",
+              "createdAt": "2025-10-16T13:45:34Z",
+              "updatedAt": "2025-10-16T13:45:34Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787HX-WW",
+          "commit": {
+            "abbreviatedOid": "175d388"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-16T13:46:48Z",
+          "updatedAt": "2025-10-16T13:46:49Z",
+          "comments": [
+            {
+              "originalPosition": 11,
+              "body": "with many things/changes pending, I don't want this to sound like a completed action \r\n",
+              "createdAt": "2025-10-16T13:46:48Z",
+              "updatedAt": "2025-10-16T13:46:49Z"
+            }
+          ]
         }
       ]
     }
