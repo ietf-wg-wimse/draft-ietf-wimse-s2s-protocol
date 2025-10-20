@@ -404,8 +404,7 @@ The Workload Identity Token (WIT) is bound to a secret cryptographic key and is 
 * Preventing Eavesdropping and Interception with TLS
 
 An attacker observing or intercepting the communication channel can view the token and its proof of possession and attempt to replay it to gain an advantage. In order to prevent this the
-token and proof of possession MUST be sent over a secure, server authenticated TLS connection unless a secure channel is provided by some other mechanisms. Host name validation according
-to {{server-name}} MUST be performed by the client.
+token and proof of possession MUST be sent over a secure, server authenticated TLS connection unless a secure channel is provided by some other mechanisms.
 
 * Limiting Proof of Possession Lifespan
 
