@@ -341,33 +341,17 @@ authorization policy may take into account both the sending workload's identity 
 identity in the WIT may be used to establish which API calls can be made and information in the context token may be used to determine
 which specific resources can be accessed.
 
-# Using Mutual TLS for Workload-to-Workload Authentication {#mutual-tls}
+# Transport Level Workload-to-Workload Authentication {#transport-level}
 
-As noted in the introduction, for many deployments, transport-level protection of application traffic using TLS is ideal.
+As noted in the introduction, for many deployments, transport-level protection of application traffic is ideal.
 
 ## The Workload Identity Certificate {#to-wic}
 
 The Workload Identity Certificate is an X.509 certificate. The workload identity MUST be encoded in a SubjectAltName extension of type URI. There MUST be only one SubjectAltName extension of type URI in a Workload Identity Certificate. If the workload will act as a TLS server for clients that do not understand workload identities it is RECOMMENDED that the Workload Identity Certificate contain a SubjectAltName of type DNSName with the appropriate DNS names for the server. The certificate MAY contain SubjectAltName extensions of other types.
 
-## Workload Identity Certificate Validation {#wic-validation}
-
-Workload Identity Certificates may be used to authenticate both the server and client side of the connections.  When validating a Workload Identity Certificate, the relying party MUST use the trust anchors configured for the trust domain in the workload identity to validate the peer's certificate.  Other PKIX {{!RFC5280}} path validation rules apply. Workloads acting as TLS clients and servers MUST validate that the trust domain portion of the Workload Identity Certificate matches the expected trust domain for the other side of the connection.
-
-Servers wishing to use the Workload Identity Certificate for authorizing the client MUST require client certificate authentication in the TLS handshake. Other methods of post handshake authentication are not specified by this document.
-
-Workload Identity Certificates used by TLS servers SHOULD have the `id-kp-serverAuth` extended key usage {{!RFC5280}} field set and Workload Identity Certificates used by TLS clients SHOULD have the `id-kp-clientAuth` extended key usage field set. A certificate that is used for both client and server connections may have both fields set. This specification does not make any other requirements beyond {{!RFC5280}} on the contents of Workload Identity Certificates or on the certification authorities that issue workload certificates.
-
-### Server Name Validation {#server-name}
-
-If the WIMSE client uses a hostname to connect to the server and the server certificate contain a DNS SAN the client MUST perform standard host name validation ({{Section 6.3 of RFC9525}}) unless it is configured with the additional information necessary to perform alternate validation of the peer's workload identity.
-If the client did not perform standard host name validation then the WIMSE client SHOULD further use the workload identifier to validate the server.
-The host portion of the workload identifier is NOT treated as a host name as specified in section 6.4 of {{!RFC9525}} but rather as a trust domain. The server identity is encoded in the path portion of the workload identifier in a deployment specific way.
-Validating the workload identity could be a simple match on the trust domain and path portions of the identifier or validation may be based on the specific details on how the identifier is constructed. The path portion of the WIMSE identifier MUST always be considered in the scope of the trust domain.
-In most cases it is preferable to validate the entire workload identifier, see {{granular-auth}} for additional implementation advice.
-
 ## Client Authorization Using the Workload Identity {#client-name}
 
-The server application retrieves the workload identifier from the client certificate subjectAltName, which in turn is obtained from the TLS layer. The identifier is used in authorization, accounting and auditing.
+The server application retrieves the workload identifier from the client certificate subjectAltName. The identifier is used in authorization, accounting and auditing.
 For example, the full workload identifier may be matched against ACLs to authorize actions requested by the peer and the identifier may be included in log messages to associate actions to the client workload for audit purposes.
 A deployment may specify other authorization policies based on the specific details of how the workload identifier is constructed. The path portion of the workload identifier MUST always be considered in the scope of the trust domain.
 See {{granular-auth}} on additional security implications of workload identifiers.
