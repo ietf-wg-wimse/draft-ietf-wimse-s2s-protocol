@@ -39,7 +39,7 @@ informative:
 --- abstract
 
 The WIMSE architecture defines authentication and authorization for software workloads
-in a variety of runtime environments, from the most basic ones up to complex
+in a variety of runtime environments, from the most basic ones to complex
 multi-service, multi-cloud, multi-tenant deployments.
 This document defines one of the alternative mechanisms to provide workload authentication and authorization,
 using HTTP Signatures. While only applicable to HTTP traffic, the protocol provides end-to-end
@@ -56,13 +56,13 @@ This is the core component of the WIMSE architecture {{?I-D.ietf-wimse-arch}}.
 This document focuses on HTTP-based services,
 and the workload-to-workload call consists of a single HTTP request and its response.
 We define a profile of the HTTP Signatures protocol {{!RFC9421}} to protect the service traffic.
-Service authentication is using the Workload Identity Token (WIT) defined in <cref>creds draft</cref>,
+Service authentication uses the Workload Identity Token (WIT) defined in <cref>creds draft</cref>,
 and the signature uses the private key associated with the WIT and thus proves possession of the private key.
 
 ## Deployment Architecture and Message Flow
 
-Please refer to <cref>Sec. 1.2 of creds</cref> for the deployment architecture which is common to all three
-protection options, including the one described in this document.
+Refer to <cref>Sec. 1.2 of creds</cref> for the deployment architecture which is common to all three
+protection options, including the one described here.
 
 # Conventions and Definitions
 
@@ -139,7 +139,7 @@ Implementors need to be aware that the WIT is extracted from the message before 
 Either client or server MAY send an `Accept-Signature` header, but is not required to do so. When this header is sent, it MUST include the header components listed above.
 
 Following is a non-normative example of a signed request and a signed response,
-where the caller is using the keys specified in <cref>TBD include the keys</cref>.
+where the caller uses the keys specified in <cref>TBD include the keys</cref>.
 
 ~~~ http
 {::include includes/sigs-request.txt.out}
@@ -164,7 +164,7 @@ A signed response would be:
 
 Errors may occur during the processing of the message signature. If the signature verification fails for any reason,
 such as an invalid signature, an expired validity time window, or a malformed data structure, an error is returned. Typically,
-this will be in response to an API call, so an HTTP status code such as 400 (Bad Request) is appropriate. This response could
+this will be in response to an API call. An HTTP status code such as 400 (Bad Request) is appropriate. The response could
 include more details as per {{?RFC9457}}, such as an indicator that the wrong key material or algorithm was used.  The use of HTTP
 status code 401 is NOT RECOMMENDED for this purpose because it requires a WWW-Authenticate with acceptable http auth mechanisms in
 the error response and an associated Authorization header in the subsequent request. The use of these headers for the WIT is not compatible
@@ -185,7 +185,7 @@ The Workload Identity Token (WIT) is bound to a secret cryptographic key and is 
 * Preventing Eavesdropping and Interception with TLS
 
 An attacker observing or intercepting the communication channel can view the token and its proof of possession and attempt to replay it to gain an advantage. In order to prevent this the
-token and proof of possession MUST be sent over a secure, server authenticated TLS connection unless a secure channel is provided by some other mechanisms. Host name validation according
+token and proof of possession MUST be sent over a secure, server authenticated TLS connection unless a secure channel is provided by some other mechanisms. Hostname validation according
 to Section 6.3 of {{!RFC9525}} MUST be performed by the client.
 
 * Limiting Proof of Possession Lifespan
@@ -217,7 +217,7 @@ if responses are signed in addition to requests.
 
 ## Privacy Considerations
 
-WITs and the proofs of possession may contain private information such as user names or other identities. Care should be taken to prevent the disclosure of this information. The use of TLS helps protect the privacy of WITs and proofs of possession.
+WITs and the proofs of possession may contain private information such as user names or other identities. Care must be taken to prevent disclosure of this information. The use of TLS helps protect the privacy of WITs and proofs of possession.
 
 WITs and certificates with workload identifiers are typically associated with a workload and not a specific user, however in some deployments the workload may be associated directly to a user. While these are exceptional cases a deployment should evaluate if the disclosure of WITs or certificates can be used to track a user.
 
