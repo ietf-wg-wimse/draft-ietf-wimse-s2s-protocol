@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-10-19T01:36:53.486892+00:00",
+  "timestamp": "2025-10-21T01:22:24.461057+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -3087,7 +3087,7 @@
       "labels": [],
       "body": "We currently don't talk about where the trust anchor comes from and what data is used to identify those. We believe this should be added on a high level. The exact provisioning is out of scope.",
       "createdAt": "2025-09-23T14:48:53Z",
-      "updatedAt": "2025-09-24T15:56:55Z",
+      "updatedAt": "2025-10-20T10:31:15Z",
       "closedAt": null,
       "comments": [
         {
@@ -3096,6 +3096,13 @@
           "body": "# Establishing Trust Anchors\n\nThis specification expects that trust anchors used for the validation of Workload Identity Certificates and Workload Identity Tokens are associated with the trust domain and are provisioned with other trust domain information to the workloads. This specification does not define a means for discovering trust anchor information.  In particular, the issuer claim MUST NOT be used to directly look up trust anchor information such as a JWKS. ",
           "createdAt": "2025-09-24T15:56:55Z",
           "updatedAt": "2025-09-24T15:56:55Z"
+        },
+        {
+          "author": "sorindumitru",
+          "authorAssociation": "NONE",
+          "body": "With regards to validating the WIT:\n\n* Can the trust anchors include more than one key? I assume so, to allow for rotating the keys. The spec currently says `The afore-exampled WIT is signed with the private key of the Identity Server.`, which could be read to imply one key.\n* If the trust anchors can include multiple keys, how does one determine the key to use for validating the token? I assume standard JWT validation applies here, but it would be good to have it stated in the spec.",
+          "createdAt": "2025-10-20T10:31:15Z",
+          "updatedAt": "2025-10-20T10:31:15Z"
         }
       ]
     },
@@ -3176,6 +3183,22 @@
       "body": "* When using mTLS, the SubjectAltName is a WIMSE ID. The assumption is that both peers know each other's ID and can validate the incoming certs.\n* Sec. 1.3 is about mapping from Request URI (which is known to the client by definition) to the target's WIMSE ID.\n\nAnd yet we still specified the `aud` claim of the WPT (Sec. 3.2) as the Request URI. Both points above point towards `aud` as the WIMSE ID.",
       "createdAt": "2025-09-26T11:03:20Z",
       "updatedAt": "2025-09-26T11:03:20Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 177,
+      "id": "I_kwDOLJmm787SZ2Bn",
+      "title": "Move authz to Architecture document",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/177",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Much of Sec. 1.2 and in particular Figure 1 describes a view on authorization that's high level enough to fit the Architecture draft, and in fact is missing from that draft.\n\n@jsalowey WDYT?",
+      "createdAt": "2025-10-19T11:40:09Z",
+      "updatedAt": "2025-10-19T11:40:09Z",
       "closedAt": null,
       "comments": []
     }
@@ -13032,6 +13055,171 @@
               "body": "with many things/changes pending, I don't want this to sound like a completed action \r\n",
               "createdAt": "2025-10-16T13:46:48Z",
               "updatedAt": "2025-10-16T13:46:49Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 178,
+      "id": "PR_kwDOLJmm786und8R",
+      "title": "[WIP] First draft of Workload Credential draft",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/178",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-10-20T11:52:04Z",
+      "updatedAt": "2025-10-20T14:39:54Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "5958651d2e6728a7de709091fb678d3c73f6b582",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "arndt/add_creds_draft",
+      "headRefOid": "c32572b81d22fc3856271db87431975232ed4441",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm787IC3U0",
+          "commit": {
+            "abbreviatedOid": "1deab91"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-20T11:53:12Z",
+          "updatedAt": "2025-10-20T11:53:12Z",
+          "comments": [
+            {
+              "originalPosition": 135,
+              "body": "I rephrased the flow a bit. Please take a look at this part here.",
+              "createdAt": "2025-10-20T11:53:12Z",
+              "updatedAt": "2025-10-20T11:53:12Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787IC6yL",
+          "commit": {
+            "abbreviatedOid": "ed2e7e8"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-20T11:59:04Z",
+          "updatedAt": "2025-10-20T11:59:04Z",
+          "comments": [
+            {
+              "originalPosition": 61,
+              "body": "Abstract & introduction have been rephrased.",
+              "createdAt": "2025-10-20T11:59:04Z",
+              "updatedAt": "2025-10-20T11:59:04Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787IEpXr",
+          "commit": {
+            "abbreviatedOid": "c32572b"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2025-10-20T14:17:05Z",
+          "updatedAt": "2025-10-20T14:23:24Z",
+          "comments": [
+            {
+              "originalPosition": 320,
+              "body": "I think this subsection does not belong here.",
+              "createdAt": "2025-10-20T14:17:05Z",
+              "updatedAt": "2025-10-20T14:23:24Z"
+            },
+            {
+              "originalPosition": 330,
+              "body": "Same for this subsection, although it is a bit more complicated.",
+              "createdAt": "2025-10-20T14:17:34Z",
+              "updatedAt": "2025-10-20T14:23:24Z"
+            },
+            {
+              "originalPosition": 394,
+              "body": "IMHO, the following subsections can be removed:\n* Preventing Eavesdropping and Interception with TLS\n* Limiting Proof of Possession Lifespan\n* Limiting Proof of Possession Scope\n* Replay Protection\n* Binding to TLS Endpoint\n* Middle Boxes",
+              "createdAt": "2025-10-20T14:19:07Z",
+              "updatedAt": "2025-10-20T14:23:24Z"
+            },
+            {
+              "originalPosition": 541,
+              "body": "-00",
+              "createdAt": "2025-10-20T14:22:53Z",
+              "updatedAt": "2025-10-20T14:23:24Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787IE6EU",
+          "commit": {
+            "abbreviatedOid": "c32572b"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-20T14:36:17Z",
+          "updatedAt": "2025-10-20T14:36:17Z",
+          "comments": [
+            {
+              "originalPosition": 75,
+              "body": "```suggestion\nThis document focuses on the credentials that carry workload identity and bind the key material to the identity. The presentation of the proof of possession of the key material is part of other documents and out of scope for this one.\n```",
+              "createdAt": "2025-10-20T14:36:17Z",
+              "updatedAt": "2025-10-20T14:36:17Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787IE6-Z",
+          "commit": {
+            "abbreviatedOid": "c32572b"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-20T14:37:23Z",
+          "updatedAt": "2025-10-20T14:37:23Z",
+          "comments": [
+            {
+              "originalPosition": 131,
+              "body": "```suggestion\nPEP is a Policy Enforcement Point, the component that allows the message to go through or blocks it. PDP is an optional\n```",
+              "createdAt": "2025-10-20T14:37:23Z",
+              "updatedAt": "2025-10-20T14:37:23Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787IE9ET",
+          "commit": {
+            "abbreviatedOid": "c32572b"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-20T14:39:54Z",
+          "updatedAt": "2025-10-20T14:39:54Z",
+          "comments": [
+            {
+              "originalPosition": 143,
+              "body": "```suggestion\nDepending on the protocol, the workload authentication may happen during step (2) at the transport-level or at step (3) at the application-level, or both. In addition, some protocols may authenticate the response in addition to the request.\n```",
+              "createdAt": "2025-10-20T14:39:54Z",
+              "updatedAt": "2025-10-20T14:39:54Z"
             }
           ]
         }
