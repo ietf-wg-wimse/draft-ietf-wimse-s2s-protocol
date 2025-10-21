@@ -206,7 +206,7 @@ replay protection would not be effective.
 
 * Binding to TLS Endpoint
 
-The POP MAY be bound to a transport layer sender such as the client identity of a TLS session or TLS channel binding parameters. The mechanisms for binding are outside the scope of this specification.
+The PoP MAY be bound to a transport layer sender such as the client identity of a TLS session or TLS channel binding parameters. The mechanisms for binding are outside the scope of this specification.
 
 ## Middle Boxes {#middleboxes}
 
@@ -224,7 +224,7 @@ WITs and certificates with workload identifiers are typically associated with a 
 
 # IANA Considerations
 
-This document does not include and IANA considerations.
+This document does not include any IANA considerations.
 
 --- back
 
