@@ -420,11 +420,7 @@ In order to reduce the risk of theft and replay the PoP should have a limited sc
 
 * Replay Protection
 
-A proof of possession includes the `jti` claim that MUST uniquely identify it, within the scope of a particular sender.
-This claim SHOULD be used by the receiver to perform basic replay protection against tokens it has already seen.
-Depending upon the design of the system it may be difficult to synchronize the replay cache across all token validators.
-If an attacker can somehow influence the identity of the validator (e.g. which cluster member receives the message) then
-replay protection would not be effective.
+Proof of possession mechanisms should include replay protection to prevent reuse of a captured PoP. Without it an attacker can replay a captured PoP within its validity period.
 
 * Binding to TLS Endpoint
 
