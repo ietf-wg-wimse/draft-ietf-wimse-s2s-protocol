@@ -20,7 +20,7 @@ venue:
   mail: "wimse@ietf.org"
   arch: "https://mailarchive.ietf.org/arch/browse/wimse/"
   github: "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol"
-  latest: "https://ietf-wg-wimse.github.io/draft-ietf-wimse-s2s-protocol/draft-ietf-wimse-s2s-protocol.html"
+  latest: "https://ietf-wg-wimse.github.io/draft-ietf-wimse-s2s-protocol/draft-ietf-wimse-workload-creds.html"
 
 author:
  -
@@ -39,6 +39,10 @@ author:
     fullname: "Yaron Sheffer"
     organization: Intuit
     email: "yaronf.ietf@gmail.com"
+ -
+    fullname: "Yaroslav Rosomakho"
+    organization: Zscaler
+    email: "yrosomakho@zscaler.com"
 
 normative:
   RFC5234:
@@ -64,7 +68,7 @@ The WIMSE architecture defines authentication and authorization for software wor
 in a variety of runtime environments, from the most basic ones up to complex
 multi-service, multi-cloud, multi-tenant deployments.
 
-This document defines the credentials that workloads use to represent their identity. They can be used in various protocols to authenticate workloads to each other. To use these credentials, workloads must provide proof of possession of the associated private key material, which is covered in other documents. This document focuses on the credentials alone, regardless of the proof-of-possession mechanism.
+This document defines the credentials that workloads use to represent their identity. They can be used in various protocols to authenticate workloads to each other. To use these credentials, workloads must provide proof of possession of the associated private key material, which is covered in other documents. This document focuses on the credentials alone, independent of the proof-of-possession mechanism.
 
 --- middle
 
@@ -72,11 +76,11 @@ This document defines the credentials that workloads use to represent their iden
 
 This document defines authentication and authorization in the context of interaction between two workloads.
 This is the core component of the WIMSE architecture {{?I-D.ietf-wimse-arch}}.
-This document focuses on the credentials that carry workload identity and binds the key material to the identity. The presentation of the proof of possession of the key material is part of other documents and out of scope for this one.
+This document focuses on the credentials that carry workload identity and bind the key material to the identity. The presentation of the proof of possession of the key material is part of other documents and out of scope for this one.
 
 In this document, two credentials are defined:
 
-* The Workload Identity Token (WIT) represents the identity of a workload and binds a public key to that identity.
+* The Workload Identity Token (WIT) is a JWT that represents the identity of a workload and binds a public key to that identity.
 
 * The Workload Identity Certificate (WIC) is an X.509 certificate that represents the identity of a workload and binds a public key to that identity.
 
@@ -86,9 +90,9 @@ The various protocol bindings that use these credentials to authenticate workloa
 
 * Transport level authentication mutual TLS using the Workload Identity Certificate.
 
-* Application level authentication using the Workload Identity Token with a JWT-based proof of possession, the Workload Proof Token (WPT).
+* Application level authentication using the Workload Identity Token in conjunction with a JWT-based proof of possession, the Workload Proof Token (WPT).
 
-* Application level authentication using the Workload Identity Token with HTTP Message Signatures.
+* Application level authentication using the Workload Identity Token in conjunction with HTTP Message Signatures.
 
 ## Use In Other Protocols
 
@@ -96,7 +100,7 @@ The credentials defined in this document are designed to be used in various prot
 
 ## Deployment Architecture and Message Flow
 
-Regardless of the transport between the workloads, we assume the following logical architecture
+Independent of the transport between the workloads, we assume the following logical architecture
 (numbers refer to the sequence of steps listed below):
 
 ~~~ aasvg
@@ -128,7 +132,7 @@ The Identity Server provisions credentials to each of the workloads. At least Wo
 with a credential before the call can proceed. Details of communication with the Identity Server are out of scope
 of this document, however we do describe the credential received by the workload.
 
-PEP is a Policy Enforcement Point, the component that allows the call to go through or blocks it. PDP is an optional
+PEP is a Policy Enforcement Point, the component that allows the message to go through or blocks it. PDP is an optional
 Policy Decision Point, which may be deployed in architectures where policy management is centralized. All details of
 policy management and message authorization are out of scope of this document.
 
@@ -181,7 +185,7 @@ end-to-end transport security such as TLS. For these deployment styles, this doc
 The Workload Identity Token (WIT) is a JWS {{RFC7515}} signed JWT {{RFC7519}} that represents the identity of a workload.
 It is issued by the Identity Server and binds a public key to the workload identity. See {{workload-identity-key-management}} for security considerations.
 
-A WIT MUST contain the following claims, except where noted:
+A WIT MUST contain the following content, except where noted:
 
 * in the JOSE header:
     * `alg`: An identifier for a JWS asymmetric digital signature algorithm
@@ -319,12 +323,12 @@ of the identifier and related rules). Implementations MAY include the `iss` clai
 
 ## Error Conditions
 
-Errors may occur during the processing of the message signature or WPT. If the signature verification fails for any reason,
+Errors may occur during the processing of the WIT. If the WIT validation fails for any reason,
 such as an invalid signature, an expired validity time window, or a malformed data structure, an error is returned. Typically,
 this will be in response to an API call, so an HTTP status code such as 400 (Bad Request) is appropriate. This response could
 include more details as per {{RFC9457}}, such as an indicator that the wrong key material or algorithm was used.  The use of HTTP
 status code 401 is NOT RECOMMENDED for this purpose because it requires a WWW-Authenticate with acceptable http auth mechanisms in
-the error response and an associated Authorization header in the subsequent request. The use of these headers for the WIT or WPT is not compatible
+the error response and an associated Authorization header in the subsequent request. The use of these headers for the WIT is not compatible
 with this specification.
 
 ## Coexistence with JWT Bearer Tokens {#coexist}
@@ -538,7 +542,7 @@ IANA is requested to register the "wimse" scheme to the "URI Schemes" registry {
 # Document History
 <cref>RFC Editor: please remove before publication.</cref>
 
-## draft-ietf-wimse-workload-creds-01
+## draft-ietf-wimse-workload-creds-00
 
 * Remove WPT, HTTP-Sig and mutual TLS sections, which are going to be covered by individual documents. This includes re-phrasing of various sections to focus on the credentials only.
 
