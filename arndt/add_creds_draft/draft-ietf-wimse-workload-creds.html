@@ -1942,11 +1942,7 @@ token and proof of possession <span class="bcp14">MUST</span> be sent over a sec
             <p id="section-6.2-8.1.1">Replay Protection<a href="#section-6.2-8.1.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-6.2-9">A proof of possession includes the <code>jti</code> claim that <span class="bcp14">MUST</span> uniquely identify it, within the scope of a particular sender.
-This claim <span class="bcp14">SHOULD</span> be used by the receiver to perform basic replay protection against tokens it has already seen.
-Depending upon the design of the system it may be difficult to synchronize the replay cache across all token validators.
-If an attacker can somehow influence the identity of the validator (e.g. which cluster member receives the message) then
-replay protection would not be effective.<a href="#section-6.2-9" class="pilcrow">¶</a></p>
+<p id="section-6.2-9">Proof of possession mechanisms should include replay protection to prevent reuse of a captured PoP. Without it an attacker can replay a captured PoP within its validity period.<a href="#section-6.2-9" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6.2-10.1">
             <p id="section-6.2-10.1.1">Binding to TLS Endpoint<a href="#section-6.2-10.1.1" class="pilcrow">¶</a></p>
