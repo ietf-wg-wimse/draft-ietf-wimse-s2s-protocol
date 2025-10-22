@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments                J. Salowey
 Internet-Draft                                                  CyberArk
 Intended status: Standards Track                              Y. Sheffer
-Expires: 24 April 2026                                            Intuit
-                                                         21 October 2025
+Expires: 25 April 2026                                            Intuit
+                                                         22 October 2025
 
 
      WIMSE Workload-to-Workload Authentication with HTTP Signatures
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 24 April 2026.
+   This Internet-Draft will expire on 25 April 2026.
 
 Copyright Notice
 
@@ -79,18 +79,17 @@ Table of Contents
    1.  Introduction
      1.1.  Deployment Architecture and Message Flow
    2.  Conventions and Definitions
-   3.  Application Level Workload-to-Workload Authentication
-   4.  Authentication Based on HTTP Message Signatures
-   5.  Error Conditions
-   6.  Security Considerations
-     6.1.  Workload Identity
-     6.2.  Workload Identity Token and Proof of Possession
-     6.3.  Middle Boxes
-     6.4.  Privacy Considerations
-   7.  IANA Considerations
-   8.  References
-     8.1.  Normative References
-     8.2.  Informative References
+   3.  The Protocol: Authentication Based on HTTP Message Signatures
+     3.1.  Error Conditions
+     3.2.  Example Requests and Responses
+   4.  Security Considerations
+     4.1.  Workload Identity Token and Proof of Possession
+     4.2.  Middle Boxes
+     4.3.  Privacy Considerations
+   5.  IANA Considerations
+   6.  References
+     6.1.  Normative References
+     6.2.  Informative References
    Appendix A.  Document History
      A.1.  draft-ietf-wimse-http-signature-00
      A.2.  draft-ietf-wimse-s2s-protocol-07
@@ -112,12 +111,30 @@ Table of Contents
    of interaction between two workloads.  This is the core component of
    the WIMSE architecture [I-D.ietf-wimse-arch].  This document focuses
    on HTTP-based services, and the workload-to-workload call consists of
-   a single HTTP request and its response.  We define a profile of the
-   HTTP Signatures protocol [RFC9421] to protect the service traffic.
-   Service authentication uses the Workload Identity Token (WIT) defined
-   in
+   a single HTTP request and its response.
+
+   One option to protect such traffic is through Mutual TLS, and this
+   usage is defined in
+   // mTLS doc.  Many deployments prefer application-level approaches,
+   whether for lack of CA infrastructure or because inter-service
+   communication consists of multiple separate TLS hops.  This document
+   defines one of the two WIMSE approaches for application-level
+   protection.
+
+   We define a profile of the HTTP Signatures protocol [RFC9421] to
+   protect the service traffic.  Service authentication uses the
+   Workload Identity Token (WIT) defined in
    // creds draft, and the signature uses the private key associated
-   with the WIT and thus proves possession of the private key.
+   with the WIT and thus proves possession of that key.
+
+   As noted, the WIMSE working group is specifying two alternatives for
+   application-level protection, both using the newly introduced
+   Workload Identity Token (
+   // creds!).  The first alternative (
+   // WPT draft) is inspired by the OAuth DPoP specification.  The
+   second is based on the HTTP Message Signatures RFC, and this is the
+   one defined in this document.  Appendix B includes a comparison of
+   the two alternatives.
 
 1.1.  Deployment Architecture and Message Flow
 
@@ -135,22 +152,7 @@ Table of Contents
    BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
    capitals, as shown here.
 
-3.  Application Level Workload-to-Workload Authentication
-
-   As noted in the Introduction, for many deployments communication
-   between workloads cannot use end-to-end TLS.  For these deployment
-   styles, this document proposes application-level protections.
-
-   The WIMSE working group is specifying two alternatives for
-   application-level protection, both using the newly introduced
-   Workload Identity Token (
-   // creds!).  The first alternative (
-   // WPT draft) is inspired by the OAuth DPoP specification.  The
-   second is based on the HTTP Message Signatures RFC, and this is the
-   one defined in this document.  A comparison of the two alternatives
-   is attempted in Appendix B.
-
-4.  Authentication Based on HTTP Message Signatures
+3.  The Protocol: Authentication Based on HTTP Message Signatures
 
    This protocol uses the Workload Identity Token (
    // creds!) and the private key associated with its public key, to
@@ -240,9 +242,27 @@ Table of Contents
    not required to do so.  When this header is sent, it MUST include the
    header components listed above.
 
+3.1.  Error Conditions
+
+   Errors may occur during the processing of the message signature.  If
+   the signature verification fails for any reason, such as an invalid
+   signature, an expired validity time window, or a malformed data
+   structure, an error is returned.  Typically, this will be in response
+   to an API call.  An HTTP status code such as 400 (Bad Request) is
+   appropriate.  The response could include more details as per
+   [RFC9457], such as an indicator that the wrong key material or
+   algorithm was used.  The use of HTTP status code 401 is NOT
+   RECOMMENDED for this purpose because it requires a WWW-Authenticate
+   with acceptable http auth mechanisms in the error response and an
+   associated Authorization header in the subsequent request.  The use
+   of these headers for the WIT is not compatible with this
+   specification.
+
+3.2.  Example Requests and Responses
+
    Following is a non-normative example of a signed request and a signed
    response, where the caller uses the keys specified in
-   // TBD include the keys.
+   // TODO include the keys.
 
    =============== NOTE: '\' line wrapping per RFC 8792 ================
 
@@ -307,37 +327,14 @@ Table of Contents
 
                          Figure 3: Signed Response
 
-5.  Error Conditions
+4.  Security Considerations
 
-   Errors may occur during the processing of the message signature.  If
-   the signature verification fails for any reason, such as an invalid
-   signature, an expired validity time window, or a malformed data
-   structure, an error is returned.  Typically, this will be in response
-   to an API call.  An HTTP status code such as 400 (Bad Request) is
-   appropriate.  The response could include more details as per
-   [RFC9457], such as an indicator that the wrong key material or
-   algorithm was used.  The use of HTTP status code 401 is NOT
-   RECOMMENDED for this purpose because it requires a WWW-Authenticate
-   with acceptable http auth mechanisms in the error response and an
-   associated Authorization header in the subsequent request.  The use
-   of these headers for the WIT is not compatible with this
-   specification.
+   This section includes security considerations that are specific to
+   the HTTP Signature protocol defined here.  Refer to
+   // Sec. Cons. in creds for more generic security considerations
+   associated with the workload identity and its WIT representation.
 
-6.  Security Considerations
-
-6.1.  Workload Identity
-
-   The Workload Identifier is scoped within an issuer and therefore any
-   sub-components (path portion of Identifier) are only unique within a
-   trust domain defined by the issuer.  Using a Workload Identifier
-   without taking into account the trust domain could allow one domain
-   to issue tokens to spoof identities in another domain.  Additionally,
-   the trust domain must be tied to an authorized issuer cryptographic
-   trust anchor through some mechanism such as a JWKS or X.509
-   certificate chain.  The association of an issuer, trust domain and a
-   cryptographic trust anchor MUST be communicated securely out of band.
-
-6.2.  Workload Identity Token and Proof of Possession
+4.1.  Workload Identity Token and Proof of Possession
 
    The Workload Identity Token (WIT) is bound to a secret cryptographic
    key and is always presented with a proof of possession as described
@@ -348,8 +345,15 @@ Table of Contents
    MUST NOT be used as a bearer token.  While this helps reduce the
    sensitivity of the token it is still possible that a token and its
    proof of possession may be captured and replayed within the PoP's
-   lifetime.  The following are some mitigations for the capture and
-   reuse of the proof of possession (PoP):
+   lifetime.
+
+   The HTTP Signature profile presented here binds the proof of
+   possession to the critical parts of the HTTP request (and potentially
+   response), including the Request URI and the message body.  This
+   eliminates most of the risk associated with active attackers on a
+   middlebox.
+
+   In addition, the following mitigations should be used:
 
    *  Preventing Eavesdropping and Interception with TLS
 
@@ -361,75 +365,59 @@ Table of Contents
    mechanisms.  Hostname validation according to Section 6.3 of
    [RFC9525] MUST be performed by the client.
 
-   *  Limiting Proof of Possession Lifespan
+   *  Limiting Signature Lifespan
 
-   The proof of possession MUST be time limited.  A PoP should only be
-   valid over the time necessary for it to be successfully used for the
-   purpose it is needed.  This will typically be on the order of
-   minutes.  PoPs received outside their validity time MUST be rejected.
-
-   *  Limiting Proof of Possession Scope
-
-   In order to reduce the risk of theft and replay the PoP should have a
-   limited scope.  For example, a PoP may be targeted for use with a
-   specific workload and even a specific transaction to reduce the
-   impact of a stolen PoP.  In some cases a workload may wish to reuse a
-   PoP for a period of time or have it accepted by multiple target
-   workloads.  A careful analysis is warranted to understand the impacts
-   to the system if a PoP is disclosed allowing it to be presented by an
-   attacker along with a captured WIT.
+   The signature lifespan MUST be limited by using a tight expires
+   value, taking into account potential clock skew and processing
+   latency, but usually within minutes of the message sending time.
+   Signatures received outside their validity time MUST be rejected.
 
    *  Replay Protection
 
-   A proof of possession includes the jti claim that MUST uniquely
-   identify it, within the scope of a particular sender.  This claim
-   SHOULD be used by the receiver to perform basic replay protection
-   against tokens it has already seen.  Depending upon the design of the
+   A signed message includes the jti claim that MUST uniquely identify
+   it, within the scope of a particular sender.  This claim SHOULD be
+   used by the receiver to perform basic replay protection against
+   messages it has already seen.  Depending upon the design of the
    system it may be difficult to synchronize the replay cache across all
-   token validators.  If an attacker can somehow influence the identity
-   of the validator (e.g. which cluster member receives the message)
-   then replay protection would not be effective.
+   messages validators.  If an attacker can somehow influence the
+   identity of the validator (e.g. which cluster member receives the
+   message) then replay protection would not be effective.
 
-   *  Binding to TLS Endpoint
-
-   The PoP MAY be bound to a transport layer sender such as the client
-   identity of a TLS session or TLS channel binding parameters.  The
-   mechanisms for binding are outside the scope of this specification.
-
-6.3.  Middle Boxes
+4.2.  Middle Boxes
 
    In some deployments the Workload Identity Token and proof of
    possession (signature) may pass through multiple systems.  The
-   communication between the systems is over TLS, but the token and PoP
-   are available in the clear at each intermediary.  While the
+   communication between the systems is over TLS, but the WIT and
+   signature are available in the clear at each intermediary.  While the
    intermediary cannot modify the token or the information within the
-   PoP they can attempt to capture and replay the token or modify the
-   data not protected by the PoP.
+   signature they can attempt to capture and replay the the message or
+   modify unsigned information, such as proprietary HTTP headers that
+   may remain unsigned.
 
-   Mitigations listed in Section 3 provide a reasonable level of
+   Mitigations listed in the protocol provide a reasonable level of
    security in these situations, in particular if responses are signed
    in addition to requests.
 
-6.4.  Privacy Considerations
+4.3.  Privacy Considerations
 
-   WITs and the proofs of possession may contain private information
-   such as user names or other identities.  Care must be taken to
-   prevent disclosure of this information.  The use of TLS helps protect
-   the privacy of WITs and proofs of possession.
+   WITs and the signatures may contain private information such as user
+   names or other identities.  Care must be taken to prevent disclosure
+   of this information.  The use of TLS helps protect the privacy of
+   WITs and proofs of possession.
 
-   WITs and certificates with workload identifiers are typically
-   associated with a workload and not a specific user, however in some
-   deployments the workload may be associated directly to a user.  While
-   these are exceptional cases a deployment should evaluate if the
-   disclosure of WITs or certificates can be used to track a user.
+   WITs are typically associated with a workload and not a specific
+   user, however in some deployments the workload may be associated
+   directly to a user.  While these are exceptional cases a deployment
+   should evaluate if the disclosure of WITs or signatures can be used
+   to track a user.
 
-7.  IANA Considerations
+5.  IANA Considerations
 
    This document does not include any IANA considerations.
 
-8.  References
+6.  References
 
-8.1.  Normative References
+6.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -448,7 +436,7 @@ Table of Contents
               RFC 9525, DOI 10.17487/RFC9525, November 2023,
               <https://www.rfc-editor.org/rfc/rfc9525>.
 
-8.2.  Informative References
+6.2.  Informative References
 
    [I-D.ietf-oauth-transaction-tokens]
               Tulshibagwale, A., Fletcher, G., and P. Kasselman,
@@ -577,7 +565,7 @@ Appendix B.  Comparing the DPoP Inspired Option with Message Signatures
    The two workload protection options have different strengths and
    weaknesses regarding implementation complexity, extensibility, and
    security.  Here is a summary of the main differences between
-   // WPT draft and Section 4.
+   // WPT draft and Section 3.
 
    *  The DPoP-inspired solution is less HTTP-specific, making it easier
       to adapt for other protocols beyond HTTP.  This flexibility is
@@ -598,7 +586,7 @@ Appendix B.  Comparing the DPoP Inspired Option with Message Signatures
 
    *  Message Signatures offer superior integrity protection,
       particularly by mitigating message modification by middleboxes.
-      See also Section 6.3.
+      See also Section 4.2.
 
    *  A key advantage of Message Signatures is that they support
       response signing.  This opens up the possibility for future
