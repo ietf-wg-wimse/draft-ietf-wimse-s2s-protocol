@@ -5,12 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 23 April 2026                                          CyberArk
+Expires: 25 April 2026                                          CyberArk
                                                       A. Schwenkschuster
                                                         Defakto Security
                                                               Y. Sheffer
                                                                   Intuit
-                                                         20 October 2025
+                                                            Y. Rosomakho
+                                                                 Zscaler
+                                                         22 October 2025
 
 
                        WIMSE Workload Credentials
@@ -28,7 +30,7 @@ Abstract
    authenticate workloads to each other.  To use these credentials,
    workloads must provide proof of possession of the associated private
    key material, which is covered in other documents.  This document
-   focuses on the credentials alone, regardless of the proof-of-
+   focuses on the credentials alone, independent of the proof-of-
    possession mechanism.
 
 About This Document
@@ -36,9 +38,10 @@ About This Document
    This note is to be removed before publishing as an RFC.
 
    The latest revision of this draft can be found at https://ietf-wg-
-   wimse.github.io/draft-ietf-wimse-s2s-protocol/draft-ietf-wimse-s2s-
-   protocol.html.  Status information for this document may be found at
-   https://datatracker.ietf.org/doc/draft-ietf-wimse-workload-creds/.
+   wimse.github.io/draft-ietf-wimse-s2s-protocol/draft-ietf-wimse-
+   workload-creds.html.  Status information for this document may be
+   found at https://datatracker.ietf.org/doc/draft-ietf-wimse-workload-
+   creds/.
 
    Discussion of this document takes place on the Workload Identity in
    Multi System Environments Working Group mailing list
@@ -64,7 +67,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 23 April 2026.
+   This Internet-Draft will expire on 25 April 2026.
 
 Copyright Notice
 
@@ -114,7 +117,7 @@ Table of Contents
      8.1.  Normative References
      8.2.  Informative References
    Appendix A.  Document History
-     A.1.  draft-ietf-wimse-workload-creds-01
+     A.1.  draft-ietf-wimse-workload-creds-00
      A.2.  draft-ietf-wimse-s2s-protocol-07
      A.3.  draft-ietf-wimse-s2s-protocol-06
      A.4.  draft-ietf-wimse-s2s-protocol-05
@@ -131,15 +134,15 @@ Table of Contents
    This document defines authentication and authorization in the context
    of interaction between two workloads.  This is the core component of
    the WIMSE architecture [I-D.ietf-wimse-arch].  This document focuses
-   on the credentials that carry workload identity and binds the key
+   on the credentials that carry workload identity and bind the key
    material to the identity.  The presentation of the proof of
    possession of the key material is part of other documents and out of
    scope for this one.
 
    In this document, two credentials are defined:
 
-   *  The Workload Identity Token (WIT) represents the identity of a
-      workload and binds a public key to that identity.
+   *  The Workload Identity Token (WIT) is a JWT that represents the
+      identity of a workload and binds a public key to that identity.
 
    *  The Workload Identity Certificate (WIC) is an X.509 certificate
       that represents the identity of a workload and binds a public key
@@ -159,11 +162,11 @@ Table of Contents
       Identity Certificate.
 
    *  Application level authentication using the Workload Identity Token
-      with a JWT-based proof of possession, the Workload Proof Token
-      (WPT).
+      in conjunction with a JWT-based proof of possession, the Workload
+      Proof Token (WPT).
 
    *  Application level authentication using the Workload Identity Token
-      with HTTP Message Signatures.
+      in conjunction with HTTP Message Signatures.
 
 1.1.  Use In Other Protocols
 
@@ -175,7 +178,7 @@ Table of Contents
 
 1.2.  Deployment Architecture and Message Flow
 
-   Regardless of the transport between the workloads, we assume the
+   Independent of the transport between the workloads, we assume the
    following logical architecture (numbers refer to the sequence of
    steps listed below):
 
@@ -209,11 +212,11 @@ Table of Contents
    with the Identity Server are out of scope of this document, however
    we do describe the credential received by the workload.
 
-   PEP is a Policy Enforcement Point, the component that allows the call
-   to go through or blocks it.  PDP is an optional Policy Decision
-   Point, which may be deployed in architectures where policy management
-   is centralized.  All details of policy management and message
-   authorization are out of scope of this document.
+   PEP is a Policy Enforcement Point, the component that allows the
+   message to go through or blocks it.  PDP is an optional Policy
+   Decision Point, which may be deployed in architectures where policy
+   management is centralized.  All details of policy management and
+   message authorization are out of scope of this document.
 
    The high-level message flow is as follows:
 
@@ -297,7 +300,7 @@ Table of Contents
    by the Identity Server and binds a public key to the workload
    identity.  See Section 6.3 for security considerations.
 
-   A WIT MUST contain the following claims, except where noted:
+   A WIT MUST contain the following content, except where noted:
 
    *  in the JOSE header:
 
@@ -520,19 +523,18 @@ Table of Contents
 
 3.2.  Error Conditions
 
-   Errors may occur during the processing of the message signature or
-   WPT.  If the signature verification fails for any reason, such as an
-   invalid signature, an expired validity time window, or a malformed
-   data structure, an error is returned.  Typically, this will be in
-   response to an API call, so an HTTP status code such as 400 (Bad
-   Request) is appropriate.  This response could include more details as
-   per [RFC9457], such as an indicator that the wrong key material or
-   algorithm was used.  The use of HTTP status code 401 is NOT
-   RECOMMENDED for this purpose because it requires a WWW-Authenticate
-   with acceptable http auth mechanisms in the error response and an
-   associated Authorization header in the subsequent request.  The use
-   of these headers for the WIT or WPT is not compatible with this
-   specification.
+   Errors may occur during the processing of the WIT.  If the WIT
+   validation fails for any reason, such as an invalid signature, an
+   expired validity time window, or a malformed data structure, an error
+   is returned.  Typically, this will be in response to an API call, so
+   an HTTP status code such as 400 (Bad Request) is appropriate.  This
+   response could include more details as per [RFC9457], such as an
+   indicator that the wrong key material or algorithm was used.  The use
+   of HTTP status code 401 is NOT RECOMMENDED for this purpose because
+   it requires a WWW-Authenticate with acceptable http auth mechanisms
+   in the error response and an associated Authorization header in the
+   subsequent request.  The use of these headers for the WIT is not
+   compatible with this specification.
 
 3.3.  Coexistence with JWT Bearer Tokens
 
@@ -973,7 +975,7 @@ Appendix A.  Document History
 
    // RFC Editor: please remove before publication.
 
-A.1.  draft-ietf-wimse-workload-creds-01
+A.1.  draft-ietf-wimse-workload-creds-00
 
    *  Remove WPT, HTTP-Sig and mutual TLS sections, which are going to
       be covered by individual documents.  This includes re-phrasing of
@@ -1101,3 +1103,8 @@ Authors' Addresses
    Yaron Sheffer
    Intuit
    Email: yaronf.ietf@gmail.com
+
+
+   Yaroslav Rosomakho
+   Zscaler
+   Email: yrosomakho@zscaler.com
