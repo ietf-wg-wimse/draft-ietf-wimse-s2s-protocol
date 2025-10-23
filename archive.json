@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-10-21T01:22:24.461057+00:00",
+  "timestamp": "2025-10-23T01:21:41.684062+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -62,6 +62,11 @@
       "name": "small",
       "description": "",
       "color": "f9d0c4"
+    },
+    {
+      "name": "draft-ietf-wimse-http-signature",
+      "description": "",
+      "color": "a715ac"
     }
   ],
   "issues": [
@@ -13072,13 +13077,13 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-10-20T11:52:04Z",
-      "updatedAt": "2025-10-20T14:39:54Z",
+      "updatedAt": "2025-10-22T18:39:31Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "5958651d2e6728a7de709091fb678d3c73f6b582",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "arndt/add_creds_draft",
-      "headRefOid": "c32572b81d22fc3856271db87431975232ed4441",
+      "headRefOid": "cd1e4641681cb847278332fe74c5b0131ad9efd2",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -13222,8 +13227,436 @@
               "updatedAt": "2025-10-20T14:39:54Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787IXM8Q",
+          "commit": {
+            "abbreviatedOid": "c32572b"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-21T15:57:49Z",
+          "updatedAt": "2025-10-21T15:57:50Z",
+          "comments": [
+            {
+              "originalPosition": 23,
+              "body": "won't this draft be this now?\n```suggestion\n  latest: \"https://ietf-wg-wimse.github.io/draft-ietf-wimse-s2s-protocol/draft-ietf-wimse-workload-creds.html\"\n```",
+              "createdAt": "2025-10-21T15:57:50Z",
+              "updatedAt": "2025-10-21T15:57:50Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787IXYO_",
+          "commit": {
+            "abbreviatedOid": "c32572b"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-21T16:07:26Z",
+          "updatedAt": "2025-10-21T16:07:26Z",
+          "comments": [
+            {
+              "originalPosition": 42,
+              "body": "I was driving carpool and/or walking my dad's dog but I think we decided to add the new guy (aka @yaroslavros) to this one too?  \n\n```suggestion\n    fullname: \"Yaroslav Rosomakho\"\n    organization: Zscaler\n    email: \"yrosomakho@zscaler.com\"\n```",
+              "createdAt": "2025-10-21T16:07:26Z",
+              "updatedAt": "2025-10-21T16:07:26Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787IX5At",
+          "commit": {
+            "abbreviatedOid": "c32572b"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-21T16:40:02Z",
+          "updatedAt": "2025-10-21T16:40:02Z",
+          "comments": [
+            {
+              "originalPosition": 67,
+              "body": "to me anyway, the word \"regardless\" reads as kind of dismissive or something. This maybe feels a little less harsh: \n\n```suggestion\nThis document defines the credentials that workloads use to represent their identity. They can be used in various protocols to authenticate workloads to each other. To use these credentials, workloads must provide proof of possession of the associated private key material, which is covered in other documents. This document focuses on the credentials alone, independent of the proof-of-possession mechanism.\n```",
+              "createdAt": "2025-10-21T16:40:02Z",
+              "updatedAt": "2025-10-21T16:40:02Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787IX7O1",
+          "commit": {
+            "abbreviatedOid": "c32572b"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-21T16:41:56Z",
+          "updatedAt": "2025-10-21T16:41:56Z",
+          "comments": [
+            {
+              "originalPosition": 79,
+              "body": "```suggestion\n* The Workload Identity Token (WIT) is a JWT that represents the identity of a workload and binds a public key to that identity.\n```",
+              "createdAt": "2025-10-21T16:41:56Z",
+              "updatedAt": "2025-10-21T16:41:56Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787IX713",
+          "commit": {
+            "abbreviatedOid": "c32572b"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-21T16:42:27Z",
+          "updatedAt": "2025-10-21T16:42:27Z",
+          "comments": [
+            {
+              "originalPosition": 85,
+              "body": "```suggestion\nThe various protocol bindings that use these credentials to authenticate workloads to each other are out of scope for this document. At the time of writing, three such protocols are proposed:\n```",
+              "createdAt": "2025-10-21T16:42:27Z",
+              "updatedAt": "2025-10-21T16:42:27Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787IX8z1",
+          "commit": {
+            "abbreviatedOid": "c32572b"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-21T16:43:15Z",
+          "updatedAt": "2025-10-21T16:43:15Z",
+          "comments": [
+            {
+              "originalPosition": 89,
+              "body": "```suggestion\n* Application level authentication using the Workload Identity Token in conjunction with a JWT-based proof of possession, the Workload Proof Token (WPT).\n```",
+              "createdAt": "2025-10-21T16:43:15Z",
+              "updatedAt": "2025-10-21T16:43:15Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787IX9-G",
+          "commit": {
+            "abbreviatedOid": "c32572b"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-21T16:44:08Z",
+          "updatedAt": "2025-10-21T16:44:08Z",
+          "comments": [
+            {
+              "originalPosition": 91,
+              "body": "```suggestion\n* Application level authentication using the Workload Identity Token in conjunction with HTTP Message Signatures.\n```",
+              "createdAt": "2025-10-21T16:44:08Z",
+              "updatedAt": "2025-10-21T16:44:08Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787IY0zs",
+          "commit": {
+            "abbreviatedOid": "c32572b"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-21T17:38:42Z",
+          "updatedAt": "2025-10-21T17:38:42Z",
+          "comments": [
+            {
+              "originalPosition": 143,
+              "body": "That's a confusing detail that I don't believe should be covered at this place in these documents. ",
+              "createdAt": "2025-10-21T17:38:42Z",
+              "updatedAt": "2025-10-22T18:38:11Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787IY1Xg",
+          "commit": {
+            "abbreviatedOid": "c32572b"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-21T17:39:19Z",
+          "updatedAt": "2025-10-21T17:39:19Z",
+          "comments": [
+            {
+              "originalPosition": 143,
+              "body": "```suggestion\nDepending on the protocol, authentication of the calling workload may happen during step (2) at the transport-level or at step (3) at the application-level, or both.\n```",
+              "createdAt": "2025-10-21T17:39:19Z",
+              "updatedAt": "2025-10-21T17:39:19Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787IY54W",
+          "commit": {
+            "abbreviatedOid": "c32572b"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-21T17:44:16Z",
+          "updatedAt": "2025-10-21T17:44:17Z",
+          "comments": [
+            {
+              "originalPosition": 145,
+              "body": "I know this all is in the current doc and so am not going to actually object to it here. But I still think server authentication is getting beyond what this work can or should be trying to define. ",
+              "createdAt": "2025-10-21T17:44:17Z",
+              "updatedAt": "2025-10-21T17:44:17Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787IY8GF",
+          "commit": {
+            "abbreviatedOid": "c32572b"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-21T17:46:37Z",
+          "updatedAt": "2025-10-21T17:46:37Z",
+          "comments": [
+            {
+              "originalPosition": 184,
+              "body": "headers are not claims. only claims are claims. i know this is pedantic but it's also true \n```suggestion\nA WIT MUST contain the following content, except where noted:\n```",
+              "createdAt": "2025-10-21T17:46:37Z",
+              "updatedAt": "2025-10-21T17:46:37Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787IZGVe",
+          "commit": {
+            "abbreviatedOid": "c32572b"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-21T17:56:33Z",
+          "updatedAt": "2025-10-21T17:56:33Z",
+          "comments": [
+            {
+              "originalPosition": 320,
+              "body": "Errors validating the WPT might occur though. Adjusting this subsection to discuss only that would be worthwhile.  ",
+              "createdAt": "2025-10-21T17:56:33Z",
+              "updatedAt": "2025-10-21T17:56:33Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787IZNfP",
+          "commit": {
+            "abbreviatedOid": "c32572b"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-21T18:03:20Z",
+          "updatedAt": "2025-10-21T18:03:20Z",
+          "comments": [
+            {
+              "originalPosition": 328,
+              "body": "```suggestion\nErrors may occur during the processing of the WIT. If the WIT validation fails for any reason,\nsuch as an invalid signature, an expired validity time window, or a malformed data structure, an error is returned. Typically,\nthis will be in response to an API call, so an HTTP status code such as 400 (Bad Request) is appropriate. This response could\ninclude more details as per {{RFC9457}}, such as an indicator that the wrong key material or algorithm was used.  The use of HTTP\nstatus code 401 is NOT RECOMMENDED for this purpose because it requires a WWW-Authenticate with acceptable http auth mechanisms in\nthe error response and an associated Authorization header in the subsequent request. The use of these headers for the WIT is not compatible\nwith this specification.\n```",
+              "createdAt": "2025-10-21T18:03:20Z",
+              "updatedAt": "2025-10-21T18:03:20Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787IZQpM",
+          "commit": {
+            "abbreviatedOid": "c32572b"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-21T18:05:59Z",
+          "updatedAt": "2025-10-21T18:06:00Z",
+          "comments": [
+            {
+              "originalPosition": 330,
+              "body": "I think I get that perspective but feel this bit is okay here. ",
+              "createdAt": "2025-10-21T18:06:00Z",
+              "updatedAt": "2025-10-21T18:06:00Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787IZVXj",
+          "commit": {
+            "abbreviatedOid": "c32572b"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-21T18:10:43Z",
+          "updatedAt": "2025-10-21T18:10:43Z",
+          "comments": [
+            {
+              "originalPosition": 541,
+              "body": "```suggestion\n## draft-ietf-wimse-workload-creds-00\n```",
+              "createdAt": "2025-10-21T18:10:43Z",
+              "updatedAt": "2025-10-21T18:10:43Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787Ipgsl",
+          "commit": {
+            "abbreviatedOid": "c32572b"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-22T15:20:29Z",
+          "updatedAt": "2025-10-22T15:20:29Z",
+          "comments": [
+            {
+              "originalPosition": 143,
+              "body": "I would consider \"authenticating the response\" as \"workload authentication\" too.",
+              "createdAt": "2025-10-22T15:20:29Z",
+              "updatedAt": "2025-10-22T15:20:29Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787Ipne9",
+          "commit": {
+            "abbreviatedOid": "c32572b"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-22T15:25:31Z",
+          "updatedAt": "2025-10-22T15:25:31Z",
+          "comments": [
+            {
+              "originalPosition": 143,
+              "body": "However, Brian suggested \"Depending on the protocol, authentication of the calling workload may happen during step (2) at the transport-level or at step (3) at the application-level, or both.\" where it's clearly just client authentication.\r\n\r\n@bc-pi @yaronf ?",
+              "createdAt": "2025-10-22T15:25:31Z",
+              "updatedAt": "2025-10-22T15:25:31Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787IprEF",
+          "commit": {
+            "abbreviatedOid": "c32572b"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-22T15:29:16Z",
+          "updatedAt": "2025-10-22T15:29:16Z",
+          "comments": [
+            {
+              "originalPosition": 320,
+              "body": "Adjusted the section based on Brians suggestion",
+              "createdAt": "2025-10-22T15:29:16Z",
+              "updatedAt": "2025-10-22T15:29:16Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787Ipysp",
+          "commit": {
+            "abbreviatedOid": "c32572b"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-22T15:36:55Z",
+          "updatedAt": "2025-10-22T15:36:56Z",
+          "comments": [
+            {
+              "originalPosition": 394,
+              "body": "> * Preventing Eavesdropping and Interception with TLS\r\n> * Limiting Proof of Possession Lifespan\r\n> * Limiting Proof of Possession Scope\r\n> * Middle Boxes\r\n\r\nI believe this is still relevant for all profiles. So the question becomes if this is something this document should talk about at all or delegate completely to the profiles. I believe there's value in talking about it, but maybe we should explicitly name it. Maybe something like \"Proof of key possession security considerations\" and mention in the beginning that while this topic is out of scope they all have similar security considerations that need to be considered?\r\n\r\nReplay protection was very WPT specific, so I rephrased it a bit to make it more universal.\r\n\r\n\r\n\r\n\r\n",
+              "createdAt": "2025-10-22T15:36:55Z",
+              "updatedAt": "2025-10-22T15:37:09Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787IsZ41",
+          "commit": {
+            "abbreviatedOid": "cd1e464"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-22T18:39:31Z",
+          "updatedAt": "2025-10-22T18:39:31Z",
+          "comments": [
+            {
+              "originalPosition": 143,
+              "body": "I agree with that suggestion :) ",
+              "createdAt": "2025-10-22T18:39:31Z",
+              "updatedAt": "2025-10-22T18:39:31Z"
+            }
+          ]
         }
       ]
+    },
+    {
+      "number": 179,
+      "id": "PR_kwDOLJmm786vCiPT",
+      "title": "draft-ietf-wimse-http-signature - let's go!",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/179",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-http-signature"
+      ],
+      "body": "Preview: https://ietf-wg-wimse.github.io/draft-ietf-wimse-s2s-protocol/ys-http-sig-00/draft-ietf-wimse-http-signature.html",
+      "createdAt": "2025-10-22T10:45:13Z",
+      "updatedAt": "2025-10-22T10:52:02Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "5958651d2e6728a7de709091fb678d3c73f6b582",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-http-sig-00",
+      "headRefOid": "c3a003725d29182e02ae1f45fd00faf187f67e02",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
