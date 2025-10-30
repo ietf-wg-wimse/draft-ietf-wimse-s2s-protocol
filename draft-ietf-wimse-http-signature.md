@@ -56,23 +56,23 @@ This is the core component of the WIMSE architecture {{?I-D.ietf-wimse-arch}}.
 This document focuses on HTTP-based services,
 and the workload-to-workload call consists of a single HTTP request and its response.
 
-One option to protect such traffic is through Mutual TLS, and this usage is defined in <cref>mTLS doc</cref>.
+One option to protect such traffic is through Mutual TLS, and this usage is defined in {{?I-D.ietf-wimse-mutual-tls}}.
 Many deployments prefer application-level approaches, whether for lack of CA infrastructure or because
 inter-service communication consists of multiple separate TLS hops. This document defines one of the two WIMSE
 approaches for application-level protection.
 
 We define a profile of the HTTP Signatures protocol {{!RFC9421}} to protect the service traffic.
-Service authentication uses the Workload Identity Token (WIT) defined in <cref>creds draft</cref>,
+Service authentication uses the Workload Identity Token (WIT) defined in {{!I-D.ietf-wimse-workload-creds}},
 and the signature uses the private key associated with the WIT and thus proves possession of that key.
 
 As noted, the WIMSE working group is specifying two alternatives for application-level protection, both using the newly introduced
-Workload Identity Token (<cref>creds!</cref>). The first alternative (<cref> WPT draft </cref>) is inspired by the OAuth DPoP specification.
+Workload Identity Token {{I-D.ietf-wimse-workload-creds}}. The first alternative {{?I-D.ietf-wimse-wpt}} is inspired by the OAuth DPoP specification.
 The second is based on the HTTP Message Signatures RFC, and this is the one defined in this document.
 {{app-level-comparison}} includes a comparison of the two alternatives.
 
 ## Deployment Architecture and Message Flow
 
-Refer to <cref>Sec. 1.2 of creds</cref> for the deployment architecture which is common to all three
+Refer to Sec. 1.2 of {{I-D.ietf-wimse-workload-creds}} for the deployment architecture which is common to all three
 protection options, including the one described here.
 
 # Conventions and Definitions
@@ -83,7 +83,7 @@ All terminology in this document follows {{?I-D.ietf-wimse-arch}}.
 
 # The Protocol: Authentication Based on HTTP Message Signatures {#http-sig-auth}
 
-This protocol uses the Workload Identity Token (<cref>creds!</cref>) and the private key associated with its public key,
+This protocol uses the Workload Identity Token {{I-D.ietf-wimse-workload-creds}} and the private key associated with its public key,
 to sign the request and optionally, the response.
 Formally, this is a profile of the Message Signatures specification {{!RFC9421}}.
 
@@ -123,7 +123,7 @@ mechanisms in support of long-lived compute processes.
 The following signature parameters in the `Signature-Input` header MUST NOT be used:
 
 * `keyid` - The signing key is sent along with the message in the WIT. Additionally specifying the key identity would add confusion.
-* `alg` - The signature algorithm is specified in the `jwk` section of the `cnf` claim in the WIT. See <cref>creds!</cref> and Sec. 3.3.7 of {{RFC9421}} for details.
+* `alg` - The signature algorithm is specified in the `jwk` section of the `cnf` claim in the WIT. See {{I-D.ietf-wimse-workload-creds}} and Sec. 3.3.7 of {{RFC9421}} for details.
 
 It is RECOMMENDED to include only one signature with the HTTP message.
 If multiple ones are included, then the signature label included in both the `Signature-Input` and `Signature` headers SHOULD
@@ -150,8 +150,16 @@ with this specification.
 
 ## Example Requests and Responses
 
-Following is a non-normative example of a signed request and a signed response,
-where the caller uses the keys specified in <cref>TODO include the keys</cref>.
+Following is a non-normative example of a signed request and a signed response.
+
+The caller uses this keypair:
+
+~~~ jwk
+{::include includes/sigs-svca-jwk.txt}
+~~~
+{: title="Caller Private Key"}
+
+The caller uses its keypair and generates the following HTTP request:
 
 ~~~ http
 {::include includes/sigs-request.txt.out}
@@ -176,14 +184,14 @@ A signed response would be:
 # Security Considerations
 
 This section includes security considerations that are specific to the HTTP Signature protocol defined here. Refer to
-<cref>Sec. Cons. in creds</cref> for more generic security considerations associated with the workload identity
+<cref>Security Considerations section of</cref> {{I-D.ietf-wimse-workload-creds}} for more generic security considerations associated with the workload identity
 and its WIT representation.
 
 ## Workload Identity Token and Proof of Possession
 
 The Workload Identity Token (WIT) is bound to a secret cryptographic key and is
 always presented with a proof of possession as described in
-<cref>creds!</cref>. The WIT is a general purpose token that can be presented
+{{I-D.ietf-wimse-workload-creds}}. The WIT is a general purpose token that can be presented
 in multiple contexts. The WIT and its PoP are only used in the
 application-level options, and both are not used in MTLS. The WIT MUST NOT be
 used as a bearer token. While this helps reduce the sensitivity of the token it
@@ -316,7 +324,7 @@ the Message Signature-based alternative.
 The two workload protection options have different strengths and weaknesses regarding implementation
 complexity, extensibility, and security.
 Here is a summary of the main differences between
-<cref>WPT draft</cref> and {{http-sig-auth}}.
+{{I-D.ietf-wimse-wpt}} and {{http-sig-auth}}.
 
 - The DPoP-inspired solution is less HTTP-specific, making it easier to adapt for
 other protocols beyond HTTP. This flexibility is particularly valuable for
