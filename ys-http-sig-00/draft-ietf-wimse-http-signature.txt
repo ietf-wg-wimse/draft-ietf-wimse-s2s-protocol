@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments                J. Salowey
 Internet-Draft                                                  CyberArk
 Intended status: Standards Track                              Y. Sheffer
-Expires: 25 April 2026                                            Intuit
-                                                         22 October 2025
+Expires: 3 May 2026                                               Intuit
+                                                         30 October 2025
 
 
      WIMSE Workload-to-Workload Authentication with HTTP Signatures
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 25 April 2026.
+   This Internet-Draft will expire on 3 May 2026.
 
 Copyright Notice
 
@@ -114,33 +114,31 @@ Table of Contents
    a single HTTP request and its response.
 
    One option to protect such traffic is through Mutual TLS, and this
-   usage is defined in
-   // mTLS doc.  Many deployments prefer application-level approaches,
-   whether for lack of CA infrastructure or because inter-service
-   communication consists of multiple separate TLS hops.  This document
-   defines one of the two WIMSE approaches for application-level
-   protection.
+   usage is defined in [I-D.ietf-wimse-mutual-tls].  Many deployments
+   prefer application-level approaches, whether for lack of CA
+   infrastructure or because inter-service communication consists of
+   multiple separate TLS hops.  This document defines one of the two
+   WIMSE approaches for application-level protection.
 
    We define a profile of the HTTP Signatures protocol [RFC9421] to
    protect the service traffic.  Service authentication uses the
    Workload Identity Token (WIT) defined in
-   // creds draft, and the signature uses the private key associated
-   with the WIT and thus proves possession of that key.
+   [I-D.ietf-wimse-workload-creds], and the signature uses the private
+   key associated with the WIT and thus proves possession of that key.
 
    As noted, the WIMSE working group is specifying two alternatives for
    application-level protection, both using the newly introduced
-   Workload Identity Token (
-   // creds!).  The first alternative (
-   // WPT draft) is inspired by the OAuth DPoP specification.  The
-   second is based on the HTTP Message Signatures RFC, and this is the
-   one defined in this document.  Appendix B includes a comparison of
-   the two alternatives.
+   Workload Identity Token [I-D.ietf-wimse-workload-creds].  The first
+   alternative [I-D.ietf-wimse-wpt] is inspired by the OAuth DPoP
+   specification.  The second is based on the HTTP Message Signatures
+   RFC, and this is the one defined in this document.  Appendix B
+   includes a comparison of the two alternatives.
 
 1.1.  Deployment Architecture and Message Flow
 
-   Refer to
-   // Sec. 1.2 of creds for the deployment architecture which is common
-   to all three protection options, including the one described here.
+   Refer to Sec. 1.2 of [I-D.ietf-wimse-workload-creds] for the
+   deployment architecture which is common to all three protection
+   options, including the one described here.
 
 2.  Conventions and Definitions
 
@@ -154,10 +152,11 @@ Table of Contents
 
 3.  The Protocol: Authentication Based on HTTP Message Signatures
 
-   This protocol uses the Workload Identity Token (
-   // creds!) and the private key associated with its public key, to
-   sign the request and optionally, the response.  Formally, this is a
-   profile of the Message Signatures specification [RFC9421].
+   This protocol uses the Workload Identity Token
+   [I-D.ietf-wimse-workload-creds] and the private key associated with
+   its public key, to sign the request and optionally, the response.
+   Formally, this is a profile of the Message Signatures specification
+   [RFC9421].
 
    The request is signed as per [RFC9421].  The following derived
    components MUST be signed:
@@ -218,8 +217,8 @@ Table of Contents
       Additionally specifying the key identity would add confusion.
 
    *  alg - The signature algorithm is specified in the jwk section of
-      the cnf claim in the WIT.  See
-      // creds! and Sec. 3.3.7 of [RFC9421] for details.
+      the cnf claim in the WIT.  See [I-D.ietf-wimse-workload-creds] and
+      Sec. 3.3.7 of [RFC9421] for details.
 
    It is RECOMMENDED to include only one signature with the HTTP
    message.  If multiple ones are included, then the signature label
@@ -261,91 +260,103 @@ Table of Contents
 3.2.  Example Requests and Responses
 
    Following is a non-normative example of a signed request and a signed
-   response, where the caller uses the keys specified in
-   // TODO include the keys.
+   response.
+
+   The caller uses this keypair:
+
+   {
+     "alg": "EdDSA",
+     "crv": "Ed25519",
+     "d": "JMHQzsQ7wxHfaj5d4fQJ8oDNGh5SJY1CcOD24tuo2ws",
+     "kid": "svc-a-key",
+     "kty": "OKP",
+     "x": "zKORkA6iFB3-dkDJG6kbnhw-57VXOHa-IE9XWVd-GtM"
+   }
+
+                        Figure 1: Caller Private Key
+
+   The caller uses its keypair and generates the following HTTP request:
 
    =============== NOTE: '\' line wrapping per RFC 8792 ================
 
    GET /gimme-ice-cream?flavor=vanilla HTTP/1.1
    Host: example.com
-   Signature: wimse=:zyR2W7QeUEYwGT8q+jU5HyEiPhC4iiBJlAfwu6otL+kXBYOMVl\
-   ZEfGDnTlQiYmUWQMyu69811lIDWbCK42yWCw==:
+   Signature: wimse=:b1kQ7vFYUShd9QS82ojrPAy2hAgiIqSED20bXXjwH6xsnXHF0r\
+   b2J8OeIdbtSupQUsez8IOqQvoYGPaWKu76Cg==:
    Signature-Input: wimse=("@method" "@request-target" "workload-identi\
-   ty-token");created=1754558248;expires=1754558548;nonce="abcd1111";ta\
+   ty-token");created=1761859807;expires=1761860107;nonce="abcd1111";ta\
    g="wimse-workload-to-workload"
    Workload-Identity-Token: eyJhbGciOiJFZERTQSIsImtpZCI6Imlzc3Vlci1rZXk\
-   iLCJ0eXAiOiJ3aW1zZS1pZCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNB\
-   IiwiY3J2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1hLWtleSIsImt0eSI6Ik9LUCIsIngi\
-   OiJEUEhDOFdKaTZ3WEttN3BpRVdXRDRQdHBiTUdJMUcyOXVTMFl5MnNmQk5zIn19LCJl\
-   eHAiOjE3NTQ1NTg1NDgsImlhdCI6MTc1NDU1ODI0OCwiaXNzIjoiaHR0cHM6Ly9leGFt\
-   cGxlLmNvbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc1NDU1ODI0ODQwMjQ5NjAwMCIsInN1\
-   YiI6IndpbXNlOi8vZXhhbXBsZS5jb20vc3ZjQSJ9.OAPARpluzH34v4bhCtPovuOvTsx\
-   cVbAV9WSqFlbiKdNvfEVN4uRNQSRs7ePfMIJB2uqgX71XjBFH433nDzJZBQ
+   iLCJ0eXAiOiJ3aXQrand0In0.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J\
+   2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1hLWtleSIsImt0eSI6Ik9LUCIsIngiOiJ6S09\
+   Sa0E2aUZCMy1ka0RKRzZrYm5ody01N1ZYT0hhLUlFOVhXVmQtR3RNIn19LCJleHAiOjE\
+   3NjE4NjAxMDcsImlhdCI6MTc2MTg1OTgwNywiaXNzIjoiaHR0cHM6Ly9leGFtcGxlLmN\
+   vbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc2MTg1OTgwNzM0NTQ3ODAwMCIsInN1YiI6Ind\
+   pbXNlOi8vZXhhbXBsZS5jb20vc3ZjQSJ9.KxXGBK2YWhy8XT1tB9Z9sZscn2fb4OHDNz\
+   2S8mhP8fGK0mCw6yK4lv9wRqO3hnAXWJEzWuWRHpVQO8_82t_IBA
 
-                          Figure 1: Signed Request
+                          Figure 2: Signed Request
 
    Assuming that the workload being called has the following keypair:
 
    {
      "alg": "EdDSA",
      "crv": "Ed25519",
-     "d": "6oQCl9NHN4jHymcFPc5SEy3AXUEH5UnBKJ2JBC6rkdw",
+     "d": "u1DH-EPbCxpzi1LLJHtsLGZ6_4lvKsUgFHRNYOo5Mx8",
      "kid": "svc-b-key",
      "kty": "OKP",
-     "x": "bd5UWUtOgbgSYj9e499_k5sjWASpARfL5RJ5ySDPbnY"
+     "x": "8zj0S94HAaaQ0kKPhts0UdothtSTjZDX7jYC5zdLsX4"
    }
 
-                        Figure 2: Callee Private Key
+                        Figure 3: Callee Private Key
 
    A signed response would be:
 
    =============== NOTE: '\' line wrapping per RFC 8792 ================
-
-   Response:
 
    HTTP/1.1 404 Not Found
    Connection: close
    Content-Digest: sha-256=:47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU\
    =:
    Content-Type: text/plain
-   Signature: wimse=:WAjxziuCiYRqCzetetDwaTS7Ka9yMwB+dAHVJPw3VkUH+c8c4A\
-   5BKrCsPlD/ymy+7PgwXl3y3mVdaD4ww7WqDA==:
+   Signature: wimse=:cQiWDdhftD/qYu22pMUxvdqHPxo7IjOaTQ54UxZ5nvXq6Yj7Mv\
+   avAW8sGJjXNlPXwqvBc1vy0wtOvS6Q5zdVDQ==:
    Signature-Input: wimse=("@status" "workload-identity-token" "content\
    -type" "content-digest" "@method";req "@request-target";req);created\
-   =1754558248;expires=1754558550;nonce="abcd2222";tag="wimse-workload-\
+   =1761859807;expires=1761860109;nonce="abcd2222";tag="wimse-workload-\
    to-workload"
    Workload-Identity-Token: eyJhbGciOiJFZERTQSIsImtpZCI6Imlzc3Vlci1rZXk\
-   iLCJ0eXAiOiJ3aW1zZS1pZCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNB\
-   IiwiY3J2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1iLWtleSIsImt0eSI6Ik9LUCIsIngi\
-   OiJnejJhU0pFLWc5dzFyYmdKaU5wczRHYjhJUGs1MGs1b0pVRWJMRHVzYXljIn19LCJl\
-   eHAiOjE3NTQ1NTg1NTAsImlhdCI6MTc1NDU1ODI1MCwiaXNzIjoiaHR0cHM6Ly9leGFt\
-   cGxlLmNvbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc1NDU1ODI0ODQwMjY4MTAwMCIsInN1\
-   YiI6IndpbXNlOi8vZXhhbXBsZS5jb20vc3ZjQiJ9.yJ4gGQ1DQBX0E9Xp5fIgj6Ucpf9\
-   LI_gHnhURZxqu6atT-3hpbFTgw4rd-6knM7-HClok4b6N2ViZaEDcz6IMCg
+   iLCJ0eXAiOiJ3aXQrand0In0.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J\
+   2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1iLWtleSIsImt0eSI6Ik9LUCIsIngiOiI4emo\
+   wUzk0SEFhYVEwa0tQaHRzMFVkb3RodFNUalpEWDdqWUM1emRMc1g0In19LCJleHAiOjE\
+   3NjE4NjAxMDksImlhdCI6MTc2MTg1OTgwOSwiaXNzIjoiaHR0cHM6Ly9leGFtcGxlLmN\
+   vbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc2MTg1OTgwNzM0NTcwMjAwMCIsInN1YiI6Ind\
+   pbXNlOi8vZXhhbXBsZS5jb20vc3ZjQiJ9.1Z10zR2hYWXuVwBeJDx965agbLf_V8o2Ac\
+   SKiyayqGQMAEZNyRm1wrSvDmm6Ha6EJW3-1rhF0C10R-usSUYtAQ
 
    No ice cream today.
 
-                         Figure 3: Signed Response
+                         Figure 4: Signed Response
 
 4.  Security Considerations
 
    This section includes security considerations that are specific to
    the HTTP Signature protocol defined here.  Refer to
-   // Sec. Cons. in creds for more generic security considerations
-   associated with the workload identity and its WIT representation.
+   // Security Considerations section of [I-D.ietf-wimse-workload-creds]
+   for more generic security considerations associated with the workload
+   identity and its WIT representation.
 
 4.1.  Workload Identity Token and Proof of Possession
 
    The Workload Identity Token (WIT) is bound to a secret cryptographic
    key and is always presented with a proof of possession as described
-   in
-   // creds!. The WIT is a general purpose token that can be presented
-   in multiple contexts.  The WIT and its PoP are only used in the
-   application-level options, and both are not used in MTLS.  The WIT
-   MUST NOT be used as a bearer token.  While this helps reduce the
-   sensitivity of the token it is still possible that a token and its
-   proof of possession may be captured and replayed within the PoP's
-   lifetime.
+   in [I-D.ietf-wimse-workload-creds].  The WIT is a general purpose
+   token that can be presented in multiple contexts.  The WIT and its
+   PoP are only used in the application-level options, and both are not
+   used in MTLS.  The WIT MUST NOT be used as a bearer token.  While
+   this helps reduce the sensitivity of the token it is still possible
+   that a token and its proof of possession may be captured and replayed
+   within the PoP's lifetime.
 
    The HTTP Signature profile presented here binds the proof of
    possession to the critical parts of the HTTP request (and potentially
@@ -419,6 +430,9 @@ Table of Contents
 
 6.1.  Normative References
 
+   [I-D.ietf-wimse-workload-creds]
+              "*** BROKEN REFERENCE ***".
+
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
@@ -452,6 +466,12 @@ Table of Contents
               ietf-wimse-arch-06, 30 September 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
               arch-06>.
+
+   [I-D.ietf-wimse-mutual-tls]
+              "*** BROKEN REFERENCE ***".
+
+   [I-D.ietf-wimse-wpt]
+              "*** BROKEN REFERENCE ***".
 
    [RFC9457]  Nottingham, M., Wilde, E., and S. Dalal, "Problem Details
               for HTTP APIs", RFC 9457, DOI 10.17487/RFC9457, July 2023,
@@ -565,7 +585,7 @@ Appendix B.  Comparing the DPoP Inspired Option with Message Signatures
    The two workload protection options have different strengths and
    weaknesses regarding implementation complexity, extensibility, and
    security.  Here is a summary of the main differences between
-   // WPT draft and Section 3.
+   [I-D.ietf-wimse-wpt] and Section 3.
 
    *  The DPoP-inspired solution is less HTTP-specific, making it easier
       to adapt for other protocols beyond HTTP.  This flexibility is
