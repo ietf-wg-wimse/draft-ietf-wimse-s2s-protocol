@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments                J. Salowey
 Internet-Draft                                                  CyberArk
 Intended status: Standards Track                              Y. Sheffer
-Expires: 3 May 2026                                               Intuit
-                                                         30 October 2025
+Expires: 4 May 2026                                               Intuit
+                                                         31 October 2025
 
 
      WIMSE Workload-to-Workload Authentication with HTTP Signatures
@@ -17,13 +17,13 @@ Abstract
    The WIMSE architecture defines authentication and authorization for
    software workloads in a variety of runtime environments, from the
    most basic ones to complex multi-service, multi-cloud, multi-tenant
-   deployments.  This document defines one of the alternative mechanisms
-   to provide workload authentication and authorization, using HTTP
-   Signatures.  While only applicable to HTTP traffic, the protocol
-   provides end-to-end protection of requests (and optionally,
-   responses), even when service traffic is not end-to-end encrypted,
-   that is, when TLS proxies and load balancers are used.
-   Authentication is based on the Workload Identity Token (WIT).
+   deployments.  This document defines one of the mechanisms to provide
+   workload authentication, using HTTP Signatures.  While only
+   applicable to HTTP traffic, the protocol provides end-to-end
+   protection of requests (and optionally, responses), even when service
+   traffic is not end-to-end encrypted, that is, when TLS proxies and
+   load balancers are used.  Authentication is based on the Workload
+   Identity Token (WIT).
 
 About This Document
 
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 3 May 2026.
+   This Internet-Draft will expire on 4 May 2026.
 
 Copyright Notice
 
