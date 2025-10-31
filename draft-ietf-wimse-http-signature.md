@@ -41,7 +41,7 @@ informative:
 The WIMSE architecture defines authentication and authorization for software workloads
 in a variety of runtime environments, from the most basic ones to complex
 multi-service, multi-cloud, multi-tenant deployments.
-This document defines one of the alternative mechanisms to provide workload authentication and authorization,
+This document defines one of the mechanisms to provide workload authentication,
 using HTTP Signatures. While only applicable to HTTP traffic, the protocol provides end-to-end
 protection of requests (and optionally, responses), even when service traffic is not end-to-end
 encrypted, that is, when TLS proxies and load balancers are used.
