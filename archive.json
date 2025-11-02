@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-10-30T01:25:28.760682+00:00",
+  "timestamp": "2025-11-02T01:28:08.116780+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -67,6 +67,21 @@
       "name": "draft-ietf-wimse-http-signature",
       "description": "",
       "color": "a715ac"
+    },
+    {
+      "name": "draft-ietf-wimse-wpt",
+      "description": "",
+      "color": "b9628f"
+    },
+    {
+      "name": "draft-ietf-wimse-workload-creds",
+      "description": "",
+      "color": "f60040"
+    },
+    {
+      "name": "draft-ietf-wimse-mutual-tls",
+      "description": "",
+      "color": "426d44"
     }
   ],
   "issues": [
@@ -13082,16 +13097,18 @@
     {
       "number": 178,
       "id": "PR_kwDOLJmm786und8R",
-      "title": "[WIP] First draft of Workload Credential draft",
+      "title": "First draft of Workload Credential draft",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/178",
       "state": "OPEN",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
       "body": "",
       "createdAt": "2025-10-20T11:52:04Z",
-      "updatedAt": "2025-10-22T18:39:31Z",
+      "updatedAt": "2025-10-30T17:33:57Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "5958651d2e6728a7de709091fb678d3c73f6b582",
@@ -13641,6 +13658,106 @@
               "updatedAt": "2025-10-22T18:39:31Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787KpUE3",
+          "commit": {
+            "abbreviatedOid": "c32572b"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-30T14:05:24Z",
+          "updatedAt": "2025-10-30T14:05:24Z",
+          "comments": [
+            {
+              "originalPosition": 145,
+              "body": "I believe this is something to discuss after publishing -00.",
+              "createdAt": "2025-10-30T14:05:24Z",
+              "updatedAt": "2025-10-30T14:05:24Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787KrOj1",
+          "commit": {
+            "abbreviatedOid": "c32572b"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-30T15:44:12Z",
+          "updatedAt": "2025-10-30T15:44:12Z",
+          "comments": [
+            {
+              "originalPosition": 143,
+              "body": "The context does mention the response (L141), so I don't understand why this detail is irrelevant. I agree that the phrasing \"authenticate the response\" is sloppy but IMO it's clear enough to most readers.",
+              "createdAt": "2025-10-30T15:44:12Z",
+              "updatedAt": "2025-10-30T15:44:13Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787Ks6tz",
+          "commit": {
+            "abbreviatedOid": "c32572b"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-30T17:19:41Z",
+          "updatedAt": "2025-10-30T17:19:41Z",
+          "comments": [
+            {
+              "originalPosition": 143,
+              "body": "My take has not changed in the last week ",
+              "createdAt": "2025-10-30T17:19:41Z",
+              "updatedAt": "2025-10-30T17:19:41Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787Ks-Ia",
+          "commit": {
+            "abbreviatedOid": "c32572b"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-30T17:22:58Z",
+          "updatedAt": "2025-10-30T17:22:58Z",
+          "comments": [
+            {
+              "originalPosition": 145,
+              "body": "that is why I said I am not going to actually object to it here",
+              "createdAt": "2025-10-30T17:22:58Z",
+              "updatedAt": "2025-10-30T17:22:59Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787KtKKN",
+          "commit": {
+            "abbreviatedOid": "c32572b"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-30T17:33:56Z",
+          "updatedAt": "2025-10-30T17:33:57Z",
+          "comments": [
+            {
+              "originalPosition": 143,
+              "body": "Also, I believe it would be unnecessarily confusing and inappropriate here. That's different than irrelevant. ",
+              "createdAt": "2025-10-30T17:33:57Z",
+              "updatedAt": "2025-10-30T17:33:57Z"
+            }
+          ]
         }
       ]
     },
@@ -13658,19 +13775,165 @@
       ],
       "body": "Preview: https://ietf-wg-wimse.github.io/draft-ietf-wimse-s2s-protocol/ys-http-sig-00/draft-ietf-wimse-http-signature.html",
       "createdAt": "2025-10-22T10:45:13Z",
-      "updatedAt": "2025-10-22T10:52:02Z",
+      "updatedAt": "2025-10-31T12:58:20Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "5958651d2e6728a7de709091fb678d3c73f6b582",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-http-sig-00",
-      "headRefOid": "c3a003725d29182e02ae1f45fd00faf187f67e02",
+      "headRefOid": "bef13846396e3992af46ed6656a2120675930f6c",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm787KyaLI",
+          "commit": {
+            "abbreviatedOid": "13985fd"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-31T01:04:33Z",
+          "updatedAt": "2025-10-31T01:04:33Z",
+          "comments": [
+            {
+              "originalPosition": 44,
+              "body": "```suggestion\r\nThis document defines one of the mechanisms to provide workload authentication,\r\n```\r\nAlterntive makes it sound like there is a main mechanism and this is a lesser option.  I don't think we really cover autz, just authentication. ",
+              "createdAt": "2025-10-31T01:04:33Z",
+              "updatedAt": "2025-10-31T01:04:34Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787Kykjm",
+          "commit": {
+            "abbreviatedOid": "13985fd"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "This looks fine as a draft -00,  You can reject my text suggestion if you do not think its appropriate. ",
+          "createdAt": "2025-10-31T01:27:43Z",
+          "updatedAt": "2025-10-31T01:27:43Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 180,
+      "id": "PR_kwDOLJmm786woOBt",
+      "title": "First draft of WPT draft ",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/180",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-wpt"
+      ],
+      "body": "@bc-pi ",
+      "createdAt": "2025-10-30T13:59:53Z",
+      "updatedAt": "2025-10-30T15:53:01Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "5958651d2e6728a7de709091fb678d3c73f6b582",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "arndt/add_wpt_draft",
+      "headRefOid": "8d668478739b24e6e3070911d17239c3ac98b408",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm787KrFL9",
+          "commit": {
+            "abbreviatedOid": "8d66847"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2025-10-30T15:36:30Z",
+          "updatedAt": "2025-10-30T15:40:25Z",
+          "comments": [
+            {
+              "originalPosition": 74,
+              "body": "```suggestion\nThis document defines the WPT JWT format, its HTTP usage, validation requirements, and security considerations. Out of scope are the WIT credential format itself (covered in {{!I-D.ietf-wimse-workload-creds}}), policy enforcement and authorization, credential issuance and lifecycle management, detailed bindings for non-HTTP protocols (to be addressed in future specifications), and alternative proof-of-possession mechanisms such as HTTP Message Signatures (TODO: reference the draft).\n```",
+              "createdAt": "2025-10-30T15:36:30Z",
+              "updatedAt": "2025-10-30T15:40:25Z"
+            },
+            {
+              "originalPosition": 250,
+              "body": "Drop this subsection, please.",
+              "createdAt": "2025-10-30T15:38:52Z",
+              "updatedAt": "2025-10-30T15:40:25Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 181,
+      "id": "PR_kwDOLJmm786wvxKV",
+      "title": "first revision of mtls draft",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/181",
+      "state": "OPEN",
+      "author": "jsalowey",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [
+        "jsalowey"
+      ],
+      "labels": [
+        "draft-ietf-wimse-mutual-tls"
+      ],
+      "body": "Initial revision of mtls draft",
+      "createdAt": "2025-10-31T03:41:30Z",
+      "updatedAt": "2025-11-01T18:22:06Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "5958651d2e6728a7de709091fb678d3c73f6b582",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "js-draft-ietf-wimse-mutual-tls",
+      "headRefOid": "205fb6576cc9f5abe89a9a634abc5125b923cefa",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm787K1nlC",
+          "commit": {
+            "abbreviatedOid": "205fb65"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-10-31T08:37:14Z",
+          "updatedAt": "2025-10-31T08:37:14Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm787LHEfx",
+          "commit": {
+            "abbreviatedOid": "205fb65"
+          },
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-11-01T18:22:06Z",
+          "updatedAt": "2025-11-01T18:22:06Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
