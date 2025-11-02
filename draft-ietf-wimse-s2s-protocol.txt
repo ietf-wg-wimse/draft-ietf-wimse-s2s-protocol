@@ -836,19 +836,19 @@ Table of Contents
 
    GET /gimme-ice-cream?flavor=vanilla HTTP/1.1
    Host: example.com
-   Signature: wimse=:zyR2W7QeUEYwGT8q+jU5HyEiPhC4iiBJlAfwu6otL+kXBYOMVl\
-   ZEfGDnTlQiYmUWQMyu69811lIDWbCK42yWCw==:
+   Signature: wimse=:b1kQ7vFYUShd9QS82ojrPAy2hAgiIqSED20bXXjwH6xsnXHF0r\
+   b2J8OeIdbtSupQUsez8IOqQvoYGPaWKu76Cg==:
    Signature-Input: wimse=("@method" "@request-target" "workload-identi\
-   ty-token");created=1754558248;expires=1754558548;nonce="abcd1111";ta\
+   ty-token");created=1761859807;expires=1761860107;nonce="abcd1111";ta\
    g="wimse-workload-to-workload"
    Workload-Identity-Token: eyJhbGciOiJFZERTQSIsImtpZCI6Imlzc3Vlci1rZXk\
-   iLCJ0eXAiOiJ3aW1zZS1pZCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNB\
-   IiwiY3J2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1hLWtleSIsImt0eSI6Ik9LUCIsIngi\
-   OiJEUEhDOFdKaTZ3WEttN3BpRVdXRDRQdHBiTUdJMUcyOXVTMFl5MnNmQk5zIn19LCJl\
-   eHAiOjE3NTQ1NTg1NDgsImlhdCI6MTc1NDU1ODI0OCwiaXNzIjoiaHR0cHM6Ly9leGFt\
-   cGxlLmNvbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc1NDU1ODI0ODQwMjQ5NjAwMCIsInN1\
-   YiI6IndpbXNlOi8vZXhhbXBsZS5jb20vc3ZjQSJ9.OAPARpluzH34v4bhCtPovuOvTsx\
-   cVbAV9WSqFlbiKdNvfEVN4uRNQSRs7ePfMIJB2uqgX71XjBFH433nDzJZBQ
+   iLCJ0eXAiOiJ3aXQrand0In0.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J\
+   2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1hLWtleSIsImt0eSI6Ik9LUCIsIngiOiJ6S09\
+   Sa0E2aUZCMy1ka0RKRzZrYm5ody01N1ZYT0hhLUlFOVhXVmQtR3RNIn19LCJleHAiOjE\
+   3NjE4NjAxMDcsImlhdCI6MTc2MTg1OTgwNywiaXNzIjoiaHR0cHM6Ly9leGFtcGxlLmN\
+   vbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc2MTg1OTgwNzM0NTQ3ODAwMCIsInN1YiI6Ind\
+   pbXNlOi8vZXhhbXBsZS5jb20vc3ZjQSJ9.KxXGBK2YWhy8XT1tB9Z9sZscn2fb4OHDNz\
+   2S8mhP8fGK0mCw6yK4lv9wRqO3hnAXWJEzWuWRHpVQO8_82t_IBA
 
                          Figure 14: Signed Request
 
@@ -857,10 +857,10 @@ Table of Contents
    {
      "alg": "EdDSA",
      "crv": "Ed25519",
-     "d": "6oQCl9NHN4jHymcFPc5SEy3AXUEH5UnBKJ2JBC6rkdw",
+     "d": "u1DH-EPbCxpzi1LLJHtsLGZ6_4lvKsUgFHRNYOo5Mx8",
      "kid": "svc-b-key",
      "kty": "OKP",
-     "x": "bd5UWUtOgbgSYj9e499_k5sjWASpARfL5RJ5ySDPbnY"
+     "x": "8zj0S94HAaaQ0kKPhts0UdothtSTjZDX7jYC5zdLsX4"
    }
 
                        Figure 15: Callee Private Key
@@ -869,27 +869,25 @@ Table of Contents
 
    =============== NOTE: '\' line wrapping per RFC 8792 ================
 
-   Response:
-
    HTTP/1.1 404 Not Found
    Connection: close
    Content-Digest: sha-256=:47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU\
    =:
    Content-Type: text/plain
-   Signature: wimse=:WAjxziuCiYRqCzetetDwaTS7Ka9yMwB+dAHVJPw3VkUH+c8c4A\
-   5BKrCsPlD/ymy+7PgwXl3y3mVdaD4ww7WqDA==:
+   Signature: wimse=:cQiWDdhftD/qYu22pMUxvdqHPxo7IjOaTQ54UxZ5nvXq6Yj7Mv\
+   avAW8sGJjXNlPXwqvBc1vy0wtOvS6Q5zdVDQ==:
    Signature-Input: wimse=("@status" "workload-identity-token" "content\
    -type" "content-digest" "@method";req "@request-target";req);created\
-   =1754558248;expires=1754558550;nonce="abcd2222";tag="wimse-workload-\
+   =1761859807;expires=1761860109;nonce="abcd2222";tag="wimse-workload-\
    to-workload"
    Workload-Identity-Token: eyJhbGciOiJFZERTQSIsImtpZCI6Imlzc3Vlci1rZXk\
-   iLCJ0eXAiOiJ3aW1zZS1pZCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNB\
-   IiwiY3J2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1iLWtleSIsImt0eSI6Ik9LUCIsIngi\
-   OiJnejJhU0pFLWc5dzFyYmdKaU5wczRHYjhJUGs1MGs1b0pVRWJMRHVzYXljIn19LCJl\
-   eHAiOjE3NTQ1NTg1NTAsImlhdCI6MTc1NDU1ODI1MCwiaXNzIjoiaHR0cHM6Ly9leGFt\
-   cGxlLmNvbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc1NDU1ODI0ODQwMjY4MTAwMCIsInN1\
-   YiI6IndpbXNlOi8vZXhhbXBsZS5jb20vc3ZjQiJ9.yJ4gGQ1DQBX0E9Xp5fIgj6Ucpf9\
-   LI_gHnhURZxqu6atT-3hpbFTgw4rd-6knM7-HClok4b6N2ViZaEDcz6IMCg
+   iLCJ0eXAiOiJ3aXQrand0In0.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J\
+   2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1iLWtleSIsImt0eSI6Ik9LUCIsIngiOiI4emo\
+   wUzk0SEFhYVEwa0tQaHRzMFVkb3RodFNUalpEWDdqWUM1emRMc1g0In19LCJleHAiOjE\
+   3NjE4NjAxMDksImlhdCI6MTc2MTg1OTgwOSwiaXNzIjoiaHR0cHM6Ly9leGFtcGxlLmN\
+   vbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc2MTg1OTgwNzM0NTcwMjAwMCIsInN1YiI6Ind\
+   pbXNlOi8vZXhhbXBsZS5jb20vc3ZjQiJ9.1Z10zR2hYWXuVwBeJDx965agbLf_V8o2Ac\
+   SKiyayqGQMAEZNyRm1wrSvDmm6Ha6EJW3-1rhF0C10R-usSUYtAQ
 
    No ice cream today.
 
