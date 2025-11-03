@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments                J. Salowey
 Internet-Draft                                                  CyberArk
 Intended status: Standards Track                              Y. Sheffer
-Expires: 6 May 2026                                               Intuit
-                                                         2 November 2025
+Expires: 7 May 2026                                               Intuit
+                                                         3 November 2025
 
 
      WIMSE Workload-to-Workload Authentication with HTTP Signatures
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 6 May 2026.
+   This Internet-Draft will expire on 7 May 2026.
 
 Copyright Notice
 
@@ -468,7 +468,11 @@ Table of Contents
               arch-06>.
 
    [I-D.ietf-wimse-mutual-tls]
-              "*** BROKEN REFERENCE ***".
+              Salowey, J. A. and Y. Rosomakho, "Workload Authentication
+              Using Mutual TLS", Work in Progress, Internet-Draft,
+              draft-ietf-wimse-mutual-tls-00, 2 November 2025,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
+              mutual-tls-00>.
 
    [I-D.ietf-wimse-wpt]
               "*** BROKEN REFERENCE ***".
