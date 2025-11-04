@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-11-02T01:28:08.116780+00:00",
+  "timestamp": "2025-11-04T01:23:37.131363+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -3233,6 +3233,73 @@
       "body": "Much of Sec. 1.2 and in particular Figure 1 describes a view on authorization that's high level enough to fit the Architecture draft, and in fact is missing from that draft.\n\n@jsalowey WDYT?",
       "createdAt": "2025-10-19T11:40:09Z",
       "updatedAt": "2025-10-19T11:40:09Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 182,
+      "id": "I_kwDOLJmm787Vgrnk",
+      "title": "Implementation status",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/182",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-http-signature"
+      ],
+      "body": "Add https://github.com/cofide/wimse-s2s-httpsig-poc\n\ncc @cofide",
+      "createdAt": "2025-11-03T13:40:02Z",
+      "updatedAt": "2025-11-03T19:19:29Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "jsnctl",
+          "authorAssociation": "NONE",
+          "body": "Thank you for raising @yaronf, happy to open a change to add this\n\nI note the other protocol implementations are referred to here (although these refer to the organisations rather than linking to the implementations themselves)\n\nhttps://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/blob/452ba9acb1e2ec6b9127a15e1dec10341cd320c6/draft-ietf-wimse-s2s-protocol.md?plain=1#L628-L660\n\n* Does this remain the best place to add the implementation - I appreciate the document is undergoing significant change just now so perhaps this is due to be moved?\n* Should the implementation repo itself be linked?",
+          "createdAt": "2025-11-03T14:12:19Z",
+          "updatedAt": "2025-11-03T14:12:37Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Hi @jsnctl! The new drafts will be replacing this single one. Which granted complicates a bit the question of where implementation status should go to in the new \"portfolio\". I tagged your implementation with the http-sig label, but then again, you also implement the WIT itself. So the editor team will need to discuss it.\n\nFor more on the expected details, see https://datatracker.ietf.org/doc/html/rfc7942 - both closed source (=organizations) and open source code is in scope.",
+          "createdAt": "2025-11-03T19:19:29Z",
+          "updatedAt": "2025-11-03T19:19:29Z"
+        }
+      ]
+    },
+    {
+      "number": 183,
+      "id": "I_kwDOLJmm787VhJWe",
+      "title": "Response signing in Workload Identity Creds",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/183",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "See https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/178#discussion_r2445222257",
+      "createdAt": "2025-11-03T14:07:13Z",
+      "updatedAt": "2025-11-03T14:07:13Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 184,
+      "id": "I_kwDOLJmm787VnkQ_",
+      "title": "WPT ABNF",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/184",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "> is \"projection\" the right word? i don't know tbh but don't think I've heard that before\n> \n> given this will now be in a separate doc, it's maybe better to just repeat the bit of ABNF  \n\n _Originally posted by @bc-pi in [#180](https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/180/files#r2487985961)_",
+      "createdAt": "2025-11-03T22:09:33Z",
+      "updatedAt": "2025-11-03T22:09:33Z",
       "closedAt": null,
       "comments": []
     }
@@ -13099,7 +13166,7 @@
       "id": "PR_kwDOLJmm786und8R",
       "title": "First draft of Workload Credential draft",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/178",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -13108,17 +13175,19 @@
       ],
       "body": "",
       "createdAt": "2025-10-20T11:52:04Z",
-      "updatedAt": "2025-10-30T17:33:57Z",
+      "updatedAt": "2025-11-03T14:26:23Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "5958651d2e6728a7de709091fb678d3c73f6b582",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "arndt/add_creds_draft",
       "headRefOid": "cd1e4641681cb847278332fe74c5b0131ad9efd2",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-11-03T14:25:38Z",
+      "mergedAt": "2025-11-03T14:25:37Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "8fef03f89ebe0c5f4fdbf0776caa7313977a78db"
+      },
       "comments": [],
       "reviews": [
         {
@@ -13168,10 +13237,10 @@
           },
           "author": "yaronf",
           "authorAssociation": "COLLABORATOR",
-          "state": "CHANGES_REQUESTED",
+          "state": "DISMISSED",
           "body": "",
           "createdAt": "2025-10-20T14:17:05Z",
-          "updatedAt": "2025-10-20T14:23:24Z",
+          "updatedAt": "2025-11-03T14:25:34Z",
           "comments": [
             {
               "originalPosition": 320,
@@ -13758,6 +13827,39 @@
               "updatedAt": "2025-10-30T17:33:57Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787LUsrm",
+          "commit": {
+            "abbreviatedOid": "c32572b"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-11-03T14:07:28Z",
+          "updatedAt": "2025-11-03T14:07:28Z",
+          "comments": [
+            {
+              "originalPosition": 143,
+              "body": "Created https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/183 for this.",
+              "createdAt": "2025-11-03T14:07:28Z",
+              "updatedAt": "2025-11-03T14:07:29Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787LU9jl",
+          "commit": {
+            "abbreviatedOid": "cd1e464"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-11-03T14:22:30Z",
+          "updatedAt": "2025-11-03T14:22:30Z",
+          "comments": []
         }
       ]
     },
@@ -13766,7 +13868,7 @@
       "id": "PR_kwDOLJmm786vCiPT",
       "title": "draft-ietf-wimse-http-signature - let's go!",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/179",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -13775,17 +13877,19 @@
       ],
       "body": "Preview: https://ietf-wg-wimse.github.io/draft-ietf-wimse-s2s-protocol/ys-http-sig-00/draft-ietf-wimse-http-signature.html",
       "createdAt": "2025-10-22T10:45:13Z",
-      "updatedAt": "2025-10-31T12:58:20Z",
+      "updatedAt": "2025-11-02T21:01:09Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "5958651d2e6728a7de709091fb678d3c73f6b582",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-http-sig-00",
       "headRefOid": "bef13846396e3992af46ed6656a2120675930f6c",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-11-02T21:01:09Z",
+      "mergedAt": "2025-11-02T21:01:09Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "452ba9acb1e2ec6b9127a15e1dec10341cd320c6"
+      },
       "comments": [],
       "reviews": [
         {
@@ -13828,7 +13932,7 @@
       "id": "PR_kwDOLJmm786woOBt",
       "title": "First draft of WPT draft ",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/180",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -13837,18 +13941,28 @@
       ],
       "body": "@bc-pi ",
       "createdAt": "2025-10-30T13:59:53Z",
-      "updatedAt": "2025-10-30T15:53:01Z",
+      "updatedAt": "2025-11-03T22:45:00Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "5958651d2e6728a7de709091fb678d3c73f6b582",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "arndt/add_wpt_draft",
       "headRefOid": "8d668478739b24e6e3070911d17239c3ac98b408",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
-      "comments": [],
+      "closedAt": "2025-11-03T22:45:00Z",
+      "mergedAt": "2025-11-03T22:45:00Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "d3c7e629c45b02ace8a01bef7500ac4bd66ca7bd"
+      },
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "https://ietf-wg-wimse.github.io/draft-ietf-wimse-s2s-protocol/arndt/add_wpt_draft/draft-ietf-wimse-wpt.html ",
+          "createdAt": "2025-11-03T21:57:14Z",
+          "updatedAt": "2025-11-03T21:57:14Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOLJmm787KrFL9",
@@ -13857,10 +13971,10 @@
           },
           "author": "yaronf",
           "authorAssociation": "COLLABORATOR",
-          "state": "CHANGES_REQUESTED",
+          "state": "DISMISSED",
           "body": "",
           "createdAt": "2025-10-30T15:36:30Z",
-          "updatedAt": "2025-10-30T15:40:25Z",
+          "updatedAt": "2025-11-03T22:44:56Z",
           "comments": [
             {
               "originalPosition": 74,
@@ -13875,6 +13989,59 @@
               "updatedAt": "2025-10-30T15:40:25Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787Lb87H",
+          "commit": {
+            "abbreviatedOid": "8d66847"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-11-03T22:08:45Z",
+          "updatedAt": "2025-11-03T22:08:45Z",
+          "comments": [
+            {
+              "originalPosition": 86,
+              "body": "is \"projection\" the right word? i don't know tbh but don't think I've heard that before\n\ngiven this will now be in a separate doc, it's maybe better to just repeat the bit of ABNF ",
+              "createdAt": "2025-11-03T22:08:45Z",
+              "updatedAt": "2025-11-03T22:08:45Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787Lb_FD",
+          "commit": {
+            "abbreviatedOid": "8d66847"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-11-03T22:10:29Z",
+          "updatedAt": "2025-11-03T22:10:30Z",
+          "comments": [
+            {
+              "originalPosition": 86,
+              "body": "did #184 so as to resolve this",
+              "createdAt": "2025-11-03T22:10:30Z",
+              "updatedAt": "2025-11-03T22:10:30Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787LcBY5",
+          "commit": {
+            "abbreviatedOid": "8d66847"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "thank you @arndt-s ",
+          "createdAt": "2025-11-03T22:12:21Z",
+          "updatedAt": "2025-11-03T22:12:21Z",
+          "comments": []
         }
       ]
     },
@@ -13883,7 +14050,7 @@
       "id": "PR_kwDOLJmm786wvxKV",
       "title": "first revision of mtls draft",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/181",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "jsalowey",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -13894,17 +14061,19 @@
       ],
       "body": "Initial revision of mtls draft",
       "createdAt": "2025-10-31T03:41:30Z",
-      "updatedAt": "2025-11-01T18:22:06Z",
+      "updatedAt": "2025-11-02T20:51:33Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "5958651d2e6728a7de709091fb678d3c73f6b582",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "js-draft-ietf-wimse-mutual-tls",
       "headRefOid": "205fb6576cc9f5abe89a9a634abc5125b923cefa",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-11-02T20:51:33Z",
+      "mergedAt": "2025-11-02T20:51:33Z",
+      "mergedBy": "jsalowey",
+      "mergeCommit": {
+        "oid": "cf684b73b620d9c47c963dfa47d8de9bcda012ca"
+      },
       "comments": [],
       "reviews": [
         {
