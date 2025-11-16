@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-11-04T01:23:37.131363+00:00",
+  "timestamp": "2025-11-16T01:37:33.115119+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -3300,6 +3300,22 @@
       "body": "> is \"projection\" the right word? i don't know tbh but don't think I've heard that before\n> \n> given this will now be in a separate doc, it's maybe better to just repeat the bit of ABNF  \n\n _Originally posted by @bc-pi in [#180](https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/180/files#r2487985961)_",
       "createdAt": "2025-11-03T22:09:33Z",
       "updatedAt": "2025-11-03T22:09:33Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 185,
+      "id": "I_kwDOLJmm787X11ym",
+      "title": "Comments from implementers of the HTTP-Sig draft",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/185",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "From Jason Costello <jason@cofide.io>:\n\n* The `exp` of the WIT and the `expires` value of the HTTP Message Signature are independent, with the signature lifetime significantly shorter than that of the credential itself. An explicit point to note the difference between these values could ensure implementations do not incorrectly assume these are equivalent,\n\n* It appears that `keyid` was denoted a required signature parameter in earlier drafts of the HTTP Message Signatures document, with this requirement relaxed in the published RFC. While implementations should obviously conform to the RFC, this does present a scenario where older implementations of HTTP Message Signatures might expect a `keyid` (for example, Python\u2019s http-message-signatures https://pypi.org/project/http-message-signatures/).\n\n@jsnctl\n",
+      "createdAt": "2025-11-13T13:23:31Z",
+      "updatedAt": "2025-11-13T13:23:31Z",
       "closedAt": null,
       "comments": []
     }
@@ -14103,6 +14119,32 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 186,
+      "id": "PR_kwDOLJmm786zUTev",
+      "title": "Adds note on implementation",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/186",
+      "state": "OPEN",
+      "author": "jsnctl",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "raised https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/182\r\n\r\nFollowing the guidance in [RFC7942](https://datatracker.ietf.org/doc/html/rfc7942), this adds the \"Implementation Status\" section and a note on the WIT + HTTP Message Signatures implementation. \r\n\r\nThis could be equally at home in the Workload Credential/WIT document, but opening for visibility",
+      "createdAt": "2025-11-13T21:38:27Z",
+      "updatedAt": "2025-11-14T07:24:34Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "d3c7e629c45b02ace8a01bef7500ac4bd66ca7bd",
+      "headRepository": "jsnctl/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "jsnctl/add-implementation-status",
+      "headRefOid": "c8803a4c159adf3ce381600e4f1fc667df453734",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
