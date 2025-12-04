@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-11-16T01:37:33.115119+00:00",
+  "timestamp": "2025-12-04T01:27:25.220264+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -3312,10 +3312,12 @@
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-http-signature"
+      ],
       "body": "From Jason Costello <jason@cofide.io>:\n\n* The `exp` of the WIT and the `expires` value of the HTTP Message Signature are independent, with the signature lifetime significantly shorter than that of the credential itself. An explicit point to note the difference between these values could ensure implementations do not incorrectly assume these are equivalent,\n\n* It appears that `keyid` was denoted a required signature parameter in earlier drafts of the HTTP Message Signatures document, with this requirement relaxed in the published RFC. While implementations should obviously conform to the RFC, this does present a scenario where older implementations of HTTP Message Signatures might expect a `keyid` (for example, Python\u2019s http-message-signatures https://pypi.org/project/http-message-signatures/).\n\n@jsnctl\n",
       "createdAt": "2025-11-13T13:23:31Z",
-      "updatedAt": "2025-11-13T13:23:31Z",
+      "updatedAt": "2025-12-02T15:30:23Z",
       "closedAt": null,
       "comments": []
     }
