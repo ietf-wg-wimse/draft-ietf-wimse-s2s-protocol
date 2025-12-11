@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-12-04T01:27:25.220264+00:00",
+  "timestamp": "2025-12-11T01:38:40.375641+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -82,6 +82,11 @@
       "name": "draft-ietf-wimse-mutual-tls",
       "description": "",
       "color": "426d44"
+    },
+    {
+      "name": "pre-wglc",
+      "description": null,
+      "color": "aaaaaa"
     }
   ],
   "issues": [
@@ -535,13 +540,18 @@
       "state": "OPEN",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "jsalowey",
+        "yaroslavros"
+      ],
       "labels": [
-        "small"
+        "small",
+        "draft-ietf-wimse-workload-creds",
+        "pre-wglc"
       ],
       "body": "And in general consolidate the Workload Identity section with the architecture I-D, or possibly remove the section altogether.",
       "createdAt": "2024-07-03T16:26:58Z",
-      "updatedAt": "2025-10-28T15:52:06Z",
+      "updatedAt": "2025-12-09T15:08:35Z",
       "closedAt": null,
       "comments": [
         {
@@ -836,10 +846,15 @@
       "author": "PieterKas",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-http-signature",
+        "draft-ietf-wimse-wpt",
+        "draft-ietf-wimse-mutual-tls",
+        "pre-wglc"
+      ],
       "body": "Commenting as identity enthusiast as opposed to WIMSE co-chair.\r\n\r\nIt would be beneficial for readers, as well as future attempts at formal analysis, to have a section that explicitly defines the security goals for this draft. ",
       "createdAt": "2024-07-04T16:39:51Z",
-      "updatedAt": "2025-07-20T15:21:18Z",
+      "updatedAt": "2025-12-09T15:09:39Z",
       "closedAt": null,
       "comments": [
         {
@@ -1255,7 +1270,7 @@
       "id": "I_kwDOLJmm786PlL3g",
       "title": "WPT vs Message Signatures",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/52",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -1264,8 +1279,8 @@
       ],
       "body": "Creating a reference-able & umbrella issue for the choice between the DPoP-inspired and the HTTP Message Signatures approach.\r\n\r\nSection 1:\r\n> For application-level protection we currently propose two alternative solutions, one inspired by DPoP [[RFC9449](https://www.sheffer.org/wimse-s2s/draft-sheffer-wimse-s2s-protocol.html#RFC9449)] in [Section 4.2](https://www.sheffer.org/wimse-s2s/draft-sheffer-wimse-s2s-protocol.html#dpop-esque-auth) and one which is a profile of HTTP Message Signatures [[RFC9421](https://www.sheffer.org/wimse-s2s/draft-sheffer-wimse-s2s-protocol.html#RFC9421)] in [Section 4.3](https://www.sheffer.org/wimse-s2s/draft-sheffer-wimse-s2s-protocol.html#http-sig-auth). The design team believes that we need to pick one of these two alternatives for standardization, once we have understood their pros and cons.",
       "createdAt": "2024-07-15T14:29:19Z",
-      "updatedAt": "2025-07-20T15:22:33Z",
-      "closedAt": null,
+      "updatedAt": "2025-12-09T15:10:31Z",
+      "closedAt": "2025-12-09T15:10:30Z",
       "comments": [
         {
           "author": "yaronf",
@@ -1273,6 +1288,13 @@
           "body": "Keeping this issue open. The design team still believes that one option is better than two, but the WG decided otherwise. Hoping to revisit this decision later on.",
           "createdAt": "2025-01-17T20:51:10Z",
           "updatedAt": "2025-01-17T20:51:10Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Closing this as we have separate documents now.",
+          "createdAt": "2025-12-09T15:10:30Z",
+          "updatedAt": "2025-12-09T15:10:30Z"
         }
       ]
     },
@@ -1753,11 +1775,16 @@
       "state": "OPEN",
       "author": "PieterKas",
       "authorAssociation": "NONE",
-      "assignees": [],
-      "labels": [],
+      "assignees": [
+        "arndt-s"
+      ],
+      "labels": [
+        "draft-ietf-wimse-workload-creds",
+        "pre-wglc"
+      ],
       "body": "Opened as a working group member, not as chair\n\nThe abstract states that:\n\nThese two protocols are compatible, in the sense that a\n   single call chain can have some calls use one protocol and some use\n   the other.  Service A can call Service B with mutual TLS\n   authentication, while the next call from Service B to Service C would\n   be authenticated at the application level.\n\nIs simultaneous use supported as well? For example I may use mutual TLS for workload-to-workload authentication by deploying a service mesh, but also do application layer authentication? ",
       "createdAt": "2025-01-23T11:52:28Z",
-      "updatedAt": "2025-08-12T15:12:35Z",
+      "updatedAt": "2025-12-09T15:12:08Z",
       "closedAt": null,
       "comments": [
         {
@@ -2073,10 +2100,13 @@
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds",
+        "pre-wglc"
+      ],
       "body": "If a workload is eligible to multiple identities there's some security gotchas we should highlight in the security considerations:\n\n* if we decide to do `aud==<peer id>` it is important for the workload to only accept identities that are valid for that call.\n",
       "createdAt": "2025-03-06T15:25:05Z",
-      "updatedAt": "2025-03-09T18:59:32Z",
+      "updatedAt": "2025-12-09T15:15:56Z",
       "closedAt": null,
       "comments": []
     },
@@ -2372,9 +2402,17 @@
       ],
       "body": "If a deployment uses `iss` claim for key distribution it is crucial that a validator enforces allowed issuers via configuration (e.g. allowlist).\nOtherwise, any issuer can pose as a trust domain and tokens are accepted.",
       "createdAt": "2025-04-24T14:23:03Z",
-      "updatedAt": "2025-05-20T14:22:48Z",
+      "updatedAt": "2025-12-09T15:20:04Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "We believe this is out of scope as entire key distribution and discovery is out of scope. Keeping this open for potential WGLC discussion but will close it if no objection emerges.",
+          "createdAt": "2025-12-09T15:20:04Z",
+          "updatedAt": "2025-12-09T15:20:04Z"
+        }
+      ]
     },
     {
       "number": 116,
@@ -2608,15 +2646,18 @@
       "id": "I_kwDOLJmm786-TCvu",
       "title": "Collect implementations",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/136",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-http-signature",
+        "pre-wglc"
+      ],
       "body": "We want to collect implementations of the S2S protocol according to https://datatracker.ietf.org/doc/rfc7942/.",
       "createdAt": "2025-07-01T14:11:20Z",
-      "updatedAt": "2025-09-25T11:50:51Z",
-      "closedAt": null,
+      "updatedAt": "2025-12-09T15:37:32Z",
+      "closedAt": "2025-12-09T15:37:32Z",
       "comments": [
         {
           "author": "bc-pi",
@@ -2666,6 +2707,20 @@
           "body": "@dagdagdag83 It's good to hear that you're running a large scale service auth solution in production, and in fact you may want to share your experience and learnings with the working group. However, the _Implementation Status_ section of an Internet Draft is there to support **the draft** by listing partial or full implementations of the specified protocol.",
           "createdAt": "2025-09-25T11:50:51Z",
           "updatedAt": "2025-09-25T11:50:51Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Keeping it open for the work at http-sig.",
+          "createdAt": "2025-12-09T15:20:41Z",
+          "updatedAt": "2025-12-09T15:20:41Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Closing in favor of #182 ",
+          "createdAt": "2025-12-09T15:37:32Z",
+          "updatedAt": "2025-12-09T15:37:32Z"
         }
       ]
     },
@@ -2762,10 +2817,12 @@
       "assignees": [
         "arndt-s"
       ],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-wpt"
+      ],
       "body": "Per the recent definition in #149.\n\nBrian: let's consider that as a separate PR. and perhaps a separate example. I'd prefer to not clutter the main example",
       "createdAt": "2025-08-12T12:22:40Z",
-      "updatedAt": "2025-08-14T11:20:39Z",
+      "updatedAt": "2025-12-09T15:22:17Z",
       "closedAt": null,
       "comments": [
         {
@@ -2786,10 +2843,16 @@
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-http-signature",
+        "draft-ietf-wimse-wpt",
+        "draft-ietf-wimse-workload-creds",
+        "draft-ietf-wimse-mutual-tls",
+        "pre-wglc"
+      ],
       "body": "",
       "createdAt": "2025-08-25T23:09:54Z",
-      "updatedAt": "2025-08-25T23:09:54Z",
+      "updatedAt": "2025-12-09T15:22:35Z",
       "closedAt": null,
       "comments": []
     },
@@ -2827,11 +2890,14 @@
       "state": "OPEN",
       "author": "fandreas",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "jsalowey",
+        "yaroslavros"
+      ],
       "labels": [],
       "body": "The document has several references to the WIMSE architecture document for the definition of the Workload Identifier. However, we also have a new document defining the workload identifier. We need to resolve which document defines the workload identifier and then have it defined properly in there, which in turn may necessitate an update to this document. ",
       "createdAt": "2025-09-16T01:08:00Z",
-      "updatedAt": "2025-10-28T15:51:09Z",
+      "updatedAt": "2025-12-09T15:23:16Z",
       "closedAt": null,
       "comments": [
         {
@@ -2854,6 +2920,13 @@
           "body": "It looks like the WG has decided that a distinct WIMSE Identifiers document is the way to proceed https://mailarchive.ietf.org/arch/msg/wimse/Khn8D-r3fymfZgYvOst43hK5wAs/ ",
           "createdAt": "2025-10-28T15:51:09Z",
           "updatedAt": "2025-10-28T15:51:09Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Related to #31 (I believe)",
+          "createdAt": "2025-12-09T15:23:16Z",
+          "updatedAt": "2025-12-09T15:23:16Z"
         }
       ]
     },
@@ -2866,12 +2939,13 @@
       "author": "fandreas",
       "authorAssociation": "NONE",
       "assignees": [
-        "jsalowey"
+        "jsalowey",
+        "yaroslavros"
       ],
       "labels": [],
       "body": "Section 1.3 (Workload Identifiers and Authentication Granularity) is not entirely clear in how it views workload identifiers as it relates to identifying a specific instance of a workload versus a \"service\", which may consist of multiple instances that come and go: \n\n<quote>\nPrior to WIMSE, many use cases did not allow for fully granular authentication in containerized runtime platforms. For instance, with mutual TLS, there's often no clear way to map the request's external access reference (e.g., Kubernetes Ingress path, service name, or host header) to the SubjectAltName value in the server certificate. This means that the client could only verify if the server certificate is valid within a trust domain, not if it's tied to a specific workload.\n\nTo enable mutual and granular authentication between workloads, two things must be in place:\n- Each workload must know its own identifier.\n- There needs to be an explicit mapping from the external handle used to access a workload (such as an Ingress path or service DNS name) to its workload identifier.\n</quote>\n\nThe above text suggests that the workload identifier is for a specific instance, however either should be possible (with the most common use case expected to be a \"service\" rather than an \"instance\"). ",
       "createdAt": "2025-09-16T01:22:39Z",
-      "updatedAt": "2025-09-23T14:29:28Z",
+      "updatedAt": "2025-12-09T15:23:45Z",
       "closedAt": null,
       "comments": [
         {
@@ -2894,6 +2968,13 @@
           "body": "I don't believe this can be left open to implementation/deployment. Consider the authorization case: You likely want the identifier to refer to the overall service rather than a specific instance. Now consider the logging and troubleshooting: You likely (also) want to know the specific instance you are dealing with. Extend it to Agentic AI where specific instances may start behaving differently based on data and prompts they have been exposed to, and the picture gets murkier again. \n\nIn short, I believe there is a need to clearly know whether a given identify refers to a specific instance or the overall service. I understand this is not the document that should be defining the details of that, however this document will need to align with whatever the outcome of that discussion is. ",
           "createdAt": "2025-09-22T22:00:15Z",
           "updatedAt": "2025-09-22T22:00:15Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Related to #31 and #161 ",
+          "createdAt": "2025-12-09T15:23:45Z",
+          "updatedAt": "2025-12-09T15:23:45Z"
         }
       ]
     },
@@ -2902,15 +2983,15 @@
       "id": "I_kwDOLJmm787L2Peg",
       "title": "Inconsistent Decoding examples",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/163",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "fandreas",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "Some of the decoded examples do not align with the corresponding encoded representation. For example, the text after Figure 4 does not align with Figure 4 itself or the encoded token in Figure 2. ",
       "createdAt": "2025-09-16T01:27:32Z",
-      "updatedAt": "2025-09-17T11:41:46Z",
-      "closedAt": null,
+      "updatedAt": "2025-12-09T15:24:44Z",
+      "closedAt": "2025-12-09T15:24:44Z",
       "comments": [
         {
           "author": "bc-pi",
@@ -2930,10 +3011,13 @@
       "author": "fandreas",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds",
+        "pre-wglc"
+      ],
       "body": "The \"Workload Identity Token\" Section (3.1) says the iss claim is \"The issuer of the token, which is the Identity Server, represented by a URI. The iss claim is RECOMMENDED but optional\"\n\nThe example in Figure 2-4 does not include an \"iss\" claim, however the text after Figure 4 says that the claims indicate that \"the example WIT was issued by an Identity Server known as....\" (this refer to the -06 version; current editor's copy seems to have removed this). \n\nSection 3.1.2 (\"A note on iss claim and key distribution\") then says \"It is RECOMMENDED that the WIT carries an iss claim. This specification itself does not make use of a potential iss claim but also carries the trust domain in the workload identifier\". \n\n\n1) If the iss claim is recommended, then why is its use not specified and shown in the examples ? \n\n2) There seems to be an implicit statement that the issuer must be the same as the trust domain in the workload identifier, however why is that, especially in lieu of the RECOMMENDED part above ? \n\n",
       "createdAt": "2025-09-16T01:42:52Z",
-      "updatedAt": "2025-09-24T20:23:18Z",
+      "updatedAt": "2025-12-09T15:26:34Z",
       "closedAt": null,
       "comments": [
         {
@@ -2999,10 +3083,13 @@
       "author": "fandreas",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-wpt",
+        "pre-wglc"
+      ],
       "body": "Section 3.2 (\"Option 1: DPoP-Inspired Authentication\") says the \"jti\" value \"MUST be unique, at least within the scope of the sender. Unique across what and how does the receiver interpret that ? Is it based on the workload identifier, in which case we again need to consider workload instances versus \"services\", with potentially multiple instances. ",
       "createdAt": "2025-09-16T01:50:54Z",
-      "updatedAt": "2025-09-22T22:17:31Z",
+      "updatedAt": "2025-12-09T15:27:15Z",
       "closedAt": null,
       "comments": [
         {
@@ -3026,15 +3113,15 @@
       "id": "I_kwDOLJmm787L2ahK",
       "title": "WPT oth claim - mechanism is underspecified.",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/167",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "fandreas",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "Section 3.2 (\"Option 1: DPoP-Inspired Authentication\") defines the \"oth\" claim as \"Hash of any other token in the request that might convey end-user identity and authorization context of the request, if such a token exists.\". \n\nThe mechanism is under-specified and unlikely to be interoperable. It seems the editor's working copy of the document is addressing this though. \n\n\n\n ",
       "createdAt": "2025-09-16T01:57:15Z",
-      "updatedAt": "2025-09-17T00:20:19Z",
-      "closedAt": null,
+      "updatedAt": "2025-12-09T15:27:39Z",
+      "closedAt": "2025-12-09T15:27:39Z",
       "comments": [
         {
           "author": "bc-pi",
@@ -3085,10 +3172,13 @@
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds",
+        "pre-wglc"
+      ],
       "body": "See title",
       "createdAt": "2025-09-23T14:48:00Z",
-      "updatedAt": "2025-09-25T10:22:25Z",
+      "updatedAt": "2025-12-09T15:29:50Z",
       "closedAt": null,
       "comments": [
         {
@@ -3149,10 +3239,13 @@
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-wpt",
+        "pre-wglc"
+      ],
       "body": "Can workloads use the \u201cX-Forwarded-For\u201d header to help validating the \u201caud\u201d of the WPT? I believe not and that we should mention/prohibit that in the spec. ",
       "createdAt": "2025-09-26T10:29:19Z",
-      "updatedAt": "2025-09-26T10:31:33Z",
+      "updatedAt": "2025-12-09T15:30:35Z",
       "closedAt": null,
       "comments": [
         {
@@ -3173,10 +3266,13 @@
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds",
+        "pre-wglc"
+      ],
       "body": "Sec. 1.3 defines a mapping from the Request URI to the WIMSE ID, but then the MUST statement at the bottom requires a mapping \"between\" these two, which can be read as a bidirectional mapping.",
       "createdAt": "2025-09-26T10:56:13Z",
-      "updatedAt": "2025-09-26T10:56:13Z",
+      "updatedAt": "2025-12-09T15:32:54Z",
       "closedAt": null,
       "comments": []
     },
@@ -3189,10 +3285,14 @@
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-wpt",
+        "draft-ietf-wimse-workload-creds",
+        "pre-wglc"
+      ],
       "body": "From a discussion with @strideynet:\n\nIf you want different endpoints to have different access policies, then you need to go granular.\n\nPerhaps this intention could be stated more explicitly ? I think most people will be familiar with cases where aud is purely the hostname/scheme of the service you are connecting to - and that there isn't a level of granularity beneath that. It'd be good to call that out that this additional granularity binds the WPT to a specific endpoint/RPC rather than just a specific target host.\n\nThis seems to belong in Sec. 1.3, \"Workload Identifiers and Authentication Granularity\".",
       "createdAt": "2025-09-26T11:00:35Z",
-      "updatedAt": "2025-09-26T11:06:38Z",
+      "updatedAt": "2025-12-09T15:34:16Z",
       "closedAt": null,
       "comments": [
         {
@@ -3213,10 +3313,14 @@
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-wpt",
+        "draft-ietf-wimse-workload-creds",
+        "pre-wglc"
+      ],
       "body": "* When using mTLS, the SubjectAltName is a WIMSE ID. The assumption is that both peers know each other's ID and can validate the incoming certs.\n* Sec. 1.3 is about mapping from Request URI (which is known to the client by definition) to the target's WIMSE ID.\n\nAnd yet we still specified the `aud` claim of the WPT (Sec. 3.2) as the Request URI. Both points above point towards `aud` as the WIMSE ID.",
       "createdAt": "2025-09-26T11:03:20Z",
-      "updatedAt": "2025-09-26T11:03:20Z",
+      "updatedAt": "2025-12-09T15:35:27Z",
       "closedAt": null,
       "comments": []
     },
@@ -3228,11 +3332,16 @@
       "state": "OPEN",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
-      "labels": [],
+      "assignees": [
+        "jsalowey"
+      ],
+      "labels": [
+        "draft-ietf-wimse-workload-creds",
+        "pre-wglc"
+      ],
       "body": "Much of Sec. 1.2 and in particular Figure 1 describes a view on authorization that's high level enough to fit the Architecture draft, and in fact is missing from that draft.\n\n@jsalowey WDYT?",
       "createdAt": "2025-10-19T11:40:09Z",
-      "updatedAt": "2025-10-19T11:40:09Z",
+      "updatedAt": "2025-12-09T15:36:37Z",
       "closedAt": null,
       "comments": []
     },
@@ -3277,13 +3386,15 @@
       "state": "OPEN",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "arndt-s"
+      ],
       "labels": [
         "draft-ietf-wimse-workload-creds"
       ],
       "body": "See https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/178#discussion_r2445222257",
       "createdAt": "2025-11-03T14:07:13Z",
-      "updatedAt": "2025-11-03T14:07:13Z",
+      "updatedAt": "2025-12-09T15:04:29Z",
       "closedAt": null,
       "comments": []
     },
@@ -3296,10 +3407,13 @@
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-wpt",
+        "pre-wglc"
+      ],
       "body": "> is \"projection\" the right word? i don't know tbh but don't think I've heard that before\n> \n> given this will now be in a separate doc, it's maybe better to just repeat the bit of ABNF  \n\n _Originally posted by @bc-pi in [#180](https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/180/files#r2487985961)_",
       "createdAt": "2025-11-03T22:09:33Z",
-      "updatedAt": "2025-11-03T22:09:33Z",
+      "updatedAt": "2025-12-09T15:37:50Z",
       "closedAt": null,
       "comments": []
     },
@@ -3313,11 +3427,12 @@
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [
-        "draft-ietf-wimse-http-signature"
+        "draft-ietf-wimse-http-signature",
+        "pre-wglc"
       ],
       "body": "From Jason Costello <jason@cofide.io>:\n\n* The `exp` of the WIT and the `expires` value of the HTTP Message Signature are independent, with the signature lifetime significantly shorter than that of the credential itself. An explicit point to note the difference between these values could ensure implementations do not incorrectly assume these are equivalent,\n\n* It appears that `keyid` was denoted a required signature parameter in earlier drafts of the HTTP Message Signatures document, with this requirement relaxed in the published RFC. While implementations should obviously conform to the RFC, this does present a scenario where older implementations of HTTP Message Signatures might expect a `keyid` (for example, Python\u2019s http-message-signatures https://pypi.org/project/http-message-signatures/).\n\n@jsnctl\n",
       "createdAt": "2025-11-13T13:23:31Z",
-      "updatedAt": "2025-12-02T15:30:23Z",
+      "updatedAt": "2025-12-09T15:38:26Z",
       "closedAt": null,
       "comments": []
     }
