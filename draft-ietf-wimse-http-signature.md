@@ -183,20 +183,21 @@ A signed response would be:
 # Implementation Status
 
 <cref>Note to RFC Editor: please remove this section, as well as the reference to RFC 7942, before publication.</cref>
+
 This section records the status of known implementations of the protocol defined by this specification at the time of posting of this Internet-Draft, and is based on a proposal described in {{!RFC7942}}. The description of implementations in this section is intended to assist the IETF in its decision processes in progressing drafts to RFCs.  Please note that the listing of any individual implementation here does not imply endorsement by the IETF.  Furthermore, no effort has been spent to verify the information presented here that was supplied by IETF contributors. This is not intended as, and must not be construed to be, a catalog of available implementations or their features.  Readers are advised to note that other implementations may exist.
 
 According to RFC 7942, "this will allow reviewers and working groups to assign due consideration to documents that have the benefit of running code, which may serve as evidence of valuable experimentation and feedback that have made the implemented protocols more mature.  It is up to the individual working groups to use this information as they see fit".
 
-Cofide
+## Cofide
 
 * Organization: Cofide
-* Implementation: https://github.com/cofide/wimse-s2s-httpsig-poc
+* Implementation: <https://github.com/cofide/wimse-s2s-httpsig-poc>
 * Maturity:
     * WIT + HTTP Message Signatures: proof-of-concept
 * Coverage: WIT, HTTP Message Signatures
 * License: Apache 2.0
 * Contact: jason@cofide.io
-* Last updated: 13/11/2025
+* Last updated: 13-Nov-2025
 
 # Security Considerations
 
