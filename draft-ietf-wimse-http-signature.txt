@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments                J. Salowey
 Internet-Draft                                                  CyberArk
 Intended status: Standards Track                              Y. Sheffer
-Expires: 7 May 2026                                               Intuit
-                                                         3 November 2025
+Expires: 15 June 2026                                             Intuit
+                                                        12 December 2025
 
 
      WIMSE Workload-to-Workload Authentication with HTTP Signatures
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 7 May 2026.
+   This Internet-Draft will expire on 15 June 2026.
 
 Copyright Notice
 
@@ -82,14 +82,16 @@ Table of Contents
    3.  The Protocol: Authentication Based on HTTP Message Signatures
      3.1.  Error Conditions
      3.2.  Example Requests and Responses
-   4.  Security Considerations
-     4.1.  Workload Identity Token and Proof of Possession
-     4.2.  Middle Boxes
-     4.3.  Privacy Considerations
-   5.  IANA Considerations
-   6.  References
-     6.1.  Normative References
-     6.2.  Informative References
+   4.  Implementation Status
+     4.1.  Cofide
+   5.  Security Considerations
+     5.1.  Workload Identity Token and Proof of Possession
+     5.2.  Middle Boxes
+     5.3.  Privacy Considerations
+   6.  IANA Considerations
+   7.  References
+     7.1.  Normative References
+     7.2.  Informative References
    Appendix A.  Document History
      A.1.  draft-ietf-wimse-http-signature-00
      A.2.  draft-ietf-wimse-s2s-protocol-07
@@ -338,7 +340,52 @@ Table of Contents
 
                          Figure 4: Signed Response
 
-4.  Security Considerations
+4.  Implementation Status
+
+
+   // Note to RFC Editor: please remove this section, as well as the
+   // reference to RFC 7942, before publication.
+
+   This section records the status of known implementations of the
+   protocol defined by this specification at the time of posting of this
+   Internet-Draft, and is based on a proposal described in [RFC7942].
+   The description of implementations in this section is intended to
+   assist the IETF in its decision processes in progressing drafts to
+   RFCs.  Please note that the listing of any individual implementation
+   here does not imply endorsement by the IETF.  Furthermore, no effort
+   has been spent to verify the information presented here that was
+   supplied by IETF contributors.  This is not intended as, and must not
+   be construed to be, a catalog of available implementations or their
+   features.  Readers are advised to note that other implementations may
+   exist.
+
+   According to RFC 7942, "this will allow reviewers and working groups
+   to assign due consideration to documents that have the benefit of
+   running code, which may serve as evidence of valuable experimentation
+   and feedback that have made the implemented protocols more mature.
+   It is up to the individual working groups to use this information as
+   they see fit".
+
+4.1.  Cofide
+
+   *  Organization: Cofide
+
+   *  Implementation: https://github.com/cofide/wimse-s2s-httpsig-poc
+      (https://github.com/cofide/wimse-s2s-httpsig-poc)
+
+   *  Maturity:
+
+      -  WIT + HTTP Message Signatures: proof-of-concept
+
+   *  Coverage: WIT, HTTP Message Signatures
+
+   *  License: Apache 2.0
+
+   *  Contact: jason@cofide.io
+
+   *  Last updated: 13-Nov-2025
+
+5.  Security Considerations
 
    This section includes security considerations that are specific to
    the HTTP Signature protocol defined here.  Refer to
@@ -346,7 +393,7 @@ Table of Contents
    for more generic security considerations associated with the workload
    identity and its WIT representation.
 
-4.1.  Workload Identity Token and Proof of Possession
+5.1.  Workload Identity Token and Proof of Possession
 
    The Workload Identity Token (WIT) is bound to a secret cryptographic
    key and is always presented with a proof of possession as described
@@ -394,7 +441,7 @@ Table of Contents
    identity of the validator (e.g. which cluster member receives the
    message) then replay protection would not be effective.
 
-4.2.  Middle Boxes
+5.2.  Middle Boxes
 
    In some deployments the Workload Identity Token and proof of
    possession (signature) may pass through multiple systems.  The
@@ -409,7 +456,7 @@ Table of Contents
    security in these situations, in particular if responses are signed
    in addition to requests.
 
-4.3.  Privacy Considerations
+5.3.  Privacy Considerations
 
    WITs and the signatures may contain private information such as user
    names or other identities.  Care must be taken to prevent disclosure
@@ -422,21 +469,31 @@ Table of Contents
    should evaluate if the disclosure of WITs or signatures can be used
    to track a user.
 
-5.  IANA Considerations
+6.  IANA Considerations
 
    This document does not include any IANA considerations.
 
-6.  References
+7.  References
 
-6.1.  Normative References
+7.1.  Normative References
 
    [I-D.ietf-wimse-workload-creds]
-              "*** BROKEN REFERENCE ***".
+              Campbell, B., Salowey, J. A., Schwenkschuster, A.,
+              Sheffer, Y., and Y. Rosomakho, "WIMSE Workload
+              Credentials", Work in Progress, Internet-Draft, draft-
+              ietf-wimse-workload-creds-00, 3 November 2025,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
+              workload-creds-00>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/rfc/rfc2119>.
+
+   [RFC7942]  Sheffer, Y. and A. Farrel, "Improving Awareness of Running
+              Code: The Implementation Status Section", BCP 205,
+              RFC 7942, DOI 10.17487/RFC7942, July 2016,
+              <https://www.rfc-editor.org/rfc/rfc7942>.
 
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
@@ -450,7 +507,7 @@ Table of Contents
               RFC 9525, DOI 10.17487/RFC9525, November 2023,
               <https://www.rfc-editor.org/rfc/rfc9525>.
 
-6.2.  Informative References
+7.2.  Informative References
 
    [I-D.ietf-oauth-transaction-tokens]
               Tulshibagwale, A., Fletcher, G., and P. Kasselman,
@@ -475,7 +532,11 @@ Table of Contents
               mutual-tls-00>.
 
    [I-D.ietf-wimse-wpt]
-              "*** BROKEN REFERENCE ***".
+              Campbell, B. and A. Schwenkschuster, "WIMSE Workload Proof
+              Token", Work in Progress, Internet-Draft, draft-ietf-
+              wimse-wpt-00, 3 November 2025,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
+              wpt-00>.
 
    [RFC9457]  Nottingham, M., Wilde, E., and S. Dalal, "Problem Details
               for HTTP APIs", RFC 9457, DOI 10.17487/RFC9457, July 2023,
@@ -610,7 +671,7 @@ Appendix B.  Comparing the DPoP Inspired Option with Message Signatures
 
    *  Message Signatures offer superior integrity protection,
       particularly by mitigating message modification by middleboxes.
-      See also Section 4.2.
+      See also Section 5.2.
 
    *  A key advantage of Message Signatures is that they support
       response signing.  This opens up the possibility for future
