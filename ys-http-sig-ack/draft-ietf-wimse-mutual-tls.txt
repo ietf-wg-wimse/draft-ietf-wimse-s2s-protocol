@@ -1,0 +1,284 @@
+
+
+
+
+Workload Identity in Multi System Environments                 j Salowey
+Internet-Draft                                                  CyberArk
+Intended status: Standards Track                            Y. Rosomakho
+Expires: 15 June 2026                                            Zscaler
+                                                        12 December 2025
+
+
+                Workload Authentication Using Mutual TLS
+                   draft-ietf-wimse-mutual-tls-latest
+
+Abstract
+
+   The WIMSE architecture defines authentication and authorization for
+   software workloads in a variety of runtime environments, from the
+   most basic ones to complex multi-service, multi-cloud, multi-tenant
+   deployments.  This document profiles a workload authentication based
+   on X.509 workload identity certificates using mutual TLS (mTLS).
+
+About This Document
+
+   This note is to be removed before publishing as an RFC.
+
+   The latest revision of this draft can be found at https://ietf-wg-
+   wimse.github.io/draft-ietf-wimse-s2s-protocol/draft-ietf-wimsemutual-
+   tls.html.  Status information for this document may be found at
+   https://datatracker.ietf.org/doc/draft-ietf-wimse-mutual-tls/.
+
+   Discussion of this document takes place on the Workload Identity in
+   Multi System Environments Working Group mailing list
+   (mailto:wimse@ietf.org), which is archived at
+   https://mailarchive.ietf.org/arch/browse/wimse/.  Subscribe at
+   https://www.ietf.org/mailman/listinfo/wimse/.
+
+   Source for this draft and an issue tracker can be found at
+   https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on 15 June 2026.
+
+Copyright Notice
+
+   Copyright (c) 2025 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents (https://trustee.ietf.org/
+   license-info) in effect on the date of publication of this document.
+   Please review these documents carefully, as they describe your rights
+   and restrictions with respect to this document.  Code Components
+   extracted from this document must include Revised BSD License text as
+   described in Section 4.e of the Trust Legal Provisions and are
+   provided without warranty as described in the Revised BSD License.
+
+Table of Contents
+
+   1.  Introduction
+     1.1.  Deployment Architecture and Message Flow
+     1.2.  Workload Identity Certificates
+   2.  Conventions and Definitions
+   3.  Using Mutual TLS for Workload-to-Workload Authentication
+     3.1.  The Workload Identity Certificate
+     3.2.  Workload Identity Certificate Validation
+       3.2.1.  Server Name Validation
+     3.3.  Client Authorization Using the Workload Identity
+   4.  IANA Considerations
+   5.  Security Considerations
+   6.  References
+     6.1.  Normative References
+     6.2.  Informative References
+   Appendix A.  Document History
+     A.1.  draft-ietf-wimse-mutual-tls-00
+   Acknowledgments
+   Authors' Addresses
+
+1.  Introduction
+
+   This document defines authentication and authorization in the context
+   of interaction between two workloads.  This is the core component of
+   the WIMSE architecture [I-D.ietf-wimse-arch].  This document focuses
+   on using X.509 workload identity certificates
+   [I-D.ietf-wimse-workload-creds] to authenticate the communication
+   between workloads using TLS.
+
+   The use of TLS for authentication is widely deployed, however it may
+   not be applicable to all environments.  For example, some deployments
+   may lack the PKI infrastructure necessary to manage certificates or
+   inter-service communication consists of multiple separate TLS hops.
+   For these cases, other options based on Workload Identity Tokens
+   (WIT) [I-D.ietf-wimse-workload-creds] may be more appropriate since
+   they are not based on X.509 certificates and are communicated at the
+   application layer rather than the transport layer.
+
+1.1.  Deployment Architecture and Message Flow
+
+   Refer to Sec. 1.2 of [I-D.ietf-wimse-workload-creds] for the
+   deployment architecture which is common to all three protection
+   options, including the one described here.
+
+1.2.  Workload Identity Certificates
+
+   Workload identity certificates are X.509 certificates that carry
+   workload identifiers as described in section 4.1 of
+   [I-D.ietf-wimse-workload-creds]
+
+2.  Conventions and Definitions
+
+   All terminology in this document follows [I-D.ietf-wimse-arch].
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in
+   BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   capitals, as shown here.
+
+3.  Using Mutual TLS for Workload-to-Workload Authentication
+
+   As noted in the introduction, for many deployments, transport-level
+   protection of application traffic using TLS is ideal.
+
+3.1.  The Workload Identity Certificate
+
+   Workload identity certificates are X.509 certificates that carry
+   workload identifiers as described in section 4.1 of
+   [I-D.ietf-wimse-workload-creds]
+
+3.2.  Workload Identity Certificate Validation
+
+   Workload Identity Certificates may be used to authenticate both the
+   server and client side of the connections.  When validating a
+   Workload Identity Certificate, the relying party MUST use the trust
+   anchors configured for the trust domain in the workload identity to
+   validate the peer's certificate.  Other PKIX [RFC5280] path
+   validation rules apply.  Workloads acting as TLS clients and servers
+   MUST validate that the trust domain portion of the Workload Identity
+   Certificate matches the expected trust domain for the other side of
+   the connection.
+
+   Servers wishing to use the Workload Identity Certificate for
+   authorizing the client MUST require client certificate authentication
+   in the TLS handshake.  Other methods of post handshake authentication
+   are not specified by this document.
+
+   Workload Identity Certificates used by TLS servers SHOULD have the
+   id-kp-serverAuth extended key usage [RFC5280] field set and Workload
+   Identity Certificates used by TLS clients SHOULD have the id-kp-
+   clientAuth extended key usage field set.  A certificate that is used
+   for both client and server connections may have both fields set.
+   This specification does not make any other requirements beyond
+   [RFC5280] on the contents of Workload Identity Certificates or on the
+   certification authorities that issue workload certificates.
+
+3.2.1.  Server Name Validation
+
+   If the WIMSE client uses a hostname to connect to the server and the
+   server certificate contain a DNS SAN the client MUST perform standard
+   host name validation (Section 6.3 of [RFC9525]) unless it is
+   configured with the additional information necessary to perform
+   alternate validation of the peer's workload identity.  If the client
+   did not perform standard host name validation then the WIMSE client
+   SHOULD further use the workload identifier to validate the server.
+   The host portion of the workload identifier is NOT treated as a host
+   name as specified in section 6.4 of [RFC9525] but rather as a trust
+   domain.  The server identity is encoded in the path portion of the
+   workload identifier in a deployment specific way.  Validating the
+   workload identity could be a simple match on the trust domain and
+   path portions of the identifier or validation may be based on the
+   specific details on how the identifier is constructed.  The path
+   portion of the WIMSE identifier MUST always be considered in the
+   scope of the trust domain.  In most cases it is preferable to
+   validate the entire workload identifier, see section 1.3 of
+   [I-D.ietf-wimse-workload-creds] for additional implementation advice.
+
+3.3.  Client Authorization Using the Workload Identity
+
+   The server application retrieves the workload identifier from the
+   client certificate subjectAltName, which in turn is obtained from the
+   TLS layer.  The identifier is used in authorization, accounting and
+   auditing.  For example, the full workload identifier may be matched
+   against ACLs to authorize actions requested by the peer and the
+   identifier may be included in log messages to associate actions to
+   the client workload for audit purposes.  A deployment may specify
+   other authorization policies based on the specific details of how the
+   workload identifier is constructed.  The path portion of the workload
+   identifier MUST always be considered in the scope of the trust
+   domain.  See section 1.3 of [I-D.ietf-wimse-workload-creds] on
+   additional security implications of workload identifiers.
+
+4.  IANA Considerations
+
+   This document does not include any IANA considerations.
+
+5.  Security Considerations
+
+   ToDo: perhaps some discussion of certificate lifetimes and their
+   implications, various server name validation choices, implications of
+   middle boxes, etc.
+
+6.  References
+
+6.1.  Normative References
+
+   [I-D.ietf-wimse-workload-creds]
+              Campbell, B., Salowey, J. A., Schwenkschuster, A.,
+              Sheffer, Y., and Y. Rosomakho, "WIMSE Workload
+              Credentials", Work in Progress, Internet-Draft, draft-
+              ietf-wimse-workload-creds-00, 3 November 2025,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
+              workload-creds-00>.
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/rfc/rfc2119>.
+
+   [RFC5280]  Cooper, D., Santesson, S., Farrell, S., Boeyen, S.,
+              Housley, R., and W. Polk, "Internet X.509 Public Key
+              Infrastructure Certificate and Certificate Revocation List
+              (CRL) Profile", RFC 5280, DOI 10.17487/RFC5280, May 2008,
+              <https://www.rfc-editor.org/rfc/rfc5280>.
+
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
+
+   [RFC9525]  Saint-Andre, P. and R. Salz, "Service Identity in TLS",
+              RFC 9525, DOI 10.17487/RFC9525, November 2023,
+              <https://www.rfc-editor.org/rfc/rfc9525>.
+
+6.2.  Informative References
+
+   [I-D.ietf-wimse-arch]
+              Salowey, J. A., Rosomakho, Y., and H. Tschofenig,
+              "Workload Identity in a Multi System Environment (WIMSE)
+              Architecture", Work in Progress, Internet-Draft, draft-
+              ietf-wimse-arch-06, 30 September 2025,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
+              arch-06>.
+
+Appendix A.  Document History
+
+
+   // RFC Editor: please remove before publication.
+
+A.1.  draft-ietf-wimse-mutual-tls-00
+
+   *  Initial version, extracted from the draft-ietf-wimse-s2s-
+      protocol-07 S2s draft with minimal edits.
+
+   *  added security consideration for Server Name Validation
+
+Acknowledgments
+
+   We thank Yaron Sheffer, Arndt Schwenkschuster, Brian Campbell, and
+   Daniel Feldman for their contributions to earlier versions of this
+   document.
+
+Authors' Addresses
+
+   Joe Salowey
+   CyberArk
+   Email: joe@salowey.net
+
+
+   Yaroslav Rosomakho
+   Zscaler
+   Email: yaroslavros@gmail.com
