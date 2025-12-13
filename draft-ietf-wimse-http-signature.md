@@ -291,19 +291,20 @@ been activated and likewise, the recipient validates this signature.
 ## Confidentiality
 
 * All workload-to-workload traffic is confidential and (assuming honest participants) is only available to sender,
-receiver and potentially to middleboxes.
+receiver, and any TLS-terminating middleboxes that process the traffic.
 
 ## Integrity
 
 * No requests can be modified without detection by the recipient. All HTTP headers specified in this document
-are integrity protected, as well as the message body.
+are integrity protected when present, as well as the message body (when present).
 * No responses can be modified without detection, provided that optional response signing has been activated and
 that the recipient validates incoming responses.
+* Note: Headers not specified in this document may remain unsigned and could potentially be modified by intermediaries without detection.
 
 ## Replay and Deletion
 
-* Replay protection is not strictly mandated because of implementation considerations. Therefore it is not claimed as
-a goal.
+* Replay protection is not strictly mandated because of implementation considerations (e.g., distributed system challenges with synchronizing replay caches across validators). Therefore it is not claimed as
+a goal, though implementations SHOULD attempt to detect replays when feasible.
 * Complete deletion of a request/response pair is possible without detection.
 
 
