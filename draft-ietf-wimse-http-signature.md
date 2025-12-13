@@ -262,6 +262,50 @@ in some deployments the workload may be associated directly to a user. While
 these are exceptional cases a deployment should evaluate if the disclosure of
 WITs or signatures can be used to track a user.
 
+# Security Goals
+
+This section defines semiformal security goals for this protocol, when used in conjunction with the WIT credential. Our aim
+is to inform developers and for these goals to eventually evolve into formal verification of the protocol.
+
+## Assumptions
+
+The following are out of scope of the protocol and their security is assumed.
+
+* There exists a WIT Issuer which is trusted to issue credentials honestly.
+* Workloads have a way to authenticate themselves to the Issuer and be provisioned with a valid WIT, associated
+with their WIMSE identity.
+* All workloads are provisioned with trust anchors that allow them to validate incoming WITs.
+* The entire authorization subsystem is out of scope and trusted. This can potentially include
+provisioning and enforcement of an authorization policy, issuance of transactions tokens
+and workload attestation.
+* All workload-to-workload traffic is TLS-protected. However TLS may be terminated on one or more middleboxes
+and the TLS endpoint identity (or identities) is not associated with a WIMSE identity.
+
+## Authentication
+
+* A workload receiving a request can validate that it is signed correctly, and can identify the sender.
+* A workload receiving a response can similarly authenticate its sender, provided that optional response signing has
+been activated and likewise, the recipient validates this signature.
+* The above implies that a stolen WIT cannot be used by an entity other than its owner.
+
+## Confidentiality
+
+* All workload-to-workload traffic is confidential and (assuming honest participants) is only available to sender,
+receiver and potentially to middleboxes.
+
+## Integrity
+
+* No requests can be modified without detection by the recipient. All HTTP headers specified in this document
+are integrity protected, as well as the message body.
+* No responses can be modified without detection, provided that optional response signing has been activated and
+that the recipient validates incoming responses.
+
+## Replay and Deletion
+
+* Replay protection is not strictly mandated because of implementation considerations. Therefore it is not claimed as
+a goal.
+* Complete deletion of a request/response pair is possible without detection.
+
 
 # IANA Considerations
 
