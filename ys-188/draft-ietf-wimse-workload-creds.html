@@ -1,0 +1,2480 @@
+<!DOCTYPE html>
+<html lang="en" class="Internet-Draft">
+<head>
+<meta charset="utf-8">
+<meta content="Common,Latin" name="scripts">
+<meta content="initial-scale=1.0" name="viewport">
+<title>WIMSE Workload Credentials</title>
+<meta content="Brian Campbell" name="author">
+<meta content="Joe Salowey" name="author">
+<meta content="Arndt Schwenkschuster" name="author">
+<meta content="Yaron Sheffer" name="author">
+<meta content="Yaroslav Rosomakho" name="author">
+<meta content="
+       The WIMSE architecture defines authentication and authorization for software workloads
+in a variety of runtime environments, from the most basic ones up to complex
+multi-service, multi-cloud, multi-tenant deployments. 
+       This document defines the credentials that workloads use to represent their identity. They can be used in various protocols to authenticate workloads to each other. To use these credentials, workloads must provide proof of possession of the associated private key material, which is covered in other documents. This document focuses on the credentials alone, independent of the proof-of-possession mechanism. 
+    " name="description">
+<meta content="xml2rfc 3.31.0" name="generator">
+<meta content="workload" name="keyword">
+<meta content="identity" name="keyword">
+<meta content="draft-ietf-wimse-workload-creds-latest" name="ietf.draft">
+<!-- Generator version information:
+  xml2rfc 3.31.0
+    Python 3.12.12
+    ConfigArgParse 1.7
+    google-i18n-address 3.1.1
+    intervaltree 3.1.0
+    Jinja2 3.1.6
+    lxml 5.3.1
+    platformdirs 4.5.0
+    pycountry 24.6.1
+    PyYAML 6.0.2
+    requests 2.32.5
+    wcwidth 0.2.14
+-->
+<link href="draft-ietf-wimse-workload-creds.xml" rel="alternate" type="application/rfc+xml">
+<link href="#copyright" rel="license">
+<style type="text/css">@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-cyrillic.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-cyrillic.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Lora SemiBold'), local('Lora-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-semibold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Oxygen Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Oxygen Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-greek.woff2') format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-greek.woff2') format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  color-scheme: light dark;
+  --background-color: #fff;
+  --text-color: #222;
+  --title-color: #191919;
+  --link-color: #2a6496;
+  --highlight-color: #f9f9f9;
+  --line-color: #eee;
+  --pilcrow-weak: #ddd;
+  --pilcrow-strong: #bbb;
+  --small-font-size: 14.5px;
+  --font-mono: 'Oxygen Mono', monospace;
+  --font-title: "Sofia Sans Semi Condensed", sans-serif;
+  scrollbar-color: #bbb #eee;
+}
+body {
+  max-width: 600px;
+  margin: 75px auto;
+  padding: 0 5px;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  font: 16px/22px "Lora", serif;
+  scroll-behavior: smooth;
+}
+
+.ears {
+  display: none;
+}
+
+/* headings */
+section {
+  clear: both;
+}
+.section-number {
+  padding-right: 0.5em;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-title);
+  font-weight: 680;
+  margin: 0.8em 0 0.3em;
+  font-size-adjust: 0.5;
+  color: var(--title-color);
+}
+h1#title {
+  font-size: 32px;
+  line-height: 40px;
+  clear: both;
+}
+h1#title, h1#rfcnum {
+  margin: 1.5em 0 0.2em;
+}
+h1#rfcnum + h1#title {
+  margin: 0.2em 0;
+}
+
+h1, h2, h3 {
+  font-size: 22px;
+  line-height: 27px;
+}
+h4, h5, h6 {
+  font-size: 20px;
+  line-height: 24px;
+}
+
+/* general structure */
+.author {
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+#abstract+p {
+  font-size: 18px;
+  line-height: 24px;
+}
+#abstract+p code, #abstract+p samp, #abstract+p tt {
+  font-size: 16px;
+  line-height: 0;
+}
+
+p {
+  padding: 0;
+  margin: 0.5em 0;
+  text-align: left;
+}
+div {
+  margin: 0;
+}
+.alignRight.art-text {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  padding: 0.5em 1em 0;
+  margin-bottom: 0.5em;
+}
+.alignRight.art-text pre {
+  padding: 0;
+  width: auto;
+}
+.alignRight {
+  margin: 1em 0;
+}
+.alignRight > *:first-child {
+  border: none;
+  margin: 0;
+  float: right;
+  clear: both;
+}
+.alignRight > *:nth-child(2) {
+  clear: both;
+  display: block;
+  border: none;
+}
+svg {
+  display: block;
+}
+/* font-family isn't space-separated, but =~ will have to do */
+svg[font-family~="monospace" i], svg [font-family~="monospace" i] {
+  font-family: var(--font-mono);
+}
+.alignCenter.art-text {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  padding: 0.5em 1em 0;
+  margin-bottom: 0.5em;
+}
+.alignCenter.art-text pre {
+  padding: 0;
+  width: auto;
+}
+.alignCenter {
+  margin: 1em 0;
+}
+.alignCenter > *:first-child {
+  border: none;
+  /* this isn't optimal, but it's an existence proof.  PrinceXML doesn't
+     support flexbox yet.
+  */
+  display: table;
+  margin: 0 auto;
+}
+
+/* lists */
+ol, ul {
+  padding: 0;
+  margin: 0 0 0.5em 2em;
+  & :is(ol, ul) {
+    margin-left: 1em;
+  }
+}
+li {
+  margin: 0 0 0.25em 0;
+}
+ul.empty, .ulEmpty {
+  list-style-type: none;
+  & li {
+    margin-top: 0.5em;
+  }
+}
+:is(ul, ol).compact, .ulCompact, .olCompact {
+  margin: 0 0 0 2em;
+  & li {
+    margin: 0;
+    & :first-child { margin-top: 0; }
+    & :last-child { margin-bottom: 0; }
+  }
+}
+
+/* definition lists */
+dl {
+  clear: left;
+  --indent: 3ch;
+  /* --indent: attr(indent ch); not supported in any browser, but we can dream */
+  &.olPercent {
+    --indent: 5ch;
+    & > dt {
+      min-width: calc(var(--indent) - 2ch);
+    }
+  }
+  &.olPercent > dt {
+    float: none;
+  }
+
+  dl > dd > & {
+    margin-top: 0.5em;
+    margin-bottom: 0;
+  }
+}
+dl:not(.dlNewline) > dt {
+  float: left;
+  margin-right: 2ch;
+  min-width: 8ch;
+}
+dl > dd {
+  margin-bottom: .8em;
+  margin-left: var(--indent) !important; /* stupid element overrides */
+  min-height: 2ex;
+}
+:is(dl.compact, .dlCompact) > dd {
+  margin-bottom: 0;
+  & > :is(:first-child, .break:first-child + *) {
+    margin-top: 0;
+  }
+  & > :is(:last-child) {
+    margin-bottom: 0;
+  }
+}
+:is(dd, span).break {
+  display: none;
+}
+
+/* links */
+a, a[href].selfRef:hover {
+  text-decoration: none;
+}
+a[href] {
+  color: var(--link-color);
+}
+a[href].selfRef, .iref + a[href].internal {
+  color: var(--text-color);
+}
+a[href]:hover {
+  text-decoration: underline;
+}
+a[href].selfRef:hover {
+  background-color: var(--highlight-color);
+}
+a.xref:is(.cite, .auto), :is(#status-of-memo, #copyright) a {
+  white-space: nowrap;
+}
+
+/* Figures */
+tt, code, pre {
+  background-color: var(--highlight-color);
+  font: 14px/22px var(--font-mono);
+}
+tt, code {
+  /* changing the font for inline elements leads to different ascender
+     and descender heights; as we want to retain baseline alignment,
+     remove leading to avoid altering the final height of lines
+     note: this fails if these blocks take an entire line,
+     a different solution would be great */
+  line-height: 0;
+}
+:is(h1, h2, h3, h4, h5, h6) :is(tt, code) {
+  font-size: 84%;
+}
+pre {
+  border: 1px solid var(--line-color);
+  font-size: 13.5px;
+  line-height: 16px;
+  letter-spacing: -0.2px;
+  margin: 5px;
+  padding: 5px;
+}
+img {
+  max-width: 100%;
+}
+figure {
+  margin: 0.5em 0;
+  padding: 0;
+}
+figure blockquote {
+  margin: 0.8em 0.4em 0.4em;
+}
+figcaption, caption {
+  font-style: italic;
+  margin: 0.5em 1.5em;
+  text-align: left;
+  caption-side: bottom;
+}
+@media screen {
+  /* Auto-collapse boilerplate. */
+  :is(#status-of-memo, #copyright) p {
+    margin: -2px 0;
+    max-height: 0;
+    transition: max-height 2s ease, margin 0.5s ease 0.5s;
+    overflow: hidden;
+  }
+  :is(#status-of-memo, #copyright):hover p,
+  :is(#status-of-memo, #copyright) h2:target ~ p {
+    margin: 0.5em 0;
+    max-height: 500px;
+    overflow: auto;
+  }
+  pre, svg {
+    display: inline-block;
+    /* In the horizontal direction, sometimes people make over-sized figures.
+       Scrollbars for those is therefore necessary: auto adds them as necessary..
+       In the vertical direction, the line-height can combine with the font
+       asender/descender height to produce scrollbars: hidden avoids that. */
+    overflow: auto hidden;
+  }
+  pre {
+    max-width: 100%;
+    width: calc(100% - 22px - 1em);
+  }
+  svg {
+    max-width: calc(100% - 22px - 1em);
+  }
+  figure pre {
+    display: block;
+    width: calc(100% - 25px);
+  }
+  :is(pre, svg) + .pilcrow {
+    display: inline-block;
+    vertical-align: text-bottom;
+    padding-bottom: 8px;
+  }
+}
+
+/* aside, blockquote */
+aside, blockquote {
+  margin-left: 0;
+  padding: 0 2em;
+  font-style: italic;
+}
+blockquote {
+  margin: 1em 0;
+}
+cite {
+  display: block;
+  text-align: right;
+  font-style: italic;
+}
+
+/* tables */
+table {
+  width: auto;
+  max-width: 100%;
+  margin: 0 0 1em;
+  border-collapse: collapse;
+}
+table.right {
+  margin-left: auto;
+}
+table.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+table.left {
+  margin-right: auto;
+}
+table .text-left {
+  text-align: left;
+}
+table .text-center {
+  text-align: center;
+}
+table .text-right {
+  text-align: right;
+}
+
+thead, tbody {
+  border: 1px solid var(--line-color);
+}
+th, td {
+  text-align: left;
+  vertical-align: top;
+  padding: 5px 10px;
+}
+th {
+  background-color: var(--line-color);
+}
+:is(tr:nth-child(2n), thead+tbody > tr:nth-child(2n+1)) > td {
+  background-color: var(--background-color);
+}
+:is(tr:nth-child(2n+1), thead+tbody > tr:nth-child(2n)) > td {
+  background-color: var(--highlight-color);
+}
+table caption {
+  margin: 0;
+  padding: 3px 0 3px 1em;
+}
+table p {
+  margin: 0;
+}
+
+/* pilcrow */
+a.pilcrow {
+  margin-left: 3px;
+  opacity: 0.2;
+  user-select: none;
+  &[href] {
+    color: var(--pilcrow-weak);
+    &:hover { text-decoration: none; }
+  }
+}
+@media not print {
+  :hover > a.pilcrow {
+    opacity: 1;
+  }
+  a.pilcrow[href]:hover {
+    color: var(--pilcrow-strong);
+    background-color: transparent;
+  }
+}
+@media print {
+  a.pilcrow {
+    display: none;
+  }
+}
+
+/* misc */
+hr {
+  border: 0;
+  border-top: 1px solid var(--line-color);
+}
+.bcp14 {
+  font-variant: small-caps;
+  font-weight: 600;
+  font-size: var(--small-font-size);
+}
+.role {
+  font-variant: all-small-caps;
+}
+sub, sup {
+  line-height: 1;
+  font-size: 80%;
+}
+
+/* info block */
+#identifiers {
+  margin: 0;
+  font-size: var(--small-font-size);
+  line-height: 18px;
+  --identifier-width: 15ch;
+  & dt {
+    width: var(--identifier-width);
+    min-width: var(--identifier-width);
+    clear: left;
+    float: left;
+    text-align: right;
+    margin-right: 1ch;
+  }
+  & dd {
+    margin: 0;
+    margin-left: calc(1em + var(--identifier-width)) !important;
+    min-width: 5em;
+  }
+  & .authors {
+    & .author {
+      display: inline-block;
+      margin-right: 1.5em;
+    }
+    & .org {
+      font-style: italic;
+    }
+  }
+}
+
+/* The prepared/rendered info at the very bottom of the page */
+.docInfo {
+  color: #999;
+  font-size: 0.9em;
+  font-style: italic;
+  margin-top: 2em;
+}
+.docInfo .prepared {
+  float: right;
+}
+
+/* table of contents */
+#toc {
+  padding: 0.75em 0 2em 0;
+  margin-bottom: 1em;
+
+  & nav {
+    & ul {
+      margin: 0 0.5em 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    & li {
+      line-height: 1.3em;
+      margin: 2px 0;
+      padding-left: 1.2em;
+      text-indent: -1.2em;
+    }
+  }
+  & a.xref {
+    white-space: normal;
+  }
+}
+
+.references {
+  & > dt {
+    text-align: right;
+    font-weight: bold;
+    min-width: 10ch;
+    margin-right: 1.5ch;
+    &:target::before {
+      content: "⇒";
+      margin: 0 10px 0 -25px;
+    }
+  }
+  & > dd {
+    margin-left: 12ch !important;
+    overflow: visible;
+    & .refInstance {
+      margin-bottom: 0.8em;
+    }
+    & .ascii {
+      margin-bottom: 0.25em;
+    }
+  }
+}
+
+#rfc\.index\.index + ul {
+  margin-left: 0;
+}
+
+/* authors */
+address.vcard {
+  font-style: normal;
+  max-width: 20em;
+  margin: 1em auto 1em 0;
+
+  & .nameRole {
+    font-weight: 700;
+    margin-left: 0;
+  }
+  & .label {
+    margin: 0.5em 0;
+  }
+  & .type {
+    display: none;
+  }
+  & .alternative-contact {
+    margin: 0.5em 0 0.25em 0;
+  }
+  & .non-ascii {
+    margin: 0 0 0 2em;
+  }
+  & div.left {
+    text-align: left;
+  }
+  & div.right {
+    text-align: right;
+  }
+}
+
+hr.addr {
+  border-top: 1px dashed;
+  margin: 0;
+  color: #ddd;
+  max-width: calc(100% - 16px);
+}
+@media (min-width: 500px) {
+  #authors-addresses > section {
+    column-count: 2;
+    column-gap: 20px;
+  }
+  #authors-addresses > section > h2 {
+    column-span: all;
+  }
+  /* hack for break-inside: avoid-column */
+  #authors-addresses address {
+    display: inline-block;
+    break-inside: avoid-column;
+  }
+}
+
+/* Comments */
+.rfcEditorRemove p:first-of-type {
+  font-style: italic;
+}
+.cref {
+  background-color: rgba(249, 232, 105, 0.3);
+  padding: 2px 4px;
+}
+.crefSource {
+  font-style: italic;
+}
+
+@media screen {
+  #toc nav {
+    font-family: var(--font-title);
+    font-weight: 360;
+    & > ul { margin-bottom: 2em; }
+    & ul {
+      margin: 0 0 0 4px;
+      & :is(p, li) {
+        margin: 2px 0;
+      }
+    }
+  }
+  #toc a.toplink {
+    float: right;
+  }
+}
+@media not screen {
+  #toc a.toplink {
+    display: none;
+  }
+}
+
+
+/* TOC layout for smaller screens */
+@media screen and (max-width: 929px) {
+  #toc {
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    padding: 1px 0 0 0;
+    margin: 0;
+    border-bottom: 1px solid #ccc;
+    opacity: 0.6;
+  }
+  #toc h2 {
+    margin: 0;
+    padding: 2px 0 2px 6px;
+    padding-right: 1em;
+    font-size: 18px;
+    line-height: 24px;
+    min-width: 190px;
+    text-align: right;
+    background-color: #444;
+    color: white;
+    cursor: pointer;
+    &::before { /* css hamburger */
+      float: right;
+      position: relative;
+      width: 1em;
+      height: 1px;
+      left: -164px;
+      margin: 8px 0 0 0;
+      background: white none repeat scroll 0 0;
+      box-shadow: 0 4px 0 0 white, 0 8px 0 0 white;
+      content: "";
+    }
+  }
+  #toc nav {
+    display: none;
+    background-color: var(--background-color);
+    padding: 0.5em 1em 1em;
+    overflow: auto;
+    overscroll-behavior: contain;
+    height: calc(100vh - 48px);
+    border-left: 1px solid #ddd;
+  }
+  #toc.active {
+    opacity: 1;
+    & nav { display: block; }
+  }
+  /* Make the collapsed ToC header render white on gray also when it's a link */
+  #toc h2 a,
+  #toc h2 a:is(:link, :focus, :hover),
+  #toc a.toplink,
+  #toc a.toplink:hover {
+    color: white;
+    background-color: #444;
+    text-decoration: none;
+  }
+  #toc a.toplink {
+    margin: 2px 0.5em 0;
+  }
+}
+
+/* TOC layout for wide screens */
+@media screen and (min-width: 930px) {
+  body {
+    padding-right: 360px;
+    padding-right: calc(min(180px + 20%, 500px));
+  }
+  #toc {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    right: calc(50vw - 480px);
+    width: 312px;
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+  }
+  #toc h2 {
+    margin: 0;
+    padding: 0.25em 1em 1em 0;
+  }
+  #toc nav {
+    display: block;
+    height: calc(90vh - 84px);
+    bottom: 0;
+    padding: 0.5em 0 2em;
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+  img { /* future proofing */
+    max-width: 100%;
+    height: auto;
+  }
+  #toc a.toplink {
+    margin: 8px 0.5em 0;
+  }
+}
+
+/* pagination */
+@media print {
+  body {
+    width: 100%;
+  }
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+  #n-copyright-notice {
+    border-bottom: none;
+  }
+  #toc, #n-introduction {
+    page-break-before: always;
+  }
+  #toc {
+    border-top: none;
+    padding-top: 0;
+  }
+  figure, pre, .vcard {
+    page-break-inside: avoid;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+  :is(h2, h3, h4, h5, h6)+*, dd {
+    page-break-before: avoid;
+  }
+  pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 10pt;
+  }
+  table {
+    border: 1px solid #ddd;
+  }
+  td {
+    border-top: 1px solid #ddd;
+  }
+}
+
+@page :first {
+  padding-top: 0;
+  @top-left {
+    content: normal;
+    border: none;
+  }
+  @top-center {
+    content: normal;
+    border: none;
+  }
+  @top-right {
+    content: normal;
+    border: none;
+  }
+}
+
+@page {
+  size: A4;
+  margin-bottom: 45mm;
+  padding-top: 20px;
+}
+
+/* Dark mode. */
+@media (prefers-color-scheme: dark) {
+:root {
+  --background-color: #121212;
+  --text-color: #f0f0f0;
+  --title-color: #fff;
+  --link-color: #4da4f0;
+  --highlight-color: #282828;
+  --line-color: #444;
+  --pilcrow-weak: #444;
+  --pilcrow-strong: #666;
+  scrollbar-color: #777 #333;
+}
+}
+
+/* SVG Trick: a prefix match works because only black and white are allowed */
+svg :is([stroke="black"], [stroke^="#000"]) {
+  stroke: var(--text-color);
+}
+svg :is([stroke="white"], [stroke^="#fff"]) {
+  stroke: var(--background-color);
+}
+svg :is([fill="black"], [fill^="#000"], :not([fill])) {
+  fill: var(--text-color);
+}
+svg :is([fill="white"], [fill^="#fff"]) {
+  fill: var(--background-color);
+}
+</style>
+
+</head>
+<body class="xml2rfc">
+<table class="ears">
+<thead><tr>
+<td class="left">Internet-Draft</td>
+<td class="center">WIMSE Workload Credentials</td>
+<td class="right">December 2025</td>
+</tr></thead>
+<tfoot><tr>
+<td class="left">Campbell, et al.</td>
+<td class="center">Expires 17 June 2026</td>
+<td class="right">[Page]</td>
+</tr></tfoot>
+</table>
+<div id="external-metadata" class="document-information"></div>
+<div id="internal-metadata" class="document-information">
+<dl id="identifiers">
+<dt class="label-workgroup">Workgroup:</dt>
+<dd class="workgroup">Workload Identity in Multi System Environments</dd>
+<dt class="label-internet-draft">Internet-Draft:</dt>
+<dd class="internet-draft">draft-ietf-wimse-workload-creds-latest</dd>
+<dt class="label-published">Published:</dt>
+<dd class="published">
+<time datetime="2025-12-14" class="published">14 December 2025</time>
+    </dd>
+<dt class="label-intended-status">Intended Status:</dt>
+<dd class="intended-status">Standards Track</dd>
+<dt class="label-expires">Expires:</dt>
+<dd class="expires"><time datetime="2026-06-17">17 June 2026</time></dd>
+<dt class="label-authors">Authors:</dt>
+<dd class="authors">
+<div class="author">
+      <div class="author-name">B. Campbell</div>
+<div class="org">Ping Identity</div>
+</div>
+<div class="author">
+      <div class="author-name">J. Salowey</div>
+<div class="org">CyberArk</div>
+</div>
+<div class="author">
+      <div class="author-name">A. Schwenkschuster</div>
+<div class="org">Defakto Security</div>
+</div>
+<div class="author">
+      <div class="author-name">Y. Sheffer</div>
+<div class="org">Intuit</div>
+</div>
+<div class="author">
+      <div class="author-name">Y. Rosomakho</div>
+<div class="org">Zscaler</div>
+</div>
+</dd>
+</dl>
+</div>
+<h1 id="title">WIMSE Workload Credentials</h1>
+<section id="section-abstract">
+      <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
+<p id="section-abstract-1">The WIMSE architecture defines authentication and authorization for software workloads
+in a variety of runtime environments, from the most basic ones up to complex
+multi-service, multi-cloud, multi-tenant deployments.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-2">This document defines the credentials that workloads use to represent their identity. They can be used in various protocols to authenticate workloads to each other. To use these credentials, workloads must provide proof of possession of the associated private key material, which is covered in other documents. This document focuses on the credentials alone, independent of the proof-of-possession mechanism.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
+</section>
+<section class="note rfcEditorRemove" id="section-note.1">
+      <h2 id="name-about-this-document">
+<a href="#name-about-this-document" class="section-name selfRef">About This Document</a>
+      </h2>
+<p id="section-note.1-1">This note is to be removed before publishing as an RFC.<a href="#section-note.1-1" class="pilcrow">¶</a></p>
+<p id="section-note.1-2">
+        The latest revision of this draft can be found at <span><a href="https://ietf-wg-wimse.github.io/draft-ietf-wimse-s2s-protocol/draft-ietf-wimse-workload-creds.html">https://ietf-wg-wimse.github.io/draft-ietf-wimse-s2s-protocol/draft-ietf-wimse-workload-creds.html</a></span>.
+        Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-ietf-wimse-workload-creds/">https://datatracker.ietf.org/doc/draft-ietf-wimse-workload-creds/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
+<p id="section-note.1-3">
+        Discussion of this document takes place on the
+        Workload Identity in Multi System Environments Working Group mailing list (<span><a href="mailto:wimse@ietf.org">mailto:wimse@ietf.org</a></span>),
+        which is archived at <span><a href="https://mailarchive.ietf.org/arch/browse/wimse/">https://mailarchive.ietf.org/arch/browse/wimse/</a></span>.
+        Subscribe at <span><a href="https://www.ietf.org/mailman/listinfo/wimse/">https://www.ietf.org/mailman/listinfo/wimse/</a></span>.<a href="#section-note.1-3" class="pilcrow">¶</a></p>
+<p id="section-note.1-4">Source for this draft and an issue tracker can be found at
+        <span><a href="https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol">https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol</a></span>.<a href="#section-note.1-4" class="pilcrow">¶</a></p>
+</section>
+<div id="status-of-memo">
+<section id="section-boilerplate.1">
+        <h2 id="name-status-of-this-memo">
+<a href="#name-status-of-this-memo" class="section-name selfRef">Status of This Memo</a>
+        </h2>
+<p id="section-boilerplate.1-1">
+        This Internet-Draft is submitted in full conformance with the
+        provisions of BCP 78 and BCP 79.<a href="#section-boilerplate.1-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-2">
+        Internet-Drafts are working documents of the Internet Engineering Task
+        Force (IETF). Note that other groups may also distribute working
+        documents as Internet-Drafts. The list of current Internet-Drafts is
+        at <span><a href="https://datatracker.ietf.org/drafts/current/">https://datatracker.ietf.org/drafts/current/</a></span>.<a href="#section-boilerplate.1-2" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-3">
+        Internet-Drafts are draft documents valid for a maximum of six months
+        and may be updated, replaced, or obsoleted by other documents at any
+        time. It is inappropriate to use Internet-Drafts as reference
+        material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-4">
+        This Internet-Draft will expire on 17 June 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="copyright">
+<section id="section-boilerplate.2">
+        <h2 id="name-copyright-notice">
+<a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
+        </h2>
+<p id="section-boilerplate.2-1">
+            Copyright (c) 2025 IETF Trust and the persons identified as the
+            document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.2-2">
+            This document is subject to BCP 78 and the IETF Trust's Legal
+            Provisions Relating to IETF Documents
+            (<span><a href="https://trustee.ietf.org/license-info">https://trustee.ietf.org/license-info</a></span>) in effect on the date of
+            publication of this document. Please review these documents
+            carefully, as they describe your rights and restrictions with
+            respect to this document. Code Components extracted from this
+            document must include Revised BSD License text as described in
+            Section 4.e of the Trust Legal Provisions and are provided without
+            warranty as described in the Revised BSD License.<a href="#section-boilerplate.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="toc">
+<section id="section-toc.1">
+        <a href="#" onclick="scroll(0,0)" class="toplink">▲</a><h2 id="name-table-of-contents">
+<a href="#name-table-of-contents" class="section-name selfRef">Table of Contents</a>
+        </h2>
+<nav class="toc"><ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1">
+            <p id="section-toc.1-1.1.1"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.1">
+                <p id="section-toc.1-1.1.2.1.1" class="keepWithNext"><a href="#section-1.1" class="auto internal xref">1.1</a>.  <a href="#name-use-in-other-protocols" class="internal xref">Use In Other Protocols</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.2">
+                <p id="section-toc.1-1.1.2.2.1" class="keepWithNext"><a href="#section-1.2" class="auto internal xref">1.2</a>.  <a href="#name-deployment-architecture-and" class="internal xref">Deployment Architecture and Message Flow</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.3">
+                <p id="section-toc.1-1.1.2.3.1" class="keepWithNext"><a href="#section-1.3" class="auto internal xref">1.3</a>.  <a href="#name-workload-identifiers-and-au" class="internal xref">Workload Identifiers and Authentication Granularity</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
+            <p id="section-toc.1-1.2.1"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-conventions-and-definitions" class="internal xref">Conventions and Definitions</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-application-level-workload-" class="internal xref">Application Level Workload-to-Workload Authentication</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
+                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-the-workload-identity-token" class="internal xref">The Workload Identity Token</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.1">
+                    <p id="section-toc.1-1.3.2.1.2.1.1"><a href="#section-3.1.1" class="auto internal xref">3.1.1</a>.  <a href="#name-the-wit-http-header" class="internal xref">The WIT HTTP Header</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.2">
+                    <p id="section-toc.1-1.3.2.1.2.2.1"><a href="#section-3.1.2" class="auto internal xref">3.1.2</a>.  <a href="#name-including-additional-claims" class="internal xref">Including Additional Claims</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.3">
+                    <p id="section-toc.1-1.3.2.1.2.3.1"><a href="#section-3.1.3" class="auto internal xref">3.1.3</a>.  <a href="#name-a-note-on-iss-claim-and-key" class="internal xref">A note on <code>iss</code> claim and key distribution</a></p>
+</li>
+                </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
+                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-error-conditions" class="internal xref">Error Conditions</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3">
+                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="auto internal xref">3.3</a>.  <a href="#name-coexistence-with-jwt-bearer" class="internal xref">Coexistence with JWT Bearer Tokens</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-transport-level-workload-to" class="internal xref">Transport Level Workload-to-Workload Authentication</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1">
+                <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="auto internal xref">4.1</a>.  <a href="#name-the-workload-identity-certi" class="internal xref">The Workload Identity Certificate</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2">
+                <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="auto internal xref">4.2</a>.  <a href="#name-client-authorization-using-" class="internal xref">Client Authorization Using the Workload Identity</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-implementation-status" class="internal xref">Implementation Status</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
+                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-workload-identity" class="internal xref">Workload Identity</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2">
+                <p id="section-toc.1-1.6.2.2.1"><a href="#section-6.2" class="auto internal xref">6.2</a>.  <a href="#name-workload-identity-token-and" class="internal xref">Workload Identity Token and Proof of Possession</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.3">
+                <p id="section-toc.1-1.6.2.3.1"><a href="#section-6.3" class="auto internal xref">6.3</a>.  <a href="#name-workload-identity-key-manag" class="internal xref">Workload Identity Key Management</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.4">
+                <p id="section-toc.1-1.6.2.4.1"><a href="#section-6.4" class="auto internal xref">6.4</a>.  <a href="#name-middle-boxes" class="internal xref">Middle Boxes</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.5">
+                <p id="section-toc.1-1.6.2.5.1"><a href="#section-6.5" class="auto internal xref">6.5</a>.  <a href="#name-privacy-considerations" class="internal xref">Privacy Considerations</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1">
+                <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="auto internal xref">7.1</a>.  <a href="#name-media-type-registration" class="internal xref">Media Type Registration</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1.2.1">
+                    <p id="section-toc.1-1.7.2.1.2.1.1"><a href="#section-7.1.1" class="auto internal xref">7.1.1</a>.  <a href="#name-application-witjwt" class="internal xref">application/wit+jwt</a></p>
+</li>
+                </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2">
+                <p id="section-toc.1-1.7.2.2.1"><a href="#section-7.2" class="auto internal xref">7.2</a>.  <a href="#name-hypertext-transfer-protocol" class="internal xref">Hypertext Transfer Protocol (HTTP) Field Name Registration</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2.2.1">
+                    <p id="section-toc.1-1.7.2.2.2.1.1"><a href="#section-7.2.1" class="auto internal xref">7.2.1</a>.  <a href="#name-workload-identity-token" class="internal xref">Workload-Identity-Token</a></p>
+</li>
+                </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.3">
+                <p id="section-toc.1-1.7.2.3.1"><a href="#section-7.3" class="auto internal xref">7.3</a>.  <a href="#name-uri-scheme-registration" class="internal xref">URI Scheme Registration</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
+            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-references" class="internal xref">References</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.1">
+                <p id="section-toc.1-1.8.2.1.1"><a href="#section-8.1" class="auto internal xref">8.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2">
+                <p id="section-toc.1-1.8.2.2.1"><a href="#section-8.2" class="auto internal xref">8.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
+            <p id="section-toc.1-1.9.1"><a href="#appendix-A" class="auto internal xref">Appendix A</a>.  <a href="#name-document-history" class="internal xref">Document History</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.1">
+                <p id="section-toc.1-1.9.2.1.1"><a href="#appendix-A.1" class="auto internal xref">A.1</a>.  <a href="#name-draft-ietf-wimse-workload-c" class="internal xref">draft-ietf-wimse-workload-creds-00</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.2">
+                <p id="section-toc.1-1.9.2.2.1"><a href="#appendix-A.2" class="auto internal xref">A.2</a>.  <a href="#name-draft-ietf-wimse-s2s-protoc" class="internal xref">draft-ietf-wimse-s2s-protocol-07</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.3">
+                <p id="section-toc.1-1.9.2.3.1"><a href="#appendix-A.3" class="auto internal xref">A.3</a>.  <a href="#name-draft-ietf-wimse-s2s-protoco" class="internal xref">draft-ietf-wimse-s2s-protocol-06</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.4">
+                <p id="section-toc.1-1.9.2.4.1"><a href="#appendix-A.4" class="auto internal xref">A.4</a>.  <a href="#name-draft-ietf-wimse-s2s-protocol" class="internal xref">draft-ietf-wimse-s2s-protocol-05</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.5">
+                <p id="section-toc.1-1.9.2.5.1"><a href="#appendix-A.5" class="auto internal xref">A.5</a>.  <a href="#name-draft-ietf-wimse-s2s-protocol-" class="internal xref">draft-ietf-wimse-s2s-protocol-04</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.6">
+                <p id="section-toc.1-1.9.2.6.1"><a href="#appendix-A.6" class="auto internal xref">A.6</a>.  <a href="#name-draft-ietf-wimse-s2s-protocol-0" class="internal xref">draft-ietf-wimse-s2s-protocol-03</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.7">
+                <p id="section-toc.1-1.9.2.7.1"><a href="#appendix-A.7" class="auto internal xref">A.7</a>.  <a href="#name-draft-ietf-wimse-s2s-protocol-02" class="internal xref">draft-ietf-wimse-s2s-protocol-02</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.8">
+                <p id="section-toc.1-1.9.2.8.1"><a href="#appendix-A.8" class="auto internal xref">A.8</a>.  <a href="#name-draft-ietf-wimse-s2s-protocol-01" class="internal xref">draft-ietf-wimse-s2s-protocol-01</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.9">
+                <p id="section-toc.1-1.9.2.9.1"><a href="#appendix-A.9" class="auto internal xref">A.9</a>.  <a href="#name-draft-ietf-wimse-s2s-protocol-00" class="internal xref">draft-ietf-wimse-s2s-protocol-00</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
+            <p id="section-toc.1-1.10.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11">
+            <p id="section-toc.1-1.11.1"><a href="#appendix-C" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
+</li>
+        </ul>
+</nav>
+</section>
+</div>
+<div id="introduction">
+<section id="section-1">
+      <h2 id="name-introduction">
+<a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
+      </h2>
+<p id="section-1-1">This document defines authentication and authorization in the context of interaction between two workloads.
+This is the core component of the WIMSE architecture <span>[<a href="#I-D.ietf-wimse-arch" class="cite xref">I-D.ietf-wimse-arch</a>]</span>.
+This document focuses on the credentials that carry workload identity and bind the key material to the identity. The presentation of the proof of possession of the key material is part of other documents and out of scope for this one.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">In this document, two credentials are defined:<a href="#section-1-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-1-3.1">
+          <p id="section-1-3.1.1">The Workload Identity Token (WIT) is a JWT that represents the identity of a workload and binds a public key to that identity.<a href="#section-1-3.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-1-3.2">
+          <p id="section-1-3.2.1">The Workload Identity Certificate (WIC) is an X.509 certificate that represents the identity of a workload and binds a public key to that identity.<a href="#section-1-3.2.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="section-1-4">The Workload Identity Token is targeted for application-level protocols. The Workload Identity Certificate is targeted for transport-level protocols. This does not preclude the use of the WIT in transport-level protocols or the WIC in application-level protocols, but these are the primary intended uses.<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-1-5">The various protocol bindings that use these credentials to authenticate workloads to each other are out of scope for this document. At the time of writing, three such protocols are defined:<a href="#section-1-5" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-1-6.1">
+          <p id="section-1-6.1.1">Transport level authentication mutual TLS using the Workload Identity Certificate.<a href="#section-1-6.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-1-6.2">
+          <p id="section-1-6.2.1">Application level authentication using the Workload Identity Token in conjunction with a JWT-based proof of possession, the Workload Proof Token (WPT).<a href="#section-1-6.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-1-6.3">
+          <p id="section-1-6.3.1">Application level authentication using the Workload Identity Token in conjunction with HTTP Message Signatures.<a href="#section-1-6.3.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<div id="use-in-other-protocols">
+<section id="section-1.1">
+        <h3 id="name-use-in-other-protocols">
+<a href="#section-1.1" class="section-number selfRef">1.1. </a><a href="#name-use-in-other-protocols" class="section-name selfRef">Use In Other Protocols</a>
+        </h3>
+<p id="section-1.1-1">The credentials defined in this document are designed to be used in various protocols. This document does not define the protocols themselves, but rather the credentials that can be used within them. Additional protocols <span class="bcp14">MAY</span> be defined in the future that use these credentials for workload authentication.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="deployment-architecture-and-message-flow">
+<section id="section-1.2">
+        <h3 id="name-deployment-architecture-and">
+<a href="#section-1.2" class="section-number selfRef">1.2. </a><a href="#name-deployment-architecture-and" class="section-name selfRef">Deployment Architecture and Message Flow</a>
+        </h3>
+<p id="section-1.2-1">Independent of the transport between the workloads, we assume the following logical architecture
+(numbers refer to the sequence of steps listed below):<a href="#section-1.2-1" class="pilcrow">¶</a></p>
+<span id="name-sequence-of-operations"></span><div id="high-level-seq">
+<figure id="figure-1">
+          <div id="section-1.2-2.1">
+            <div class="alignLeft art-svg artwork" id="section-1.2-2.1.1">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="368" width="352" viewBox="0 0 352 368" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
+                <path d="M 8,32 L 8,176" fill="none" stroke="black"></path>
+                <path d="M 8,272 L 8,352" fill="none" stroke="black"></path>
+                <path d="M 56,184 L 56,264" fill="none" stroke="black"></path>
+                <path d="M 72,224 L 72,264" fill="none" stroke="black"></path>
+                <path d="M 112,32 L 112,176" fill="none" stroke="black"></path>
+                <path d="M 112,272 L 112,352" fill="none" stroke="black"></path>
+                <path d="M 240,32 L 240,176" fill="none" stroke="black"></path>
+                <path d="M 240,272 L 240,352" fill="none" stroke="black"></path>
+                <path d="M 256,184 L 256,224" fill="none" stroke="black"></path>
+                <path d="M 272,144 L 272,176" fill="none" stroke="black"></path>
+                <path d="M 304,184 L 304,264" fill="none" stroke="black"></path>
+                <path d="M 344,32 L 344,176" fill="none" stroke="black"></path>
+                <path d="M 344,272 L 344,352" fill="none" stroke="black"></path>
+                <path d="M 8,32 L 112,32" fill="none" stroke="black"></path>
+                <path d="M 240,32 L 344,32" fill="none" stroke="black"></path>
+                <path d="M 120,62 L 232,62" fill="none" stroke="black"></path>
+                <path d="M 120,66 L 232,66" fill="none" stroke="black"></path>
+                <path d="M 120,110 L 232,110" fill="none" stroke="black"></path>
+                <path d="M 120,114 L 232,114" fill="none" stroke="black"></path>
+                <path d="M 272,144 L 344,144" fill="none" stroke="black"></path>
+                <path d="M 120,158 L 232,158" fill="none" stroke="black"></path>
+                <path d="M 120,162 L 232,162" fill="none" stroke="black"></path>
+                <path d="M 8,176 L 112,176" fill="none" stroke="black"></path>
+                <path d="M 240,176 L 344,176" fill="none" stroke="black"></path>
+                <path d="M 72,224 L 256,224" fill="none" stroke="black"></path>
+                <path d="M 8,272 L 112,272" fill="none" stroke="black"></path>
+                <path d="M 240,272 L 344,272" fill="none" stroke="black"></path>
+                <path d="M 8,352 L 112,352" fill="none" stroke="black"></path>
+                <path d="M 240,352 L 344,352" fill="none" stroke="black"></path>
+                <polygon class="arrowhead" points="312,264 300,258.4 300,269.6" fill="black" transform="rotate(90,304,264)"></polygon>
+                <polygon class="arrowhead" points="312,184 300,178.4 300,189.6" fill="black" transform="rotate(270,304,184)"></polygon>
+                <polygon class="arrowhead" points="264,184 252,178.4 252,189.6" fill="black" transform="rotate(270,256,184)"></polygon>
+                <polygon class="arrowhead" points="240,112 228,106.4 228,117.6" fill="black" transform="rotate(0,232,112)"></polygon>
+                <polygon class="arrowhead" points="240,64 228,58.4 228,69.6" fill="black" transform="rotate(0,232,64)"></polygon>
+                <polygon class="arrowhead" points="128,160 116,154.4 116,165.6" fill="black" transform="rotate(180,120,160)"></polygon>
+                <polygon class="arrowhead" points="128,64 116,58.4 116,69.6" fill="black" transform="rotate(180,120,64)"></polygon>
+                <polygon class="arrowhead" points="80,264 68,258.4 68,269.6" fill="black" transform="rotate(90,72,264)"></polygon>
+                <polygon class="arrowhead" points="64,264 52,258.4 52,269.6" fill="black" transform="rotate(90,56,264)"></polygon>
+                <polygon class="arrowhead" points="64,184 52,178.4 52,189.6" fill="black" transform="rotate(270,56,184)"></polygon>
+                <g class="text">
+                  <text x="176" y="52">(2)</text>
+                  <text x="52" y="100">Workload</text>
+                  <text x="96" y="100">A</text>
+                  <text x="176" y="100">(3)</text>
+                  <text x="284" y="100">Workload</text>
+                  <text x="328" y="100">B</text>
+                  <text x="176" y="148">(5)</text>
+                  <text x="304" y="164">PEP</text>
+                  <text x="168" y="212">(1)</text>
+                  <text x="32" y="228">(1)</text>
+                  <text x="328" y="228">(4)</text>
+                  <text x="60" y="308">Identity</text>
+                  <text x="288" y="308">PDP</text>
+                  <text x="60" y="324">Server</text>
+                  <text x="292" y="324">(optional)</text>
+                </g>
+              </svg><a href="#section-1.2-2.1.1" class="pilcrow">¶</a>
+</div>
+</div>
+<figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
+<a href="#name-sequence-of-operations" class="selfRef">Sequence of Operations</a>
+          </figcaption></figure>
+</div>
+<p id="section-1.2-3">The Identity Server provisions credentials to each of the workloads. At least Workload A (and possibly both) must be provisioned
+with a credential before the call can proceed. Details of communication with the Identity Server are out of scope
+of this document, however we do describe the credential received by the workload.<a href="#section-1.2-3" class="pilcrow">¶</a></p>
+<p id="section-1.2-4">PEP is a Policy Enforcement Point, the component that allows the message to go through or blocks it. PDP is an optional
+Policy Decision Point, which may be deployed in architectures where policy management is centralized. All details of
+policy management and message authorization are out of scope of this document.<a href="#section-1.2-4" class="pilcrow">¶</a></p>
+<p id="section-1.2-5">The high-level message flow is as follows:<a href="#section-1.2-5" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-1.2-6">
+<li id="section-1.2-6.1">
+            <p id="section-1.2-6.1.1">Workload A (and similarly, Workload B) obtains a credential from the Identity Server. This happens periodically, e.g. once every 24 hours.<a href="#section-1.2-6.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-1.2-6.2">
+            <p id="section-1.2-6.2.1">A transport connection is set up. This may already include the use of the Workload Identity Certificate with transport-level security, such as TLS.<a href="#section-1.2-6.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-1.2-6.3">
+            <p id="section-1.2-6.3.1">Workload A prepares to call Workload B. This may include adding application-level authentication information, such as the Workload Identity Token and proof of possession. Workload B authenticates Workload A.<a href="#section-1.2-6.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-1.2-6.4">
+            <p id="section-1.2-6.4.1">Workload B authorizes the call. This policy enforcement (Policy Enforcement Point, PEP) may include consulting with an external server (Policy Decision Point, PDP) when making this decision.<a href="#section-1.2-6.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-1.2-6.5">
+            <p id="section-1.2-6.5.1">Workload B returns a response to Workload A, which may be an error response or a regular one.<a href="#section-1.2-6.5.1" class="pilcrow">¶</a></p>
+</li>
+        </ol>
+<p id="section-1.2-7">Depending on the protocol, the workload authentication may happen during step (2) at the transport-level or at step (3) at the application-level, or both.<a href="#section-1.2-7" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="granular-auth">
+<section id="section-1.3">
+        <h3 id="name-workload-identifiers-and-au">
+<a href="#section-1.3" class="section-number selfRef">1.3. </a><a href="#name-workload-identifiers-and-au" class="section-name selfRef">Workload Identifiers and Authentication Granularity</a>
+        </h3>
+<p id="section-1.3-1">The specific format of workload identifiers (see <span>[<a href="#I-D.ietf-wimse-arch" class="cite xref">I-D.ietf-wimse-arch</a>]</span>) is set by local policy for each deployment,
+and this choice has several implications.<a href="#section-1.3-1" class="pilcrow">¶</a></p>
+<p id="section-1.3-2">Prior to WIMSE, many use cases did not allow for fully granular authentication in containerized runtime platforms.
+For instance, with mutual TLS,
+there's often no clear way to map the request's external access reference
+(e.g., Kubernetes Ingress path, service name, or host header)
+to the SubjectAltName value in the server certificate. This means that the client could only verify
+if the server certificate is valid within a trust domain, not if it's tied to a specific workload.<a href="#section-1.3-2" class="pilcrow">¶</a></p>
+<p id="section-1.3-3">To enable mutual and granular authentication between workloads, two things must be in place:<a href="#section-1.3-3" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-1.3-4.1">
+            <p id="section-1.3-4.1.1">Each workload must know its own identifier.<a href="#section-1.3-4.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-1.3-4.2">
+            <p id="section-1.3-4.2.1">There needs to be an explicit mapping from the external handle used to access a workload (such as an Ingress path or service DNS name)
+to its workload identifier.<a href="#section-1.3-4.2.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-1.3-5">Once these conditions are met, the methods described in this document can be used for the caller and callee to mutually authenticate.<a href="#section-1.3-5" class="pilcrow">¶</a></p>
+<p id="section-1.3-6">Implementations <span class="bcp14">MUST</span> allow for defining this mapping between the workload's access path and the workload identifier (e.g., through
+callback functions). Deployments <span class="bcp14">SHOULD</span> use these features to establish a consistent set of identifiers within their environment.<a href="#section-1.3-6" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="conventions-and-definitions">
+<section id="section-2">
+      <h2 id="name-conventions-and-definitions">
+<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-conventions-and-definitions" class="section-name selfRef">Conventions and Definitions</a>
+      </h2>
+<p id="section-2-1">All terminology in this document follows <span>[<a href="#I-D.ietf-wimse-arch" class="cite xref">I-D.ietf-wimse-arch</a>]</span>.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<p id="section-2-2">The key words "<span class="bcp14">MUST</span>", "<span class="bcp14">MUST NOT</span>", "<span class="bcp14">REQUIRED</span>", "<span class="bcp14">SHALL</span>", "<span class="bcp14">SHALL NOT</span>", "<span class="bcp14">SHOULD</span>", "<span class="bcp14">SHOULD NOT</span>", "<span class="bcp14">RECOMMENDED</span>", "<span class="bcp14">NOT RECOMMENDED</span>",
+"<span class="bcp14">MAY</span>", and "<span class="bcp14">OPTIONAL</span>" in this document are to be interpreted as
+described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they
+appear in all capitals, as shown here.<a href="#section-2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="app-level">
+<section id="section-3">
+      <h2 id="name-application-level-workload-">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-application-level-workload-" class="section-name selfRef">Application Level Workload-to-Workload Authentication</a>
+      </h2>
+<p id="section-3-1">As noted in the Introduction, for many deployments communication between workloads cannot use
+end-to-end transport security such as TLS. For these deployment styles, this document proposes a credential that can be used at the application level.<a href="#section-3-1" class="pilcrow">¶</a></p>
+<div id="to-wit">
+<section id="section-3.1">
+        <h3 id="name-the-workload-identity-token">
+<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-the-workload-identity-token" class="section-name selfRef">The Workload Identity Token</a>
+        </h3>
+<p id="section-3.1-1">The Workload Identity Token (WIT) is a JWS <span>[<a href="#RFC7515" class="cite xref">RFC7515</a>]</span> signed JWT <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span> that represents the identity of a workload.
+It is issued by the Identity Server and binds a public key to the workload identity. See <a href="#workload-identity-key-management" class="auto internal xref">Section 6.3</a> for security considerations.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.1-2">A WIT <span class="bcp14">MUST</span> contain the following content, except where noted:<a href="#section-3.1-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.1-3.1">
+            <p id="section-3.1-3.1.1">in the JOSE header:<a href="#section-3.1-3.1.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.1-3.1.2.1">
+                <p id="section-3.1-3.1.2.1.1"><code>alg</code>: An identifier for a JWS asymmetric digital signature algorithm
+   (registered algorithm identifiers are listed in the IANA JOSE Algorithms registry <span>[<a href="#IANA.JOSE.ALGS" class="cite xref">IANA.JOSE.ALGS</a>]</span>). The value <code>none</code> <span class="bcp14">MUST NOT</span> be used.<a href="#section-3.1-3.1.2.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-3.1-3.1.2.2">
+                <p id="section-3.1-3.1.2.2.1"><code>typ</code>: the WIT is explicitly typed, as recommended in <span><a href="https://rfc-editor.org/rfc/rfc8725#section-3.11" class="relref">Section 3.11</a> of [<a href="#RFC8725" class="cite xref">RFC8725</a>]</span>, using the <code>wit+jwt</code> media type.<a href="#section-3.1-3.1.2.2.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+</li>
+          <li class="normal" id="section-3.1-3.2">
+            <p id="section-3.1-3.2.1">in the JWT claims:<a href="#section-3.1-3.2.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.1-3.2.2.1">
+                <p id="section-3.1-3.2.2.1.1"><code>iss</code>: The issuer of the token, which is the Identity Server, represented by a URI. The <code>iss</code> claim is <span class="bcp14">RECOMMENDED</span> but optional, see <a href="#wit-iss-note" class="auto internal xref">Section 3.1.3</a> for more.<a href="#section-3.1-3.2.2.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-3.1-3.2.2.2">
+                <p id="section-3.1-3.2.2.2.1"><code>sub</code>: The subject of the token, which is the identity of the workload, represented by a URI. See <span>[<a href="#I-D.ietf-wimse-arch" class="cite xref">I-D.ietf-wimse-arch</a>]</span> for details of the Workload Identifier. And see <a href="#granular-auth" class="auto internal xref">Section 1.3</a> for security implications of these identifiers.<a href="#section-3.1-3.2.2.2.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-3.1-3.2.2.3">
+                <p id="section-3.1-3.2.2.3.1"><code>exp</code>: The expiration time of the token (as defined in <span><a href="https://rfc-editor.org/rfc/rfc7519#section-4.1.4" class="relref">Section 4.1.4</a> of [<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>).
+WITs should be refreshed regularly, e.g. on the order of hours.<a href="#section-3.1-3.2.2.3.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-3.1-3.2.2.4">
+                <p id="section-3.1-3.2.2.4.1"><code>jti</code>: A unique identifier for the token. This claim is <span class="bcp14">OPTIONAL</span>. The <code>jti</code> claim is frequently useful for auditing issuance of individual WITs or to revoke them, but some token generation environments do not support it.<a href="#section-3.1-3.2.2.4.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-3.1-3.2.2.5">
+                <p id="section-3.1-3.2.2.5.1"><code>cnf</code>: A confirmation claim referencing the public key of the workload.<a href="#section-3.1-3.2.2.5.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.1-3.2.2.5.2.1">
+                    <p id="section-3.1-3.2.2.5.2.1.1"><code>jwk</code>: Within the cnf claim, a <code>jwk</code> key <span class="bcp14">MUST</span> be present that contains the public key of the workload as defined in <span><a href="https://rfc-editor.org/rfc/rfc7800#section-3.2" class="relref">Section 3.2</a> of [<a href="#RFC7800" class="cite xref">RFC7800</a>]</span>. The workload <span class="bcp14">MUST</span> prove possession of the corresponding private key when presenting the WIT to another party. As such, it <span class="bcp14">MUST NOT</span> be used as a bearer token and is not intended for use in the <code>Authorization</code> header.<a href="#section-3.1-3.2.2.5.2.1.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.1-3.2.2.5.2.1.2.1">
+                        <p id="section-3.1-3.2.2.5.2.1.2.1.1"><code>alg</code>: Within the jwk object, an <code>alg</code> field <span class="bcp14">MUST</span> be present. Allowed values are listed in the IANA "JSON Web Signature and Encryption Algorithms" registry established by <span>[<a href="#RFC7518" class="cite xref">RFC7518</a>]</span>. The presented proof <span class="bcp14">MUST</span> be produced with the algorithm specified in this field. The value <code>none</code> <span class="bcp14">MUST NOT</span> be used. Algorithms used in combination with symmetric keys <span class="bcp14">MUST NOT</span> be used. Also encryption algorithms <span class="bcp14">MUST NOT</span> be used as this would require additional key distribution outside of the WIT. To promote interoperability, the <code>ES256</code> signing algorithm <span class="bcp14">MUST</span> be supported by general purpose implementations of this document.<a href="#section-3.1-3.2.2.5.2.1.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                    </ul>
+</li>
+                </ul>
+</li>
+            </ul>
+</li>
+        </ul>
+<p id="section-3.1-4">As noted in <span>[<a href="#I-D.ietf-wimse-arch" class="cite xref">I-D.ietf-wimse-arch</a>]</span>, a workload identifier is a URI with a trust domain component.
+The runtime environment often determines which
+URI scheme is used, e.g. if SPIFFE is used to authenticate workloads, it mandates "spiffe" URIs.
+However for those deployments where this is not the case, this document (<a href="#iana-uri" class="auto internal xref">Section 7.3</a>)
+defines the "wimse" URI scheme which can be used by any deployment that implements this protocol.<a href="#section-3.1-4" class="pilcrow">¶</a></p>
+<p id="section-3.1-5">An example WIT might look like this:<a href="#section-3.1-5" class="pilcrow">¶</a></p>
+<span id="name-an-example-workload-identit"></span><div id="example-wit">
+<figure id="figure-2">
+          <div class="lang-jwt sourcecode" id="section-3.1-6.1">
+<pre>
+=============== NOTE: '\' line wrapping per RFC 8792 ================
+
+eyJhbGciOiJFUzI1NiIsImtpZCI6Ikp1bmUgNSIsInR5cCI6IndpdCtqd3QifQ.eyJjb\
+mYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J2IjoiRWQyNTUxOSIsImt0eSI6Ik9LU\
+CIsIngiOiIxQ1hYdmZsTl9MVlZzSXNZWHNVdkIwM0ptbEdXZUNIcVFWdW91Q0Y5MmJnI\
+n19LCJleHAiOjE3NDU1MTI1MTAsImlhdCI6MTc0NTUwODkxMCwianRpIjoieC1fMUNUT\
+DJjY2EzQ1NFNGN3Yl9sIiwic3ViIjoid2ltc2U6Ly9leGFtcGxlLmNvbS9zcGVjaWZpY\
+y13b3JrbG9hZCJ9.6KraSQUxWdl9dxFQ3Fj6dPY0Vi88OkwFwZpAIOhLeq6AbXAnLLQg\
+Op8U9UDGcBuYF3KiNv6oKQD1ZWAzrMZOJw
+</pre>
+</div>
+<figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
+<a href="#name-an-example-workload-identit" class="selfRef">An example Workload Identity Token (WIT)</a>
+          </figcaption></figure>
+</div>
+<p id="section-3.1-7">The decoded JOSE header of the WIT from the example above is shown here:<a href="#section-3.1-7" class="pilcrow">¶</a></p>
+<span id="name-example-wit-jose-header"></span><figure id="figure-3">
+          <div class="lang-json sourcecode" id="section-3.1-8.1">
+<pre>
+{
+  "alg": "ES256",
+  "kid": "June 5",
+  "typ": "wit+jwt"
+}
+</pre>
+</div>
+<figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
+<a href="#name-example-wit-jose-header" class="selfRef">Example WIT JOSE Header</a>
+          </figcaption></figure>
+<p id="section-3.1-9">The decoded JWT claims of the WIT from the example above are shown here:<a href="#section-3.1-9" class="pilcrow">¶</a></p>
+<span id="name-example-wit-claims"></span><figure id="figure-4">
+          <div class="lang-json sourcecode" id="section-3.1-10.1">
+<pre>
+{
+  "cnf": {
+    "jwk": {
+      "alg": "EdDSA",
+      "crv": "Ed25519",
+      "kty": "OKP",
+      "x": "1CXXvflN_LVVsIsYXsUvB03JmlGWeCHqQVuouCF92bg"
+    }
+  },
+  "exp": 1745512510,
+  "iat": 1745508910,
+  "jti": "x-_1CTL2cca3CSE4cwb_l",
+  "sub": "wimse://example.com/specific-workload"
+}
+</pre>
+</div>
+<figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
+<a href="#name-example-wit-claims" class="selfRef">Example WIT Claims</a>
+          </figcaption></figure>
+<p id="section-3.1-11">The claims indicate that the example WIT:<a href="#section-3.1-11" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.1-12.1">
+            <p id="section-3.1-12.1.1">is valid until Thu Apr 24 2025 16:35:10 GMT (represented as NumericDate <span><a href="https://rfc-editor.org/rfc/rfc7519#section-2" class="relref">Section 2</a> of [<a href="#RFC7519" class="cite xref">RFC7519</a>]</span> value <code>1745512510</code>).<a href="#section-3.1-12.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.1-12.2">
+            <p id="section-3.1-12.2.1">identifies the workload to which the token was issued as <code>wimse://example.com/specific-workload</code>.<a href="#section-3.1-12.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.1-12.3">
+            <p id="section-3.1-12.3.1">has a unique identifier of <code>x-_1CTL2cca3CSE4cwb_l</code>.<a href="#section-3.1-12.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.1-12.4">
+            <p id="section-3.1-12.4.1">binds the public key represented by the <code>jwk</code> confirmation method to the workload <code>wimse://example.com/specific-workload</code>.<a href="#section-3.1-12.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.1-12.5">
+            <p id="section-3.1-12.5.1">requires the proof to be produced with the <code>EdDSA</code> signature algorithm.<a href="#section-3.1-12.5.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-3.1-13">For elucidative purposes only, the workload's key, including the private part, is shown below in JWK <span>[<a href="#RFC7517" class="cite xref">RFC7517</a>]</span> format:<a href="#section-3.1-13" class="pilcrow">¶</a></p>
+<span id="name-example-workloads-key"></span><div id="example-caller-jwk">
+<figure id="figure-5">
+          <div class="lang-jwk sourcecode" id="section-3.1-14.1">
+<pre>
+{
+ "kty": "OKP",
+ "crv": "Ed25519",
+ "x": "1CXXvflN_LVVsIsYXsUvB03JmlGWeCHqQVuouCF92bg",
+ "d": "sdLX8yCYKqo_XvGBLn-ZWeKT7llYeeQpgeCaXVxb5kY"
+}
+</pre>
+</div>
+<figcaption><a href="#figure-5" class="selfRef">Figure 5</a>:
+<a href="#name-example-workloads-key" class="selfRef">Example Workload's Key</a>
+          </figcaption></figure>
+</div>
+<p id="section-3.1-15">The afore-exampled WIT is signed with the private key of the Identity Server.
+The public key(s) of the Identity Server need to be known to all workloads in order to verify the signature of the WIT.
+The Identity Server's public key from this example is shown below in JWK <span>[<a href="#RFC7517" class="cite xref">RFC7517</a>]</span> format:<a href="#section-3.1-15" class="pilcrow">¶</a></p>
+<span id="name-example-identity-server-key"></span><figure id="figure-6">
+          <div class="lang-jwk sourcecode" id="section-3.1-16.1">
+<pre>
+{
+ "kty": "EC",
+ "kid": "June 5",
+ "crv": "P-256",
+ "x": "kXqnA2Op7hgd4zRMbw0iFcc_hDxUxhojxOFVGjE2gks",
+ "y": "n__VndPMR021-59UAs0b9qDTFT-EZtT6xSNs_xFskLo"
+}
+</pre>
+</div>
+<figcaption><a href="#figure-6" class="selfRef">Figure 6</a>:
+<a href="#name-example-identity-server-key" class="selfRef">Example Identity Server Key</a>
+          </figcaption></figure>
+<div id="wit-http-header">
+<section id="section-3.1.1">
+          <h4 id="name-the-wit-http-header">
+<a href="#section-3.1.1" class="section-number selfRef">3.1.1. </a><a href="#name-the-wit-http-header" class="section-name selfRef">The WIT HTTP Header</a>
+          </h4>
+<p id="section-3.1.1-1">A WIT is conveyed in an HTTP header field named <code>Workload-Identity-Token</code>.<a href="#section-3.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-2">ABNF <span>[<a href="#RFC5234" class="cite xref">RFC5234</a>]</span> for the value of <code>Workload-Identity-Token</code> header field is provided in <a href="#wit-header-abnf" class="auto internal xref">Figure 7</a>:<a href="#section-3.1.1-2" class="pilcrow">¶</a></p>
+<span id="name-workload-identity-token-hea"></span><div id="wit-header-abnf">
+<figure id="figure-7">
+            <div class="lang-abnf sourcecode" id="section-3.1.1-3.1">
+<pre>
+ALPHA = %x41-5A / %x61-7A ; A-Z / a-z
+DIGIT = %x30-39 ; 0-9
+base64url = 1*(ALPHA / DIGIT / "-" / "_")
+JWT =  base64url "." base64url "." base64url
+WIT =  JWT
+</pre>
+</div>
+<figcaption><a href="#figure-7" class="selfRef">Figure 7</a>:
+<a href="#name-workload-identity-token-hea" class="selfRef">Workload-Identity-Token Header Field ABNF</a>
+            </figcaption></figure>
+</div>
+<p id="section-3.1.1-4">The following shows the WIT from <a href="#example-wit" class="auto internal xref">Figure 2</a> in an example of a <code>Workload-Identity-Token</code> header field:<a href="#section-3.1.1-4" class="pilcrow">¶</a></p>
+<span id="name-an-example-workload-identity"></span><figure id="figure-8">
+            <div class="lang-http-message sourcecode" id="section-3.1.1-5.1">
+<pre>
+=============== NOTE: '\' line wrapping per RFC 8792 ================
+
+Workload-Identity-Token: eyJhbGciOiJFUzI1NiIsImtpZCI6Ikp1bmUgNSIsInR\
+5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J2Ijoi\
+RWQyNTUxOSIsImt0eSI6Ik9LUCIsIngiOiIxQ1hYdmZsTl9MVlZzSXNZWHNVdkIwM0pt\
+bEdXZUNIcVFWdW91Q0Y5MmJnIn19LCJleHAiOjE3NDU1MTI1MTAsImlhdCI6MTc0NTUw\
+ODkxMCwianRpIjoieC1fMUNUTDJjY2EzQ1NFNGN3Yl9sIiwic3ViIjoid2ltc2U6Ly9l\
+eGFtcGxlLmNvbS9zcGVjaWZpYy13b3JrbG9hZCJ9.6KraSQUxWdl9dxFQ3Fj6dPY0Vi8\
+8OkwFwZpAIOhLeq6AbXAnLLQgOp8U9UDGcBuYF3KiNv6oKQD1ZWAzrMZOJw
+</pre>
+</div>
+<figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
+<a href="#name-an-example-workload-identity" class="selfRef">An example Workload Identity Token HTTP Header Field</a>
+            </figcaption></figure>
+<p id="section-3.1.1-6">Note that per <span>[<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>, header field names are case insensitive;
+thus, <code>Workload-Identity-Token</code>, <code>workload-identity-token</code>, <code>WORKLOAD-IDENTITY-TOKEN</code>,
+etc., are all valid and equivalent header field names. However, case is significant in the header field value.<a href="#section-3.1.1-6" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="add-claims">
+<section id="section-3.1.2">
+          <h4 id="name-including-additional-claims">
+<a href="#section-3.1.2" class="section-number selfRef">3.1.2. </a><a href="#name-including-additional-claims" class="section-name selfRef">Including Additional Claims</a>
+          </h4>
+<p id="section-3.1.2-1">The WIT contains JSON structures and therefore can be trivially extended by adding more claims beyond those defined in the current specification.
+This, however, could result in interoperability issues, which the following rules are addressing.<a href="#section-3.1.2-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.1.2-2.1">
+              <p id="section-3.1.2-2.1.1">To ensure interoperability in WIMSE environments, the use of Private claim names (Sec. 4.3 of <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>) is <span class="bcp14">NOT RECOMMENDED</span>.<a href="#section-3.1.2-2.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3.1.2-2.2">
+              <p id="section-3.1.2-2.2.1">In closed environments, deployers <span class="bcp14">MAY</span> freely add claims to the WIT. Such claims <span class="bcp14">SHOULD</span> be collision-resistant, such as <code>example.com/myclaim</code>.<a href="#section-3.1.2-2.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3.1.2-2.3">
+              <p id="section-3.1.2-2.3.1">A recipient that does not understand such claims <span class="bcp14">MUST</span> ignore them, as per Sec. 4 of <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>.<a href="#section-3.1.2-2.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3.1.2-2.4">
+              <p id="section-3.1.2-2.4.1">Outside of closed environments, new claims <span class="bcp14">MUST</span> be registered with IANA <span>[<a href="#IANA.JWT.CLAIMS" class="cite xref">IANA.JWT.CLAIMS</a>]</span> before they can be used.<a href="#section-3.1.2-2.4.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+</section>
+</div>
+<div id="wit-iss-note">
+<section id="section-3.1.3">
+          <h4 id="name-a-note-on-iss-claim-and-key">
+<a href="#section-3.1.3" class="section-number selfRef">3.1.3. </a><a href="#name-a-note-on-iss-claim-and-key" class="section-name selfRef">A note on <code>iss</code> claim and key distribution</a>
+          </h4>
+<p id="section-3.1.3-1">It is <span class="bcp14">RECOMMENDED</span> that the WIT carries an <code>iss</code> claim. This specification itself does not make use of a potential <code>iss</code> claim but also carries the trust domain in the workload identifier (see <span>[<a href="#I-D.ietf-wimse-arch" class="cite xref">I-D.ietf-wimse-arch</a>]</span> for a definition
+of the identifier and related rules). Implementations <span class="bcp14">MAY</span> include the <code>iss</code> claim in the form of a <code>https</code> URL to facilitate key distribution via mechanisms like the <code>jwks_uri</code> from <span>[<a href="#RFC8414" class="cite xref">RFC8414</a>]</span> but alternative key distribution methods may make use of the trust domain included in the workload identifier which is carried in the mandatory <code>sub</code> claim.<a href="#section-3.1.3-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="error-conditions">
+<section id="section-3.2">
+        <h3 id="name-error-conditions">
+<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-error-conditions" class="section-name selfRef">Error Conditions</a>
+        </h3>
+<p id="section-3.2-1">Errors may occur during the processing of the WIT. If the WIT validation fails for any reason,
+such as an invalid signature, an expired validity time window, or a malformed data structure, an error is returned. Typically,
+this will be in response to an API call, so an HTTP status code such as 400 (Bad Request) is appropriate. This response could
+include more details as per <span>[<a href="#RFC9457" class="cite xref">RFC9457</a>]</span>, such as an indicator that the wrong key material or algorithm was used.  The use of HTTP
+status code 401 is <span class="bcp14">NOT RECOMMENDED</span> for this purpose because it requires a WWW-Authenticate with acceptable http auth mechanisms in
+the error response and an associated Authorization header in the subsequent request. The use of these headers for the WIT is not compatible
+with this specification.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="coexist">
+<section id="section-3.3">
+        <h3 id="name-coexistence-with-jwt-bearer">
+<a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-coexistence-with-jwt-bearer" class="section-name selfRef">Coexistence with JWT Bearer Tokens</a>
+        </h3>
+<p id="section-3.3-1">The WIT defines new HTTP headers. It can therefore be presented along with existing headers used for JWT bearer tokens. This
+property allows for transition from mechanisms using identity tokens based on bearer JWTs to proof of possession based WITs.
+A workload may implement a policy that accepts both bearer tokens and WITs during a transition period. This policy may be configurable
+per-caller to allow the workload to reject bearer tokens from callers that support WITs. Once a deployment fully supports WITs, then the use of
+bearer tokens for identity can be disabled through policy.  Implementations should be careful when implementing such a transition strategy,
+since the decision which token to prefer is made when the caller's identity has still not been authenticated, and needs to be revalidated following the authentication step.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
+<p id="section-3.3-2">The WIT can also coexist with tokens used to establish security context, such as transaction tokens <span>[<a href="#I-D.ietf-oauth-transaction-tokens" class="cite xref">I-D.ietf-oauth-transaction-tokens</a>]</span>. In this case a workload's
+authorization policy may take into account both the sending workload's identity and the information in the context token. For example, the
+identity in the WIT may be used to establish which API calls can be made and information in the context token may be used to determine
+which specific resources can be accessed.<a href="#section-3.3-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="transport-level">
+<section id="section-4">
+      <h2 id="name-transport-level-workload-to">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-transport-level-workload-to" class="section-name selfRef">Transport Level Workload-to-Workload Authentication</a>
+      </h2>
+<p id="section-4-1">As noted in the introduction, for many deployments, transport-level protection of application traffic is ideal.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<div id="to-wic">
+<section id="section-4.1">
+        <h3 id="name-the-workload-identity-certi">
+<a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-the-workload-identity-certi" class="section-name selfRef">The Workload Identity Certificate</a>
+        </h3>
+<p id="section-4.1-1">The Workload Identity Certificate is an X.509 certificate. The workload identity <span class="bcp14">MUST</span> be encoded in a SubjectAltName extension of type URI. There <span class="bcp14">MUST</span> be only one SubjectAltName extension of type URI in a Workload Identity Certificate. If the workload will act as a TLS server for clients that do not understand workload identities it is <span class="bcp14">RECOMMENDED</span> that the Workload Identity Certificate contain a SubjectAltName of type DNSName with the appropriate DNS names for the server. The certificate <span class="bcp14">MAY</span> contain SubjectAltName extensions of other types.<a href="#section-4.1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="client-name">
+<section id="section-4.2">
+        <h3 id="name-client-authorization-using-">
+<a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-client-authorization-using-" class="section-name selfRef">Client Authorization Using the Workload Identity</a>
+        </h3>
+<p id="section-4.2-1">The server application retrieves the workload identifier from the client certificate subjectAltName. The identifier is used in authorization, accounting and auditing.
+For example, the full workload identifier may be matched against ACLs to authorize actions requested by the peer and the identifier may be included in log messages to associate actions to the client workload for audit purposes.
+A deployment may specify other authorization policies based on the specific details of how the workload identifier is constructed. The path portion of the workload identifier <span class="bcp14">MUST</span> always be considered in the scope of the trust domain.
+See <a href="#granular-auth" class="auto internal xref">Section 1.3</a> on additional security implications of workload identifiers.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="implementation-status">
+<section id="section-5">
+      <h2 id="name-implementation-status">
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-implementation-status" class="section-name selfRef">Implementation Status</a>
+      </h2>
+<p id="section-5-1"><span class="cref">Note to RFC Editor: please remove this section, as well as the reference to RFC 7942, before publication.</span>
+This section records the status of known implementations of the protocol defined by this specification at the time of posting of this Internet-Draft, and is based on a proposal described in <span>[<a href="#RFC7942" class="cite xref">RFC7942</a>]</span>. The description of implementations in this section is intended to assist the IETF in its decision processes in progressing drafts to RFCs.  Please note that the listing of any individual implementation here does not imply endorsement by the IETF.  Furthermore, no effort has been spent to verify the information presented here that was supplied by IETF contributors. This is not intended as, and must not be construed to be, a catalog of available implementations or their features.  Readers are advised to note that other implementations may exist.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-2">According to RFC 7942, "this will allow reviewers and working groups to assign due consideration to documents that have the benefit of running code, which may serve as evidence of valuable experimentation and feedback that have made the implemented protocols more mature.  It is up to the individual working groups to use this information as they see fit".<a href="#section-5-2" class="pilcrow">¶</a></p>
+<p id="section-5-3">SPIFFE (Standard)<a href="#section-5-3" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-5-4.1">
+          <p id="section-5-4.1.1">Organization: CNCF<a href="#section-5-4.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-5-4.2">
+          <p id="section-5-4.2.1">Maturity:<a href="#section-5-4.2.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-5-4.2.2.1">
+              <p id="section-5-4.2.2.1.1">Workload Identity Certificate: fully compatible with the X509-SVID and widely used.<a href="#section-5-4.2.2.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-5-4.2.2.2">
+              <p id="section-5-4.2.2.2.1">Workload Identity Token: beta<a href="#section-5-4.2.2.2.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+</li>
+        <li class="normal" id="section-5-4.3">
+          <p id="section-5-4.3.1">Coverage: Workload Identity Certificate, WIT<a href="#section-5-4.3.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-5-4.4">
+          <p id="section-5-4.4.1">Contact: <a href="https://github.com/spiffe/spiffe/tree/main/community/sig-spec">SPIFFE sig-spec community</a><a href="#section-5-4.4.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="section-5-5">Defakto Security<a href="#section-5-5" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-5-6.1">
+          <p id="section-5-6.1.1">Organization: Defakto Security (prior SPIRL)<a href="#section-5-6.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-5-6.2">
+          <p id="section-5-6.2.1">Maturity:<a href="#section-5-6.2.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-5-6.2.2.1">
+              <p id="section-5-6.2.2.1.1">Workload Identity Certificate: production<a href="#section-5-6.2.2.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-5-6.2.2.2">
+              <p id="section-5-6.2.2.2.1">Workload Identity Token: alpha<a href="#section-5-6.2.2.2.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+</li>
+        <li class="normal" id="section-5-6.3">
+          <p id="section-5-6.3.1">Coverage: Workload Identity Certificate, WIT<a href="#section-5-6.3.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-5-6.4">
+          <p id="section-5-6.4.1">Contact: arndt@defakto.security<a href="#section-5-6.4.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="section-5-7">Teleport - Machine &amp; Workload Identity<a href="#section-5-7" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-5-8.1">
+          <p id="section-5-8.1.1">Organization: Teleport<a href="#section-5-8.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-5-8.2">
+          <p id="section-5-8.2.1">Maturity:<a href="#section-5-8.2.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-5-8.2.2.1">
+              <p id="section-5-8.2.2.1.1">Workload Identity Certificate: production<a href="#section-5-8.2.2.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-5-8.2.2.2">
+              <p id="section-5-8.2.2.2.1">Workload Identity Token: research<a href="#section-5-8.2.2.2.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+</li>
+        <li class="normal" id="section-5-8.3">
+          <p id="section-5-8.3.1">Coverage: Workload Identity Certificate<a href="#section-5-8.3.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-5-8.4">
+          <p id="section-5-8.4.1">Contact: noah@goteleport.com<a href="#section-5-8.4.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+</section>
+</div>
+<div id="security-considerations">
+<section id="section-6">
+      <h2 id="name-security-considerations">
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+      </h2>
+<div id="workload-identity">
+<section id="section-6.1">
+        <h3 id="name-workload-identity">
+<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-workload-identity" class="section-name selfRef">Workload Identity</a>
+        </h3>
+<p id="section-6.1-1">The Workload Identifier is scoped within an issuer and therefore any sub-components (path portion of Identifier) are only unique within a trust domain defined by the issuer. Using a Workload Identifier without taking into account the trust domain could allow one domain to issue tokens to spoof identities in another domain. Additionally, the trust domain must be tied to an authorized issuer cryptographic trust anchor through some mechanism such as a JWKS or X.509 certificate chain. The association of an issuer, trust domain and a cryptographic trust anchor <span class="bcp14">MUST</span> be communicated securely out of band.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="workload-identity-token-and-proof-of-possession">
+<section id="section-6.2">
+        <h3 id="name-workload-identity-token-and">
+<a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-workload-identity-token-and" class="section-name selfRef">Workload Identity Token and Proof of Possession</a>
+        </h3>
+<p id="section-6.2-1">The Workload Identity Token (WIT) is bound to a secret cryptographic key and is always presented with a proof of possession as described in <a href="#to-wit" class="auto internal xref">Section 3.1</a>. The WIT is a general purpose token that can be presented in multiple contexts. The WIT and its PoP are only used in the application-level options, and both are not used in MTLS. The WIT <span class="bcp14">MUST NOT</span> be used as a bearer token. While this helps reduce the sensitivity of the token it is still possible that a token and its proof of possession may be captured and replayed within the PoP's lifetime. The following are some mitigations for the capture and reuse of the proof of possession (PoP):<a href="#section-6.2-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-6.2-2.1">
+            <p id="section-6.2-2.1.1">Preventing Eavesdropping and Interception with TLS<a href="#section-6.2-2.1.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-6.2-3">An attacker observing or intercepting the communication channel can view the token and its proof of possession and attempt to replay it to gain an advantage. In order to prevent this the
+token and proof of possession <span class="bcp14">MUST</span> be sent over a secure, server authenticated TLS connection unless a secure channel is provided by some other mechanisms.<a href="#section-6.2-3" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-6.2-4.1">
+            <p id="section-6.2-4.1.1">Limiting Proof of Possession Lifespan<a href="#section-6.2-4.1.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-6.2-5">The proof of possession <span class="bcp14">MUST</span> be time limited. A PoP should only be valid over the time necessary for it to be successfully used for the purpose it is needed. This will typically be on the order of minutes.  PoPs received outside their validity time <span class="bcp14">MUST</span> be rejected.<a href="#section-6.2-5" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-6.2-6.1">
+            <p id="section-6.2-6.1.1">Limiting Proof of Possession Scope<a href="#section-6.2-6.1.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-6.2-7">In order to reduce the risk of theft and replay the PoP should have a limited scope. For example, a PoP may be targeted for use with a specific workload and even a specific transaction to reduce the impact of a stolen PoP. In some cases a workload may wish to reuse a PoP for a period of time or have it accepted by multiple target workloads. A careful analysis is warranted to understand the impacts to the system if a PoP is disclosed allowing it to be presented by an attacker along with a captured WIT.<a href="#section-6.2-7" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-6.2-8.1">
+            <p id="section-6.2-8.1.1">Replay Protection<a href="#section-6.2-8.1.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-6.2-9">Proof of possession mechanisms should include replay protection to prevent reuse of a captured PoP. Without it an attacker can replay a captured PoP within its validity period.<a href="#section-6.2-9" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-6.2-10.1">
+            <p id="section-6.2-10.1.1">Binding to TLS Endpoint<a href="#section-6.2-10.1.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-6.2-11">The POP <span class="bcp14">MAY</span> be bound to a transport layer sender such as the client identity of a TLS session or TLS channel binding parameters. The mechanisms for binding are outside the scope of this specification.<a href="#section-6.2-11" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="workload-identity-key-management">
+<section id="section-6.3">
+        <h3 id="name-workload-identity-key-manag">
+<a href="#section-6.3" class="section-number selfRef">6.3. </a><a href="#name-workload-identity-key-manag" class="section-name selfRef">Workload Identity Key Management</a>
+        </h3>
+<p id="section-6.3-1">Both the Workload Identity Token and the Workload Identity Certificate carry a public key. The corresponding private key:<a href="#section-6.3-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-6.3-2.1">
+            <p id="section-6.3-2.1.1"><span class="bcp14">MUST</span> be kept private<a href="#section-6.3-2.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-6.3-2.2">
+            <p id="section-6.3-2.2.1"><span class="bcp14">MUST</span> be individual for each Workload Identifier (see <span>[<a href="#I-D.ietf-wimse-arch" class="cite xref">I-D.ietf-wimse-arch</a>]</span>)<a href="#section-6.3-2.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-6.3-2.3">
+            <p id="section-6.3-2.3.1"><span class="bcp14">MUST NOT</span> be used once the credential is expired<a href="#section-6.3-2.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-6.3-2.4">
+            <p id="section-6.3-2.4.1"><span class="bcp14">SHOULD</span> be re-generated for each new Workload Identity Token or Certificate.<a href="#section-6.3-2.4.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+</section>
+</div>
+<div id="middleboxes">
+<section id="section-6.4">
+        <h3 id="name-middle-boxes">
+<a href="#section-6.4" class="section-number selfRef">6.4. </a><a href="#name-middle-boxes" class="section-name selfRef">Middle Boxes</a>
+        </h3>
+<p id="section-6.4-1">In some deployments the Workload Identity Token and proof of possession may pass through multiple systems. The communication between the systems is over TLS, but the token and PoP are available in the clear at each intermediary.  While the intermediary cannot modify the token or the information within the PoP they can attempt to capture and replay the token or modify the data not protected by the PoP.<a href="#section-6.4-1" class="pilcrow">¶</a></p>
+<p id="section-6.4-2">Mitigations listed in <a href="#app-level" class="auto internal xref">Section 3</a> can be used to provide some protection from middle boxes.<a href="#section-6.4-2" class="pilcrow">¶</a></p>
+<p id="section-6.4-3">Deployments should perform analysis on their situation to determine if it is appropriate to trust and allow traffic to pass through a middle box.<a href="#section-6.4-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="privacy-considerations">
+<section id="section-6.5">
+        <h3 id="name-privacy-considerations">
+<a href="#section-6.5" class="section-number selfRef">6.5. </a><a href="#name-privacy-considerations" class="section-name selfRef">Privacy Considerations</a>
+        </h3>
+<p id="section-6.5-1">WITs and the proofs of possession may contain private information such as user names or other identities. Care should be taken to prevent the disclosure of this information. The use of TLS helps protect the privacy of WITs and proofs of possession.<a href="#section-6.5-1" class="pilcrow">¶</a></p>
+<p id="section-6.5-2">WITs and certificates with workload identifiers are typically associated with a workload and not a specific user, however in some deployments the workload may be associated directly to a user. While these are exceptional cases a deployment should evaluate if the disclosure of WITs or certificates can be used to track a user.<a href="#section-6.5-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="iana-considerations">
+<section id="section-7">
+      <h2 id="name-iana-considerations">
+<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
+      </h2>
+<div id="media-type-registration">
+<section id="section-7.1">
+        <h3 id="name-media-type-registration">
+<a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-media-type-registration" class="section-name selfRef">Media Type Registration</a>
+        </h3>
+<p id="section-7.1-1">IANA is requested to register the following entries to the "Media Types" registry <span>[<a href="#IANA.MEDIA.TYPES" class="cite xref">IANA.MEDIA.TYPES</a>]</span>:<a href="#section-7.1-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-7.1-2.1">
+            <p id="section-7.1-2.1.1">application/wit+jwt, per <a href="#iana-wit" class="auto internal xref">Section 7.1.1</a>.<a href="#section-7.1-2.1.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<div id="iana-wit">
+<section id="section-7.1.1">
+          <h4 id="name-application-witjwt">
+<a href="#section-7.1.1" class="section-number selfRef">7.1.1. </a><a href="#name-application-witjwt" class="section-name selfRef">application/wit+jwt</a>
+          </h4>
+<p id="section-7.1.1-1">Type name: application<a href="#section-7.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-7.1.1-2">Subtype name: wit+jwt<a href="#section-7.1.1-2" class="pilcrow">¶</a></p>
+<p id="section-7.1.1-3">Required parameters: N/A<a href="#section-7.1.1-3" class="pilcrow">¶</a></p>
+<p id="section-7.1.1-4">Optional parameters: N/A<a href="#section-7.1.1-4" class="pilcrow">¶</a></p>
+<p id="section-7.1.1-5">Encoding considerations: Encoding considerations are identical to those specified for the "application/jwt" media type. See <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>.<a href="#section-7.1.1-5" class="pilcrow">¶</a></p>
+<p id="section-7.1.1-6">Security considerations: See the Security Considerations section of RFC XXX.<a href="#section-7.1.1-6" class="pilcrow">¶</a></p>
+<p id="section-7.1.1-7">Interoperability considerations: N/A<a href="#section-7.1.1-7" class="pilcrow">¶</a></p>
+<p id="section-7.1.1-8">Published specification: RFC XXX, <a href="#to-wit" class="auto internal xref">Section 3.1</a>.<a href="#section-7.1.1-8" class="pilcrow">¶</a></p>
+<p id="section-7.1.1-9">Applications that use this media type: Identity servers that vend Workload Identity Tokens, and Workloads that
+use these tokens to authenticate to each other.<a href="#section-7.1.1-9" class="pilcrow">¶</a></p>
+<p id="section-7.1.1-10">Fragment identifier considerations: N/A<a href="#section-7.1.1-10" class="pilcrow">¶</a></p>
+<p id="section-7.1.1-11">Additional information:<a href="#section-7.1.1-11" class="pilcrow">¶</a></p>
+<p id="section-7.1.1-12">Deprecated alias names for this type: N/A<a href="#section-7.1.1-12" class="pilcrow">¶</a></p>
+<p id="section-7.1.1-13">Magic number(s): N/A<a href="#section-7.1.1-13" class="pilcrow">¶</a></p>
+<p id="section-7.1.1-14">File extension(s): None<a href="#section-7.1.1-14" class="pilcrow">¶</a></p>
+<p id="section-7.1.1-15">Macintosh file type code(s): N/A<a href="#section-7.1.1-15" class="pilcrow">¶</a></p>
+<p id="section-7.1.1-16">Person &amp; email address to contact for further information:<a href="#section-7.1.1-16" class="pilcrow">¶</a></p>
+<p id="section-7.1.1-17">See the Authors' Addresses section of RFC XXX.<a href="#section-7.1.1-17" class="pilcrow">¶</a></p>
+<p id="section-7.1.1-18">Intended usage: COMMON<a href="#section-7.1.1-18" class="pilcrow">¶</a></p>
+<p id="section-7.1.1-19">Restrictions on usage: N/A<a href="#section-7.1.1-19" class="pilcrow">¶</a></p>
+<p id="section-7.1.1-20">Author: See the Authors' Addresses section of RFC XXX.<a href="#section-7.1.1-20" class="pilcrow">¶</a></p>
+<p id="section-7.1.1-21">Change controller: Internet Engineering Task Force (iesg@ietf.org).<a href="#section-7.1.1-21" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="hypertext-transfer-protocol-http-field-name-registration">
+<section id="section-7.2">
+        <h3 id="name-hypertext-transfer-protocol">
+<a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-hypertext-transfer-protocol" class="section-name selfRef">Hypertext Transfer Protocol (HTTP) Field Name Registration</a>
+        </h3>
+<p id="section-7.2-1">IANA is requested to register the following entries to the "Hypertext Transfer Protocol (HTTP) Field Name Registry" <span>[<a href="#IANA.HTTP.FIELDS" class="cite xref">IANA.HTTP.FIELDS</a>]</span>:<a href="#section-7.2-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-7.2-2.1">
+            <p id="section-7.2-2.1.1"><code>Workload-Identity-Token</code>, per <a href="#iana-wit-field" class="auto internal xref">Section 7.2.1</a>.<a href="#section-7.2-2.1.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<div id="iana-wit-field">
+<section id="section-7.2.1">
+          <h4 id="name-workload-identity-token">
+<a href="#section-7.2.1" class="section-number selfRef">7.2.1. </a><a href="#name-workload-identity-token" class="section-name selfRef">Workload-Identity-Token</a>
+          </h4>
+<ul class="normal">
+<li class="normal" id="section-7.2.1-1.1">
+              <p id="section-7.2.1-1.1.1">Field Name: Workload-Identity-Token<a href="#section-7.2.1-1.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.1-1.2">
+              <p id="section-7.2.1-1.2.1">Status: permanent<a href="#section-7.2.1-1.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.1-1.3">
+              <p id="section-7.2.1-1.3.1">Structured Type: N/A<a href="#section-7.2.1-1.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.1-1.4">
+              <p id="section-7.2.1-1.4.1">Specification Document: RFC XXX, <a href="#wit-http-header" class="auto internal xref">Section 3.1.1</a><a href="#section-7.2.1-1.4.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.1-1.5">
+              <p id="section-7.2.1-1.5.1">Comments: see reference above for an ABNF syntax of this field<a href="#section-7.2.1-1.5.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+</section>
+</div>
+</section>
+</div>
+<div id="iana-uri">
+<section id="section-7.3">
+        <h3 id="name-uri-scheme-registration">
+<a href="#section-7.3" class="section-number selfRef">7.3. </a><a href="#name-uri-scheme-registration" class="section-name selfRef">URI Scheme Registration</a>
+        </h3>
+<p id="section-7.3-1">IANA is requested to register the "wimse" scheme to the "URI Schemes" registry <span>[<a href="#IANA.URI.SCHEMES" class="cite xref">IANA.URI.SCHEMES</a>]</span>:<a href="#section-7.3-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-7.3-2.1">
+            <p id="section-7.3-2.1.1">Scheme name: wimse<a href="#section-7.3-2.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-7.3-2.2">
+            <p id="section-7.3-2.2.1">Status: permanent<a href="#section-7.3-2.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-7.3-2.3">
+            <p id="section-7.3-2.3.1">Applications/protocols that use this scheme name: the WIMSE workload-to-workload authentication protocol.<a href="#section-7.3-2.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-7.3-2.4">
+            <p id="section-7.3-2.4.1">Contact: IETF Chair <a href="mailto:chair@ietf.org">chair@ietf.org</a><a href="#section-7.3-2.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-7.3-2.5">
+            <p id="section-7.3-2.5.1">Change controller: IESG <a href="mailto:iesg@ietf.org">iesg@ietf.org</a><a href="#section-7.3-2.5.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-7.3-2.6">
+            <p id="section-7.3-2.6.1">References: <a href="#app-level" class="auto internal xref">Section 3</a> of this document (RFC XXX).<a href="#section-7.3-2.6.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+</section>
+</div>
+</section>
+</div>
+<div id="sec-combined-references">
+<section id="section-8">
+      <h2 id="name-references">
+<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-references" class="section-name selfRef">References</a>
+      </h2>
+<div id="sec-normative-references">
+<section id="section-8.1">
+        <h3 id="name-normative-references">
+<a href="#section-8.1" class="section-number selfRef">8.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+        </h3>
+<dl class="references">
+<dt id="RFC2119">[RFC2119]</dt>
+        <dd>
+<span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC5234">[RFC5234]</dt>
+        <dd>
+<span class="refAuthor">Crocker, D., Ed.</span> and <span class="refAuthor">P. Overell</span>, <span class="refTitle">"Augmented BNF for Syntax Specifications: ABNF"</span>, <span class="seriesInfo">STD 68</span>, <span class="seriesInfo">RFC 5234</span>, <span class="seriesInfo">DOI 10.17487/RFC5234</span>, <time datetime="2008-01" class="refDate">January 2008</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc5234">https://www.rfc-editor.org/rfc/rfc5234</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC7515">[RFC7515]</dt>
+        <dd>
+<span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Bradley, J.</span>, and <span class="refAuthor">N. Sakimura</span>, <span class="refTitle">"JSON Web Signature (JWS)"</span>, <span class="seriesInfo">RFC 7515</span>, <span class="seriesInfo">DOI 10.17487/RFC7515</span>, <time datetime="2015-05" class="refDate">May 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7515">https://www.rfc-editor.org/rfc/rfc7515</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC7517">[RFC7517]</dt>
+        <dd>
+<span class="refAuthor">Jones, M.</span>, <span class="refTitle">"JSON Web Key (JWK)"</span>, <span class="seriesInfo">RFC 7517</span>, <span class="seriesInfo">DOI 10.17487/RFC7517</span>, <time datetime="2015-05" class="refDate">May 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7517">https://www.rfc-editor.org/rfc/rfc7517</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC7518">[RFC7518]</dt>
+        <dd>
+<span class="refAuthor">Jones, M.</span>, <span class="refTitle">"JSON Web Algorithms (JWA)"</span>, <span class="seriesInfo">RFC 7518</span>, <span class="seriesInfo">DOI 10.17487/RFC7518</span>, <time datetime="2015-05" class="refDate">May 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7518">https://www.rfc-editor.org/rfc/rfc7518</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC7519">[RFC7519]</dt>
+        <dd>
+<span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Bradley, J.</span>, and <span class="refAuthor">N. Sakimura</span>, <span class="refTitle">"JSON Web Token (JWT)"</span>, <span class="seriesInfo">RFC 7519</span>, <span class="seriesInfo">DOI 10.17487/RFC7519</span>, <time datetime="2015-05" class="refDate">May 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7519">https://www.rfc-editor.org/rfc/rfc7519</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC7800">[RFC7800]</dt>
+        <dd>
+<span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Bradley, J.</span>, and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"Proof-of-Possession Key Semantics for JSON Web Tokens (JWTs)"</span>, <span class="seriesInfo">RFC 7800</span>, <span class="seriesInfo">DOI 10.17487/RFC7800</span>, <time datetime="2016-04" class="refDate">April 2016</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7800">https://www.rfc-editor.org/rfc/rfc7800</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC7942">[RFC7942]</dt>
+        <dd>
+<span class="refAuthor">Sheffer, Y.</span> and <span class="refAuthor">A. Farrel</span>, <span class="refTitle">"Improving Awareness of Running Code: The Implementation Status Section"</span>, <span class="seriesInfo">BCP 205</span>, <span class="seriesInfo">RFC 7942</span>, <span class="seriesInfo">DOI 10.17487/RFC7942</span>, <time datetime="2016-07" class="refDate">July 2016</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7942">https://www.rfc-editor.org/rfc/rfc7942</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8174">[RFC8174]</dt>
+        <dd>
+<span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8414">[RFC8414]</dt>
+        <dd>
+<span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Sakimura, N.</span>, and <span class="refAuthor">J. Bradley</span>, <span class="refTitle">"OAuth 2.0 Authorization Server Metadata"</span>, <span class="seriesInfo">RFC 8414</span>, <span class="seriesInfo">DOI 10.17487/RFC8414</span>, <time datetime="2018-06" class="refDate">June 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8414">https://www.rfc-editor.org/rfc/rfc8414</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8725">[RFC8725]</dt>
+        <dd>
+<span class="refAuthor">Sheffer, Y.</span>, <span class="refAuthor">Hardt, D.</span>, and <span class="refAuthor">M. Jones</span>, <span class="refTitle">"JSON Web Token Best Current Practices"</span>, <span class="seriesInfo">BCP 225</span>, <span class="seriesInfo">RFC 8725</span>, <span class="seriesInfo">DOI 10.17487/RFC8725</span>, <time datetime="2020-02" class="refDate">February 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8725">https://www.rfc-editor.org/rfc/rfc8725</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9110">[RFC9110]</dt>
+      <dd>
+<span class="refAuthor">Fielding, R., Ed.</span>, <span class="refAuthor">Nottingham, M., Ed.</span>, and <span class="refAuthor">J. Reschke, Ed.</span>, <span class="refTitle">"HTTP Semantics"</span>, <span class="seriesInfo">STD 97</span>, <span class="seriesInfo">RFC 9110</span>, <span class="seriesInfo">DOI 10.17487/RFC9110</span>, <time datetime="2022-06" class="refDate">June 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9110">https://www.rfc-editor.org/rfc/rfc9110</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+</div>
+<div id="sec-informative-references">
+<section id="section-8.2">
+        <h3 id="name-informative-references">
+<a href="#section-8.2" class="section-number selfRef">8.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+        </h3>
+<dl class="references">
+<dt id="I-D.ietf-oauth-transaction-tokens">[I-D.ietf-oauth-transaction-tokens]</dt>
+        <dd>
+<span class="refAuthor">Tulshibagwale, A.</span>, <span class="refAuthor">Fletcher, G.</span>, and <span class="refAuthor">P. Kasselman</span>, <span class="refTitle">"Transaction Tokens"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-transaction-tokens-06</span>, <time datetime="2025-07-28" class="refDate">28 July 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-transaction-tokens-06">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-transaction-tokens-06</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.ietf-wimse-arch">[I-D.ietf-wimse-arch]</dt>
+        <dd>
+<span class="refAuthor">Salowey, J. A.</span>, <span class="refAuthor">Rosomakho, Y.</span>, and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"Workload Identity in a Multi System Environment (WIMSE) Architecture"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-arch-06</span>, <time datetime="2025-09-30" class="refDate">30 September 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-06">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-06</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="IANA.HTTP.FIELDS">[IANA.HTTP.FIELDS]</dt>
+        <dd>
+<span class="refAuthor">IANA</span>, <span class="refTitle">"Hypertext Transfer Protocol (HTTP) Field Name Registry"</span>, <span>&lt;<a href="https://www.iana.org/assignments/http-fields">https://www.iana.org/assignments/http-fields</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="IANA.JOSE.ALGS">[IANA.JOSE.ALGS]</dt>
+        <dd>
+<span class="refAuthor">IANA</span>, <span class="refTitle">"JSON Web Signature and Encryption Algorithms"</span>, <span>&lt;<a href="https://www.iana.org/assignments/jose">https://www.iana.org/assignments/jose</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="IANA.JWT.CLAIMS">[IANA.JWT.CLAIMS]</dt>
+        <dd>
+<span class="refAuthor">IANA</span>, <span class="refTitle">"JSON Web Token Claims"</span>, <span>&lt;<a href="https://www.iana.org/assignments/jwt">https://www.iana.org/assignments/jwt</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="IANA.MEDIA.TYPES">[IANA.MEDIA.TYPES]</dt>
+        <dd>
+<span class="refAuthor">IANA</span>, <span class="refTitle">"Media Types"</span>, <span>&lt;<a href="https://www.iana.org/assignments/media-types">https://www.iana.org/assignments/media-types</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="IANA.URI.SCHEMES">[IANA.URI.SCHEMES]</dt>
+        <dd>
+<span class="refAuthor">IANA</span>, <span class="refTitle">"Uniform Resource Identifier (URI) Schemes"</span>, <span>&lt;<a href="https://www.iana.org/assignments/uri-schemes">https://www.iana.org/assignments/uri-schemes</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9457">[RFC9457]</dt>
+      <dd>
+<span class="refAuthor">Nottingham, M.</span>, <span class="refAuthor">Wilde, E.</span>, and <span class="refAuthor">S. Dalal</span>, <span class="refTitle">"Problem Details for HTTP APIs"</span>, <span class="seriesInfo">RFC 9457</span>, <span class="seriesInfo">DOI 10.17487/RFC9457</span>, <time datetime="2023-07" class="refDate">July 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9457">https://www.rfc-editor.org/rfc/rfc9457</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+</div>
+</section>
+</div>
+<div id="document-history">
+<section id="appendix-A">
+      <h2 id="name-document-history">
+<a href="#appendix-A" class="section-number selfRef">Appendix A. </a><a href="#name-document-history" class="section-name selfRef">Document History</a>
+      </h2>
+<p id="appendix-A-1"><span class="cref">RFC Editor: please remove before publication.</span><a href="#appendix-A-1" class="pilcrow">¶</a></p>
+<div id="draft-ietf-wimse-workload-creds-00">
+<section id="appendix-A.1">
+        <h3 id="name-draft-ietf-wimse-workload-c">
+<a href="#appendix-A.1" class="section-number selfRef">A.1. </a><a href="#name-draft-ietf-wimse-workload-c" class="section-name selfRef">draft-ietf-wimse-workload-creds-00</a>
+        </h3>
+<ul class="normal">
+<li class="normal" id="appendix-A.1-1.1">
+            <p id="appendix-A.1-1.1.1">Remove WPT, HTTP-Sig and mutual TLS sections, which are going to be covered by individual documents. This includes re-phrasing of various sections to focus on the credentials only.<a href="#appendix-A.1-1.1.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+</section>
+</div>
+<div id="draft-ietf-wimse-s2s-protocol-07">
+<section id="appendix-A.2">
+        <h3 id="name-draft-ietf-wimse-s2s-protoc">
+<a href="#appendix-A.2" class="section-number selfRef">A.2. </a><a href="#name-draft-ietf-wimse-s2s-protoc" class="section-name selfRef">draft-ietf-wimse-s2s-protocol-07</a>
+        </h3>
+<ul class="normal">
+<li class="normal" id="appendix-A.2-1.1">
+            <p id="appendix-A.2-1.1.1">Rework the WPT's <code>oth</code> claim.<a href="#appendix-A.2-1.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.2-1.2">
+            <p id="appendix-A.2-1.2.1">update the media types.<a href="#appendix-A.2-1.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.2-1.3">
+            <p id="appendix-A.2-1.3.1">Discuss extensibility of WIT and WPT.<a href="#appendix-A.2-1.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.2-1.4">
+            <p id="appendix-A.2-1.4.1">Clarify error handling, specifically why not HTTP 401.<a href="#appendix-A.2-1.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.2-1.5">
+            <p id="appendix-A.2-1.5.1">Correct the code examples.<a href="#appendix-A.2-1.5.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.2-1.6">
+            <p id="appendix-A.2-1.6.1">Add registration request content for a <code>wimse</code> URI scheme.<a href="#appendix-A.2-1.6.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.2-1.7">
+            <p id="appendix-A.2-1.7.1">New section on key management.<a href="#appendix-A.2-1.7.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.2-1.8">
+            <p id="appendix-A.2-1.8.1">Use of the <code>Accept-Signature</code> header.<a href="#appendix-A.2-1.8.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+</section>
+</div>
+<div id="draft-ietf-wimse-s2s-protocol-06">
+<section id="appendix-A.3">
+        <h3 id="name-draft-ietf-wimse-s2s-protoco">
+<a href="#appendix-A.3" class="section-number selfRef">A.3. </a><a href="#name-draft-ietf-wimse-s2s-protoco" class="section-name selfRef">draft-ietf-wimse-s2s-protocol-06</a>
+        </h3>
+<ul class="normal">
+<li class="normal" id="appendix-A.3-1.1">
+            <p id="appendix-A.3-1.1.1">Explicit definition of the Workload Identity Certificate.<a href="#appendix-A.3-1.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.3-1.2">
+            <p id="appendix-A.3-1.2.1">Definition of the validation of workload identifiers as part of workload authentication. Still work in progress.<a href="#appendix-A.3-1.2.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+</section>
+</div>
+<div id="draft-ietf-wimse-s2s-protocol-05">
+<section id="appendix-A.4">
+        <h3 id="name-draft-ietf-wimse-s2s-protocol">
+<a href="#appendix-A.4" class="section-number selfRef">A.4. </a><a href="#name-draft-ietf-wimse-s2s-protocol" class="section-name selfRef">draft-ietf-wimse-s2s-protocol-05</a>
+        </h3>
+<ul class="normal">
+<li class="normal" id="appendix-A.4-1.1">
+            <p id="appendix-A.4-1.1.1">Removed the entire Workload Identity section which is now covered in the Architecture document.<a href="#appendix-A.4-1.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.4-1.2">
+            <p id="appendix-A.4-1.2.1">Content-Digest is mandatory with HTTP-Sig.<a href="#appendix-A.4-1.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.4-1.3">
+            <p id="appendix-A.4-1.3.1">Some wording on extending the protocol beyond HTTP.<a href="#appendix-A.4-1.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.4-1.4">
+            <p id="appendix-A.4-1.4.1">IANA considerations.<a href="#appendix-A.4-1.4.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+</section>
+</div>
+<div id="draft-ietf-wimse-s2s-protocol-04">
+<section id="appendix-A.5">
+        <h3 id="name-draft-ietf-wimse-s2s-protocol-">
+<a href="#appendix-A.5" class="section-number selfRef">A.5. </a><a href="#name-draft-ietf-wimse-s2s-protocol-" class="section-name selfRef">draft-ietf-wimse-s2s-protocol-04</a>
+        </h3>
+<ul class="normal">
+<li class="normal" id="appendix-A.5-1.1">
+            <p id="appendix-A.5-1.1.1">Require <code>cnf.jwk.alg</code> in WIT which restricts signature algorithm of WPT or HTTP-Sig.<a href="#appendix-A.5-1.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.5-1.2">
+            <p id="appendix-A.5-1.2.1">Replay protection as a <span class="bcp14">SHOULD</span> for both WPT and HTTP-Sig.<a href="#appendix-A.5-1.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.5-1.3">
+            <p id="appendix-A.5-1.3.1">Consolidate terminology with the Architecture draft.<a href="#appendix-A.5-1.3.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+</section>
+</div>
+<div id="draft-ietf-wimse-s2s-protocol-03">
+<section id="appendix-A.6">
+        <h3 id="name-draft-ietf-wimse-s2s-protocol-0">
+<a href="#appendix-A.6" class="section-number selfRef">A.6. </a><a href="#name-draft-ietf-wimse-s2s-protocol-0" class="section-name selfRef">draft-ietf-wimse-s2s-protocol-03</a>
+        </h3>
+<ul class="normal">
+<li class="normal" id="appendix-A.6-1.1">
+            <p id="appendix-A.6-1.1.1">Consistently use "workload".<a href="#appendix-A.6-1.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.6-1.2">
+            <p id="appendix-A.6-1.2.1">Implement comments from the SPIFFE community.<a href="#appendix-A.6-1.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.6-1.3">
+            <p id="appendix-A.6-1.3.1">Make <code>iss</code> claim in WIT optional and add wording about its relation to key distribution.<a href="#appendix-A.6-1.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.6-1.4">
+            <p id="appendix-A.6-1.4.1">Remove <code>iss</code> claim from WPT.<a href="#appendix-A.6-1.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.6-1.5">
+            <p id="appendix-A.6-1.5.1">Make <code>jti</code> claim in WIT optional.<a href="#appendix-A.6-1.5.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.6-1.6">
+            <p id="appendix-A.6-1.6.1">Error handling for the application level methods.<a href="#appendix-A.6-1.6.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+</section>
+</div>
+<div id="draft-ietf-wimse-s2s-protocol-02">
+<section id="appendix-A.7">
+        <h3 id="name-draft-ietf-wimse-s2s-protocol-02">
+<a href="#appendix-A.7" class="section-number selfRef">A.7. </a><a href="#name-draft-ietf-wimse-s2s-protocol-02" class="section-name selfRef">draft-ietf-wimse-s2s-protocol-02</a>
+        </h3>
+<ul class="normal">
+<li class="normal" id="appendix-A.7-1.1">
+            <p id="appendix-A.7-1.1.1">Coexistence with bearer tokens.<a href="#appendix-A.7-1.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.7-1.2">
+            <p id="appendix-A.7-1.2.1">Improve the architecture diagram.<a href="#appendix-A.7-1.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.7-1.3">
+            <p id="appendix-A.7-1.3.1">Some more ABNF.<a href="#appendix-A.7-1.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.7-1.4">
+            <p id="appendix-A.7-1.4.1">Clarified identifiers and URIs.<a href="#appendix-A.7-1.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.7-1.5">
+            <p id="appendix-A.7-1.5.1">Moved an author to acknowledgments.<a href="#appendix-A.7-1.5.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+</section>
+</div>
+<div id="draft-ietf-wimse-s2s-protocol-01">
+<section id="appendix-A.8">
+        <h3 id="name-draft-ietf-wimse-s2s-protocol-01">
+<a href="#appendix-A.8" class="section-number selfRef">A.8. </a><a href="#name-draft-ietf-wimse-s2s-protocol-01" class="section-name selfRef">draft-ietf-wimse-s2s-protocol-01</a>
+        </h3>
+<ul class="normal">
+<li class="normal" id="appendix-A.8-1.1">
+            <p id="appendix-A.8-1.1.1">Addressed multiple comments from Pieter.<a href="#appendix-A.8-1.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.8-1.2">
+            <p id="appendix-A.8-1.2.1">Clarified WIMSE identity concepts, specifically "trust domain"
+and "workload identifier".<a href="#appendix-A.8-1.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.8-1.3">
+            <p id="appendix-A.8-1.3.1">Much more detail around mTLS, including some normative language.<a href="#appendix-A.8-1.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.8-1.4">
+            <p id="appendix-A.8-1.4.1">WIT (the identity token) is now included in the WPT proof of possession.<a href="#appendix-A.8-1.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.8-1.5">
+            <p id="appendix-A.8-1.5.1">Added a section comparing the DPoP-inspired app-level security option to
+the Message Signature-based alternative.<a href="#appendix-A.8-1.5.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+</section>
+</div>
+<div id="draft-ietf-wimse-s2s-protocol-00">
+<section id="appendix-A.9">
+        <h3 id="name-draft-ietf-wimse-s2s-protocol-00">
+<a href="#appendix-A.9" class="section-number selfRef">A.9. </a><a href="#name-draft-ietf-wimse-s2s-protocol-00" class="section-name selfRef">draft-ietf-wimse-s2s-protocol-00</a>
+        </h3>
+<ul class="normal">
+<li class="normal" id="appendix-A.9-1.1">
+            <p id="appendix-A.9-1.1.1">Initial WG draft, an exact copy of draft-sheffer-wimse-s2s-protocol-00<a href="#appendix-A.9-1.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.9-1.2">
+            <p id="appendix-A.9-1.2.1">Added this document history section<a href="#appendix-A.9-1.2.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+</section>
+</div>
+</section>
+</div>
+<div id="acknowledgments">
+<section id="appendix-B">
+      <h2 id="name-acknowledgments">
+<a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
+      </h2>
+<p id="appendix-B-1">The authors would like to thank Pieter Kasselman for his detailed comments.<a href="#appendix-B-1" class="pilcrow">¶</a></p>
+<p id="appendix-B-2">We thank Daniel Feldman for his contributions to earlier versions of this document.<a href="#appendix-B-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="authors-addresses">
+<section id="appendix-C">
+      <h2 id="name-authors-addresses">
+<a href="#name-authors-addresses" class="section-name selfRef">Authors' Addresses</a>
+      </h2>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Brian Campbell</span></div>
+<div dir="auto" class="left"><span class="org">Ping Identity</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:bcampbell@pingidentity.com" class="email">bcampbell@pingidentity.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Joe Salowey</span></div>
+<div dir="auto" class="left"><span class="org">CyberArk</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:joe@salowey.net" class="email">joe@salowey.net</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Arndt Schwenkschuster</span></div>
+<div dir="auto" class="left"><span class="org">Defakto Security</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:arndts.ietf@gmail.com" class="email">arndts.ietf@gmail.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Yaron Sheffer</span></div>
+<div dir="auto" class="left"><span class="org">Intuit</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:yaronf.ietf@gmail.com" class="email">yaronf.ietf@gmail.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Yaroslav Rosomakho</span></div>
+<div dir="auto" class="left"><span class="org">Zscaler</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:yrosomakho@zscaler.com" class="email">yrosomakho@zscaler.com</a>
+</div>
+</address>
+</section>
+</div>
+<script>const toc = document.getElementById("toc");
+toc.querySelector("h2").addEventListener("click", e => {
+  toc.classList.toggle("active");
+});
+toc.querySelector("nav").addEventListener("click", e => {
+  toc.classList.remove("active");
+});
+</script>
+</body>
+</html>
