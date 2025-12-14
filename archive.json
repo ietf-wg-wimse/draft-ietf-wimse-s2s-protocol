@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-12-11T01:38:40.375641+00:00",
+  "timestamp": "2025-12-14T01:43:45.808919+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -2852,9 +2852,17 @@
       ],
       "body": "",
       "createdAt": "2025-08-25T23:09:54Z",
-      "updatedAt": "2025-12-09T15:22:35Z",
+      "updatedAt": "2025-12-12T15:11:40Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "For http-sig, #187 ",
+          "createdAt": "2025-12-12T15:11:40Z",
+          "updatedAt": "2025-12-12T15:11:40Z"
+        }
+      ]
     },
     {
       "number": 156,
@@ -3350,7 +3358,7 @@
       "id": "I_kwDOLJmm787Vgrnk",
       "title": "Implementation status",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/182",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -3359,12 +3367,12 @@
       ],
       "body": "Add https://github.com/cofide/wimse-s2s-httpsig-poc\n\ncc @cofide",
       "createdAt": "2025-11-03T13:40:02Z",
-      "updatedAt": "2025-11-03T19:19:29Z",
-      "closedAt": null,
+      "updatedAt": "2025-12-12T15:24:34Z",
+      "closedAt": "2025-12-12T15:24:34Z",
       "comments": [
         {
           "author": "jsnctl",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Thank you for raising @yaronf, happy to open a change to add this\n\nI note the other protocol implementations are referred to here (although these refer to the organisations rather than linking to the implementations themselves)\n\nhttps://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/blob/452ba9acb1e2ec6b9127a15e1dec10341cd320c6/draft-ietf-wimse-s2s-protocol.md?plain=1#L628-L660\n\n* Does this remain the best place to add the implementation - I appreciate the document is undergoing significant change just now so perhaps this is due to be moved?\n* Should the implementation repo itself be linked?",
           "createdAt": "2025-11-03T14:12:19Z",
           "updatedAt": "2025-11-03T14:12:37Z"
@@ -3375,6 +3383,13 @@
           "body": "Hi @jsnctl! The new drafts will be replacing this single one. Which granted complicates a bit the question of where implementation status should go to in the new \"portfolio\". I tagged your implementation with the http-sig label, but then again, you also implement the WIT itself. So the editor team will need to discuss it.\n\nFor more on the expected details, see https://datatracker.ietf.org/doc/html/rfc7942 - both closed source (=organizations) and open source code is in scope.",
           "createdAt": "2025-11-03T19:19:29Z",
           "updatedAt": "2025-11-03T19:19:29Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Addressed by #186.",
+          "createdAt": "2025-12-12T15:24:34Z",
+          "updatedAt": "2025-12-12T15:24:34Z"
         }
       ]
     },
@@ -3433,6 +3448,24 @@
       "body": "From Jason Costello <jason@cofide.io>:\n\n* The `exp` of the WIT and the `expires` value of the HTTP Message Signature are independent, with the signature lifetime significantly shorter than that of the credential itself. An explicit point to note the difference between these values could ensure implementations do not incorrectly assume these are equivalent,\n\n* It appears that `keyid` was denoted a required signature parameter in earlier drafts of the HTTP Message Signatures document, with this requirement relaxed in the published RFC. While implementations should obviously conform to the RFC, this does present a scenario where older implementations of HTTP Message Signatures might expect a `keyid` (for example, Python\u2019s http-message-signatures https://pypi.org/project/http-message-signatures/).\n\n@jsnctl\n",
       "createdAt": "2025-11-13T13:23:31Z",
       "updatedAt": "2025-12-09T15:38:26Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 188,
+      "id": "I_kwDOLJmm787eGC0G",
+      "title": "Response signing",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/188",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-http-signature"
+      ],
+      "body": "The normative status of response signing (MAY or SHOULD) is never clarified.\n\nWe should also note that (in the absence of agreed upon policy) the response signature can be deleted by an attacker without detection. And the `Accept-Signature` header would not help either.",
+      "createdAt": "2025-12-13T16:04:39Z",
+      "updatedAt": "2025-12-13T16:04:39Z",
       "closedAt": null,
       "comments": []
     }
@@ -9256,7 +9289,7 @@
       "labels": [],
       "body": "See title. Resolves #95.",
       "createdAt": "2025-02-27T18:23:31Z",
-      "updatedAt": "2025-02-28T14:18:46Z",
+      "updatedAt": "2025-12-13T13:23:49Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "e0b68d47c67d43a0e8ae6c4d1f36b309cdbb4f14",
@@ -9753,7 +9786,7 @@
       "labels": [],
       "body": "Resolves issue #15 ",
       "createdAt": "2025-03-01T19:44:05Z",
-      "updatedAt": "2025-03-03T10:40:21Z",
+      "updatedAt": "2025-12-13T13:23:53Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "bc1d511696258eef2ddd23abf96fdef468b83192",
@@ -11840,7 +11873,7 @@
       "labels": [],
       "body": "Resolves #123.",
       "createdAt": "2025-07-29T18:42:39Z",
-      "updatedAt": "2025-08-12T14:07:23Z",
+      "updatedAt": "2025-12-13T13:24:55Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "1184084fa0feea4f9c1fe6d36221cb119b96bf56",
@@ -11895,7 +11928,7 @@
       "labels": [],
       "body": "Closes #113.",
       "createdAt": "2025-08-03T09:56:59Z",
-      "updatedAt": "2025-08-03T15:18:35Z",
+      "updatedAt": "2025-12-13T13:23:57Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "1184084fa0feea4f9c1fe6d36221cb119b96bf56",
@@ -11937,7 +11970,7 @@
       "labels": [],
       "body": "Resolves #70.",
       "createdAt": "2025-08-06T14:06:21Z",
-      "updatedAt": "2025-08-12T14:11:08Z",
+      "updatedAt": "2025-12-13T13:23:58Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "8b1a163d38399e544d695d7a204055d6e047c698",
@@ -11992,7 +12025,7 @@
       "labels": [],
       "body": "Resolves #100.",
       "createdAt": "2025-08-07T09:09:46Z",
-      "updatedAt": "2025-08-12T14:12:59Z",
+      "updatedAt": "2025-12-13T13:24:58Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "b3de336af6c2d92ba01090f8fb6a3359bea107cf",
@@ -12227,7 +12260,7 @@
       "labels": [],
       "body": "Closes #112.",
       "createdAt": "2025-08-13T17:03:17Z",
-      "updatedAt": "2025-08-27T22:31:22Z",
+      "updatedAt": "2025-12-13T13:24:08Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "44dde15f2daceaa4760cf7fef69125226524af4d",
@@ -12515,7 +12548,7 @@
       "labels": [],
       "body": "for #139\r\n\r\nchange wimse-id+jwt and wimse-proof+jwt to wit+jwt and wpt+jwt respectively \r\n \r\nupdate examples/main.go and try to make things that don't need to change not change\r\n\r\nupdated the typ value in WITs of http sigs ",
       "createdAt": "2025-08-25T23:05:48Z",
-      "updatedAt": "2025-09-09T16:48:19Z",
+      "updatedAt": "2025-12-13T13:24:23Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "44dde15f2daceaa4760cf7fef69125226524af4d",
@@ -12632,7 +12665,7 @@
       "labels": [],
       "body": "addresses issue #69 ",
       "createdAt": "2025-08-26T03:43:10Z",
-      "updatedAt": "2025-08-26T12:52:49Z",
+      "updatedAt": "2025-12-13T13:24:18Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "44dde15f2daceaa4760cf7fef69125226524af4d",
@@ -12936,7 +12969,7 @@
       "labels": [],
       "body": "Remove WIMSE client and server terms as we do not use them anywhere else. close issue #73 ",
       "createdAt": "2025-09-07T22:41:27Z",
-      "updatedAt": "2025-09-17T18:41:08Z",
+      "updatedAt": "2025-12-13T13:24:33Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "95ddc76f6c1c142e118ab1d42bc97f57c08b9b38",
@@ -13011,7 +13044,7 @@
       "labels": [],
       "body": "Removes  extraneous sentence. closes issue 156",
       "createdAt": "2025-09-07T22:47:38Z",
-      "updatedAt": "2025-09-09T16:50:46Z",
+      "updatedAt": "2025-12-13T13:24:32Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "95ddc76f6c1c142e118ab1d42bc97f57c08b9b38",
@@ -13066,7 +13099,7 @@
       "labels": [],
       "body": "forgotten in #152 ",
       "createdAt": "2025-09-09T17:01:31Z",
-      "updatedAt": "2025-09-17T14:23:01Z",
+      "updatedAt": "2025-12-13T13:24:34Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "4aabcef732e7c2c6980e1e8265dfb949558ef63f",
@@ -13224,7 +13257,7 @@
       "labels": [],
       "body": "Doc history for -07, the starting point for the new document structure.",
       "createdAt": "2025-10-16T12:23:18Z",
-      "updatedAt": "2025-10-16T13:58:20Z",
+      "updatedAt": "2025-12-13T13:23:20Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "51a2408c1c9bc490394bb7633b78b385277a7fe2",
@@ -14010,7 +14043,7 @@
       ],
       "body": "Preview: https://ietf-wg-wimse.github.io/draft-ietf-wimse-s2s-protocol/ys-http-sig-00/draft-ietf-wimse-http-signature.html",
       "createdAt": "2025-10-22T10:45:13Z",
-      "updatedAt": "2025-11-02T21:01:09Z",
+      "updatedAt": "2025-12-13T13:23:19Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "5958651d2e6728a7de709091fb678d3c73f6b582",
@@ -14242,20 +14275,107 @@
       "id": "PR_kwDOLJmm786zUTev",
       "title": "Adds note on implementation",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/186",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "jsnctl",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "raised https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/182\r\n\r\nFollowing the guidance in [RFC7942](https://datatracker.ietf.org/doc/html/rfc7942), this adds the \"Implementation Status\" section and a note on the WIT + HTTP Message Signatures implementation. \r\n\r\nThis could be equally at home in the Workload Credential/WIT document, but opening for visibility",
       "createdAt": "2025-11-13T21:38:27Z",
-      "updatedAt": "2025-11-14T07:24:34Z",
+      "updatedAt": "2025-12-12T15:23:42Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "d3c7e629c45b02ace8a01bef7500ac4bd66ca7bd",
       "headRepository": "jsnctl/draft-ietf-wimse-s2s-protocol",
       "headRefName": "jsnctl/add-implementation-status",
-      "headRefOid": "c8803a4c159adf3ce381600e4f1fc667df453734",
+      "headRefOid": "c9d161e9d19f9ff7b8b1c6e8a9eb11880756d1f9",
+      "closedAt": "2025-12-12T15:23:42Z",
+      "mergedAt": "2025-12-12T15:23:42Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "4a0de62dfe29a6e58fcbbb5ceeca92a3f0aeed55"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm787U7RHA",
+          "commit": {
+            "abbreviatedOid": "c9d161e"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-12-12T15:22:59Z",
+          "updatedAt": "2025-12-12T15:22:59Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 187,
+      "id": "PR_kwDOLJmm7864leFd",
+      "title": "Acknowledgements - HTTP Sig",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/187",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-http-signature"
+      ],
+      "body": "",
+      "createdAt": "2025-12-12T15:07:51Z",
+      "updatedAt": "2025-12-12T17:48:05Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "d3c7e629c45b02ace8a01bef7500ac4bd66ca7bd",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-http-sig-ack",
+      "headRefOid": "f630bdd7f974ae024676e12e0e1a95489beddc26",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "jsnctl",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Thank you @yaronf. If possible, could you also include my colleagues Maartje Eyskens and Rados\u0142aw Piliszek as they both contributed to the implementation and feedback?",
+          "createdAt": "2025-12-12T17:15:16Z",
+          "updatedAt": "2025-12-12T17:15:16Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> Thank you @yaronf. If possible, could you also include my colleagues Maartje Eyskens and Rados\u0142aw Piliszek as they both contributed to the implementation and feedback?\r\n\r\nDone.",
+          "createdAt": "2025-12-12T17:48:05Z",
+          "updatedAt": "2025-12-12T17:48:05Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 189,
+      "id": "PR_kwDOLJmm7864tHTd",
+      "title": "HTTP Sig - Security Goals",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/189",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-http-signature"
+      ],
+      "body": "I am asking the whole team to review because we will want similar sections in all docs.",
+      "createdAt": "2025-12-13T16:13:17Z",
+      "updatedAt": "2025-12-13T21:35:19Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "4a0de62dfe29a6e58fcbbb5ceeca92a3f0aeed55",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-httpsig-sec-goals",
+      "headRefOid": "edf5dcd7714dee7c7ca141c720cbd3bcc9b86799",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
