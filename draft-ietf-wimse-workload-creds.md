@@ -144,7 +144,7 @@ The high-level message flow is as follows:
 4. Workload B authorizes the call. This policy enforcement (Policy Enforcement Point, PEP) may include consulting with an external server (Policy Decision Point, PDP) when making this decision.
 5. Workload B returns a response to Workload A, which may be an error response or a regular one.
 
-Depending on the protocol, the workload authentication may happen during step (2) at the transport-level or at step (3) at the application-level, or both.
+Depending on the protocol, the workload authentication may happen during step (2) at the transport-level or at step (3) at the application-level, or both. In special situations, step 5 may also carry authentication information, see "Response authentication" at {{workload-identity-token-and-proof-of-possession}}
 
 ## Workload Identifiers and Authentication Granularity {#granular-auth}
 
@@ -426,6 +426,10 @@ Proof of possession mechanisms should include replay protection to prevent reuse
 
 The POP MAY be bound to a transport layer sender such as the client identity of a TLS session or TLS channel binding parameters. The mechanisms for binding are outside the scope of this specification.
 
+* Response authentication
+
+A server may return a WIT and POP to authenticate the response to the client. It is important to differentiate this with the server authentication at the transport-level which generally happens when the connection is established and crucially, before a request is sent. Relying on a WIT & POP in the response for server authentication means the request is sent before the peer is authenticated, potentially sending it to a undesired party. Mitigating measures may include using both, transport-level and application-level workload authentication simultaneously. See TODO link from other PR.
+
 ## Workload Identity Key Management
 
 Both the Workload Identity Token and the Workload Identity Certificate carry a public key. The corresponding private key:
@@ -448,7 +452,6 @@ Deployments should perform analysis on their situation to determine if it is app
 WITs and the proofs of possession may contain private information such as user names or other identities. Care should be taken to prevent the disclosure of this information. The use of TLS helps protect the privacy of WITs and proofs of possession.
 
 WITs and certificates with workload identifiers are typically associated with a workload and not a specific user, however in some deployments the workload may be associated directly to a user. While these are exceptional cases a deployment should evaluate if the disclosure of WITs or certificates can be used to track a user.
-
 
 # IANA Considerations
 
