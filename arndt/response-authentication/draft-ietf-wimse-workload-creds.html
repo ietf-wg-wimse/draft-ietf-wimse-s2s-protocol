@@ -1954,7 +1954,7 @@ token and proof of possession <span class="bcp14">MUST</span> be sent over a sec
             <p id="section-6.2-12.1.1">Response authentication<a href="#section-6.2-12.1.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-6.2-13">A server may return a WIT and POP to authenticate the response to the client. It is important to differentiate this with the server authentication at the transport-level which generally happens when the connection is established and crucially, before a request is sent. Relying on a WIT &amp; POP in the response for server authentication means the request is sent before the peer is authenticated, potentially sending it to a undesired party. Mitigating measures may include using both, transport-level and application-level workload authentication simultaneously. See TODO link from other PR.<a href="#section-6.2-13" class="pilcrow">¶</a></p>
+<p id="section-6.2-13">A server may return a WIT and POP to authenticate the response to the client. It is important to differentiate this from the server authentication at the transport-level which generally happens when the connection is established and crucially, before a request is sent. Relying on a WIT &amp; POP in the response for server authentication means the request is sent before the peer is authenticated, potentially sending it to an undesired party. Mitigating measures may include using both transport-level and application-level workload authentication simultaneously. See TODO link from other PR.<a href="#section-6.2-13" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="workload-identity-key-management">
