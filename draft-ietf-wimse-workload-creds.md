@@ -428,7 +428,7 @@ The POP MAY be bound to a transport layer sender such as the client identity of 
 
 * Response authentication
 
-A server may return a WIT and POP to authenticate the response to the client. It is important to differentiate this with the server authentication at the transport-level which generally happens when the connection is established and crucially, before a request is sent. Relying on a WIT & POP in the response for server authentication means the request is sent before the peer is authenticated, potentially sending it to a undesired party. Mitigating measures may include using both, transport-level and application-level workload authentication simultaneously. See TODO link from other PR.
+A server may return a WIT and POP to authenticate the response to the client. It is important to differentiate this from the server authentication at the transport-level which generally happens when the connection is established and crucially, before a request is sent. Relying on a WIT & POP in the response for server authentication means the request is sent before the peer is authenticated, potentially sending it to an undesired party. Mitigating measures may include using both transport-level and application-level workload authentication simultaneously. See TODO link from other PR.
 
 ## Workload Identity Key Management
 
