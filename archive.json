@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-12-14T01:43:45.808919+00:00",
+  "timestamp": "2025-12-16T01:39:05.455047+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -3447,9 +3447,17 @@
       ],
       "body": "From Jason Costello <jason@cofide.io>:\n\n* The `exp` of the WIT and the `expires` value of the HTTP Message Signature are independent, with the signature lifetime significantly shorter than that of the credential itself. An explicit point to note the difference between these values could ensure implementations do not incorrectly assume these are equivalent,\n\n* It appears that `keyid` was denoted a required signature parameter in earlier drafts of the HTTP Message Signatures document, with this requirement relaxed in the published RFC. While implementations should obviously conform to the RFC, this does present a scenario where older implementations of HTTP Message Signatures might expect a `keyid` (for example, Python\u2019s http-message-signatures https://pypi.org/project/http-message-signatures/).\n\n@jsnctl\n",
       "createdAt": "2025-11-13T13:23:31Z",
-      "updatedAt": "2025-12-09T15:38:26Z",
+      "updatedAt": "2025-12-14T17:02:16Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Will add a note re: `exp`.\n\nI thought of adding a note on `keyid` but then decided that it would not age well. This is a bug and should be fixed in the implementation. The library is not even *that* old...",
+          "createdAt": "2025-12-14T17:02:16Z",
+          "updatedAt": "2025-12-14T17:02:16Z"
+        }
+      ]
     },
     {
       "number": 188,
@@ -14369,13 +14377,69 @@
       ],
       "body": "I am asking the whole team to review because we will want similar sections in all docs.",
       "createdAt": "2025-12-13T16:13:17Z",
-      "updatedAt": "2025-12-13T21:35:19Z",
+      "updatedAt": "2025-12-14T19:43:37Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "4a0de62dfe29a6e58fcbbb5ceeca92a3f0aeed55",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-httpsig-sec-goals",
       "headRefOid": "edf5dcd7714dee7c7ca141c720cbd3bcc9b86799",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 190,
+      "id": "PR_kwDOLJmm7864x94P",
+      "title": "Clarify response signing section",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/190",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-http-signature"
+      ],
+      "body": "- Clarify that Accept-Signature is a preference, not a mandate\r\n- Specify which components to include in Accept-Signature header\r\n- Clarify that client (recipient of response) must validate signatures\r\n- Add requirement to reject responses if signature is absent or invalid\r\n\r\nCloses #188.",
+      "createdAt": "2025-12-14T16:51:32Z",
+      "updatedAt": "2025-12-14T16:51:32Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "4a0de62dfe29a6e58fcbbb5ceeca92a3f0aeed55",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-188",
+      "headRefOid": "2de8c1931d235b51a2ccde6a356b4b943f7f9337",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 191,
+      "id": "PR_kwDOLJmm7864yDhi",
+      "title": "Implementation feedback",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/191",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-http-signature"
+      ],
+      "body": "Closes #185.",
+      "createdAt": "2025-12-14T17:08:53Z",
+      "updatedAt": "2025-12-14T17:08:53Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "4a0de62dfe29a6e58fcbbb5ceeca92a3f0aeed55",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-185",
+      "headRefOid": "c11f2150ca85b0d83fcdd91ea0e011f9e5e13c26",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
