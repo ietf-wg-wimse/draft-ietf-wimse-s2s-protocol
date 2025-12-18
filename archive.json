@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-12-16T01:39:05.455047+00:00",
+  "timestamp": "2025-12-18T01:25:58.140089+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -14334,7 +14334,7 @@
       ],
       "body": "",
       "createdAt": "2025-12-12T15:07:51Z",
-      "updatedAt": "2025-12-12T17:48:05Z",
+      "updatedAt": "2025-12-16T15:03:14Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "d3c7e629c45b02ace8a01bef7500ac4bd66ca7bd",
@@ -14361,7 +14361,21 @@
           "updatedAt": "2025-12-12T17:48:05Z"
         }
       ],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm787VmM8X",
+          "commit": {
+            "abbreviatedOid": "f630bdd"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Thank you back :) ",
+          "createdAt": "2025-12-16T15:03:14Z",
+          "updatedAt": "2025-12-16T15:03:14Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 189,
@@ -14377,7 +14391,7 @@
       ],
       "body": "I am asking the whole team to review because we will want similar sections in all docs.",
       "createdAt": "2025-12-13T16:13:17Z",
-      "updatedAt": "2025-12-14T19:43:37Z",
+      "updatedAt": "2025-12-16T15:47:34Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "4a0de62dfe29a6e58fcbbb5ceeca92a3f0aeed55",
@@ -14389,7 +14403,88 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm787Vm7gj",
+          "commit": {
+            "abbreviatedOid": "edf5dcd"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-12-16T15:40:04Z",
+          "updatedAt": "2025-12-16T15:40:04Z",
+          "comments": [
+            {
+              "originalPosition": 9,
+              "body": "Prerequisites?",
+              "createdAt": "2025-12-16T15:40:04Z",
+              "updatedAt": "2025-12-16T15:40:04Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787Vm-rz",
+          "commit": {
+            "abbreviatedOid": "edf5dcd"
+          },
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-12-16T15:43:13Z",
+          "updatedAt": "2025-12-16T15:43:14Z",
+          "comments": [
+            {
+              "originalPosition": 38,
+              "body": "```suggestion\r\n* No requests can be modified without detection by the recipient. Integrity of all present HTTP headers specified in this document is protected, as well as the message body (when present).\r\n```",
+              "createdAt": "2025-12-16T15:43:13Z",
+              "updatedAt": "2025-12-16T15:43:14Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787Vm_5a",
+          "commit": {
+            "abbreviatedOid": "edf5dcd"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-12-16T15:44:25Z",
+          "updatedAt": "2025-12-16T15:44:26Z",
+          "comments": [
+            {
+              "originalPosition": 30,
+              "body": "More a prereq than a property.",
+              "createdAt": "2025-12-16T15:44:26Z",
+              "updatedAt": "2025-12-16T15:44:26Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787VnDbo",
+          "commit": {
+            "abbreviatedOid": "edf5dcd"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-12-16T15:47:33Z",
+          "updatedAt": "2025-12-16T15:47:34Z",
+          "comments": [
+            {
+              "originalPosition": 47,
+              "body": "Unless response signing is mandated.",
+              "createdAt": "2025-12-16T15:47:34Z",
+              "updatedAt": "2025-12-16T15:47:34Z"
+            }
+          ]
+        }
+      ]
     },
     {
       "number": 190,
@@ -14405,7 +14500,7 @@
       ],
       "body": "- Clarify that Accept-Signature is a preference, not a mandate\r\n- Specify which components to include in Accept-Signature header\r\n- Clarify that client (recipient of response) must validate signatures\r\n- Add requirement to reject responses if signature is absent or invalid\r\n\r\nCloses #188.",
       "createdAt": "2025-12-14T16:51:32Z",
-      "updatedAt": "2025-12-14T16:51:32Z",
+      "updatedAt": "2025-12-16T15:10:11Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "4a0de62dfe29a6e58fcbbb5ceeca92a3f0aeed55",
@@ -14417,7 +14512,48 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm787VmWet",
+          "commit": {
+            "abbreviatedOid": "2de8c19"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-12-16T15:09:59Z",
+          "updatedAt": "2025-12-16T15:09:59Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "Clarify that this is per Sec. 5 of RFC xxx.",
+              "createdAt": "2025-12-16T15:09:59Z",
+              "updatedAt": "2025-12-16T15:09:59Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787VmWvR",
+          "commit": {
+            "abbreviatedOid": "2de8c19"
+          },
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-12-16T15:10:10Z",
+          "updatedAt": "2025-12-16T15:10:11Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "```suggestion\r\nAs described in {{Section 5 of RFC9421}}, either client or server MAY send an `Accept-Signature` header, but is not required to do so. The `Accept-Signature` header indicates a preference for signed messages but does not mandate that responses be signed. When a client sends `Accept-Signature` in a request, it SHOULD list the response components it wishes to have signed (as specified above for signed responses). When a server sends `Accept-Signature` in a response, it SHOULD list the request components it wishes to have signed in subsequent requests (as specified above for signed requests).\r\n```",
+              "createdAt": "2025-12-16T15:10:10Z",
+              "updatedAt": "2025-12-16T15:10:11Z"
+            }
+          ]
+        }
+      ]
     },
     {
       "number": 191,
@@ -14433,7 +14569,7 @@
       ],
       "body": "Closes #185.",
       "createdAt": "2025-12-14T17:08:53Z",
-      "updatedAt": "2025-12-14T17:08:53Z",
+      "updatedAt": "2025-12-16T15:04:58Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "4a0de62dfe29a6e58fcbbb5ceeca92a3f0aeed55",
@@ -14445,7 +14581,187 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm787VmPUD",
+          "commit": {
+            "abbreviatedOid": "c11f215"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-12-16T15:04:58Z",
+          "updatedAt": "2025-12-16T15:04:58Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 192,
+      "id": "PR_kwDOLJmm7865IZ3b",
+      "title": "Describe simultaneous use",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/192",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "Resolves #87",
+      "createdAt": "2025-12-16T11:27:06Z",
+      "updatedAt": "2025-12-16T15:10:14Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "4a0de62dfe29a6e58fcbbb5ceeca92a3f0aeed55",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "arndt/simultaneous-use",
+      "headRefOid": "54745812e3b252652983f51a92aa01d7352a8190",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm787Vi1-6",
+          "commit": {
+            "abbreviatedOid": "5474581"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-12-16T11:46:10Z",
+          "updatedAt": "2025-12-16T11:46:10Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "The question arises if the Workload Identity must be the same. I believe no, as it would break the proxy pattern. However, it's a special situation if 2 different identities are passed. Questions come up: Which one is used for authentication, what is the actor, etc?",
+              "createdAt": "2025-12-16T11:46:10Z",
+              "updatedAt": "2025-12-16T11:46:10Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 193,
+      "id": "PR_kwDOLJmm7865Iar_",
+      "title": "Delete old s2s document",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/193",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-12-16T11:28:19Z",
+      "updatedAt": "2025-12-16T17:57:22Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "4a0de62dfe29a6e58fcbbb5ceeca92a3f0aeed55",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "arndt/delete-old-document",
+      "headRefOid": "ce4c113671c5f7765829fee2ab0dcb8661922d2c",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Are you sure? What are we gaining by deleting it? Also, the I-D is officially not expired (and it's an adopted draft) so this looks weird from a formalistic point of view.\r\n\r\nMaybe all we need to do is to manually edit the README to link to the Editor's Copy for each of the new draft.",
+          "createdAt": "2025-12-16T12:29:24Z",
+          "updatedAt": "2025-12-16T12:29:24Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm787Vm4i7",
+          "commit": {
+            "abbreviatedOid": "ce4c113"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-12-16T15:37:15Z",
+          "updatedAt": "2025-12-16T15:37:15Z",
+          "comments": [
+            {
+              "originalPosition": 1,
+              "body": "@arndt-s  update readme",
+              "createdAt": "2025-12-16T15:37:15Z",
+              "updatedAt": "2025-12-16T15:37:15Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787VpFaz",
+          "commit": {
+            "abbreviatedOid": "ce4c113"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-12-16T17:57:22Z",
+          "updatedAt": "2025-12-16T17:57:22Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 194,
+      "id": "PR_kwDOLJmm7865IrE8",
+      "title": "Add some color to response authentication",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/194",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "Attempt to resolve #183.\n\nIt talks about signing, but I believe in general, this is about authenticating the response on a broader level.",
+      "createdAt": "2025-12-16T11:52:04Z",
+      "updatedAt": "2025-12-16T15:37:55Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "4a0de62dfe29a6e58fcbbb5ceeca92a3f0aeed55",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "arndt/response-authentication",
+      "headRefOid": "61ac766cdc08a5ddcba2ad807c718374771ebb88",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm787Vl_5u",
+          "commit": {
+            "abbreviatedOid": "2e657ef"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-12-16T14:52:17Z",
+          "updatedAt": "2025-12-16T14:52:17Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "```suggestion\nA server may return a WIT and POP to authenticate the response to the client. It is important to differentiate this from the server authentication at the transport-level which generally happens when the connection is established and crucially, before a request is sent. Relying on a WIT & POP in the response for server authentication means the request is sent before the peer is authenticated, potentially sending it to an undesired party. Mitigating measures may include using both transport-level and application-level workload authentication simultaneously. See TODO link from other PR.\n```",
+              "createdAt": "2025-12-16T14:52:17Z",
+              "updatedAt": "2025-12-16T14:52:17Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
