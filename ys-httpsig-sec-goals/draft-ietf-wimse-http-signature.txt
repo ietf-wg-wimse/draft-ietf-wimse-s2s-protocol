@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments                J. Salowey
 Internet-Draft                                                  CyberArk
 Intended status: Standards Track                              Y. Sheffer
-Expires: 16 June 2026                                             Intuit
-                                                        13 December 2025
+Expires: 24 June 2026                                             Intuit
+                                                        21 December 2025
 
 
      WIMSE Workload-to-Workload Authentication with HTTP Signatures
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 16 June 2026.
+   This Internet-Draft will expire on 24 June 2026.
 
 Copyright Notice
 
@@ -89,11 +89,10 @@ Table of Contents
      5.2.  Middle Boxes
      5.3.  Privacy Considerations
    6.  Security Goals
-     6.1.  Assumptions
+     6.1.  Prerequisites
      6.2.  Authentication
-     6.3.  Confidentiality
-     6.4.  Integrity
-     6.5.  Replay and Deletion
+     6.3.  Integrity
+     6.4.  Replay and Deletion
    7.  IANA Considerations
    8.  References
      8.1.  Normative References
@@ -482,7 +481,7 @@ Table of Contents
    inform developers and for these goals to eventually evolve into
    formal verification of the protocol.
 
-6.1.  Assumptions
+6.1.  Prerequisites
 
    The following are out of scope of the protocol and their security is
    assumed.
@@ -506,6 +505,11 @@ Table of Contents
       may be terminated on one or more middleboxes and the TLS endpoint
       identity (or identities) is not associated with a WIMSE identity.
 
+   *  As a result, all workload-to-workload traffic is confidential and
+      (assuming honest participants) is only available to sender,
+      receiver, and any TLS-terminating middleboxes that process the
+      traffic.
+
 6.2.  Authentication
 
    *  A workload receiving a request can validate that it is signed
@@ -518,37 +522,30 @@ Table of Contents
    *  The above implies that a stolen WIT cannot be used by an entity
       other than its owner.
 
-6.3.  Confidentiality
-
-   *  All workload-to-workload traffic is confidential and (assuming
-      honest participants) is only available to sender, receiver, and
-      any TLS-terminating middleboxes that process the traffic.
-
-6.4.  Integrity
+6.3.  Integrity
 
    *  No requests can be modified without detection by the recipient.
-      All HTTP headers specified in this document are integrity
-      protected when present, as well as the message body (when
-      present).
+      Integrity of all present HTTP headers specified in this document
+      is protected, as well as the message body (when present).
 
    *  No responses can be modified without detection, provided that
       optional response signing has been activated and that the
       recipient validates incoming responses.
 
    *  Note: Headers not specified in this document may remain unsigned
-      and could potentially be modified by intermediaries without
-      detection.
+      and could potentially be modified or deleted by intermediaries
+      without detection.
 
-6.5.  Replay and Deletion
+6.4.  Replay and Deletion
 
    *  Replay protection is not strictly mandated because of
       implementation considerations (e.g., distributed system challenges
       with synchronizing replay caches across validators).  Therefore it
       is not claimed as a goal, though implementations SHOULD attempt to
-      detect replays when feasible.
+      detect replays where feasible.
 
-   *  Complete deletion of a request/response pair is possible without
-      detection.
+   *  Unless response signing is mandated by local policy, complete
+      deletion of a request/response pair is possible without detection.
 
 7.  IANA Considerations
 
