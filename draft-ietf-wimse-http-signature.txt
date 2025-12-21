@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments                J. Salowey
 Internet-Draft                                                  CyberArk
 Intended status: Standards Track                              Y. Sheffer
-Expires: 15 June 2026                                             Intuit
-                                                        12 December 2025
+Expires: 24 June 2026                                             Intuit
+                                                        21 December 2025
 
 
      WIMSE Workload-to-Workload Authentication with HTTP Signatures
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 15 June 2026.
+   This Internet-Draft will expire on 24 June 2026.
 
 Copyright Notice
 
@@ -693,10 +693,13 @@ Appendix B.  Comparing the DPoP Inspired Option with Message Signatures
 Acknowledgments
 
    The authors would like to thank Pieter Kasselman for his detailed
-   comments.
+   comments, as well as Jason Costello, Maartje Eyskens and Radosław
+   Piliszek for implementing this draft and sharing their learnings.
 
    We thank Daniel Feldman for his contributions to earlier versions of
-   this document.
+   this document.  We also thank Arndt Schwenkschuster and Brian
+   Campbell who coauthored the grand unified WIMSE Workload to Workload
+   protocol draft.
 
 Authors' Addresses
 

@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments                 j Salowey
 Internet-Draft                                                  CyberArk
 Intended status: Standards Track                            Y. Rosomakho
-Expires: 15 June 2026                                            Zscaler
-                                                        12 December 2025
+Expires: 24 June 2026                                            Zscaler
+                                                        21 December 2025
 
 
                 Workload Authentication Using Mutual TLS
@@ -53,7 +53,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 15 June 2026.
+   This Internet-Draft will expire on 24 June 2026.
 
 Copyright Notice
 
