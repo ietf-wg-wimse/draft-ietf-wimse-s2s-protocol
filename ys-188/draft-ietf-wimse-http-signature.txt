@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments                J. Salowey
 Internet-Draft                                                  CyberArk
 Intended status: Standards Track                              Y. Sheffer
-Expires: 17 June 2026                                             Intuit
-                                                        14 December 2025
+Expires: 24 June 2026                                             Intuit
+                                                        21 December 2025
 
 
      WIMSE Workload-to-Workload Authentication with HTTP Signatures
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 17 June 2026.
+   This Internet-Draft will expire on 24 June 2026.
 
 Copyright Notice
 
@@ -253,15 +253,15 @@ Table of Contents
    validate it.  The response MUST be rejected if a signature is absent
    or does not validate.
 
-   Either client or server MAY send an Accept-Signature header, but is
-   not required to do so.  The Accept-Signature header indicates a
-   preference for signed messages but does not mandate that responses be
-   signed.  When a client sends Accept-Signature in a request, it SHOULD
-   list the response components it wishes to have signed (as specified
-   above for signed responses).  When a server sends Accept-Signature in
-   a response, it SHOULD list the request components it wishes to have
-   signed in subsequent requests (as specified above for signed
-   requests).
+   As described in Section 5 of [RFC9421], either client or server MAY
+   send an Accept-Signature header, but is not required to do so.  The
+   Accept-Signature header indicates a preference for signed messages
+   but does not mandate that responses be signed.  When a client sends
+   Accept-Signature in a request, it SHOULD list the response components
+   it wishes to have signed (as specified above for signed responses).
+   When a server sends Accept-Signature in a response, it SHOULD list
+   the request components it wishes to have signed in subsequent
+   requests (as specified above for signed requests).
 
 3.2.  Error Conditions
 
