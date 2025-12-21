@@ -267,7 +267,7 @@ WITs or signatures can be used to track a user.
 This section defines semiformal security goals for this protocol, when used in conjunction with the WIT credential. Our aim
 is to inform developers and for these goals to eventually evolve into formal verification of the protocol.
 
-## Assumptions
+## Prerequisites
 
 The following are out of scope of the protocol and their security is assumed.
 
@@ -280,6 +280,8 @@ provisioning and enforcement of an authorization policy, issuance of transaction
 and workload attestation.
 * All workload-to-workload traffic is TLS-protected. However TLS may be terminated on one or more middleboxes
 and the TLS endpoint identity (or identities) is not associated with a WIMSE identity.
+* As a result, all workload-to-workload traffic is confidential and (assuming honest participants) is only available to sender,
+receiver, and any TLS-terminating middleboxes that process the traffic.
 
 ## Authentication
 
@@ -288,24 +290,23 @@ and the TLS endpoint identity (or identities) is not associated with a WIMSE ide
 been activated and likewise, the recipient validates this signature.
 * The above implies that a stolen WIT cannot be used by an entity other than its owner.
 
-## Confidentiality
-
-* All workload-to-workload traffic is confidential and (assuming honest participants) is only available to sender,
-receiver, and any TLS-terminating middleboxes that process the traffic.
-
 ## Integrity
 
-* No requests can be modified without detection by the recipient. All HTTP headers specified in this document
-are integrity protected when present, as well as the message body (when present).
+* No requests can be modified without detection by the recipient. Integrity of
+  all present HTTP headers specified in this document is protected, as well as
+the message body (when present).
 * No responses can be modified without detection, provided that optional response signing has been activated and
 that the recipient validates incoming responses.
-* Note: Headers not specified in this document may remain unsigned and could potentially be modified by intermediaries without detection.
+* Note: Headers not specified in this document may remain unsigned and could
+  potentially be modified or deleted by intermediaries without detection.
 
 ## Replay and Deletion
 
-* Replay protection is not strictly mandated because of implementation considerations (e.g., distributed system challenges with synchronizing replay caches across validators). Therefore it is not claimed as
-a goal, though implementations SHOULD attempt to detect replays when feasible.
-* Complete deletion of a request/response pair is possible without detection.
+* Replay protection is not strictly mandated because of implementation
+  considerations (e.g., distributed system challenges with synchronizing replay
+caches across validators). Therefore it is not claimed as
+a goal, though implementations SHOULD attempt to detect replays where feasible.
+* Unless response signing is mandated by local policy, complete deletion of a request/response pair is possible without detection.
 
 
 # IANA Considerations
