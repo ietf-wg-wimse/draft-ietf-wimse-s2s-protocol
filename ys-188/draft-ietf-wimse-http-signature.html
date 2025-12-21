@@ -1412,8 +1412,16 @@ a recipient <span class="bcp14">SHOULD</span> reject a message (request or respo
 may be exceptionally large or is expected to be streamed, signing it may not be practical.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
 <p id="section-3.1-2">In practice, we expect response signing to be enabled by local policy. If response signing is enabled for a deployment,
 the client (recipient of the response) <span class="bcp14">MUST</span> check that the signature exists and validate it.
-The response <span class="bcp14">MUST</span> be rejected if a signature is absent or does not validate.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
-<p id="section-3.1-3">As described in <span><a href="https://rfc-editor.org/rfc/rfc9421#section-5" class="relref">Section 5</a> of [<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>, either client or server <span class="bcp14">MAY</span> send an <code>Accept-Signature</code> header, but is not required to do so. The <code>Accept-Signature</code> header indicates a preference for signed messages but does not mandate that responses be signed. When a client sends <code>Accept-Signature</code> in a request, it <span class="bcp14">SHOULD</span> list the response components it wishes to have signed (as specified above for signed responses). When a server sends <code>Accept-Signature</code> in a response, it <span class="bcp14">SHOULD</span> list the request components it wishes to have signed in subsequent requests (as specified above for signed requests).<a href="#section-3.1-3" class="pilcrow">¶</a></p>
+The response <span class="bcp14">MUST</span> be rejected if a signature is absent or fails to validate.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
+<p id="section-3.1-3">As described in <span><a href="https://rfc-editor.org/rfc/rfc9421#section-5" class="relref">Section 5</a> of [<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>, either client or server <span class="bcp14">MAY</span> send an
+<code>Accept-Signature</code> header,
+but is not required to do so. The <code>Accept-Signature</code> header indicates a
+preference for signed messages but does not mandate that responses be signed.
+When a client sends <code>Accept-Signature</code> in a request, it <span class="bcp14">SHOULD</span> list the
+response components it wishes to have signed (including at least those specified above for signed
+responses). When a server sends <code>Accept-Signature</code> in a response, it <span class="bcp14">SHOULD</span>
+list the request components it wishes to have signed in subsequent requests (minimally those
+specified above for signed requests).<a href="#section-3.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="error-conditions">
