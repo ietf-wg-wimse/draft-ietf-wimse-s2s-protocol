@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-12-23T01:38:54.876648+00:00",
+  "timestamp": "2025-12-30T01:39:24.447091+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -14393,7 +14393,7 @@
       ],
       "body": "I am asking the whole team to review because we will want similar sections in all docs.",
       "createdAt": "2025-12-13T16:13:17Z",
-      "updatedAt": "2025-12-21T14:24:25Z",
+      "updatedAt": "2025-12-29T16:06:04Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "4a0de62dfe29a6e58fcbbb5ceeca92a3f0aeed55",
@@ -14485,6 +14485,39 @@
               "updatedAt": "2025-12-16T15:47:34Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787XiyFS",
+          "commit": {
+            "abbreviatedOid": "e0f90e0"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-12-29T16:05:50Z",
+          "updatedAt": "2025-12-29T16:05:51Z",
+          "comments": [
+            {
+              "originalPosition": 49,
+              "body": "There is an additional consideration for replay in that since most of the request is signed the attacker can only replay ht message in a context where the signed portions of the message make sense.  This is a differentiator with respect to the WPT approach.  Here is a suggestion, but I am OK deferring this to future time (if you don't apply this maybe open up an issue).  \r\n```suggestion\r\n* An attacker can attempt to replay the signed portion of the message in another context where it will be accepted.  For some situations this may result in a security impact.  This can be mitigated through the use of mechanisms such as a replay cache, however, this is not strictly mandated because of implementation considerations (e.g., distributed system challenges with synchronizing replay\r\ncaches across validators). Therefore it is not claimed as\r\na goal, though implementations SHOULD attempt to detect replays where it represents a security risk. \r\n* Unless response signing is mandated by local policy, complete deletion of a request/response pair is possible without detection.\r\n\r\n```",
+              "createdAt": "2025-12-29T16:05:50Z",
+              "updatedAt": "2025-12-29T16:12:47Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787XiyNc",
+          "commit": {
+            "abbreviatedOid": "e0f90e0"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-12-29T16:06:04Z",
+          "updatedAt": "2025-12-29T16:06:04Z",
+          "comments": []
         }
       ]
     },
@@ -14502,7 +14535,7 @@
       ],
       "body": "- Clarify that Accept-Signature is a preference, not a mandate\r\n- Specify which components to include in Accept-Signature header\r\n- Clarify that client (recipient of response) must validate signatures\r\n- Add requirement to reject responses if signature is absent or invalid\r\n\r\nCloses #188.",
       "createdAt": "2025-12-14T16:51:32Z",
-      "updatedAt": "2025-12-21T14:07:35Z",
+      "updatedAt": "2025-12-29T16:07:56Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "4a0de62dfe29a6e58fcbbb5ceeca92a3f0aeed55",
@@ -14554,6 +14587,19 @@
               "updatedAt": "2025-12-16T15:10:11Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787Xizfu",
+          "commit": {
+            "abbreviatedOid": "6d90a20"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-12-29T16:07:56Z",
+          "updatedAt": "2025-12-29T16:07:56Z",
+          "comments": []
         }
       ]
     },
