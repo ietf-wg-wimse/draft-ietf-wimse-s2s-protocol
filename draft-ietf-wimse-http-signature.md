@@ -306,6 +306,8 @@ that the recipient validates incoming responses.
   considerations (e.g., distributed system challenges with synchronizing replay
 caches across validators). Therefore it is not claimed as
 a goal, though implementations SHOULD attempt to detect replays where feasible.
+We note that since most of the message is signed, replay attacks are only possible in a
+context where the request would be accepted as valid, and this mitigates the risk to some extent.
 * Unless response signing is mandated by local policy, complete deletion of a request/response pair is possible without detection.
 
 
