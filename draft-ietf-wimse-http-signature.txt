@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments                J. Salowey
 Internet-Draft                                                  CyberArk
 Intended status: Standards Track                              Y. Sheffer
-Expires: 24 June 2026                                             Intuit
-                                                        21 December 2025
+Expires: 8 July 2026                                              Intuit
+                                                          4 January 2026
 
 
      WIMSE Workload-to-Workload Authentication with HTTP Signatures
@@ -58,11 +58,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 24 June 2026.
+   This Internet-Draft will expire on 8 July 2026.
 
 Copyright Notice
 
-   Copyright (c) 2025 IETF Trust and the persons identified as the
+   Copyright (c) 2026 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -88,10 +88,15 @@ Table of Contents
      5.1.  Workload Identity Token and Proof of Possession
      5.2.  Middle Boxes
      5.3.  Privacy Considerations
-   6.  IANA Considerations
-   7.  References
-     7.1.  Normative References
-     7.2.  Informative References
+   6.  Security Goals
+     6.1.  Prerequisites
+     6.2.  Authentication
+     6.3.  Integrity
+     6.4.  Replay and Deletion
+   7.  IANA Considerations
+   8.  References
+     8.1.  Normative References
+     8.2.  Informative References
    Appendix A.  Document History
      A.1.  draft-ietf-wimse-http-signature-00
      A.2.  draft-ietf-wimse-s2s-protocol-07
@@ -393,9 +398,9 @@ Table of Contents
 
    This section includes security considerations that are specific to
    the HTTP Signature protocol defined here.  Refer to
-   // Security Considerations section of [I-D.ietf-wimse-workload-creds]
-   for more generic security considerations associated with the workload
-   identity and its WIT representation.
+   [I-D.ietf-wimse-workload-creds] for more generic security
+   considerations associated with the workload identity and its WIT
+   representation.
 
 5.1.  Workload Identity Token and Proof of Possession
 
@@ -473,13 +478,89 @@ Table of Contents
    should evaluate if the disclosure of WITs or signatures can be used
    to track a user.
 
-6.  IANA Considerations
+6.  Security Goals
+
+   This section defines semiformal security goals for this protocol,
+   when used in conjunction with the WIT credential.  Our aim is to
+   inform developers and for these goals to eventually evolve into
+   formal verification of the protocol.
+
+6.1.  Prerequisites
+
+   The following are out of scope of the protocol and their security is
+   assumed.
+
+   *  There exists a WIT Issuer which is trusted to issue credentials
+      honestly.
+
+   *  Workloads have a way to authenticate themselves to the Issuer and
+      be provisioned with a valid WIT, associated with their WIMSE
+      identity.
+
+   *  All workloads are provisioned with trust anchors that allow them
+      to validate incoming WITs.
+
+   *  The entire authorization subsystem is out of scope and trusted.
+      This can potentially include provisioning and enforcement of an
+      authorization policy, issuance of transactions tokens and workload
+      attestation.
+
+   *  All workload-to-workload traffic is TLS-protected.  However TLS
+      may be terminated on one or more middleboxes and the TLS endpoint
+      identity (or identities) is not associated with a WIMSE identity.
+
+   *  As a result, all workload-to-workload traffic is confidential and
+      (assuming honest participants) is only available to sender,
+      receiver, and any TLS-terminating middleboxes that process the
+      traffic.
+
+6.2.  Authentication
+
+   *  A workload receiving a request can validate that it is signed
+      correctly, and can identify the sender.
+
+   *  A workload receiving a response can similarly authenticate its
+      sender, provided that optional response signing has been activated
+      and likewise, the recipient validates this signature.
+
+   *  The above implies that a stolen WIT cannot be used by an entity
+      other than its owner.
+
+6.3.  Integrity
+
+   *  No requests can be modified without detection by the recipient.
+      Integrity of all present HTTP headers specified in this document
+      is protected, as well as the message body (when present).
+
+   *  No responses can be modified without detection, provided that
+      optional response signing has been activated and that the
+      recipient validates incoming responses.
+
+   *  Note: Headers not specified in this document may remain unsigned
+      and could potentially be modified or deleted by intermediaries
+      without detection.
+
+6.4.  Replay and Deletion
+
+   *  Replay protection is not strictly mandated because of
+      implementation considerations (e.g., distributed system challenges
+      with synchronizing replay caches across validators).  Therefore it
+      is not claimed as a goal, though implementations SHOULD attempt to
+      detect replays where feasible.  We note that since most of the
+      message is signed, replay attacks are only possible in a context
+      where the request would be accepted as valid, and this mitigates
+      the risk to some extent.
+
+   *  Unless response signing is mandated by local policy, complete
+      deletion of a request/response pair is possible without detection.
+
+7.  IANA Considerations
 
    This document does not include any IANA considerations.
 
-7.  References
+8.  References
 
-7.1.  Normative References
+8.1.  Normative References
 
    [I-D.ietf-wimse-workload-creds]
               Campbell, B., Salowey, J. A., Schwenkschuster, A.,
@@ -511,7 +592,7 @@ Table of Contents
               RFC 9525, DOI 10.17487/RFC9525, November 2023,
               <https://www.rfc-editor.org/rfc/rfc9525>.
 
-7.2.  Informative References
+8.2.  Informative References
 
    [I-D.ietf-oauth-transaction-tokens]
               Tulshibagwale, A., Fletcher, G., and P. Kasselman,
