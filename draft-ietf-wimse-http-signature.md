@@ -202,7 +202,7 @@ According to RFC 7942, "this will allow reviewers and working groups to assign d
 # Security Considerations
 
 This section includes security considerations that are specific to the HTTP Signature protocol defined here. Refer to
-<cref>Security Considerations section of</cref> {{I-D.ietf-wimse-workload-creds}} for more generic security considerations associated with the workload identity
+{{I-D.ietf-wimse-workload-creds}} for more generic security considerations associated with the workload identity
 and its WIT representation.
 
 ## Workload Identity Token and Proof of Possession
