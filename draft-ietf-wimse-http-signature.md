@@ -137,7 +137,25 @@ For clarity: the signature's lifetime (the `expires` signature parameter) is dif
 
 Implementors need to be aware that the WIT is extracted from the message before the message signature is validated. Recipients of signed HTTP messages MUST validate the signature and content of the WIT before validating the HTTP message signature. They MUST ensure that the message is not processed further before it has been fully validated.
 
-Either client or server MAY send an `Accept-Signature` header, but is not required to do so. When this header is sent, it MUST include the header components listed above.
+
+## Signing the Response
+
+Protecting the response by signing it with the server's WIT is RECOMMENDED but optional. In particular, if the response
+may be exceptionally large or is expected to be streamed, signing it may not be practical.
+
+In practice, we expect response signing to be enabled by local policy. If response signing is enabled for a deployment,
+the client (recipient of the response) MUST check that the signature exists and validate it.
+The response MUST be rejected if a signature is absent or fails to validate.
+
+As described in {{Section 5 of RFC9421}}, either client or server MAY send an
+`Accept-Signature` header,
+but is not required to do so. The `Accept-Signature` header indicates a
+preference for signed messages but does not mandate that responses be signed.
+When a client sends `Accept-Signature` in a request, it SHOULD list the
+response components it wishes to have signed (including at least those specified above for signed
+responses). When a server sends `Accept-Signature` in a response, it SHOULD
+list the request components it wishes to have signed in subsequent requests (minimally those
+specified above for signed requests).
 
 ## Error Conditions
 
