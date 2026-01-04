@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments                J. Salowey
 Internet-Draft                                                  CyberArk
 Intended status: Standards Track                              Y. Sheffer
-Expires: 24 June 2026                                             Intuit
-                                                        21 December 2025
+Expires: 8 July 2026                                              Intuit
+                                                          4 January 2026
 
 
      WIMSE Workload-to-Workload Authentication with HTTP Signatures
@@ -58,11 +58,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 24 June 2026.
+   This Internet-Draft will expire on 8 July 2026.
 
 Copyright Notice
 
-   Copyright (c) 2025 IETF Trust and the persons identified as the
+   Copyright (c) 2026 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -542,7 +542,10 @@ Table of Contents
       implementation considerations (e.g., distributed system challenges
       with synchronizing replay caches across validators).  Therefore it
       is not claimed as a goal, though implementations SHOULD attempt to
-      detect replays where feasible.
+      detect replays where feasible.  We note that since most of the
+      message is signed, replay attacks are only possible in a context
+      where the request would be accepted as valid, and this mitigates
+      the risk to some extent.
 
    *  Unless response signing is mandated by local policy, complete
       deletion of a request/response pair is possible without detection.
