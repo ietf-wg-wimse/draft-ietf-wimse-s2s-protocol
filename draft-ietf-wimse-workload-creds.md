@@ -169,6 +169,22 @@ Once these conditions are met, the methods described in this document can be use
 Implementations MUST allow for defining this mapping between the workload's access path and the workload identifier (e.g., through
 callback functions). Deployments SHOULD use these features to establish a consistent set of identifiers within their environment.
 
+## Simultaneous use
+
+It is possible to use different workload credential simultaneously, particularly at different levels. For instance, the Workload Identity Certificate at the transport level and the Workload Identity Token at the application level. In this scenario, the credentials complement each other and are not alternatives to each other, meaning all MUST be validated, not just one.
+
+A simultaneous use is particularly relevant in environments where the transport-level security is encrypting the network between transport-layer components and the application-level security is authenticating the actual invocation between 2 workloads.
+
+~~~aasvg
+             Transport-        Transport-
+┌───────────┐level  ┌─────────┐level   ┌───────────┐
+│           │◄─────►│  Proxy  │◄──────►│           │
+│ Workload  │       └─────────┘        │ Workload  │
+│     A     │                          │     B     │
+│           │◄========================►│           │
+└───────────┘     Application-level    └───────────┘
+~~~
+
 # Conventions and Definitions
 
 All terminology in this document follows {{?I-D.ietf-wimse-arch}}.
