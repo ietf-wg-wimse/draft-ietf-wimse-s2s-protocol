@@ -23,3 +23,5 @@ draft-sheffer-wimse-s2s-protocol.xml
 package-lock.json
 report.xml
 !requirements.txt
+spellcheck.sh
+*.pws
