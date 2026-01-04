@@ -394,9 +394,9 @@ Table of Contents
 
    This section includes security considerations that are specific to
    the HTTP Signature protocol defined here.  Refer to
-   // Security Considerations section of [I-D.ietf-wimse-workload-creds]
-   for more generic security considerations associated with the workload
-   identity and its WIT representation.
+   [I-D.ietf-wimse-workload-creds] for more generic security
+   considerations associated with the workload identity and its WIT
+   representation.
 
 5.1.  Workload Identity Token and Proof of Possession
 
