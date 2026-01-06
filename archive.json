@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-12-30T01:39:24.447091+00:00",
+  "timestamp": "2026-01-06T01:41:32.649407+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -3464,7 +3464,7 @@
       "id": "I_kwDOLJmm787eGC0G",
       "title": "Response signing",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/188",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -3473,8 +3473,8 @@
       ],
       "body": "The normative status of response signing (MAY or SHOULD) is never clarified.\n\nWe should also note that (in the absence of agreed upon policy) the response signature can be deleted by an attacker without detection. And the `Accept-Signature` header would not help either.",
       "createdAt": "2025-12-13T16:04:39Z",
-      "updatedAt": "2025-12-13T16:04:39Z",
-      "closedAt": null,
+      "updatedAt": "2026-01-04T16:43:25Z",
+      "closedAt": "2026-01-04T16:43:25Z",
       "comments": []
     }
   ],
@@ -14384,7 +14384,7 @@
       "id": "PR_kwDOLJmm7864tHTd",
       "title": "HTTP Sig - Security Goals",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/189",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -14393,17 +14393,19 @@
       ],
       "body": "I am asking the whole team to review because we will want similar sections in all docs.",
       "createdAt": "2025-12-13T16:13:17Z",
-      "updatedAt": "2025-12-29T16:06:04Z",
+      "updatedAt": "2026-01-04T16:41:30Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "4a0de62dfe29a6e58fcbbb5ceeca92a3f0aeed55",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-httpsig-sec-goals",
-      "headRefOid": "e0f90e033c56236504bce1fa6a605444177ab0fc",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "64798a1d0f62da0506d4a82da549f53aee3824f2",
+      "closedAt": "2026-01-04T16:41:30Z",
+      "mergedAt": "2026-01-04T16:41:30Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "9a4efb36ec89db8700e67788231f9b605aac9ffd"
+      },
       "comments": [],
       "reviews": [
         {
@@ -14526,7 +14528,7 @@
       "id": "PR_kwDOLJmm7864x94P",
       "title": "Clarify response signing section",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/190",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -14535,17 +14537,19 @@
       ],
       "body": "- Clarify that Accept-Signature is a preference, not a mandate\r\n- Specify which components to include in Accept-Signature header\r\n- Clarify that client (recipient of response) must validate signatures\r\n- Add requirement to reject responses if signature is absent or invalid\r\n\r\nCloses #188.",
       "createdAt": "2025-12-14T16:51:32Z",
-      "updatedAt": "2025-12-29T16:07:56Z",
+      "updatedAt": "2026-01-04T16:43:24Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "4a0de62dfe29a6e58fcbbb5ceeca92a3f0aeed55",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-188",
       "headRefOid": "6d90a2067b279aaa0134add452efdc0865255892",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-01-04T16:43:24Z",
+      "mergedAt": "2026-01-04T16:43:24Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "4864db3c3345924581d2a4a2978c94e986f08168"
+      },
       "comments": [],
       "reviews": [
         {
@@ -14778,7 +14782,7 @@
       ],
       "body": "Attempt to resolve #183.\n\nIt talks about signing, but I believe in general, this is about authenticating the response on a broader level.",
       "createdAt": "2025-12-16T11:52:04Z",
-      "updatedAt": "2025-12-16T15:37:55Z",
+      "updatedAt": "2026-01-04T17:06:54Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "4a0de62dfe29a6e58fcbbb5ceeca92a3f0aeed55",
@@ -14810,8 +14814,56 @@
               "updatedAt": "2025-12-16T14:52:17Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787YEo2G",
+          "commit": {
+            "abbreviatedOid": "61ac766"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-01-04T17:06:54Z",
+          "updatedAt": "2026-01-04T17:06:54Z",
+          "comments": [
+            {
+              "originalPosition": 13,
+              "body": "@arndt-s I think you need to overhaul this text. You are discussing two distinctions at once which is terribly confusing: request vs. response, and application level vs transport level auth.\n\nIn fact, make that three :-) - authentication vs. authorization.",
+              "createdAt": "2026-01-04T17:06:54Z",
+              "updatedAt": "2026-01-04T17:06:54Z"
+            }
+          ]
         }
       ]
+    },
+    {
+      "number": 195,
+      "id": "PR_kwDOLJmm7867bnJL",
+      "title": "Doc history for -01",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/195",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-http-signature"
+      ],
+      "body": "",
+      "createdAt": "2026-01-04T16:56:21Z",
+      "updatedAt": "2026-01-04T16:56:21Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "4864db3c3345924581d2a4a2978c94e986f08168",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-httpsig-prep-01",
+      "headRefOid": "cac75975477a1e90953b47a5d3f22ab25a82ee57",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
