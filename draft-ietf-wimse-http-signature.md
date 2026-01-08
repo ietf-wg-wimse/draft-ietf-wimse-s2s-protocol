@@ -340,6 +340,13 @@ This document does not include any IANA considerations.
 # Document History
 <cref>RFC Editor: please remove before publication.</cref>
 
+## draft-ietf-wimse-http-signature-01
+
+* Clarified response signing.
+* Clarified signature vs. token lifetime.
+* Added security goals.
+* Added an Implementation Status section.
+
 ## draft-ietf-wimse-http-signature-00
 
 * Initial version, extracted from the -07 draft with minimal edits.
@@ -347,7 +354,7 @@ This document does not include any IANA considerations.
 ## draft-ietf-wimse-s2s-protocol-07
 
 * Rework the WPT's `oth` claim.
-* update the media types.
+* Update the media types.
 * Discuss extensibility of WIT and WPT.
 * Clarify error handling, specifically why not HTTP 401.
 * Correct the code examples.
