@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-01-06T01:41:32.649407+00:00",
+  "timestamp": "2026-01-08T01:41:27.198207+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -14851,7 +14851,7 @@
       ],
       "body": "",
       "createdAt": "2026-01-04T16:56:21Z",
-      "updatedAt": "2026-01-04T16:56:21Z",
+      "updatedAt": "2026-01-07T20:42:54Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "4864db3c3345924581d2a4a2978c94e986f08168",
@@ -14863,7 +14863,21 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm787Yw_5g",
+          "commit": {
+            "abbreviatedOid": "cac7597"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-01-07T20:42:54Z",
+          "updatedAt": "2026-01-07T20:42:54Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
