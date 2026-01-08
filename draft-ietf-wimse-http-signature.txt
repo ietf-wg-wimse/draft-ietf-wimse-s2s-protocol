@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments                J. Salowey
 Internet-Draft                                                  CyberArk
 Intended status: Standards Track                              Y. Sheffer
-Expires: 8 July 2026                                              Intuit
-                                                          4 January 2026
+Expires: 12 July 2026                                             Intuit
+                                                          8 January 2026
 
 
      WIMSE Workload-to-Workload Authentication with HTTP Signatures
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 8 July 2026.
+   This Internet-Draft will expire on 12 July 2026.
 
 Copyright Notice
 
@@ -99,15 +99,16 @@ Table of Contents
      8.1.  Normative References
      8.2.  Informative References
    Appendix A.  Document History
-     A.1.  draft-ietf-wimse-http-signature-00
-     A.2.  draft-ietf-wimse-s2s-protocol-07
-     A.3.  draft-ietf-wimse-s2s-protocol-06
-     A.4.  draft-ietf-wimse-s2s-protocol-05
-     A.5.  draft-ietf-wimse-s2s-protocol-04
-     A.6.  draft-ietf-wimse-s2s-protocol-03
-     A.7.  draft-ietf-wimse-s2s-protocol-02
-     A.8.  draft-ietf-wimse-s2s-protocol-01
-     A.9.  draft-ietf-wimse-s2s-protocol-00
+     A.1.  draft-ietf-wimse-http-signature-01
+     A.2.  draft-ietf-wimse-http-signature-00
+     A.3.  draft-ietf-wimse-s2s-protocol-07
+     A.4.  draft-ietf-wimse-s2s-protocol-06
+     A.5.  draft-ietf-wimse-s2s-protocol-05
+     A.6.  draft-ietf-wimse-s2s-protocol-04
+     A.7.  draft-ietf-wimse-s2s-protocol-03
+     A.8.  draft-ietf-wimse-s2s-protocol-02
+     A.9.  draft-ietf-wimse-s2s-protocol-01
+     A.10. draft-ietf-wimse-s2s-protocol-00
    Appendix B.  Comparing the DPoP Inspired Option with Message
            Signatures
    Acknowledgments
@@ -653,15 +654,25 @@ Appendix A.  Document History
 
    // RFC Editor: please remove before publication.
 
-A.1.  draft-ietf-wimse-http-signature-00
+A.1.  draft-ietf-wimse-http-signature-01
+
+   *  Clarified response signing.
+
+   *  Clarified signature vs. token lifetime.
+
+   *  Added security goals.
+
+   *  Added an Implementation Status section.
+
+A.2.  draft-ietf-wimse-http-signature-00
 
    *  Initial version, extracted from the -07 draft with minimal edits.
 
-A.2.  draft-ietf-wimse-s2s-protocol-07
+A.3.  draft-ietf-wimse-s2s-protocol-07
 
    *  Rework the WPT's oth claim.
 
-   *  update the media types.
+   *  Update the media types.
 
    *  Discuss extensibility of WIT and WPT.
 
@@ -675,14 +686,14 @@ A.2.  draft-ietf-wimse-s2s-protocol-07
 
    *  Use of the Accept-Signature header.
 
-A.3.  draft-ietf-wimse-s2s-protocol-06
+A.4.  draft-ietf-wimse-s2s-protocol-06
 
    *  Explicit definition of the Workload Identity Certificate.
 
    *  Definition of the validation of workload identifiers as part of
       workload authentication.  Still work in progress.
 
-A.4.  draft-ietf-wimse-s2s-protocol-05
+A.5.  draft-ietf-wimse-s2s-protocol-05
 
    *  Removed the entire Workload Identity section which is now covered
       in the Architecture document.
@@ -693,7 +704,7 @@ A.4.  draft-ietf-wimse-s2s-protocol-05
 
    *  IANA considerations.
 
-A.5.  draft-ietf-wimse-s2s-protocol-04
+A.6.  draft-ietf-wimse-s2s-protocol-04
 
    *  Require cnf.jwk.alg in WIT which restricts signature algorithm of
       WPT or HTTP-Sig.
@@ -702,7 +713,7 @@ A.5.  draft-ietf-wimse-s2s-protocol-04
 
    *  Consolidate terminology with the Architecture draft.
 
-A.6.  draft-ietf-wimse-s2s-protocol-03
+A.7.  draft-ietf-wimse-s2s-protocol-03
 
    *  Consistently use "workload".
 
@@ -717,7 +728,7 @@ A.6.  draft-ietf-wimse-s2s-protocol-03
 
    *  Error handling for the application level methods.
 
-A.7.  draft-ietf-wimse-s2s-protocol-02
+A.8.  draft-ietf-wimse-s2s-protocol-02
 
    *  Coexistence with bearer tokens.
 
@@ -729,7 +740,7 @@ A.7.  draft-ietf-wimse-s2s-protocol-02
 
    *  Moved an author to acknowledgments.
 
-A.8.  draft-ietf-wimse-s2s-protocol-01
+A.9.  draft-ietf-wimse-s2s-protocol-01
 
    *  Addressed multiple comments from Pieter.
 
@@ -744,7 +755,7 @@ A.8.  draft-ietf-wimse-s2s-protocol-01
    *  Added a section comparing the DPoP-inspired app-level security
       option to the Message Signature-based alternative.
 
-A.9.  draft-ietf-wimse-s2s-protocol-00
+A.10.  draft-ietf-wimse-s2s-protocol-00
 
    *  Initial WG draft, an exact copy of draft-sheffer-wimse-s2s-
       protocol-00
