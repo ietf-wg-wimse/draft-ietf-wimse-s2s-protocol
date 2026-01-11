@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-01-08T01:41:27.198207+00:00",
+  "timestamp": "2026-01-11T01:50:01.540049+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -14842,7 +14842,7 @@
       "id": "PR_kwDOLJmm7867bnJL",
       "title": "Doc history for -01",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/195",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -14851,17 +14851,19 @@
       ],
       "body": "",
       "createdAt": "2026-01-04T16:56:21Z",
-      "updatedAt": "2026-01-07T20:42:54Z",
+      "updatedAt": "2026-01-08T08:28:57Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "4864db3c3345924581d2a4a2978c94e986f08168",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-httpsig-prep-01",
       "headRefOid": "cac75975477a1e90953b47a5d3f22ab25a82ee57",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-01-08T08:28:57Z",
+      "mergedAt": "2026-01-08T08:28:57Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "41fb87003b43adccd77af7e91ad06e5e3499066f"
+      },
       "comments": [],
       "reviews": [
         {
