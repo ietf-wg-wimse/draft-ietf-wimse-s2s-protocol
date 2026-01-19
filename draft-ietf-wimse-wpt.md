@@ -249,7 +249,7 @@ The POP MAY be bound to a transport layer sender such as the client identity of 
 
 * Audience validation
 
-Validators MUST NOT use information obtained from the request to determine the applicability of the WPT. Doing this could allow attackers to trick validators into accepting a WPT with a different audience by sending a fabricated request. This is particularly relevant for the authority part of the request URI in the audience. Validators MUST keep an allow list of valid authorities and obtain it out of band, for instance via static configuration. The Host of the request or an "X-Forwarded-Host" header can not be trusted and MUST NOT be used.
+Validators MUST NOT use information obtained from the request to determine the applicability of the WPT. Doing this could allow attackers to trick validators into accepting a WPT with a different audience by sending a fabricated request. This is particularly relevant for the authority part of the request URI in the audience. Validators MUST keep an allow list of valid authorities and obtain it out of band, for instance via static configuration. The Host of the request or an "X-Forwarded-Host" header cannot be trusted and MUST NOT be used.
 
 ## Workload Identity Key Management
 
