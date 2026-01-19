@@ -19,12 +19,12 @@
     Python 3.12.12
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
-    intervaltree 3.1.0
+    intervaltree 3.2.1
     Jinja2 3.1.6
-    lxml 5.3.1
-    platformdirs 4.5.0
+    lxml 6.0.2
+    platformdirs 4.5.1
     pycountry 24.6.1
-    PyYAML 6.0.2
+    PyYAML 6.0.3
     requests 2.32.5
     wcwidth 0.2.14
 -->
@@ -1045,11 +1045,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">WIMSE Workload-Proof-Token</td>
-<td class="right">December 2025</td>
+<td class="right">January 2026</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Campbell &amp; Schwenkschuster</td>
-<td class="center">Expires 19 June 2026</td>
+<td class="center">Expires 23 July 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1062,12 +1062,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-wimse-wpt-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-12-16" class="published">16 December 2025</time>
+<time datetime="2026-01-19" class="published">19 January 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-06-19">19 June 2026</time></dd>
+<dd class="expires"><time datetime="2026-07-23">23 July 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1121,7 +1121,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 19 June 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 23 July 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1130,7 +1130,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
         </h2>
 <p id="section-boilerplate.2-1">
-            Copyright (c) 2025 IETF Trust and the persons identified as the
+            Copyright (c) 2026 IETF Trust and the persons identified as the
             document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.2-2">
             This document is subject to BCP 78 and the IETF Trust's Legal
@@ -1587,6 +1587,12 @@ replay protection would not be effective.<a href="#section-3.1-9" class="pilcrow
 </li>
         </ul>
 <p id="section-3.1-11">The POP MAY be bound to a transport layer sender such as the client identity of a TLS session or TLS channel binding parameters. The mechanisms for binding are outside the scope of this specification.<a href="#section-3.1-11" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.1-12.1">
+            <p id="section-3.1-12.1.1">Audience validation<a href="#section-3.1-12.1.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-3.1-13">Validators MUST NOT use information obtained from the request to determine the applicability of the WPT. Doing this could allow attackers to trick validators into accepting a WPT with a different audience by sending a fabricated request. This is particularly relevant for the authority part of the request URI in the audience. Validators MUST keep an allow list of valid authorities and obtain it out of band, for instance via static configuration. The Host of the request or an "X-Forwarded-Host" header can not be trusted and MUST NOT be used.<a href="#section-3.1-13" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="workload-identity-key-management">
