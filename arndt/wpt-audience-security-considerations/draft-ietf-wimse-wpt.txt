@@ -486,7 +486,7 @@ Table of Contents
    relevant for the authority part of the request URI in the audience.
    Validators MUST keep an allow list of valid authorities and obtain it
    out of band, for instance via static configuration.  The Host of the
-   request or an "X-Forwarded-Host" header can not be trusted and MUST
+   request or an "X-Forwarded-Host" header cannot be trusted and MUST
    NOT be used.
 
 3.2.  Workload Identity Key Management

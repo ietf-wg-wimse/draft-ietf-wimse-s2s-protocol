@@ -1592,7 +1592,7 @@ replay protection would not be effective.<a href="#section-3.1-9" class="pilcrow
             <p id="section-3.1-12.1.1">Audience validation<a href="#section-3.1-12.1.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-3.1-13">Validators MUST NOT use information obtained from the request to determine the applicability of the WPT. Doing this could allow attackers to trick validators into accepting a WPT with a different audience by sending a fabricated request. This is particularly relevant for the authority part of the request URI in the audience. Validators MUST keep an allow list of valid authorities and obtain it out of band, for instance via static configuration. The Host of the request or an "X-Forwarded-Host" header can not be trusted and MUST NOT be used.<a href="#section-3.1-13" class="pilcrow">¶</a></p>
+<p id="section-3.1-13">Validators MUST NOT use information obtained from the request to determine the applicability of the WPT. Doing this could allow attackers to trick validators into accepting a WPT with a different audience by sending a fabricated request. This is particularly relevant for the authority part of the request URI in the audience. Validators MUST keep an allow list of valid authorities and obtain it out of band, for instance via static configuration. The Host of the request or an "X-Forwarded-Host" header cannot be trusted and MUST NOT be used.<a href="#section-3.1-13" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="workload-identity-key-management">
