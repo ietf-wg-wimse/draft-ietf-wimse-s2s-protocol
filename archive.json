@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-01-15T01:40:38.278614+00:00",
+  "timestamp": "2026-01-20T01:42:09.498158+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -3253,7 +3253,7 @@
       ],
       "body": "Can workloads use the \u201cX-Forwarded-For\u201d header to help validating the \u201caud\u201d of the WPT? I believe not and that we should mention/prohibit that in the spec. ",
       "createdAt": "2025-09-26T10:29:19Z",
-      "updatedAt": "2025-12-09T15:30:35Z",
+      "updatedAt": "2026-01-19T14:26:10Z",
       "closedAt": null,
       "comments": [
         {
@@ -3262,6 +3262,27 @@
           "body": "For clarity: the assumption is that this header is added by the proxy/middlebox, and therefore it's not protected and cannot be protected.",
           "createdAt": "2025-09-26T10:31:33Z",
           "updatedAt": "2025-09-26T10:31:33Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Same applies for the Host, as it's coming from the inbound request and cannot be trusted.",
+          "createdAt": "2026-01-19T10:45:26Z",
+          "updatedAt": "2026-01-19T10:45:26Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@yaronf how does http-sig protect against fabricated requests where the signature fits the host but is sent to a different IP?\n\nE.g. I'm observing a request to \n\nPOST /customer/create\nHost: arndts-org.crm.com\nSignature: asdfasdf\nSignature-Input: ... @authority ...\n\nBut is sent to an IP belonging to DNS `yarons-org.crm.com`? How does the server at yarons org detect the misuse?\n\n\n\n\n\n\n",
+          "createdAt": "2026-01-19T10:57:04Z",
+          "updatedAt": "2026-01-19T10:57:04Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I think this is a generic HTTP question, see [\"misdirected requests\"](https://www.rfc-editor.org/rfc/rfc9110.html#name-rejecting-misdirected-reque). In particular the HTTPS paragraph towards the end of the section.\n\nWe may need to add clearer wording about that. To both transport drafts (i.e. it has little to do with the signature question).",
+          "createdAt": "2026-01-19T14:26:10Z",
+          "updatedAt": "2026-01-19T14:26:10Z"
         }
       ]
     },
@@ -3625,7 +3646,7 @@
       "labels": [],
       "body": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/blob/41fb87003b43adccd77af7e91ad06e5e3499066f/draft-ietf-wimse-workload-creds.md?plain=1#L354\n\nWhat is the rationale for only allowing one SubjectAltName extension of type URI in the certificate ? This goes back to the need to be able to convey more than one \"type\" of identity (e.g. service and instance). ",
       "createdAt": "2026-01-14T02:50:10Z",
-      "updatedAt": "2026-01-14T17:40:40Z",
+      "updatedAt": "2026-01-19T10:33:46Z",
       "closedAt": null,
       "comments": [
         {
@@ -3641,6 +3662,20 @@
           "body": "Thanks for the SPIFFE pointer @jsnctl which does indeed help explain where the MUST came from. \n\nThe underlying point and requirement remains though, i.e. the need to convey different types of identities in WIMSE credentials (like \"service\" and \"instance\"). In the case of X.509 certificates, there are a couple of options, e.g. \n1) Allow for multiple SAN URIs, and ideally get SPIFFE to allow for that as well. \n2) Use otherName SAN for the \"secondary\" identities\n3) Define an X.509 extension\n\nEach comes with different trade-offs.  I'm currently leaning towards option 2 (otherName) since it would allow for explicit typing and would not cause compatibility issues with SPIFFE. \n\n",
           "createdAt": "2026-01-14T17:40:40Z",
           "updatedAt": "2026-01-14T17:40:40Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "There's a 4th variant that is currently used in SPIFFE, which is issuing dedicated certificates for each alternative identity. \n\nIn the \"instance\" and \"service\" example this would result in 2 certificates:\n* X.509 with URI SAN **/booking-service\n* X.509 with URI SAN **/booking-service/124521",
+          "createdAt": "2026-01-19T10:30:14Z",
+          "updatedAt": "2026-01-19T10:30:25Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I believe it depends whether instance-specific identifiers are used for authentication or not. In most cases I'd expect it to be more a accountably, traceability and observability concern and I believe there's other, more native ways, to do this: JWT jti claim, instance-specific X.509 Subject.",
+          "createdAt": "2026-01-19T10:33:46Z",
+          "updatedAt": "2026-01-19T10:33:46Z"
         }
       ]
     },
@@ -15061,6 +15096,73 @@
           "createdAt": "2026-01-07T20:42:54Z",
           "updatedAt": "2026-01-07T20:42:54Z",
           "comments": []
+        }
+      ]
+    },
+    {
+      "number": 206,
+      "id": "PR_kwDOLJmm7869-eQL",
+      "title": "WPT audience security considerations",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/206",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Adds security considerations on how to validate the audience, particularly the authority part.\r\n\r\nResolves #172.\r\n",
+      "createdAt": "2026-01-19T10:44:59Z",
+      "updatedAt": "2026-01-19T19:42:38Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "41fb87003b43adccd77af7e91ad06e5e3499066f",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "arndt/wpt-audience-security-considerations",
+      "headRefOid": "d4c9edf4f8455826613e8782892e9e8408933c5b",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm787bMWqW",
+          "commit": {
+            "abbreviatedOid": "909fce5"
+          },
+          "author": "copilot-pull-request-reviewer",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "## Pull request overview\n\nThis PR adds security guidance to address the potential misuse of request headers (particularly X-Forwarded-Host and Host headers) when validating the audience claim in Workload Proof Tokens (WPTs). The change resolves issue #172 by explicitly prohibiting workloads from using untrusted request headers for audience validation.\n\n**Changes:**\n- Added a new \"Audience validation\" subsection to the Security Considerations section that provides explicit guidance on how validators should determine the applicability of WPTs\n\n\n\n\n\n---\n\n\ud83d\udca1 <a href=\"/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/new/main/.github/instructions?filename=*.instructions.md\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">Add Copilot custom instructions</a> for smarter, more guided reviews. <a href=\"https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">Learn how to get started</a>.",
+          "createdAt": "2026-01-19T10:46:57Z",
+          "updatedAt": "2026-01-19T10:46:57Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "The phrase \"can not\" should be written as one word: \"cannot\". This is the standard spelling in formal technical documentation.\n```suggestion\nValidators MUST NOT use information obtained from the request to determine the applicability of the WPT. Doing this could allow attackers to trick validators into accepting a WPT with a different audience by sending a fabricated request. This is particularly relevant for the authority part of the request URI in the audience. Validators MUST keep an allow list of valid authorities and obtain it out of band, for instance via static configuration. The Host of the request or an \"X-Forwarded-Host\" header cannot be trusted and MUST NOT be used.\n```",
+              "createdAt": "2026-01-19T10:46:57Z",
+              "updatedAt": "2026-01-19T10:46:58Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787bTvLR",
+          "commit": {
+            "abbreviatedOid": "d4c9edf"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-01-19T19:42:38Z",
+          "updatedAt": "2026-01-19T19:42:38Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "\"Applicability\" is too vague. Also, should we use \"authorization\" terminology here?",
+              "createdAt": "2026-01-19T19:42:38Z",
+              "updatedAt": "2026-01-19T19:42:38Z"
+            }
+          ]
         }
       ]
     }
