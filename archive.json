@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-01-20T01:42:09.498158+00:00",
+  "timestamp": "2026-01-22T01:45:04.524747+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -3646,7 +3646,7 @@
       "labels": [],
       "body": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/blob/41fb87003b43adccd77af7e91ad06e5e3499066f/draft-ietf-wimse-workload-creds.md?plain=1#L354\n\nWhat is the rationale for only allowing one SubjectAltName extension of type URI in the certificate ? This goes back to the need to be able to convey more than one \"type\" of identity (e.g. service and instance). ",
       "createdAt": "2026-01-14T02:50:10Z",
-      "updatedAt": "2026-01-19T10:33:46Z",
+      "updatedAt": "2026-01-20T23:29:58Z",
       "closedAt": null,
       "comments": [
         {
@@ -3676,6 +3676,13 @@
           "body": "I believe it depends whether instance-specific identifiers are used for authentication or not. In most cases I'd expect it to be more a accountably, traceability and observability concern and I believe there's other, more native ways, to do this: JWT jti claim, instance-specific X.509 Subject.",
           "createdAt": "2026-01-19T10:33:46Z",
           "updatedAt": "2026-01-19T10:33:46Z"
+        },
+        {
+          "author": "fandreas",
+          "authorAssociation": "NONE",
+          "body": "@arndt-s, I don't believe you can generally present multiple certificates when performing authentication, and you generally do not know whether the authenticating party wants to leverage instance-specific identifiers or not. \n\nThe requirement noted above remains, i.e.  the need to convey different types of identities in a WIMSE credential (like \"service\" and \"instance\"). I'm not clear on how your proposal addresses that. ",
+          "createdAt": "2026-01-20T23:29:58Z",
+          "updatedAt": "2026-01-20T23:29:58Z"
         }
       ]
     },
