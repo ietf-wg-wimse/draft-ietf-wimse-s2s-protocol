@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-01-22T01:45:04.524747+00:00",
+  "timestamp": "2026-01-29T01:56:54.571090+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -3216,10 +3216,12 @@
       "assignees": [
         "jsalowey"
       ],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
       "body": "We currently don't talk about where the trust anchor comes from and what data is used to identify those. We believe this should be added on a high level. The exact provisioning is out of scope.",
       "createdAt": "2025-09-23T14:48:53Z",
-      "updatedAt": "2025-10-20T10:31:15Z",
+      "updatedAt": "2026-01-27T15:50:57Z",
       "closedAt": null,
       "comments": [
         {
@@ -3430,9 +3432,17 @@
       ],
       "body": "See https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/178#discussion_r2445222257",
       "createdAt": "2025-11-03T14:07:13Z",
-      "updatedAt": "2025-12-09T15:04:29Z",
+      "updatedAt": "2026-01-27T15:52:05Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "#194 is not acceptable and none of this is necessary in the creds layer anyway ",
+          "createdAt": "2026-01-27T15:52:05Z",
+          "updatedAt": "2026-01-27T15:52:05Z"
+        }
+      ]
     },
     {
       "number": 184,
@@ -3554,11 +3564,13 @@
       "state": "OPEN",
       "author": "fandreas",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "yaroslavros"
+      ],
       "labels": [],
       "body": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/blob/41fb87003b43adccd77af7e91ad06e5e3499066f/draft-ietf-wimse-workload-creds.md?plain=1#L151\n\nGlobal comment: The workload identifier is defined in the Workload Identifier document now (not the architecture document), and hence that is what needs to be referenced instead in a number of places. Note that some of the content may have changed since that reorganization and the workload identifier document itself is in need of some updates, which may impact some of the definitions relied upon in this document. ",
       "createdAt": "2026-01-14T02:23:58Z",
-      "updatedAt": "2026-01-14T02:23:58Z",
+      "updatedAt": "2026-01-27T15:56:38Z",
       "closedAt": null,
       "comments": []
     },
@@ -3699,6 +3711,24 @@
       "body": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/blob/41fb87003b43adccd77af7e91ad06e5e3499066f/draft-ietf-wimse-workload-creds.md?plain=1#L402\n\nI'm not sure I agree with the statement \n\n\"The Workload Identifier is scoped within an issuer and therefore any sub-components (path portion of Identifier) are only unique within a trust domain defined by the issuer.\"\n\nsince it seems to preclude delegated trust, but that's something that should be resolved in the wimse identifier document (an issue has been raised against that document separately, and the resolution of that should eventually be reflected here).\n\n",
       "createdAt": "2026-01-14T02:53:28Z",
       "updatedAt": "2026-01-14T02:53:28Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 207,
+      "id": "I_kwDOLJmm787mJhe7",
+      "title": "Move wimse scheme definition to identifier document",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/207",
+      "state": "OPEN",
+      "author": "yaroslavros",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [
+        "yaroslavros"
+      ],
+      "labels": [],
+      "body": "As per https://github.com/ietf-wg-wimse/draft-ietf-wimse-identifier/issues/32",
+      "createdAt": "2026-01-27T15:55:48Z",
+      "updatedAt": "2026-01-27T15:55:55Z",
       "closedAt": null,
       "comments": []
     }
@@ -14890,7 +14920,7 @@
       ],
       "body": "Resolves #87",
       "createdAt": "2025-12-16T11:27:06Z",
-      "updatedAt": "2025-12-16T15:10:14Z",
+      "updatedAt": "2026-01-27T15:16:45Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "4a0de62dfe29a6e58fcbbb5ceeca92a3f0aeed55",
@@ -14901,7 +14931,15 @@
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I am told by @yaronf that this doesn't address #87 as written ",
+          "createdAt": "2026-01-27T15:16:45Z",
+          "updatedAt": "2026-01-27T15:16:45Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOLJmm787Vi1-6",
@@ -14922,6 +14960,26 @@
               "updatedAt": "2025-12-16T11:46:10Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787dPXwp",
+          "commit": {
+            "abbreviatedOid": "5474581"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-01-27T15:15:13Z",
+          "updatedAt": "2026-01-27T15:15:14Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "@yaroslavros said he didn't like \"level\" and I @jsalowey and @yaronf agreed while @arndt-s was in San Diego\n```suggestion\nIt is possible to use different workload credential simultaneously, particularly at different layers. For instance, the Workload Identity Certificate at the transport layer and the Workload Identity Token at the application layer. In this scenario, the credentials complement each other and are not alternatives to each other, meaning all MUST be validated, not just one.\n```",
+              "createdAt": "2026-01-27T15:15:13Z",
+              "updatedAt": "2026-01-27T15:15:14Z"
+            }
+          ]
         }
       ]
     },
@@ -14937,7 +14995,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-12-16T11:28:19Z",
-      "updatedAt": "2025-12-16T17:57:22Z",
+      "updatedAt": "2026-01-27T15:08:58Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "4a0de62dfe29a6e58fcbbb5ceeca92a3f0aeed55",
@@ -14955,6 +15013,13 @@
           "body": "Are you sure? What are we gaining by deleting it? Also, the I-D is officially not expired (and it's an adopted draft) so this looks weird from a formalistic point of view.\r\n\r\nMaybe all we need to do is to manually edit the README to link to the Editor's Copy for each of the new draft.",
           "createdAt": "2025-12-16T12:29:24Z",
           "updatedAt": "2025-12-16T12:29:24Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@arndt please see https://github.com/martinthomson/i-d-template/blob/main/doc/UPDATE.md - you probably need to run `make update` and then merge the whole thing.",
+          "createdAt": "2026-01-27T15:08:58Z",
+          "updatedAt": "2026-01-27T15:08:58Z"
         }
       ],
       "reviews": [
@@ -15007,7 +15072,7 @@
       ],
       "body": "Attempt to resolve #183.\n\nIt talks about signing, but I believe in general, this is about authenticating the response on a broader level.",
       "createdAt": "2025-12-16T11:52:04Z",
-      "updatedAt": "2026-01-04T17:06:54Z",
+      "updatedAt": "2026-01-27T15:22:04Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "4a0de62dfe29a6e58fcbbb5ceeca92a3f0aeed55",
@@ -15018,7 +15083,15 @@
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "nope ",
+          "createdAt": "2026-01-27T15:20:51Z",
+          "updatedAt": "2026-01-27T15:20:51Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOLJmm787Vl_5u",
@@ -15059,6 +15132,19 @@
               "updatedAt": "2026-01-04T17:06:54Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787dPhM9",
+          "commit": {
+            "abbreviatedOid": "61ac766"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "this is not ok",
+          "createdAt": "2026-01-27T15:22:04Z",
+          "updatedAt": "2026-01-27T15:22:04Z",
+          "comments": []
         }
       ]
     },
@@ -15118,7 +15204,7 @@
       "labels": [],
       "body": "Adds security considerations on how to validate the audience, particularly the authority part.\r\n\r\nResolves #172.\r\n",
       "createdAt": "2026-01-19T10:44:59Z",
-      "updatedAt": "2026-01-19T19:42:38Z",
+      "updatedAt": "2026-01-27T05:30:37Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "41fb87003b43adccd77af7e91ad06e5e3499066f",
@@ -15168,6 +15254,26 @@
               "body": "\"Applicability\" is too vague. Also, should we use \"authorization\" terminology here?",
               "createdAt": "2026-01-19T19:42:38Z",
               "updatedAt": "2026-01-19T19:42:38Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787dFbIE",
+          "commit": {
+            "abbreviatedOid": "d4c9edf"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-01-27T05:30:11Z",
+          "updatedAt": "2026-01-27T05:30:37Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "Maybe\n```suggestion\nValidators MUST check that the audience field of the WPT is a URI or other value that is for their consumption.  In some cases when a URI is used as the audience some information, such as the authority portion, may be generated by an external requester who sees a different host name for the service than is used internally.  Validators MUST NOT use untrusted information obtained from the request to determine if the hostname belongs to an authorized authority.  Doing so could allow attackers to trick validators into accepting a WPT generated for a different receiver by sending a fabricated request. The validator MUST get the information about allowed URL authorities from a trusted source such as out-of-band configuration.  The Host of the request or an \"X-Forwarded-Host\" header is an example of untrusted data and cannot be trusted and MUST NOT be used.\n```\n",
+              "createdAt": "2026-01-27T05:30:11Z",
+              "updatedAt": "2026-01-27T05:30:37Z"
             }
           ]
         }
