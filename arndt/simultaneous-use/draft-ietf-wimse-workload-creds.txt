@@ -287,17 +287,17 @@ Table of Contents
    all MUST be validated, not just one.
 
    A simultaneous use is particularly relevant in environments where the
-   transport-level security is encrypting the network between transport-
-   layer components and the application-level security is authenticating
+   transport-layer security is encrypting the network between transport-
+   layer components and the application-layer security is authenticating
    the actual invocation between 2 workloads.
 
                 Transport-        Transport-
-   ┌───────────┐level  ┌─────────┐level   ┌───────────┐
+   ┌───────────┐layer  ┌─────────┐layer   ┌───────────┐
    │           │◄─────►│  Proxy  │◄──────►│           │
    │ Workload  │       └─────────┘        │ Workload  │
    │     A     │                          │     B     │
    │           │◄========================►│           │
-   └───────────┘     Application-level    └───────────┘
+   └───────────┘     Application-layer    └───────────┘
 
 2.  Conventions and Definitions
 

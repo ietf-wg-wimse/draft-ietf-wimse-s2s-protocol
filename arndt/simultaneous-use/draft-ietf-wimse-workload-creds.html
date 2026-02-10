@@ -1502,7 +1502,7 @@ callback functions). Deployments <span class="bcp14">SHOULD</span> use these fea
 <a href="#section-1.4" class="section-number selfRef">1.4. </a><a href="#name-simultaneous-use" class="section-name selfRef">Simultaneous use</a>
         </h3>
 <p id="section-1.4-1">It is possible to use different workload credential simultaneously, particularly at different layers. For instance, the Workload Identity Certificate at the transport layer and the Workload Identity Token at the application layer. In this scenario, the credentials complement each other and are not alternatives to each other, meaning all <span class="bcp14">MUST</span> be validated, not just one.<a href="#section-1.4-1" class="pilcrow">¶</a></p>
-<p id="section-1.4-2">A simultaneous use is particularly relevant in environments where the transport-level security is encrypting the network between transport-layer components and the application-level security is authenticating the actual invocation between 2 workloads.<a href="#section-1.4-2" class="pilcrow">¶</a></p>
+<p id="section-1.4-2">A simultaneous use is particularly relevant in environments where the transport-layer security is encrypting the network between transport-layer components and the application-layer security is authenticating the actual invocation between 2 workloads.<a href="#section-1.4-2" class="pilcrow">¶</a></p>
 <div id="section-1.4-3">
           <div class="alignLeft art-svg artwork" id="section-1.4-3.1">
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="144" width="424" viewBox="0 0 424 144" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
@@ -1511,8 +1511,8 @@ callback functions). Deployments <span class="bcp14">SHOULD</span> use these fea
               <g class="text">
                 <text x="148" y="36">Transport-</text>
                 <text x="292" y="36">Transport-</text>
-                <text x="76" y="52">┌───────────┐level</text>
-                <text x="228" y="52">┌─────────┐level</text>
+                <text x="76" y="52">┌───────────┐layer</text>
+                <text x="228" y="52">┌─────────┐layer</text>
                 <text x="368" y="52">┌───────────┐</text>
                 <text x="8" y="68">│</text>
                 <text x="136" y="68">│◄─────►│</text>
@@ -1537,7 +1537,7 @@ callback functions). Deployments <span class="bcp14">SHOULD</span> use these fea
                 <text x="316" y="116">►│</text>
                 <text x="416" y="116">│</text>
                 <text x="56" y="132">└───────────┘</text>
-                <text x="216" y="132">Application-level</text>
+                <text x="216" y="132">Application-layer</text>
                 <text x="368" y="132">└───────────┘</text>
               </g>
             </svg><a href="#section-1.4-3.1" class="pilcrow">¶</a>
