@@ -171,7 +171,7 @@ callback functions). Deployments SHOULD use these features to establish a consis
 
 ## Simultaneous use
 
-It is possible to use different workload credential simultaneously, particularly at different levels. For instance, the Workload Identity Certificate at the transport level and the Workload Identity Token at the application level. In this scenario, the credentials complement each other and are not alternatives to each other, meaning all MUST be validated, not just one.
+It is possible to use different workload credential simultaneously, particularly at different layers. For instance, the Workload Identity Certificate at the transport layer and the Workload Identity Token at the application layer. In this scenario, the credentials complement each other and are not alternatives to each other, meaning all MUST be validated, not just one.
 
 A simultaneous use is particularly relevant in environments where the transport-level security is encrypting the network between transport-layer components and the application-level security is authenticating the actual invocation between 2 workloads.
 
