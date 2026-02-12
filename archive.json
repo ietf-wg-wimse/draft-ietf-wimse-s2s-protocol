@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-01-29T01:56:54.571090+00:00",
+  "timestamp": "2026-02-12T02:06:21.107643+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -3729,6 +3729,22 @@
       "body": "As per https://github.com/ietf-wg-wimse/draft-ietf-wimse-identifier/issues/32",
       "createdAt": "2026-01-27T15:55:48Z",
       "updatedAt": "2026-01-27T15:55:55Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 208,
+      "id": "I_kwDOLJmm787pxxkh",
+      "title": "Clean up security considerations in credentials draft",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/208",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Currently, a lot of the security considerations are POP specific and talk about semantics not described in the credentials document.",
+      "createdAt": "2026-02-10T15:32:41Z",
+      "updatedAt": "2026-02-10T15:33:06Z",
       "closedAt": null,
       "comments": []
     }
@@ -14918,15 +14934,15 @@
       "labels": [
         "draft-ietf-wimse-workload-creds"
       ],
-      "body": "Resolves #87",
+      "body": "Related to #87, covering actual \"simultaneious use\"",
       "createdAt": "2025-12-16T11:27:06Z",
-      "updatedAt": "2026-01-27T15:16:45Z",
+      "updatedAt": "2026-02-10T15:18:19Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "4a0de62dfe29a6e58fcbbb5ceeca92a3f0aeed55",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "arndt/simultaneous-use",
-      "headRefOid": "54745812e3b252652983f51a92aa01d7352a8190",
+      "headRefOid": "468a0b1a6c13169bd140c45410e0ff1157b27eb7",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -14938,6 +14954,13 @@
           "body": "I am told by @yaronf that this doesn't address #87 as written ",
           "createdAt": "2026-01-27T15:16:45Z",
           "updatedAt": "2026-01-27T15:16:45Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> I am told by @yaronf that this doesn't address https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/87 as written\r\n\r\nCan @yaronf give more details on it? \r\n\r\nWe already talk about \"simultaneous use\" in a way that you can use 1 for the first hop and 2 for the next one. \r\n\r\n\"These two protocols are compatible, in the sense that a single call chain can have some calls use one protocol and some use the other. Workload A can call Workload B with mutual TLS authentication, while the next call from Workload B to Workload C would be authenticated at the application level.\"\r\n\r\nSo this is mainly to fill the gap of a truly simultaneous use, when network and application level authentication is happening on the same hop.",
+          "createdAt": "2026-02-10T10:41:17Z",
+          "updatedAt": "2026-02-10T10:41:17Z"
         }
       ],
       "reviews": [
@@ -14978,6 +15001,26 @@
               "body": "@yaroslavros said he didn't like \"level\" and I @jsalowey and @yaronf agreed while @arndt-s was in San Diego\n```suggestion\nIt is possible to use different workload credential simultaneously, particularly at different layers. For instance, the Workload Identity Certificate at the transport layer and the Workload Identity Token at the application layer. In this scenario, the credentials complement each other and are not alternatives to each other, meaning all MUST be validated, not just one.\n```",
               "createdAt": "2026-01-27T15:15:13Z",
               "updatedAt": "2026-01-27T15:15:14Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787hSGXE",
+          "commit": {
+            "abbreviatedOid": "468a0b1"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-10T15:11:48Z",
+          "updatedAt": "2026-02-10T15:11:48Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "Discussed today:\n\n- more specific\n- up to local policy",
+              "createdAt": "2026-02-10T15:11:48Z",
+              "updatedAt": "2026-02-10T15:11:48Z"
             }
           ]
         }
@@ -15063,7 +15106,7 @@
       "id": "PR_kwDOLJmm7865IrE8",
       "title": "Add some color to response authentication",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/194",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -15072,14 +15115,14 @@
       ],
       "body": "Attempt to resolve #183.\n\nIt talks about signing, but I believe in general, this is about authenticating the response on a broader level.",
       "createdAt": "2025-12-16T11:52:04Z",
-      "updatedAt": "2026-01-27T15:22:04Z",
+      "updatedAt": "2026-02-10T15:33:39Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "4a0de62dfe29a6e58fcbbb5ceeca92a3f0aeed55",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "arndt/response-authentication",
       "headRefOid": "61ac766cdc08a5ddcba2ad807c718374771ebb88",
-      "closedAt": null,
+      "closedAt": "2026-02-10T15:33:38Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
@@ -15090,6 +15133,13 @@
           "body": "nope ",
           "createdAt": "2026-01-27T15:20:51Z",
           "updatedAt": "2026-01-27T15:20:51Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Closed. using #208 to make sure we clean up the other security considerations.",
+          "createdAt": "2026-02-10T15:33:38Z",
+          "updatedAt": "2026-02-10T15:33:38Z"
         }
       ],
       "reviews": [
