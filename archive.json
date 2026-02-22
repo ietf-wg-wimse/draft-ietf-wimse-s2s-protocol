@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-02-12T02:06:21.107643+00:00",
+  "timestamp": "2026-02-22T02:04:14.524611+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -15328,6 +15328,32 @@
           ]
         }
       ]
+    },
+    {
+      "number": 209,
+      "id": "PR_kwDOLJmm787FSOmF",
+      "title": "Updated identifier reference",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/209",
+      "state": "OPEN",
+      "author": "yaroslavros",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "To address https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/199",
+      "createdAt": "2026-02-21T00:12:52Z",
+      "updatedAt": "2026-02-21T00:13:05Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "41fb87003b43adccd77af7e91ad06e5e3499066f",
+      "headRepository": "yaroslavros/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "main",
+      "headRefOid": "2d5a602cd1eb12d34e41a35c7ec0da45d3f3145d",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
