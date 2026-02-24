@@ -148,8 +148,8 @@ Depending on the protocol, the workload authentication may happen during step (2
 
 ## Workload Identifiers and Authentication Granularity {#granular-auth}
 
-The specific format of workload identifiers (see {{I-D.ietf-wimse-arch}}) is set by local policy for each deployment,
-and this choice has several implications.
+The Workload Identifier is a URI and its baseline syntax and processing requirements are defined in {{!WIMSE-ID=I-D.ietf-wimse-identifier}}.
+While deployments define how they assign identifiers and what the path portion means, implementations MUST enforce the URI requirements outlined in {{Section 4.1 of WIMSE-ID}}.
 
 Prior to WIMSE, many use cases did not allow for fully granular authentication in containerized runtime platforms.
 For instance, with mutual TLS,
@@ -193,7 +193,7 @@ A WIT MUST contain the following content, except where noted:
     * `typ`: the WIT is explicitly typed, as recommended in {{Section 3.11 of RFC8725}}, using the `wit+jwt` media type.
 * in the JWT claims:
     * `iss`: The issuer of the token, which is the Identity Server, represented by a URI. The `iss` claim is RECOMMENDED but optional, see {{wit-iss-note}} for more.
-    * `sub`: The subject of the token, which is the identity of the workload, represented by a URI. See {{I-D.ietf-wimse-arch}} for details of the Workload Identifier. And see {{granular-auth}} for security implications of these identifiers.
+    * `sub`: The subject of the token, which is the identity of the workload, represented by a URI as defined in {{WIMSE-ID}}. {{granular-auth}} provides additional considerations for security implications of these identifiers.
     * `exp`: The expiration time of the token (as defined in {{Section 4.1.4 of RFC7519}}).
       WITs should be refreshed regularly, e.g. on the order of hours.
     * `jti`: A unique identifier for the token. This claim is OPTIONAL. The `jti` claim is frequently useful for auditing issuance of individual WITs or to revoke them, but some token generation environments do not support it.
@@ -201,7 +201,7 @@ A WIT MUST contain the following content, except where noted:
         * `jwk`: Within the cnf claim, a `jwk` key MUST be present that contains the public key of the workload as defined in {{Section 3.2 of RFC7800}}. The workload MUST prove possession of the corresponding private key when presenting the WIT to another party. As such, it MUST NOT be used as a bearer token and is not intended for use in the `Authorization` header.
             * `alg`: Within the jwk object, an `alg` field MUST be present. Allowed values are listed in the IANA "JSON Web Signature and Encryption Algorithms" registry established by {{RFC7518}}. The presented proof MUST be produced with the algorithm specified in this field. The value `none` MUST NOT be used. Algorithms used in combination with symmetric keys MUST NOT be used. Also encryption algorithms MUST NOT be used as this would require additional key distribution outside of the WIT. To promote interoperability, the `ES256` signing algorithm MUST be supported by general purpose implementations of this document.
 
-As noted in {{I-D.ietf-wimse-arch}}, a workload identifier is a URI with a trust domain component.
+As noted in {{WIMSE-ID}}, a workload identifier is a URI that includes a trust domain in the authority component.
 The runtime environment often determines which
 URI scheme is used, e.g. if SPIFFE is used to authenticate workloads, it mandates "spiffe" URIs.
 However for those deployments where this is not the case, this document ({{iana-uri}})
@@ -318,8 +318,7 @@ This, however, could result in interoperability issues, which the following rule
 
 ### A note on `iss` claim and key distribution {#wit-iss-note}
 
-It is RECOMMENDED that the WIT carries an `iss` claim. This specification itself does not make use of a potential `iss` claim but also carries the trust domain in the workload identifier (see {{I-D.ietf-wimse-arch}} for a definition
-of the identifier and related rules). Implementations MAY include the `iss` claim in the form of a `https` URL to facilitate key distribution via mechanisms like the `jwks_uri` from {{!RFC8414}} but alternative key distribution methods may make use of the trust domain included in the workload identifier which is carried in the mandatory `sub` claim.
+It is RECOMMENDED that the WIT carries an `iss` claim. This specification itself does not make use of a potential `iss` claim but also carries the trust domain in the workload identifier ({{WIMSE-ID}}). Implementations MAY include the `iss` claim in the form of a `https` URL to facilitate key distribution via mechanisms like the `jwks_uri` from {{!RFC8414}} but alternative key distribution methods may make use of the trust domain included in the workload identifier which is carried in the mandatory `sub` claim.
 
 ## Error Conditions
 
@@ -399,7 +398,7 @@ Teleport - Machine & Workload Identity
 
 ## Workload Identity
 
-The Workload Identifier is scoped within an issuer and therefore any sub-components (path portion of Identifier) are only unique within a trust domain defined by the issuer. Using a Workload Identifier without taking into account the trust domain could allow one domain to issue tokens to spoof identities in another domain. Additionally, the trust domain must be tied to an authorized issuer cryptographic trust anchor through some mechanism such as a JWKS or X.509 certificate chain. The association of an issuer, trust domain and a cryptographic trust anchor MUST be communicated securely out of band.
+Workload Identifiers ({{WIMSE-ID}}) are scoped to a trust domain (the URI authority component) and MUST be interpreted in that trust domain context. Using a Workload Identifier without taking into account the trust domain could allow one domain to issue tokens to spoof identities in another domain. Consumers MUST bind each trust domain to an authorized issuer (or set of issuers) and to the corresponding cryptographic trust anchors used to validate credentials from that domain (for example using a JWKS or an X.509 certificate chain). The mapping from trust domain to authorized issuers and trust anchors MUST be distributed to consumers via a secure out-of-band mechanism.
 
 ## Workload Identity Token and Proof of Possession
 
@@ -431,7 +430,7 @@ The POP MAY be bound to a transport layer sender such as the client identity of 
 Both the Workload Identity Token and the Workload Identity Certificate carry a public key. The corresponding private key:
 
 * MUST be kept private
-* MUST be individual for each Workload Identifier (see {{I-D.ietf-wimse-arch}})
+* MUST be bound to a single Workload Identifier ({{WIMSE-ID}})
 * MUST NOT be used once the credential is expired
 * SHOULD be re-generated for each new Workload Identity Token or Certificate.
 
