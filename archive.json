@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-02-22T02:04:14.524611+00:00",
+  "timestamp": "2026-02-24T02:01:36.315064+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -3452,14 +3452,16 @@
       "state": "OPEN",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "bc-pi"
+      ],
       "labels": [
         "draft-ietf-wimse-wpt",
         "pre-wglc"
       ],
       "body": "> is \"projection\" the right word? i don't know tbh but don't think I've heard that before\n> \n> given this will now be in a separate doc, it's maybe better to just repeat the bit of ABNF  \n\n _Originally posted by @bc-pi in [#180](https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/180/files#r2487985961)_",
       "createdAt": "2025-11-03T22:09:33Z",
-      "updatedAt": "2025-12-09T15:37:50Z",
+      "updatedAt": "2026-02-23T21:38:08Z",
       "closedAt": null,
       "comments": []
     },
@@ -3741,10 +3743,12 @@
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
       "body": "Currently, a lot of the security considerations are POP specific and talk about semantics not described in the credentials document.",
       "createdAt": "2026-02-10T15:32:41Z",
-      "updatedAt": "2026-02-10T15:33:06Z",
+      "updatedAt": "2026-02-23T21:50:19Z",
       "closedAt": null,
       "comments": []
     }
@@ -15341,13 +15345,82 @@
       "labels": [],
       "body": "To address https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/199",
       "createdAt": "2026-02-21T00:12:52Z",
-      "updatedAt": "2026-02-21T00:13:05Z",
+      "updatedAt": "2026-02-22T23:56:22Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "41fb87003b43adccd77af7e91ad06e5e3499066f",
       "headRepository": "yaroslavros/draft-ietf-wimse-s2s-protocol",
       "headRefName": "main",
-      "headRefOid": "2d5a602cd1eb12d34e41a35c7ec0da45d3f3145d",
+      "headRefOid": "aed7240139406e6f91445fb71845a39c6a64a3b7",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm787kyTA4",
+          "commit": {
+            "abbreviatedOid": "2d5a602"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-22T17:12:31Z",
+          "updatedAt": "2026-02-22T17:12:31Z",
+          "comments": [
+            {
+              "originalPosition": 44,
+              "body": "> The association of an issuer\n\nAssociation with what? Please restructure the last 2 sentences.",
+              "createdAt": "2026-02-22T17:12:31Z",
+              "updatedAt": "2026-02-22T17:12:31Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787kzgRl",
+          "commit": {
+            "abbreviatedOid": "2d5a602"
+          },
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-22T23:56:22Z",
+          "updatedAt": "2026-02-22T23:56:22Z",
+          "comments": [
+            {
+              "originalPosition": 44,
+              "body": "Technically this is not related to updating reference of WIMSE identifier and these sentences were before the PR.\r\n\r\nHowever, I updated my PR to tighten this.\r\n\r\nPlease review.",
+              "createdAt": "2026-02-22T23:56:22Z",
+              "updatedAt": "2026-02-22T23:56:23Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 210,
+      "id": "PR_kwDOLJmm787Fwe5R",
+      "title": "Inline the ABNF for the Workload-Proof-Token Header Field",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/210",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-wpt"
+      ],
+      "body": "for #184\r\n",
+      "createdAt": "2026-02-23T21:48:36Z",
+      "updatedAt": "2026-02-23T22:05:52Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "41fb87003b43adccd77af7e91ad06e5e3499066f",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "wpt-abnf",
+      "headRefOid": "7bbee3213562ffc259b2231b3fbe68394396b8f6",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
