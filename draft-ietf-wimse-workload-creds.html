@@ -32,7 +32,7 @@ multi-service, multi-cloud, multi-tenant deployments.
     pycountry 24.6.1
     PyYAML 6.0.3
     requests 2.32.5
-    wcwidth 0.2.14
+    wcwidth 0.3.0
 -->
 <link href="draft-ietf-wimse-workload-creds.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -173,7 +173,7 @@ multi-service, multi-cloud, multi-tenant deployments.
   font-weight: 400;
   font-display: swap;
   src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face {
   font-family: 'Oxygen Mono';
@@ -181,7 +181,8 @@ multi-service, multi-cloud, multi-tenant deployments.
   font-weight: 400;
   font-display: swap;
   src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 }
 
 @font-face {
@@ -573,6 +574,7 @@ aside, blockquote {
 }
 blockquote {
   margin: 1em 0;
+  border-left: 2px var(--pilcrow-strong) solid;
 }
 cite {
   display: block;
@@ -643,7 +645,7 @@ a.pilcrow {
   }
 }
 @media not print {
-  :hover > a.pilcrow {
+  :hover > a.pilcrow, a.pilcrow:focus {
     opacity: 1;
   }
   a.pilcrow[href]:hover {
@@ -1051,11 +1053,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">WIMSE Workload Credentials</td>
-<td class="right">January 2026</td>
+<td class="right">February 2026</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Campbell, et al.</td>
-<td class="center">Expires 12 July 2026</td>
+<td class="center">Expires 28 August 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1068,12 +1070,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-wimse-workload-creds-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-01-08" class="published">8 January 2026</time>
+<time datetime="2026-02-24" class="published">24 February 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-07-12">12 July 2026</time></dd>
+<dd class="expires"><time datetime="2026-08-28">28 August 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1142,7 +1144,7 @@ multi-service, multi-cloud, multi-tenant deployments.<a href="#section-abstract-
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 12 July 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 28 August 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1469,8 +1471,8 @@ policy management and message authorization are out of scope of this document.<a
         <h3 id="name-workload-identifiers-and-au">
 <a href="#section-1.3" class="section-number selfRef">1.3. </a><a href="#name-workload-identifiers-and-au" class="section-name selfRef">Workload Identifiers and Authentication Granularity</a>
         </h3>
-<p id="section-1.3-1">The specific format of workload identifiers (see <span>[<a href="#I-D.ietf-wimse-arch" class="cite xref">I-D.ietf-wimse-arch</a>]</span>) is set by local policy for each deployment,
-and this choice has several implications.<a href="#section-1.3-1" class="pilcrow">¶</a></p>
+<p id="section-1.3-1">The Workload Identifier is a URI and its baseline syntax and processing requirements are defined in <span>[<a href="#WIMSE-ID" class="cite xref">WIMSE-ID</a>]</span>.
+While deployments define how they assign identifiers and what the path portion means, implementations <span class="bcp14">MUST</span> enforce the URI requirements outlined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-identifier-01#section-4.1" class="relref">Section 4.1</a> of [<a href="#WIMSE-ID" class="cite xref">WIMSE-ID</a>]</span>.<a href="#section-1.3-1" class="pilcrow">¶</a></p>
 <p id="section-1.3-2">Prior to WIMSE, many use cases did not allow for fully granular authentication in containerized runtime platforms.
 For instance, with mutual TLS,
 there's often no clear way to map the request's external access reference
@@ -1541,7 +1543,7 @@ It is issued by the Identity Server and binds a public key to the workload ident
                 <p id="section-3.1-3.2.2.1.1"><code>iss</code>: The issuer of the token, which is the Identity Server, represented by a URI. The <code>iss</code> claim is <span class="bcp14">RECOMMENDED</span> but optional, see <a href="#wit-iss-note" class="auto internal xref">Section 3.1.3</a> for more.<a href="#section-3.1-3.2.2.1.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-3.1-3.2.2.2">
-                <p id="section-3.1-3.2.2.2.1"><code>sub</code>: The subject of the token, which is the identity of the workload, represented by a URI. See <span>[<a href="#I-D.ietf-wimse-arch" class="cite xref">I-D.ietf-wimse-arch</a>]</span> for details of the Workload Identifier. And see <a href="#granular-auth" class="auto internal xref">Section 1.3</a> for security implications of these identifiers.<a href="#section-3.1-3.2.2.2.1" class="pilcrow">¶</a></p>
+                <p id="section-3.1-3.2.2.2.1"><code>sub</code>: The subject of the token, which is the identity of the workload, represented by a URI as defined in <span>[<a href="#WIMSE-ID" class="cite xref">WIMSE-ID</a>]</span>. <a href="#granular-auth" class="auto internal xref">Section 1.3</a> provides additional considerations for security implications of these identifiers.<a href="#section-3.1-3.2.2.2.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-3.1-3.2.2.3">
                 <p id="section-3.1-3.2.2.3.1"><code>exp</code>: The expiration time of the token (as defined in <span><a href="https://rfc-editor.org/rfc/rfc7519#section-4.1.4" class="relref">Section 4.1.4</a> of [<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>).
@@ -1566,7 +1568,7 @@ WITs should be refreshed regularly, e.g. on the order of hours.<a href="#section
             </ul>
 </li>
         </ul>
-<p id="section-3.1-4">As noted in <span>[<a href="#I-D.ietf-wimse-arch" class="cite xref">I-D.ietf-wimse-arch</a>]</span>, a workload identifier is a URI with a trust domain component.
+<p id="section-3.1-4">As noted in <span>[<a href="#WIMSE-ID" class="cite xref">WIMSE-ID</a>]</span>, a workload identifier is a URI that includes a trust domain in the authority component.
 The runtime environment often determines which
 URI scheme is used, e.g. if SPIFFE is used to authenticate workloads, it mandates "spiffe" URIs.
 However for those deployments where this is not the case, this document (<a href="#iana-uri" class="auto internal xref">Section 7.3</a>)
@@ -1754,8 +1756,7 @@ This, however, could result in interoperability issues, which the following rule
           <h4 id="name-a-note-on-iss-claim-and-key">
 <a href="#section-3.1.3" class="section-number selfRef">3.1.3. </a><a href="#name-a-note-on-iss-claim-and-key" class="section-name selfRef">A note on <code>iss</code> claim and key distribution</a>
           </h4>
-<p id="section-3.1.3-1">It is <span class="bcp14">RECOMMENDED</span> that the WIT carries an <code>iss</code> claim. This specification itself does not make use of a potential <code>iss</code> claim but also carries the trust domain in the workload identifier (see <span>[<a href="#I-D.ietf-wimse-arch" class="cite xref">I-D.ietf-wimse-arch</a>]</span> for a definition
-of the identifier and related rules). Implementations <span class="bcp14">MAY</span> include the <code>iss</code> claim in the form of a <code>https</code> URL to facilitate key distribution via mechanisms like the <code>jwks_uri</code> from <span>[<a href="#RFC8414" class="cite xref">RFC8414</a>]</span> but alternative key distribution methods may make use of the trust domain included in the workload identifier which is carried in the mandatory <code>sub</code> claim.<a href="#section-3.1.3-1" class="pilcrow">¶</a></p>
+<p id="section-3.1.3-1">It is <span class="bcp14">RECOMMENDED</span> that the WIT carries an <code>iss</code> claim. This specification itself does not make use of a potential <code>iss</code> claim but also carries the trust domain in the workload identifier (<span>[<a href="#WIMSE-ID" class="cite xref">WIMSE-ID</a>]</span>). Implementations <span class="bcp14">MAY</span> include the <code>iss</code> claim in the form of a <code>https</code> URL to facilitate key distribution via mechanisms like the <code>jwks_uri</code> from <span>[<a href="#RFC8414" class="cite xref">RFC8414</a>]</span> but alternative key distribution methods may make use of the trust domain included in the workload identifier which is carried in the mandatory <code>sub</code> claim.<a href="#section-3.1.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1909,7 +1910,7 @@ This section records the status of known implementations of the protocol defined
         <h3 id="name-workload-identity">
 <a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-workload-identity" class="section-name selfRef">Workload Identity</a>
         </h3>
-<p id="section-6.1-1">The Workload Identifier is scoped within an issuer and therefore any sub-components (path portion of Identifier) are only unique within a trust domain defined by the issuer. Using a Workload Identifier without taking into account the trust domain could allow one domain to issue tokens to spoof identities in another domain. Additionally, the trust domain must be tied to an authorized issuer cryptographic trust anchor through some mechanism such as a JWKS or X.509 certificate chain. The association of an issuer, trust domain and a cryptographic trust anchor <span class="bcp14">MUST</span> be communicated securely out of band.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
+<p id="section-6.1-1">Workload Identifiers (<span>[<a href="#WIMSE-ID" class="cite xref">WIMSE-ID</a>]</span>) are scoped to a trust domain (the URI authority component) and <span class="bcp14">MUST</span> be interpreted in that trust domain context. Using a Workload Identifier without taking into account the trust domain could allow one domain to issue tokens to spoof identities in another domain. Consumers <span class="bcp14">MUST</span> bind each trust domain to an authorized issuer (or set of issuers) and to the corresponding cryptographic trust anchors used to validate credentials from that domain (for example using a JWKS or an X.509 certificate chain). The mapping from trust domain to authorized issuers and trust anchors <span class="bcp14">MUST</span> be distributed to consumers via a secure out-of-band mechanism.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="workload-identity-token-and-proof-of-possession">
@@ -1962,7 +1963,7 @@ token and proof of possession <span class="bcp14">MUST</span> be sent over a sec
             <p id="section-6.3-2.1.1"><span class="bcp14">MUST</span> be kept private<a href="#section-6.3-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-6.3-2.2">
-            <p id="section-6.3-2.2.1"><span class="bcp14">MUST</span> be individual for each Workload Identifier (see <span>[<a href="#I-D.ietf-wimse-arch" class="cite xref">I-D.ietf-wimse-arch</a>]</span>)<a href="#section-6.3-2.2.1" class="pilcrow">¶</a></p>
+            <p id="section-6.3-2.2.1"><span class="bcp14">MUST</span> be bound to a single Workload Identifier (<span>[<a href="#WIMSE-ID" class="cite xref">WIMSE-ID</a>]</span>)<a href="#section-6.3-2.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-6.3-2.3">
             <p id="section-6.3-2.3.1"><span class="bcp14">MUST NOT</span> be used once the credential is expired<a href="#section-6.3-2.3.1" class="pilcrow">¶</a></p>
@@ -2164,8 +2165,12 @@ use these tokens to authenticate to each other.<a href="#section-7.1.1-9" class=
 <span class="refAuthor">Sheffer, Y.</span>, <span class="refAuthor">Hardt, D.</span>, and <span class="refAuthor">M. Jones</span>, <span class="refTitle">"JSON Web Token Best Current Practices"</span>, <span class="seriesInfo">BCP 225</span>, <span class="seriesInfo">RFC 8725</span>, <span class="seriesInfo">DOI 10.17487/RFC8725</span>, <time datetime="2020-02" class="refDate">February 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8725">https://www.rfc-editor.org/rfc/rfc8725</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9110">[RFC9110]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Fielding, R., Ed.</span>, <span class="refAuthor">Nottingham, M., Ed.</span>, and <span class="refAuthor">J. Reschke, Ed.</span>, <span class="refTitle">"HTTP Semantics"</span>, <span class="seriesInfo">STD 97</span>, <span class="seriesInfo">RFC 9110</span>, <span class="seriesInfo">DOI 10.17487/RFC9110</span>, <time datetime="2022-06" class="refDate">June 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9110">https://www.rfc-editor.org/rfc/rfc9110</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="WIMSE-ID">[WIMSE-ID]</dt>
+      <dd>
+<span class="refAuthor">Rosomakho, Y.</span> and <span class="refAuthor">J. A. Salowey</span>, <span class="refTitle">"Workload Identifier"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-identifier-01</span>, <time datetime="2025-12-29" class="refDate">29 December 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-identifier-01">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-identifier-01</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -2178,7 +2183,7 @@ use these tokens to authenticate to each other.<a href="#section-7.1.1-9" class=
 <dl class="references">
 <dt id="I-D.ietf-oauth-transaction-tokens">[I-D.ietf-oauth-transaction-tokens]</dt>
         <dd>
-<span class="refAuthor">Tulshibagwale, A.</span>, <span class="refAuthor">Fletcher, G.</span>, and <span class="refAuthor">P. Kasselman</span>, <span class="refTitle">"Transaction Tokens"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-transaction-tokens-06</span>, <time datetime="2025-07-28" class="refDate">28 July 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-transaction-tokens-06">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-transaction-tokens-06</a>&gt;</span>. </dd>
+<span class="refAuthor">Tulshibagwale, A.</span>, <span class="refAuthor">Fletcher, G.</span>, and <span class="refAuthor">P. Kasselman</span>, <span class="refTitle">"Transaction Tokens"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-transaction-tokens-07</span>, <time datetime="2026-01-24" class="refDate">24 January 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-transaction-tokens-07">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-transaction-tokens-07</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-wimse-arch">[I-D.ietf-wimse-arch]</dt>
         <dd>
