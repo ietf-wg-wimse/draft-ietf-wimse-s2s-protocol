@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-02-24T02:01:36.315064+00:00",
+  "timestamp": "2026-02-26T01:59:52.483522+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -3149,10 +3149,12 @@
       "author": "fandreas",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-wpt"
+      ],
       "body": "Open 1 (DPoP-inspired) says that \"It is RECOMMENDED to check that the value of the jti claim has not been used before in the time window in which the respective WPT would be considered valid.\"\n\nWhat is the scope/context in which this check should be made ? Elsewhere, it was suggested that the jti only needed to be unique within the sender scope (albeit it was not entirely clear what constitutes the sender scope). ",
       "createdAt": "2025-09-16T02:08:50Z",
-      "updatedAt": "2025-09-22T22:15:58Z",
+      "updatedAt": "2026-02-24T17:39:05Z",
       "closedAt": null,
       "comments": [
         {
@@ -3600,11 +3602,13 @@
       "state": "OPEN",
       "author": "fandreas",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "yaroslavros"
+      ],
       "labels": [],
       "body": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/blob/41fb87003b43adccd77af7e91ad06e5e3499066f/draft-ietf-wimse-workload-creds.md?plain=1#L180\n\nI don't think that was noted in the Introduction. ",
       "createdAt": "2026-01-14T02:39:31Z",
-      "updatedAt": "2026-01-14T02:39:31Z",
+      "updatedAt": "2026-02-24T15:53:44Z",
       "closedAt": null,
       "comments": []
     },
@@ -3616,11 +3620,13 @@
       "state": "OPEN",
       "author": "fandreas",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "yaroslavros"
+      ],
       "labels": [],
       "body": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/blob/41fb87003b43adccd77af7e91ad06e5e3499066f/draft-ietf-wimse-workload-creds.md?plain=1#L196\n\nRather than just a URI, shouldn't the 'sub' claim contain a WIMSE identifier ? ",
       "createdAt": "2026-01-14T02:41:10Z",
-      "updatedAt": "2026-01-14T02:42:27Z",
+      "updatedAt": "2026-02-24T15:52:20Z",
       "closedAt": null,
       "comments": [
         {
@@ -3708,11 +3714,13 @@
       "state": "OPEN",
       "author": "fandreas",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "yaroslavros"
+      ],
       "labels": [],
       "body": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/blob/41fb87003b43adccd77af7e91ad06e5e3499066f/draft-ietf-wimse-workload-creds.md?plain=1#L402\n\nI'm not sure I agree with the statement \n\n\"The Workload Identifier is scoped within an issuer and therefore any sub-components (path portion of Identifier) are only unique within a trust domain defined by the issuer.\"\n\nsince it seems to preclude delegated trust, but that's something that should be resolved in the wimse identifier document (an issue has been raised against that document separately, and the resolution of that should eventually be reflected here).\n\n",
       "createdAt": "2026-01-14T02:53:28Z",
-      "updatedAt": "2026-01-14T02:53:28Z",
+      "updatedAt": "2026-02-24T15:51:51Z",
       "closedAt": null,
       "comments": []
     },
@@ -14940,7 +14948,7 @@
       ],
       "body": "Related to #87, covering actual \"simultaneious use\"",
       "createdAt": "2025-12-16T11:27:06Z",
-      "updatedAt": "2026-02-10T15:18:19Z",
+      "updatedAt": "2026-02-24T15:33:45Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "4a0de62dfe29a6e58fcbbb5ceeca92a3f0aeed55",
@@ -15025,6 +15033,66 @@
               "body": "Discussed today:\n\n- more specific\n- up to local policy",
               "createdAt": "2026-02-10T15:11:48Z",
               "updatedAt": "2026-02-10T15:11:48Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787lZkXw",
+          "commit": {
+            "abbreviatedOid": "468a0b1"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-24T15:27:36Z",
+          "updatedAt": "2026-02-24T15:27:36Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "```suggestion\nIt is possible to use different workload credential simultaneously, at different layers. For instance, the Workload Identity Certificate at the transport layer and the Workload Identity Token at the application layer. In this scenario, the credentials complement each other and are not alternatives to each other, meaning all MUST be validated, not just one.\n```",
+              "createdAt": "2026-02-24T15:27:36Z",
+              "updatedAt": "2026-02-24T15:27:36Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787lZlts",
+          "commit": {
+            "abbreviatedOid": "468a0b1"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-24T15:28:29Z",
+          "updatedAt": "2026-02-24T15:28:29Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "suggestion as suggested by @yaronf \n```suggestion\nIt is possible to use different workload credential simultaneously at different layers. For instance, the Workload Identity Certificate at the transport layer and the Workload Identity Token at the application layer. In this scenario, the credentials complement each other and are not alternatives to each other, meaning all MUST be validated, not just one.\n```",
+              "createdAt": "2026-02-24T15:28:29Z",
+              "updatedAt": "2026-02-24T15:29:26Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787lZtuL",
+          "commit": {
+            "abbreviatedOid": "468a0b1"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-24T15:33:45Z",
+          "updatedAt": "2026-02-24T15:33:45Z",
+          "comments": [
+            {
+              "originalPosition": 19,
+              "body": "To me, this part is confusing and mixing up authentication and encryption. ",
+              "createdAt": "2026-02-24T15:33:45Z",
+              "updatedAt": "2026-02-24T15:33:45Z"
             }
           ]
         }
@@ -15258,7 +15326,7 @@
       "labels": [],
       "body": "Adds security considerations on how to validate the audience, particularly the authority part.\r\n\r\nResolves #172.\r\n",
       "createdAt": "2026-01-19T10:44:59Z",
-      "updatedAt": "2026-01-27T05:30:37Z",
+      "updatedAt": "2026-02-24T15:23:40Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "41fb87003b43adccd77af7e91ad06e5e3499066f",
@@ -15330,6 +15398,26 @@
               "updatedAt": "2026-01-27T05:30:37Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787lZetu",
+          "commit": {
+            "abbreviatedOid": "d4c9edf"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-24T15:23:40Z",
+          "updatedAt": "2026-02-24T15:23:40Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "LGTM.",
+              "createdAt": "2026-02-24T15:23:40Z",
+              "updatedAt": "2026-02-24T15:23:40Z"
+            }
+          ]
         }
       ]
     },
@@ -15338,24 +15426,26 @@
       "id": "PR_kwDOLJmm787FSOmF",
       "title": "Updated identifier reference",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/209",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "To address https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/199",
       "createdAt": "2026-02-21T00:12:52Z",
-      "updatedAt": "2026-02-22T23:56:22Z",
+      "updatedAt": "2026-02-24T15:23:39Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "41fb87003b43adccd77af7e91ad06e5e3499066f",
       "headRepository": "yaroslavros/draft-ietf-wimse-s2s-protocol",
       "headRefName": "main",
       "headRefOid": "aed7240139406e6f91445fb71845a39c6a64a3b7",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-02-24T15:23:39Z",
+      "mergedAt": "2026-02-24T15:23:39Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "2bce559fe25431e12c6a6376689d389fdc6ee2ee"
+      },
       "comments": [],
       "reviews": [
         {
@@ -15397,6 +15487,45 @@
               "updatedAt": "2026-02-22T23:56:23Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787lZKXe",
+          "commit": {
+            "abbreviatedOid": "aed7240"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "sure",
+          "createdAt": "2026-02-24T15:11:31Z",
+          "updatedAt": "2026-02-24T15:11:31Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm787lZLIp",
+          "commit": {
+            "abbreviatedOid": "aed7240"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-02-24T15:11:55Z",
+          "updatedAt": "2026-02-24T15:11:55Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm787lZLbU",
+          "commit": {
+            "abbreviatedOid": "aed7240"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-02-24T15:12:05Z",
+          "updatedAt": "2026-02-24T15:12:05Z",
+          "comments": []
         }
       ]
     },
@@ -15414,7 +15543,7 @@
       ],
       "body": "for #184\r\n",
       "createdAt": "2026-02-23T21:48:36Z",
-      "updatedAt": "2026-02-23T22:05:52Z",
+      "updatedAt": "2026-02-24T15:14:42Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "41fb87003b43adccd77af7e91ad06e5e3499066f",
@@ -15426,7 +15555,21 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm787lZP3P",
+          "commit": {
+            "abbreviatedOid": "7bbee32"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-02-24T15:14:42Z",
+          "updatedAt": "2026-02-24T15:14:42Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
