@@ -1288,67 +1288,70 @@ This document defines the WPT JWT format, its HTTP usage, validation requirement
       <h2 id="name-workload-proof-token">
 <a href="#section-2" class="section-number selfRef">2. </a><a href="#name-workload-proof-token" class="section-name selfRef">Workload Proof Token</a>
       </h2>
-<p id="section-2-1">The Workload Proof Token (WPT) is a JWT that provides proof of possession of the private key associated with a Workload Identity Token (WIT). The Workload Identity Token is sent in the request as described in <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span>. The WPT, is sent in the <code>Workload-Proof-Token</code> header field of the request.
-The ABNF syntax of the <code>Workload-Proof-Token</code> header field is:<a href="#section-2-1" class="pilcrow">¶</a></p>
+<p id="section-2-1">The Workload Proof Token (WPT) is a JWT that provides proof of possession of the private key associated with a Workload Identity Token (WIT). The Workload Identity Token is sent in the request as described in <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span>. The WPT is sent in the <code>Workload-Proof-Token</code> header field of the request.
+The ABNF <span>[<a href="#RFC5234" class="cite xref">RFC5234</a>]</span> syntax of the <code>Workload-Proof-Token</code> header field is shown in <a href="#wpt-header-abnf" class="auto internal xref">Figure 1</a> below.<a href="#section-2-1" class="pilcrow">¶</a></p>
 <span id="name-workload-proof-token-header"></span><div id="wpt-header-abnf">
 <figure id="figure-1">
         <div class="lang-abnf sourcecode" id="section-2-2.1">
 <pre>
-WPT =  JWT
+ALPHA = %x41-5A / %x61-7A ; A-Z / a-z
+DIGIT = %x30-39 ; 0-9
+base64url = 1*(ALPHA / DIGIT / "-" / "_")
+JWT =  base64url "." base64url "." base64url
+WIT =  JWT
 </pre>
 </div>
 <figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
 <a href="#name-workload-proof-token-header" class="selfRef">Workload-Proof-Token Header Field ABNF</a>
         </figcaption></figure>
 </div>
-<p id="section-2-3">where the <code>JWT</code> projection is defined in <a href="#wpt-header-abnf" class="auto internal xref">Figure 1</a>.<a href="#section-2-3" class="pilcrow">¶</a></p>
-<p id="section-2-4">A WPT MUST contain the following:<a href="#section-2-4" class="pilcrow">¶</a></p>
+<p id="section-2-3">A WPT MUST contain the following:<a href="#section-2-3" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-2-5.1">
-          <p id="section-2-5.1.1">in the JOSE header:<a href="#section-2-5.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-2-4.1">
+          <p id="section-2-4.1.1">in the JOSE header:<a href="#section-2-4.1.1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-2-5.1.2.1">
-              <p id="section-2-5.1.2.1.1"><code>alg</code>: An identifier for an appropriate JWS asymmetric digital signature algorithm corresponding to
-   the confirmation key in the associated WIT. The value MUST match the <code>alg</code> value of the <code>jwk</code> in the <code>cnf</code> claim of the WIT. See <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span> for valid values and restrictions.<a href="#section-2-5.1.2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-2-4.1.2.1">
+              <p id="section-2-4.1.2.1.1"><code>alg</code>: An identifier for an appropriate JWS asymmetric digital signature algorithm corresponding to
+   the confirmation key in the associated WIT. The value MUST match the <code>alg</code> value of the <code>jwk</code> in the <code>cnf</code> claim of the WIT. See <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span> for valid values and restrictions.<a href="#section-2-4.1.2.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-2-5.1.2.2">
-              <p id="section-2-5.1.2.2.1"><code>typ</code>: the WPT is explicitly typed, as recommended in <span><a href="https://rfc-editor.org/rfc/rfc8725#section-3.11" class="relref">Section 3.11</a> of [<a href="#RFC8725" class="cite xref">RFC8725</a>]</span>,
-   using the <code>application/wpt+jwt</code> media type.<a href="#section-2-5.1.2.2.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="section-2-4.1.2.2">
+              <p id="section-2-4.1.2.2.1"><code>typ</code>: the WPT is explicitly typed, as recommended in <span><a href="https://rfc-editor.org/rfc/rfc8725#section-3.11" class="relref">Section 3.11</a> of [<a href="#RFC8725" class="cite xref">RFC8725</a>]</span>,
+   using the <code>application/wpt+jwt</code> media type.<a href="#section-2-4.1.2.2.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </li>
-        <li class="normal" id="section-2-5.2">
-          <p id="section-2-5.2.1">in the JWT claims:<a href="#section-2-5.2.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="section-2-4.2">
+          <p id="section-2-4.2.1">in the JWT claims:<a href="#section-2-4.2.1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-2-5.2.2.1">
-              <p id="section-2-5.2.2.1.1"><code>aud</code>: The audience SHOULD contain the HTTP target URI (<span><a href="https://rfc-editor.org/rfc/rfc9110#section-7.1" class="relref">Section 7.1</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>) of the request
+<li class="normal" id="section-2-4.2.2.1">
+              <p id="section-2-4.2.2.1.1"><code>aud</code>: The audience SHOULD contain the HTTP target URI (<span><a href="https://rfc-editor.org/rfc/rfc9110#section-7.1" class="relref">Section 7.1</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>) of the request
    to which the WPT is attached, without query or fragment parts. However, there may be some normalization,
-  rewriting or other process that requires the audience to be set to a deployment-specific value.<a href="#section-2-5.2.2.1.1" class="pilcrow">¶</a></p>
+  rewriting or other process that requires the audience to be set to a deployment-specific value.<a href="#section-2-4.2.2.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-2-5.2.2.2">
-              <p id="section-2-5.2.2.2.1"><code>exp</code>: The expiration time of the WPT (as defined in <span><a href="https://rfc-editor.org/rfc/rfc7519#section-4.1.4" class="relref">Section 4.1.4</a> of [<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>). WPT lifetimes MUST be short,
-   e.g., on the order of minutes or seconds.<a href="#section-2-5.2.2.2.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="section-2-4.2.2.2">
+              <p id="section-2-4.2.2.2.1"><code>exp</code>: The expiration time of the WPT (as defined in <span><a href="https://rfc-editor.org/rfc/rfc7519#section-4.1.4" class="relref">Section 4.1.4</a> of [<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>). WPT lifetimes MUST be short,
+   e.g., on the order of minutes or seconds.<a href="#section-2-4.2.2.2.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-2-5.2.2.3">
-              <p id="section-2-5.2.2.3.1"><code>jti</code>: A unique identifier for the WPT. The value MUST be assigned such that there is a negligible probability that the same value will be assigned to any other WPT. Such uniqueness can be accomplished by encoding (base64url or any other suitable encoding) 128 bits of pseudorandom data.<a href="#section-2-5.2.2.3.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="section-2-4.2.2.3">
+              <p id="section-2-4.2.2.3.1"><code>jti</code>: A unique identifier for the WPT. The value MUST be assigned such that there is a negligible probability that the same value will be assigned to any other WPT. Such uniqueness can be accomplished by encoding (base64url or any other suitable encoding) 128 bits of pseudorandom data.<a href="#section-2-4.2.2.3.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-2-5.2.2.4">
-              <p id="section-2-5.2.2.4.1"><code>wth</code>: Hash of the Workload Identity Token, defined in <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span>. The value is the base64url encoding of the
-   SHA-256 hash of the ASCII encoding of the WIT's value.<a href="#section-2-5.2.2.4.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="section-2-4.2.2.4">
+              <p id="section-2-4.2.2.4.1"><code>wth</code>: Hash of the Workload Identity Token, defined in <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span>. The value is the base64url encoding of the
+   SHA-256 hash of the ASCII encoding of the WIT's value.<a href="#section-2-4.2.2.4.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-2-5.2.2.5">
-              <p id="section-2-5.2.2.5.1"><code>ath</code>: Hash of the OAuth access token, if present in the request, which might convey end-user identity and/or
+            <li class="normal" id="section-2-4.2.2.5">
+              <p id="section-2-4.2.2.5.1"><code>ath</code>: Hash of the OAuth access token, if present in the request, which might convey end-user identity and/or
    authorization context of the request. The value, as per <span><a href="https://rfc-editor.org/rfc/rfc9449#section-4.1" class="relref">Section 4.1</a> of [<a href="#RFC9449" class="cite xref">RFC9449</a>]</span>,
-   is the base64url encoding of the SHA-256 hash of the ASCII encoding of the access token's value.<a href="#section-2-5.2.2.5.1" class="pilcrow">¶</a></p>
+   is the base64url encoding of the SHA-256 hash of the ASCII encoding of the access token's value.<a href="#section-2-4.2.2.5.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-2-5.2.2.6">
-              <p id="section-2-5.2.2.6.1"><code>tth</code>: Hash of the Txn-Token <span>[<a href="#I-D.ietf-oauth-transaction-tokens" class="cite xref">I-D.ietf-oauth-transaction-tokens</a>]</span>, if present in the request,
+            <li class="normal" id="section-2-4.2.2.6">
+              <p id="section-2-4.2.2.6.1"><code>tth</code>: Hash of the Txn-Token <span>[<a href="#I-D.ietf-oauth-transaction-tokens" class="cite xref">I-D.ietf-oauth-transaction-tokens</a>]</span>, if present in the request,
    which might convey end-user identity and/or authorization context of the request. The value MUST be the result of
    a base64url encoding (as defined in <span><a href="https://rfc-editor.org/rfc/rfc7515#section-2" class="relref">Section 2</a> of [<a href="#RFC7515" class="cite xref">RFC7515</a>]</span>) of the SHA-256 hash of
-   the ASCII encoding of the associated token's value.<a href="#section-2-5.2.2.6.1" class="pilcrow">¶</a></p>
+   the ASCII encoding of the associated token's value.<a href="#section-2-4.2.2.6.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-2-5.2.2.7">
-              <p id="section-2-5.2.2.7.1"><code>oth</code>: Hash(es) of other token(s) in the request that convey end-user identity and/or authorization context of the
+            <li class="normal" id="section-2-4.2.2.7">
+              <p id="section-2-4.2.2.7.1"><code>oth</code>: Hash(es) of other token(s) in the request that convey end-user identity and/or authorization context of the
    request. The value is a JSON object with a key-value pair for each such token. For each, in the absence of an
    application profile specifying details, the key corresponds to the header field name containing the token,
    and the value is the base64url encoding of the SHA-256 hash of the ASCII bytes of the header field value with any
@@ -1356,17 +1359,17 @@ WPT =  JWT
    it to all lower case.
    Header fields occurring multiple times in the request are not supported by default.
    An application profile may specify different behavior for a key, such as
-   using a different hash algorithm or means of locating the token in the request.<a href="#section-2-5.2.2.7.1" class="pilcrow">¶</a></p>
+   using a different hash algorithm or means of locating the token in the request.<a href="#section-2-4.2.2.7.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </li>
       </ul>
-<p id="section-2-6">To clarify: the <code>ath</code>, <code>tth</code> and <code>oth</code> claims are each mandatory if the respective tokens are included in the request.<a href="#section-2-6" class="pilcrow">¶</a></p>
-<p id="section-2-7">The rules for using non-standard claims in WPTs are documented in <a href="#add-claims" class="auto internal xref">Section 2.3</a>.<a href="#section-2-7" class="pilcrow">¶</a></p>
-<p id="section-2-8">An example WPT might look like the following:<a href="#section-2-8" class="pilcrow">¶</a></p>
+<p id="section-2-5">To clarify: the <code>ath</code>, <code>tth</code> and <code>oth</code> claims are each mandatory if the respective tokens are included in the request.<a href="#section-2-5" class="pilcrow">¶</a></p>
+<p id="section-2-6">The rules for using non-standard claims in WPTs are documented in <a href="#add-claims" class="auto internal xref">Section 2.3</a>.<a href="#section-2-6" class="pilcrow">¶</a></p>
+<p id="section-2-7">An example WPT might look like the following:<a href="#section-2-7" class="pilcrow">¶</a></p>
 <span id="name-example-workload-proof-toke"></span><div id="example-wpt">
 <figure id="figure-2">
-        <div class="lang-jwt sourcecode" id="section-2-9.1">
+        <div class="lang-jwt sourcecode" id="section-2-8.1">
 <pre>
 =============== NOTE: '\' line wrapping per RFC 8792 ================
 
@@ -1382,9 +1385,9 @@ UzVTIyj2dRJaTLFs6e5NYv5gg6AqcV7NvkYCwfgMgWasWQzCA
 <a href="#name-example-workload-proof-toke" class="selfRef">Example Workload Proof Token (WPT)</a>
         </figcaption></figure>
 </div>
-<p id="section-2-10">The decoded JOSE header of the WPT from the example above is shown here:<a href="#section-2-10" class="pilcrow">¶</a></p>
+<p id="section-2-9">The decoded JOSE header of the WPT from the example above is shown here:<a href="#section-2-9" class="pilcrow">¶</a></p>
 <span id="name-example-wpt-jose-header"></span><figure id="figure-3">
-        <div class="lang-json sourcecode" id="section-2-11.1">
+        <div class="lang-json sourcecode" id="section-2-10.1">
 <pre>
 {
   "alg": "EdDSA",
@@ -1395,9 +1398,9 @@ UzVTIyj2dRJaTLFs6e5NYv5gg6AqcV7NvkYCwfgMgWasWQzCA
 <figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
 <a href="#name-example-wpt-jose-header" class="selfRef">Example WPT JOSE Header</a>
         </figcaption></figure>
-<p id="section-2-12">The decoded JWT claims of the WPT from the example above are shown here:<a href="#section-2-12" class="pilcrow">¶</a></p>
+<p id="section-2-11">The decoded JWT claims of the WPT from the example above are shown here:<a href="#section-2-11" class="pilcrow">¶</a></p>
 <span id="name-example-wpt-claims"></span><figure id="figure-4">
-        <div class="lang-json sourcecode" id="section-2-13.1">
+        <div class="lang-json sourcecode" id="section-2-12.1">
 <pre>
 {
   "ath": "CL4wjfpRmNf-bdYIbYLnV9d5rMARGwKYE10wUwzC0jI",
@@ -1411,9 +1414,9 @@ UzVTIyj2dRJaTLFs6e5NYv5gg6AqcV7NvkYCwfgMgWasWQzCA
 <figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
 <a href="#name-example-wpt-claims" class="selfRef">Example WPT Claims</a>
         </figcaption></figure>
-<p id="section-2-14">An example of an HTTP request with both the WIT and WPT from prior examples is shown below:<a href="#section-2-14" class="pilcrow">¶</a></p>
+<p id="section-2-13">An example of an HTTP request with both the WIT and WPT from prior examples is shown below:<a href="#section-2-13" class="pilcrow">¶</a></p>
 <span id="name-example-http-request-with-w"></span><figure id="figure-5">
-        <div class="lang-http sourcecode" id="section-2-15.1">
+        <div class="lang-http sourcecode" id="section-2-14.1">
 <pre>
 =============== NOTE: '\' line wrapping per RFC 8792 ================
 
@@ -1442,53 +1445,53 @@ zCA
 <figcaption><a href="#figure-5" class="selfRef">Figure 5</a>:
 <a href="#name-example-http-request-with-w" class="selfRef">Example HTTP Request with WIT and WPT</a>
         </figcaption></figure>
-<p id="section-2-16">To validate the WPT in the request, the recipient MUST ensure the following:<a href="#section-2-16" class="pilcrow">¶</a></p>
+<p id="section-2-15">To validate the WPT in the request, the recipient MUST ensure the following:<a href="#section-2-15" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-2-17.1">
-          <p id="section-2-17.1.1">There is exactly one <code>Workload-Proof-Token</code> header field in the request.<a href="#section-2-17.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-2-16.1">
+          <p id="section-2-16.1.1">There is exactly one <code>Workload-Proof-Token</code> header field in the request.<a href="#section-2-16.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-2-17.2">
-          <p id="section-2-17.2.1">The <code>Workload-Proof-Token</code> header field value is a single and well-formed JWT.<a href="#section-2-17.2.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="section-2-16.2">
+          <p id="section-2-16.2.1">The <code>Workload-Proof-Token</code> header field value is a single and well-formed JWT.<a href="#section-2-16.2.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-2-17.3">
-          <p id="section-2-17.3.1">The signature algorithm in the <code>alg</code> JOSE header string-equal matches the <code>alg</code> attribute of the <code>jwk</code> in the <code>cnf</code> claim of the WIT.<a href="#section-2-17.3.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="section-2-16.3">
+          <p id="section-2-16.3.1">The signature algorithm in the <code>alg</code> JOSE header string-equal matches the <code>alg</code> attribute of the <code>jwk</code> in the <code>cnf</code> claim of the WIT.<a href="#section-2-16.3.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-2-17.4">
-          <p id="section-2-17.4.1">The WPT signature is valid using the public key from the confirmation claim of the WIT.<a href="#section-2-17.4.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="section-2-16.4">
+          <p id="section-2-16.4.1">The WPT signature is valid using the public key from the confirmation claim of the WIT.<a href="#section-2-16.4.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-2-17.5">
-          <p id="section-2-17.5.1">The <code>typ</code> JOSE header parameter of the WPT conveys a media type of <code>wpt+jwt</code>.<a href="#section-2-17.5.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="section-2-16.5">
+          <p id="section-2-16.5.1">The <code>typ</code> JOSE header parameter of the WPT conveys a media type of <code>wpt+jwt</code>.<a href="#section-2-16.5.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-2-17.6">
-          <p id="section-2-17.6.1">The <code>aud</code> claim of the WPT matches the target URI, or an acceptable alias or normalization thereof, of the HTTP request
- in which the WPT was received, ignoring any query and fragment parts.<a href="#section-2-17.6.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="section-2-16.6">
+          <p id="section-2-16.6.1">The <code>aud</code> claim of the WPT matches the target URI, or an acceptable alias or normalization thereof, of the HTTP request
+ in which the WPT was received, ignoring any query and fragment parts.<a href="#section-2-16.6.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-2-17.7">
-          <p id="section-2-17.7.1">The <code>exp</code> claim is present and conveys a time that has not passed. WPTs with an expiration time unreasonably
- far in the future SHOULD be rejected.<a href="#section-2-17.7.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="section-2-16.7">
+          <p id="section-2-16.7.1">The <code>exp</code> claim is present and conveys a time that has not passed. WPTs with an expiration time unreasonably
+ far in the future SHOULD be rejected.<a href="#section-2-16.7.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-2-17.8">
-          <p id="section-2-17.8.1">The <code>wth</code> claim is present and matches the hash of the token value conveyed in the <code>Workload-Identity-Token</code> header.<a href="#section-2-17.8.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="section-2-16.8">
+          <p id="section-2-16.8.1">The <code>wth</code> claim is present and matches the hash of the token value conveyed in the <code>Workload-Identity-Token</code> header.<a href="#section-2-16.8.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-2-17.9">
-          <p id="section-2-17.9.1">It is RECOMMENDED to check that the value of the <code>jti</code> claim has not been used before in the time window in which the
- respective WPT would be considered valid.<a href="#section-2-17.9.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="section-2-16.9">
+          <p id="section-2-16.9.1">It is RECOMMENDED to check that the value of the <code>jti</code> claim has not been used before in the time window in which the
+ respective WPT would be considered valid.<a href="#section-2-16.9.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-2-17.10">
-          <p id="section-2-17.10.1">If presented in conjunction with an OAuth access token, the value of the <code>ath</code> claim matches the hash of that token's value.<a href="#section-2-17.10.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="section-2-16.10">
+          <p id="section-2-16.10.1">If presented in conjunction with an OAuth access token, the value of the <code>ath</code> claim matches the hash of that token's value.<a href="#section-2-16.10.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-2-17.11">
-          <p id="section-2-17.11.1">If presented in conjunction with a Txn-Token, the value of the <code>tth</code> claim matches the hash of that token's value.<a href="#section-2-17.11.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="section-2-16.11">
+          <p id="section-2-16.11.1">If presented in conjunction with a Txn-Token, the value of the <code>tth</code> claim matches the hash of that token's value.<a href="#section-2-16.11.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-2-17.12">
-          <p id="section-2-17.12.1">If presented in conjunction with a token conveying end-user identity or authorization context, the value of
- the <code>oth</code> claim matches the hash of that token's value.<a href="#section-2-17.12.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="section-2-16.12">
+          <p id="section-2-16.12.1">If presented in conjunction with a token conveying end-user identity or authorization context, the value of
+ the <code>oth</code> claim matches the hash of that token's value.<a href="#section-2-16.12.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-2-17.13">
-          <p id="section-2-17.13.1">If the <code>oth</code> claim is present, verify the hashes of all tokens listed in the <code>oth</code> claim per the default behavior
+        <li class="normal" id="section-2-16.13">
+          <p id="section-2-16.13.1">If the <code>oth</code> claim is present, verify the hashes of all tokens listed in the <code>oth</code> claim per the default behavior
  defined in <a href="#wpt" class="auto internal xref">Section 2</a> or as specified by an application specific profile. If the <code>oth</code> claim contains entries
  that are not understood by the recipient, the WPT MUST be rejected. Conversely, additional tokens not covered by
- the <code>oth</code> claim MUST NOT be used by the recipient to make authorization decisions.<a href="#section-2-17.13.1" class="pilcrow">¶</a></p>
+ the <code>oth</code> claim MUST NOT be used by the recipient to make authorization decisions.<a href="#section-2-16.13.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <div id="error-conditions">
@@ -1881,6 +1884,9 @@ Deployments should perform analysis on their situation to determine if it is app
 </li>
           <li class="normal" id="appendix-A.1-1.2">
             <p id="appendix-A.1-1.2.1">Fix Example WPT Claims to match the example WPT<a href="#appendix-A.1-1.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.1-1.3">
+            <p id="appendix-A.1-1.3.1">Inline the ABNF for the Workload-Proof-Token Header Field in <a href="#wpt-header-abnf" class="auto internal xref">Figure 1</a><a href="#appendix-A.1-1.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>

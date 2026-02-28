@@ -165,15 +165,18 @@ Table of Contents
    The Workload Proof Token (WPT) is a JWT that provides proof of
    possession of the private key associated with a Workload Identity
    Token (WIT).  The Workload Identity Token is sent in the request as
-   described in [I-D.ietf-wimse-workload-creds].  The WPT, is sent in
-   the Workload-Proof-Token header field of the request.  The ABNF
-   syntax of the Workload-Proof-Token header field is:
+   described in [I-D.ietf-wimse-workload-creds].  The WPT is sent in the
+   Workload-Proof-Token header field of the request.  The ABNF [RFC5234]
+   syntax of the Workload-Proof-Token header field is shown in Figure 1
+   below.
 
-   WPT =  JWT
+   ALPHA = %x41-5A / %x61-7A ; A-Z / a-z
+   DIGIT = %x30-39 ; 0-9
+   base64url = 1*(ALPHA / DIGIT / "-" / "_")
+   JWT =  base64url "." base64url "." base64url
+   WIT =  JWT
 
               Figure 1: Workload-Proof-Token Header Field ABNF
-
-   where the JWT projection is defined in Figure 1.
 
    A WPT MUST contain the following:
 
@@ -725,6 +728,9 @@ A.1.  draft-ietf-wimse-wpt-01
    *  Clairify treatment of "jti" claim
 
    *  Fix Example WPT Claims to match the example WPT
+
+   *  Inline the ABNF for the Workload-Proof-Token Header Field in
+      Figure 1
 
 A.2.  draft-ietf-wimse-wpt-00
 
