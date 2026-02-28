@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                      A. Schwenkschuster
-Expires: 28 August 2026                                 Defakto Security
-                                                        24 February 2026
+Expires: 1 September 2026                               Defakto Security
+                                                        28 February 2026
 
 
                        WIMSE Workload Proof Token
@@ -60,7 +60,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 28 August 2026.
+   This Internet-Draft will expire on 1 September 2026.
 
 Copyright Notice
 
@@ -98,15 +98,16 @@ Table of Contents
      5.1.  Normative References
      5.2.  Informative References
    Appendix A.  Document History
-     A.1.  draft-ietf-wimse-wpt-00
-     A.2.  draft-ietf-wimse-s2s-protocol-07
-     A.3.  draft-ietf-wimse-s2s-protocol-06
-     A.4.  draft-ietf-wimse-s2s-protocol-05
-     A.5.  draft-ietf-wimse-s2s-protocol-04
-     A.6.  draft-ietf-wimse-s2s-protocol-03
-     A.7.  draft-ietf-wimse-s2s-protocol-02
-     A.8.  draft-ietf-wimse-s2s-protocol-01
-     A.9.  draft-ietf-wimse-s2s-protocol-00
+     A.1.  draft-ietf-wimse-wpt-01
+     A.2.  draft-ietf-wimse-wpt-00
+     A.3.  draft-ietf-wimse-s2s-protocol-07
+     A.4.  draft-ietf-wimse-s2s-protocol-06
+     A.5.  draft-ietf-wimse-s2s-protocol-05
+     A.6.  draft-ietf-wimse-s2s-protocol-04
+     A.7.  draft-ietf-wimse-s2s-protocol-03
+     A.8.  draft-ietf-wimse-s2s-protocol-02
+     A.9.  draft-ietf-wimse-s2s-protocol-01
+     A.10. draft-ietf-wimse-s2s-protocol-00
    Acknowledgments
    Authors' Addresses
 
@@ -164,15 +165,18 @@ Table of Contents
    The Workload Proof Token (WPT) is a JWT that provides proof of
    possession of the private key associated with a Workload Identity
    Token (WIT).  The Workload Identity Token is sent in the request as
-   described in [I-D.ietf-wimse-workload-creds].  The WPT, is sent in
-   the Workload-Proof-Token header field of the request.  The ABNF
-   syntax of the Workload-Proof-Token header field is:
+   described in [I-D.ietf-wimse-workload-creds].  The WPT is sent in the
+   Workload-Proof-Token header field of the request.  The ABNF [RFC5234]
+   syntax of the Workload-Proof-Token header field is shown in Figure 1
+   below.
 
-   WPT =  JWT
+   ALPHA = %x41-5A / %x61-7A ; A-Z / a-z
+   DIGIT = %x30-39 ; 0-9
+   base64url = 1*(ALPHA / DIGIT / "-" / "_")
+   JWT =  base64url "." base64url "." base64url
+   WIT =  JWT
 
               Figure 1: Workload-Proof-Token Header Field ABNF
-
-   where the JWT projection is defined in Figure 1.
 
    A WPT MUST contain the following:
 
@@ -716,7 +720,12 @@ Appendix A.  Document History
 
    // RFC Editor: please remove before publication.
 
-A.1.  draft-ietf-wimse-wpt-00
+A.1.  draft-ietf-wimse-wpt-01
+
+   *  Inline the ABNF for the Workload-Proof-Token Header Field in
+      Figure 1
+
+A.2.  draft-ietf-wimse-wpt-00
 
    *  Focus on Workload Proof Token (WPT) only.
 
@@ -724,7 +733,7 @@ A.1.  draft-ietf-wimse-wpt-00
 
       -  Remove HTTP-Message-Signature profile
 
-A.2.  draft-ietf-wimse-s2s-protocol-07
+A.3.  draft-ietf-wimse-s2s-protocol-07
 
    *  Rework the WPT's oth claim.
 
@@ -742,14 +751,14 @@ A.2.  draft-ietf-wimse-s2s-protocol-07
 
    *  Use of the Accept-Signature header.
 
-A.3.  draft-ietf-wimse-s2s-protocol-06
+A.4.  draft-ietf-wimse-s2s-protocol-06
 
    *  Explicit definition of the Workload Identity Certificate.
 
    *  Definition of the validation of workload identifiers as part of
       workload authentication.  Still work in progress.
 
-A.4.  draft-ietf-wimse-s2s-protocol-05
+A.5.  draft-ietf-wimse-s2s-protocol-05
 
    *  Removed the entire Workload Identity section which is now covered
       in the Architecture document.
@@ -760,7 +769,7 @@ A.4.  draft-ietf-wimse-s2s-protocol-05
 
    *  IANA considerations.
 
-A.5.  draft-ietf-wimse-s2s-protocol-04
+A.6.  draft-ietf-wimse-s2s-protocol-04
 
    *  Require cnf.jwk.alg in WIT which restricts signature algorithm of
       WPT or HTTP-Sig.
@@ -769,7 +778,7 @@ A.5.  draft-ietf-wimse-s2s-protocol-04
 
    *  Consolidate terminology with the Architecture draft.
 
-A.6.  draft-ietf-wimse-s2s-protocol-03
+A.7.  draft-ietf-wimse-s2s-protocol-03
 
    *  Consistently use "workload".
 
@@ -784,7 +793,7 @@ A.6.  draft-ietf-wimse-s2s-protocol-03
 
    *  Error handling for the application level methods.
 
-A.7.  draft-ietf-wimse-s2s-protocol-02
+A.8.  draft-ietf-wimse-s2s-protocol-02
 
    *  Coexistence with bearer tokens.
 
@@ -796,7 +805,7 @@ A.7.  draft-ietf-wimse-s2s-protocol-02
 
    *  Moved an author to acknowledgments.
 
-A.8.  draft-ietf-wimse-s2s-protocol-01
+A.9.  draft-ietf-wimse-s2s-protocol-01
 
    *  Addressed multiple comments from Pieter.
 
@@ -811,7 +820,7 @@ A.8.  draft-ietf-wimse-s2s-protocol-01
    *  Added a section comparing the DPoP-inspired app-level security
       option to the Message Signature-based alternative.
 
-A.9.  draft-ietf-wimse-s2s-protocol-00
+A.10.  draft-ietf-wimse-s2s-protocol-00
 
    *  Initial WG draft, an exact copy of draft-sheffer-wimse-s2s-
       protocol-00
