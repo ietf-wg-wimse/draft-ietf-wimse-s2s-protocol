@@ -75,15 +75,18 @@ This document defines the WPT JWT format, its HTTP usage, validation requirement
 
 # Workload Proof Token  {#wpt}
 
-The Workload Proof Token (WPT) is a JWT that provides proof of possession of the private key associated with a Workload Identity Token (WIT). The Workload Identity Token is sent in the request as described in {{!I-D.ietf-wimse-workload-creds}}. The WPT, is sent in the `Workload-Proof-Token` header field of the request.
-The ABNF syntax of the `Workload-Proof-Token` header field is:
+The Workload Proof Token (WPT) is a JWT that provides proof of possession of the private key associated with a Workload Identity Token (WIT). The Workload Identity Token is sent in the request as described in {{!I-D.ietf-wimse-workload-creds}}. The WPT is sent in the `Workload-Proof-Token` header field of the request.
+The ABNF {{RFC5234}} syntax of the `Workload-Proof-Token` header field is shown in {{wpt-header-abnf}} below.
 
 ~~~ abnf
-WPT =  JWT
+ALPHA = %x41-5A / %x61-7A ; A-Z / a-z
+DIGIT = %x30-39 ; 0-9
+base64url = 1*(ALPHA / DIGIT / "-" / "_")
+JWT =  base64url "." base64url "." base64url
+WIT =  JWT
 ~~~~
 {: #wpt-header-abnf title="Workload-Proof-Token Header Field ABNF"}
 
-where the `JWT` projection is defined in {{wpt-header-abnf}}.
 
 A WPT MUST contain the following:
 
@@ -350,6 +353,10 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 
 # Document History
 <cref>RFC Editor: please remove before publication.</cref>
+
+## draft-ietf-wimse-wpt-01
+
+* Inline the ABNF for the Workload-Proof-Token Header Field in {{wpt-header-abnf}}
 
 ## draft-ietf-wimse-wpt-00
 
