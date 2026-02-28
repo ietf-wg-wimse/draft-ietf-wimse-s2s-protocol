@@ -98,7 +98,7 @@ A WPT MUST contain the following:
     rewriting or other process that requires the audience to be set to a deployment-specific value.
     * `exp`: The expiration time of the WPT (as defined in {{Section 4.1.4 of RFC7519}}). WPT lifetimes MUST be short,
      e.g., on the order of minutes or seconds.
-    * `jti`: An identifier for the token. The value MUST be unique, at least within the scope of the sender.
+    * `jti`: A unique identifier for the WPT. The value MUST be assigned such that there is a negligible probability that the same value will be assigned to any other WPT. Such uniqueness can be accomplished by encoding (base64url or any other suitable encoding) 128 bits of pseudorandom data.
     * `wth`: Hash of the Workload Identity Token, defined in {{!I-D.ietf-wimse-workload-creds}}. The value is the base64url encoding of the
      SHA-256 hash of the ASCII encoding of the WIT's value.
     * `ath`: Hash of the OAuth access token, if present in the request, which might convey end-user identity and/or
@@ -145,9 +145,9 @@ The decoded JWT claims of the WPT from the example above are shown here:
 {
   "ath": "CL4wjfpRmNf-bdYIbYLnV9d5rMARGwKYE10wUwzC0jI",
   "aud": "https://workload.example.com/path",
-  "exp": 1740755048,
-  "jti": "0c740386ca1dcad37de1b5f9de1b0705",
-  "wth": "aA0W_oFJK7qV7zYhcmzR1KOXVCHjd2x6c4sOQLvE90Y"
+  "exp": 1745510016,
+  "jti": "__bwc4ESC3acc2LTC1-_x",
+  "wth": "AaYUfC34D1di2FxQLpiIJJ7Sg8VZ6o8OCdwSf9IToLg"
 }
 ~~~
 {: title="Example WPT Claims"}
@@ -237,8 +237,8 @@ In order to reduce the risk of theft and replay the PoP should have a limited sc
 
 * Replay Protection
 
-A proof of possession includes the `jti` claim that MUST uniquely identify it, within the scope of a particular sender.
-This claim SHOULD be used by the receiver to perform basic replay protection against tokens it has already seen.
+A proof of possession includes the `jti` claim that uniquely identifies it.
+This claim SHOULD be used by the receiver to perform basic replay protection, within the scope of a particular sender, against tokens it has already seen.
 Depending upon the design of the system it may be difficult to synchronize the replay cache across all token validators.
 If an attacker can somehow influence the identity of the validator (e.g. which cluster member receives the message) then
 replay protection would not be effective.
@@ -350,6 +350,11 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 
 # Document History
 <cref>RFC Editor: please remove before publication.</cref>
+
+## draft-ietf-wimse-wpt-01
+
+* Clairify treatment of "jti" claim
+* Fix Example WPT Claims to match the example WPT
 
 ## draft-ietf-wimse-wpt-00
 
