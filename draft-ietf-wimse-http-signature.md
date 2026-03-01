@@ -366,6 +366,10 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 # Document History
 <cref>RFC Editor: please remove before publication.</cref>
 
+## draft-ietf-wimse-http-signature-02
+
+* Add new `Wimse-Audience` HTTP header.
+
 ## draft-ietf-wimse-http-signature-01
 
 * Clarified response signing.
