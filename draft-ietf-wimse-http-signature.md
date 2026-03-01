@@ -33,8 +33,11 @@ author:
     email: "yaronf.ietf@gmail.com"
 
 normative:
+  RFC9110:
+  I-D.ietf-wimse-workload-creds:
 
 informative:
+  IANA.HTTP.FIELDS: IANA.http-fields
 
 --- abstract
 
@@ -94,6 +97,7 @@ The request is signed as per {{RFC9421}}. The following derived components MUST 
 
 In addition, the following request headers MUST be signed when they exist:
 
+* `Wimse-Audience` ({{wimse-audience-header}})
 * `Content-Type`
 * `Content-Digest`
 * `Authorization`
@@ -137,6 +141,16 @@ For clarity: the signature's lifetime (the `expires` signature parameter) is dif
 
 Implementors need to be aware that the WIT is extracted from the message before the message signature is validated. Recipients of signed HTTP messages MUST validate the signature and content of the WIT before validating the HTTP message signature. They MUST ensure that the message is not processed further before it has been fully validated.
 
+## WIMSE Audience Header {#wimse-audience-header}
+
+This document defines a new `Wimse-Audience` HTTP header field. This header MUST be included in
+the request and MUST be signed. Its purpose is to prevent reuse of the signed message other
+than to the intended audience, while allowing some protocols to rewrite the request's
+"authority" (often, the target host).
+
+The header field contains the HTTP target URI ({{Section 7.1 of !RFC9110}}) of the request, without query or fragment parts. However, there may be some normalization, rewriting or other processes that require the audience to be set to a deployment-specific value.
+
+The recipient MUST be able to verify that the audience refers to it. See "Workload Identifiers and Authentication Granularity" in {{I-D.ietf-wimse-workload-creds}} for more detail.
 
 ## Signing the Response
 
@@ -163,7 +177,7 @@ Errors may occur during the processing of the message signature. If the signatur
 such as an invalid signature, an expired validity time window, or a malformed data structure, an error is returned. Typically,
 this will be in response to an API call. An HTTP status code such as 400 (Bad Request) is appropriate. The response could
 include more details as per {{?RFC9457}}, such as an indicator that the wrong key material or algorithm was used.  The use of HTTP
-status code 401 is NOT RECOMMENDED for this purpose because it requires a WWW-Authenticate with acceptable http auth mechanisms in
+status code 401 is NOT RECOMMENDED for this purpose because it requires a WWW-Authenticate with acceptable HTTP auth mechanisms in
 the error response and an associated Authorization header in the subsequent request. The use of these headers for the WIT is not compatible
 with this specification.
 
@@ -231,7 +245,7 @@ The Workload Identity Token (WIT) is bound to a secret cryptographic key and is
 always presented with a proof of possession as described in
 {{I-D.ietf-wimse-workload-creds}}. The WIT is a general purpose token that can be presented
 in multiple contexts. The WIT and its PoP are only used in the
-application-level options, and both are not used in MTLS. The WIT MUST NOT be
+application-level options, and neither is used in MTLS. The WIT MUST NOT be
 used as a bearer token. While this helps reduce the sensitivity of the token it
 is still possible that a token and its proof of possession may be captured and
 replayed within the PoP's lifetime.
@@ -244,7 +258,7 @@ In addition, the following mitigations should be used:
 
 * Preventing Eavesdropping and Interception with TLS
 
-An attacker observing or intercepting the communication channel can view the token and its proof of possession and attempt to replay it to gain an advantage. In order to prevent this the
+An attacker observing or intercepting the communication channel can view the token and its proof of possession and attempt to replay it to gain an advantage. In order to prevent this, the
 token and proof of possession MUST be sent over a secure, server authenticated TLS connection unless a secure channel is provided by some other mechanisms. Hostname validation according
 to Section 6.3 of {{!RFC9525}} MUST be performed by the client.
 
@@ -257,7 +271,7 @@ processing latency, but usually within minutes of the message sending time. Sign
 
 A signed message includes the `jti` claim that MUST uniquely identify it, within the scope of a particular sender.
 This claim SHOULD be used by the receiver to perform basic replay protection against messages it has already seen.
-Depending upon the design of the system it may be difficult to synchronize the replay cache across all messages validators.
+Depending upon the design of the system it may be difficult to synchronize the replay cache across all message validators.
 If an attacker can somehow influence the identity of the validator (e.g. which cluster member receives the message) then
 replay protection would not be effective.
 
@@ -267,7 +281,7 @@ In some deployments the Workload Identity Token and proof of possession
 (signature) may pass through multiple systems. The communication between the
 systems is over TLS, but the WIT and signature are available in the clear at each
 intermediary.  While the intermediary cannot modify the token or the
-information within the signature they can attempt to capture and replay the the message or modify
+information within the signature they can attempt to capture and replay the message or modify
 unsigned information, such as proprietary HTTP headers that may remain unsigned.
 
 Mitigations listed in the protocol provide a reasonable level of security in these situations, in particular
@@ -296,7 +310,7 @@ The following are out of scope of the protocol and their security is assumed.
 with their WIMSE identity.
 * All workloads are provisioned with trust anchors that allow them to validate incoming WITs.
 * The entire authorization subsystem is out of scope and trusted. This can potentially include
-provisioning and enforcement of an authorization policy, issuance of transactions tokens
+provisioning and enforcement of an authorization policy, issuance of transaction tokens
 and workload attestation.
 * All workload-to-workload traffic is TLS-protected. However TLS may be terminated on one or more middleboxes
 and the TLS endpoint identity (or identities) is not associated with a WIMSE identity.
@@ -331,14 +345,30 @@ context where the request would be accepted as valid, and this mitigates the ris
 * Unless response signing is mandated by local policy, complete deletion of a request/response pair is possible without detection.
 
 
-# IANA Considerations
+# IANA Considerations {#iana-considerations}
 
-This document does not include any IANA considerations.
+## Hypertext Transfer Protocol (HTTP) Field Name Registration
+
+IANA is requested to register the following entries to the "Hypertext Transfer Protocol (HTTP) Field Name Registry" {{IANA.HTTP.FIELDS}}:
+
+* `Wimse-Audience`, per {{iana-wimse-audience-field}}.
+
+### Wimse-Audience {#iana-wimse-audience-field}
+
+* Field Name: Wimse-Audience
+* Status: permanent
+* Structured Type: Item (String)
+* Specification Document: RFC XXX, {{wimse-audience-header}}
+* Comments: This header field is used in the WIMSE HTTP Signature protocol to prevent reuse of signed messages by unintended recipients.
 
 --- back
 
 # Document History
 <cref>RFC Editor: please remove before publication.</cref>
+
+## draft-ietf-wimse-http-signature-02
+
+* Add new `Wimse-Audience` HTTP header.
 
 ## draft-ietf-wimse-http-signature-01
 
