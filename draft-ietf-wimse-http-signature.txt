@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments                J. Salowey
 Internet-Draft                                                  CyberArk
 Intended status: Standards Track                              Y. Sheffer
-Expires: 1 September 2026                                         Intuit
-                                                        28 February 2026
+Expires: 2 September 2026                                         Intuit
+                                                            1 March 2026
 
 
      WIMSE Workload-to-Workload Authentication with HTTP Signatures
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 1 September 2026.
+   This Internet-Draft will expire on 2 September 2026.
 
 Copyright Notice
 
@@ -80,9 +80,10 @@ Table of Contents
      1.1.  Deployment Architecture and Message Flow
    2.  Conventions and Definitions
    3.  The Protocol: Authentication Based on HTTP Message Signatures
-     3.1.  Signing the Response
-     3.2.  Error Conditions
-     3.3.  Example Requests and Responses
+     3.1.  WIMSE Audience Header
+     3.2.  Signing the Response
+     3.3.  Error Conditions
+     3.4.  Example Requests and Responses
    4.  Implementation Status
      4.1.  Cofide
    5.  Security Considerations
@@ -95,20 +96,23 @@ Table of Contents
      6.3.  Integrity
      6.4.  Replay and Deletion
    7.  IANA Considerations
+     7.1.  Hypertext Transfer Protocol (HTTP) Field Name Registration
+       7.1.1.  Wimse-Audience
    8.  References
      8.1.  Normative References
      8.2.  Informative References
    Appendix A.  Document History
-     A.1.  draft-ietf-wimse-http-signature-01
-     A.2.  draft-ietf-wimse-http-signature-00
-     A.3.  draft-ietf-wimse-s2s-protocol-07
-     A.4.  draft-ietf-wimse-s2s-protocol-06
-     A.5.  draft-ietf-wimse-s2s-protocol-05
-     A.6.  draft-ietf-wimse-s2s-protocol-04
-     A.7.  draft-ietf-wimse-s2s-protocol-03
-     A.8.  draft-ietf-wimse-s2s-protocol-02
-     A.9.  draft-ietf-wimse-s2s-protocol-01
-     A.10. draft-ietf-wimse-s2s-protocol-00
+     A.1.  draft-ietf-wimse-http-signature-02
+     A.2.  draft-ietf-wimse-http-signature-01
+     A.3.  draft-ietf-wimse-http-signature-00
+     A.4.  draft-ietf-wimse-s2s-protocol-07
+     A.5.  draft-ietf-wimse-s2s-protocol-06
+     A.6.  draft-ietf-wimse-s2s-protocol-05
+     A.7.  draft-ietf-wimse-s2s-protocol-04
+     A.8.  draft-ietf-wimse-s2s-protocol-03
+     A.9.  draft-ietf-wimse-s2s-protocol-02
+     A.10. draft-ietf-wimse-s2s-protocol-01
+     A.11. draft-ietf-wimse-s2s-protocol-00
    Appendix B.  Comparing the DPoP Inspired Option with Message
            Signatures
    Acknowledgments
@@ -176,6 +180,8 @@ Table of Contents
 
    In addition, the following request headers MUST be signed when they
    exist:
+
+   *  Wimse-Audience (Section 3.1)
 
    *  Content-Type
 
@@ -250,7 +256,24 @@ Table of Contents
    that the message is not processed further before it has been fully
    validated.
 
-3.1.  Signing the Response
+3.1.  WIMSE Audience Header
+
+   This document defines a new Wimse-Audience HTTP header field.  This
+   header MUST be included in the request and MUST be signed.  Its
+   purpose is to prevent reuse of the signed message other than to the
+   intended audience, while allowing some protocols to rewrite the
+   request's "authority" (often, the target host).
+
+   The header field contains the HTTP target URI (Section 7.1 of
+   [RFC9110]) of the request, without query or fragment parts.  However,
+   there may be some normalization, rewriting or other processes that
+   require the audience to be set to a deployment-specific value.
+
+   The recipient MUST be able to verify that the audience refers to it.
+   See "Workload Identifiers and Authentication Granularity" in
+   [I-D.ietf-wimse-workload-creds] for more detail.
+
+3.2.  Signing the Response
 
    Protecting the response by signing it with the server's WIT is
    RECOMMENDED but optional.  In particular, if the response may be
@@ -274,7 +297,7 @@ Table of Contents
    signed in subsequent requests (minimally those specified above for
    signed requests).
 
-3.2.  Error Conditions
+3.3.  Error Conditions
 
    Errors may occur during the processing of the message signature.  If
    the signature verification fails for any reason, such as an invalid
@@ -285,12 +308,12 @@ Table of Contents
    [RFC9457], such as an indicator that the wrong key material or
    algorithm was used.  The use of HTTP status code 401 is NOT
    RECOMMENDED for this purpose because it requires a WWW-Authenticate
-   with acceptable http auth mechanisms in the error response and an
+   with acceptable HTTP auth mechanisms in the error response and an
    associated Authorization header in the subsequent request.  The use
    of these headers for the WIT is not compatible with this
    specification.
 
-3.3.  Example Requests and Responses
+3.4.  Example Requests and Responses
 
    Following is a non-normative example of a signed request and a signed
    response.
@@ -300,33 +323,34 @@ Table of Contents
    {
      "alg": "EdDSA",
      "crv": "Ed25519",
-     "d": "JMHQzsQ7wxHfaj5d4fQJ8oDNGh5SJY1CcOD24tuo2ws",
+     "d": "Vz-mhKKZG2BmyuEC7-8y0ttwFbjONtf7Q_ABL2Tldxg",
      "kid": "svc-a-key",
      "kty": "OKP",
-     "x": "zKORkA6iFB3-dkDJG6kbnhw-57VXOHa-IE9XWVd-GtM"
+     "x": "bk3wFVdYjKRBflfa6QS8rZFIKRJEKy4ZGQRIJXAHfog"
    }
 
                         Figure 1: Caller Private Key
 
    The caller uses its keypair and generates the following HTTP request:
 
-   =============== NOTE: '\' line wrapping per RFC 8792 ================
+   =============== NOTE: '\\' line wrapping per RFC 8792 ===============
 
    GET /gimme-ice-cream?flavor=vanilla HTTP/1.1
    Host: example.com
-   Signature: wimse=:b1kQ7vFYUShd9QS82ojrPAy2hAgiIqSED20bXXjwH6xsnXHF0r\
-   b2J8OeIdbtSupQUsez8IOqQvoYGPaWKu76Cg==:
-   Signature-Input: wimse=("@method" "@request-target" "workload-identi\
-   ty-token");created=1761859807;expires=1761860107;nonce="abcd1111";ta\
-   g="wimse-workload-to-workload"
+   Signature: wimse=:e5FJnnSi0waMqPTzsvKR9bGu69UrcoR1Ure09l4b36xYhUqFHj\
+   \FTRdkKjlkkn0p9dXRqPwNyBxe/1hfSJ15OBQ==:
+   Signature-Input: wimse=("@method" "@request-target" "wimse-audience"\
+   \ "workload-identity-token");created=1772386884;expires=1772387184;n\
+   \once="abcd1111";tag="wimse-workload-to-workload"
+   Wimse-Audience: https://example.com/gimme-ice-cream
    Workload-Identity-Token: eyJhbGciOiJFZERTQSIsImtpZCI6Imlzc3Vlci1rZXk\
-   iLCJ0eXAiOiJ3aXQrand0In0.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J\
-   2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1hLWtleSIsImt0eSI6Ik9LUCIsIngiOiJ6S09\
-   Sa0E2aUZCMy1ka0RKRzZrYm5ody01N1ZYT0hhLUlFOVhXVmQtR3RNIn19LCJleHAiOjE\
-   3NjE4NjAxMDcsImlhdCI6MTc2MTg1OTgwNywiaXNzIjoiaHR0cHM6Ly9leGFtcGxlLmN\
-   vbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc2MTg1OTgwNzM0NTQ3ODAwMCIsInN1YiI6Ind\
-   pbXNlOi8vZXhhbXBsZS5jb20vc3ZjQSJ9.KxXGBK2YWhy8XT1tB9Z9sZscn2fb4OHDNz\
-   2S8mhP8fGK0mCw6yK4lv9wRqO3hnAXWJEzWuWRHpVQO8_82t_IBA
+   \iLCJ0eXAiOiJ3aXQrand0In0.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3\
+   \J2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1hLWtleSIsImt0eSI6Ik9LUCIsIngiOiJia\
+   \zN3RlZkWWpLUkJmbGZhNlFTOHJaRklLUkpFS3k0WkdRUklKWEFIZm9nIn19LCJleHAi\
+   \OjE3NzIzODcxODQsImlhdCI6MTc3MjM4Njg4NCwiaXNzIjoiaHR0cHM6Ly9leGFtcGx\
+   \lLmNvbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc3MjM4Njg4NDc5NzAwNzAwMCIsInN1Yi\
+   \I6IndpbXNlOi8vZXhhbXBsZS5jb20vc3ZjQSJ9.QxgHzB9YZ5Xh7PFBTl_6lsrYfzpj\
+   \NaWIMxgpA78dMsAOycSYw3TlSV80EDMlOkUsC-3HF0QhczSFLh_2DcY1Dw
 
                           Figure 2: Signed Request
 
@@ -335,10 +359,10 @@ Table of Contents
    {
      "alg": "EdDSA",
      "crv": "Ed25519",
-     "d": "u1DH-EPbCxpzi1LLJHtsLGZ6_4lvKsUgFHRNYOo5Mx8",
+     "d": "wfhAN8WoPeGN1ikx3KW9cveIPrno_iB6oxvkIplhRDY",
      "kid": "svc-b-key",
      "kty": "OKP",
-     "x": "8zj0S94HAaaQ0kKPhts0UdothtSTjZDX7jYC5zdLsX4"
+     "x": "fuYDsk-ZG_ol-8NyvqKwV3EIymygRtCJcqrRG_1Jvm0"
    }
 
                         Figure 3: Callee Private Key
@@ -352,20 +376,20 @@ Table of Contents
    Content-Digest: sha-256=:47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU\
    =:
    Content-Type: text/plain
-   Signature: wimse=:cQiWDdhftD/qYu22pMUxvdqHPxo7IjOaTQ54UxZ5nvXq6Yj7Mv\
-   avAW8sGJjXNlPXwqvBc1vy0wtOvS6Q5zdVDQ==:
+   Signature: wimse=:MhDGoIfHnZV/0Z7Wu57rleh77FrX2DB4Ezu3dzL9lqiXzmaDcK\
+   k6Z8i0AszK5UEUZO7RxCTaY9IjToRJS+eIBg==:
    Signature-Input: wimse=("@status" "workload-identity-token" "content\
    -type" "content-digest" "@method";req "@request-target";req);created\
-   =1761859807;expires=1761860109;nonce="abcd2222";tag="wimse-workload-\
+   =1772386884;expires=1772387186;nonce="abcd2222";tag="wimse-workload-\
    to-workload"
    Workload-Identity-Token: eyJhbGciOiJFZERTQSIsImtpZCI6Imlzc3Vlci1rZXk\
    iLCJ0eXAiOiJ3aXQrand0In0.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J\
-   2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1iLWtleSIsImt0eSI6Ik9LUCIsIngiOiI4emo\
-   wUzk0SEFhYVEwa0tQaHRzMFVkb3RodFNUalpEWDdqWUM1emRMc1g0In19LCJleHAiOjE\
-   3NjE4NjAxMDksImlhdCI6MTc2MTg1OTgwOSwiaXNzIjoiaHR0cHM6Ly9leGFtcGxlLmN\
-   vbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc2MTg1OTgwNzM0NTcwMjAwMCIsInN1YiI6Ind\
-   pbXNlOi8vZXhhbXBsZS5jb20vc3ZjQiJ9.1Z10zR2hYWXuVwBeJDx965agbLf_V8o2Ac\
-   SKiyayqGQMAEZNyRm1wrSvDmm6Ha6EJW3-1rhF0C10R-usSUYtAQ
+   2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1iLWtleSIsImt0eSI6Ik9LUCIsIngiOiJmdVl\
+   Ec2stWkdfb2wtOE55dnFLd1YzRUl5bXlnUnRDSmNxclJHXzFKdm0wIn19LCJleHAiOjE\
+   3NzIzODcxODYsImlhdCI6MTc3MjM4Njg4NiwiaXNzIjoiaHR0cHM6Ly9leGFtcGxlLmN\
+   vbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc3MjM4Njg4NDc5NzE2MjAwMCIsInN1YiI6Ind\
+   pbXNlOi8vZXhhbXBsZS5jb20vc3ZjQiJ9.lqWjoau6GlkwykzHC6M1TdIgziPVlSlVnU\
+   e9uUzcsEQEAhYdI2tpmeV60szmLW-ignonrI1buZCKJDhW2QdDDQ
 
    No ice cream today.
 
@@ -430,7 +454,7 @@ Table of Contents
    key and is always presented with a proof of possession as described
    in [I-D.ietf-wimse-workload-creds].  The WIT is a general purpose
    token that can be presented in multiple contexts.  The WIT and its
-   PoP are only used in the application-level options, and both are not
+   PoP are only used in the application-level options, and neither is
    used in MTLS.  The WIT MUST NOT be used as a bearer token.  While
    this helps reduce the sensitivity of the token it is still possible
    that a token and its proof of possession may be captured and replayed
@@ -448,7 +472,7 @@ Table of Contents
 
    An attacker observing or intercepting the communication channel can
    view the token and its proof of possession and attempt to replay it
-   to gain an advantage.  In order to prevent this the token and proof
+   to gain an advantage.  In order to prevent this, the token and proof
    of possession MUST be sent over a secure, server authenticated TLS
    connection unless a secure channel is provided by some other
    mechanisms.  Hostname validation according to Section 6.3 of
@@ -468,7 +492,7 @@ Table of Contents
    used by the receiver to perform basic replay protection against
    messages it has already seen.  Depending upon the design of the
    system it may be difficult to synchronize the replay cache across all
-   messages validators.  If an attacker can somehow influence the
+   message validators.  If an attacker can somehow influence the
    identity of the validator (e.g. which cluster member receives the
    message) then replay protection would not be effective.
 
@@ -479,7 +503,7 @@ Table of Contents
    communication between the systems is over TLS, but the WIT and
    signature are available in the clear at each intermediary.  While the
    intermediary cannot modify the token or the information within the
-   signature they can attempt to capture and replay the the message or
+   signature they can attempt to capture and replay the message or
    modify unsigned information, such as proprietary HTTP headers that
    may remain unsigned.
 
@@ -524,7 +548,7 @@ Table of Contents
 
    *  The entire authorization subsystem is out of scope and trusted.
       This can potentially include provisioning and enforcement of an
-      authorization policy, issuance of transactions tokens and workload
+      authorization policy, issuance of transaction tokens and workload
       attestation.
 
    *  All workload-to-workload traffic is TLS-protected.  However TLS
@@ -578,7 +602,26 @@ Table of Contents
 
 7.  IANA Considerations
 
-   This document does not include any IANA considerations.
+7.1.  Hypertext Transfer Protocol (HTTP) Field Name Registration
+
+   IANA is requested to register the following entries to the "Hypertext
+   Transfer Protocol (HTTP) Field Name Registry" [IANA.HTTP.FIELDS]:
+
+   *  Wimse-Audience, per Section 7.1.1.
+
+7.1.1.  Wimse-Audience
+
+   *  Field Name: Wimse-Audience
+
+   *  Status: permanent
+
+   *  Structured Type: Item (String)
+
+   *  Specification Document: RFC XXX, Section 3.1
+
+   *  Comments: This header field is used in the WIMSE HTTP Signature
+      protocol to prevent reuse of signed messages by unintended
+      recipients.
 
 8.  References
 
@@ -605,6 +648,11 @@ Table of Contents
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
+
+   [RFC9110]  Fielding, R., Ed., Nottingham, M., Ed., and J. Reschke,
+              Ed., "HTTP Semantics", STD 97, RFC 9110,
+              DOI 10.17487/RFC9110, June 2022,
+              <https://www.rfc-editor.org/rfc/rfc9110>.
 
    [RFC9421]  Backman, A., Ed., Richer, J., Ed., and M. Sporny, "HTTP
               Message Signatures", RFC 9421, DOI 10.17487/RFC9421,
@@ -645,6 +693,10 @@ Table of Contents
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
               wpt-00>.
 
+   [IANA.HTTP.FIELDS]
+              IANA, "Hypertext Transfer Protocol (HTTP) Field Name
+              Registry", <https://www.iana.org/assignments/http-fields>.
+
    [RFC9457]  Nottingham, M., Wilde, E., and S. Dalal, "Problem Details
               for HTTP APIs", RFC 9457, DOI 10.17487/RFC9457, July 2023,
               <https://www.rfc-editor.org/rfc/rfc9457>.
@@ -654,7 +706,11 @@ Appendix A.  Document History
 
    // RFC Editor: please remove before publication.
 
-A.1.  draft-ietf-wimse-http-signature-01
+A.1.  draft-ietf-wimse-http-signature-02
+
+   *  Add new Wimse-Audience HTTP header.
+
+A.2.  draft-ietf-wimse-http-signature-01
 
    *  Clarified response signing.
 
@@ -664,11 +720,11 @@ A.1.  draft-ietf-wimse-http-signature-01
 
    *  Added an Implementation Status section.
 
-A.2.  draft-ietf-wimse-http-signature-00
+A.3.  draft-ietf-wimse-http-signature-00
 
    *  Initial version, extracted from the -07 draft with minimal edits.
 
-A.3.  draft-ietf-wimse-s2s-protocol-07
+A.4.  draft-ietf-wimse-s2s-protocol-07
 
    *  Rework the WPT's oth claim.
 
@@ -686,14 +742,14 @@ A.3.  draft-ietf-wimse-s2s-protocol-07
 
    *  Use of the Accept-Signature header.
 
-A.4.  draft-ietf-wimse-s2s-protocol-06
+A.5.  draft-ietf-wimse-s2s-protocol-06
 
    *  Explicit definition of the Workload Identity Certificate.
 
    *  Definition of the validation of workload identifiers as part of
       workload authentication.  Still work in progress.
 
-A.5.  draft-ietf-wimse-s2s-protocol-05
+A.6.  draft-ietf-wimse-s2s-protocol-05
 
    *  Removed the entire Workload Identity section which is now covered
       in the Architecture document.
@@ -704,7 +760,7 @@ A.5.  draft-ietf-wimse-s2s-protocol-05
 
    *  IANA considerations.
 
-A.6.  draft-ietf-wimse-s2s-protocol-04
+A.7.  draft-ietf-wimse-s2s-protocol-04
 
    *  Require cnf.jwk.alg in WIT which restricts signature algorithm of
       WPT or HTTP-Sig.
@@ -713,7 +769,7 @@ A.6.  draft-ietf-wimse-s2s-protocol-04
 
    *  Consolidate terminology with the Architecture draft.
 
-A.7.  draft-ietf-wimse-s2s-protocol-03
+A.8.  draft-ietf-wimse-s2s-protocol-03
 
    *  Consistently use "workload".
 
@@ -728,7 +784,7 @@ A.7.  draft-ietf-wimse-s2s-protocol-03
 
    *  Error handling for the application level methods.
 
-A.8.  draft-ietf-wimse-s2s-protocol-02
+A.9.  draft-ietf-wimse-s2s-protocol-02
 
    *  Coexistence with bearer tokens.
 
@@ -740,7 +796,7 @@ A.8.  draft-ietf-wimse-s2s-protocol-02
 
    *  Moved an author to acknowledgments.
 
-A.9.  draft-ietf-wimse-s2s-protocol-01
+A.10.  draft-ietf-wimse-s2s-protocol-01
 
    *  Addressed multiple comments from Pieter.
 
@@ -755,7 +811,7 @@ A.9.  draft-ietf-wimse-s2s-protocol-01
    *  Added a section comparing the DPoP-inspired app-level security
       option to the Message Signature-based alternative.
 
-A.10.  draft-ietf-wimse-s2s-protocol-00
+A.11.  draft-ietf-wimse-s2s-protocol-00
 
    *  Initial WG draft, an exact copy of draft-sheffer-wimse-s2s-
       protocol-00

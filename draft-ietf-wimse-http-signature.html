@@ -1054,11 +1054,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">WIMSE Workload-to-Workload HTTP-Sig</td>
-<td class="right">February 2026</td>
+<td class="right">March 2026</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Salowey &amp; Sheffer</td>
-<td class="center">Expires 1 September 2026</td>
+<td class="center">Expires 2 September 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1071,12 +1071,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-wimse-http-signature-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-02-28" class="published">28 February 2026</time>
+<time datetime="2026-03-01" class="published">1 March 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-09-01">1 September 2026</time></dd>
+<dd class="expires"><time datetime="2026-09-02">2 September 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1137,7 +1137,7 @@ Authentication is based on the Workload Identity Token (WIT).<a href="#section-a
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 1 September 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 2 September 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1181,13 +1181,16 @@ Authentication is based on the Workload Identity Token (WIT).<a href="#section-a
             <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-the-protocol-authentication" class="internal xref">The Protocol: Authentication Based on HTTP Message Signatures</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
-                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-signing-the-response" class="internal xref">Signing the Response</a></p>
+                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-wimse-audience-header" class="internal xref">WIMSE Audience Header</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
-                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-error-conditions" class="internal xref">Error Conditions</a></p>
+                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-signing-the-response" class="internal xref">Signing the Response</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3">
-                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="auto internal xref">3.3</a>.  <a href="#name-example-requests-and-respon" class="internal xref">Example Requests and Responses</a></p>
+                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="auto internal xref">3.3</a>.  <a href="#name-error-conditions" class="internal xref">Error Conditions</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.4">
+                <p id="section-toc.1-1.3.2.4.1"><a href="#section-3.4" class="auto internal xref">3.4</a>.  <a href="#name-example-requests-and-respon" class="internal xref">Example Requests and Responses</a></p>
 </li>
             </ul>
 </li>
@@ -1232,6 +1235,16 @@ Authentication is based on the Workload Identity Token (WIT).<a href="#section-a
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
             <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1">
+                <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="auto internal xref">7.1</a>.  <a href="#name-hypertext-transfer-protocol" class="internal xref">Hypertext Transfer Protocol (HTTP) Field Name Registration</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1.2.1">
+                    <p id="section-toc.1-1.7.2.1.2.1.1"><a href="#section-7.1.1" class="auto internal xref">7.1.1</a>.  <a href="#name-wimse-audience" class="internal xref">Wimse-Audience</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
             <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-references" class="internal xref">References</a></p>
@@ -1248,34 +1261,37 @@ Authentication is based on the Workload Identity Token (WIT).<a href="#section-a
             <p id="section-toc.1-1.9.1"><a href="#appendix-A" class="auto internal xref">Appendix A</a>.  <a href="#name-document-history" class="internal xref">Document History</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.1">
-                <p id="section-toc.1-1.9.2.1.1"><a href="#appendix-A.1" class="auto internal xref">A.1</a>.  <a href="#name-draft-ietf-wimse-http-signa" class="internal xref">draft-ietf-wimse-http-signature-01</a></p>
+                <p id="section-toc.1-1.9.2.1.1"><a href="#appendix-A.1" class="auto internal xref">A.1</a>.  <a href="#name-draft-ietf-wimse-http-signa" class="internal xref">draft-ietf-wimse-http-signature-02</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.2">
-                <p id="section-toc.1-1.9.2.2.1"><a href="#appendix-A.2" class="auto internal xref">A.2</a>.  <a href="#name-draft-ietf-wimse-http-signat" class="internal xref">draft-ietf-wimse-http-signature-00</a></p>
+                <p id="section-toc.1-1.9.2.2.1"><a href="#appendix-A.2" class="auto internal xref">A.2</a>.  <a href="#name-draft-ietf-wimse-http-signat" class="internal xref">draft-ietf-wimse-http-signature-01</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.3">
-                <p id="section-toc.1-1.9.2.3.1"><a href="#appendix-A.3" class="auto internal xref">A.3</a>.  <a href="#name-draft-ietf-wimse-s2s-protoc" class="internal xref">draft-ietf-wimse-s2s-protocol-07</a></p>
+                <p id="section-toc.1-1.9.2.3.1"><a href="#appendix-A.3" class="auto internal xref">A.3</a>.  <a href="#name-draft-ietf-wimse-http-signatu" class="internal xref">draft-ietf-wimse-http-signature-00</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.4">
-                <p id="section-toc.1-1.9.2.4.1"><a href="#appendix-A.4" class="auto internal xref">A.4</a>.  <a href="#name-draft-ietf-wimse-s2s-protoco" class="internal xref">draft-ietf-wimse-s2s-protocol-06</a></p>
+                <p id="section-toc.1-1.9.2.4.1"><a href="#appendix-A.4" class="auto internal xref">A.4</a>.  <a href="#name-draft-ietf-wimse-s2s-protoc" class="internal xref">draft-ietf-wimse-s2s-protocol-07</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.5">
-                <p id="section-toc.1-1.9.2.5.1"><a href="#appendix-A.5" class="auto internal xref">A.5</a>.  <a href="#name-draft-ietf-wimse-s2s-protocol" class="internal xref">draft-ietf-wimse-s2s-protocol-05</a></p>
+                <p id="section-toc.1-1.9.2.5.1"><a href="#appendix-A.5" class="auto internal xref">A.5</a>.  <a href="#name-draft-ietf-wimse-s2s-protoco" class="internal xref">draft-ietf-wimse-s2s-protocol-06</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.6">
-                <p id="section-toc.1-1.9.2.6.1"><a href="#appendix-A.6" class="auto internal xref">A.6</a>.  <a href="#name-draft-ietf-wimse-s2s-protocol-" class="internal xref">draft-ietf-wimse-s2s-protocol-04</a></p>
+                <p id="section-toc.1-1.9.2.6.1"><a href="#appendix-A.6" class="auto internal xref">A.6</a>.  <a href="#name-draft-ietf-wimse-s2s-protocol" class="internal xref">draft-ietf-wimse-s2s-protocol-05</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.7">
-                <p id="section-toc.1-1.9.2.7.1"><a href="#appendix-A.7" class="auto internal xref">A.7</a>.  <a href="#name-draft-ietf-wimse-s2s-protocol-0" class="internal xref">draft-ietf-wimse-s2s-protocol-03</a></p>
+                <p id="section-toc.1-1.9.2.7.1"><a href="#appendix-A.7" class="auto internal xref">A.7</a>.  <a href="#name-draft-ietf-wimse-s2s-protocol-" class="internal xref">draft-ietf-wimse-s2s-protocol-04</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.8">
-                <p id="section-toc.1-1.9.2.8.1"><a href="#appendix-A.8" class="auto internal xref">A.8</a>.  <a href="#name-draft-ietf-wimse-s2s-protocol-02" class="internal xref">draft-ietf-wimse-s2s-protocol-02</a></p>
+                <p id="section-toc.1-1.9.2.8.1"><a href="#appendix-A.8" class="auto internal xref">A.8</a>.  <a href="#name-draft-ietf-wimse-s2s-protocol-0" class="internal xref">draft-ietf-wimse-s2s-protocol-03</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.9">
-                <p id="section-toc.1-1.9.2.9.1"><a href="#appendix-A.9" class="auto internal xref">A.9</a>.  <a href="#name-draft-ietf-wimse-s2s-protocol-01" class="internal xref">draft-ietf-wimse-s2s-protocol-01</a></p>
+                <p id="section-toc.1-1.9.2.9.1"><a href="#appendix-A.9" class="auto internal xref">A.9</a>.  <a href="#name-draft-ietf-wimse-s2s-protocol-02" class="internal xref">draft-ietf-wimse-s2s-protocol-02</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.10">
-                <p id="section-toc.1-1.9.2.10.1"><a href="#appendix-A.10" class="auto internal xref">A.10</a>. <a href="#name-draft-ietf-wimse-s2s-protocol-00" class="internal xref">draft-ietf-wimse-s2s-protocol-00</a></p>
+                <p id="section-toc.1-1.9.2.10.1"><a href="#appendix-A.10" class="auto internal xref">A.10</a>. <a href="#name-draft-ietf-wimse-s2s-protocol-01" class="internal xref">draft-ietf-wimse-s2s-protocol-01</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.11">
+                <p id="section-toc.1-1.9.2.11.1"><a href="#appendix-A.11" class="auto internal xref">A.11</a>. <a href="#name-draft-ietf-wimse-s2s-protocol-00" class="internal xref">draft-ietf-wimse-s2s-protocol-00</a></p>
 </li>
             </ul>
 </li>
@@ -1355,19 +1371,22 @@ Formally, this is a profile of the Message Signatures specification <span>[<a hr
 <p id="section-3-4">In addition, the following request headers <span class="bcp14">MUST</span> be signed when they exist:<a href="#section-3-4" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3-5.1">
-          <p id="section-3-5.1.1"><code>Content-Type</code><a href="#section-3-5.1.1" class="pilcrow">¶</a></p>
+          <p id="section-3-5.1.1"><code>Wimse-Audience</code> (<a href="#wimse-audience-header" class="auto internal xref">Section 3.1</a>)<a href="#section-3-5.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-3-5.2">
-          <p id="section-3-5.2.1"><code>Content-Digest</code><a href="#section-3-5.2.1" class="pilcrow">¶</a></p>
+          <p id="section-3-5.2.1"><code>Content-Type</code><a href="#section-3-5.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-3-5.3">
-          <p id="section-3-5.3.1"><code>Authorization</code><a href="#section-3-5.3.1" class="pilcrow">¶</a></p>
+          <p id="section-3-5.3.1"><code>Content-Digest</code><a href="#section-3-5.3.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-3-5.4">
-          <p id="section-3-5.4.1"><code>Txn-Token</code> <span>[<a href="#I-D.ietf-oauth-transaction-tokens" class="cite xref">I-D.ietf-oauth-transaction-tokens</a>]</span><a href="#section-3-5.4.1" class="pilcrow">¶</a></p>
+          <p id="section-3-5.4.1"><code>Authorization</code><a href="#section-3-5.4.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-3-5.5">
-          <p id="section-3-5.5.1"><code>Workload-Identity-Token</code><a href="#section-3-5.5.1" class="pilcrow">¶</a></p>
+          <p id="section-3-5.5.1"><code>Txn-Token</code> <span>[<a href="#I-D.ietf-oauth-transaction-tokens" class="cite xref">I-D.ietf-oauth-transaction-tokens</a>]</span><a href="#section-3-5.5.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-3-5.6">
+          <p id="section-3-5.6.1"><code>Workload-Identity-Token</code><a href="#section-3-5.6.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <p id="section-3-6">If the response is signed, the following components <span class="bcp14">MUST</span> be signed:<a href="#section-3-6" class="pilcrow">¶</a></p>
@@ -1426,17 +1445,30 @@ To detect message replays,
 a recipient <span class="bcp14">SHOULD</span> reject a message (request or response) if a nonce generated by a certain peer is seen more than once.<a href="#section-3-14" class="pilcrow">¶</a></p>
 <p id="section-3-15">For clarity: the signature's lifetime (the <code>expires</code> signature parameter) is different and typically much shorter than the WIT's lifetime, denoted by its <code>exp</code> claim.<a href="#section-3-15" class="pilcrow">¶</a></p>
 <p id="section-3-16">Implementors need to be aware that the WIT is extracted from the message before the message signature is validated. Recipients of signed HTTP messages <span class="bcp14">MUST</span> validate the signature and content of the WIT before validating the HTTP message signature. They <span class="bcp14">MUST</span> ensure that the message is not processed further before it has been fully validated.<a href="#section-3-16" class="pilcrow">¶</a></p>
-<div id="signing-the-response">
+<div id="wimse-audience-header">
 <section id="section-3.1">
-        <h3 id="name-signing-the-response">
-<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-signing-the-response" class="section-name selfRef">Signing the Response</a>
+        <h3 id="name-wimse-audience-header">
+<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-wimse-audience-header" class="section-name selfRef">WIMSE Audience Header</a>
         </h3>
-<p id="section-3.1-1">Protecting the response by signing it with the server's WIT is <span class="bcp14">RECOMMENDED</span> but optional. In particular, if the response
-may be exceptionally large or is expected to be streamed, signing it may not be practical.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
-<p id="section-3.1-2">In practice, we expect response signing to be enabled by local policy. If response signing is enabled for a deployment,
+<p id="section-3.1-1">This document defines a new <code>Wimse-Audience</code> HTTP header field. This header <span class="bcp14">MUST</span> be included in
+the request and <span class="bcp14">MUST</span> be signed. Its purpose is to prevent reuse of the signed message other
+than to the intended audience, while allowing some protocols to rewrite the request's
+"authority" (often, the target host).<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.1-2">The header field contains the HTTP target URI (<span><a href="https://rfc-editor.org/rfc/rfc9110#section-7.1" class="relref">Section 7.1</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>) of the request, without query or fragment parts. However, there may be some normalization, rewriting or other processes that require the audience to be set to a deployment-specific value.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
+<p id="section-3.1-3">The recipient <span class="bcp14">MUST</span> be able to verify that the audience refers to it. See "Workload Identifiers and Authentication Granularity" in <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span> for more detail.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="signing-the-response">
+<section id="section-3.2">
+        <h3 id="name-signing-the-response">
+<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-signing-the-response" class="section-name selfRef">Signing the Response</a>
+        </h3>
+<p id="section-3.2-1">Protecting the response by signing it with the server's WIT is <span class="bcp14">RECOMMENDED</span> but optional. In particular, if the response
+may be exceptionally large or is expected to be streamed, signing it may not be practical.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.2-2">In practice, we expect response signing to be enabled by local policy. If response signing is enabled for a deployment,
 the client (recipient of the response) <span class="bcp14">MUST</span> check that the signature exists and validate it.
-The response <span class="bcp14">MUST</span> be rejected if a signature is absent or fails to validate.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
-<p id="section-3.1-3">As described in <span><a href="https://rfc-editor.org/rfc/rfc9421#section-5" class="relref">Section 5</a> of [<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>, either client or server <span class="bcp14">MAY</span> send an
+The response <span class="bcp14">MUST</span> be rejected if a signature is absent or fails to validate.<a href="#section-3.2-2" class="pilcrow">¶</a></p>
+<p id="section-3.2-3">As described in <span><a href="https://rfc-editor.org/rfc/rfc9421#section-5" class="relref">Section 5</a> of [<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>, either client or server <span class="bcp14">MAY</span> send an
 <code>Accept-Signature</code> header,
 but is not required to do so. The <code>Accept-Signature</code> header indicates a
 preference for signed messages but does not mandate that responses be signed.
@@ -1444,93 +1476,94 @@ When a client sends <code>Accept-Signature</code> in a request, it <span class="
 response components it wishes to have signed (including at least those specified above for signed
 responses). When a server sends <code>Accept-Signature</code> in a response, it <span class="bcp14">SHOULD</span>
 list the request components it wishes to have signed in subsequent requests (minimally those
-specified above for signed requests).<a href="#section-3.1-3" class="pilcrow">¶</a></p>
+specified above for signed requests).<a href="#section-3.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="error-conditions">
-<section id="section-3.2">
+<section id="section-3.3">
         <h3 id="name-error-conditions">
-<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-error-conditions" class="section-name selfRef">Error Conditions</a>
+<a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-error-conditions" class="section-name selfRef">Error Conditions</a>
         </h3>
-<p id="section-3.2-1">Errors may occur during the processing of the message signature. If the signature verification fails for any reason,
+<p id="section-3.3-1">Errors may occur during the processing of the message signature. If the signature verification fails for any reason,
 such as an invalid signature, an expired validity time window, or a malformed data structure, an error is returned. Typically,
 this will be in response to an API call. An HTTP status code such as 400 (Bad Request) is appropriate. The response could
 include more details as per <span>[<a href="#RFC9457" class="cite xref">RFC9457</a>]</span>, such as an indicator that the wrong key material or algorithm was used.  The use of HTTP
-status code 401 is <span class="bcp14">NOT RECOMMENDED</span> for this purpose because it requires a WWW-Authenticate with acceptable http auth mechanisms in
+status code 401 is <span class="bcp14">NOT RECOMMENDED</span> for this purpose because it requires a WWW-Authenticate with acceptable HTTP auth mechanisms in
 the error response and an associated Authorization header in the subsequent request. The use of these headers for the WIT is not compatible
-with this specification.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
+with this specification.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="example-requests-and-responses">
-<section id="section-3.3">
+<section id="section-3.4">
         <h3 id="name-example-requests-and-respon">
-<a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-example-requests-and-respon" class="section-name selfRef">Example Requests and Responses</a>
+<a href="#section-3.4" class="section-number selfRef">3.4. </a><a href="#name-example-requests-and-respon" class="section-name selfRef">Example Requests and Responses</a>
         </h3>
-<p id="section-3.3-1">Following is a non-normative example of a signed request and a signed response.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
-<p id="section-3.3-2">The caller uses this keypair:<a href="#section-3.3-2" class="pilcrow">¶</a></p>
+<p id="section-3.4-1">Following is a non-normative example of a signed request and a signed response.<a href="#section-3.4-1" class="pilcrow">¶</a></p>
+<p id="section-3.4-2">The caller uses this keypair:<a href="#section-3.4-2" class="pilcrow">¶</a></p>
 <span id="name-caller-private-key"></span><figure id="figure-1">
-          <div class="lang-jwk sourcecode" id="section-3.3-3.1">
+          <div class="lang-jwk sourcecode" id="section-3.4-3.1">
 <pre>
 {
   "alg": "EdDSA",
   "crv": "Ed25519",
-  "d": "JMHQzsQ7wxHfaj5d4fQJ8oDNGh5SJY1CcOD24tuo2ws",
+  "d": "Vz-mhKKZG2BmyuEC7-8y0ttwFbjONtf7Q_ABL2Tldxg",
   "kid": "svc-a-key",
   "kty": "OKP",
-  "x": "zKORkA6iFB3-dkDJG6kbnhw-57VXOHa-IE9XWVd-GtM"
+  "x": "bk3wFVdYjKRBflfa6QS8rZFIKRJEKy4ZGQRIJXAHfog"
 }
 </pre>
 </div>
 <figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
 <a href="#name-caller-private-key" class="selfRef">Caller Private Key</a>
           </figcaption></figure>
-<p id="section-3.3-4">The caller uses its keypair and generates the following HTTP request:<a href="#section-3.3-4" class="pilcrow">¶</a></p>
+<p id="section-3.4-4">The caller uses its keypair and generates the following HTTP request:<a href="#section-3.4-4" class="pilcrow">¶</a></p>
 <span id="name-signed-request"></span><figure id="figure-2">
-          <div class="lang-http sourcecode" id="section-3.3-5.1">
+          <div class="lang-http sourcecode" id="section-3.4-5.1">
 <pre>
-=============== NOTE: '\' line wrapping per RFC 8792 ================
+=============== NOTE: '\\' line wrapping per RFC 8792 ===============
 
 GET /gimme-ice-cream?flavor=vanilla HTTP/1.1
 Host: example.com
-Signature: wimse=:b1kQ7vFYUShd9QS82ojrPAy2hAgiIqSED20bXXjwH6xsnXHF0r\
-b2J8OeIdbtSupQUsez8IOqQvoYGPaWKu76Cg==:
-Signature-Input: wimse=("@method" "@request-target" "workload-identi\
-ty-token");created=1761859807;expires=1761860107;nonce="abcd1111";ta\
-g="wimse-workload-to-workload"
+Signature: wimse=:e5FJnnSi0waMqPTzsvKR9bGu69UrcoR1Ure09l4b36xYhUqFHj\
+\FTRdkKjlkkn0p9dXRqPwNyBxe/1hfSJ15OBQ==:
+Signature-Input: wimse=("@method" "@request-target" "wimse-audience"\
+\ "workload-identity-token");created=1772386884;expires=1772387184;n\
+\once="abcd1111";tag="wimse-workload-to-workload"
+Wimse-Audience: https://example.com/gimme-ice-cream
 Workload-Identity-Token: eyJhbGciOiJFZERTQSIsImtpZCI6Imlzc3Vlci1rZXk\
-iLCJ0eXAiOiJ3aXQrand0In0.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J\
-2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1hLWtleSIsImt0eSI6Ik9LUCIsIngiOiJ6S09\
-Sa0E2aUZCMy1ka0RKRzZrYm5ody01N1ZYT0hhLUlFOVhXVmQtR3RNIn19LCJleHAiOjE\
-3NjE4NjAxMDcsImlhdCI6MTc2MTg1OTgwNywiaXNzIjoiaHR0cHM6Ly9leGFtcGxlLmN\
-vbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc2MTg1OTgwNzM0NTQ3ODAwMCIsInN1YiI6Ind\
-pbXNlOi8vZXhhbXBsZS5jb20vc3ZjQSJ9.KxXGBK2YWhy8XT1tB9Z9sZscn2fb4OHDNz\
-2S8mhP8fGK0mCw6yK4lv9wRqO3hnAXWJEzWuWRHpVQO8_82t_IBA
+\iLCJ0eXAiOiJ3aXQrand0In0.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3\
+\J2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1hLWtleSIsImt0eSI6Ik9LUCIsIngiOiJia\
+\zN3RlZkWWpLUkJmbGZhNlFTOHJaRklLUkpFS3k0WkdRUklKWEFIZm9nIn19LCJleHAi\
+\OjE3NzIzODcxODQsImlhdCI6MTc3MjM4Njg4NCwiaXNzIjoiaHR0cHM6Ly9leGFtcGx\
+\lLmNvbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc3MjM4Njg4NDc5NzAwNzAwMCIsInN1Yi\
+\I6IndpbXNlOi8vZXhhbXBsZS5jb20vc3ZjQSJ9.QxgHzB9YZ5Xh7PFBTl_6lsrYfzpj\
+\NaWIMxgpA78dMsAOycSYw3TlSV80EDMlOkUsC-3HF0QhczSFLh_2DcY1Dw
 
 </pre>
 </div>
 <figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
 <a href="#name-signed-request" class="selfRef">Signed Request</a>
           </figcaption></figure>
-<p id="section-3.3-6">Assuming that the workload being called has the following keypair:<a href="#section-3.3-6" class="pilcrow">¶</a></p>
+<p id="section-3.4-6">Assuming that the workload being called has the following keypair:<a href="#section-3.4-6" class="pilcrow">¶</a></p>
 <span id="name-callee-private-key"></span><figure id="figure-3">
-          <div class="lang-jwk sourcecode" id="section-3.3-7.1">
+          <div class="lang-jwk sourcecode" id="section-3.4-7.1">
 <pre>
 {
   "alg": "EdDSA",
   "crv": "Ed25519",
-  "d": "u1DH-EPbCxpzi1LLJHtsLGZ6_4lvKsUgFHRNYOo5Mx8",
+  "d": "wfhAN8WoPeGN1ikx3KW9cveIPrno_iB6oxvkIplhRDY",
   "kid": "svc-b-key",
   "kty": "OKP",
-  "x": "8zj0S94HAaaQ0kKPhts0UdothtSTjZDX7jYC5zdLsX4"
+  "x": "fuYDsk-ZG_ol-8NyvqKwV3EIymygRtCJcqrRG_1Jvm0"
 }
 </pre>
 </div>
 <figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
 <a href="#name-callee-private-key" class="selfRef">Callee Private Key</a>
           </figcaption></figure>
-<p id="section-3.3-8">A signed response would be:<a href="#section-3.3-8" class="pilcrow">¶</a></p>
+<p id="section-3.4-8">A signed response would be:<a href="#section-3.4-8" class="pilcrow">¶</a></p>
 <span id="name-signed-response"></span><figure id="figure-4">
-          <div class="lang-http sourcecode" id="section-3.3-9.1">
+          <div class="lang-http sourcecode" id="section-3.4-9.1">
 <pre>
 =============== NOTE: '\' line wrapping per RFC 8792 ================
 
@@ -1539,20 +1572,20 @@ Connection: close
 Content-Digest: sha-256=:47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU\
 =:
 Content-Type: text/plain
-Signature: wimse=:cQiWDdhftD/qYu22pMUxvdqHPxo7IjOaTQ54UxZ5nvXq6Yj7Mv\
-avAW8sGJjXNlPXwqvBc1vy0wtOvS6Q5zdVDQ==:
+Signature: wimse=:MhDGoIfHnZV/0Z7Wu57rleh77FrX2DB4Ezu3dzL9lqiXzmaDcK\
+k6Z8i0AszK5UEUZO7RxCTaY9IjToRJS+eIBg==:
 Signature-Input: wimse=("@status" "workload-identity-token" "content\
 -type" "content-digest" "@method";req "@request-target";req);created\
-=1761859807;expires=1761860109;nonce="abcd2222";tag="wimse-workload-\
+=1772386884;expires=1772387186;nonce="abcd2222";tag="wimse-workload-\
 to-workload"
 Workload-Identity-Token: eyJhbGciOiJFZERTQSIsImtpZCI6Imlzc3Vlci1rZXk\
 iLCJ0eXAiOiJ3aXQrand0In0.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J\
-2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1iLWtleSIsImt0eSI6Ik9LUCIsIngiOiI4emo\
-wUzk0SEFhYVEwa0tQaHRzMFVkb3RodFNUalpEWDdqWUM1emRMc1g0In19LCJleHAiOjE\
-3NjE4NjAxMDksImlhdCI6MTc2MTg1OTgwOSwiaXNzIjoiaHR0cHM6Ly9leGFtcGxlLmN\
-vbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc2MTg1OTgwNzM0NTcwMjAwMCIsInN1YiI6Ind\
-pbXNlOi8vZXhhbXBsZS5jb20vc3ZjQiJ9.1Z10zR2hYWXuVwBeJDx965agbLf_V8o2Ac\
-SKiyayqGQMAEZNyRm1wrSvDmm6Ha6EJW3-1rhF0C10R-usSUYtAQ
+2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1iLWtleSIsImt0eSI6Ik9LUCIsIngiOiJmdVl\
+Ec2stWkdfb2wtOE55dnFLd1YzRUl5bXlnUnRDSmNxclJHXzFKdm0wIn19LCJleHAiOjE\
+3NzIzODcxODYsImlhdCI6MTc3MjM4Njg4NiwiaXNzIjoiaHR0cHM6Ly9leGFtcGxlLmN\
+vbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc3MjM4Njg4NDc5NzE2MjAwMCIsInN1YiI6Ind\
+pbXNlOi8vZXhhbXBsZS5jb20vc3ZjQiJ9.lqWjoau6GlkwykzHC6M1TdIgziPVlSlVnU\
+e9uUzcsEQEAhYdI2tpmeV60szmLW-ignonrI1buZCKJDhW2QdDDQ
 
 No ice cream today.
 
@@ -1627,7 +1660,7 @@ and its WIT representation.<a href="#section-5-1" class="pilcrow">¶</a></p>
 always presented with a proof of possession as described in
 <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span>. The WIT is a general purpose token that can be presented
 in multiple contexts. The WIT and its PoP are only used in the
-application-level options, and both are not used in MTLS. The WIT <span class="bcp14">MUST NOT</span> be
+application-level options, and neither is used in MTLS. The WIT <span class="bcp14">MUST NOT</span> be
 used as a bearer token. While this helps reduce the sensitivity of the token it
 is still possible that a token and its proof of possession may be captured and
 replayed within the PoP's lifetime.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
@@ -1640,7 +1673,7 @@ eliminates most of the risk associated with active attackers on a middlebox.<a h
             <p id="section-5.1-4.1.1">Preventing Eavesdropping and Interception with TLS<a href="#section-5.1-4.1.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-5.1-5">An attacker observing or intercepting the communication channel can view the token and its proof of possession and attempt to replay it to gain an advantage. In order to prevent this the
+<p id="section-5.1-5">An attacker observing or intercepting the communication channel can view the token and its proof of possession and attempt to replay it to gain an advantage. In order to prevent this, the
 token and proof of possession <span class="bcp14">MUST</span> be sent over a secure, server authenticated TLS connection unless a secure channel is provided by some other mechanisms. Hostname validation according
 to Section 6.3 of <span>[<a href="#RFC9525" class="cite xref">RFC9525</a>]</span> <span class="bcp14">MUST</span> be performed by the client.<a href="#section-5.1-5" class="pilcrow">¶</a></p>
 <ul class="normal">
@@ -1657,7 +1690,7 @@ processing latency, but usually within minutes of the message sending time. Sign
         </ul>
 <p id="section-5.1-9">A signed message includes the <code>jti</code> claim that <span class="bcp14">MUST</span> uniquely identify it, within the scope of a particular sender.
 This claim <span class="bcp14">SHOULD</span> be used by the receiver to perform basic replay protection against messages it has already seen.
-Depending upon the design of the system it may be difficult to synchronize the replay cache across all messages validators.
+Depending upon the design of the system it may be difficult to synchronize the replay cache across all message validators.
 If an attacker can somehow influence the identity of the validator (e.g. which cluster member receives the message) then
 replay protection would not be effective.<a href="#section-5.1-9" class="pilcrow">¶</a></p>
 </section>
@@ -1671,7 +1704,7 @@ replay protection would not be effective.<a href="#section-5.1-9" class="pilcrow
 (signature) may pass through multiple systems. The communication between the
 systems is over TLS, but the WIT and signature are available in the clear at each
 intermediary.  While the intermediary cannot modify the token or the
-information within the signature they can attempt to capture and replay the the message or modify
+information within the signature they can attempt to capture and replay the message or modify
 unsigned information, such as proprietary HTTP headers that may remain unsigned.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
 <p id="section-5.2-2">Mitigations listed in the protocol provide a reasonable level of security in these situations, in particular
 if responses are signed in addition to requests.<a href="#section-5.2-2" class="pilcrow">¶</a></p>
@@ -1717,7 +1750,7 @@ with their WIMSE identity.<a href="#section-6.1-2.2.1" class="pilcrow">¶</a></p
 </li>
           <li class="normal" id="section-6.1-2.4">
             <p id="section-6.1-2.4.1">The entire authorization subsystem is out of scope and trusted. This can potentially include
-provisioning and enforcement of an authorization policy, issuance of transactions tokens
+provisioning and enforcement of an authorization policy, issuance of transaction tokens
 and workload attestation.<a href="#section-6.1-2.4.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-6.1-2.5">
@@ -1799,7 +1832,43 @@ context where the request would be accepted as valid, and this mitigates the ris
       <h2 id="name-iana-considerations">
 <a href="#section-7" class="section-number selfRef">7. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
-<p id="section-7-1">This document does not include any IANA considerations.<a href="#section-7-1" class="pilcrow">¶</a></p>
+<div id="hypertext-transfer-protocol-http-field-name-registration">
+<section id="section-7.1">
+        <h3 id="name-hypertext-transfer-protocol">
+<a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-hypertext-transfer-protocol" class="section-name selfRef">Hypertext Transfer Protocol (HTTP) Field Name Registration</a>
+        </h3>
+<p id="section-7.1-1">IANA is requested to register the following entries to the "Hypertext Transfer Protocol (HTTP) Field Name Registry" <span>[<a href="#IANA.HTTP.FIELDS" class="cite xref">IANA.HTTP.FIELDS</a>]</span>:<a href="#section-7.1-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-7.1-2.1">
+            <p id="section-7.1-2.1.1"><code>Wimse-Audience</code>, per <a href="#iana-wimse-audience-field" class="auto internal xref">Section 7.1.1</a>.<a href="#section-7.1-2.1.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<div id="iana-wimse-audience-field">
+<section id="section-7.1.1">
+          <h4 id="name-wimse-audience">
+<a href="#section-7.1.1" class="section-number selfRef">7.1.1. </a><a href="#name-wimse-audience" class="section-name selfRef">Wimse-Audience</a>
+          </h4>
+<ul class="normal">
+<li class="normal" id="section-7.1.1-1.1">
+              <p id="section-7.1.1-1.1.1">Field Name: Wimse-Audience<a href="#section-7.1.1-1.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.1.1-1.2">
+              <p id="section-7.1.1-1.2.1">Status: permanent<a href="#section-7.1.1-1.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.1.1-1.3">
+              <p id="section-7.1.1-1.3.1">Structured Type: Item (String)<a href="#section-7.1.1-1.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.1.1-1.4">
+              <p id="section-7.1.1-1.4.1">Specification Document: RFC XXX, <a href="#wimse-audience-header" class="auto internal xref">Section 3.1</a><a href="#section-7.1.1-1.4.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.1.1-1.5">
+              <p id="section-7.1.1-1.5.1">Comments: This header field is used in the WIMSE HTTP Signature protocol to prevent reuse of signed messages by unintended recipients.<a href="#section-7.1.1-1.5.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+</section>
+</div>
+</section>
+</div>
 </section>
 </div>
 <div id="sec-combined-references">
@@ -1828,6 +1897,10 @@ context where the request would be accepted as valid, and this mitigates the ris
 <dt id="RFC8174">[RFC8174]</dt>
         <dd>
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9110">[RFC9110]</dt>
+        <dd>
+<span class="refAuthor">Fielding, R., Ed.</span>, <span class="refAuthor">Nottingham, M., Ed.</span>, and <span class="refAuthor">J. Reschke, Ed.</span>, <span class="refTitle">"HTTP Semantics"</span>, <span class="seriesInfo">STD 97</span>, <span class="seriesInfo">RFC 9110</span>, <span class="seriesInfo">DOI 10.17487/RFC9110</span>, <time datetime="2022-06" class="refDate">June 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9110">https://www.rfc-editor.org/rfc/rfc9110</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9421">[RFC9421]</dt>
         <dd>
@@ -1862,6 +1935,10 @@ context where the request would be accepted as valid, and this mitigates the ris
         <dd>
 <span class="refAuthor">Campbell, B.</span> and <span class="refAuthor">A. Schwenkschuster</span>, <span class="refTitle">"WIMSE Workload Proof Token"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-wpt-00</span>, <time datetime="2025-11-03" class="refDate">3 November 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-wpt-00">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-wpt-00</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="IANA.HTTP.FIELDS">[IANA.HTTP.FIELDS]</dt>
+        <dd>
+<span class="refAuthor">IANA</span>, <span class="refTitle">"Hypertext Transfer Protocol (HTTP) Field Name Registry"</span>, <span>&lt;<a href="https://www.iana.org/assignments/http-fields">https://www.iana.org/assignments/http-fields</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC9457">[RFC9457]</dt>
       <dd>
 <span class="refAuthor">Nottingham, M.</span>, <span class="refAuthor">Wilde, E.</span>, and <span class="refAuthor">S. Dalal</span>, <span class="refTitle">"Problem Details for HTTP APIs"</span>, <span class="seriesInfo">RFC 9457</span>, <span class="seriesInfo">DOI 10.17487/RFC9457</span>, <time datetime="2023-07" class="refDate">July 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9457">https://www.rfc-editor.org/rfc/rfc9457</a>&gt;</span>. </dd>
@@ -1877,214 +1954,226 @@ context where the request would be accepted as valid, and this mitigates the ris
 <a href="#appendix-A" class="section-number selfRef">Appendix A. </a><a href="#name-document-history" class="section-name selfRef">Document History</a>
       </h2>
 <p id="appendix-A-1"><span class="cref">RFC Editor: please remove before publication.</span><a href="#appendix-A-1" class="pilcrow">¶</a></p>
-<div id="draft-ietf-wimse-http-signature-01">
+<div id="draft-ietf-wimse-http-signature-02">
 <section id="appendix-A.1">
         <h3 id="name-draft-ietf-wimse-http-signa">
-<a href="#appendix-A.1" class="section-number selfRef">A.1. </a><a href="#name-draft-ietf-wimse-http-signa" class="section-name selfRef">draft-ietf-wimse-http-signature-01</a>
+<a href="#appendix-A.1" class="section-number selfRef">A.1. </a><a href="#name-draft-ietf-wimse-http-signa" class="section-name selfRef">draft-ietf-wimse-http-signature-02</a>
         </h3>
 <ul class="normal">
 <li class="normal" id="appendix-A.1-1.1">
-            <p id="appendix-A.1-1.1.1">Clarified response signing.<a href="#appendix-A.1-1.1.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.1.1">Add new <code>Wimse-Audience</code> HTTP header.<a href="#appendix-A.1-1.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-A.1-1.2">
-            <p id="appendix-A.1-1.2.1">Clarified signature vs. token lifetime.<a href="#appendix-A.1-1.2.1" class="pilcrow">¶</a></p>
+        </ul>
+</section>
+</div>
+<div id="draft-ietf-wimse-http-signature-01">
+<section id="appendix-A.2">
+        <h3 id="name-draft-ietf-wimse-http-signat">
+<a href="#appendix-A.2" class="section-number selfRef">A.2. </a><a href="#name-draft-ietf-wimse-http-signat" class="section-name selfRef">draft-ietf-wimse-http-signature-01</a>
+        </h3>
+<ul class="normal">
+<li class="normal" id="appendix-A.2-1.1">
+            <p id="appendix-A.2-1.1.1">Clarified response signing.<a href="#appendix-A.2-1.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-A.1-1.3">
-            <p id="appendix-A.1-1.3.1">Added security goals.<a href="#appendix-A.1-1.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-A.2-1.2">
+            <p id="appendix-A.2-1.2.1">Clarified signature vs. token lifetime.<a href="#appendix-A.2-1.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-A.1-1.4">
-            <p id="appendix-A.1-1.4.1">Added an Implementation Status section.<a href="#appendix-A.1-1.4.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-A.2-1.3">
+            <p id="appendix-A.2-1.3.1">Added security goals.<a href="#appendix-A.2-1.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.2-1.4">
+            <p id="appendix-A.2-1.4.1">Added an Implementation Status section.<a href="#appendix-A.2-1.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
 </div>
 <div id="draft-ietf-wimse-http-signature-00">
-<section id="appendix-A.2">
-        <h3 id="name-draft-ietf-wimse-http-signat">
-<a href="#appendix-A.2" class="section-number selfRef">A.2. </a><a href="#name-draft-ietf-wimse-http-signat" class="section-name selfRef">draft-ietf-wimse-http-signature-00</a>
+<section id="appendix-A.3">
+        <h3 id="name-draft-ietf-wimse-http-signatu">
+<a href="#appendix-A.3" class="section-number selfRef">A.3. </a><a href="#name-draft-ietf-wimse-http-signatu" class="section-name selfRef">draft-ietf-wimse-http-signature-00</a>
         </h3>
 <ul class="normal">
-<li class="normal" id="appendix-A.2-1.1">
-            <p id="appendix-A.2-1.1.1">Initial version, extracted from the -07 draft with minimal edits.<a href="#appendix-A.2-1.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-A.3-1.1">
+            <p id="appendix-A.3-1.1.1">Initial version, extracted from the -07 draft with minimal edits.<a href="#appendix-A.3-1.1.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
 </div>
 <div id="draft-ietf-wimse-s2s-protocol-07">
-<section id="appendix-A.3">
+<section id="appendix-A.4">
         <h3 id="name-draft-ietf-wimse-s2s-protoc">
-<a href="#appendix-A.3" class="section-number selfRef">A.3. </a><a href="#name-draft-ietf-wimse-s2s-protoc" class="section-name selfRef">draft-ietf-wimse-s2s-protocol-07</a>
+<a href="#appendix-A.4" class="section-number selfRef">A.4. </a><a href="#name-draft-ietf-wimse-s2s-protoc" class="section-name selfRef">draft-ietf-wimse-s2s-protocol-07</a>
         </h3>
 <ul class="normal">
-<li class="normal" id="appendix-A.3-1.1">
-            <p id="appendix-A.3-1.1.1">Rework the WPT's <code>oth</code> claim.<a href="#appendix-A.3-1.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-A.4-1.1">
+            <p id="appendix-A.4-1.1.1">Rework the WPT's <code>oth</code> claim.<a href="#appendix-A.4-1.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-A.3-1.2">
-            <p id="appendix-A.3-1.2.1">Update the media types.<a href="#appendix-A.3-1.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-A.4-1.2">
+            <p id="appendix-A.4-1.2.1">Update the media types.<a href="#appendix-A.4-1.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-A.3-1.3">
-            <p id="appendix-A.3-1.3.1">Discuss extensibility of WIT and WPT.<a href="#appendix-A.3-1.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-A.4-1.3">
+            <p id="appendix-A.4-1.3.1">Discuss extensibility of WIT and WPT.<a href="#appendix-A.4-1.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-A.3-1.4">
-            <p id="appendix-A.3-1.4.1">Clarify error handling, specifically why not HTTP 401.<a href="#appendix-A.3-1.4.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-A.4-1.4">
+            <p id="appendix-A.4-1.4.1">Clarify error handling, specifically why not HTTP 401.<a href="#appendix-A.4-1.4.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-A.3-1.5">
-            <p id="appendix-A.3-1.5.1">Correct the code examples.<a href="#appendix-A.3-1.5.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-A.4-1.5">
+            <p id="appendix-A.4-1.5.1">Correct the code examples.<a href="#appendix-A.4-1.5.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-A.3-1.6">
-            <p id="appendix-A.3-1.6.1">Add registration request content for a <code>wimse</code> URI scheme.<a href="#appendix-A.3-1.6.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-A.4-1.6">
+            <p id="appendix-A.4-1.6.1">Add registration request content for a <code>wimse</code> URI scheme.<a href="#appendix-A.4-1.6.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-A.3-1.7">
-            <p id="appendix-A.3-1.7.1">New section on key management.<a href="#appendix-A.3-1.7.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-A.4-1.7">
+            <p id="appendix-A.4-1.7.1">New section on key management.<a href="#appendix-A.4-1.7.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-A.3-1.8">
-            <p id="appendix-A.3-1.8.1">Use of the <code>Accept-Signature</code> header.<a href="#appendix-A.3-1.8.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-A.4-1.8">
+            <p id="appendix-A.4-1.8.1">Use of the <code>Accept-Signature</code> header.<a href="#appendix-A.4-1.8.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
 </div>
 <div id="draft-ietf-wimse-s2s-protocol-06">
-<section id="appendix-A.4">
+<section id="appendix-A.5">
         <h3 id="name-draft-ietf-wimse-s2s-protoco">
-<a href="#appendix-A.4" class="section-number selfRef">A.4. </a><a href="#name-draft-ietf-wimse-s2s-protoco" class="section-name selfRef">draft-ietf-wimse-s2s-protocol-06</a>
+<a href="#appendix-A.5" class="section-number selfRef">A.5. </a><a href="#name-draft-ietf-wimse-s2s-protoco" class="section-name selfRef">draft-ietf-wimse-s2s-protocol-06</a>
         </h3>
 <ul class="normal">
-<li class="normal" id="appendix-A.4-1.1">
-            <p id="appendix-A.4-1.1.1">Explicit definition of the Workload Identity Certificate.<a href="#appendix-A.4-1.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-A.5-1.1">
+            <p id="appendix-A.5-1.1.1">Explicit definition of the Workload Identity Certificate.<a href="#appendix-A.5-1.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-A.4-1.2">
-            <p id="appendix-A.4-1.2.1">Definition of the validation of workload identifiers as part of workload authentication. Still work in progress.<a href="#appendix-A.4-1.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-A.5-1.2">
+            <p id="appendix-A.5-1.2.1">Definition of the validation of workload identifiers as part of workload authentication. Still work in progress.<a href="#appendix-A.5-1.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
 </div>
 <div id="draft-ietf-wimse-s2s-protocol-05">
-<section id="appendix-A.5">
+<section id="appendix-A.6">
         <h3 id="name-draft-ietf-wimse-s2s-protocol">
-<a href="#appendix-A.5" class="section-number selfRef">A.5. </a><a href="#name-draft-ietf-wimse-s2s-protocol" class="section-name selfRef">draft-ietf-wimse-s2s-protocol-05</a>
+<a href="#appendix-A.6" class="section-number selfRef">A.6. </a><a href="#name-draft-ietf-wimse-s2s-protocol" class="section-name selfRef">draft-ietf-wimse-s2s-protocol-05</a>
         </h3>
 <ul class="normal">
-<li class="normal" id="appendix-A.5-1.1">
-            <p id="appendix-A.5-1.1.1">Removed the entire Workload Identity section which is now covered in the Architecture document.<a href="#appendix-A.5-1.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-A.6-1.1">
+            <p id="appendix-A.6-1.1.1">Removed the entire Workload Identity section which is now covered in the Architecture document.<a href="#appendix-A.6-1.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-A.5-1.2">
-            <p id="appendix-A.5-1.2.1">Content-Digest is mandatory with HTTP-Sig.<a href="#appendix-A.5-1.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-A.6-1.2">
+            <p id="appendix-A.6-1.2.1">Content-Digest is mandatory with HTTP-Sig.<a href="#appendix-A.6-1.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-A.5-1.3">
-            <p id="appendix-A.5-1.3.1">Some wording on extending the protocol beyond HTTP.<a href="#appendix-A.5-1.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-A.6-1.3">
+            <p id="appendix-A.6-1.3.1">Some wording on extending the protocol beyond HTTP.<a href="#appendix-A.6-1.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-A.5-1.4">
-            <p id="appendix-A.5-1.4.1">IANA considerations.<a href="#appendix-A.5-1.4.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-A.6-1.4">
+            <p id="appendix-A.6-1.4.1">IANA considerations.<a href="#appendix-A.6-1.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
 </div>
 <div id="draft-ietf-wimse-s2s-protocol-04">
-<section id="appendix-A.6">
+<section id="appendix-A.7">
         <h3 id="name-draft-ietf-wimse-s2s-protocol-">
-<a href="#appendix-A.6" class="section-number selfRef">A.6. </a><a href="#name-draft-ietf-wimse-s2s-protocol-" class="section-name selfRef">draft-ietf-wimse-s2s-protocol-04</a>
+<a href="#appendix-A.7" class="section-number selfRef">A.7. </a><a href="#name-draft-ietf-wimse-s2s-protocol-" class="section-name selfRef">draft-ietf-wimse-s2s-protocol-04</a>
         </h3>
 <ul class="normal">
-<li class="normal" id="appendix-A.6-1.1">
-            <p id="appendix-A.6-1.1.1">Require <code>cnf.jwk.alg</code> in WIT which restricts signature algorithm of WPT or HTTP-Sig.<a href="#appendix-A.6-1.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-A.7-1.1">
+            <p id="appendix-A.7-1.1.1">Require <code>cnf.jwk.alg</code> in WIT which restricts signature algorithm of WPT or HTTP-Sig.<a href="#appendix-A.7-1.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-A.6-1.2">
-            <p id="appendix-A.6-1.2.1">Replay protection as a <span class="bcp14">SHOULD</span> for both WPT and HTTP-Sig.<a href="#appendix-A.6-1.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-A.7-1.2">
+            <p id="appendix-A.7-1.2.1">Replay protection as a <span class="bcp14">SHOULD</span> for both WPT and HTTP-Sig.<a href="#appendix-A.7-1.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-A.6-1.3">
-            <p id="appendix-A.6-1.3.1">Consolidate terminology with the Architecture draft.<a href="#appendix-A.6-1.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-A.7-1.3">
+            <p id="appendix-A.7-1.3.1">Consolidate terminology with the Architecture draft.<a href="#appendix-A.7-1.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
 </div>
 <div id="draft-ietf-wimse-s2s-protocol-03">
-<section id="appendix-A.7">
+<section id="appendix-A.8">
         <h3 id="name-draft-ietf-wimse-s2s-protocol-0">
-<a href="#appendix-A.7" class="section-number selfRef">A.7. </a><a href="#name-draft-ietf-wimse-s2s-protocol-0" class="section-name selfRef">draft-ietf-wimse-s2s-protocol-03</a>
+<a href="#appendix-A.8" class="section-number selfRef">A.8. </a><a href="#name-draft-ietf-wimse-s2s-protocol-0" class="section-name selfRef">draft-ietf-wimse-s2s-protocol-03</a>
         </h3>
 <ul class="normal">
-<li class="normal" id="appendix-A.7-1.1">
-            <p id="appendix-A.7-1.1.1">Consistently use "workload".<a href="#appendix-A.7-1.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-A.8-1.1">
+            <p id="appendix-A.8-1.1.1">Consistently use "workload".<a href="#appendix-A.8-1.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-A.7-1.2">
-            <p id="appendix-A.7-1.2.1">Implement comments from the SPIFFE community.<a href="#appendix-A.7-1.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-A.8-1.2">
+            <p id="appendix-A.8-1.2.1">Implement comments from the SPIFFE community.<a href="#appendix-A.8-1.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-A.7-1.3">
-            <p id="appendix-A.7-1.3.1">Make <code>iss</code> claim in WIT optional and add wording about its relation to key distribution.<a href="#appendix-A.7-1.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-A.8-1.3">
+            <p id="appendix-A.8-1.3.1">Make <code>iss</code> claim in WIT optional and add wording about its relation to key distribution.<a href="#appendix-A.8-1.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-A.7-1.4">
-            <p id="appendix-A.7-1.4.1">Remove <code>iss</code> claim from WPT.<a href="#appendix-A.7-1.4.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-A.8-1.4">
+            <p id="appendix-A.8-1.4.1">Remove <code>iss</code> claim from WPT.<a href="#appendix-A.8-1.4.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-A.7-1.5">
-            <p id="appendix-A.7-1.5.1">Make <code>jti</code> claim in WIT optional.<a href="#appendix-A.7-1.5.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-A.8-1.5">
+            <p id="appendix-A.8-1.5.1">Make <code>jti</code> claim in WIT optional.<a href="#appendix-A.8-1.5.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-A.7-1.6">
-            <p id="appendix-A.7-1.6.1">Error handling for the application level methods.<a href="#appendix-A.7-1.6.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-A.8-1.6">
+            <p id="appendix-A.8-1.6.1">Error handling for the application level methods.<a href="#appendix-A.8-1.6.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
 </div>
 <div id="draft-ietf-wimse-s2s-protocol-02">
-<section id="appendix-A.8">
+<section id="appendix-A.9">
         <h3 id="name-draft-ietf-wimse-s2s-protocol-02">
-<a href="#appendix-A.8" class="section-number selfRef">A.8. </a><a href="#name-draft-ietf-wimse-s2s-protocol-02" class="section-name selfRef">draft-ietf-wimse-s2s-protocol-02</a>
+<a href="#appendix-A.9" class="section-number selfRef">A.9. </a><a href="#name-draft-ietf-wimse-s2s-protocol-02" class="section-name selfRef">draft-ietf-wimse-s2s-protocol-02</a>
         </h3>
 <ul class="normal">
-<li class="normal" id="appendix-A.8-1.1">
-            <p id="appendix-A.8-1.1.1">Coexistence with bearer tokens.<a href="#appendix-A.8-1.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-A.9-1.1">
+            <p id="appendix-A.9-1.1.1">Coexistence with bearer tokens.<a href="#appendix-A.9-1.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-A.8-1.2">
-            <p id="appendix-A.8-1.2.1">Improve the architecture diagram.<a href="#appendix-A.8-1.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-A.9-1.2">
+            <p id="appendix-A.9-1.2.1">Improve the architecture diagram.<a href="#appendix-A.9-1.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-A.8-1.3">
-            <p id="appendix-A.8-1.3.1">Some more ABNF.<a href="#appendix-A.8-1.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-A.9-1.3">
+            <p id="appendix-A.9-1.3.1">Some more ABNF.<a href="#appendix-A.9-1.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-A.8-1.4">
-            <p id="appendix-A.8-1.4.1">Clarified identifiers and URIs.<a href="#appendix-A.8-1.4.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-A.9-1.4">
+            <p id="appendix-A.9-1.4.1">Clarified identifiers and URIs.<a href="#appendix-A.9-1.4.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-A.8-1.5">
-            <p id="appendix-A.8-1.5.1">Moved an author to acknowledgments.<a href="#appendix-A.8-1.5.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-A.9-1.5">
+            <p id="appendix-A.9-1.5.1">Moved an author to acknowledgments.<a href="#appendix-A.9-1.5.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
 </div>
 <div id="draft-ietf-wimse-s2s-protocol-01">
-<section id="appendix-A.9">
+<section id="appendix-A.10">
         <h3 id="name-draft-ietf-wimse-s2s-protocol-01">
-<a href="#appendix-A.9" class="section-number selfRef">A.9. </a><a href="#name-draft-ietf-wimse-s2s-protocol-01" class="section-name selfRef">draft-ietf-wimse-s2s-protocol-01</a>
+<a href="#appendix-A.10" class="section-number selfRef">A.10. </a><a href="#name-draft-ietf-wimse-s2s-protocol-01" class="section-name selfRef">draft-ietf-wimse-s2s-protocol-01</a>
         </h3>
 <ul class="normal">
-<li class="normal" id="appendix-A.9-1.1">
-            <p id="appendix-A.9-1.1.1">Addressed multiple comments from Pieter.<a href="#appendix-A.9-1.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-A.10-1.1">
+            <p id="appendix-A.10-1.1.1">Addressed multiple comments from Pieter.<a href="#appendix-A.10-1.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-A.9-1.2">
-            <p id="appendix-A.9-1.2.1">Clarified WIMSE identity concepts, specifically "trust domain"
-and "workload identifier".<a href="#appendix-A.9-1.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-A.10-1.2">
+            <p id="appendix-A.10-1.2.1">Clarified WIMSE identity concepts, specifically "trust domain"
+and "workload identifier".<a href="#appendix-A.10-1.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-A.9-1.3">
-            <p id="appendix-A.9-1.3.1">Much more detail around mTLS, including some normative language.<a href="#appendix-A.9-1.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-A.10-1.3">
+            <p id="appendix-A.10-1.3.1">Much more detail around mTLS, including some normative language.<a href="#appendix-A.10-1.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-A.9-1.4">
-            <p id="appendix-A.9-1.4.1">WIT (the identity token) is now included in the WPT proof of possession.<a href="#appendix-A.9-1.4.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-A.10-1.4">
+            <p id="appendix-A.10-1.4.1">WIT (the identity token) is now included in the WPT proof of possession.<a href="#appendix-A.10-1.4.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-A.9-1.5">
-            <p id="appendix-A.9-1.5.1">Added a section comparing the DPoP-inspired app-level security option to
-the Message Signature-based alternative.<a href="#appendix-A.9-1.5.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-A.10-1.5">
+            <p id="appendix-A.10-1.5.1">Added a section comparing the DPoP-inspired app-level security option to
+the Message Signature-based alternative.<a href="#appendix-A.10-1.5.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
 </div>
 <div id="draft-ietf-wimse-s2s-protocol-00">
-<section id="appendix-A.10">
+<section id="appendix-A.11">
         <h3 id="name-draft-ietf-wimse-s2s-protocol-00">
-<a href="#appendix-A.10" class="section-number selfRef">A.10. </a><a href="#name-draft-ietf-wimse-s2s-protocol-00" class="section-name selfRef">draft-ietf-wimse-s2s-protocol-00</a>
+<a href="#appendix-A.11" class="section-number selfRef">A.11. </a><a href="#name-draft-ietf-wimse-s2s-protocol-00" class="section-name selfRef">draft-ietf-wimse-s2s-protocol-00</a>
         </h3>
 <ul class="normal">
-<li class="normal" id="appendix-A.10-1.1">
-            <p id="appendix-A.10-1.1.1">Initial WG draft, an exact copy of draft-sheffer-wimse-s2s-protocol-00<a href="#appendix-A.10-1.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-A.11-1.1">
+            <p id="appendix-A.11-1.1.1">Initial WG draft, an exact copy of draft-sheffer-wimse-s2s-protocol-00<a href="#appendix-A.11-1.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-A.10-1.2">
-            <p id="appendix-A.10-1.2.1">Added this document history section<a href="#appendix-A.10-1.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-A.11-1.2">
+            <p id="appendix-A.11-1.2.1">Added this document history section<a href="#appendix-A.11-1.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
