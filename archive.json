@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-02-26T01:59:52.483522+00:00",
+  "timestamp": "2026-03-01T02:11:03.089553+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -3097,7 +3097,7 @@
       ],
       "body": "Section 3.2 (\"Option 1: DPoP-Inspired Authentication\") says the \"jti\" value \"MUST be unique, at least within the scope of the sender. Unique across what and how does the receiver interpret that ? Is it based on the workload identifier, in which case we again need to consider workload instances versus \"services\", with potentially multiple instances. ",
       "createdAt": "2025-09-16T01:50:54Z",
-      "updatedAt": "2025-12-09T15:27:15Z",
+      "updatedAt": "2026-02-28T13:34:29Z",
       "closedAt": null,
       "comments": [
         {
@@ -3113,6 +3113,13 @@
           "body": "I think referencing RFC7519 jti makes sense here (thanks), not least coupled with a practical note about 128 bits of randomness and checking you provided. I don't believe the current text:\n\n> jti: An identifier for the token. The value MUST be unique, at least within the scope of the sender.\n\nis consistent with RFC 7519:\n\n>[4.1.7](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1.7).  \"jti\" (JWT ID) Claim\n   The \"jti\" (JWT ID) claim provides a unique identifier for the JWT.\n   The identifier value MUST be assigned in a manner that ensures that\n   there is a negligible probability that the same value will be\n   accidentally assigned to a different data object; if the application\n   uses multiple issuers, collisions MUST be prevented among values\n   produced by different issuers as well.  The \"jti\" claim can be used\n   to prevent the JWT from being replayed.  The \"jti\" value is a case-\n   sensitive string.  Use of this claim is OPTIONAL. \n\nThe scenario I was concerned about is one where the workload identifier is for a service (multiple instances), however \"sender\" would refer to each instance. It would then be valid to have multiple instances generate the same jti, however it's not clear how the receiver would necessarily know these were different senders (at least not based on the workload identifier). The issue goes away if you make the changes you proposed. ",
           "createdAt": "2025-09-22T22:12:20Z",
           "updatedAt": "2025-09-22T22:17:31Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "#211 attempts to resolve things here ",
+          "createdAt": "2026-02-28T13:34:29Z",
+          "updatedAt": "2026-02-28T13:34:29Z"
         }
       ]
     },
@@ -3154,7 +3161,7 @@
       ],
       "body": "Open 1 (DPoP-inspired) says that \"It is RECOMMENDED to check that the value of the jti claim has not been used before in the time window in which the respective WPT would be considered valid.\"\n\nWhat is the scope/context in which this check should be made ? Elsewhere, it was suggested that the jti only needed to be unique within the sender scope (albeit it was not entirely clear what constitutes the sender scope). ",
       "createdAt": "2025-09-16T02:08:50Z",
-      "updatedAt": "2026-02-24T17:39:05Z",
+      "updatedAt": "2026-02-28T13:34:15Z",
       "closedAt": null,
       "comments": [
         {
@@ -3170,6 +3177,13 @@
           "body": "I think this is being addressed by https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/166 but will leave open here for now. ",
           "createdAt": "2025-09-22T22:15:58Z",
           "updatedAt": "2025-09-22T22:15:58Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "#211 attempts to resolve things here ",
+          "createdAt": "2026-02-28T13:34:14Z",
+          "updatedAt": "2026-02-28T13:34:14Z"
         }
       ]
     },
@@ -3451,7 +3465,7 @@
       "id": "I_kwDOLJmm787VnkQ_",
       "title": "WPT ABNF",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/184",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -3463,8 +3477,8 @@
       ],
       "body": "> is \"projection\" the right word? i don't know tbh but don't think I've heard that before\n> \n> given this will now be in a separate doc, it's maybe better to just repeat the bit of ABNF  \n\n _Originally posted by @bc-pi in [#180](https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/180/files#r2487985961)_",
       "createdAt": "2025-11-03T22:09:33Z",
-      "updatedAt": "2026-02-23T21:38:08Z",
-      "closedAt": null,
+      "updatedAt": "2026-02-28T13:47:26Z",
+      "closedAt": "2026-02-28T13:47:26Z",
       "comments": []
     },
     {
@@ -15323,10 +15337,12 @@
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-wpt"
+      ],
       "body": "Adds security considerations on how to validate the audience, particularly the authority part.\r\n\r\nResolves #172.\r\n",
       "createdAt": "2026-01-19T10:44:59Z",
-      "updatedAt": "2026-02-24T15:23:40Z",
+      "updatedAt": "2026-02-28T13:37:44Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "41fb87003b43adccd77af7e91ad06e5e3499066f",
@@ -15416,6 +15432,26 @@
               "body": "LGTM.",
               "createdAt": "2026-02-24T15:23:40Z",
               "updatedAt": "2026-02-24T15:23:40Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787msmGc",
+          "commit": {
+            "abbreviatedOid": "d4c9edf"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-28T13:37:44Z",
+          "updatedAt": "2026-02-28T13:37:44Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "@jsalowey's \"Maybe\" suggestion in https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/206#discussion_r2730316058 works okay for me. ",
+              "createdAt": "2026-02-28T13:37:44Z",
+              "updatedAt": "2026-02-28T13:37:44Z"
             }
           ]
         }
@@ -15534,7 +15570,7 @@
       "id": "PR_kwDOLJmm787Fwe5R",
       "title": "Inline the ABNF for the Workload-Proof-Token Header Field",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/210",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -15543,17 +15579,19 @@
       ],
       "body": "for #184\r\n",
       "createdAt": "2026-02-23T21:48:36Z",
-      "updatedAt": "2026-02-24T15:14:42Z",
+      "updatedAt": "2026-02-28T13:47:25Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "41fb87003b43adccd77af7e91ad06e5e3499066f",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "wpt-abnf",
       "headRefOid": "7bbee3213562ffc259b2231b3fbe68394396b8f6",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-02-28T13:47:25Z",
+      "mergedAt": "2026-02-28T13:47:25Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "9904d14d37137e5f536e9b1eb8cfb6bf35ad6c73"
+      },
       "comments": [],
       "reviews": [
         {
@@ -15570,6 +15608,34 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 211,
+      "id": "PR_kwDOLJmm787HAioT",
+      "title": "Clairify treatment of \"jti\" claim",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/211",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-wpt"
+      ],
+      "body": "also Fix Example WPT Claims to match the example WPT",
+      "createdAt": "2026-02-28T13:32:43Z",
+      "updatedAt": "2026-02-28T13:48:31Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "9904d14d37137e5f536e9b1eb8cfb6bf35ad6c73",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "WPT-jti-wpt-good",
+      "headRefOid": "d2a73967745ab495f0a562a440bbbaf24bb5d9c1",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
