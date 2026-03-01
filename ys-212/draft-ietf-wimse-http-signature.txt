@@ -322,33 +322,34 @@ Table of Contents
    {
      "alg": "EdDSA",
      "crv": "Ed25519",
-     "d": "JMHQzsQ7wxHfaj5d4fQJ8oDNGh5SJY1CcOD24tuo2ws",
+     "d": "Vz-mhKKZG2BmyuEC7-8y0ttwFbjONtf7Q_ABL2Tldxg",
      "kid": "svc-a-key",
      "kty": "OKP",
-     "x": "zKORkA6iFB3-dkDJG6kbnhw-57VXOHa-IE9XWVd-GtM"
+     "x": "bk3wFVdYjKRBflfa6QS8rZFIKRJEKy4ZGQRIJXAHfog"
    }
 
                         Figure 1: Caller Private Key
 
    The caller uses its keypair and generates the following HTTP request:
 
-   =============== NOTE: '\' line wrapping per RFC 8792 ================
+   =============== NOTE: '\\' line wrapping per RFC 8792 ===============
 
    GET /gimme-ice-cream?flavor=vanilla HTTP/1.1
    Host: example.com
-   Signature: wimse=:b1kQ7vFYUShd9QS82ojrPAy2hAgiIqSED20bXXjwH6xsnXHF0r\
-   b2J8OeIdbtSupQUsez8IOqQvoYGPaWKu76Cg==:
-   Signature-Input: wimse=("@method" "@request-target" "workload-identi\
-   ty-token");created=1761859807;expires=1761860107;nonce="abcd1111";ta\
-   g="wimse-workload-to-workload"
+   Signature: wimse=:e5FJnnSi0waMqPTzsvKR9bGu69UrcoR1Ure09l4b36xYhUqFHj\
+   \FTRdkKjlkkn0p9dXRqPwNyBxe/1hfSJ15OBQ==:
+   Signature-Input: wimse=("@method" "@request-target" "wimse-audience"\
+   \ "workload-identity-token");created=1772386884;expires=1772387184;n\
+   \once="abcd1111";tag="wimse-workload-to-workload"
+   Wimse-Audience: https://example.com/gimme-ice-cream
    Workload-Identity-Token: eyJhbGciOiJFZERTQSIsImtpZCI6Imlzc3Vlci1rZXk\
-   iLCJ0eXAiOiJ3aXQrand0In0.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J\
-   2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1hLWtleSIsImt0eSI6Ik9LUCIsIngiOiJ6S09\
-   Sa0E2aUZCMy1ka0RKRzZrYm5ody01N1ZYT0hhLUlFOVhXVmQtR3RNIn19LCJleHAiOjE\
-   3NjE4NjAxMDcsImlhdCI6MTc2MTg1OTgwNywiaXNzIjoiaHR0cHM6Ly9leGFtcGxlLmN\
-   vbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc2MTg1OTgwNzM0NTQ3ODAwMCIsInN1YiI6Ind\
-   pbXNlOi8vZXhhbXBsZS5jb20vc3ZjQSJ9.KxXGBK2YWhy8XT1tB9Z9sZscn2fb4OHDNz\
-   2S8mhP8fGK0mCw6yK4lv9wRqO3hnAXWJEzWuWRHpVQO8_82t_IBA
+   \iLCJ0eXAiOiJ3aXQrand0In0.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3\
+   \J2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1hLWtleSIsImt0eSI6Ik9LUCIsIngiOiJia\
+   \zN3RlZkWWpLUkJmbGZhNlFTOHJaRklLUkpFS3k0WkdRUklKWEFIZm9nIn19LCJleHAi\
+   \OjE3NzIzODcxODQsImlhdCI6MTc3MjM4Njg4NCwiaXNzIjoiaHR0cHM6Ly9leGFtcGx\
+   \lLmNvbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc3MjM4Njg4NDc5NzAwNzAwMCIsInN1Yi\
+   \I6IndpbXNlOi8vZXhhbXBsZS5jb20vc3ZjQSJ9.QxgHzB9YZ5Xh7PFBTl_6lsrYfzpj\
+   \NaWIMxgpA78dMsAOycSYw3TlSV80EDMlOkUsC-3HF0QhczSFLh_2DcY1Dw
 
                           Figure 2: Signed Request
 
@@ -357,10 +358,10 @@ Table of Contents
    {
      "alg": "EdDSA",
      "crv": "Ed25519",
-     "d": "u1DH-EPbCxpzi1LLJHtsLGZ6_4lvKsUgFHRNYOo5Mx8",
+     "d": "wfhAN8WoPeGN1ikx3KW9cveIPrno_iB6oxvkIplhRDY",
      "kid": "svc-b-key",
      "kty": "OKP",
-     "x": "8zj0S94HAaaQ0kKPhts0UdothtSTjZDX7jYC5zdLsX4"
+     "x": "fuYDsk-ZG_ol-8NyvqKwV3EIymygRtCJcqrRG_1Jvm0"
    }
 
                         Figure 3: Callee Private Key
@@ -374,20 +375,20 @@ Table of Contents
    Content-Digest: sha-256=:47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU\
    =:
    Content-Type: text/plain
-   Signature: wimse=:cQiWDdhftD/qYu22pMUxvdqHPxo7IjOaTQ54UxZ5nvXq6Yj7Mv\
-   avAW8sGJjXNlPXwqvBc1vy0wtOvS6Q5zdVDQ==:
+   Signature: wimse=:MhDGoIfHnZV/0Z7Wu57rleh77FrX2DB4Ezu3dzL9lqiXzmaDcK\
+   k6Z8i0AszK5UEUZO7RxCTaY9IjToRJS+eIBg==:
    Signature-Input: wimse=("@status" "workload-identity-token" "content\
    -type" "content-digest" "@method";req "@request-target";req);created\
-   =1761859807;expires=1761860109;nonce="abcd2222";tag="wimse-workload-\
+   =1772386884;expires=1772387186;nonce="abcd2222";tag="wimse-workload-\
    to-workload"
    Workload-Identity-Token: eyJhbGciOiJFZERTQSIsImtpZCI6Imlzc3Vlci1rZXk\
    iLCJ0eXAiOiJ3aXQrand0In0.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J\
-   2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1iLWtleSIsImt0eSI6Ik9LUCIsIngiOiI4emo\
-   wUzk0SEFhYVEwa0tQaHRzMFVkb3RodFNUalpEWDdqWUM1emRMc1g0In19LCJleHAiOjE\
-   3NjE4NjAxMDksImlhdCI6MTc2MTg1OTgwOSwiaXNzIjoiaHR0cHM6Ly9leGFtcGxlLmN\
-   vbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc2MTg1OTgwNzM0NTcwMjAwMCIsInN1YiI6Ind\
-   pbXNlOi8vZXhhbXBsZS5jb20vc3ZjQiJ9.1Z10zR2hYWXuVwBeJDx965agbLf_V8o2Ac\
-   SKiyayqGQMAEZNyRm1wrSvDmm6Ha6EJW3-1rhF0C10R-usSUYtAQ
+   2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1iLWtleSIsImt0eSI6Ik9LUCIsIngiOiJmdVl\
+   Ec2stWkdfb2wtOE55dnFLd1YzRUl5bXlnUnRDSmNxclJHXzFKdm0wIn19LCJleHAiOjE\
+   3NzIzODcxODYsImlhdCI6MTc3MjM4Njg4NiwiaXNzIjoiaHR0cHM6Ly9leGFtcGxlLmN\
+   vbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc3MjM4Njg4NDc5NzE2MjAwMCIsInN1YiI6Ind\
+   pbXNlOi8vZXhhbXBsZS5jb20vc3ZjQiJ9.lqWjoau6GlkwykzHC6M1TdIgziPVlSlVnU\
+   e9uUzcsEQEAhYdI2tpmeV60szmLW-ignonrI1buZCKJDhW2QdDDQ
 
    No ice cream today.
 
