@@ -102,16 +102,17 @@ Table of Contents
      8.1.  Normative References
      8.2.  Informative References
    Appendix A.  Document History
-     A.1.  draft-ietf-wimse-http-signature-01
-     A.2.  draft-ietf-wimse-http-signature-00
-     A.3.  draft-ietf-wimse-s2s-protocol-07
-     A.4.  draft-ietf-wimse-s2s-protocol-06
-     A.5.  draft-ietf-wimse-s2s-protocol-05
-     A.6.  draft-ietf-wimse-s2s-protocol-04
-     A.7.  draft-ietf-wimse-s2s-protocol-03
-     A.8.  draft-ietf-wimse-s2s-protocol-02
-     A.9.  draft-ietf-wimse-s2s-protocol-01
-     A.10. draft-ietf-wimse-s2s-protocol-00
+     A.1.  draft-ietf-wimse-http-signature-02
+     A.2.  draft-ietf-wimse-http-signature-01
+     A.3.  draft-ietf-wimse-http-signature-00
+     A.4.  draft-ietf-wimse-s2s-protocol-07
+     A.5.  draft-ietf-wimse-s2s-protocol-06
+     A.6.  draft-ietf-wimse-s2s-protocol-05
+     A.7.  draft-ietf-wimse-s2s-protocol-04
+     A.8.  draft-ietf-wimse-s2s-protocol-03
+     A.9.  draft-ietf-wimse-s2s-protocol-02
+     A.10. draft-ietf-wimse-s2s-protocol-01
+     A.11. draft-ietf-wimse-s2s-protocol-00
    Appendix B.  Comparing the DPoP Inspired Option with Message
            Signatures
    Acknowledgments
@@ -705,7 +706,11 @@ Appendix A.  Document History
 
    // RFC Editor: please remove before publication.
 
-A.1.  draft-ietf-wimse-http-signature-01
+A.1.  draft-ietf-wimse-http-signature-02
+
+   *  Add new Wimse-Audience HTTP header.
+
+A.2.  draft-ietf-wimse-http-signature-01
 
    *  Clarified response signing.
 
@@ -715,11 +720,11 @@ A.1.  draft-ietf-wimse-http-signature-01
 
    *  Added an Implementation Status section.
 
-A.2.  draft-ietf-wimse-http-signature-00
+A.3.  draft-ietf-wimse-http-signature-00
 
    *  Initial version, extracted from the -07 draft with minimal edits.
 
-A.3.  draft-ietf-wimse-s2s-protocol-07
+A.4.  draft-ietf-wimse-s2s-protocol-07
 
    *  Rework the WPT's oth claim.
 
@@ -737,14 +742,14 @@ A.3.  draft-ietf-wimse-s2s-protocol-07
 
    *  Use of the Accept-Signature header.
 
-A.4.  draft-ietf-wimse-s2s-protocol-06
+A.5.  draft-ietf-wimse-s2s-protocol-06
 
    *  Explicit definition of the Workload Identity Certificate.
 
    *  Definition of the validation of workload identifiers as part of
       workload authentication.  Still work in progress.
 
-A.5.  draft-ietf-wimse-s2s-protocol-05
+A.6.  draft-ietf-wimse-s2s-protocol-05
 
    *  Removed the entire Workload Identity section which is now covered
       in the Architecture document.
@@ -755,7 +760,7 @@ A.5.  draft-ietf-wimse-s2s-protocol-05
 
    *  IANA considerations.
 
-A.6.  draft-ietf-wimse-s2s-protocol-04
+A.7.  draft-ietf-wimse-s2s-protocol-04
 
    *  Require cnf.jwk.alg in WIT which restricts signature algorithm of
       WPT or HTTP-Sig.
@@ -764,7 +769,7 @@ A.6.  draft-ietf-wimse-s2s-protocol-04
 
    *  Consolidate terminology with the Architecture draft.
 
-A.7.  draft-ietf-wimse-s2s-protocol-03
+A.8.  draft-ietf-wimse-s2s-protocol-03
 
    *  Consistently use "workload".
 
@@ -779,7 +784,7 @@ A.7.  draft-ietf-wimse-s2s-protocol-03
 
    *  Error handling for the application level methods.
 
-A.8.  draft-ietf-wimse-s2s-protocol-02
+A.9.  draft-ietf-wimse-s2s-protocol-02
 
    *  Coexistence with bearer tokens.
 
@@ -791,7 +796,7 @@ A.8.  draft-ietf-wimse-s2s-protocol-02
 
    *  Moved an author to acknowledgments.
 
-A.9.  draft-ietf-wimse-s2s-protocol-01
+A.10.  draft-ietf-wimse-s2s-protocol-01
 
    *  Addressed multiple comments from Pieter.
 
@@ -806,7 +811,7 @@ A.9.  draft-ietf-wimse-s2s-protocol-01
    *  Added a section comparing the DPoP-inspired app-level security
       option to the Message Signature-based alternative.
 
-A.10.  draft-ietf-wimse-s2s-protocol-00
+A.11.  draft-ietf-wimse-s2s-protocol-00
 
    *  Initial WG draft, an exact copy of draft-sheffer-wimse-s2s-
       protocol-00
