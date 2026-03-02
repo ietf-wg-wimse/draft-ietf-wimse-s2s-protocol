@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                      A. Schwenkschuster
-Expires: 2 September 2026                               Defakto Security
-                                                            1 March 2026
+Expires: 3 September 2026                               Defakto Security
+                                                            2 March 2026
 
 
                        WIMSE Workload Proof Token
@@ -60,7 +60,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 2 September 2026.
+   This Internet-Draft will expire on 3 September 2026.
 
 Copyright Notice
 
@@ -205,8 +205,11 @@ Table of Contents
          Section 4.1.4 of [RFC7519]).  WPT lifetimes MUST be short,
          e.g., on the order of minutes or seconds.
 
-      -  jti: An identifier for the token.  The value MUST be unique, at
-         least within the scope of the sender.
+      -  jti: A unique identifier for the WPT.  The value MUST be
+         assigned such that there is a negligible probability that the
+         same value will be assigned to any other WPT.  Such uniqueness
+         can be accomplished by encoding (base64url or any other
+         suitable encoding) 128 bits of pseudorandom data.
 
       -  wth: Hash of the Workload Identity Token, defined in
          [I-D.ietf-wimse-workload-creds].  The value is the base64url
@@ -276,9 +279,9 @@ Table of Contents
    {
      "ath": "CL4wjfpRmNf-bdYIbYLnV9d5rMARGwKYE10wUwzC0jI",
      "aud": "https://workload.example.com/path",
-     "exp": 1740755048,
-     "jti": "0c740386ca1dcad37de1b5f9de1b0705",
-     "wth": "aA0W_oFJK7qV7zYhcmzR1KOXVCHjd2x6c4sOQLvE90Y"
+     "exp": 1745510016,
+     "jti": "__bwc4ESC3acc2LTC1-_x",
+     "wth": "AaYUfC34D1di2FxQLpiIJJ7Sg8VZ6o8OCdwSf9IToLg"
    }
 
                         Figure 4: Example WPT Claims
@@ -466,14 +469,14 @@ Table of Contents
 
    *  Replay Protection
 
-   A proof of possession includes the jti claim that MUST uniquely
-   identify it, within the scope of a particular sender.  This claim
-   SHOULD be used by the receiver to perform basic replay protection
-   against tokens it has already seen.  Depending upon the design of the
-   system it may be difficult to synchronize the replay cache across all
-   token validators.  If an attacker can somehow influence the identity
-   of the validator (e.g. which cluster member receives the message)
-   then replay protection would not be effective.
+   A proof of possession includes the jti claim that uniquely identifies
+   it.  This claim SHOULD be used by the receiver to perform basic
+   replay protection, within the scope of a particular sender, against
+   tokens it has already seen.  Depending upon the design of the system
+   it may be difficult to synchronize the replay cache across all token
+   validators.  If an attacker can somehow influence the identity of the
+   validator (e.g. which cluster member receives the message) then
+   replay protection would not be effective.
 
    *  Binding to TLS Endpoint
 
@@ -629,9 +632,9 @@ Table of Contents
               Salowey, J. A., Rosomakho, Y., and H. Tschofenig,
               "Workload Identity in a Multi System Environment (WIMSE)
               Architecture", Work in Progress, Internet-Draft, draft-
-              ietf-wimse-arch-06, 30 September 2025,
+              ietf-wimse-arch-07, 2 March 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
-              arch-06>.
+              arch-07>.
 
    [I-D.ietf-wimse-workload-creds]
               Campbell, B., Salowey, J. A., Schwenkschuster, A.,
@@ -687,9 +690,9 @@ Table of Contents
    [I-D.ietf-oauth-transaction-tokens]
               Tulshibagwale, A., Fletcher, G., and P. Kasselman,
               "Transaction Tokens", Work in Progress, Internet-Draft,
-              draft-ietf-oauth-transaction-tokens-07, 24 January 2026,
+              draft-ietf-oauth-transaction-tokens-08, 2 March 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              transaction-tokens-07>.
+              transaction-tokens-08>.
 
    [IANA.HTTP.FIELDS]
               IANA, "Hypertext Transfer Protocol (HTTP) Field Name
@@ -721,6 +724,10 @@ Appendix A.  Document History
    // RFC Editor: please remove before publication.
 
 A.1.  draft-ietf-wimse-wpt-01
+
+   *  Clairify treatment of "jti" claim
+
+   *  Fix Example WPT Claims to match the example WPT
 
    *  Inline the ABNF for the Workload-Proof-Token Header Field in
       Figure 1
