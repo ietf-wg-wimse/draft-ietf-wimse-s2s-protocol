@@ -363,6 +363,7 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 * Clairify treatment of "jti" claim
 * Fix Example WPT Claims to match the example WPT
 * Inline the ABNF for the Workload-Proof-Token Header Field in {{wpt-header-abnf}}
+* Add audience security considerations
 
 ## draft-ietf-wimse-wpt-00
 
