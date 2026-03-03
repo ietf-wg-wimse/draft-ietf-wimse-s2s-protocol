@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-03-01T02:11:03.089553+00:00",
+  "timestamp": "2026-03-03T02:03:51.261332+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -3087,7 +3087,7 @@
       "id": "I_kwDOLJmm787L2YTl",
       "title": "WPT jti claim",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/166",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "fandreas",
       "authorAssociation": "NONE",
       "assignees": [],
@@ -3097,8 +3097,8 @@
       ],
       "body": "Section 3.2 (\"Option 1: DPoP-Inspired Authentication\") says the \"jti\" value \"MUST be unique, at least within the scope of the sender. Unique across what and how does the receiver interpret that ? Is it based on the workload identifier, in which case we again need to consider workload instances versus \"services\", with potentially multiple instances. ",
       "createdAt": "2025-09-16T01:50:54Z",
-      "updatedAt": "2026-02-28T13:34:29Z",
-      "closedAt": null,
+      "updatedAt": "2026-03-02T19:19:32Z",
+      "closedAt": "2026-03-02T19:19:32Z",
       "comments": [
         {
           "author": "bc-pi",
@@ -3152,7 +3152,7 @@
       "id": "I_kwDOLJmm787L2fdh",
       "title": "WPT jti validation",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/168",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "fandreas",
       "authorAssociation": "NONE",
       "assignees": [],
@@ -3161,8 +3161,8 @@
       ],
       "body": "Open 1 (DPoP-inspired) says that \"It is RECOMMENDED to check that the value of the jti claim has not been used before in the time window in which the respective WPT would be considered valid.\"\n\nWhat is the scope/context in which this check should be made ? Elsewhere, it was suggested that the jti only needed to be unique within the sender scope (albeit it was not entirely clear what constitutes the sender scope). ",
       "createdAt": "2025-09-16T02:08:50Z",
-      "updatedAt": "2026-02-28T13:34:15Z",
-      "closedAt": null,
+      "updatedAt": "2026-03-02T19:19:33Z",
+      "closedAt": "2026-03-02T19:19:33Z",
       "comments": [
         {
           "author": "bc-pi",
@@ -3261,7 +3261,7 @@
       "id": "I_kwDOLJmm787ODEl1",
       "title": "X-Forwarded-Host & aud claim",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/172",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -3271,8 +3271,8 @@
       ],
       "body": "Can workloads use the \u201cX-Forwarded-For\u201d header to help validating the \u201caud\u201d of the WPT? I believe not and that we should mention/prohibit that in the spec. ",
       "createdAt": "2025-09-26T10:29:19Z",
-      "updatedAt": "2026-01-19T14:26:10Z",
-      "closedAt": null,
+      "updatedAt": "2026-03-02T19:21:43Z",
+      "closedAt": "2026-03-02T19:21:43Z",
       "comments": [
         {
           "author": "yaronf",
@@ -3771,6 +3771,84 @@
       "body": "Currently, a lot of the security considerations are POP specific and talk about semantics not described in the credentials document.",
       "createdAt": "2026-02-10T15:32:41Z",
       "updatedAt": "2026-02-23T21:50:19Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 212,
+      "id": "I_kwDOLJmm787u4Gcy",
+      "title": "Bind signature to expected audience",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/212",
+      "state": "CLOSED",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-http-signature"
+      ],
+      "body": "Currently the signature does not cover the URL's authority field, and therefore a signed message can be redirected to a recipient other than the expected audience. Add an application-level indication of the audience and make sure it is signed/verified.",
+      "createdAt": "2026-03-01T16:41:47Z",
+      "updatedAt": "2026-03-01T19:38:00Z",
+      "closedAt": "2026-03-01T19:38:00Z",
+      "comments": []
+    },
+    {
+      "number": 213,
+      "id": "I_kwDOLJmm787u4Sh-",
+      "title": "Workload Identifiers and Authentication Granularity",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/213",
+      "state": "CLOSED",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This section from the s2s protocol seems to have been lost in the new document structure. It may actually belong in the architecture draft, but it's essential for consistency and security of the protocol(s).",
+      "createdAt": "2026-03-01T17:02:46Z",
+      "updatedAt": "2026-03-01T17:06:08Z",
+      "closedAt": "2026-03-01T17:06:07Z",
+      "comments": [
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "It's in creds!",
+          "createdAt": "2026-03-01T17:06:07Z",
+          "updatedAt": "2026-03-01T17:06:07Z"
+        }
+      ]
+    },
+    {
+      "number": 216,
+      "id": "I_kwDOLJmm787vOxwJ",
+      "title": "consider Txn-Token in WPT example(s)",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/216",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-wpt"
+      ],
+      "body": "maybe instead of the access token w/ Authorization: Bearer\n\nmaybe \n\nthis might be a better conceptual model to have in examples ",
+      "createdAt": "2026-03-02T22:28:55Z",
+      "updatedAt": "2026-03-02T22:28:55Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 217,
+      "id": "I_kwDOLJmm787vO0Xw",
+      "title": "WPT Sec 3.1 Formating seems funky",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/217",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-wpt"
+      ],
+      "body": "https://www.ietf.org/archive/id/draft-ietf-wimse-wpt-01.html#section-3.1 the bullets don't seem right... ",
+      "createdAt": "2026-03-02T22:31:24Z",
+      "updatedAt": "2026-03-02T22:31:24Z",
       "closedAt": null,
       "comments": []
     }
@@ -15333,7 +15411,7 @@
       "id": "PR_kwDOLJmm7869-eQL",
       "title": "WPT audience security considerations",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/206",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -15342,17 +15420,19 @@
       ],
       "body": "Adds security considerations on how to validate the audience, particularly the authority part.\r\n\r\nResolves #172.\r\n",
       "createdAt": "2026-01-19T10:44:59Z",
-      "updatedAt": "2026-02-28T13:37:44Z",
+      "updatedAt": "2026-03-02T19:21:42Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "41fb87003b43adccd77af7e91ad06e5e3499066f",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "arndt/wpt-audience-security-considerations",
-      "headRefOid": "d4c9edf4f8455826613e8782892e9e8408933c5b",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "68272e0bc9ec2d0b7cd0fa21a401f9c6e601afb6",
+      "closedAt": "2026-03-02T19:21:42Z",
+      "mergedAt": "2026-03-02T19:21:42Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "fed70843c889cbdb6d593835577370080e9aa2de"
+      },
       "comments": [],
       "reviews": [
         {
@@ -15361,7 +15441,7 @@
             "abbreviatedOid": "909fce5"
           },
           "author": "copilot-pull-request-reviewer",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "## Pull request overview\n\nThis PR adds security guidance to address the potential misuse of request headers (particularly X-Forwarded-Host and Host headers) when validating the audience claim in Workload Proof Tokens (WPTs). The change resolves issue #172 by explicitly prohibiting workloads from using untrusted request headers for audience validation.\n\n**Changes:**\n- Added a new \"Audience validation\" subsection to the Security Considerations section that provides explicit guidance on how validators should determine the applicability of WPTs\n\n\n\n\n\n---\n\n\ud83d\udca1 <a href=\"/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/new/main/.github/instructions?filename=*.instructions.md\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">Add Copilot custom instructions</a> for smarter, more guided reviews. <a href=\"https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">Learn how to get started</a>.",
           "createdAt": "2026-01-19T10:46:57Z",
@@ -15454,6 +15534,19 @@
               "updatedAt": "2026-02-28T13:37:44Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787nJ_Uh",
+          "commit": {
+            "abbreviatedOid": "68272e0"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-03-02T19:21:20Z",
+          "updatedAt": "2026-03-02T19:21:20Z",
+          "comments": []
         }
       ]
     },
@@ -15614,7 +15707,7 @@
       "id": "PR_kwDOLJmm787HAioT",
       "title": "Clairify treatment of \"jti\" claim",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/211",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -15623,19 +15716,121 @@
       ],
       "body": "also Fix Example WPT Claims to match the example WPT",
       "createdAt": "2026-02-28T13:32:43Z",
-      "updatedAt": "2026-02-28T13:48:31Z",
+      "updatedAt": "2026-03-02T19:19:31Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "9904d14d37137e5f536e9b1eb8cfb6bf35ad6c73",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "WPT-jti-wpt-good",
       "headRefOid": "d2a73967745ab495f0a562a440bbbaf24bb5d9c1",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-03-02T19:19:31Z",
+      "mergedAt": "2026-03-02T19:19:31Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "d2f3f8d77bf2f9e508fcf0c1a0d497dec25dec3f"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm787nJ36w",
+          "commit": {
+            "abbreviatedOid": "d2a7396"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-03-02T19:13:57Z",
+          "updatedAt": "2026-03-02T19:13:57Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 214,
+      "id": "PR_kwDOLJmm787HKFp9",
+      "title": "New Wimse-Audience header",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/214",
+      "state": "MERGED",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-http-signature"
+      ],
+      "body": "Fix #212. \r\n\r\n* Add new section about the explicit audience header.\r\n* IANA definition of the header.\r\n* New sample files.\r\n* Some typos.\r\n* Doc history for -02 (only this change).",
+      "createdAt": "2026-03-01T17:33:13Z",
+      "updatedAt": "2026-03-01T19:37:59Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "9904d14d37137e5f536e9b1eb8cfb6bf35ad6c73",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-212",
+      "headRefOid": "4fcdcbfdf0663b35caefc151a9050a734b670742",
+      "closedAt": "2026-03-01T19:37:59Z",
+      "mergedAt": "2026-03-01T19:37:59Z",
+      "mergedBy": "jsalowey",
+      "mergeCommit": {
+        "oid": "480004e0d5ba2bcc638bfcdb1cd1b638e36403ed"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm787m3cpm",
+          "commit": {
+            "abbreviatedOid": "4fcdcbf"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-03-01T19:37:39Z",
+          "updatedAt": "2026-03-01T19:37:39Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 215,
+      "id": "PR_kwDOLJmm787Hao-p",
+      "title": "Prepare changelog for -01",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/215",
+      "state": "MERGED",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-03-02T19:27:30Z",
+      "updatedAt": "2026-03-02T19:28:14Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "fed70843c889cbdb6d593835577370080e9aa2de",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "prepare-01",
+      "headRefOid": "5ecd94ecdbfb27630fbf857e10317672b8566094",
+      "closedAt": "2026-03-02T19:28:14Z",
+      "mergedAt": "2026-03-02T19:28:14Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "07498d9dfc8c5c41c7aea156eb952aa056f1c63c"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm787nKGLz",
+          "commit": {
+            "abbreviatedOid": "5ecd94e"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-03-02T19:27:48Z",
+          "updatedAt": "2026-03-02T19:27:48Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
