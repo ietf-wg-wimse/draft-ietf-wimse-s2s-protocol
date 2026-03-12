@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-03-03T02:03:51.261332+00:00",
+  "timestamp": "2026-03-12T02:01:48.723642+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -3018,14 +3018,16 @@
       "state": "OPEN",
       "author": "fandreas",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "arndt-s"
+      ],
       "labels": [
         "draft-ietf-wimse-workload-creds",
         "pre-wglc"
       ],
       "body": "The \"Workload Identity Token\" Section (3.1) says the iss claim is \"The issuer of the token, which is the Identity Server, represented by a URI. The iss claim is RECOMMENDED but optional\"\n\nThe example in Figure 2-4 does not include an \"iss\" claim, however the text after Figure 4 says that the claims indicate that \"the example WIT was issued by an Identity Server known as....\" (this refer to the -06 version; current editor's copy seems to have removed this). \n\nSection 3.1.2 (\"A note on iss claim and key distribution\") then says \"It is RECOMMENDED that the WIT carries an iss claim. This specification itself does not make use of a potential iss claim but also carries the trust domain in the workload identifier\". \n\n\n1) If the iss claim is recommended, then why is its use not specified and shown in the examples ? \n\n2) There seems to be an implicit statement that the issuer must be the same as the trust domain in the workload identifier, however why is that, especially in lieu of the RECOMMENDED part above ? \n\n",
       "createdAt": "2025-09-16T01:42:52Z",
-      "updatedAt": "2025-12-09T15:26:34Z",
+      "updatedAt": "2026-03-10T15:25:52Z",
       "closedAt": null,
       "comments": [
         {
@@ -3055,6 +3057,13 @@
           "body": "Must be part of the trust domain -> must be authoritative for the trust domain (I find the former wording meaningless, to me the \"trust domain\" os the group of workloads that are all provisioned from one source of trust; the issuer may or may not be such a workload).",
           "createdAt": "2025-09-24T20:23:18Z",
           "updatedAt": "2025-09-24T20:23:18Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Discussed amongst the authors today, we're leaning towards making it required but not define a specific format or schema. If wimse scheme is used, the authority MUST match the authority of the WIMSE ID.",
+          "createdAt": "2026-03-10T15:25:40Z",
+          "updatedAt": "2026-03-10T15:25:40Z"
         }
       ]
     },
