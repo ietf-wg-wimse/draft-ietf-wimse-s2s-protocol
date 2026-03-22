@@ -192,7 +192,7 @@ A WIT MUST contain the following content, except where noted:
      (registered algorithm identifiers are listed in the IANA JOSE Algorithms registry {{IANA.JOSE.ALGS}}). The value `none` MUST NOT be used.
     * `typ`: the WIT is explicitly typed, as recommended in {{Section 3.11 of RFC8725}}, using the `wit+jwt` media type.
 * in the JWT claims:
-    * `iss`: The issuer of the token, which is the Identity Server, represented by a URI. The `iss` claim is RECOMMENDED but optional, see {{wit-iss-note}} for more.
+    * `iss`: The issuer of the token, which is the Identity Server, represented by a URI. The `iss` claim is RECOMMENDED but optional; when present, it is particularly useful for auditing and operations (for example, identifying which Identity Server issued the WIT in logs or compliance records). See {{wit-iss-note}} for key distribution and validation context.
     * `sub`: The subject of the token, which is the identity of the workload, represented by a URI as defined in {{WIMSE-ID}}. {{granular-auth}} provides additional considerations for security implications of these identifiers.
     * `exp`: The expiration time of the token (as defined in {{Section 4.1.4 of RFC7519}}).
       WITs should be refreshed regularly, e.g. on the order of hours.
@@ -318,7 +318,7 @@ This, however, could result in interoperability issues, which the following rule
 
 ### A note on `iss` claim and key distribution {#wit-iss-note}
 
-It is RECOMMENDED that the WIT carries an `iss` claim. This specification itself does not make use of a potential `iss` claim but also carries the trust domain in the workload identifier ({{WIMSE-ID}}). Implementations MAY include the `iss` claim in the form of a `https` URL to facilitate key distribution via mechanisms like the `jwks_uri` from {{!RFC8414}} but alternative key distribution methods may make use of the trust domain included in the workload identifier which is carried in the mandatory `sub` claim.
+It is RECOMMENDED that the WIT carries an `iss` claim, including for the auditing and operational uses described above. Validators are not required to use `iss` when validating the WIT or establishing the workload identity: the trust domain and workload identity are carried in the mandatory `sub` claim ({{WIMSE-ID}}). Implementations MAY include the `iss` claim in the form of a `https` URL to facilitate key distribution via mechanisms like the `jwks_uri` from {{!RFC8414}}; alternative key distribution methods may use only the trust domain from the `sub` claim.
 
 ## Error Conditions
 
@@ -536,6 +536,10 @@ IANA is requested to register the "wimse" scheme to the "URI Schemes" registry {
 
 # Document History
 <cref>RFC Editor: please remove before publication.</cref>
+
+## draft-ietf-wimse-workload-creds-01
+
+* Clarify that the `iss` claim is RECOMMENDED in part for auditing and operations, and that validation of workload identity uses `sub`, not `iss`.
 
 ## draft-ietf-wimse-workload-creds-00
 
