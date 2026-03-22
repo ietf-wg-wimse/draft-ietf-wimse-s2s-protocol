@@ -1,7 +1,6 @@
 GET /gimme-ice-cream?flavor=vanilla HTTP/1.1
 Host: example.com
 Signature: wimse=:e5FJnnSi0waMqPTzsvKR9bGu69UrcoR1Ure09l4b36xYhUqFHjFTRdkKjlkkn0p9dXRqPwNyBxe/1hfSJ15OBQ==:
-Signature-Input: wimse=("@method" "@request-target" "wimse-audience" "workload-identity-token");created=1772386884;expires=1772387184;nonce="abcd1111";tag="wimse-workload-to-workload"
-Wimse-Audience: https://example.com/gimme-ice-cream
+Signature-Input: wimse=("@method" "@request-target" "workload-identity-token");created=1772386884;expires=1772387184;nonce="abcd1111";tag="wimse-workload-to-workload";wimse-aud="https://example.com/gimme-ice-cream"
 Workload-Identity-Token: eyJhbGciOiJFZERTQSIsImtpZCI6Imlzc3Vlci1rZXkiLCJ0eXAiOiJ3aXQrand0In0.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1hLWtleSIsImt0eSI6Ik9LUCIsIngiOiJiazN3RlZkWWpLUkJmbGZhNlFTOHJaRklLUkpFS3k0WkdRUklKWEFIZm9nIn19LCJleHAiOjE3NzIzODcxODQsImlhdCI6MTc3MjM4Njg4NCwiaXNzIjoiaHR0cHM6Ly9leGFtcGxlLmNvbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc3MjM4Njg4NDc5NzAwNzAwMCIsInN1YiI6IndpbXNlOi8vZXhhbXBsZS5jb20vc3ZjQSJ9.QxgHzB9YZ5Xh7PFBTl_6lsrYfzpjNaWIMxgpA78dMsAOycSYw3TlSV80EDMlOkUsC-3HF0QhczSFLh_2DcY1Dw
 
