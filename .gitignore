@@ -25,3 +25,4 @@ report.xml
 !requirements.txt
 spellcheck.sh
 *.pws
+.DS_Store
