@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-03-12T02:01:48.723642+00:00",
+  "timestamp": "2026-03-24T02:00:53.315758+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -3860,6 +3860,59 @@
       "updatedAt": "2026-03-02T22:31:24Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 218,
+      "id": "I_kwDOLJmm7871YRsM",
+      "title": "Fix README to include links per (current draft) instead of a set of links for the one draft that we abandoned",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/218",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [
+        "yaronf"
+      ],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-03-22T18:45:03Z",
+      "updatedAt": "2026-03-22T18:45:03Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 221,
+      "id": "I_kwDOLJmm7871Ytw6",
+      "title": "\"aud\" in HTTP-Sig - express as a derived component, not an HTTP header",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/221",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [
+        "yaronf"
+      ],
+      "labels": [
+        "draft-ietf-wimse-http-signature"
+      ],
+      "body": "Main reason: @bc-pi is on YouTube saying it's ugly :-)\n\nThe HTTP header was basically a misunderstanding of what an RFC 9421 derived component is allowed to be. The `aud` value actually meets the requirements, and so we can drop the HTTP header and add a derived component named `wimse-aud` to do the work.",
+      "createdAt": "2026-03-22T19:28:51Z",
+      "updatedAt": "2026-03-22T22:42:25Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "However, the whole point of `aud` is that we need to carry the value explicitly, because the request URI may be rewritten. So instead of a derived component, we could use a signature parameter. Not terribly elegant but workable.",
+          "createdAt": "2026-03-22T20:11:36Z",
+          "updatedAt": "2026-03-22T20:11:36Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "The PR keeps this issue open, because examples in the draft have not been updated. These examples would require some serious code changes if we agree on this approach.",
+          "createdAt": "2026-03-22T22:42:25Z",
+          "updatedAt": "2026-03-22T22:42:25Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -15840,6 +15893,84 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 219,
+      "id": "PR_kwDOLJmm787Mg0R9",
+      "title": "Fix README links for all active drafts (#218)",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/219",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "## Summary\n- Update README to list Editor's Copy, Datatracker, WG HTML, and diff links for each active split draft (workload-creds, wpt, http-signature, mutual-tls).\n- Add `.DS_Store` to `.gitignore`.\n- Minor README wording (drafts plural, contributing link on one line).\n\nFixes #218\n\nMade with [Cursor](https://cursor.com)",
+      "createdAt": "2026-03-22T18:54:46Z",
+      "updatedAt": "2026-03-22T18:55:34Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "07498d9dfc8c5c41c7aea156eb952aa056f1c63c",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-218",
+      "headRefOid": "20887bbfd171bb085fe431361b92ffd642c47a46",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 220,
+      "id": "PR_kwDOLJmm787Mg9Gt",
+      "title": "Workload creds: clarify iss for auditing (#169)",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/220",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "## Summary\nAddresses **#169** (sub-issue of **#164**): state explicitly that `iss` is RECOMMENDED in part for **auditing and operations**, and that **validation of workload identity uses `sub`**, not `iss`.\n\n## Changes\n- `iss` bullet: auditing/ops examples; link to `{{wit-iss-note}}` for key distribution and validation context.\n- `{{wit-iss-note}}`: rewritten for clarity; RFC8414 / `sub` trust domain unchanged in intent.\n- Document History: `draft-ietf-wimse-workload-creds-01` entry.\n\nFixes #169\n\nMade with [Cursor](https://cursor.com)",
+      "createdAt": "2026-03-22T19:19:15Z",
+      "updatedAt": "2026-03-22T19:19:37Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "07498d9dfc8c5c41c7aea156eb952aa056f1c63c",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-169",
+      "headRefOid": "715999ad593dd2dddc7e9655b0b4c9793d2d76e4",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 222,
+      "id": "PR_kwDOLJmm787MheI4",
+      "title": "HTTP-Sig: wimse-aud signature parameter (#221)",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/222",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "## Summary\nReplaces the `Wimse-Audience` HTTP header with the `wimse-aud` signature metadata parameter (RFC 9421) and adds an IANA registration in the HTTP Signature Metadata Parameters registry. Addresses #221.\n\n## Notes\nThe non-normative request example updates `Signature-Input` (adds `wimse-aud`, drops the header), but the `Signature` value was not recomputed over the new signature base; follow-up to regenerate with tooling when ready.\n",
+      "createdAt": "2026-03-22T20:56:42Z",
+      "updatedAt": "2026-03-22T20:57:19Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "07498d9dfc8c5c41c7aea156eb952aa056f1c63c",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-221",
+      "headRefOid": "a752cbeb64dab119235142871dc82c3ba1951cc6",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
