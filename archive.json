@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-03-24T02:00:53.315758+00:00",
+  "timestamp": "2026-03-26T02:12:09.399163+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -3866,7 +3866,7 @@
       "id": "I_kwDOLJmm7871YRsM",
       "title": "Fix README to include links per (current draft) instead of a set of links for the one draft that we abandoned",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/218",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -3875,8 +3875,8 @@
       "labels": [],
       "body": "",
       "createdAt": "2026-03-22T18:45:03Z",
-      "updatedAt": "2026-03-22T18:45:03Z",
-      "closedAt": null,
+      "updatedAt": "2026-03-24T15:16:36Z",
+      "closedAt": "2026-03-24T15:16:36Z",
       "comments": []
     },
     {
@@ -15899,26 +15899,42 @@
       "id": "PR_kwDOLJmm787Mg0R9",
       "title": "Fix README links for all active drafts (#218)",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/219",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "## Summary\n- Update README to list Editor's Copy, Datatracker, WG HTML, and diff links for each active split draft (workload-creds, wpt, http-signature, mutual-tls).\n- Add `.DS_Store` to `.gitignore`.\n- Minor README wording (drafts plural, contributing link on one line).\n\nFixes #218\n\nMade with [Cursor](https://cursor.com)",
       "createdAt": "2026-03-22T18:54:46Z",
-      "updatedAt": "2026-03-22T18:55:34Z",
+      "updatedAt": "2026-03-24T15:16:35Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "07498d9dfc8c5c41c7aea156eb952aa056f1c63c",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-218",
       "headRefOid": "20887bbfd171bb085fe431361b92ffd642c47a46",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-03-24T15:16:35Z",
+      "mergedAt": "2026-03-24T15:16:35Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "783a7b84331d431f143d11b02b0f222a7f827c37"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm787ubFGm",
+          "commit": {
+            "abbreviatedOid": "20887bb"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-03-24T15:16:09Z",
+          "updatedAt": "2026-03-24T15:16:09Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 220,
@@ -15958,7 +15974,7 @@
       "labels": [],
       "body": "## Summary\nReplaces the `Wimse-Audience` HTTP header with the `wimse-aud` signature metadata parameter (RFC 9421) and adds an IANA registration in the HTTP Signature Metadata Parameters registry. Addresses #221.\n\n## Notes\nThe non-normative request example updates `Signature-Input` (adds `wimse-aud`, drops the header), but the `Signature` value was not recomputed over the new signature base; follow-up to regenerate with tooling when ready.\n",
       "createdAt": "2026-03-22T20:56:42Z",
-      "updatedAt": "2026-03-22T20:57:19Z",
+      "updatedAt": "2026-03-25T10:50:42Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "07498d9dfc8c5c41c7aea156eb952aa056f1c63c",
@@ -15969,8 +15985,50 @@
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
-      "reviews": []
+      "comments": [
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@jricher ",
+          "createdAt": "2026-03-24T15:07:39Z",
+          "updatedAt": "2026-03-24T15:07:39Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm787ubGLZ",
+          "commit": {
+            "abbreviatedOid": "a752cbe"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-03-24T15:16:46Z",
+          "updatedAt": "2026-03-24T15:16:46Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm787uwmJm",
+          "commit": {
+            "abbreviatedOid": "a752cbe"
+          },
+          "author": "jricher",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-03-25T10:50:42Z",
+          "updatedAt": "2026-03-25T10:50:42Z",
+          "comments": [
+            {
+              "originalPosition": 54,
+              "body": "While I realize this is the same definition as the old header, this value feels under specified. Is it deployment specific, or is it the url? What are the requirements on the verifier to validate it, if any?\n\nOtherwise the definition looks good and serves the purpose. ",
+              "createdAt": "2026-03-25T10:50:42Z",
+              "updatedAt": "2026-03-25T10:50:42Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
