@@ -150,9 +150,9 @@ alongside the covered components. That metadata is covered by the signature as t
 
 This document defines the `wimse-aud` signature metadata parameter for requests. Using a signature parameter carries the audience explicitly in `Signature-Input`.
 
-The value is the HTTP target URI ({{Section 7.1 of !RFC9110}}) of the request, without query or fragment parts.
-However, there may be normalization, rewriting, or other processes that require the audience to be set to a
-deployment-specific value.
+The default value for `wimse-aud` is the request's HTTP target URI ({{Section 7.1 of !RFC9110}}), without query or fragment components.
+Senders, recipients, and intermediaries do not always derive the same string for that URI: normalization and rewriting differ by implementation and hop, so the audience that verification should use is a deployment-specific choice.
+When the default string is not suitable for verification at the recipient, senders SHOULD set `wimse-aud` to an explicit audience value as appropriate for that deployment.
 
 The recipient MUST be able to verify that the audience refers to it. See "Workload Identifiers and Authentication Granularity" in {{I-D.ietf-wimse-workload-creds}} for more detail.
 
@@ -363,7 +363,7 @@ IANA is requested to register the following entry in the "HTTP Signature Metadat
 
 * Name: `wimse-aud`
 * Description: the WIMSE message audience. Request signatures only; binds the HTTP message signature to the intended recipient.
-* Reference: RFC XXX, {{wimse-aud-param}}
+* Reference: RFC XXX, {{wimse-aud-param}}.
 
 --- back
 
