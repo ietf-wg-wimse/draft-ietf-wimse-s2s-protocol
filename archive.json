@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-03-26T02:12:09.399163+00:00",
+  "timestamp": "2026-03-29T02:23:58.958641+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -15948,7 +15948,7 @@
       "labels": [],
       "body": "## Summary\nAddresses **#169** (sub-issue of **#164**): state explicitly that `iss` is RECOMMENDED in part for **auditing and operations**, and that **validation of workload identity uses `sub`**, not `iss`.\n\n## Changes\n- `iss` bullet: auditing/ops examples; link to `{{wit-iss-note}}` for key distribution and validation context.\n- `{{wit-iss-note}}`: rewritten for clarity; RFC8414 / `sub` trust domain unchanged in intent.\n- Document History: `draft-ietf-wimse-workload-creds-01` entry.\n\nFixes #169\n\nMade with [Cursor](https://cursor.com)",
       "createdAt": "2026-03-22T19:19:15Z",
-      "updatedAt": "2026-03-22T19:19:37Z",
+      "updatedAt": "2026-03-27T08:56:11Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "07498d9dfc8c5c41c7aea156eb952aa056f1c63c",
@@ -15960,7 +15960,21 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm787vmHJt",
+          "commit": {
+            "abbreviatedOid": "715999a"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-03-27T08:56:11Z",
+          "updatedAt": "2026-03-27T08:56:11Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 222,
