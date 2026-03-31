@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-03-29T02:23:58.958641+00:00",
+  "timestamp": "2026-03-31T02:21:39.169484+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -15988,13 +15988,13 @@
       "labels": [],
       "body": "## Summary\nReplaces the `Wimse-Audience` HTTP header with the `wimse-aud` signature metadata parameter (RFC 9421) and adds an IANA registration in the HTTP Signature Metadata Parameters registry. Addresses #221.\n\n## Notes\nThe non-normative request example updates `Signature-Input` (adds `wimse-aud`, drops the header), but the `Signature` value was not recomputed over the new signature base; follow-up to regenerate with tooling when ready.\n",
       "createdAt": "2026-03-22T20:56:42Z",
-      "updatedAt": "2026-03-25T10:50:42Z",
+      "updatedAt": "2026-03-29T18:47:00Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "07498d9dfc8c5c41c7aea156eb952aa056f1c63c",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-221",
-      "headRefOid": "a752cbeb64dab119235142871dc82c3ba1951cc6",
+      "headRefOid": "4111caf86b953f198d8c1a083235aea2867c00cc",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -16039,6 +16039,26 @@
               "body": "While I realize this is the same definition as the old header, this value feels under specified. Is it deployment specific, or is it the url? What are the requirements on the verifier to validate it, if any?\n\nOtherwise the definition looks good and serves the purpose. ",
               "createdAt": "2026-03-25T10:50:42Z",
               "updatedAt": "2026-03-25T10:50:42Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm787wBrBV",
+          "commit": {
+            "abbreviatedOid": "a752cbe"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-03-29T16:47:17Z",
+          "updatedAt": "2026-03-29T16:47:17Z",
+          "comments": [
+            {
+              "originalPosition": 54,
+              "body": "@jricher the new text should address your comment.",
+              "createdAt": "2026-03-29T16:47:17Z",
+              "updatedAt": "2026-03-29T16:47:17Z"
             }
           ]
         }
