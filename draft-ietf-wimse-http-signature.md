@@ -32,12 +32,10 @@ author:
     organization: Intuit
     email: "yaronf.ietf@gmail.com"
 
-normative:
-  RFC9110:
-  I-D.ietf-wimse-workload-creds:
-
 informative:
-  IANA.HTTP.FIELDS: IANA.http-fields
+  IANA.HTTP.MESSAGE.SIGNATURE:
+    title: "HTTP Message Signature"
+    target: https://www.iana.org/assignments/http-message-signature/http-message-signature.xhtml#signature-metadata-parameters
 
 --- abstract
 
@@ -97,7 +95,6 @@ The request is signed as per {{RFC9421}}. The following derived components MUST 
 
 In addition, the following request headers MUST be signed when they exist:
 
-* `Wimse-Audience` ({{wimse-audience-header}})
 * `Content-Type`
 * `Content-Digest`
 * `Authorization`
@@ -124,6 +121,10 @@ mechanisms in support of long-lived compute processes.
 * `nonce`
 * `tag` - the value for implementations of this specification is `wimse-workload-to-workload`
 
+For requests only, the following signature parameter MUST also be included:
+
+* `wimse-aud` ({{wimse-aud-param}})
+
 The following signature parameters in the `Signature-Input` header MUST NOT be used:
 
 * `keyid` - The signing key is sent along with the message in the WIT. Additionally specifying the key identity would add confusion.
@@ -141,14 +142,17 @@ For clarity: the signature's lifetime (the `expires` signature parameter) is dif
 
 Implementors need to be aware that the WIT is extracted from the message before the message signature is validated. Recipients of signed HTTP messages MUST validate the signature and content of the WIT before validating the HTTP message signature. They MUST ensure that the message is not processed further before it has been fully validated.
 
-## WIMSE Audience Header {#wimse-audience-header}
+## The `wimse-aud` Signature Parameter {#wimse-aud-param}
 
-This document defines a new `Wimse-Audience` HTTP header field. This header MUST be included in
-the request and MUST be signed. Its purpose is to prevent reuse of the signed message other
-than to the intended audience, while allowing some protocols to rewrite the request's
-"authority" (often, the target host).
+{{RFC9421}} defines signature parameters for HTTP message signatures: metadata carried in the `Signature-Input` field
+alongside the covered components. That metadata is covered by the signature as the `@signature-params` component value
+(Section 2.3 of {{RFC9421}}), which is always the last line of the signature base.
 
-The header field contains the HTTP target URI ({{Section 7.1 of !RFC9110}}) of the request, without query or fragment parts. However, there may be some normalization, rewriting or other processes that require the audience to be set to a deployment-specific value.
+This document defines the `wimse-aud` signature metadata parameter for requests. Using a signature parameter carries the audience explicitly in `Signature-Input`.
+
+The default value for `wimse-aud` is the request's HTTP target URI ({{Section 7.1 of !RFC9110}}), without query or fragment components.
+Senders, recipients, and intermediaries do not always derive the same string for that URI: normalization and rewriting differ by implementation and hop, so the audience that verification should use is a deployment-specific choice.
+When the default string is not suitable for verification at the recipient, senders SHOULD set `wimse-aud` to an explicit audience value as appropriate for that deployment.
 
 The recipient MUST be able to verify that the audience refers to it. See "Workload Identifiers and Authentication Granularity" in {{I-D.ietf-wimse-workload-creds}} for more detail.
 
@@ -328,6 +332,8 @@ been activated and likewise, the recipient validates this signature.
 
 * No requests can be modified without detection by the recipient. Integrity of
   all present HTTP headers specified in this document is protected, as well as
+the derived components listed in {{http-sig-auth}}, the signature parameters
+(including `wimse-aud` on requests) as covered by `@signature-params` in {{RFC9421}}, and
 the message body (when present).
 * No responses can be modified without detection, provided that optional response signing has been activated and
 that the recipient validates incoming responses.
@@ -347,28 +353,30 @@ context where the request would be accepted as valid, and this mitigates the ris
 
 # IANA Considerations {#iana-considerations}
 
-## Hypertext Transfer Protocol (HTTP) Field Name Registration
+## HTTP Signature Metadata Parameters Registration
 
-IANA is requested to register the following entries to the "Hypertext Transfer Protocol (HTTP) Field Name Registry" {{IANA.HTTP.FIELDS}}:
+IANA is requested to register the following entry in the "HTTP Signature Metadata Parameters" registry {{IANA.HTTP.MESSAGE.SIGNATURE}}, per the registration template in Section 6.3.1 of {{RFC9421}}:
 
-* `Wimse-Audience`, per {{iana-wimse-audience-field}}.
+* `wimse-aud`, per {{iana-wimse-aud-param}}.
 
-### Wimse-Audience {#iana-wimse-audience-field}
+### `wimse-aud` {#iana-wimse-aud-param}
 
-* Field Name: Wimse-Audience
-* Status: permanent
-* Structured Type: Item (String)
-* Specification Document: RFC XXX, {{wimse-audience-header}}
-* Comments: This header field is used in the WIMSE HTTP Signature protocol to prevent reuse of signed messages by unintended recipients.
+* Name: `wimse-aud`
+* Description: the WIMSE message audience. Request signatures only; binds the HTTP message signature to the intended recipient.
+* Reference: RFC XXX, {{wimse-aud-param}}.
 
 --- back
 
 # Document History
 <cref>RFC Editor: please remove before publication.</cref>
 
+## draft-ietf-wimse-http-signature-03
+
+* Replace `Wimse-Audience` HTTP header with the `wimse-aud` signature metadata parameter ({{RFC9421}}); register with IANA (HTTP Signature Metadata Parameters). Non-normative request example updated accordingly; the `Signature` value was not regenerated (see issue tracker).
+
 ## draft-ietf-wimse-http-signature-02
 
-* Add new `Wimse-Audience` HTTP header.
+* Add new `Wimse-Audience` HTTP header (superseded by `wimse-aud` in -03).
 
 ## draft-ietf-wimse-http-signature-01
 
