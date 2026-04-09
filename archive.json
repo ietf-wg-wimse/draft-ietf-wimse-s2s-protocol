@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-03-31T02:21:39.169484+00:00",
+  "timestamp": "2026-04-09T02:09:36.681633+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -3779,9 +3779,17 @@
       ],
       "body": "Currently, a lot of the security considerations are POP specific and talk about semantics not described in the credentials document.",
       "createdAt": "2026-02-10T15:32:41Z",
-      "updatedAt": "2026-02-23T21:50:19Z",
+      "updatedAt": "2026-04-07T14:54:27Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Notes from sync:\n6.1 - makes sense\n6.2 - level of detail is ok\n6.3 - ok\n6.4 - the sentence that section 3 carries mitigations seems to be outdated.\n6.4 - move into a bullet point into 6.2 after TLS\nOR dedicated section about TLS and move first bullet of 6.2 into it too.\n6.5 - it's very WIT focused, it applies to certificates too.\n\n- 4.1 & 4.2 may also need additional security considerations.",
+          "createdAt": "2026-04-07T14:48:18Z",
+          "updatedAt": "2026-04-07T14:54:27Z"
+        }
+      ]
     },
     {
       "number": 212,
@@ -15981,24 +15989,26 @@
       "id": "PR_kwDOLJmm787MheI4",
       "title": "HTTP-Sig: wimse-aud signature parameter (#221)",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/222",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "## Summary\nReplaces the `Wimse-Audience` HTTP header with the `wimse-aud` signature metadata parameter (RFC 9421) and adds an IANA registration in the HTTP Signature Metadata Parameters registry. Addresses #221.\n\n## Notes\nThe non-normative request example updates `Signature-Input` (adds `wimse-aud`, drops the header), but the `Signature` value was not recomputed over the new signature base; follow-up to regenerate with tooling when ready.\n",
       "createdAt": "2026-03-22T20:56:42Z",
-      "updatedAt": "2026-03-29T18:47:00Z",
+      "updatedAt": "2026-04-07T13:59:06Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "07498d9dfc8c5c41c7aea156eb952aa056f1c63c",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-221",
       "headRefOid": "4111caf86b953f198d8c1a083235aea2867c00cc",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-04-07T13:59:06Z",
+      "mergedAt": "2026-04-07T13:59:06Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "6f58383cbe6aea09c60843b2b9d2348bb7336d65"
+      },
       "comments": [
         {
           "author": "yaronf",
