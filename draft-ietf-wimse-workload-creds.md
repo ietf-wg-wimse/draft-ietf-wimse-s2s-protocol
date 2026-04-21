@@ -169,6 +169,26 @@ Once these conditions are met, the methods described in this document can be use
 Implementations MUST allow for defining this mapping between the workload's access path and the workload identifier (e.g., through
 callback functions). Deployments SHOULD use these features to establish a consistent set of identifiers within their environment.
 
+## Simultaneous Use of Credentials {#simultaneous-use}
+
+It is possible to use different workload credentials simultaneously at different layers. For instance, the Workload Identity Certificate at the transport layer and the Workload Identity Token at the application layer. In this scenario, the credentials complement each other and are not alternatives to each other, meaning all MUST be validated, not just one.
+
+A common use case for simultaneous use is when transport-layer components, such as proxies in a service mesh, authenticate each other using the Workload Identity Certificate, while the workloads themselves perform end-to-end authentication at the application layer using the Workload Identity Token or HTTP Message Signatures.
+
+~~~aasvg
+             Transport-        Transport-
+┌───────────┐layer  ┌─────────┐layer   ┌───────────┐
+│           │◄─────►│  Proxy  │◄──────►│           │
+│ Workload  │       └─────────┘        │ Workload  │
+│     A     │                          │     B     │
+│           │◄========================►│           │
+└───────────┘     Application-layer    └───────────┘
+~~~
+
+Whether simultaneous use of credentials is appropriate is governed by local policy. Deployments SHOULD define clear rules for when and how multiple credentials are used on the same hop. See {{security-simultaneous-use}} for security considerations related to simultaneous use.
+
+Using different authentication methods inconsistently between the same pair of workloads SHOULD be avoided. A given pair of communicating workloads SHOULD use a consistent set of authentication methods across their interactions to prevent confusion about the required level of authentication.
+
 # Conventions and Definitions
 
 All terminology in this document follows {{?I-D.ietf-wimse-arch}}.
@@ -441,6 +461,12 @@ In some deployments the Workload Identity Token and proof of possession may pass
 Mitigations listed in {{app-level}} can be used to provide some protection from middle boxes.
 
 Deployments should perform analysis on their situation to determine if it is appropriate to trust and allow traffic to pass through a middle box.
+
+## Simultaneous Use of Credentials {#security-simultaneous-use}
+
+Using both transport-level and application-level authentication between the same pair of workloads (as opposed to the proxy pattern described in {{simultaneous-use}}) SHOULD NOT be done without careful analysis. When both methods authenticate the same hop directly, it creates ambiguity about which identity is authoritative for authorization decisions and increases the attack surface without a clear security benefit.
+
+If a deployment does use multiple credential types simultaneously, and credentials at different layers carry different Workload Identifiers, the authorization policy MUST account for both identities and define which is authoritative for each authorization decision.
 
 ## Privacy Considerations
 
