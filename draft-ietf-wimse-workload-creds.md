@@ -59,7 +59,6 @@ informative:
   IANA.JOSE.ALGS: IANA.jose_web-signature-encryption-algorithms
   IANA.JWT.CLAIMS: IANA.jwt_claims
   IANA.MEDIA.TYPES: IANA.media-types
-  IANA.URI.SCHEMES: IANA.uri-schemes
   RFC9457:
 
 --- abstract
@@ -204,8 +203,7 @@ A WIT MUST contain the following content, except where noted:
 As noted in {{WIMSE-ID}}, a workload identifier is a URI that includes a trust domain in the authority component.
 The runtime environment often determines which
 URI scheme is used, e.g. if SPIFFE is used to authenticate workloads, it mandates "spiffe" URIs.
-However for those deployments where this is not the case, this document ({{iana-uri}})
-defines the "wimse" URI scheme which can be used by any deployment that implements this protocol.
+For deployments that do not use an environment-specific scheme, the `wimse` URI scheme MAY be used; it is defined in {{WIMSE-ID}}, which also registers it with IANA.
 
 An example WIT might look like this:
 
@@ -518,22 +516,6 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 * Specification Document: RFC XXX, {{wit-http-header}}
 * Comments: see reference above for an ABNF syntax of this field
 
-## URI Scheme Registration {#iana-uri}
-
-IANA is requested to register the "wimse" scheme to the "URI Schemes" registry {{IANA.URI.SCHEMES}}:
-
-* Scheme name: wimse
-
-* Status: permanent
-
-* Applications/protocols that use this scheme name: the WIMSE workload-to-workload authentication protocol.
-
-* Contact: IETF Chair <chair@ietf.org>
-
-* Change controller: IESG <iesg@ietf.org>
-
-* References: {{app-level}} of this document (RFC XXX).
-
 --- back
 
 # Document History
@@ -542,6 +524,7 @@ IANA is requested to register the "wimse" scheme to the "URI Schemes" registry {
 ## draft-ietf-wimse-workload-creds-01
 
 * Clarify that the `iss` claim is RECOMMENDED in part for auditing and operations, and that validation of workload identity uses `sub`, not `iss`.
+* Remove the `wimse` URI scheme definition and IANA registration from this document; both are specified in {{WIMSE-ID}}.
 
 ## draft-ietf-wimse-workload-creds-00
 
