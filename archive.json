@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-09T02:09:36.681633+00:00",
+  "timestamp": "2026-04-23T02:33:18.031848+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -85,6 +85,11 @@
     },
     {
       "name": "pre-wglc",
+      "description": null,
+      "color": "aaaaaa"
+    },
+    {
+      "name": "april_21",
       "description": null,
       "color": "aaaaaa"
     }
@@ -2096,19 +2101,35 @@
       "id": "I_kwDOLJmm786s5XqE",
       "title": "Add security consideration when multiple workload identities are available",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/105",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [
         "draft-ietf-wimse-workload-creds",
-        "pre-wglc"
+        "pre-wglc",
+        "april_21"
       ],
       "body": "If a workload is eligible to multiple identities there's some security gotchas we should highlight in the security considerations:\n\n* if we decide to do `aud==<peer id>` it is important for the workload to only accept identities that are valid for that call.\n",
       "createdAt": "2025-03-06T15:25:05Z",
-      "updatedAt": "2025-12-09T15:15:56Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2026-04-21T14:26:09Z",
+      "closedAt": "2026-04-21T14:26:09Z",
+      "comments": [
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "For today: We can put this out of scope, it's more of an architectural topic IMO. ",
+          "createdAt": "2026-04-21T13:32:49Z",
+          "updatedAt": "2026-04-21T13:32:49Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Discussed that this is, if anything, more of an architectural discussion.",
+          "createdAt": "2026-04-21T14:26:09Z",
+          "updatedAt": "2026-04-21T14:26:09Z"
+        }
+      ]
     },
     {
       "number": 107,
@@ -2393,7 +2414,7 @@
       "id": "I_kwDOLJmm786z2wOW",
       "title": "Security considerations: iss allowlist",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/114",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -2402,8 +2423,8 @@
       ],
       "body": "If a deployment uses `iss` claim for key distribution it is crucial that a validator enforces allowed issuers via configuration (e.g. allowlist).\nOtherwise, any issuer can pose as a trust domain and tokens are accepted.",
       "createdAt": "2025-04-24T14:23:03Z",
-      "updatedAt": "2025-12-09T15:20:04Z",
-      "closedAt": null,
+      "updatedAt": "2026-04-21T14:08:20Z",
+      "closedAt": "2026-04-21T14:08:20Z",
       "comments": [
         {
           "author": "arndt-s",
@@ -2950,10 +2971,12 @@
         "jsalowey",
         "yaroslavros"
       ],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
       "body": "Section 1.3 (Workload Identifiers and Authentication Granularity) is not entirely clear in how it views workload identifiers as it relates to identifying a specific instance of a workload versus a \"service\", which may consist of multiple instances that come and go: \n\n<quote>\nPrior to WIMSE, many use cases did not allow for fully granular authentication in containerized runtime platforms. For instance, with mutual TLS, there's often no clear way to map the request's external access reference (e.g., Kubernetes Ingress path, service name, or host header) to the SubjectAltName value in the server certificate. This means that the client could only verify if the server certificate is valid within a trust domain, not if it's tied to a specific workload.\n\nTo enable mutual and granular authentication between workloads, two things must be in place:\n- Each workload must know its own identifier.\n- There needs to be an explicit mapping from the external handle used to access a workload (such as an Ingress path or service DNS name) to its workload identifier.\n</quote>\n\nThe above text suggests that the workload identifier is for a specific instance, however either should be possible (with the most common use case expected to be a \"service\" rather than an \"instance\"). ",
       "createdAt": "2025-09-16T01:22:39Z",
-      "updatedAt": "2025-12-09T15:23:45Z",
+      "updatedAt": "2026-04-22T17:04:21Z",
       "closedAt": null,
       "comments": [
         {
@@ -3201,7 +3224,7 @@
       "id": "I_kwDOLJmm787NX83X",
       "title": "Indicate the iss is recommended for auditing purposes",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/169",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -3211,8 +3234,8 @@
       ],
       "body": "See title",
       "createdAt": "2025-09-23T14:48:00Z",
-      "updatedAt": "2025-12-09T15:29:50Z",
-      "closedAt": null,
+      "updatedAt": "2026-04-21T14:06:17Z",
+      "closedAt": "2026-04-21T14:06:17Z",
       "comments": [
         {
           "author": "jsalowey",
@@ -3397,9 +3420,17 @@
       ],
       "body": "Much of Sec. 1.2 and in particular Figure 1 describes a view on authorization that's high level enough to fit the Architecture draft, and in fact is missing from that draft.\n\n@jsalowey WDYT?",
       "createdAt": "2025-10-19T11:40:09Z",
-      "updatedAt": "2025-12-09T15:36:37Z",
+      "updatedAt": "2026-04-23T00:42:14Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Architecture side: https://github.com/ietf-wg-wimse/draft-ietf-wimse-arch/pull/121 (does not close this; creds draft follow-up still needed per PR note).",
+          "createdAt": "2026-04-23T00:42:14Z",
+          "updatedAt": "2026-04-23T00:42:14Z"
+        }
+      ]
     },
     {
       "number": 182,
@@ -3446,7 +3477,7 @@
       "id": "I_kwDOLJmm787VhJWe",
       "title": "Response signing in Workload Identity Creds",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/183",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -3457,8 +3488,8 @@
       ],
       "body": "See https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/178#discussion_r2445222257",
       "createdAt": "2025-11-03T14:07:13Z",
-      "updatedAt": "2026-01-27T15:52:05Z",
-      "closedAt": null,
+      "updatedAt": "2026-04-21T13:19:51Z",
+      "closedAt": "2026-04-21T13:19:51Z",
       "comments": [
         {
           "author": "bc-pi",
@@ -3466,6 +3497,13 @@
           "body": "#194 is not acceptable and none of this is necessary in the creds layer anyway ",
           "createdAt": "2026-01-27T15:52:05Z",
           "updatedAt": "2026-01-27T15:52:05Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I believe this has been discussed now enough and we decided to not include it into the main draft.",
+          "createdAt": "2026-04-21T13:19:51Z",
+          "updatedAt": "2026-04-21T13:19:51Z"
         }
       ]
     },
@@ -3544,10 +3582,12 @@
       "author": "fandreas",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
       "body": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/blob/41fb87003b43adccd77af7e91ad06e5e3499066f/draft-ietf-wimse-workload-creds.md?plain=1#L87\n\nGlobal comment: Decide on \"application-level\" or \"application level\" and be consistent. Same with \"transport -level\"",
       "createdAt": "2026-01-14T02:16:28Z",
-      "updatedAt": "2026-01-14T02:16:28Z",
+      "updatedAt": "2026-04-22T17:03:44Z",
       "closedAt": null,
       "comments": []
     },
@@ -3560,10 +3600,12 @@
       "author": "fandreas",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
       "body": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/blob/41fb87003b43adccd77af7e91ad06e5e3499066f/draft-ietf-wimse-workload-creds.md?plain=1#L89-L95\n\nConfusing when reading initially. Clarify that those protocols are defined in separate documents and include references to them. ",
       "createdAt": "2026-01-14T02:18:38Z",
-      "updatedAt": "2026-01-14T02:18:38Z",
+      "updatedAt": "2026-04-22T17:03:49Z",
       "closedAt": null,
       "comments": []
     },
@@ -3576,10 +3618,12 @@
       "author": "fandreas",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
       "body": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/blob/41fb87003b43adccd77af7e91ad06e5e3499066f/draft-ietf-wimse-workload-creds.md?plain=1#L141\n\nThe 24-hour example is inconsistent with Section 3.1, which suggests WITs should be refreshed every couple of hours (exp claim). ",
       "createdAt": "2026-01-14T02:20:25Z",
-      "updatedAt": "2026-01-14T02:20:25Z",
+      "updatedAt": "2026-04-22T17:03:53Z",
       "closedAt": null,
       "comments": []
     },
@@ -3588,7 +3632,7 @@
       "id": "I_kwDOLJmm787jKzRA",
       "title": "Workload identifiers are defined in the workload identifier draft",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/199",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "fandreas",
       "authorAssociation": "NONE",
       "assignees": [
@@ -3597,9 +3641,17 @@
       "labels": [],
       "body": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/blob/41fb87003b43adccd77af7e91ad06e5e3499066f/draft-ietf-wimse-workload-creds.md?plain=1#L151\n\nGlobal comment: The workload identifier is defined in the Workload Identifier document now (not the architecture document), and hence that is what needs to be referenced instead in a number of places. Note that some of the content may have changed since that reorganization and the workload identifier document itself is in need of some updates, which may impact some of the definitions relied upon in this document. ",
       "createdAt": "2026-01-14T02:23:58Z",
-      "updatedAt": "2026-01-27T15:56:38Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2026-04-22T17:08:54Z",
+      "closedAt": "2026-04-22T17:08:53Z",
+      "comments": [
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "We are now consistently referencing the ID draft.",
+          "createdAt": "2026-04-22T17:08:53Z",
+          "updatedAt": "2026-04-22T17:08:53Z"
+        }
+      ]
     },
     {
       "number": 200,
@@ -3610,10 +3662,12 @@
       "author": "fandreas",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
       "body": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/blob/41fb87003b43adccd77af7e91ad06e5e3499066f/draft-ietf-wimse-workload-creds.md?plain=1#L163\n\nI'd like to see some considerations around workload identifier uniqueness and at least \"service\" versus \"instance\", i.e. multiple instances of the same workload (software) versus a particular instance (see also the thread in https://mailarchive.ietf.org/arch/msg/wimse/i5xZo84jY9sB-EmbGAD2Ufu0g7s/).\n\nSubsequently, I'd also like to see some explicit mechanisms in the credentials that enable us to indicate one versus the other (as well as both at the same time, and maybe even other \"types\" going forward). ",
       "createdAt": "2026-01-14T02:38:37Z",
-      "updatedAt": "2026-01-14T02:38:37Z",
+      "updatedAt": "2026-04-22T17:03:58Z",
       "closedAt": null,
       "comments": []
     },
@@ -3628,10 +3682,12 @@
       "assignees": [
         "yaroslavros"
       ],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
       "body": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/blob/41fb87003b43adccd77af7e91ad06e5e3499066f/draft-ietf-wimse-workload-creds.md?plain=1#L180\n\nI don't think that was noted in the Introduction. ",
       "createdAt": "2026-01-14T02:39:31Z",
-      "updatedAt": "2026-02-24T15:53:44Z",
+      "updatedAt": "2026-04-22T17:04:02Z",
       "closedAt": null,
       "comments": []
     },
@@ -3646,10 +3702,12 @@
       "assignees": [
         "yaroslavros"
       ],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
       "body": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/blob/41fb87003b43adccd77af7e91ad06e5e3499066f/draft-ietf-wimse-workload-creds.md?plain=1#L196\n\nRather than just a URI, shouldn't the 'sub' claim contain a WIMSE identifier ? ",
       "createdAt": "2026-01-14T02:41:10Z",
-      "updatedAt": "2026-02-24T15:52:20Z",
+      "updatedAt": "2026-04-22T17:04:07Z",
       "closedAt": null,
       "comments": [
         {
@@ -3670,10 +3728,12 @@
       "author": "fandreas",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
       "body": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/blob/41fb87003b43adccd77af7e91ad06e5e3499066f/draft-ietf-wimse-workload-creds.md?plain=1#L287\n\nThe Workload-Identity-Token as currently defined only allows us to include a single wimse identifier. This is related to the \"service\" versus \"instance\" issue, where we want to be able to provide both (and maybe others) as well as being able to determine which one we are actually seeing. For example, you want to include the \"service\" wimse identifier to be used for authentication/authorization but you also want the \"instance\" identifier for auditing/logging purposes. ",
       "createdAt": "2026-01-14T02:47:17Z",
-      "updatedAt": "2026-01-14T02:47:17Z",
+      "updatedAt": "2026-04-22T17:04:12Z",
       "closedAt": null,
       "comments": []
     },
@@ -3686,15 +3746,17 @@
       "author": "fandreas",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
       "body": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/blob/41fb87003b43adccd77af7e91ad06e5e3499066f/draft-ietf-wimse-workload-creds.md?plain=1#L354\n\nWhat is the rationale for only allowing one SubjectAltName extension of type URI in the certificate ? This goes back to the need to be able to convey more than one \"type\" of identity (e.g. service and instance). ",
       "createdAt": "2026-01-14T02:50:10Z",
-      "updatedAt": "2026-01-20T23:29:58Z",
+      "updatedAt": "2026-04-22T17:04:16Z",
       "closedAt": null,
       "comments": [
         {
           "author": "jsnctl",
-          "authorAssociation": "CONTRIBUTOR",
+          "authorAssociation": "NONE",
           "body": "Hi @fandreas, [this might provide](https://github.com/spiffe/spiffe/blob/main/standards/X509-SVID.md#2-spiffe-id) some useful context regarding strictly one SAN, in specifically SPIFFE as a workload identity methodology. \n\n> An X.509 SVID MUST contain exactly one URI SAN, and by extension, exactly one SPIFFE ID. SVIDs containing more than one SPIFFE ID introduce challenges related to auditing and authorization logic, and SVIDs containing more than one URI SAN introduce challenges related to SPIFFE ID validation. \n\nI think the X.509 SVID mentioned here can be considered at least equivalent to the WIC we define in WIMSE.\n\nWhile I appreciate WIMSE != SPIFFE, I believe a lot of the thinking has permeated over. We should rightly consider whether this should still be applicable here (especially given your point regarding service/instance granularity), but hopefully this at least explains the likely origin of this MUST instance. \n\nAlso apologies in advance if this is already known/self-evident.",
           "createdAt": "2026-01-14T07:54:06Z",
           "updatedAt": "2026-01-14T07:54:06Z"
@@ -3758,12 +3820,22 @@
       "assignees": [
         "yaroslavros"
       ],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
       "body": "As per https://github.com/ietf-wg-wimse/draft-ietf-wimse-identifier/issues/32",
       "createdAt": "2026-01-27T15:55:48Z",
-      "updatedAt": "2026-01-27T15:55:55Z",
+      "updatedAt": "2026-04-22T16:57:05Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "The \u201cto\u201d side is already done in `draft-ietf-wimse-identifier` (see https://github.com/ietf-wg-wimse/draft-ietf-wimse-identifier/pull/45). This issue/PR is only the \u201cfrom\u201d side (workload-creds).",
+          "createdAt": "2026-04-22T16:57:05Z",
+          "updatedAt": "2026-04-22T16:57:05Z"
+        }
+      ]
     },
     {
       "number": 208,
@@ -3892,7 +3964,7 @@
       "id": "I_kwDOLJmm7871Ytw6",
       "title": "\"aud\" in HTTP-Sig - express as a derived component, not an HTTP header",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/221",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -3903,8 +3975,8 @@
       ],
       "body": "Main reason: @bc-pi is on YouTube saying it's ugly :-)\n\nThe HTTP header was basically a misunderstanding of what an RFC 9421 derived component is allowed to be. The `aud` value actually meets the requirements, and so we can drop the HTTP header and add a derived component named `wimse-aud` to do the work.",
       "createdAt": "2026-03-22T19:28:51Z",
-      "updatedAt": "2026-03-22T22:42:25Z",
-      "closedAt": null,
+      "updatedAt": "2026-04-22T16:39:25Z",
+      "closedAt": "2026-04-22T16:39:25Z",
       "comments": [
         {
           "author": "yaronf",
@@ -3919,6 +3991,13 @@
           "body": "The PR keeps this issue open, because examples in the draft have not been updated. These examples would require some serious code changes if we agree on this approach.",
           "createdAt": "2026-03-22T22:42:25Z",
           "updatedAt": "2026-03-22T22:42:25Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Closed by #222.",
+          "createdAt": "2026-04-22T16:39:25Z",
+          "updatedAt": "2026-04-22T16:39:25Z"
         }
       ]
     }
@@ -15101,7 +15180,7 @@
       "id": "PR_kwDOLJmm7865IZ3b",
       "title": "Describe simultaneous use",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/192",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -15110,14 +15189,14 @@
       ],
       "body": "Related to #87, covering actual \"simultaneious use\"",
       "createdAt": "2025-12-16T11:27:06Z",
-      "updatedAt": "2026-02-24T15:33:45Z",
+      "updatedAt": "2026-04-21T12:30:46Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "4a0de62dfe29a6e58fcbbb5ceeca92a3f0aeed55",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "arndt/simultaneous-use",
       "headRefOid": "468a0b1a6c13169bd140c45410e0ff1157b27eb7",
-      "closedAt": null,
+      "closedAt": "2026-04-21T12:30:46Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
@@ -15949,24 +16028,26 @@
       "id": "PR_kwDOLJmm787Mg9Gt",
       "title": "Workload creds: clarify iss for auditing (#169)",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/220",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "## Summary\nAddresses **#169** (sub-issue of **#164**): state explicitly that `iss` is RECOMMENDED in part for **auditing and operations**, and that **validation of workload identity uses `sub`**, not `iss`.\n\n## Changes\n- `iss` bullet: auditing/ops examples; link to `{{wit-iss-note}}` for key distribution and validation context.\n- `{{wit-iss-note}}`: rewritten for clarity; RFC8414 / `sub` trust domain unchanged in intent.\n- Document History: `draft-ietf-wimse-workload-creds-01` entry.\n\nFixes #169\n\nMade with [Cursor](https://cursor.com)",
       "createdAt": "2026-03-22T19:19:15Z",
-      "updatedAt": "2026-03-27T08:56:11Z",
+      "updatedAt": "2026-04-21T14:06:16Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "07498d9dfc8c5c41c7aea156eb952aa056f1c63c",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-169",
       "headRefOid": "715999ad593dd2dddc7e9655b0b4c9793d2d76e4",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-04-21T14:06:15Z",
+      "mergedAt": "2026-04-21T14:06:15Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "b54c35b4f7c4a7fa7803d37e85fd3c0c9403d51a"
+      },
       "comments": [],
       "reviews": [
         {
@@ -16073,6 +16154,227 @@
           ]
         }
       ]
+    },
+    {
+      "number": 223,
+      "id": "PR_kwDOLJmm787UT3_U",
+      "title": "Another attempt at simultaneous use",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/223",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Suceeds #192, resolves #87",
+      "createdAt": "2026-04-21T13:18:26Z",
+      "updatedAt": "2026-04-21T14:21:33Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "6f58383cbe6aea09c60843b2b9d2348bb7336d65",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "arndt/simultaneous_use",
+      "headRefOid": "00a77e0280a49d165e45ede7ce992e1fbaa88fa7",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm7873QslL",
+          "commit": {
+            "abbreviatedOid": "00a77e0"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-21T14:12:44Z",
+          "updatedAt": "2026-04-21T14:12:44Z",
+          "comments": [
+            {
+              "originalPosition": 22,
+              "body": "Let's cut this part.",
+              "createdAt": "2026-04-21T14:12:44Z",
+              "updatedAt": "2026-04-21T14:12:44Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm7873Qun_",
+          "commit": {
+            "abbreviatedOid": "00a77e0"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-21T14:13:54Z",
+          "updatedAt": "2026-04-21T14:13:54Z",
+          "comments": [
+            {
+              "originalPosition": 1,
+              "body": "we need to talk about identifier here. They may and likely will differ.",
+              "createdAt": "2026-04-21T14:13:54Z",
+              "updatedAt": "2026-04-21T14:13:54Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm7873QyIP",
+          "commit": {
+            "abbreviatedOid": "00a77e0"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-21T14:15:19Z",
+          "updatedAt": "2026-04-21T14:15:19Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "Let's make this proxy specific and less generic.",
+              "createdAt": "2026-04-21T14:15:19Z",
+              "updatedAt": "2026-04-21T14:15:19Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm7873Q1qV",
+          "commit": {
+            "abbreviatedOid": "00a77e0"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-21T14:17:07Z",
+          "updatedAt": "2026-04-21T14:17:11Z",
+          "comments": [
+            {
+              "originalPosition": 1,
+              "body": "instead of proxy -> intermediary.",
+              "createdAt": "2026-04-21T14:17:08Z",
+              "updatedAt": "2026-04-21T14:17:11Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm7873Q9FC",
+          "commit": {
+            "abbreviatedOid": "00a77e0"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-21T14:21:33Z",
+          "updatedAt": "2026-04-21T14:21:33Z",
+          "comments": [
+            {
+              "originalPosition": 1,
+              "body": "also check architecture document for the wording used there.",
+              "createdAt": "2026-04-21T14:21:33Z",
+              "updatedAt": "2026-04-21T14:21:34Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 224,
+      "id": "PR_kwDOLJmm787UUH_J",
+      "title": "Add sentence about iss restrictions/allow list",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/224",
+      "state": "MERGED",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves #114",
+      "createdAt": "2026-04-21T13:31:42Z",
+      "updatedAt": "2026-04-21T14:08:19Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "6f58383cbe6aea09c60843b2b9d2348bb7336d65",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "arndt/talk_about_iss_allowlist",
+      "headRefOid": "b6a2a338d54b0f695fef685e2787f6f7599bb604",
+      "closedAt": "2026-04-21T14:08:19Z",
+      "mergedAt": "2026-04-21T14:08:19Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "6af86bb41598bb17d40931006d6bd6d9341b5f97"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm7873QkVz",
+          "commit": {
+            "abbreviatedOid": "b6a2a33"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-04-21T14:08:07Z",
+          "updatedAt": "2026-04-21T14:08:07Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 225,
+      "id": "PR_kwDOLJmm787Us6-G",
+      "title": "Move wimse URI scheme to identifier draft (workload-creds)",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/225",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Closes #207\n\n- Point WIT text at {{WIMSE-ID}} for the `wimse` scheme; remove duplicate IANA URI scheme section and `IANA.uri-schemes` ref.\n- Document history: -01 bullet for this change (with existing -01 `iss`/`sub` item).\n\nThe identifier draft already contains the scheme + IANA registration (draft-ietf-wimse-identifier#45).\n\nMade with [Cursor](https://cursor.com)",
+      "createdAt": "2026-04-22T16:58:15Z",
+      "updatedAt": "2026-04-22T16:59:59Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "6af86bb41598bb17d40931006d6bd6d9341b5f97",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-207",
+      "headRefOid": "900a3420ed6150683cfb88f4a97b282ba875aba7",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 226,
+      "id": "PR_kwDOLJmm787Uzx0h",
+      "title": "WIT `sub` claim (#202)",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/226",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Closes #202\n\nMade with [Cursor](https://cursor.com)",
+      "createdAt": "2026-04-23T01:05:23Z",
+      "updatedAt": "2026-04-23T01:05:23Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "6af86bb41598bb17d40931006d6bd6d9341b5f97",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-202",
+      "headRefOid": "45e3bd35c5c8708251f670cc154d392b8b63fefb",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
