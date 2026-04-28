@@ -1,8 +1,8 @@
 {
   "alg": "EdDSA",
   "crv": "Ed25519",
-  "d": "u1DH-EPbCxpzi1LLJHtsLGZ6_4lvKsUgFHRNYOo5Mx8",
+  "d": "FYS8IsAD74dDpTYu88MX5XFQP4JYNYiRDIkEplk4DW0",
   "kid": "svc-b-key",
   "kty": "OKP",
-  "x": "8zj0S94HAaaQ0kKPhts0UdothtSTjZDX7jYC5zdLsX4"
+  "x": "oKbIElQedC-yvw01avHZsh2Vg6CnSV5Pw6wnYZEJazM"
 }

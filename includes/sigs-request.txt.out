@@ -1,18 +1,19 @@
 =============== NOTE: '\' line wrapping per RFC 8792 ================
 
 GET /gimme-ice-cream?flavor=vanilla HTTP/1.1
-Host: example.com
-Signature: wimse=:b1kQ7vFYUShd9QS82ojrPAy2hAgiIqSED20bXXjwH6xsnXHF0r\
-b2J8OeIdbtSupQUsez8IOqQvoYGPaWKu76Cg==:
+Host: svcb.example.com
+Signature: wimse=:6QjBIpZW1lUZ64dQTOs4oiMBp4wH1Xzjo/iGa1XtrT9BGG2a0p\
+MQXddNQ3M2wHE9q+FnxnL86HPtYVQ2fYTTDg==:
 Signature-Input: wimse=("@method" "@request-target" "workload-identi\
-ty-token");created=1761859807;expires=1761860107;nonce="abcd1111";ta\
-g="wimse-workload-to-workload"
+ty-token");created=1774809014;expires=1774809314;nonce="abcd1111";ta\
+g="wimse-workload-to-workload";wimse-aud="https://svcb.example.com/g\
+imme-ice-cream"
 Workload-Identity-Token: eyJhbGciOiJFZERTQSIsImtpZCI6Imlzc3Vlci1rZXk\
 iLCJ0eXAiOiJ3aXQrand0In0.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J\
-2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1hLWtleSIsImt0eSI6Ik9LUCIsIngiOiJ6S09\
-Sa0E2aUZCMy1ka0RKRzZrYm5ody01N1ZYT0hhLUlFOVhXVmQtR3RNIn19LCJleHAiOjE\
-3NjE4NjAxMDcsImlhdCI6MTc2MTg1OTgwNywiaXNzIjoiaHR0cHM6Ly9leGFtcGxlLmN\
-vbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc2MTg1OTgwNzM0NTQ3ODAwMCIsInN1YiI6Ind\
-pbXNlOi8vZXhhbXBsZS5jb20vc3ZjQSJ9.KxXGBK2YWhy8XT1tB9Z9sZscn2fb4OHDNz\
-2S8mhP8fGK0mCw6yK4lv9wRqO3hnAXWJEzWuWRHpVQO8_82t_IBA
+2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1hLWtleSIsImt0eSI6Ik9LUCIsIngiOiJDU3N\
+lcFh5V2VhNW0tbk5UZmpuSGFSZkxvZHBZMWdQU1B0YWkxeEotcUowIn19LCJleHAiOjE\
+3NzQ4MDkzMTQsImlhdCI6MTc3NDgwOTAxNCwiaXNzIjoiaHR0cHM6Ly9leGFtcGxlLmN\
+vbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc3NDgwOTAxNDA4OTM3MjAwMCIsInN1YiI6Ind\
+pbXNlOi8vZXhhbXBsZS5jb20vc3ZjQSJ9.UwMa_iVUp-0lbNLjWZMItulNEzFlfx_jCC\
+sWdd-7Cx8fN87ldxamCiESXSMR2u1H17OInKBULCNLZjkfZdSiBw
 
