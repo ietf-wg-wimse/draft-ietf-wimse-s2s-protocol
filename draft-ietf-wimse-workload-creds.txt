@@ -112,7 +112,6 @@ Table of Contents
        7.1.1.  application/wit+jwt
      7.2.  Hypertext Transfer Protocol (HTTP) Field Name Registration
        7.2.1.  Workload-Identity-Token
-     7.3.  URI Scheme Registration
    8.  References
      8.1.  Normative References
      8.2.  Informative References
@@ -365,10 +364,10 @@ Table of Contents
    As noted in [WIMSE-ID], a workload identifier is a URI that includes
    a trust domain in the authority component.  The runtime environment
    often determines which URI scheme is used, e.g. if SPIFFE is used to
-   authenticate workloads, it mandates "spiffe" URIs.  However for those
-   deployments where this is not the case, this document (Section 7.3)
-   defines the "wimse" URI scheme which can be used by any deployment
-   that implements this protocol.
+   authenticate workloads, it mandates "spiffe" URIs.  For deployments
+   that do not use an environment-specific scheme, the wimse URI scheme
+   MAY be used; it is defined in [WIMSE-ID], which also registers it
+   with IANA.
 
    An example WIT might look like this:
 
@@ -860,24 +859,6 @@ Table of Contents
 
    *  Comments: see reference above for an ABNF syntax of this field
 
-7.3.  URI Scheme Registration
-
-   IANA is requested to register the "wimse" scheme to the "URI Schemes"
-   registry [IANA.URI.SCHEMES]:
-
-   *  Scheme name: wimse
-
-   *  Status: permanent
-
-   *  Applications/protocols that use this scheme name: the WIMSE
-      workload-to-workload authentication protocol.
-
-   *  Contact: IETF Chair chair@ietf.org (mailto:chair@ietf.org)
-
-   *  Change controller: IESG iesg@ietf.org (mailto:iesg@ietf.org)
-
-   *  References: Section 3 of this document (RFC XXX).
-
 8.  References
 
 8.1.  Normative References
@@ -976,10 +957,6 @@ Table of Contents
               IANA, "Media Types",
               <https://www.iana.org/assignments/media-types>.
 
-   [IANA.URI.SCHEMES]
-              IANA, "Uniform Resource Identifier (URI) Schemes",
-              <https://www.iana.org/assignments/uri-schemes>.
-
    [RFC9457]  Nottingham, M., Wilde, E., and S. Dalal, "Problem Details
               for HTTP APIs", RFC 9457, DOI 10.17487/RFC9457, July 2023,
               <https://www.rfc-editor.org/rfc/rfc9457>.
@@ -994,6 +971,9 @@ A.1.  draft-ietf-wimse-workload-creds-01
    *  Clarify that the iss claim is RECOMMENDED in part for auditing and
       operations, and that validation of workload identity uses sub, not
       iss.
+
+   *  Remove the wimse URI scheme definition and IANA registration from
+      this document; both are specified in [WIMSE-ID].
 
 A.2.  draft-ietf-wimse-workload-creds-00
 

@@ -1268,9 +1268,6 @@ multi-service, multi-cloud, multi-tenant deployments.<a href="#section-abstract-
 </li>
                 </ul>
 </li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.3">
-                <p id="section-toc.1-1.7.2.3.1"><a href="#section-7.3" class="auto internal xref">7.3</a>.  <a href="#name-uri-scheme-registration" class="internal xref">URI Scheme Registration</a></p>
-</li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
@@ -1574,8 +1571,7 @@ WITs should be refreshed regularly, e.g. on the order of hours.<a href="#section
 <p id="section-3.1-4">As noted in <span>[<a href="#WIMSE-ID" class="cite xref">WIMSE-ID</a>]</span>, a workload identifier is a URI that includes a trust domain in the authority component.
 The runtime environment often determines which
 URI scheme is used, e.g. if SPIFFE is used to authenticate workloads, it mandates "spiffe" URIs.
-However for those deployments where this is not the case, this document (<a href="#iana-uri" class="auto internal xref">Section 7.3</a>)
-defines the "wimse" URI scheme which can be used by any deployment that implements this protocol.<a href="#section-3.1-4" class="pilcrow">¶</a></p>
+For deployments that do not use an environment-specific scheme, the <code>wimse</code> URI scheme <span class="bcp14">MAY</span> be used; it is defined in <span>[<a href="#WIMSE-ID" class="cite xref">WIMSE-ID</a>]</span>, which also registers it with IANA.<a href="#section-3.1-4" class="pilcrow">¶</a></p>
 <p id="section-3.1-5">An example WIT might look like this:<a href="#section-3.1-5" class="pilcrow">¶</a></p>
 <span id="name-an-example-workload-identit"></span><div id="example-wit">
 <figure id="figure-2">
@@ -2083,34 +2079,6 @@ use these tokens to authenticate to each other.<a href="#section-7.1.1-9" class=
 </div>
 </section>
 </div>
-<div id="iana-uri">
-<section id="section-7.3">
-        <h3 id="name-uri-scheme-registration">
-<a href="#section-7.3" class="section-number selfRef">7.3. </a><a href="#name-uri-scheme-registration" class="section-name selfRef">URI Scheme Registration</a>
-        </h3>
-<p id="section-7.3-1">IANA is requested to register the "wimse" scheme to the "URI Schemes" registry <span>[<a href="#IANA.URI.SCHEMES" class="cite xref">IANA.URI.SCHEMES</a>]</span>:<a href="#section-7.3-1" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-7.3-2.1">
-            <p id="section-7.3-2.1.1">Scheme name: wimse<a href="#section-7.3-2.1.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-7.3-2.2">
-            <p id="section-7.3-2.2.1">Status: permanent<a href="#section-7.3-2.2.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-7.3-2.3">
-            <p id="section-7.3-2.3.1">Applications/protocols that use this scheme name: the WIMSE workload-to-workload authentication protocol.<a href="#section-7.3-2.3.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-7.3-2.4">
-            <p id="section-7.3-2.4.1">Contact: IETF Chair <a href="mailto:chair@ietf.org">chair@ietf.org</a><a href="#section-7.3-2.4.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-7.3-2.5">
-            <p id="section-7.3-2.5.1">Change controller: IESG <a href="mailto:iesg@ietf.org">iesg@ietf.org</a><a href="#section-7.3-2.5.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-7.3-2.6">
-            <p id="section-7.3-2.6.1">References: <a href="#app-level" class="auto internal xref">Section 3</a> of this document (RFC XXX).<a href="#section-7.3-2.6.1" class="pilcrow">¶</a></p>
-</li>
-        </ul>
-</section>
-</div>
 </section>
 </div>
 <div id="sec-combined-references">
@@ -2209,10 +2177,6 @@ use these tokens to authenticate to each other.<a href="#section-7.1.1-9" class=
         <dd>
 <span class="refAuthor">IANA</span>, <span class="refTitle">"Media Types"</span>, <span>&lt;<a href="https://www.iana.org/assignments/media-types">https://www.iana.org/assignments/media-types</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="IANA.URI.SCHEMES">[IANA.URI.SCHEMES]</dt>
-        <dd>
-<span class="refAuthor">IANA</span>, <span class="refTitle">"Uniform Resource Identifier (URI) Schemes"</span>, <span>&lt;<a href="https://www.iana.org/assignments/uri-schemes">https://www.iana.org/assignments/uri-schemes</a>&gt;</span>. </dd>
-<dd class="break"></dd>
 <dt id="RFC9457">[RFC9457]</dt>
       <dd>
 <span class="refAuthor">Nottingham, M.</span>, <span class="refAuthor">Wilde, E.</span>, and <span class="refAuthor">S. Dalal</span>, <span class="refTitle">"Problem Details for HTTP APIs"</span>, <span class="seriesInfo">RFC 9457</span>, <span class="seriesInfo">DOI 10.17487/RFC9457</span>, <time datetime="2023-07" class="refDate">July 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9457">https://www.rfc-editor.org/rfc/rfc9457</a>&gt;</span>. </dd>
@@ -2236,6 +2200,9 @@ use these tokens to authenticate to each other.<a href="#section-7.1.1-9" class=
 <ul class="normal">
 <li class="normal" id="appendix-A.1-1.1">
             <p id="appendix-A.1-1.1.1">Clarify that the <code>iss</code> claim is <span class="bcp14">RECOMMENDED</span> in part for auditing and operations, and that validation of workload identity uses <code>sub</code>, not <code>iss</code>.<a href="#appendix-A.1-1.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.1-1.2">
+            <p id="appendix-A.1-1.2.1">Remove the <code>wimse</code> URI scheme definition and IANA registration from this document; both are specified in <span>[<a href="#WIMSE-ID" class="cite xref">WIMSE-ID</a>]</span>.<a href="#appendix-A.1-1.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
