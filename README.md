@@ -1,11 +1,36 @@
-# WIMSE Workload-to-Workload Authentication
+<!-- regenerate: on (set to off if you edit this file) -->
 
-This is the working area for the IETF [WIMSE Working Group](https://datatracker.ietf.org/wg/wimse/documents/) Internet-Draft, "WIMSE Workload-to-Workload Authentication".
+# WIMSE Drafts
 
-* [Editor's Copy](https://ietf-wg-wimse.github.io/draft-ietf-wimse-s2s-protocol/#go.draft-ietf-wimse-s2s-protocol.html)
-* [Datatracker Page](https://datatracker.ietf.org/doc/draft-ietf-wimse-s2s-protocol)
-* [Working Group Draft](https://datatracker.ietf.org/doc/html/draft-ietf-wimse-s2s-protocol)
-* [Compare Editor's Copy to Working Group Draft](https://ietf-wg-wimse.github.io/draft-ietf-wimse-s2s-protocol/#go.draft-ietf-wimse-s2s-protocol.diff)
+This is the working area for IETF [WIMSE Working Group](https://datatracker.ietf.org/group/wimse/documents/) Internet-Drafts.
+
+## WIMSE Workload-to-Workload Authentication with HTTP Signatures
+
+* [Editor's Copy](https://ietf-wg-wimse.github.io/draft-ietf-wimse-s2s-protocol/#go.draft-ietf-wimse-http-signature.html)
+* [Datatracker Page](https://datatracker.ietf.org/doc/draft-ietf-wimse-http-signature)
+* [Working Group Draft](https://datatracker.ietf.org/doc/html/draft-ietf-wimse-http-signature)
+* [Compare Editor's Copy to Working Group Draft](https://ietf-wg-wimse.github.io/draft-ietf-wimse-s2s-protocol/#go.draft-ietf-wimse-http-signature.diff)
+
+## Workload Authentication Using Mutual TLS
+
+* [Editor's Copy](https://ietf-wg-wimse.github.io/draft-ietf-wimse-s2s-protocol/#go.draft-ietf-wimse-mutual-tls.html)
+* [Datatracker Page](https://datatracker.ietf.org/doc/draft-ietf-wimse-mutual-tls)
+* [Working Group Draft](https://datatracker.ietf.org/doc/html/draft-ietf-wimse-mutual-tls)
+* [Compare Editor's Copy to Working Group Draft](https://ietf-wg-wimse.github.io/draft-ietf-wimse-s2s-protocol/#go.draft-ietf-wimse-mutual-tls.diff)
+
+## WIMSE Workload Credentials
+
+* [Editor's Copy](https://ietf-wg-wimse.github.io/draft-ietf-wimse-s2s-protocol/#go.draft-ietf-wimse-workload-creds.html)
+* [Datatracker Page](https://datatracker.ietf.org/doc/draft-ietf-wimse-workload-creds)
+* [Working Group Draft](https://datatracker.ietf.org/doc/html/draft-ietf-wimse-workload-creds)
+* [Compare Editor's Copy to Working Group Draft](https://ietf-wg-wimse.github.io/draft-ietf-wimse-s2s-protocol/#go.draft-ietf-wimse-workload-creds.diff)
+
+## WIMSE Workload Proof Token
+
+* [Editor's Copy](https://ietf-wg-wimse.github.io/draft-ietf-wimse-s2s-protocol/#go.draft-ietf-wimse-wpt.html)
+* [Datatracker Page](https://datatracker.ietf.org/doc/draft-ietf-wimse-wpt)
+* [Working Group Draft](https://datatracker.ietf.org/doc/html/draft-ietf-wimse-wpt)
+* [Compare Editor's Copy to Working Group Draft](https://ietf-wg-wimse.github.io/draft-ietf-wimse-s2s-protocol/#go.draft-ietf-wimse-wpt.diff)
 
 
 ## Contributing
@@ -13,9 +38,8 @@ This is the working area for the IETF [WIMSE Working Group](https://datatracker.
 See the
 [guidelines for contributions](https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/blob/main/CONTRIBUTING.md).
 
-Contributions can be made by creating pull requests.
-The GitHub interface supports creating pull requests using the Edit (✏) button.
-
+The contributing file also has tips on how to make contributions, if you
+don't already know how to do that.
 
 ## Command Line Usage
 
