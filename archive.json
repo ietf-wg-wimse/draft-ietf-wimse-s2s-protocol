@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-23T02:33:18.031848+00:00",
+  "timestamp": "2026-04-28T02:48:33.032775+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -16375,6 +16375,59 @@
       "mergeCommit": null,
       "comments": [],
       "reviews": []
+    },
+    {
+      "number": 227,
+      "id": "PR_kwDOLJmm787WCd0w",
+      "title": "Add oth example",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/227",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves #150 ",
+      "createdAt": "2026-04-27T16:27:44Z",
+      "updatedAt": "2026-04-27T16:31:25Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "6af86bb41598bb17d40931006d6bd6d9341b5f97",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "arndt/add_oth_example",
+      "headRefOid": "d2a575504fc3c772af0fbb18d52cff4355edafd6",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm7875TZIS",
+          "commit": {
+            "abbreviatedOid": "d2a5755"
+          },
+          "author": "copilot-pull-request-reviewer",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "## Pull request overview\n\nAdds a new specification example demonstrating the WPT `oth` claim and an accompanying HTTP request, and updates the Go example generator to emit a corresponding \u201cWPT-OTH\u201d token.\n\n**Changes:**\n- Add new include sources and folded outputs for a WPT containing an `oth` claim and an HTTP request carrying the bound \u201cother token\u201d.\n- Update `draft-ietf-wimse-wpt.md` to embed the new `oth` example and decoded claims.\n- Update `examples/main.go` to generate and print a WPT with an `oth` claim, and model `oth` as a JSON object in the example claims struct.\n\n### Reviewed changes\n\nCopilot reviewed 6 out of 6 changed files in this pull request and generated 2 comments.\n\n<details>\n<summary>Show a summary per file</summary>\n\n| File | Description |\r\n| ---- | ----------- |\r\n| includes/wpt-oth.txt.out | New folded (RFC 8792) WPT-with-`oth` JWT include. |\r\n| includes/wpt-oth.txt | New unfolded WPT-with-`oth` JWT include source. |\r\n| includes/wpt-oth-request.txt.out | New folded HTTP request example including `X-Custom-Token` and WPT-with-`oth`. |\r\n| includes/wpt-oth-request.txt | New unfolded HTTP request example source. |\r\n| examples/main.go | Generate/print a WPT containing an `oth` object and add an example \u201cother token\u201d. |\r\n| draft-ietf-wimse-wpt.md | Add a new spec section embedding the `oth` example token, decoded claims, and request. |\n</details>\n\n\n\n\n\n\n---\n\n\ud83d\udca1 <a href=\"/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/new/main?filename=.github/instructions/*.instructions.md\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">Add Copilot custom instructions</a> for smarter, more guided reviews. <a href=\"https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">Learn how to get started</a>.",
+          "createdAt": "2026-04-27T16:31:24Z",
+          "updatedAt": "2026-04-27T16:31:25Z",
+          "comments": [
+            {
+              "originalPosition": 85,
+              "body": "When computing the `oth` entry you\u2019re hashing `rawOtherToken` directly, but the spec text in this draft requires hashing the header field value with any leading/trailing spaces removed. To keep the example generator aligned with the normative algorithm, trim OWS (e.g., `strings.TrimSpace`) before hashing for `oth` values (without changing the behavior for `ath`/`wth`).",
+              "createdAt": "2026-04-27T16:31:24Z",
+              "updatedAt": "2026-04-27T16:31:25Z"
+            },
+            {
+              "originalPosition": 10,
+              "body": "This new example text references `X-Custom-Token`, but the `oth` claim in the example uses the normalized lower-case key (`x-custom-token`) as required earlier in the document. Consider adding an explicit sentence here noting that header field names are lowercased in the `oth` object to avoid reader confusion.",
+              "createdAt": "2026-04-27T16:31:24Z",
+              "updatedAt": "2026-04-27T16:31:25Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
