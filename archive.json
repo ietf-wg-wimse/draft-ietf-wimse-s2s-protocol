@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-28T02:48:33.032775+00:00",
+  "timestamp": "2026-04-30T02:49:40.883940+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -3814,7 +3814,7 @@
       "id": "I_kwDOLJmm787mJhe7",
       "title": "Move wimse scheme definition to identifier document",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/207",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -3825,8 +3825,8 @@
       ],
       "body": "As per https://github.com/ietf-wg-wimse/draft-ietf-wimse-identifier/issues/32",
       "createdAt": "2026-01-27T15:55:48Z",
-      "updatedAt": "2026-04-22T16:57:05Z",
-      "closedAt": null,
+      "updatedAt": "2026-04-28T20:10:34Z",
+      "closedAt": "2026-04-28T20:10:34Z",
       "comments": [
         {
           "author": "yaronf",
@@ -15344,24 +15344,26 @@
       "id": "PR_kwDOLJmm7865Iar_",
       "title": "Delete old s2s document",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/193",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-12-16T11:28:19Z",
-      "updatedAt": "2026-01-27T15:08:58Z",
+      "updatedAt": "2026-04-28T08:22:57Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
-      "baseRefOid": "4a0de62dfe29a6e58fcbbb5ceeca92a3f0aeed55",
+      "baseRefOid": "6f58383cbe6aea09c60843b2b9d2348bb7336d65",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "arndt/delete-old-document",
-      "headRefOid": "ce4c113671c5f7765829fee2ab0dcb8661922d2c",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "95f26a8dc908aa44ab5d83c6964bb12aed30d73a",
+      "closedAt": "2026-04-28T08:22:57Z",
+      "mergedAt": "2026-04-28T08:22:57Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "ccaba041861624fbe689d9cc40efe61adf2b0a6d"
+      },
       "comments": [
         {
           "author": "yaronf",
@@ -16329,26 +16331,42 @@
       "id": "PR_kwDOLJmm787Us6-G",
       "title": "Move wimse URI scheme to identifier draft (workload-creds)",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/225",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Closes #207\n\n- Point WIT text at {{WIMSE-ID}} for the `wimse` scheme; remove duplicate IANA URI scheme section and `IANA.uri-schemes` ref.\n- Document history: -01 bullet for this change (with existing -01 `iss`/`sub` item).\n\nThe identifier draft already contains the scheme + IANA registration (draft-ietf-wimse-identifier#45).\n\nMade with [Cursor](https://cursor.com)",
       "createdAt": "2026-04-22T16:58:15Z",
-      "updatedAt": "2026-04-22T16:59:59Z",
+      "updatedAt": "2026-04-28T20:10:33Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "6af86bb41598bb17d40931006d6bd6d9341b5f97",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-207",
       "headRefOid": "900a3420ed6150683cfb88f4a97b282ba875aba7",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-04-28T20:10:33Z",
+      "mergedAt": "2026-04-28T20:10:33Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "7253f02a42973d1c4243150795d86a746300a041"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm7875j6jF",
+          "commit": {
+            "abbreviatedOid": "900a342"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-04-28T08:17:21Z",
+          "updatedAt": "2026-04-28T08:17:21Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 226,
@@ -16362,7 +16380,7 @@
       "labels": [],
       "body": "Closes #202\n\nMade with [Cursor](https://cursor.com)",
       "createdAt": "2026-04-23T01:05:23Z",
-      "updatedAt": "2026-04-23T01:05:23Z",
+      "updatedAt": "2026-04-29T22:17:54Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "6af86bb41598bb17d40931006d6bd6d9341b5f97",
@@ -16373,7 +16391,15 @@
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I'm honestly struggling to understand \"WIT sub claim\" and the changes here. Some of which seem to have been done in a different change #225. ",
+          "createdAt": "2026-04-29T22:17:54Z",
+          "updatedAt": "2026-04-29T22:17:54Z"
+        }
+      ],
       "reviews": []
     },
     {
@@ -16388,7 +16414,7 @@
       "labels": [],
       "body": "Resolves #150 ",
       "createdAt": "2026-04-27T16:27:44Z",
-      "updatedAt": "2026-04-27T16:31:25Z",
+      "updatedAt": "2026-04-29T22:10:18Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "6af86bb41598bb17d40931006d6bd6d9341b5f97",
@@ -16426,6 +16452,59 @@
               "updatedAt": "2026-04-27T16:31:25Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm7876Y_Oe",
+          "commit": {
+            "abbreviatedOid": "d2a5755"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-29T21:28:57Z",
+          "updatedAt": "2026-04-29T21:28:58Z",
+          "comments": [
+            {
+              "originalPosition": 10,
+              "body": "I think it's okay without",
+              "createdAt": "2026-04-29T21:28:58Z",
+              "updatedAt": "2026-04-29T21:28:58Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm7876ZEPG",
+          "commit": {
+            "abbreviatedOid": "d2a5755"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-29T21:31:48Z",
+          "updatedAt": "2026-04-29T21:31:49Z",
+          "comments": [
+            {
+              "originalPosition": 85,
+              "body": "seems unnecessary",
+              "createdAt": "2026-04-29T21:31:48Z",
+              "updatedAt": "2026-04-29T21:31:49Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm7876Z4uJ",
+          "commit": {
+            "abbreviatedOid": "d2a5755"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "I'm not totally convinced this is even needed. Which I thought I'd said somewhere but don't see it in #150. Maybe it was in one of the prior PRs. I dunno. But, if we do include it, it might be better in a separate section or appendix or some how better broken out. It feels kind of cluttered/awkward/etc right there after the existing example. With the same access token is kinda weird too (to me anyway, not to mention considering #216).  ",
+          "createdAt": "2026-04-29T22:10:09Z",
+          "updatedAt": "2026-04-29T22:10:09Z",
+          "comments": []
         }
       ]
     }
