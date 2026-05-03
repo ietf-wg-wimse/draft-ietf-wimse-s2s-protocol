@@ -192,7 +192,7 @@ A WIT MUST contain the following content, except where noted:
     * `typ`: the WIT is explicitly typed, as recommended in {{Section 3.11 of RFC8725}}, using the `wit+jwt` media type.
 * in the JWT claims:
     * `iss`: The issuer of the token, which is the Identity Server, represented by a URI. The `iss` claim is RECOMMENDED but optional; when present, it is particularly useful for auditing and operations (for example, identifying which Identity Server issued the WIT in logs or compliance records). See {{wit-iss-note}} for key distribution and validation context.
-    * `sub`: The subject of the token, which is the identity of the workload, represented by a URI as defined in {{WIMSE-ID}}. {{granular-auth}} provides additional considerations for security implications of these identifiers.
+    * `sub`: The subject of the token, which is the identity of the workload, represented by a Workload Identifier (a URI) as defined in {{WIMSE-ID}}. {{granular-auth}} provides additional requirements associated with these identifiers, so they can be used to secure workload-to-workload communication.
     * `exp`: The expiration time of the token (as defined in {{Section 4.1.4 of RFC7519}}).
       WITs should be refreshed regularly, e.g. on the order of hours.
     * `jti`: A unique identifier for the token. This claim is OPTIONAL. The `jti` claim is frequently useful for auditing issuance of individual WITs or to revoke them, but some token generation environments do not support it.
