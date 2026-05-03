@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 30 October 2026                                        CyberArk
+Expires: 4 November 2026                                        CyberArk
                                                       A. Schwenkschuster
                                                         Defakto Security
                                                               Y. Sheffer
                                                                   Intuit
                                                             Y. Rosomakho
                                                                  Zscaler
-                                                           28 April 2026
+                                                              3 May 2026
 
 
                        WIMSE Workload Credentials
@@ -67,7 +67,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 30 October 2026.
+   This Internet-Draft will expire on 4 November 2026.
 
 Copyright Notice
 
@@ -324,9 +324,10 @@ Table of Contents
          Section 3.1.3 for key distribution and validation context.
 
       -  sub: The subject of the token, which is the identity of the
-         workload, represented by a URI as defined in [WIMSE-ID].
-         Section 1.3 provides additional considerations for security
-         implications of these identifiers.
+         workload, represented by a Workload Identifier (a URI) as
+         defined in [WIMSE-ID].  Section 1.3 provides additional
+         requirements associated with these identifiers, so they can be
+         used to secure workload-to-workload communication.
 
       -  exp: The expiration time of the token (as defined in
          Section 4.1.4 of [RFC7519]).  WITs should be refreshed
