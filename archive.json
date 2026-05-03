@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-30T02:49:40.883940+00:00",
+  "timestamp": "2026-05-03T02:48:40.255014+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -16166,10 +16166,12 @@
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
       "body": "Suceeds #192, resolves #87",
       "createdAt": "2026-04-21T13:18:26Z",
-      "updatedAt": "2026-04-21T14:21:33Z",
+      "updatedAt": "2026-04-30T09:10:19Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "6f58383cbe6aea09c60843b2b9d2348bb7336d65",
@@ -16377,10 +16379,12 @@
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
       "body": "Closes #202\n\nMade with [Cursor](https://cursor.com)",
       "createdAt": "2026-04-23T01:05:23Z",
-      "updatedAt": "2026-04-29T22:17:54Z",
+      "updatedAt": "2026-04-30T21:01:05Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "6af86bb41598bb17d40931006d6bd6d9341b5f97",
@@ -16398,9 +16402,30 @@
           "body": "I'm honestly struggling to understand \"WIT sub claim\" and the changes here. Some of which seem to have been done in a different change #225. ",
           "createdAt": "2026-04-29T22:17:54Z",
           "updatedAt": "2026-04-29T22:17:54Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> I'm honestly struggling to understand \"WIT sub claim\" and the changes here. Some of which seem to have been done in a different change #225.\r\n\r\n@bc-pi This PR addresses #202, and specifically this text:\r\n\r\n> Also, in the second sentence, I don't think it's really security implications. Rather, it's additional requirements associated with these identifiers.\r\n\r\nSo it's just a minor editorial changes. I had to pull in some of #225 to avoid merge conflicts.",
+          "createdAt": "2026-04-30T14:06:57Z",
+          "updatedAt": "2026-04-30T14:06:57Z"
         }
       ],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm78762NgU",
+          "commit": {
+            "abbreviatedOid": "45e3bd3"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "that's different than how I understand things to work but okay ",
+          "createdAt": "2026-04-30T21:01:05Z",
+          "updatedAt": "2026-04-30T21:01:05Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 227,
@@ -16411,10 +16436,12 @@
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-wpt"
+      ],
       "body": "Resolves #150 ",
       "createdAt": "2026-04-27T16:27:44Z",
-      "updatedAt": "2026-04-29T22:10:18Z",
+      "updatedAt": "2026-04-30T09:08:44Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "6af86bb41598bb17d40931006d6bd6d9341b5f97",
