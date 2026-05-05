@@ -235,6 +235,15 @@ Table of Contents
    the intended server workload would allow mis-issued or otherwise
    valid certificates for other workloads to be used for impersonation.
 
+   Client authentication is based on the workload identity certificate
+   presented by the TLS client.  A server performing mTLS authentication
+   MUST validate the client certificate chain, the associated trust
+   domain, and the workload identifier before using that identity for
+   authorization, accounting, or auditing.  Accepting any valid client
+   certificate from a trusted CA without checking whether the
+   authenticated workload is authorized for the requested action can
+   allow unintended workloads to gain access.
+
    Workload identity certificates are often issued to dynamic or short-
    lived workloads.  Deployments SHOULD use certificate lifetimes that
    are appropriate for the workload environment and SHOULD provide
