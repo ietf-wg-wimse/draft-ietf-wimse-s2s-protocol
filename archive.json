@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-05-03T02:48:40.255014+00:00",
+  "timestamp": "2026-05-05T02:38:58.307567+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -3696,7 +3696,7 @@
       "id": "I_kwDOLJmm787jK6A8",
       "title": "URI should be wimse identifier (?)",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/202",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "fandreas",
       "authorAssociation": "NONE",
       "assignees": [
@@ -3707,8 +3707,8 @@
       ],
       "body": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/blob/41fb87003b43adccd77af7e91ad06e5e3499066f/draft-ietf-wimse-workload-creds.md?plain=1#L196\n\nRather than just a URI, shouldn't the 'sub' claim contain a WIMSE identifier ? ",
       "createdAt": "2026-01-14T02:41:10Z",
-      "updatedAt": "2026-04-22T17:04:07Z",
-      "closedAt": null,
+      "updatedAt": "2026-05-03T13:30:42Z",
+      "closedAt": "2026-05-03T13:30:42Z",
       "comments": [
         {
           "author": "fandreas",
@@ -3796,7 +3796,7 @@
       "id": "I_kwDOLJmm787jK_CR",
       "title": "Workload Identifier scoped within an issuer",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/205",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "fandreas",
       "authorAssociation": "NONE",
       "assignees": [
@@ -3805,9 +3805,17 @@
       "labels": [],
       "body": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/blob/41fb87003b43adccd77af7e91ad06e5e3499066f/draft-ietf-wimse-workload-creds.md?plain=1#L402\n\nI'm not sure I agree with the statement \n\n\"The Workload Identifier is scoped within an issuer and therefore any sub-components (path portion of Identifier) are only unique within a trust domain defined by the issuer.\"\n\nsince it seems to preclude delegated trust, but that's something that should be resolved in the wimse identifier document (an issue has been raised against that document separately, and the resolution of that should eventually be reflected here).\n\n",
       "createdAt": "2026-01-14T02:53:28Z",
-      "updatedAt": "2026-02-24T15:51:51Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2026-05-03T23:07:02Z",
+      "closedAt": "2026-05-03T23:07:02Z",
+      "comments": [
+        {
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I believe this is resolved here with https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/commit/2bce559fe25431e12c6a6376689d389fdc6ee2ee",
+          "createdAt": "2026-05-03T23:07:02Z",
+          "updatedAt": "2026-05-03T23:07:02Z"
+        }
+      ]
     },
     {
       "number": 207,
@@ -4000,6 +4008,22 @@
           "updatedAt": "2026-04-22T16:39:25Z"
         }
       ]
+    },
+    {
+      "number": 228,
+      "id": "I_kwDOLJmm788AAAABBJL_xA",
+      "title": "Workload credentials draft specifies fetching id from certificate",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/228",
+      "state": "OPEN",
+      "author": "sorindumitru",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Currently the [workload credentials](https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/blob/main/draft-ietf-wimse-workload-creds.md#client-authorization-using-the-workload-identity-client-name) draft specifies fetching the workload identity from the certificate subject alternative names. This is only available in the [m]TLS case (and it's indeed reproduced there too), but that does not rely on WITs.\n\nThe section should be updated to reference fetching it from the subject claim of the WIT or move it to the WPT and HTTP signatures one, if there are differences between the two.",
+      "createdAt": "2026-05-03T11:55:57Z",
+      "updatedAt": "2026-05-03T11:55:57Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -16375,7 +16399,7 @@
       "id": "PR_kwDOLJmm787Uzx0h",
       "title": "WIT `sub` claim (#202)",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/226",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -16384,17 +16408,19 @@
       ],
       "body": "Closes #202\n\nMade with [Cursor](https://cursor.com)",
       "createdAt": "2026-04-23T01:05:23Z",
-      "updatedAt": "2026-04-30T21:01:05Z",
+      "updatedAt": "2026-05-03T13:30:41Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "6af86bb41598bb17d40931006d6bd6d9341b5f97",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-202",
       "headRefOid": "45e3bd35c5c8708251f670cc154d392b8b63fefb",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-05-03T13:30:41Z",
+      "mergedAt": "2026-05-03T13:30:41Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "7d3e7c8c1734a525ba18944f2ea7d32b556af83d"
+      },
       "comments": [
         {
           "author": "bc-pi",
@@ -16532,6 +16558,119 @@
           "createdAt": "2026-04-29T22:10:09Z",
           "updatedAt": "2026-04-29T22:10:09Z",
           "comments": []
+        }
+      ]
+    },
+    {
+      "number": 229,
+      "id": "PR_kwDOLJmm787X1ose",
+      "title": "Editorial correction",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/229",
+      "state": "OPEN",
+      "author": "yaroslavros",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "To fix https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/201",
+      "createdAt": "2026-05-03T23:08:26Z",
+      "updatedAt": "2026-05-04T06:49:56Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "7d3e7c8c1734a525ba18944f2ea7d32b556af83d",
+      "headRepository": "yaroslavros/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "main",
+      "headRefOid": "94c561b30fc3cdeb9bd978dc374b1fc49b4ea16b",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm7877aEeo",
+          "commit": {
+            "abbreviatedOid": "94c561b"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-05-04T06:49:56Z",
+          "updatedAt": "2026-05-04T06:49:56Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 230,
+      "id": "PR_kwDOLJmm787X1t2_",
+      "title": "Mtls security",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/230",
+      "state": "OPEN",
+      "author": "yaroslavros",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-05-03T23:23:59Z",
+      "updatedAt": "2026-05-04T22:26:22Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "7d3e7c8c1734a525ba18944f2ea7d32b556af83d",
+      "headRepository": "yaroslavros/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "mtls-security",
+      "headRefOid": "fdef2511d1b215300067f89f6d27ee640544db20",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm7877aIin",
+          "commit": {
+            "abbreviatedOid": "fdef251"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "Looks good.",
+          "createdAt": "2026-05-04T06:53:12Z",
+          "updatedAt": "2026-05-04T06:55:58Z",
+          "comments": [
+            {
+              "originalPosition": 9,
+              "body": "For client auth, some of this is still relevant: the server MUST be configured with sufficient information to determine the expected workload identity of the client, and MUST validate it (the \"aud\" problem).",
+              "createdAt": "2026-05-04T06:53:12Z",
+              "updatedAt": "2026-05-04T06:55:58Z"
+            },
+            {
+              "originalPosition": 15,
+              "body": "```suggestion\nThis document specifies authentication at the TLS layer. If application traffic traverses intermediaries, gateways, service meshes, or other middleboxes that terminate and re-establish TLS, the application endpoint might not be directly authenticated to the peer workload. In such deployments, authorization decisions need to account for where TLS is terminated and whether the authenticated certificate represents the peer workload, an intermediary, or another delegated entity. Such cases often call for one of the application-level WIMSE protection mechanisms.\n```",
+              "createdAt": "2026-05-04T06:55:00Z",
+              "updatedAt": "2026-05-04T06:55:58Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm7877xLLP",
+          "commit": {
+            "abbreviatedOid": "fdef251"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-04T22:26:22Z",
+          "updatedAt": "2026-05-04T22:26:22Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "I'm OK with this change",
+              "createdAt": "2026-05-04T22:26:22Z",
+              "updatedAt": "2026-05-04T22:26:22Z"
+            }
+          ]
         }
       ]
     }
