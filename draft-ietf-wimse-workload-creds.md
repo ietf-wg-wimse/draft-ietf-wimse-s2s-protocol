@@ -176,8 +176,7 @@ All terminology in this document follows {{?I-D.ietf-wimse-arch}}.
 
 # Application Level Workload-to-Workload Authentication {#app-level}
 
-As noted in the Introduction, for many deployments communication between workloads cannot use
-end-to-end transport security such as TLS. For these deployment styles, this document proposes a credential that can be used at the application level.
+In many deployments communication between workloads cannot use end-to-end transport security such as TLS. For these deployment styles, this document proposes a credential that can be used at the application level.
 
 ## The Workload Identity Token {#to-wit}
 
