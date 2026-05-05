@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 4 November 2026                                        CyberArk
+Expires: 6 November 2026                                        CyberArk
                                                       A. Schwenkschuster
                                                         Defakto Security
                                                               Y. Sheffer
                                                                   Intuit
                                                             Y. Rosomakho
                                                                  Zscaler
-                                                              3 May 2026
+                                                              5 May 2026
 
 
                        WIMSE Workload Credentials
@@ -67,7 +67,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 4 November 2026.
+   This Internet-Draft will expire on 6 November 2026.
 
 Copyright Notice
 
@@ -290,10 +290,10 @@ Table of Contents
 
 3.  Application Level Workload-to-Workload Authentication
 
-   As noted in the Introduction, for many deployments communication
-   between workloads cannot use end-to-end transport security such as
-   TLS.  For these deployment styles, this document proposes a
-   credential that can be used at the application level.
+   In many deployments communication between workloads cannot use end-
+   to-end transport security such as TLS.  For these deployment styles,
+   this document proposes a credential that can be used at the
+   application level.
 
 3.1.  The Workload Identity Token
 

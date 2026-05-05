@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments                 j Salowey
 Internet-Draft                                                  CyberArk
 Intended status: Standards Track                            Y. Rosomakho
-Expires: 4 November 2026                                         Zscaler
-                                                              3 May 2026
+Expires: 6 November 2026                                         Zscaler
+                                                              5 May 2026
 
 
                 Workload Authentication Using Mutual TLS
@@ -53,7 +53,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 4 November 2026.
+   This Internet-Draft will expire on 6 November 2026.
 
 Copyright Notice
 
@@ -86,7 +86,8 @@ Table of Contents
      6.1.  Normative References
      6.2.  Informative References
    Appendix A.  Document History
-     A.1.  draft-ietf-wimse-mutual-tls-00
+     A.1.  draft-ietf-wimse-mutual-tls-01
+     A.2.  draft-ietf-wimse-mutual-tls-00
    Acknowledgments
    Authors' Addresses
 
@@ -209,9 +210,72 @@ Table of Contents
 
 5.  Security Considerations
 
-   ToDo: perhaps some discussion of certificate lifetimes and their
-   implications, various server name validation choices, implications of
-   middle boxes, etc.
+   This document relies on the security properties of TLS [TLS], PKIX
+   path validation [RFC5280], and workload identity certificate
+   validation as described in Section 4.1 of
+   [I-D.ietf-wimse-workload-creds].  Implementations MUST validate the
+   peer certificate chain, the applicable extended key usage, and the
+   workload identifier according to the rules in this document before
+   using the authenticated identity for authorization decisions.
+
+   Workload identifiers are meaningful only within the scope of their
+   trust domain.  Authorization policies MUST NOT evaluate only the path
+   or other sub-components of a workload identifier without also
+   considering the trust domain and the trust anchor used to validate
+   the certificate.  Failure to bind the workload identifier to the
+   expected trust domain and configured trust anchor can allow one trust
+   domain to impersonate workloads from another domain.
+
+   Server authentication can be based on either conventional DNS name
+   validation or workload identity validation, depending on deployment
+   configuration.  If DNS name validation is not performed, the client
+   MUST be configured with sufficient information to determine the
+   expected workload identity of the server.  Accepting any certificate
+   issued by a trusted workload CA without validating that it represents
+   the intended server workload would allow mis-issued or otherwise
+   valid certificates for other workloads to be used for impersonation.
+
+   Workload identity certificates are often issued to dynamic or short-
+   lived workloads.  Deployments SHOULD use certificate lifetimes that
+   are appropriate for the workload environment and SHOULD provide
+   timely revocation or replacement mechanisms when workload identity,
+   authorization, or runtime state changes.  Long-lived certificates
+   increase the impact of private key compromise and stale authorization
+   decisions.
+
+   Private keys associated with workload identity certificates MUST be
+   protected against disclosure and unauthorized use.  In particular,
+   deployments MUST NOT share private keys across unrelated workload
+   instances.  Where possible, private keys SHOULD be generated and held
+   in the workload runtime environment or a dedicated key protection
+   mechanism, rather than distributed over the network.
+
+   This document specifies authentication at the TLS layer.  If
+   application traffic traverses intermediaries, gateways, service
+   meshes, or other middleboxes that terminate and re-establish TLS, the
+   application endpoint might not be directly authenticated to the peer
+   workload.  In such deployments, authorization decisions need to
+   account for where TLS is terminated and whether the authenticated
+   certificate represents the peer workload, an intermediary, or another
+   delegated entity.  Where end-to-end workload authentication context
+   is required across such boundaries, deployments SHOULD use an
+   application-layer WIMSE protection mechanism in addition to TLS-layer
+   server authentication.
+
+   Client certificate authentication exposes the client workload
+   identity to the TLS server during the handshake.  Deployments should
+   consider whether disclosure of workload identifiers to servers,
+   intermediaries, or logs is acceptable for their threat model.
+   Workload identifiers included in certificates and audit records
+   should avoid embedding unnecessary sensitive information.
+
+   Authorization decisions based on workload identity need to be made
+   using the authenticated identity obtained from the validated
+   certificate, not from unauthenticated application-layer metadata such
+   as HTTP headers.  Application-layer identity assertions can be useful
+   for logging or context, but they MUST NOT override the identity
+   established by mutual TLS unless protected and authorized by another
+   mechanism.
 
 6.  References
 
@@ -244,6 +308,12 @@ Table of Contents
               RFC 9525, DOI 10.17487/RFC9525, November 2023,
               <https://www.rfc-editor.org/rfc/rfc9525>.
 
+   [TLS]      Rescorla, E., "The Transport Layer Security (TLS) Protocol
+              Version 1.3", Work in Progress, Internet-Draft, draft-
+              ietf-tls-rfc8446bis-14, 13 September 2025,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-tls-
+              rfc8446bis-14>.
+
 6.2.  Informative References
 
    [I-D.ietf-wimse-arch]
@@ -259,7 +329,11 @@ Appendix A.  Document History
 
    // RFC Editor: please remove before publication.
 
-A.1.  draft-ietf-wimse-mutual-tls-00
+A.1.  draft-ietf-wimse-mutual-tls-01
+
+   *  Added security considerations
+
+A.2.  draft-ietf-wimse-mutual-tls-00
 
    *  Initial version, extracted from the draft-ietf-wimse-s2s-
       protocol-07 S2s draft with minimal edits.

@@ -1051,7 +1051,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">j Salowey &amp; Rosomakho</td>
-<td class="center">Expires 4 November 2026</td>
+<td class="center">Expires 6 November 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1064,12 +1064,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-wimse-mutual-tls-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-05-03" class="published">3 May 2026</time>
+<time datetime="2026-05-05" class="published">5 May 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-11-04">4 November 2026</time></dd>
+<dd class="expires"><time datetime="2026-11-06">6 November 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1123,7 +1123,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 4 November 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 6 November 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1206,7 +1206,10 @@ svg :is([fill="white"], [fill^="#fff"]) {
             <p id="section-toc.1-1.7.1"><a href="#appendix-A" class="auto internal xref">Appendix A</a>.  <a href="#name-document-history" class="internal xref">Document History</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1">
-                <p id="section-toc.1-1.7.2.1.1"><a href="#appendix-A.1" class="auto internal xref">A.1</a>.  <a href="#name-draft-ietf-wimse-mutual-tls" class="internal xref">draft-ietf-wimse-mutual-tls-00</a></p>
+                <p id="section-toc.1-1.7.2.1.1"><a href="#appendix-A.1" class="auto internal xref">A.1</a>.  <a href="#name-draft-ietf-wimse-mutual-tls" class="internal xref">draft-ietf-wimse-mutual-tls-01</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2">
+                <p id="section-toc.1-1.7.2.2.1"><a href="#appendix-A.2" class="auto internal xref">A.2</a>.  <a href="#name-draft-ietf-wimse-mutual-tls-" class="internal xref">draft-ietf-wimse-mutual-tls-00</a></p>
 </li>
             </ul>
 </li>
@@ -1322,7 +1325,14 @@ See section 1.3 of <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite x
       <h2 id="name-security-considerations">
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<p id="section-5-1">ToDo: perhaps some discussion of certificate lifetimes and their implications, various server name validation choices, implications of middle boxes, etc.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-1">This document relies on the security properties of TLS <span>[<a href="#TLS" class="cite xref">TLS</a>]</span>, PKIX path validation <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span>, and workload identity certificate validation as described in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-workload-creds-00#section-4.1" class="relref">Section 4.1</a> of [<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span>. Implementations <span class="bcp14">MUST</span> validate the peer certificate chain, the applicable extended key usage, and the workload identifier according to the rules in this document before using the authenticated identity for authorization decisions.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-2">Workload identifiers are meaningful only within the scope of their trust domain. Authorization policies <span class="bcp14">MUST NOT</span> evaluate only the path or other sub-components of a workload identifier without also considering the trust domain and the trust anchor used to validate the certificate. Failure to bind the workload identifier to the expected trust domain and configured trust anchor can allow one trust domain to impersonate workloads from another domain.<a href="#section-5-2" class="pilcrow">¶</a></p>
+<p id="section-5-3">Server authentication can be based on either conventional DNS name validation or workload identity validation, depending on deployment configuration. If DNS name validation is not performed, the client <span class="bcp14">MUST</span> be configured with sufficient information to determine the expected workload identity of the server. Accepting any certificate issued by a trusted workload CA without validating that it represents the intended server workload would allow mis-issued or otherwise valid certificates for other workloads to be used for impersonation.<a href="#section-5-3" class="pilcrow">¶</a></p>
+<p id="section-5-4">Workload identity certificates are often issued to dynamic or short-lived workloads. Deployments <span class="bcp14">SHOULD</span> use certificate lifetimes that are appropriate for the workload environment and <span class="bcp14">SHOULD</span> provide timely revocation or replacement mechanisms when workload identity, authorization, or runtime state changes. Long-lived certificates increase the impact of private key compromise and stale authorization decisions.<a href="#section-5-4" class="pilcrow">¶</a></p>
+<p id="section-5-5">Private keys associated with workload identity certificates <span class="bcp14">MUST</span> be protected against disclosure and unauthorized use. In particular, deployments <span class="bcp14">MUST NOT</span> share private keys across unrelated workload instances. Where possible, private keys <span class="bcp14">SHOULD</span> be generated and held in the workload runtime environment or a dedicated key protection mechanism, rather than distributed over the network.<a href="#section-5-5" class="pilcrow">¶</a></p>
+<p id="section-5-6">This document specifies authentication at the TLS layer. If application traffic traverses intermediaries, gateways, service meshes, or other middleboxes that terminate and re-establish TLS, the application endpoint might not be directly authenticated to the peer workload. In such deployments, authorization decisions need to account for where TLS is terminated and whether the authenticated certificate represents the peer workload, an intermediary, or another delegated entity. Where end-to-end workload authentication context is required across such boundaries, deployments <span class="bcp14">SHOULD</span> use an application-layer WIMSE protection mechanism in addition to TLS-layer server authentication.<a href="#section-5-6" class="pilcrow">¶</a></p>
+<p id="section-5-7">Client certificate authentication exposes the client workload identity to the TLS server during the handshake. Deployments should consider whether disclosure of workload identifiers to servers, intermediaries, or logs is acceptable for their threat model. Workload identifiers included in certificates and audit records should avoid embedding unnecessary sensitive information.<a href="#section-5-7" class="pilcrow">¶</a></p>
+<p id="section-5-8">Authorization decisions based on workload identity need to be made using the authenticated identity obtained from the validated certificate, not from unauthenticated application-layer metadata such as HTTP headers. Application-layer identity assertions can be useful for logging or context, but they <span class="bcp14">MUST NOT</span> override the identity established by mutual TLS unless protected and authorized by another mechanism.<a href="#section-5-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="sec-combined-references">
@@ -1353,8 +1363,12 @@ See section 1.3 of <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite x
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9525">[RFC9525]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Saint-Andre, P.</span> and <span class="refAuthor">R. Salz</span>, <span class="refTitle">"Service Identity in TLS"</span>, <span class="seriesInfo">RFC 9525</span>, <span class="seriesInfo">DOI 10.17487/RFC9525</span>, <time datetime="2023-11" class="refDate">November 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9525">https://www.rfc-editor.org/rfc/rfc9525</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="TLS">[TLS]</dt>
+      <dd>
+<span class="refAuthor">Rescorla, E.</span>, <span class="refTitle">"The Transport Layer Security (TLS) Protocol Version 1.3"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-tls-rfc8446bis-14</span>, <time datetime="2025-09-13" class="refDate">13 September 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-tls-rfc8446bis-14">https://datatracker.ietf.org/doc/html/draft-ietf-tls-rfc8446bis-14</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -1380,17 +1394,29 @@ See section 1.3 of <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite x
 <a href="#appendix-A" class="section-number selfRef">Appendix A. </a><a href="#name-document-history" class="section-name selfRef">Document History</a>
       </h2>
 <p id="appendix-A-1"><span class="cref">RFC Editor: please remove before publication.</span><a href="#appendix-A-1" class="pilcrow">¶</a></p>
-<div id="draft-ietf-wimse-mutual-tls-00">
+<div id="draft-ietf-wimse-mutual-tls-01">
 <section id="appendix-A.1">
         <h3 id="name-draft-ietf-wimse-mutual-tls">
-<a href="#appendix-A.1" class="section-number selfRef">A.1. </a><a href="#name-draft-ietf-wimse-mutual-tls" class="section-name selfRef">draft-ietf-wimse-mutual-tls-00</a>
+<a href="#appendix-A.1" class="section-number selfRef">A.1. </a><a href="#name-draft-ietf-wimse-mutual-tls" class="section-name selfRef">draft-ietf-wimse-mutual-tls-01</a>
         </h3>
 <ul class="normal">
 <li class="normal" id="appendix-A.1-1.1">
-            <p id="appendix-A.1-1.1.1">Initial version, extracted from the draft-ietf-wimse-s2s-protocol-07 S2s draft with minimal edits.<a href="#appendix-A.1-1.1.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.1.1">Added security considerations<a href="#appendix-A.1-1.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-A.1-1.2">
-            <p id="appendix-A.1-1.2.1">added security consideration for Server Name Validation<a href="#appendix-A.1-1.2.1" class="pilcrow">¶</a></p>
+        </ul>
+</section>
+</div>
+<div id="draft-ietf-wimse-mutual-tls-00">
+<section id="appendix-A.2">
+        <h3 id="name-draft-ietf-wimse-mutual-tls-">
+<a href="#appendix-A.2" class="section-number selfRef">A.2. </a><a href="#name-draft-ietf-wimse-mutual-tls-" class="section-name selfRef">draft-ietf-wimse-mutual-tls-00</a>
+        </h3>
+<ul class="normal">
+<li class="normal" id="appendix-A.2-1.1">
+            <p id="appendix-A.2-1.1.1">Initial version, extracted from the draft-ietf-wimse-s2s-protocol-07 S2s draft with minimal edits.<a href="#appendix-A.2-1.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.2-1.2">
+            <p id="appendix-A.2-1.2.1">added security consideration for Server Name Validation<a href="#appendix-A.2-1.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
