@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-05-07T02:46:03.232951+00:00",
+  "timestamp": "2026-05-10T02:50:38.383216+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -2916,7 +2916,7 @@
       "id": "I_kwDOLJmm787L2Irm",
       "title": "Workload Identifer reference",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/161",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "fandreas",
       "authorAssociation": "NONE",
       "assignees": [
@@ -2926,8 +2926,8 @@
       "labels": [],
       "body": "The document has several references to the WIMSE architecture document for the definition of the Workload Identifier. However, we also have a new document defining the workload identifier. We need to resolve which document defines the workload identifier and then have it defined properly in there, which in turn may necessitate an update to this document. ",
       "createdAt": "2025-09-16T01:08:00Z",
-      "updatedAt": "2025-12-09T15:23:16Z",
-      "closedAt": null,
+      "updatedAt": "2026-05-08T13:34:42Z",
+      "closedAt": "2026-05-08T13:34:42Z",
       "comments": [
         {
           "author": "bc-pi",
@@ -2956,6 +2956,13 @@
           "body": "Related to #31 (I believe)",
           "createdAt": "2025-12-09T15:23:16Z",
           "updatedAt": "2025-12-09T15:23:16Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Closing as obsolete.",
+          "createdAt": "2026-05-08T13:34:42Z",
+          "updatedAt": "2026-05-08T13:34:42Z"
         }
       ]
     },
@@ -4018,10 +4025,12 @@
       "author": "sorindumitru",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
       "body": "Currently the [workload credentials](https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/blob/main/draft-ietf-wimse-workload-creds.md#client-authorization-using-the-workload-identity-client-name) draft specifies fetching the workload identity from the certificate subject alternative names. This is only available in the [m]TLS case (and it's indeed reproduced there too), but that does not rely on WITs.\n\nThe section should be updated to reference fetching it from the subject claim of the WIT or move it to the WPT and HTTP signatures one, if there are differences between the two.",
       "createdAt": "2026-05-03T11:55:57Z",
-      "updatedAt": "2026-05-03T11:55:57Z",
+      "updatedAt": "2026-05-08T13:33:35Z",
       "closedAt": null,
       "comments": []
     },
