@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-05-10T02:50:38.383216+00:00",
+  "timestamp": "2026-05-12T02:51:30.437309+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -4079,6 +4079,22 @@
       "body": "",
       "createdAt": "2026-05-05T14:36:14Z",
       "updatedAt": "2026-05-05T14:36:14Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 234,
+      "id": "I_kwDOLJmm788AAAABBytPGQ",
+      "title": "WPT validation doesn't seem to require WIT validation",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/234",
+      "state": "OPEN",
+      "author": "sorindumitru",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "AFAICT, the draft does not require validating the WIT when validating the WPT, just that the the hash matches but that doesn't give any security.\n\nOn top of that, AFAICT, there's nothing defining how to validate a WIT. It's specified as a JWS and that the workload needs to have the key from somewhere, but is that enough? Should it specify fetching the trust domain from the `sub` field and then determine the key[s] to use for validating it?",
+      "createdAt": "2026-05-10T09:33:22Z",
+      "updatedAt": "2026-05-10T09:33:22Z",
       "closedAt": null,
       "comments": []
     }
