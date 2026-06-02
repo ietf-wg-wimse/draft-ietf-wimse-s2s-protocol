@@ -349,12 +349,17 @@ As noted in the introduction, for many deployments, transport-level protection o
 
 The Workload Identity Certificate is an X.509 certificate. The workload identity MUST be encoded in a SubjectAltName extension of type URI. There MUST be only one SubjectAltName extension of type URI in a Workload Identity Certificate. If the workload will act as a TLS server for clients that do not understand workload identities it is RECOMMENDED that the Workload Identity Certificate contain a SubjectAltName of type DNSName with the appropriate DNS names for the server. The certificate MAY contain SubjectAltName extensions of other types.
 
-## Client Authorization Using the Workload Identity {#client-name}
+# Client Authorization Using the Workload Identity {#client-name}
 
-The server application retrieves the workload identifier from the client certificate subjectAltName. The identifier is used in authorization, accounting and auditing.
+The receiving application uses the authenticated peer's workload identifier in authorization, accounting, and auditing.
 For example, the full workload identifier may be matched against ACLs to authorize actions requested by the peer and the identifier may be included in log messages to associate actions to the client workload for audit purposes.
 A deployment may specify other authorization policies based on the specific details of how the workload identifier is constructed. The path portion of the workload identifier MUST always be considered in the scope of the trust domain.
 See {{granular-auth}} on additional security implications of workload identifiers.
+
+How the receiving application obtains the workload identifier depends on the credential used to authenticate the peer:
+
+* Application level: After successfully validating the WIT, the receiving application retrieves the workload identifier from the `sub` claim.
+* Transport level: When the client is authenticated with a Workload Identity Certificate, the receiving application retrieves the workload identifier from the client certificate's SubjectAltName extension of type URI.
 
 # Implementation Status
 
