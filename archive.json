@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-05-12T02:51:30.437309+00:00",
+  "timestamp": "2026-06-04T03:54:23.098568+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -3045,7 +3045,7 @@
       "id": "I_kwDOLJmm787L2Vsc",
       "title": "iss claim in WIT",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/164",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "fandreas",
       "authorAssociation": "NONE",
       "assignees": [
@@ -3057,8 +3057,8 @@
       ],
       "body": "The \"Workload Identity Token\" Section (3.1) says the iss claim is \"The issuer of the token, which is the Identity Server, represented by a URI. The iss claim is RECOMMENDED but optional\"\n\nThe example in Figure 2-4 does not include an \"iss\" claim, however the text after Figure 4 says that the claims indicate that \"the example WIT was issued by an Identity Server known as....\" (this refer to the -06 version; current editor's copy seems to have removed this). \n\nSection 3.1.2 (\"A note on iss claim and key distribution\") then says \"It is RECOMMENDED that the WIT carries an iss claim. This specification itself does not make use of a potential iss claim but also carries the trust domain in the workload identifier\". \n\n\n1) If the iss claim is recommended, then why is its use not specified and shown in the examples ? \n\n2) There seems to be an implicit statement that the issuer must be the same as the trust domain in the workload identifier, however why is that, especially in lieu of the RECOMMENDED part above ? \n\n",
       "createdAt": "2025-09-16T01:42:52Z",
-      "updatedAt": "2026-03-10T15:25:52Z",
-      "closedAt": null,
+      "updatedAt": "2026-06-02T14:45:38Z",
+      "closedAt": "2026-06-02T14:20:13Z",
       "comments": [
         {
           "author": "bc-pi",
@@ -3094,6 +3094,20 @@
           "body": "Discussed amongst the authors today, we're leaning towards making it required but not define a specific format or schema. If wimse scheme is used, the authority MUST match the authority of the WIMSE ID.",
           "createdAt": "2026-03-10T15:25:40Z",
           "updatedAt": "2026-03-10T15:25:40Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Closing this based on #220 - the `iss` is still optional but added wording why it makes sense to include it.",
+          "createdAt": "2026-06-02T14:20:13Z",
+          "updatedAt": "2026-06-02T14:20:13Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> Discussed amongst the authors today, we're leaning towards making it required but not define a specific format or schema. If wimse scheme is used, the authority MUST match the authority of the WIMSE ID.\n\nwhy didn't we go with this direction, anyone remember? ",
+          "createdAt": "2026-06-02T14:45:37Z",
+          "updatedAt": "2026-06-02T14:45:37Z"
         }
       ]
     },
@@ -3269,14 +3283,14 @@
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
-        "jsalowey"
+        "yaronf"
       ],
       "labels": [
         "draft-ietf-wimse-workload-creds"
       ],
       "body": "We currently don't talk about where the trust anchor comes from and what data is used to identify those. We believe this should be added on a high level. The exact provisioning is out of scope.",
       "createdAt": "2025-09-23T14:48:53Z",
-      "updatedAt": "2026-01-27T15:50:57Z",
+      "updatedAt": "2026-06-02T14:25:05Z",
       "closedAt": null,
       "comments": [
         {
@@ -3351,14 +3365,16 @@
       "state": "OPEN",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "yaronf"
+      ],
       "labels": [
         "draft-ietf-wimse-workload-creds",
         "pre-wglc"
       ],
       "body": "Sec. 1.3 defines a mapping from the Request URI to the WIMSE ID, but then the MUST statement at the bottom requires a mapping \"between\" these two, which can be read as a bidirectional mapping.",
       "createdAt": "2025-09-26T10:56:13Z",
-      "updatedAt": "2025-12-09T15:32:54Z",
+      "updatedAt": "2026-06-02T14:27:05Z",
       "closedAt": null,
       "comments": []
     },
@@ -3373,12 +3389,11 @@
       "assignees": [],
       "labels": [
         "draft-ietf-wimse-wpt",
-        "draft-ietf-wimse-workload-creds",
         "pre-wglc"
       ],
       "body": "From a discussion with @strideynet:\n\nIf you want different endpoints to have different access policies, then you need to go granular.\n\nPerhaps this intention could be stated more explicitly ? I think most people will be familiar with cases where aud is purely the hostname/scheme of the service you are connecting to - and that there isn't a level of granularity beneath that. It'd be good to call that out that this additional granularity binds the WPT to a specific endpoint/RPC rather than just a specific target host.\n\nThis seems to belong in Sec. 1.3, \"Workload Identifiers and Authentication Granularity\".",
       "createdAt": "2025-09-26T11:00:35Z",
-      "updatedAt": "2025-12-09T15:34:16Z",
+      "updatedAt": "2026-06-02T14:58:10Z",
       "closedAt": null,
       "comments": [
         {
@@ -3398,7 +3413,9 @@
       "state": "OPEN",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "yaronf"
+      ],
       "labels": [
         "draft-ietf-wimse-wpt",
         "draft-ietf-wimse-workload-creds",
@@ -3406,7 +3423,7 @@
       ],
       "body": "* When using mTLS, the SubjectAltName is a WIMSE ID. The assumption is that both peers know each other's ID and can validate the incoming certs.\n* Sec. 1.3 is about mapping from Request URI (which is known to the client by definition) to the target's WIMSE ID.\n\nAnd yet we still specified the `aud` claim of the WPT (Sec. 3.2) as the Request URI. Both points above point towards `aud` as the WIMSE ID.",
       "createdAt": "2025-09-26T11:03:20Z",
-      "updatedAt": "2025-12-09T15:35:27Z",
+      "updatedAt": "2026-06-02T14:27:19Z",
       "closedAt": null,
       "comments": []
     },
@@ -3588,13 +3605,15 @@
       "state": "OPEN",
       "author": "fandreas",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "arndt-s"
+      ],
       "labels": [
         "draft-ietf-wimse-workload-creds"
       ],
       "body": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/blob/41fb87003b43adccd77af7e91ad06e5e3499066f/draft-ietf-wimse-workload-creds.md?plain=1#L87\n\nGlobal comment: Decide on \"application-level\" or \"application level\" and be consistent. Same with \"transport -level\"",
       "createdAt": "2026-01-14T02:16:28Z",
-      "updatedAt": "2026-04-22T17:03:44Z",
+      "updatedAt": "2026-06-02T14:28:43Z",
       "closedAt": null,
       "comments": []
     },
@@ -3606,13 +3625,15 @@
       "state": "OPEN",
       "author": "fandreas",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "arndt-s"
+      ],
       "labels": [
         "draft-ietf-wimse-workload-creds"
       ],
       "body": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/blob/41fb87003b43adccd77af7e91ad06e5e3499066f/draft-ietf-wimse-workload-creds.md?plain=1#L89-L95\n\nConfusing when reading initially. Clarify that those protocols are defined in separate documents and include references to them. ",
       "createdAt": "2026-01-14T02:18:38Z",
-      "updatedAt": "2026-04-22T17:03:49Z",
+      "updatedAt": "2026-06-02T14:29:05Z",
       "closedAt": null,
       "comments": []
     },
@@ -3624,13 +3645,15 @@
       "state": "OPEN",
       "author": "fandreas",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "arndt-s"
+      ],
       "labels": [
         "draft-ietf-wimse-workload-creds"
       ],
       "body": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/blob/41fb87003b43adccd77af7e91ad06e5e3499066f/draft-ietf-wimse-workload-creds.md?plain=1#L141\n\nThe 24-hour example is inconsistent with Section 3.1, which suggests WITs should be refreshed every couple of hours (exp claim). ",
       "createdAt": "2026-01-14T02:20:25Z",
-      "updatedAt": "2026-04-22T17:03:53Z",
+      "updatedAt": "2026-06-02T14:29:33Z",
       "closedAt": null,
       "comments": []
     },
@@ -3734,15 +3757,25 @@
       "state": "OPEN",
       "author": "fandreas",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "yaronf"
+      ],
       "labels": [
         "draft-ietf-wimse-workload-creds"
       ],
       "body": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/blob/41fb87003b43adccd77af7e91ad06e5e3499066f/draft-ietf-wimse-workload-creds.md?plain=1#L287\n\nThe Workload-Identity-Token as currently defined only allows us to include a single wimse identifier. This is related to the \"service\" versus \"instance\" issue, where we want to be able to provide both (and maybe others) as well as being able to determine which one we are actually seeing. For example, you want to include the \"service\" wimse identifier to be used for authentication/authorization but you also want the \"instance\" identifier for auditing/logging purposes. ",
       "createdAt": "2026-01-14T02:47:17Z",
-      "updatedAt": "2026-04-22T17:04:12Z",
+      "updatedAt": "2026-06-02T14:47:23Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "body": "We should recommend only one identity credential.  ",
+          "createdAt": "2026-06-02T14:46:59Z",
+          "updatedAt": "2026-06-02T14:46:59Z"
+        }
+      ]
     },
     {
       "number": 204,
@@ -3752,13 +3785,15 @@
       "state": "OPEN",
       "author": "fandreas",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "yaronf"
+      ],
       "labels": [
         "draft-ietf-wimse-workload-creds"
       ],
       "body": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/blob/41fb87003b43adccd77af7e91ad06e5e3499066f/draft-ietf-wimse-workload-creds.md?plain=1#L354\n\nWhat is the rationale for only allowing one SubjectAltName extension of type URI in the certificate ? This goes back to the need to be able to convey more than one \"type\" of identity (e.g. service and instance). ",
       "createdAt": "2026-01-14T02:50:10Z",
-      "updatedAt": "2026-04-22T17:04:16Z",
+      "updatedAt": "2026-06-02T14:49:04Z",
       "closedAt": null,
       "comments": [
         {
@@ -3795,6 +3830,13 @@
           "body": "@arndt-s, I don't believe you can generally present multiple certificates when performing authentication, and you generally do not know whether the authenticating party wants to leverage instance-specific identifiers or not. \n\nThe requirement noted above remains, i.e.  the need to convey different types of identities in a WIMSE credential (like \"service\" and \"instance\"). I'm not clear on how your proposal addresses that. ",
           "createdAt": "2026-01-20T23:29:58Z",
           "updatedAt": "2026-01-20T23:29:58Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Needs text in both creds and mTLS.",
+          "createdAt": "2026-06-02T14:48:51Z",
+          "updatedAt": "2026-06-02T14:48:51Z"
         }
       ]
     },
@@ -3860,13 +3902,15 @@
       "state": "OPEN",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "arndt-s"
+      ],
       "labels": [
         "draft-ietf-wimse-workload-creds"
       ],
       "body": "Currently, a lot of the security considerations are POP specific and talk about semantics not described in the credentials document.",
       "createdAt": "2026-02-10T15:32:41Z",
-      "updatedAt": "2026-04-07T14:54:27Z",
+      "updatedAt": "2026-06-02T14:50:01Z",
       "closedAt": null,
       "comments": [
         {
@@ -4024,15 +4068,25 @@
       "state": "OPEN",
       "author": "sorindumitru",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "yaronf"
+      ],
       "labels": [
         "draft-ietf-wimse-workload-creds"
       ],
       "body": "Currently the [workload credentials](https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/blob/main/draft-ietf-wimse-workload-creds.md#client-authorization-using-the-workload-identity-client-name) draft specifies fetching the workload identity from the certificate subject alternative names. This is only available in the [m]TLS case (and it's indeed reproduced there too), but that does not rely on WITs.\n\nThe section should be updated to reference fetching it from the subject claim of the WIT or move it to the WPT and HTTP signatures one, if there are differences between the two.",
       "createdAt": "2026-05-03T11:55:57Z",
-      "updatedAt": "2026-05-08T13:33:35Z",
+      "updatedAt": "2026-06-02T14:55:03Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "body": "There should be equivalent text in the WIT section (or perhaps uplevel to a common section) ",
+          "createdAt": "2026-06-02T14:54:47Z",
+          "updatedAt": "2026-06-02T14:54:47Z"
+        }
+      ]
     },
     {
       "number": 231,
@@ -4091,10 +4145,12 @@
       "author": "sorindumitru",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-wpt"
+      ],
       "body": "AFAICT, the draft does not require validating the WIT when validating the WPT, just that the the hash matches but that doesn't give any security.\n\nOn top of that, AFAICT, there's nothing defining how to validate a WIT. It's specified as a JWS and that the workload needs to have the key from somewhere, but is that enough? Should it specify fetching the trust domain from the `sub` field and then determine the key[s] to use for validating it?",
       "createdAt": "2026-05-10T09:33:22Z",
-      "updatedAt": "2026-05-10T09:33:22Z",
+      "updatedAt": "2026-06-03T18:24:20Z",
       "closedAt": null,
       "comments": []
     }
@@ -16838,6 +16894,91 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 235,
+      "id": "PR_kwDOLJmm787h5YJb",
+      "title": "Unify client authorization for WIT and WIC (#228)",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/235",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "Add a top-level section on using the workload identifier for authorization. Shared policy text; bullets distinguish application level (`sub`) from transport level (certificate SAN). Use \"receiving application\" for the party that authorizes the peer.\r\n\r\nCloses #228.",
+      "createdAt": "2026-06-02T17:23:09Z",
+      "updatedAt": "2026-06-02T17:27:05Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "08761f7e68366d3a496fd14d8b395c6eac7f272e",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-228",
+      "headRefOid": "cb1911634e86cfe294126cebe1a8691a11c8f107",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 236,
+      "id": "PR_kwDOLJmm787h6RWL",
+      "title": "Add trust anchors section; clarify WIT validation (#170)",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/236",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "Introduce normative Establishing Trust Anchors (OOB provisioning, multiple keys, `kid`/RFC 7515/8725, WIC pointer). Align `iss` note with trust anchors and RFC 8414 only when configured OOB. Update WIT example signing-key wording.\r\n\r\nCloses #170.",
+      "createdAt": "2026-06-02T18:04:46Z",
+      "updatedAt": "2026-06-03T14:07:51Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "08761f7e68366d3a496fd14d8b395c6eac7f272e",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-170",
+      "headRefOid": "16526d7f31f232a5bfd486705749f6805013b830",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 237,
+      "id": "PR_kwDOLJmm787iRsrg",
+      "title": "One workload identity per WIT and WIC (#203, #204)",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/237",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds",
+        "draft-ietf-wimse-mutual-tls"
+      ],
+      "body": "Add a normative section on a single Workload Identifier per credential, clarify WIT sub and WIC URI SAN rules, and allow other SAN types (e.g. DNSName) for TLS server use. Align mutual-tls text with creds and cite the new section.\r\n\r\nClose #203, #204.",
+      "createdAt": "2026-06-03T14:53:08Z",
+      "updatedAt": "2026-06-03T14:53:34Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "08761f7e68366d3a496fd14d8b395c6eac7f272e",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-203",
+      "headRefOid": "527e25ec334de8d8ad113c6d6193a9ed3d3c5825",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
