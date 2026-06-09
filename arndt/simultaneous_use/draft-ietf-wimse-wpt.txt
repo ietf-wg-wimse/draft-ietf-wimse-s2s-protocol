@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                      A. Schwenkschuster
-Expires: 23 October 2026                                Defakto Security
-                                                           21 April 2026
+Expires: 11 December 2026                               Defakto Security
+                                                             9 June 2026
 
 
                        WIMSE Workload Proof Token
@@ -60,7 +60,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 23 October 2026.
+   This Internet-Draft will expire on 11 December 2026.
 
 Copyright Notice
 
@@ -657,9 +657,9 @@ Table of Contents
               Campbell, B., Salowey, J. A., Schwenkschuster, A.,
               Sheffer, Y., and Y. Rosomakho, "WIMSE Workload
               Credentials", Work in Progress, Internet-Draft, draft-
-              ietf-wimse-workload-creds-00, 3 November 2025,
+              ietf-wimse-workload-creds-01, 5 May 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
-              workload-creds-00>.
+              workload-creds-01>.
 
    [RFC5234]  Crocker, D., Ed. and P. Overell, "Augmented BNF for Syntax
               Specifications: ABNF", STD 68, RFC 5234,
