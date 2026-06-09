@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 5 December 2026                                        CyberArk
+Expires: 11 December 2026                                       CyberArk
                                                       A. Schwenkschuster
                                                         Defakto Security
                                                               Y. Sheffer
                                                                   Intuit
                                                             Y. Rosomakho
                                                                  Zscaler
-                                                             3 June 2026
+                                                             9 June 2026
 
 
                        WIMSE Workload Credentials
@@ -67,7 +67,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 5 December 2026.
+   This Internet-Draft will expire on 11 December 2026.
 
 Copyright Notice
 
@@ -91,31 +91,31 @@ Table of Contents
      1.3.  Workload Identifiers and Authentication Granularity
    2.  Conventions and Definitions
    3.  One Workload Identity per Credential
-   4.  Application Level Workload-to-Workload Authentication
+   4.  Application-Level Workload-to-Workload Authentication
      4.1.  The Workload Identity Token
        4.1.1.  The WIT HTTP Header
        4.1.2.  Including Additional Claims
        4.1.3.  A note on iss claim and key distribution
      4.2.  Error Conditions
      4.3.  Coexistence with JWT Bearer Tokens
-   5.  Transport Level Workload-to-Workload Authentication
+   5.  Transport-Level Workload-to-Workload Authentication
      5.1.  The Workload Identity Certificate
-     5.2.  Client Authorization Using the Workload Identity
-   6.  Implementation Status
-   7.  Security Considerations
-     7.1.  Workload Identity
-     7.2.  Workload Identity Token and Proof of Possession
-     7.3.  Workload Identity Key Management
-     7.4.  Middle Boxes
-     7.5.  Privacy Considerations
-   8.  IANA Considerations
-     8.1.  Media Type Registration
-       8.1.1.  application/wit+jwt
-     8.2.  Hypertext Transfer Protocol (HTTP) Field Name Registration
-       8.2.1.  Workload-Identity-Token
-   9.  References
-     9.1.  Normative References
-     9.2.  Informative References
+   6.  Client Authorization Using the Workload Identity
+   7.  Implementation Status
+   8.  Security Considerations
+     8.1.  Workload Identity
+     8.2.  Workload Identity Token and Proof of Possession
+     8.3.  Workload Identity Key Management
+     8.4.  Middle Boxes
+     8.5.  Privacy Considerations
+   9.  IANA Considerations
+     9.1.  Media Type Registration
+       9.1.1.  application/wit+jwt
+     9.2.  Hypertext Transfer Protocol (HTTP) Field Name Registration
+       9.2.1.  Workload-Identity-Token
+   10. References
+     10.1.  Normative References
+     10.2.  Informative References
    Appendix A.  Document History
      A.1.  draft-ietf-wimse-workload-creds-01
      A.2.  draft-ietf-wimse-workload-creds-00
@@ -159,14 +159,14 @@ Table of Contents
    authenticate workloads to each other are out of scope for this
    document.  At the time of writing, three such protocols are defined:
 
-   *  Transport level authentication mutual TLS using the Workload
+   *  Transport-level authentication mutual TLS using the Workload
       Identity Certificate.
 
-   *  Application level authentication using the Workload Identity Token
+   *  Application-level authentication using the Workload Identity Token
       in conjunction with a JWT-based proof of possession, the Workload
       Proof Token (WPT).
 
-   *  Application level authentication using the Workload Identity Token
+   *  Application-level authentication using the Workload Identity Token
       in conjunction with HTTP Message Signatures.
 
 1.1.  Use In Other Protocols
@@ -309,19 +309,19 @@ Table of Contents
    MAY use other mechanisms, such as the optional jti claim, separate
    credentials, or additional claims as described in Section 4.1.2.
 
-4.  Application Level Workload-to-Workload Authentication
+4.  Application-Level Workload-to-Workload Authentication
 
    In many deployments communication between workloads cannot use end-
    to-end transport security such as TLS.  For these deployment styles,
    this document proposes a credential that can be used at the
-   application level.
+   application-level.
 
 4.1.  The Workload Identity Token
 
    The Workload Identity Token (WIT) is a JWS [RFC7515] signed JWT
    [RFC7519] that represents the identity of a workload.  It is issued
    by the Identity Server and binds a public key to the workload
-   identity.  See Section 7.3 for security considerations.
+   identity.  See Section 8.3 for security considerations.
 
    A WIT MUST contain the following content, except where noted:
 
@@ -589,7 +589,7 @@ Table of Contents
    calls can be made and information in the context token may be used to
    determine which specific resources can be accessed.
 
-5.  Transport Level Workload-to-Workload Authentication
+5.  Transport-Level Workload-to-Workload Authentication
 
    As noted in the introduction, for many deployments, transport-level
    protection of application traffic is ideal.
@@ -609,7 +609,7 @@ Table of Contents
    contain SubjectAltName extensions of other types for PKIX or local
    policy, but only the URI SAN above is the WIMSE workload identity.
 
-5.2.  Client Authorization Using the Workload Identity
+6.  Client Authorization Using the Workload Identity
 
    The server application retrieves the workload identifier from the
    client certificate's URI SubjectAltName (see Section 5.1).  The
@@ -624,7 +624,19 @@ Table of Contents
    Section 1.3 on additional security implications of workload
    identifiers.
 
-6.  Implementation Status
+   How the receiving application obtains the workload identifier depends
+   on the credential used to authenticate the peer:
+
+   *  Application-level: After successfully validating the WIT, the
+      receiving application retrieves the workload identifier from the
+      sub claim.
+
+   *  Transport-level: When the client is authenticated with a Workload
+      Identity Certificate, the receiving application retrieves the
+      workload identifier from the client certificate's SubjectAltName
+      extension of type URI.
+
+7.  Implementation Status
 
 
    // Note to RFC Editor: please remove this section, as well as the
@@ -692,9 +704,9 @@ Table of Contents
 
    *  Contact: noah@goteleport.com
 
-7.  Security Considerations
+8.  Security Considerations
 
-7.1.  Workload Identity
+8.1.  Workload Identity
 
    Workload Identifiers ([WIMSE-ID]) are scoped to a trust domain (the
    URI authority component) and MUST be interpreted in that trust domain
@@ -714,7 +726,7 @@ Table of Contents
    accepted by a validator that fetches and trusts the corresponding key
    material without verifying the issuer's legitimacy.
 
-7.2.  Workload Identity Token and Proof of Possession
+8.2.  Workload Identity Token and Proof of Possession
 
    The Workload Identity Token (WIT) is bound to a secret cryptographic
    key and is always presented with a proof of possession as described
@@ -766,7 +778,7 @@ Table of Contents
    identity of a TLS session or TLS channel binding parameters.  The
    mechanisms for binding are outside the scope of this specification.
 
-7.3.  Workload Identity Key Management
+8.3.  Workload Identity Key Management
 
    Both the Workload Identity Token and the Workload Identity
    Certificate carry a public key.  The corresponding private key:
@@ -780,7 +792,7 @@ Table of Contents
    *  SHOULD be re-generated for each new Workload Identity Token or
       Certificate.
 
-7.4.  Middle Boxes
+8.4.  Middle Boxes
 
    In some deployments the Workload Identity Token and proof of
    possession may pass through multiple systems.  The communication
@@ -797,7 +809,7 @@ Table of Contents
    if it is appropriate to trust and allow traffic to pass through a
    middle box.
 
-7.5.  Privacy Considerations
+8.5.  Privacy Considerations
 
    WITs and the proofs of possession may contain private information
    such as user names or other identities.  Care should be taken to
@@ -810,16 +822,16 @@ Table of Contents
    these are exceptional cases a deployment should evaluate if the
    disclosure of WITs or certificates can be used to track a user.
 
-8.  IANA Considerations
+9.  IANA Considerations
 
-8.1.  Media Type Registration
+9.1.  Media Type Registration
 
    IANA is requested to register the following entries to the "Media
    Types" registry [IANA.MEDIA.TYPES]:
 
-   *  application/wit+jwt, per Section 8.1.1.
+   *  application/wit+jwt, per Section 9.1.1.
 
-8.1.1.  application/wit+jwt
+9.1.1.  application/wit+jwt
 
    Type name: application
 
@@ -867,14 +879,14 @@ Table of Contents
 
    Change controller: Internet Engineering Task Force (iesg@ietf.org).
 
-8.2.  Hypertext Transfer Protocol (HTTP) Field Name Registration
+9.2.  Hypertext Transfer Protocol (HTTP) Field Name Registration
 
    IANA is requested to register the following entries to the "Hypertext
    Transfer Protocol (HTTP) Field Name Registry" [IANA.HTTP.FIELDS]:
 
-   *  Workload-Identity-Token, per Section 8.2.1.
+   *  Workload-Identity-Token, per Section 9.2.1.
 
-8.2.1.  Workload-Identity-Token
+9.2.1.  Workload-Identity-Token
 
    *  Field Name: Workload-Identity-Token
 
@@ -886,9 +898,9 @@ Table of Contents
 
    *  Comments: see reference above for an ABNF syntax of this field
 
-9.  References
+10.  References
 
-9.1.  Normative References
+10.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -951,7 +963,7 @@ Table of Contents
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
               identifier-02>.
 
-9.2.  Informative References
+10.2.  Informative References
 
    [I-D.ietf-oauth-transaction-tokens]
               Tulshibagwale, A., Fletcher, G., and P. Kasselman,
@@ -1066,7 +1078,7 @@ A.7.  draft-ietf-wimse-s2s-protocol-03
 
    *  Make jti claim in WIT optional.
 
-   *  Error handling for the application level methods.
+   *  Error handling for the application-level methods.
 
 A.8.  draft-ietf-wimse-s2s-protocol-02
 
