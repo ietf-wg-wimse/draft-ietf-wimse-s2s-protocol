@@ -1244,7 +1244,7 @@ protection options, including the one described here.<a href="#section-1.1-1" cl
         <h3 id="name-workload-identity-certifica">
 <a href="#section-1.2" class="section-number selfRef">1.2. </a><a href="#name-workload-identity-certifica" class="section-name selfRef">Workload Identity Certificates</a>
         </h3>
-<p id="section-1.2-1">Workload identity certificates are X.509 certificates that carry workload identifiers as described in section 4.1 of <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span><a href="#section-1.2-1" class="pilcrow">¶</a></p>
+<p id="section-1.2-1">Workload identity certificates are X.509 certificates that carry a single workload identifier in one URI SubjectAltName, as defined in <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span>.<a href="#section-1.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1272,7 +1272,7 @@ appear in all capitals, as shown here.<a href="#section-2-2" class="pilcrow">¶<
         <h3 id="name-the-workload-identity-certi">
 <a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-the-workload-identity-certi" class="section-name selfRef">The Workload Identity Certificate</a>
         </h3>
-<p id="section-3.1-1">Workload identity certificates are X.509 certificates that carry workload identifiers as described in section 4.1 of <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span><a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.1-1">Workload identity certificates are X.509 certificates that carry a single workload identifier in one URI SubjectAltName, as defined in the "One Workload Identity per Credential" section of <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span>. Other SubjectAltName types (such as DNSName for host name validation) do not carry the WIMSE workload identity.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="wic-validation">
@@ -1302,7 +1302,7 @@ In most cases it is preferable to validate the entire workload identifier, see s
         <h3 id="name-client-authorization-using-">
 <a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-client-authorization-using-" class="section-name selfRef">Client Authorization Using the Workload Identity</a>
         </h3>
-<p id="section-3.3-1">The server application retrieves the workload identifier from the client certificate subjectAltName, which in turn is obtained from the TLS layer. The identifier is used in authorization, accounting and auditing.
+<p id="section-3.3-1">The server application retrieves the workload identifier from the client certificate's URI SubjectAltName (see <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span>), which in turn is obtained from the TLS layer. The identifier is used in authorization, accounting and auditing.
 For example, the full workload identifier may be matched against ACLs to authorize actions requested by the peer and the identifier may be included in log messages to associate actions to the client workload for audit purposes.
 A deployment may specify other authorization policies based on the specific details of how the workload identifier is constructed. The path portion of the workload identifier <span class="bcp14">MUST</span> always be considered in the scope of the trust domain.
 See section 1.3 of <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span> on additional security implications of workload identifiers.<a href="#section-3.3-1" class="pilcrow">¶</a></p>

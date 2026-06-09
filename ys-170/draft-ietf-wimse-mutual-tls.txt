@@ -117,9 +117,9 @@ Table of Contents
 
 1.2.  Workload Identity Certificates
 
-   Workload identity certificates are X.509 certificates that carry
-   workload identifiers as described in section 4.1 of
-   [I-D.ietf-wimse-workload-creds]
+   Workload identity certificates are X.509 certificates that carry a
+   single workload identifier in one URI SubjectAltName, as defined in
+   [I-D.ietf-wimse-workload-creds].
 
 2.  Conventions and Definitions
 
@@ -138,9 +138,12 @@ Table of Contents
 
 3.1.  The Workload Identity Certificate
 
-   Workload identity certificates are X.509 certificates that carry
-   workload identifiers as described in section 4.1 of
-   [I-D.ietf-wimse-workload-creds]
+   Workload identity certificates are X.509 certificates that carry a
+   single workload identifier in one URI SubjectAltName, as defined in
+   the "One Workload Identity per Credential" section of
+   [I-D.ietf-wimse-workload-creds].  Other SubjectAltName types (such as
+   DNSName for host name validation) do not carry the WIMSE workload
+   identity.
 
 3.2.  Workload Identity Certificate Validation
 
@@ -192,7 +195,8 @@ Table of Contents
 3.3.  Client Authorization Using the Workload Identity
 
    The server application retrieves the workload identifier from the
-   client certificate subjectAltName, which in turn is obtained from the
+   client certificate's URI SubjectAltName (see
+   [I-D.ietf-wimse-workload-creds]), which in turn is obtained from the
    TLS layer.  The identifier is used in authorization, accounting and
    auditing.  For example, the full workload identifier may be matched
    against ACLs to authorize actions requested by the peer and the

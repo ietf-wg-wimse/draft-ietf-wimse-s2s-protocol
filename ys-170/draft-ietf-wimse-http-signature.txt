@@ -805,7 +805,7 @@ A.9.  draft-ietf-wimse-s2s-protocol-03
 
    *  Make jti claim in WIT optional.
 
-   *  Error handling for the application level methods.
+   *  Error handling for the application-level methods.
 
 A.10.  draft-ietf-wimse-s2s-protocol-02
 
