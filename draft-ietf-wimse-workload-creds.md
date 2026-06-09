@@ -359,7 +359,7 @@ See {{granular-auth}} on additional security implications of workload identifier
 How the receiving application obtains the workload identifier depends on the credential used to authenticate the peer:
 
 * Application-level: After successfully validating the WIT, the receiving application retrieves the workload identifier from the `sub` claim.
-* Transport level: When the client is authenticated with a Workload Identity Certificate, the receiving application retrieves the workload identifier from the client certificate's SubjectAltName extension of type URI.
+* Transport-level: When the client is authenticated with a Workload Identity Certificate, the receiving application retrieves the workload identifier from the client certificate's SubjectAltName extension of type URI.
 
 # Implementation Status
 
