@@ -58,7 +58,7 @@ protection options, including the one described here.
 
 ## Workload Identity Certificates
 
-Workload identity certificates are X.509 certificates that carry workload identifiers as described in section 4.1 of {{!I-D.ietf-wimse-workload-creds}}
+Workload identity certificates are X.509 certificates that carry a single workload identifier in one URI SubjectAltName, as defined in {{!I-D.ietf-wimse-workload-creds}}.
 
 # Conventions and Definitions
 
@@ -72,7 +72,7 @@ As noted in the introduction, for many deployments, transport-level protection o
 
 ## The Workload Identity Certificate {#to-wic}
 
-Workload identity certificates are X.509 certificates that carry workload identifiers as described in section 4.1 of {{!I-D.ietf-wimse-workload-creds}}
+Workload identity certificates are X.509 certificates that carry a single workload identifier in one URI SubjectAltName, as defined in the "One Workload Identity per Credential" section of {{!I-D.ietf-wimse-workload-creds}}. Other SubjectAltName types (such as DNSName for host name validation) do not carry the WIMSE workload identity.
 
 ## Workload Identity Certificate Validation {#wic-validation}
 
@@ -92,7 +92,7 @@ In most cases it is preferable to validate the entire workload identifier, see s
 
 ## Client Authorization Using the Workload Identity {#client-name}
 
-The server application retrieves the workload identifier from the client certificate subjectAltName, which in turn is obtained from the TLS layer. The identifier is used in authorization, accounting and auditing.
+The server application retrieves the workload identifier from the client certificate's URI SubjectAltName (see {{!I-D.ietf-wimse-workload-creds}}), which in turn is obtained from the TLS layer. The identifier is used in authorization, accounting and auditing.
 For example, the full workload identifier may be matched against ACLs to authorize actions requested by the peer and the identifier may be included in log messages to associate actions to the client workload for audit purposes.
 A deployment may specify other authorization policies based on the specific details of how the workload identifier is constructed. The path portion of the workload identifier MUST always be considered in the scope of the trust domain.
 See section 1.3 of {{!I-D.ietf-wimse-workload-creds}} on additional security implications of workload identifiers.
