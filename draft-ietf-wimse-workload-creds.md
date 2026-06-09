@@ -87,11 +87,11 @@ The Workload Identity Token is targeted for application-level protocols. The Wor
 
 The various protocol bindings that use these credentials to authenticate workloads to each other are out of scope for this document. At the time of writing, three such protocols are defined:
 
-* Transport level authentication mutual TLS using the Workload Identity Certificate.
+* Transport-level authentication mutual TLS using the Workload Identity Certificate.
 
-* Application level authentication using the Workload Identity Token in conjunction with a JWT-based proof of possession, the Workload Proof Token (WPT).
+* Application-level authentication using the Workload Identity Token in conjunction with a JWT-based proof of possession, the Workload Proof Token (WPT).
 
-* Application level authentication using the Workload Identity Token in conjunction with HTTP Message Signatures.
+* Application-level authentication using the Workload Identity Token in conjunction with HTTP Message Signatures.
 
 ## Use In Other Protocols
 
@@ -174,9 +174,9 @@ All terminology in this document follows {{?I-D.ietf-wimse-arch}}.
 
 {::boilerplate bcp14-tagged}
 
-# Application Level Workload-to-Workload Authentication {#app-level}
+# Application-Level Workload-to-Workload Authentication {#app-level}
 
-In many deployments communication between workloads cannot use end-to-end transport security such as TLS. For these deployment styles, this document proposes a credential that can be used at the application level.
+In many deployments communication between workloads cannot use end-to-end transport security such as TLS. For these deployment styles, this document proposes a credential that can be used at the application-level.
 
 ## The Workload Identity Token {#to-wit}
 
@@ -341,7 +341,7 @@ authorization policy may take into account both the sending workload's identity 
 identity in the WIT may be used to establish which API calls can be made and information in the context token may be used to determine
 which specific resources can be accessed.
 
-# Transport Level Workload-to-Workload Authentication {#transport-level}
+# Transport-Level Workload-to-Workload Authentication {#transport-level}
 
 As noted in the introduction, for many deployments, transport-level protection of application traffic is ideal.
 
@@ -565,7 +565,7 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 * Make `iss` claim in WIT optional and add wording about its relation to key distribution.
 * Remove `iss` claim from WPT.
 * Make `jti` claim in WIT optional.
-* Error handling for the application level methods.
+* Error handling for the application-level methods.
 
 ## draft-ietf-wimse-s2s-protocol-02
 
