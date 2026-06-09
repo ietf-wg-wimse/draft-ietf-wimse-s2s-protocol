@@ -87,11 +87,11 @@ The Workload Identity Token is targeted for application-level protocols. The Wor
 
 The various protocol bindings that use these credentials to authenticate workloads to each other are out of scope for this document. At the time of writing, three such protocols are defined:
 
-* Transport level authentication mutual TLS using the Workload Identity Certificate.
+* Transport-level authentication mutual TLS using the Workload Identity Certificate.
 
-* Application level authentication using the Workload Identity Token in conjunction with a JWT-based proof of possession, the Workload Proof Token (WPT).
+* Application-level authentication using the Workload Identity Token in conjunction with a JWT-based proof of possession, the Workload Proof Token (WPT).
 
-* Application level authentication using the Workload Identity Token in conjunction with HTTP Message Signatures.
+* Application-level authentication using the Workload Identity Token in conjunction with HTTP Message Signatures.
 
 ## Use In Other Protocols
 
@@ -182,9 +182,9 @@ For a Workload Identity Token, that identifier is the value of the `sub` claim. 
 
 Deployments that distinguish several labels for the same runtime (for example a stable service identity and a specific instance) MUST place the identity required for the access decision in that one credential. Additional correlation for logging or operations MUST NOT be encoded as a second workload identifier in the same WIT or WIC. Deployments MAY use other mechanisms, such as the optional `jti` claim, separate credentials, or additional claims as described in {{add-claims}}.
 
-# Application Level Workload-to-Workload Authentication {#app-level}
+# Application-Level Workload-to-Workload Authentication {#app-level}
 
-In many deployments communication between workloads cannot use end-to-end transport security such as TLS. For these deployment styles, this document proposes a credential that can be used at the application level.
+In many deployments communication between workloads cannot use end-to-end transport security such as TLS. For these deployment styles, this document proposes a credential that can be used at the application-level.
 
 ## The Workload Identity Token {#to-wit}
 
@@ -349,7 +349,7 @@ authorization policy may take into account both the sending workload's identity 
 identity in the WIT may be used to establish which API calls can be made and information in the context token may be used to determine
 which specific resources can be accessed.
 
-# Transport Level Workload-to-Workload Authentication {#transport-level}
+# Transport-Level Workload-to-Workload Authentication {#transport-level}
 
 As noted in the introduction, for many deployments, transport-level protection of application traffic is ideal.
 
@@ -359,12 +359,17 @@ The Workload Identity Certificate is an X.509 certificate. The Workload Identifi
 
 When the certificate is also used for TLS server authentication, it is RECOMMENDED to include SubjectAltName extensions of type DNSName with the appropriate DNS names for clients that validate the server by host name rather than by workload identity. The certificate MAY contain SubjectAltName extensions of other types for PKIX or local policy, but only the URI SAN above is the WIMSE workload identity.
 
-## Client Authorization Using the Workload Identity {#client-name}
+# Client Authorization Using the Workload Identity {#client-name}
 
 The server application retrieves the workload identifier from the client certificate's URI SubjectAltName (see {{to-wic}}). The identifier is used in authorization, accounting and auditing.
 For example, the full workload identifier may be matched against ACLs to authorize actions requested by the peer and the identifier may be included in log messages to associate actions to the client workload for audit purposes.
 A deployment may specify other authorization policies based on the specific details of how the workload identifier is constructed. The path portion of the workload identifier MUST always be considered in the scope of the trust domain.
 See {{granular-auth}} on additional security implications of workload identifiers.
+
+How the receiving application obtains the workload identifier depends on the credential used to authenticate the peer:
+
+* Application-level: After successfully validating the WIT, the receiving application retrieves the workload identifier from the `sub` claim.
+* Transport-level: When the client is authenticated with a Workload Identity Certificate, the receiving application retrieves the workload identifier from the client certificate's SubjectAltName extension of type URI.
 
 # Implementation Status
 
@@ -575,7 +580,7 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 * Make `iss` claim in WIT optional and add wording about its relation to key distribution.
 * Remove `iss` claim from WPT.
 * Make `jti` claim in WIT optional.
-* Error handling for the application level methods.
+* Error handling for the application-level methods.
 
 ## draft-ietf-wimse-s2s-protocol-02
 

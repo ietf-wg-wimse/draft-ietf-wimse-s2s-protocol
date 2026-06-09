@@ -425,7 +425,7 @@ IANA is requested to register the following entry in the "HTTP Signature Metadat
 * Make `iss` claim in WIT optional and add wording about its relation to key distribution.
 * Remove `iss` claim from WPT.
 * Make `jti` claim in WIT optional.
-* Error handling for the application level methods.
+* Error handling for the application-level methods.
 
 ## draft-ietf-wimse-s2s-protocol-02
 
