@@ -1,0 +1,24 @@
+=============== NOTE: '\' line wrapping per RFC 8792 ================
+
+POST /path HTTP/1.1
+Host: workload.example.com
+Content-Type: application/json
+Authorization: Bearer 16_mAd0GiwaZokU26_0902100
+X-Custom-Token: some-example-other-token
+Workload-Identity-Token: eyJhbGciOiJFUzI1NiIsImtpZCI6Ikp1bmUgNSIsInR\
+5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J2Ijoi\
+RWQyNTUxOSIsImt0eSI6Ik9LUCIsIngiOiIxQ1hYdmZsTl9MVlZzSXNZWHNVdkIwM0pt\
+bEdXZUNIcVFWdW91Q0Y5MmJnIn19LCJleHAiOjE3NDU1MTI1MTAsImlhdCI6MTc0NTUw\
+ODkxMCwianRpIjoieC1fMUNUTDJjY2EzQ1NFNGN3Yl9sIiwic3ViIjoid2ltc2U6Ly9l\
+eGFtcGxlLmNvbS9zcGVjaWZpYy13b3JrbG9hZCJ9.lRMvg6aDnk4ua2tI427zRw8fUKK\
+8S9AOP7nWn20uo2XQx4JlTDOlXn-tXffvz5tEZuKH46QRJcPKxCs-mgzebw
+Workload-Proof-Token: eyJhbGciOiJFZERTQSIsInR5cCI6IndwdCtqd3QifQ.eyJ\
+hdGgiOiJDTDR3amZwUm1OZi1iZFlJYllMblY5ZDVyTUFSR3dLWUUxMHdVd3pDMGpJIiw\
+iYXVkIjoiaHR0cHM6Ly93b3JrbG9hZC5leGFtcGxlLmNvbS9wYXRoIiwiZXhwIjoxNzQ\
+1NTEwMDE2LCJqdGkiOiJDYjFmQ2EzY0ZFU0NfeC0yNENMVEwiLCJvdGgiOnsieC1jdXN\
+0b20tdG9rZW4iOiJ4LVV5NkNoX3huM0FiVVZLRGpQTVFRdWd0Y24yZXJMV3JrdlZXQW1\
+LbDFrIn0sInd0aCI6IjFWNGhQQ1ZEbWI2M2dQc1BEVDEwZGtnRWVkdlNfTXZrT19DQnQ\
+wSHV5ak0ifQ.DLKlhONV8XpR96t39CnD-kUgVTaN5UHXZM8iC6CvqvCwbMDIrAwD861D\
+C1e3AStZ4v32x6waN97m2g29HuSVBw
+
+{"do stuff":"please"}

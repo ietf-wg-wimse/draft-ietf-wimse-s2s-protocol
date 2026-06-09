@@ -162,6 +162,36 @@ An example of an HTTP request with both the WIT and WPT from prior examples is s
 ~~~
 {: title="Example HTTP Request with WIT and WPT"}
 
+The following is an example of a WPT that includes the `oth` claim, binding an additional token conveyed in the `X-Custom-Token` header:
+
+~~~ jwt
+{::include includes/wpt-oth.txt.out}
+~~~
+{: #example-wpt-oth title="Example WPT with oth Claim"}
+
+The decoded JWT claims of the WPT from the example above are shown here:
+
+~~~ json
+{
+  "ath": "CL4wjfpRmNf-bdYIbYLnV9d5rMARGwKYE10wUwzC0jI",
+  "aud": "https://workload.example.com/path",
+  "exp": 1745510016,
+  "jti": "Cb1fCa3cFESC_x-24CLTL",
+  "oth": {
+    "x-custom-token": "x-Uy6Ch_xn3AbUVKDjPMQQugtcn2erLWrkvVWAmKl1k"
+  },
+  "wth": "1V4hPCVDmb63gPsPDT10dkgEedvS_MvkO_CBt0HuyjM"
+}
+~~~
+{: title="Example WPT Claims with oth"}
+
+An example of an HTTP request carrying the additional token bound by the `oth` claim is shown below:
+
+~~~ http
+{::include includes/wpt-oth-request.txt.out}
+~~~
+{: title="Example HTTP Request with oth Claim"}
+
 To validate the WPT in the request, the recipient MUST ensure the following:
 
 * There is exactly one `Workload-Proof-Token` header field in the request.
