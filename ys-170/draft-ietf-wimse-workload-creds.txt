@@ -295,13 +295,11 @@ Table of Contents
    This specification expects that trust anchors used to validate
    Workload Identity Certificates and Workload Identity Tokens are
    associated with a trust domain and are provisioned to consumers
-   together with other trust domain configuration (such as which issuers
-   are authorized).  Trust anchors can be represented in different ways
-   depending on the deployment; for example, as a set of public keys
-   (such as a JWKS), as an X.509 certification authority used to
-   validate certificate chains, or as other deployment-specific
-   material.  A trust anchor for WIT validation MAY include more than
-   one public key so that operators can rotate signing keys.
+   together with trust domain metadata for that domain.  Trust anchors
+   can be represented in different ways depending on the deployment; for
+   example, as a set of public keys (such as a JWKS), as an X.509
+   certification authority used to validate certificate chains, or as
+   other deployment-specific material.
 
    This specification does not define a mechanism for discovering trust
    anchor information.  Consumers MUST bind each trust domain to an
@@ -313,15 +311,17 @@ Table of Contents
 
    To validate a WIT, the receiving workload verifies the JWS signature
    using key material from the trust anchors configured for the trust
-   domain in the sub claim.  Verification follows [RFC7515] and the JWT
-   best practices in [RFC8725]: the alg header parameter MUST identify
-   an algorithm that the validator accepts for that trust domain, and
-   the signature MUST verify under a key drawn from the configured trust
-   anchors.  If the JWS header contains a kid parameter, the validator
-   MUST use the key in the trust anchor material with the same kid
-   value.  If kid is absent, the validator MUST obtain unambiguous key
-   selection by deployment policy (for example, when only a single key
-   is configured for that trust domain).
+   domain in the sub claim.  Trust anchor material for WIT validation
+   MAY include more than one public key so that operators can rotate
+   signing keys.  Verification follows [RFC7515] and the JWT best
+   practices in [RFC8725].  In practice, the alg header parameter would
+   identify an algorithm that the validator accepts for that trust
+   domain, and the signature would be checked under a key drawn from the
+   configured trust anchors.  If the JWS header contains a kid
+   parameter, the validator would use the key in the trust anchor
+   material with the same kid value.  If kid is absent, deployment
+   policy would need to provide unambiguous key selection (for example,
+   when only a single key is configured for that trust domain).
 
    For Workload Identity Certificates, validators use the trust anchors
    for the peer's trust domain to validate the X.509 chain and the
