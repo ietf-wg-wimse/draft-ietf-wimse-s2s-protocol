@@ -171,23 +171,21 @@ callback functions). Deployments SHOULD use these features to establish a consis
 
 ## Simultaneous Use of Credentials {#simultaneous-use}
 
-It is possible to use different workload credentials simultaneously at different layers. For instance, the Workload Identity Certificate at the transport layer and the Workload Identity Token at the application layer. In this scenario, the credentials complement each other and are not alternatives to each other, meaning all MUST be validated, not just one.
-
-A common use case for simultaneous use is when transport-layer components, such as proxies in a service mesh, authenticate each other using the Workload Identity Certificate, while the workloads themselves perform end-to-end authentication at the application layer using the Workload Identity Token or HTTP Message Signatures.
+Different workload credentials can be used simultaneously at different layers when an intermediary terminates the transport-layer connection between two workloads. A common example is a service mesh proxy that authenticates to its peer at the transport layer using a Workload Identity Certificate, while the workloads on either side authenticate each other end-to-end at the application layer using a Workload Identity Token. In this scenario the transport-layer and application-layer credentials complement each other and are not alternatives: each MUST be validated by the party that terminates the corresponding layer.
 
 ~~~aasvg
-             Transport-        Transport-
-┌───────────┐layer  ┌─────────┐layer   ┌───────────┐
-│           │◄─────►│  Proxy  │◄──────►│           │
-│ Workload  │       └─────────┘        │ Workload  │
-│     A     │                          │     B     │
-│           │◄========================►│           │
-└───────────┘     Application-layer    └───────────┘
+              Transport-        Transport-
+┌───────────┐ layer  ┌──────────────┐ layer  ┌───────────┐
+│           │◄──────►│ Intermediary │◄──────►│           │
+│ Workload  │        └──────────────┘        │ Workload  │
+│     A     │                                │     B     │
+│           │◄══════════════════════════════►│           │
+└───────────┘      Application-layer         └───────────┘
 ~~~
 
-Whether simultaneous use of credentials is appropriate is governed by local policy. Deployments SHOULD define clear rules for when and how multiple credentials are used on the same hop. See {{security-simultaneous-use}} for security considerations related to simultaneous use.
+The Workload Identifier presented by the intermediary at the transport layer will typically differ from the Workload Identifier presented end-to-end at the application layer, since they identify different parties (the intermediary versus Workload A). Authorization policy at Workload B MUST treat these as distinct identities and define which identity is authoritative for each authorization decision; see {{security-simultaneous-use}}.
 
-Using different authentication methods inconsistently between the same pair of workloads SHOULD be avoided. A given pair of communicating workloads SHOULD use a consistent set of authentication methods across their interactions to prevent confusion about the required level of authentication.
+Whether simultaneous use of credentials is appropriate is governed by local policy. Deployments SHOULD define clear rules for when and how multiple credentials are used on the same hop.
 
 # Conventions and Definitions
 
@@ -464,9 +462,9 @@ Deployments should perform analysis on their situation to determine if it is app
 
 ## Simultaneous Use of Credentials {#security-simultaneous-use}
 
-Using both transport-level and application-level authentication between the same pair of workloads (as opposed to the proxy pattern described in {{simultaneous-use}}) SHOULD NOT be done without careful analysis. When both methods authenticate the same hop directly, it creates ambiguity about which identity is authoritative for authorization decisions and increases the attack surface without a clear security benefit.
+Using both transport-level and application-level authentication between the same pair of workloads (as opposed to the intermediary pattern described in {{simultaneous-use}}) SHOULD NOT be done without careful analysis. When both methods authenticate the same hop directly, it creates ambiguity about which identity is authoritative for authorization decisions and increases the attack surface without a clear security benefit.
 
-If a deployment does use multiple credential types simultaneously, and credentials at different layers carry different Workload Identifiers, the authorization policy MUST account for both identities and define which is authoritative for each authorization decision.
+When an intermediary is present and the credentials at the transport and application layers carry different Workload Identifiers, the authorization policy MUST account for both identities and define which is authoritative for each authorization decision. Failing to do so can allow a compromised intermediary, or a misrouted request, to be authorized on the basis of the wrong identity.
 
 ## Privacy Considerations
 
