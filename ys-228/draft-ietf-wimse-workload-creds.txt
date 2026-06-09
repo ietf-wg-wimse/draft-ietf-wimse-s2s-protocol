@@ -604,7 +604,7 @@ Table of Contents
       receiving application retrieves the workload identifier from the
       sub claim.
 
-   *  Transport level: When the client is authenticated with a Workload
+   *  Transport-level: When the client is authenticated with a Workload
       Identity Certificate, the receiving application retrieves the
       workload identifier from the client certificate's SubjectAltName
       extension of type URI.
