@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-06-11T03:52:45.422156+00:00",
+  "timestamp": "2026-06-14T03:57:49.139997+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -4166,6 +4166,42 @@
       "body": "AFAICT, the draft does not require validating the WIT when validating the WPT, just that the the hash matches but that doesn't give any security.\n\nOn top of that, AFAICT, there's nothing defining how to validate a WIT. It's specified as a JWS and that the workload needs to have the key from somewhere, but is that enough? Should it specify fetching the trust domain from the `sub` field and then determine the key[s] to use for validating it?",
       "createdAt": "2026-05-10T09:33:22Z",
       "updatedAt": "2026-06-03T18:24:20Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 239,
+      "id": "I_kwDOLJmm788AAAABFHmPaA",
+      "title": "HTTP Sig replay section references `jti` instead of `nonce`",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/239",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-http-signature"
+      ],
+      "body": "In `draft-ietf-wimse-http-signature.md`, the *Replay Protection* security consideration (around line 276) says:\n\n> A signed message includes the `jti` claim that MUST uniquely identify it...\n\nThis looks like text copied from the WPT draft. The HTTP Signatures profile uses the **`nonce` signature parameter** in `Signature-Input`, not a JWT `jti` claim. See the mandatory signature parameters in \u00a74 (`nonce`) and the replay guidance at lines 137\u2013139.\n\nSuggested fix: replace `jti` / \"claim\" with `nonce` / \"signature parameter\" in that paragraph.",
+      "createdAt": "2026-06-11T08:04:42Z",
+      "updatedAt": "2026-06-11T08:05:27Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 240,
+      "id": "I_kwDOLJmm788AAAABFHws4w",
+      "title": "Response signing: wimse-aud gap and replay to a different client",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/240",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-http-signature"
+      ],
+      "body": "I think the lack of wimse-aud on the response is a real gap, in that responses can be replayed to a different client. Two ways to address it:\n\n* Bind to the request by including a `nonce-req` value in the response (copying the `nonce` from the request). This is somewhat hacky.\n* Include `wimse-aud` in the response, but that needs to be a WIMSE ID (the caller doesn't necessarily have a request URI) and for symmetry, we would need to change it to a WIMSE ID on the request too. This would change the mapping calculus again.",
+      "createdAt": "2026-06-11T08:25:17Z",
+      "updatedAt": "2026-06-11T08:25:17Z",
       "closedAt": null,
       "comments": []
     }
