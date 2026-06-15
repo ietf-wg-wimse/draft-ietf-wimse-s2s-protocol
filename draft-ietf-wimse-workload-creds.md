@@ -85,13 +85,13 @@ In this document, two credentials are defined:
 
 The Workload Identity Token is targeted for application-level protocols. The Workload Identity Certificate is targeted for transport-level protocols. This does not preclude the use of the WIT in transport-level protocols or the WIC in application-level protocols, but these are the primary intended uses.
 
-The various protocol bindings that use these credentials to authenticate workloads to each other are out of scope for this document. At the time of writing, three such protocols are defined:
+The various protocol bindings that use these credentials to authenticate workloads to each other are specified in separate documents and are out of scope for this document. At the time of writing, three such protocol bindings are defined:
 
-* Transport-level authentication mutual TLS using the Workload Identity Certificate.
+* Transport-level authentication using mutual TLS with the Workload Identity Certificate, specified in {{?I-D.ietf-wimse-mutual-tls}}.
 
-* Application-level authentication using the Workload Identity Token in conjunction with a JWT-based proof of possession, the Workload Proof Token (WPT).
+* Application-level authentication using the Workload Identity Token in conjunction with a JWT-based proof of possession, the Workload Proof Token (WPT), specified in {{?I-D.ietf-wimse-wpt}}.
 
-* Application-level authentication using the Workload Identity Token in conjunction with HTTP Message Signatures.
+* Application-level authentication using the Workload Identity Token in conjunction with HTTP Message Signatures, specified in {{?I-D.ietf-wimse-http-signature}}.
 
 ## Use In Other Protocols
 
