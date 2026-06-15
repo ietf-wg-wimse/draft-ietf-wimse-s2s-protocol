@@ -184,6 +184,8 @@ Different workload credentials can be used simultaneously at different levels wh
 
 The Workload Identifier presented by the intermediary at the transport-level will typically differ from the Workload Identifier presented end-to-end at the application-level, since they identify different parties (the intermediary versus Workload A). Authorization policy at Workload B MUST treat these as distinct identities and define which identity is authoritative for each authorization decision; see {{security-simultaneous-use}}.
 
+When the same workload presents both a Workload Identity Certificate at the transport-level and a Workload Identity Token at the application-level (for example, Workload A in the deployment above), it SHOULD use the same Workload Identifier in both credentials. Using a single identifier across both credentials simplifies policy management and auditing by removing the need to maintain and correlate separate identifiers for the same workload.
+
 Whether simultaneous use of credentials is appropriate is governed by local policy. Deployments SHOULD define clear rules for when and how multiple credentials are used on the same hop.
 
 # Conventions and Definitions
