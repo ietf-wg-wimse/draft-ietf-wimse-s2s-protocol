@@ -173,13 +173,13 @@ callback functions). Deployments SHOULD use these features to establish a consis
 Different workload credentials can be used simultaneously at different levels when an intermediary terminates the transport-level connection between two workloads. A common example is a service mesh proxy that authenticates to its peer at the transport-level using a Workload Identity Certificate, while the workloads on either side authenticate each other end-to-end at the application-level using a Workload Identity Token. In this scenario the transport-level and application-level credentials complement each other and are not alternatives: each MUST be validated by the party that terminates the corresponding level.
 
 ~~~aasvg
-              Transport-        Transport-
-┌───────────┐ level  ┌──────────────┐ level  ┌───────────┐
-│           │◄──────►│ Intermediary │◄──────►│           │
-│ Workload  │        └──────────────┘        │ Workload  │
-│     A     │                                │     B     │
-│           │◄══════════════════════════════►│           │
-└───────────┘      Application-level         └───────────┘
+┌───────────┐           Application-level          ┌───────────┐
+│           │<════════════════════════════════════>│           │
+│ Workload  │                                      │ Workload  │
+│     A     │           ┌──────────────┐           │     B     │
+│           │◄─────────►│ Intermediary │◄─────────►│           │
+└───────────┘ Transport └──────────────┘ Transport └───────────┘
+              level                      level
 ~~~
 
 The Workload Identifier presented by the intermediary at the transport-level will typically differ from the Workload Identifier presented end-to-end at the application-level, since they identify different parties (the intermediary versus Workload A). Authorization policy at Workload B MUST treat these as distinct identities and define which identity is authoritative for each authorization decision; see {{security-simultaneous-use}}.
