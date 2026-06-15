@@ -171,19 +171,19 @@ callback functions). Deployments SHOULD use these features to establish a consis
 
 ## Simultaneous Use of Credentials {#simultaneous-use}
 
-Different workload credentials can be used simultaneously at different layers when an intermediary terminates the transport-layer connection between two workloads. A common example is a service mesh proxy that authenticates to its peer at the transport layer using a Workload Identity Certificate, while the workloads on either side authenticate each other end-to-end at the application layer using a Workload Identity Token. In this scenario the transport-layer and application-layer credentials complement each other and are not alternatives: each MUST be validated by the party that terminates the corresponding layer.
+Different workload credentials can be used simultaneously at different levels when an intermediary terminates the transport-level connection between two workloads. A common example is a service mesh proxy that authenticates to its peer at the transport-level using a Workload Identity Certificate, while the workloads on either side authenticate each other end-to-end at the application-level using a Workload Identity Token. In this scenario the transport-level and application-level credentials complement each other and are not alternatives: each MUST be validated by the party that terminates the corresponding level.
 
 ~~~aasvg
               Transport-        Transport-
-┌───────────┐ layer  ┌──────────────┐ layer  ┌───────────┐
+┌───────────┐ level  ┌──────────────┐ level  ┌───────────┐
 │           │◄──────►│ Intermediary │◄──────►│           │
 │ Workload  │        └──────────────┘        │ Workload  │
 │     A     │                                │     B     │
 │           │◄══════════════════════════════►│           │
-└───────────┘      Application-layer         └───────────┘
+└───────────┘      Application-level         └───────────┘
 ~~~
 
-The Workload Identifier presented by the intermediary at the transport layer will typically differ from the Workload Identifier presented end-to-end at the application layer, since they identify different parties (the intermediary versus Workload A). Authorization policy at Workload B MUST treat these as distinct identities and define which identity is authoritative for each authorization decision; see {{security-simultaneous-use}}.
+The Workload Identifier presented by the intermediary at the transport-level will typically differ from the Workload Identifier presented end-to-end at the application-level, since they identify different parties (the intermediary versus Workload A). Authorization policy at Workload B MUST treat these as distinct identities and define which identity is authoritative for each authorization decision; see {{security-simultaneous-use}}.
 
 Whether simultaneous use of credentials is appropriate is governed by local policy. Deployments SHOULD define clear rules for when and how multiple credentials are used on the same hop.
 
@@ -464,7 +464,7 @@ Deployments should perform analysis on their situation to determine if it is app
 
 Using both transport-level and application-level authentication between the same pair of workloads (as opposed to the intermediary pattern described in {{simultaneous-use}}) SHOULD NOT be done without careful analysis. When both methods authenticate the same hop directly, it creates ambiguity about which identity is authoritative for authorization decisions and increases the attack surface without a clear security benefit.
 
-When an intermediary is present and the credentials at the transport and application layers carry different Workload Identifiers, the authorization policy MUST account for both identities and define which is authoritative for each authorization decision. Failing to do so can allow a compromised intermediary, or a misrouted request, to be authorized on the basis of the wrong identity.
+When an intermediary is present and the transport-level and application-level credentials carry different Workload Identifiers, the authorization policy MUST account for both identities and define which is authoritative for each authorization decision. Failing to do so can allow a compromised intermediary, or a misrouted request, to be authorized on the basis of the wrong identity.
 
 ## Privacy Considerations
 
