@@ -1,3 +1,6 @@
 # Automatically generated CODEOWNERS
 # Regenerate with `make update-codeowners`
-draft-sheffer-wimse-s2s-protocol.md yaronf@gmx.com
+draft-ietf-wimse-http-signature.md joe@salowey.net yaronf.ietf@gmail.com
+draft-ietf-wimse-mutual-tls.md joe@salowey.net yaroslavros@gmail.com
+draft-ietf-wimse-workload-creds.md bcampbell@pingidentity.com joe@salowey.net arndts.ietf@gmail.com yaronf.ietf@gmail.com yrosomakho@zscaler.com
+draft-ietf-wimse-wpt.md bcampbell@pingidentity.com arndts.ietf@gmail.com

@@ -59,7 +59,6 @@ informative:
   IANA.JOSE.ALGS: IANA.jose_web-signature-encryption-algorithms
   IANA.JWT.CLAIMS: IANA.jwt_claims
   IANA.MEDIA.TYPES: IANA.media-types
-  IANA.URI.SCHEMES: IANA.uri-schemes
   RFC9457:
 
 --- abstract
@@ -88,11 +87,11 @@ The Workload Identity Token is targeted for application-level protocols. The Wor
 
 The various protocol bindings that use these credentials to authenticate workloads to each other are out of scope for this document. At the time of writing, three such protocols are defined:
 
-* Transport level authentication mutual TLS using the Workload Identity Certificate.
+* Transport-level authentication mutual TLS using the Workload Identity Certificate.
 
-* Application level authentication using the Workload Identity Token in conjunction with a JWT-based proof of possession, the Workload Proof Token (WPT).
+* Application-level authentication using the Workload Identity Token in conjunction with a JWT-based proof of possession, the Workload Proof Token (WPT).
 
-* Application level authentication using the Workload Identity Token in conjunction with HTTP Message Signatures.
+* Application-level authentication using the Workload Identity Token in conjunction with HTTP Message Signatures.
 
 ## Use In Other Protocols
 
@@ -193,10 +192,17 @@ All terminology in this document follows {{?I-D.ietf-wimse-arch}}.
 
 {::boilerplate bcp14-tagged}
 
-# Application Level Workload-to-Workload Authentication {#app-level}
+# One Workload Identity per Credential {#single-workload-identity}
 
-As noted in the Introduction, for many deployments communication between workloads cannot use
-end-to-end transport security such as TLS. For these deployment styles, this document proposes a credential that can be used at the application level.
+Each WIMSE credential carries exactly one Workload Identifier ({{WIMSE-ID}}) that is used for authentication and authorization. Requiring a single identifier per credential keeps authorization and auditing unambiguous and aligns with common practice for workload X.509 certificates (for example, a single URI in an X.509-SVID).
+
+For a Workload Identity Token, that identifier is the value of the `sub` claim. For a Workload Identity Certificate, that identifier is carried in the single URI SubjectAltName described in {{to-wic}}.
+
+Deployments that distinguish several labels for the same runtime (for example a stable service identity and a specific instance) MUST place the identity required for the access decision in that one credential. Additional correlation for logging or operations MUST NOT be encoded as a second workload identifier in the same WIT or WIC. Deployments MAY use other mechanisms, such as the optional `jti` claim, separate credentials, or additional claims as described in {{add-claims}}.
+
+# Application-Level Workload-to-Workload Authentication {#app-level}
+
+In many deployments communication between workloads cannot use end-to-end transport security such as TLS. For these deployment styles, this document proposes a credential that can be used at the application-level.
 
 ## The Workload Identity Token {#to-wit}
 
@@ -210,8 +216,8 @@ A WIT MUST contain the following content, except where noted:
      (registered algorithm identifiers are listed in the IANA JOSE Algorithms registry {{IANA.JOSE.ALGS}}). The value `none` MUST NOT be used.
     * `typ`: the WIT is explicitly typed, as recommended in {{Section 3.11 of RFC8725}}, using the `wit+jwt` media type.
 * in the JWT claims:
-    * `iss`: The issuer of the token, which is the Identity Server, represented by a URI. The `iss` claim is RECOMMENDED but optional, see {{wit-iss-note}} for more.
-    * `sub`: The subject of the token, which is the identity of the workload, represented by a URI as defined in {{WIMSE-ID}}. {{granular-auth}} provides additional considerations for security implications of these identifiers.
+    * `iss`: The issuer of the token, which is the Identity Server, represented by a URI. The `iss` claim is RECOMMENDED but optional; when present, it is particularly useful for auditing and operations (for example, identifying which Identity Server issued the WIT in logs or compliance records). See {{wit-iss-note}} for key distribution and validation context.
+    * `sub`: The subject of the token, which is the single Workload Identifier for the workload used for authentication and authorization, as defined in {{WIMSE-ID}} and {{single-workload-identity}}. {{granular-auth}} provides additional requirements associated with these identifiers, so they can be used to secure workload-to-workload communication.
     * `exp`: The expiration time of the token (as defined in {{Section 4.1.4 of RFC7519}}).
       WITs should be refreshed regularly, e.g. on the order of hours.
     * `jti`: A unique identifier for the token. This claim is OPTIONAL. The `jti` claim is frequently useful for auditing issuance of individual WITs or to revoke them, but some token generation environments do not support it.
@@ -222,8 +228,7 @@ A WIT MUST contain the following content, except where noted:
 As noted in {{WIMSE-ID}}, a workload identifier is a URI that includes a trust domain in the authority component.
 The runtime environment often determines which
 URI scheme is used, e.g. if SPIFFE is used to authenticate workloads, it mandates "spiffe" URIs.
-However for those deployments where this is not the case, this document ({{iana-uri}})
-defines the "wimse" URI scheme which can be used by any deployment that implements this protocol.
+For deployments that do not use an environment-specific scheme, the `wimse` URI scheme MAY be used; it is defined in {{WIMSE-ID}}, which also registers it with IANA.
 
 An example WIT might look like this:
 
@@ -336,7 +341,7 @@ This, however, could result in interoperability issues, which the following rule
 
 ### A note on `iss` claim and key distribution {#wit-iss-note}
 
-It is RECOMMENDED that the WIT carries an `iss` claim. This specification itself does not make use of a potential `iss` claim but also carries the trust domain in the workload identifier ({{WIMSE-ID}}). Implementations MAY include the `iss` claim in the form of a `https` URL to facilitate key distribution via mechanisms like the `jwks_uri` from {{!RFC8414}} but alternative key distribution methods may make use of the trust domain included in the workload identifier which is carried in the mandatory `sub` claim.
+It is RECOMMENDED that the WIT carries an `iss` claim, including for the auditing and operational uses described above. Validators are not required to use `iss` when validating the WIT or establishing the workload identity: the trust domain and workload identity are carried in the mandatory `sub` claim ({{WIMSE-ID}}). Implementations MAY include the `iss` claim in the form of a `https` URL to facilitate key distribution via mechanisms like the `jwks_uri` from {{!RFC8414}}; alternative key distribution methods may use only the trust domain from the `sub` claim.
 
 ## Error Conditions
 
@@ -362,20 +367,27 @@ authorization policy may take into account both the sending workload's identity 
 identity in the WIT may be used to establish which API calls can be made and information in the context token may be used to determine
 which specific resources can be accessed.
 
-# Transport Level Workload-to-Workload Authentication {#transport-level}
+# Transport-Level Workload-to-Workload Authentication {#transport-level}
 
 As noted in the introduction, for many deployments, transport-level protection of application traffic is ideal.
 
 ## The Workload Identity Certificate {#to-wic}
 
-The Workload Identity Certificate is an X.509 certificate. The workload identity MUST be encoded in a SubjectAltName extension of type URI. There MUST be only one SubjectAltName extension of type URI in a Workload Identity Certificate. If the workload will act as a TLS server for clients that do not understand workload identities it is RECOMMENDED that the Workload Identity Certificate contain a SubjectAltName of type DNSName with the appropriate DNS names for the server. The certificate MAY contain SubjectAltName extensions of other types.
+The Workload Identity Certificate is an X.509 certificate. The Workload Identifier used for WIMSE authentication and authorization MUST appear in exactly one SubjectAltName extension of type URI, as required by {{single-workload-identity}}. The certificate MUST NOT contain more than one URI SAN that carries a workload identifier.
 
-## Client Authorization Using the Workload Identity {#client-name}
+When the certificate is also used for TLS server authentication, it is RECOMMENDED to include SubjectAltName extensions of type DNSName with the appropriate DNS names for clients that validate the server by host name rather than by workload identity. The certificate MAY contain SubjectAltName extensions of other types for PKIX or local policy, but only the URI SAN above is the WIMSE workload identity.
 
-The server application retrieves the workload identifier from the client certificate subjectAltName. The identifier is used in authorization, accounting and auditing.
+# Client Authorization Using the Workload Identity {#client-name}
+
+The server application retrieves the workload identifier from the client certificate's URI SubjectAltName (see {{to-wic}}). The identifier is used in authorization, accounting and auditing.
 For example, the full workload identifier may be matched against ACLs to authorize actions requested by the peer and the identifier may be included in log messages to associate actions to the client workload for audit purposes.
 A deployment may specify other authorization policies based on the specific details of how the workload identifier is constructed. The path portion of the workload identifier MUST always be considered in the scope of the trust domain.
 See {{granular-auth}} on additional security implications of workload identifiers.
+
+How the receiving application obtains the workload identifier depends on the credential used to authenticate the peer:
+
+* Application-level: After successfully validating the WIT, the receiving application retrieves the workload identifier from the `sub` claim.
+* Transport-level: When the client is authenticated with a Workload Identity Certificate, the receiving application retrieves the workload identifier from the client certificate's SubjectAltName extension of type URI.
 
 # Implementation Status
 
@@ -417,6 +429,8 @@ Teleport - Machine & Workload Identity
 ## Workload Identity
 
 Workload Identifiers ({{WIMSE-ID}}) are scoped to a trust domain (the URI authority component) and MUST be interpreted in that trust domain context. Using a Workload Identifier without taking into account the trust domain could allow one domain to issue tokens to spoof identities in another domain. Consumers MUST bind each trust domain to an authorized issuer (or set of issuers) and to the corresponding cryptographic trust anchors used to validate credentials from that domain (for example using a JWKS or an X.509 certificate chain). The mapping from trust domain to authorized issuers and trust anchors MUST be distributed to consumers via a secure out-of-band mechanism.
+
+When a deployment uses the `iss` claim for key distribution as described in {{wit-iss-note}}, validators MUST enforce an allowlist of accepted issuers. Absent such a restriction, any entity could stand up an issuer, present a WIT with that issuer's `iss` value, and have it accepted by a validator that fetches and trusts the corresponding key material without verifying the issuer's legitimacy.
 
 ## Workload Identity Token and Proof of Possession
 
@@ -540,26 +554,15 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 * Specification Document: RFC XXX, {{wit-http-header}}
 * Comments: see reference above for an ABNF syntax of this field
 
-## URI Scheme Registration {#iana-uri}
-
-IANA is requested to register the "wimse" scheme to the "URI Schemes" registry {{IANA.URI.SCHEMES}}:
-
-* Scheme name: wimse
-
-* Status: permanent
-
-* Applications/protocols that use this scheme name: the WIMSE workload-to-workload authentication protocol.
-
-* Contact: IETF Chair <chair@ietf.org>
-
-* Change controller: IESG <iesg@ietf.org>
-
-* References: {{app-level}} of this document (RFC XXX).
-
 --- back
 
 # Document History
 <cref>RFC Editor: please remove before publication.</cref>
+
+## draft-ietf-wimse-workload-creds-01
+
+* Clarify that the `iss` claim is RECOMMENDED in part for auditing and operations, and that validation of workload identity uses `sub`, not `iss`.
+* Remove the `wimse` URI scheme definition and IANA registration from this document; both are specified in {{WIMSE-ID}}.
 
 ## draft-ietf-wimse-workload-creds-00
 
@@ -601,7 +604,7 @@ IANA is requested to register the "wimse" scheme to the "URI Schemes" registry {
 * Make `iss` claim in WIT optional and add wording about its relation to key distribution.
 * Remove `iss` claim from WPT.
 * Make `jti` claim in WIT optional.
-* Error handling for the application level methods.
+* Error handling for the application-level methods.
 
 ## draft-ietf-wimse-s2s-protocol-02
 

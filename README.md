@@ -1,4 +1,4 @@
-# WIMSE Workload-to-Workload Authentication
+<!-- regenerate: on (set to off if you edit this file) -->
 
 This is the working area for the IETF [WIMSE Working Group](https://datatracker.ietf.org/wg/wimse/documents/) documents on workload identity and workload-to-workload authentication. The repository builds several related Internet-Drafts.
 
@@ -34,9 +34,8 @@ This is the working area for the IETF [WIMSE Working Group](https://datatracker.
 
 See the [guidelines for contributions](https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/blob/main/CONTRIBUTING.md).
 
-Contributions can be made by creating pull requests.
-The GitHub interface supports creating pull requests using the Edit (✏) button.
-
+The contributing file also has tips on how to make contributions, if you
+don't already know how to do that.
 
 ## Command Line Usage
 
