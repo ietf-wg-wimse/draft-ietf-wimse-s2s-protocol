@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments                J. Salowey
 Internet-Draft                                                  CyberArk
 Intended status: Standards Track                              Y. Sheffer
-Expires: 11 December 2026                                         Intuit
-                                                             9 June 2026
+Expires: 17 December 2026                                         Intuit
+                                                            15 June 2026
 
 
      WIMSE Workload-to-Workload Authentication with HTTP Signatures
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 11 December 2026.
+   This Internet-Draft will expire on 17 December 2026.
 
 Copyright Notice
 
@@ -805,7 +805,7 @@ A.9.  draft-ietf-wimse-s2s-protocol-03
 
    *  Make jti claim in WIT optional.
 
-   *  Error handling for the application level methods.
+   *  Error handling for the application-level methods.
 
 A.10.  draft-ietf-wimse-s2s-protocol-02
 
