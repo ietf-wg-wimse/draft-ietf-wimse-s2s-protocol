@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-06-14T03:57:49.139997+00:00",
+  "timestamp": "2026-06-16T03:59:39.356521+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -16375,13 +16375,13 @@
       ],
       "body": "Suceeds #192, resolves #87",
       "createdAt": "2026-04-21T13:18:26Z",
-      "updatedAt": "2026-06-09T14:51:59Z",
+      "updatedAt": "2026-06-15T08:40:30Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
-      "baseRefOid": "6f58383cbe6aea09c60843b2b9d2348bb7336d65",
+      "baseRefOid": "e38c9541856d4b33725eb4fff3f83a207b940538",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "arndt/simultaneous_use",
-      "headRefOid": "ad731f1ddbf3ce6a872cfefaebbbb17dbeb0c618",
+      "headRefOid": "7e00d8f067dd256850fb3f3e4642acf0dc840f2d",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -17278,6 +17278,58 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 241,
+      "id": "PR_kwDOLJmm787mdGt3",
+      "title": "Clarify protocol binding locations",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/241",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fixes #197 ",
+      "createdAt": "2026-06-15T08:55:32Z",
+      "updatedAt": "2026-06-15T08:55:33Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "e38c9541856d4b33725eb4fff3f83a207b940538",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "arndt/clarify-protocol-binding-locations",
+      "headRefOid": "c763ac422e743c63f31f4553af49f2cc0ec1dc1f",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 242,
+      "id": "PR_kwDOLJmm787meTL3",
+      "title": "Add wit expiration security considerations and align across document",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/242",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "While working on #198 I noticed that we don't have security considerations about the WIT lifetime, only for the POP.\r\n\r\nFixes #198 too.",
+      "createdAt": "2026-06-15T09:45:13Z",
+      "updatedAt": "2026-06-15T09:45:14Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "e38c9541856d4b33725eb4fff3f83a207b940538",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "arndt/wit_expiration_consistency_and_security_considerations",
+      "headRefOid": "2248ecbaf24c96be3ff9ee23d1a1bf3ed4d233d8",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
