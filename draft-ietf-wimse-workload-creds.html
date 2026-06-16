@@ -1055,7 +1055,7 @@ svg {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Campbell, et al.</td>
-<td class="center">Expires 11 December 2026</td>
+<td class="center">Expires 18 December 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1068,12 +1068,12 @@ svg {
 <dd class="internet-draft">draft-ietf-wimse-workload-creds-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-06-09" class="published">9 June 2026</time>
+<time datetime="2026-06-16" class="published">16 June 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-12-11">11 December 2026</time></dd>
+<dd class="expires"><time datetime="2026-12-18">18 December 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1142,7 +1142,7 @@ multi-service, multi-cloud, multi-tenant deployments.<a href="#section-abstract-
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 11 December 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 18 December 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1345,16 +1345,16 @@ This document focuses on the credentials that carry workload identity and bind t
 </li>
       </ul>
 <p id="section-1-4">The Workload Identity Token is targeted for application-level protocols. The Workload Identity Certificate is targeted for transport-level protocols. This does not preclude the use of the WIT in transport-level protocols or the WIC in application-level protocols, but these are the primary intended uses.<a href="#section-1-4" class="pilcrow">¶</a></p>
-<p id="section-1-5">The various protocol bindings that use these credentials to authenticate workloads to each other are out of scope for this document. At the time of writing, three such protocols are defined:<a href="#section-1-5" class="pilcrow">¶</a></p>
+<p id="section-1-5">The various protocol bindings that use these credentials to authenticate workloads to each other are specified in separate documents and are out of scope for this document. At the time of writing, three such protocol bindings are defined:<a href="#section-1-5" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-1-6.1">
-          <p id="section-1-6.1.1">Transport-level authentication mutual TLS using the Workload Identity Certificate.<a href="#section-1-6.1.1" class="pilcrow">¶</a></p>
+          <p id="section-1-6.1.1">Transport-level authentication using mutual TLS with the Workload Identity Certificate, specified in <span>[<a href="#I-D.ietf-wimse-mutual-tls" class="cite xref">I-D.ietf-wimse-mutual-tls</a>]</span>.<a href="#section-1-6.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-1-6.2">
-          <p id="section-1-6.2.1">Application-level authentication using the Workload Identity Token in conjunction with a JWT-based proof of possession, the Workload Proof Token (WPT).<a href="#section-1-6.2.1" class="pilcrow">¶</a></p>
+          <p id="section-1-6.2.1">Application-level authentication using the Workload Identity Token in conjunction with a JWT-based proof of possession, the Workload Proof Token (WPT), specified in <span>[<a href="#I-D.ietf-wimse-wpt" class="cite xref">I-D.ietf-wimse-wpt</a>]</span>.<a href="#section-1-6.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-1-6.3">
-          <p id="section-1-6.3.1">Application-level authentication using the Workload Identity Token in conjunction with HTTP Message Signatures.<a href="#section-1-6.3.1" class="pilcrow">¶</a></p>
+          <p id="section-1-6.3.1">Application-level authentication using the Workload Identity Token in conjunction with HTTP Message Signatures, specified in <span>[<a href="#I-D.ietf-wimse-http-signature" class="cite xref">I-D.ietf-wimse-http-signature</a>]</span>.<a href="#section-1-6.3.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <div id="use-in-other-protocols">
@@ -2180,6 +2180,18 @@ use these tokens to authenticate to each other.<a href="#section-9.1.1-9" class=
 <dt id="I-D.ietf-wimse-arch">[I-D.ietf-wimse-arch]</dt>
         <dd>
 <span class="refAuthor">Salowey, J. A.</span>, <span class="refAuthor">Rosomakho, Y.</span>, and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"Workload Identity in a Multi System Environment (WIMSE) Architecture"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-arch-07</span>, <time datetime="2026-03-02" class="refDate">2 March 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-07">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-07</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.ietf-wimse-http-signature">[I-D.ietf-wimse-http-signature]</dt>
+        <dd>
+<span class="refAuthor">Salowey, J. A.</span> and <span class="refAuthor">Y. Sheffer</span>, <span class="refTitle">"WIMSE Workload-to-Workload Authentication with HTTP Signatures"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-http-signature-03</span>, <time datetime="2026-04-07" class="refDate">7 April 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-http-signature-03">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-http-signature-03</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.ietf-wimse-mutual-tls">[I-D.ietf-wimse-mutual-tls]</dt>
+        <dd>
+<span class="refAuthor">Salowey, J. A.</span> and <span class="refAuthor">Y. Rosomakho</span>, <span class="refTitle">"Workload Authentication Using Mutual TLS"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-mutual-tls-01</span>, <time datetime="2026-05-05" class="refDate">5 May 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-mutual-tls-01">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-mutual-tls-01</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.ietf-wimse-wpt">[I-D.ietf-wimse-wpt]</dt>
+        <dd>
+<span class="refAuthor">Campbell, B.</span> and <span class="refAuthor">A. Schwenkschuster</span>, <span class="refTitle">"WIMSE Workload Proof Token"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-wpt-01</span>, <time datetime="2026-03-02" class="refDate">2 March 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-wpt-01">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-wpt-01</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="IANA.HTTP.FIELDS">[IANA.HTTP.FIELDS]</dt>
         <dd>

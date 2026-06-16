@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 11 December 2026                                       CyberArk
+Expires: 18 December 2026                                       CyberArk
                                                       A. Schwenkschuster
                                                         Defakto Security
                                                               Y. Sheffer
                                                                   Intuit
                                                             Y. Rosomakho
                                                                  Zscaler
-                                                             9 June 2026
+                                                            16 June 2026
 
 
                        WIMSE Workload Credentials
@@ -67,7 +67,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 11 December 2026.
+   This Internet-Draft will expire on 18 December 2026.
 
 Copyright Notice
 
@@ -156,18 +156,20 @@ Table of Contents
    protocols, but these are the primary intended uses.
 
    The various protocol bindings that use these credentials to
-   authenticate workloads to each other are out of scope for this
-   document.  At the time of writing, three such protocols are defined:
+   authenticate workloads to each other are specified in separate
+   documents and are out of scope for this document.  At the time of
+   writing, three such protocol bindings are defined:
 
-   *  Transport-level authentication mutual TLS using the Workload
-      Identity Certificate.
+   *  Transport-level authentication using mutual TLS with the Workload
+      Identity Certificate, specified in [I-D.ietf-wimse-mutual-tls].
 
    *  Application-level authentication using the Workload Identity Token
       in conjunction with a JWT-based proof of possession, the Workload
-      Proof Token (WPT).
+      Proof Token (WPT), specified in [I-D.ietf-wimse-wpt].
 
    *  Application-level authentication using the Workload Identity Token
-      in conjunction with HTTP Message Signatures.
+      in conjunction with HTTP Message Signatures, specified in
+      [I-D.ietf-wimse-http-signature].
 
 1.1.  Use In Other Protocols
 
@@ -979,6 +981,27 @@ Table of Contents
               ietf-wimse-arch-07, 2 March 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
               arch-07>.
+
+   [I-D.ietf-wimse-http-signature]
+              Salowey, J. A. and Y. Sheffer, "WIMSE Workload-to-Workload
+              Authentication with HTTP Signatures", Work in Progress,
+              Internet-Draft, draft-ietf-wimse-http-signature-03, 7
+              April 2026, <https://datatracker.ietf.org/doc/html/draft-
+              ietf-wimse-http-signature-03>.
+
+   [I-D.ietf-wimse-mutual-tls]
+              Salowey, J. A. and Y. Rosomakho, "Workload Authentication
+              Using Mutual TLS", Work in Progress, Internet-Draft,
+              draft-ietf-wimse-mutual-tls-01, 5 May 2026,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
+              mutual-tls-01>.
+
+   [I-D.ietf-wimse-wpt]
+              Campbell, B. and A. Schwenkschuster, "WIMSE Workload Proof
+              Token", Work in Progress, Internet-Draft, draft-ietf-
+              wimse-wpt-01, 2 March 2026,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
+              wpt-01>.
 
    [IANA.HTTP.FIELDS]
               IANA, "Hypertext Transfer Protocol (HTTP) Field Name
