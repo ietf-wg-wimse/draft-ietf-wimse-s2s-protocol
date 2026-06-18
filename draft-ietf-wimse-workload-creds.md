@@ -371,7 +371,7 @@ How the receiving application obtains the workload identifier depends on the cre
 * Application-level: After successfully validating the WIT, the receiving application retrieves the workload identifier from the `sub` claim.
 * Transport-level: When the client is authenticated with a Workload Identity Certificate, the receiving application retrieves the workload identifier from the client certificate's SubjectAltName extension of type URI.
 
-A workload may use other standard and deployment specific fields in the workload credential for accounting or authorization purposes.
+A workload MAY use other standard and deployment specific fields in the workload credential for accounting or authorization purposes.
 
 # Implementation Status
 
