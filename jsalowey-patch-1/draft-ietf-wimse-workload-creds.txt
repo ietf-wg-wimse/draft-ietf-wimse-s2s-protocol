@@ -638,7 +638,7 @@ Table of Contents
       workload identifier from the client certificate's SubjectAltName
       extension of type URI.
 
-   A workload may use other standard and deployment specific fields in
+   A workload MAY use other standard and deployment specific fields in
    the workload credential for accounting or authorization purposes.
 
 7.  Implementation Status
