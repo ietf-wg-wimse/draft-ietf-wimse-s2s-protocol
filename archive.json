@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-06-16T03:59:39.356521+00:00",
+  "timestamp": "2026-06-18T03:52:02.400287+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -3630,7 +3630,7 @@
       "id": "I_kwDOLJmm787jKxEl",
       "title": "Clarify protocol bindings are specified in other documents",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/197",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "fandreas",
       "authorAssociation": "NONE",
       "assignees": [
@@ -3641,8 +3641,8 @@
       ],
       "body": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/blob/41fb87003b43adccd77af7e91ad06e5e3499066f/draft-ietf-wimse-workload-creds.md?plain=1#L89-L95\n\nConfusing when reading initially. Clarify that those protocols are defined in separate documents and include references to them. ",
       "createdAt": "2026-01-14T02:18:38Z",
-      "updatedAt": "2026-06-02T14:29:05Z",
-      "closedAt": null,
+      "updatedAt": "2026-06-16T14:14:50Z",
+      "closedAt": "2026-06-16T14:14:50Z",
       "comments": []
     },
     {
@@ -16375,7 +16375,7 @@
       ],
       "body": "Suceeds #192, resolves #87",
       "createdAt": "2026-04-21T13:18:26Z",
-      "updatedAt": "2026-06-15T08:40:30Z",
+      "updatedAt": "2026-06-16T13:20:29Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "e38c9541856d4b33725eb4fff3f83a207b940538",
@@ -16525,6 +16525,26 @@
               "body": "Should + justification to simplify policy management & auditing",
               "createdAt": "2026-06-09T14:51:59Z",
               "updatedAt": "2026-06-09T14:51:59Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABDJ-ZYA",
+          "commit": {
+            "abbreviatedOid": "7e00d8f"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-16T13:20:29Z",
+          "updatedAt": "2026-06-16T13:20:29Z",
+          "comments": [
+            {
+              "originalPosition": 35,
+              "body": "This is confusing: the first paragraph is expressly NOT about intermediaries, so why does the second paragraph belong here? In fact, why not move it to the first \"Simultaneous Use of Credentials \" section?\n\nBTW it is not great to have two sections with the same name. \"Simultaneous use of section name.\"",
+              "createdAt": "2026-06-16T13:20:29Z",
+              "updatedAt": "2026-06-16T13:20:29Z"
             }
           ]
         }
@@ -17284,26 +17304,42 @@
       "id": "PR_kwDOLJmm787mdGt3",
       "title": "Clarify protocol binding locations",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/241",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Fixes #197 ",
       "createdAt": "2026-06-15T08:55:32Z",
-      "updatedAt": "2026-06-15T08:55:33Z",
+      "updatedAt": "2026-06-16T14:14:49Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "e38c9541856d4b33725eb4fff3f83a207b940538",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "arndt/clarify-protocol-binding-locations",
       "headRefOid": "c763ac422e743c63f31f4553af49f2cc0ec1dc1f",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-06-16T14:14:49Z",
+      "mergedAt": "2026-06-16T14:14:49Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "ffa8bf13e2cb4f64890dcc3d9fa4d73fe45cc33c"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABDJ_SsA",
+          "commit": {
+            "abbreviatedOid": "c763ac4"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-06-16T13:22:03Z",
+          "updatedAt": "2026-06-16T13:22:03Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 242,
@@ -17317,7 +17353,7 @@
       "labels": [],
       "body": "While working on #198 I noticed that we don't have security considerations about the WIT lifetime, only for the POP.\r\n\r\nFixes #198 too.",
       "createdAt": "2026-06-15T09:45:13Z",
-      "updatedAt": "2026-06-15T09:45:14Z",
+      "updatedAt": "2026-06-16T13:25:06Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "e38c9541856d4b33725eb4fff3f83a207b940538",
@@ -17329,7 +17365,21 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABDKBAaw",
+          "commit": {
+            "abbreviatedOid": "2248ecb"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-06-16T13:25:06Z",
+          "updatedAt": "2026-06-16T13:25:06Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
