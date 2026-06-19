@@ -97,9 +97,9 @@ A WPT MUST contain the following:
      using the `application/wpt+jwt` media type.
 * in the JWT claims:
     * `aud`: The audience SHOULD contain the HTTP target URI ({{Section 7.1 of RFC9110}}) of the request
-     to which the WPT is attached, without query or fragment parts. Senders set the audience to the URI they use for the request.
-     However, normalization, rewriting, or other deployment-specific processing may require a different audience value.
-     Recipients validate that the audience is intended for them, using trusted configuration or a local API (for example, to determine the expected request URI or to validate a received audience value); see "Workload Identifiers and Authentication Granularity" in {{!I-D.ietf-wimse-workload-creds}}.
+     to which the WPT is attached, without query or fragment parts. However, there may be some normalization,
+    rewriting or other process that requires the audience to be set to a deployment-specific value.
+    See "Workload Identifiers and Authentication Granularity" in {{!I-D.ietf-wimse-workload-creds}}.
     * `exp`: The expiration time of the WPT (as defined in {{Section 4.1.4 of RFC7519}}). WPT lifetimes MUST be short,
      e.g., on the order of minutes or seconds.
     * `jti`: A unique identifier for the WPT. The value MUST be assigned such that there is a negligible probability that the same value will be assigned to any other WPT. Such uniqueness can be accomplished by encoding (base64url or any other suitable encoding) 128 bits of pseudorandom data.
@@ -361,7 +361,7 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 
 ## draft-ietf-wimse-wpt-02
 
-* Clarify WPT `aud` as HTTP target URI; note trusted local validation of audience.
+* Tie WPT `aud` to "Workload Identifiers and Authentication Granularity" in workload-creds.
 
 ## draft-ietf-wimse-wpt-01
 

@@ -158,7 +158,7 @@ The default value for `wimse-aud` is the request's HTTP target URI ({{Section 7.
 Senders, recipients, and intermediaries do not always derive the same string for that URI: normalization and rewriting differ by implementation and hop, so the audience that verification should use is a deployment-specific choice.
 When the default string is not suitable for verification at the recipient, senders SHOULD set `wimse-aud` to an explicit audience value as appropriate for that deployment.
 
-The recipient MUST be able to verify that the audience is intended for it, using trusted configuration or a local API (for example, to determine the expected request URI or to validate a received audience value); see "Workload Identifiers and Authentication Granularity" in {{I-D.ietf-wimse-workload-creds}}.
+The recipient MUST be able to verify that the audience refers to it. See "Workload Identifiers and Authentication Granularity" in {{I-D.ietf-wimse-workload-creds}} for more detail.
 
 ## The `wimse-req-nonce` Signature Parameter {#wimse-req-nonce-param}
 

@@ -160,15 +160,11 @@ if the server certificate is valid within a trust domain, not if it's tied to a 
 To enable mutual and granular authentication between workloads, two things must be in place:
 
 - Each workload must know its own identifier.
-- There needs to be an explicit mapping from the external handle used to access a workload (such as an Ingress path or service DNS name)
-to its workload identifier.
+- The infrastructure must make available to workloads some means to verify that an HTTP target URI (authority and path) is intended for them.
 
-Once these conditions are met, the methods described in this document can be used for the caller and callee to mutually authenticate.
+Once these conditions are met, the methods described in this document can be used for the caller and callee to mutually authenticate. Specifically, deployments should use this capability for consistent audience validation within their environment.
 
-Implementations MUST allow for defining this mapping from the workload's access path to the workload identifier through a concrete API (e.g., callback functions). Deployments SHOULD use these features to establish a consistent set of identifiers within their environment.
-
-Application-level proof-of-possession mechanisms in {{?I-D.ietf-wimse-wpt}} and {{?I-D.ietf-wimse-http-signature}} carry audience as the HTTP target URI of the request (the access handle the caller uses). The Workload Identifier in a WIT or WIC identifies the sender. The Audience identifies the recipient.
-The caller sets the audience to the request URI; the callee validates that the audience is intended for it using the mapping API, including any deployment-specific aliases or normalization. For mutual TLS, the caller uses the same mapping when validating the server by workload identity rather than DNS hostname (see {{?I-D.ietf-wimse-mutual-tls}}).
+Application-level proof-of-possession mechanisms in {{?I-D.ietf-wimse-wpt}} and {{?I-D.ietf-wimse-http-signature}} use the HTTP target URI of the request as audience. The Workload Identifier in a WIT or WIC identifies the sender; the audience identifies the intended recipient. The caller sets the audience to the HTTP target URI; the callee verifies that the audience is intended for it using infrastructure support as described above, including any deployment-specific aliases or normalization. For mutual TLS, the caller uses the same support when validating the server by workload identity rather than DNS hostname (see {{?I-D.ietf-wimse-mutual-tls}}).
 
 # Conventions and Definitions
 
@@ -555,7 +551,7 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 
 ## draft-ietf-wimse-workload-creds-02
 
-* Clarify access-path-to-identifier mapping direction and concrete API in "Workload Identifiers and Authentication Granularity"; document HTTP URI audience vs Workload Identifier roles.
+* Clarify that infrastructure must support verifying HTTP target URI against workload; document HTTP URI audience vs Workload Identifier roles.
 
 ## draft-ietf-wimse-workload-creds-01
 
