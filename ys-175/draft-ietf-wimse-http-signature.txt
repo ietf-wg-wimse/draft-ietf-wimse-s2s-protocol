@@ -761,7 +761,9 @@ Appendix A.  Document History
 A.1.  draft-ietf-wimse-http-signature-04
 
    *  On signed responses, require wimse-req-nonce (request binding);
-      register with IANA.
+      register with IANA.  Non-normative response example not updated
+      accordingly; the Signature value was not regenerated (see issue
+      tracker).
 
 A.2.  draft-ietf-wimse-http-signature-03
 
