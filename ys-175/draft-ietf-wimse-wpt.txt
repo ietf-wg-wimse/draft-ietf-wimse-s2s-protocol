@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                      A. Schwenkschuster
-Expires: 20 December 2026                               Defakto Security
-                                                            18 June 2026
+Expires: 21 December 2026                               Defakto Security
+                                                            19 June 2026
 
 
                        WIMSE Workload Proof Token
@@ -60,7 +60,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 20 December 2026.
+   This Internet-Draft will expire on 21 December 2026.
 
 Copyright Notice
 
@@ -198,14 +198,10 @@ Table of Contents
 
       -  aud: The audience SHOULD contain the HTTP target URI
          (Section 7.1 of [RFC9110]) of the request to which the WPT is
-         attached, without query or fragment parts.  Senders set the
-         audience to the URI they use for the request.  However,
-         normalization, rewriting, or other deployment-specific
-         processing may require a different audience value.  Recipients
-         validate that the audience is intended for them, using trusted
-         configuration or a local API (for example, to determine the
-         expected request URI or to validate a received audience value);
-         see "Workload Identifiers and Authentication Granularity" in
+         attached, without query or fragment parts.  However, there may
+         be some normalization, rewriting or other process that requires
+         the audience to be set to a deployment-specific value.  See
+         "Workload Identifiers and Authentication Granularity" in
          [I-D.ietf-wimse-workload-creds].
 
       -  exp: The expiration time of the WPT (as defined in
@@ -749,8 +745,8 @@ Appendix A.  Document History
 
 A.1.  draft-ietf-wimse-wpt-02
 
-   *  Clarify WPT aud as HTTP target URI; note trusted local validation
-      of audience.
+   *  Tie WPT aud to "Workload Identifiers and Authentication
+      Granularity" in workload-creds.
 
 A.2.  draft-ietf-wimse-wpt-01
 

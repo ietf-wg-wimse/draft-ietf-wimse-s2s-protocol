@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments                J. Salowey
 Internet-Draft                                                  CyberArk
 Intended status: Standards Track                              Y. Sheffer
-Expires: 20 December 2026                                         Intuit
-                                                            18 June 2026
+Expires: 21 December 2026                                         Intuit
+                                                            19 June 2026
 
 
      WIMSE Workload-to-Workload Authentication with HTTP Signatures
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 20 December 2026.
+   This Internet-Draft will expire on 21 December 2026.
 
 Copyright Notice
 
@@ -289,11 +289,9 @@ Table of Contents
    suitable for verification at the recipient, senders SHOULD set wimse-
    aud to an explicit audience value as appropriate for that deployment.
 
-   The recipient MUST be able to verify that the audience is intended
-   for it, using trusted configuration or a local API (for example, to
-   determine the expected request URI or to validate a received audience
-   value); see "Workload Identifiers and Authentication Granularity" in
-   [I-D.ietf-wimse-workload-creds].
+   The recipient MUST be able to verify that the audience refers to it.
+   See "Workload Identifiers and Authentication Granularity" in
+   [I-D.ietf-wimse-workload-creds] for more detail.
 
 3.2.  The wimse-req-nonce Signature Parameter
 

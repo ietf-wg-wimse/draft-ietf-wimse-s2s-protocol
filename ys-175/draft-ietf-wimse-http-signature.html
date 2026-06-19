@@ -1057,7 +1057,7 @@ svg {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Salowey &amp; Sheffer</td>
-<td class="center">Expires 20 December 2026</td>
+<td class="center">Expires 21 December 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1070,12 +1070,12 @@ svg {
 <dd class="internet-draft">draft-ietf-wimse-http-signature-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-06-18" class="published">18 June 2026</time>
+<time datetime="2026-06-19" class="published">19 June 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-12-20">20 December 2026</time></dd>
+<dd class="expires"><time datetime="2026-12-21">21 December 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1136,7 +1136,7 @@ Authentication is based on the Workload Identity Token (WIT).<a href="#section-a
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 20 December 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 21 December 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1477,7 +1477,7 @@ alongside the covered components. That metadata is covered by the signature as t
 <p id="section-3.1-3">The default value for <code>wimse-aud</code> is the request's HTTP target URI (<span><a href="https://rfc-editor.org/rfc/rfc9110#section-7.1" class="relref">Section 7.1</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>), without query or fragment components.
 Senders, recipients, and intermediaries do not always derive the same string for that URI: normalization and rewriting differ by implementation and hop, so the audience that verification should use is a deployment-specific choice.
 When the default string is not suitable for verification at the recipient, senders <span class="bcp14">SHOULD</span> set <code>wimse-aud</code> to an explicit audience value as appropriate for that deployment.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
-<p id="section-3.1-4">The recipient <span class="bcp14">MUST</span> be able to verify that the audience is intended for it, using trusted configuration or a local API (for example, to determine the expected request URI or to validate a received audience value); see "Workload Identifiers and Authentication Granularity" in <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span>.<a href="#section-3.1-4" class="pilcrow">¶</a></p>
+<p id="section-3.1-4">The recipient <span class="bcp14">MUST</span> be able to verify that the audience refers to it. See "Workload Identifiers and Authentication Granularity" in <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span> for more detail.<a href="#section-3.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="wimse-req-nonce-param">
