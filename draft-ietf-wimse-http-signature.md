@@ -394,7 +394,7 @@ IANA is requested to register the following entries in the "HTTP Signature Metad
 
 ## draft-ietf-wimse-http-signature-04
 
-* On signed responses, require `wimse-req-nonce` (request binding); register with IANA.
+* On signed responses, require `wimse-req-nonce` (request binding); register with IANA. Non-normative response example not updated accordingly; the `Signature` value was not regenerated (see issue tracker).
 
 ## draft-ietf-wimse-http-signature-03
 
