@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-06-18T03:52:02.400287+00:00",
+  "timestamp": "2026-06-21T04:05:54.324020+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -542,7 +542,7 @@
       "id": "I_kwDOLJmm786OZayF",
       "title": "Workload Identity -> Identifier",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/31",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -556,8 +556,8 @@
       ],
       "body": "And in general consolidate the Workload Identity section with the architecture I-D, or possibly remove the section altogether.",
       "createdAt": "2024-07-03T16:26:58Z",
-      "updatedAt": "2025-12-09T15:08:35Z",
-      "closedAt": null,
+      "updatedAt": "2026-06-18T09:55:36Z",
+      "closedAt": "2026-06-18T09:55:36Z",
       "comments": [
         {
           "author": "PieterKas",
@@ -579,6 +579,13 @@
           "body": "It looks like there will in fact be be a separate identifier document https://mailarchive.ietf.org/arch/msg/wimse/Khn8D-r3fymfZgYvOst43hK5wAs/ ",
           "createdAt": "2025-10-28T15:52:06Z",
           "updatedAt": "2025-10-28T15:52:06Z"
+        },
+        {
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "body": "We moved the discussion of the format of the identifier to the identifier document.  This issue should be closed.",
+          "createdAt": "2026-06-18T04:33:16Z",
+          "updatedAt": "2026-06-18T04:33:16Z"
         }
       ]
     },
@@ -2971,7 +2978,7 @@
       "id": "I_kwDOLJmm787L2Nx4",
       "title": "Workload Identifier: Service or Instance ?",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/162",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "fandreas",
       "authorAssociation": "NONE",
       "assignees": [
@@ -2983,8 +2990,8 @@
       ],
       "body": "Section 1.3 (Workload Identifiers and Authentication Granularity) is not entirely clear in how it views workload identifiers as it relates to identifying a specific instance of a workload versus a \"service\", which may consist of multiple instances that come and go: \n\n<quote>\nPrior to WIMSE, many use cases did not allow for fully granular authentication in containerized runtime platforms. For instance, with mutual TLS, there's often no clear way to map the request's external access reference (e.g., Kubernetes Ingress path, service name, or host header) to the SubjectAltName value in the server certificate. This means that the client could only verify if the server certificate is valid within a trust domain, not if it's tied to a specific workload.\n\nTo enable mutual and granular authentication between workloads, two things must be in place:\n- Each workload must know its own identifier.\n- There needs to be an explicit mapping from the external handle used to access a workload (such as an Ingress path or service DNS name) to its workload identifier.\n</quote>\n\nThe above text suggests that the workload identifier is for a specific instance, however either should be possible (with the most common use case expected to be a \"service\" rather than an \"instance\"). ",
       "createdAt": "2025-09-16T01:22:39Z",
-      "updatedAt": "2026-04-22T17:04:21Z",
-      "closedAt": null,
+      "updatedAt": "2026-06-18T14:21:32Z",
+      "closedAt": "2026-06-18T14:21:32Z",
       "comments": [
         {
           "author": "yaronf",
@@ -3013,6 +3020,13 @@
           "body": "Related to #31 and #161 ",
           "createdAt": "2025-12-09T15:23:45Z",
           "updatedAt": "2025-12-09T15:23:45Z"
+        },
+        {
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "body": "My current view on this is that it is a deployment specific matter as to the granularity of an identifier.  FOr the purposes of this document the identifier MAY be used for authorization and accounting.  Implementations MAY also take other claims in the JWT or fields in a certificate when performing authorization and accounting.   A specific scheme may be more prescriptive on what an identifier represents. \nI think this discussion should be in the identity or the architecture documents, but I did open a PR to state that other fields in the credential can be used for authorization and accounting purposes #243",
+          "createdAt": "2026-06-18T04:56:29Z",
+          "updatedAt": "2026-06-18T04:56:29Z"
         }
       ]
     },
@@ -3279,7 +3293,7 @@
       "id": "I_kwDOLJmm787NX90P",
       "title": "Create section about trust anchors",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/170",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -3290,8 +3304,8 @@
       ],
       "body": "We currently don't talk about where the trust anchor comes from and what data is used to identify those. We believe this should be added on a high level. The exact provisioning is out of scope.",
       "createdAt": "2025-09-23T14:48:53Z",
-      "updatedAt": "2026-06-02T14:25:05Z",
-      "closedAt": null,
+      "updatedAt": "2026-06-18T14:18:02Z",
+      "closedAt": "2026-06-18T14:18:02Z",
       "comments": [
         {
           "author": "jsalowey",
@@ -3423,7 +3437,7 @@
       ],
       "body": "* When using mTLS, the SubjectAltName is a WIMSE ID. The assumption is that both peers know each other's ID and can validate the incoming certs.\n* Sec. 1.3 is about mapping from Request URI (which is known to the client by definition) to the target's WIMSE ID.\n\nAnd yet we still specified the `aud` claim of the WPT (Sec. 3.2) as the Request URI. Both points above point towards `aud` as the WIMSE ID.",
       "createdAt": "2025-09-26T11:03:20Z",
-      "updatedAt": "2026-06-10T16:19:03Z",
+      "updatedAt": "2026-06-18T14:38:14Z",
       "closedAt": null,
       "comments": [
         {
@@ -3432,6 +3446,13 @@
           "body": "I suggest we close this issue without changing `aud`/`wimse-aud` to a Workload Identifier:\n\n1. **Keep audience as the HTTP target URI** in WPT and HTTP Signatures (RFC 9110 \u00a77.1, no query/fragment, existing normalization/rewriting caveats). The caller knows this URI when constructing the request. In HTTP Signatures, `@request-target` covers path (and query); `wimse-aud` adds scheme and authority. Identity (`sub`, WIC SAN) identifies the sender; audience binds the PoP to the HTTP access handle, not a WIMSE ID.\n\n2. **Keep the #granular-auth mapping**, direction access path \u2192 Workload Identifier (#173 is a separate editorial fix). The creds draft already requires a concrete mapping API (e.g. callback functions). Either direction would work; we keep the existing one for interoperability. The caller sets `aud`/`wimse-aud` to the request URI; the callee uses the mapping to validate audience (including alias/normalization).\n\n3. **Which side uses the mapping depends on the method:**\n   * **mTLS:** caller \u2014 server validation by workload identity (#server-name, #granular-auth). Callee gets caller ID from the client cert.\n   * **WPT / HTTP Signatures:** callee \u2014 PoP audience validation.\n",
           "createdAt": "2026-06-10T16:19:03Z",
           "updatedAt": "2026-06-10T16:19:03Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Discussion: implement req/res binding in http-sig, leave wimse-aud as RequestURI, and resolve the mapping issue.",
+          "createdAt": "2026-06-18T14:38:14Z",
+          "updatedAt": "2026-06-18T14:38:14Z"
         }
       ]
     },
@@ -3650,7 +3671,7 @@
       "id": "I_kwDOLJmm787jKxy2",
       "title": "Inconsistent credential lifetime guidance",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/198",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "fandreas",
       "authorAssociation": "NONE",
       "assignees": [
@@ -3661,8 +3682,8 @@
       ],
       "body": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/blob/41fb87003b43adccd77af7e91ad06e5e3499066f/draft-ietf-wimse-workload-creds.md?plain=1#L141\n\nThe 24-hour example is inconsistent with Section 3.1, which suggests WITs should be refreshed every couple of hours (exp claim). ",
       "createdAt": "2026-01-14T02:20:25Z",
-      "updatedAt": "2026-06-02T14:29:33Z",
-      "closedAt": null,
+      "updatedAt": "2026-06-18T14:17:45Z",
+      "closedAt": "2026-06-18T14:17:44Z",
       "comments": []
     },
     {
@@ -4202,6 +4223,26 @@
       "body": "I think the lack of wimse-aud on the response is a real gap, in that responses can be replayed to a different client. Two ways to address it:\n\n* Bind to the request by including a `nonce-req` value in the response (copying the `nonce` from the request). This is somewhat hacky.\n* Include `wimse-aud` in the response, but that needs to be a WIMSE ID (the caller doesn't necessarily have a request URI) and for symmetry, we would need to change it to a WIMSE ID on the request too. This would change the mapping calculus again.",
       "createdAt": "2026-06-11T08:25:17Z",
       "updatedAt": "2026-06-11T08:25:17Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 244,
+      "id": "I_kwDOLJmm788AAAABF7xtQQ",
+      "title": "PoP definition and consistent writing",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/244",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [
+        "arndt-s"
+      ],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "POP vs PoP vs Proof of posession",
+      "createdAt": "2026-06-18T14:16:24Z",
+      "updatedAt": "2026-06-18T15:30:13Z",
       "closedAt": null,
       "comments": []
     }
@@ -15062,7 +15103,7 @@
       ],
       "body": "",
       "createdAt": "2025-12-12T15:07:51Z",
-      "updatedAt": "2025-12-21T13:36:05Z",
+      "updatedAt": "2026-06-18T15:29:39Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "d3c7e629c45b02ace8a01bef7500ac4bd66ca7bd",
@@ -15078,7 +15119,7 @@
       "comments": [
         {
           "author": "jsnctl",
-          "authorAssociation": "CONTRIBUTOR",
+          "authorAssociation": "NONE",
           "body": "Thank you @yaronf. If possible, could you also include my colleagues Maartje Eyskens and Rados\u0142aw Piliszek as they both contributed to the implementation and feedback?",
           "createdAt": "2025-12-12T17:15:16Z",
           "updatedAt": "2025-12-12T17:15:16Z"
@@ -15121,7 +15162,7 @@
       ],
       "body": "I am asking the whole team to review because we will want similar sections in all docs.",
       "createdAt": "2025-12-13T16:13:17Z",
-      "updatedAt": "2026-01-04T16:41:30Z",
+      "updatedAt": "2026-06-18T15:29:25Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "4a0de62dfe29a6e58fcbbb5ceeca92a3f0aeed55",
@@ -15265,7 +15306,7 @@
       ],
       "body": "- Clarify that Accept-Signature is a preference, not a mandate\r\n- Specify which components to include in Accept-Signature header\r\n- Clarify that client (recipient of response) must validate signatures\r\n- Add requirement to reject responses if signature is absent or invalid\r\n\r\nCloses #188.",
       "createdAt": "2025-12-14T16:51:32Z",
-      "updatedAt": "2026-01-04T16:43:24Z",
+      "updatedAt": "2026-06-18T15:29:27Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "4a0de62dfe29a6e58fcbbb5ceeca92a3f0aeed55",
@@ -15349,7 +15390,7 @@
       ],
       "body": "Closes #185.",
       "createdAt": "2025-12-14T17:08:53Z",
-      "updatedAt": "2025-12-21T13:37:34Z",
+      "updatedAt": "2026-06-18T15:29:30Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "4a0de62dfe29a6e58fcbbb5ceeca92a3f0aeed55",
@@ -15731,7 +15772,7 @@
       ],
       "body": "",
       "createdAt": "2026-01-04T16:56:21Z",
-      "updatedAt": "2026-01-08T08:28:57Z",
+      "updatedAt": "2026-06-18T15:29:23Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "4864db3c3345924581d2a4a2978c94e986f08168",
@@ -16115,7 +16156,7 @@
       ],
       "body": "Fix #212. \r\n\r\n* Add new section about the explicit audience header.\r\n* IANA definition of the header.\r\n* New sample files.\r\n* Some typos.\r\n* Doc history for -02 (only this change).",
       "createdAt": "2026-03-01T17:33:13Z",
-      "updatedAt": "2026-03-01T19:37:59Z",
+      "updatedAt": "2026-06-18T15:29:18Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "9904d14d37137e5f536e9b1eb8cfb6bf35ad6c73",
@@ -16199,7 +16240,7 @@
       "labels": [],
       "body": "## Summary\n- Update README to list Editor's Copy, Datatracker, WG HTML, and diff links for each active split draft (workload-creds, wpt, http-signature, mutual-tls).\n- Add `.DS_Store` to `.gitignore`.\n- Minor README wording (drafts plural, contributing link on one line).\n\nFixes #218\n\nMade with [Cursor](https://cursor.com)",
       "createdAt": "2026-03-22T18:54:46Z",
-      "updatedAt": "2026-03-24T15:16:35Z",
+      "updatedAt": "2026-06-18T15:28:51Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "07498d9dfc8c5c41c7aea156eb952aa056f1c63c",
@@ -16241,7 +16282,7 @@
       "labels": [],
       "body": "## Summary\nAddresses **#169** (sub-issue of **#164**): state explicitly that `iss` is RECOMMENDED in part for **auditing and operations**, and that **validation of workload identity uses `sub`**, not `iss`.\n\n## Changes\n- `iss` bullet: auditing/ops examples; link to `{{wit-iss-note}}` for key distribution and validation context.\n- `{{wit-iss-note}}`: rewritten for clarity; RFC8414 / `sub` trust domain unchanged in intent.\n- Document History: `draft-ietf-wimse-workload-creds-01` entry.\n\nFixes #169\n\nMade with [Cursor](https://cursor.com)",
       "createdAt": "2026-03-22T19:19:15Z",
-      "updatedAt": "2026-04-21T14:06:16Z",
+      "updatedAt": "2026-06-18T15:28:49Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "07498d9dfc8c5c41c7aea156eb952aa056f1c63c",
@@ -16283,7 +16324,7 @@
       "labels": [],
       "body": "## Summary\nReplaces the `Wimse-Audience` HTTP header with the `wimse-aud` signature metadata parameter (RFC 9421) and adds an IANA registration in the HTTP Signature Metadata Parameters registry. Addresses #221.\n\n## Notes\nThe non-normative request example updates `Signature-Input` (adds `wimse-aud`, drops the header), but the `Signature` value was not recomputed over the new signature base; follow-up to regenerate with tooling when ready.\n",
       "createdAt": "2026-03-22T20:56:42Z",
-      "updatedAt": "2026-04-07T13:59:06Z",
+      "updatedAt": "2026-06-18T15:28:46Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "07498d9dfc8c5c41c7aea156eb952aa056f1c63c",
@@ -16604,7 +16645,7 @@
       "labels": [],
       "body": "Closes #207\n\n- Point WIT text at {{WIMSE-ID}} for the `wimse` scheme; remove duplicate IANA URI scheme section and `IANA.uri-schemes` ref.\n- Document history: -01 bullet for this change (with existing -01 `iss`/`sub` item).\n\nThe identifier draft already contains the scheme + IANA registration (draft-ietf-wimse-identifier#45).\n\nMade with [Cursor](https://cursor.com)",
       "createdAt": "2026-04-22T16:58:15Z",
-      "updatedAt": "2026-04-28T20:10:33Z",
+      "updatedAt": "2026-06-18T15:29:13Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "6af86bb41598bb17d40931006d6bd6d9341b5f97",
@@ -16648,7 +16689,7 @@
       ],
       "body": "Closes #202\n\nMade with [Cursor](https://cursor.com)",
       "createdAt": "2026-04-23T01:05:23Z",
-      "updatedAt": "2026-05-03T13:30:41Z",
+      "updatedAt": "2026-06-18T15:28:30Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "6af86bb41598bb17d40931006d6bd6d9341b5f97",
@@ -17020,7 +17061,7 @@
       ],
       "body": "Add a top-level section on using the workload identifier for authorization. Shared policy text; bullets distinguish application level (`sub`) from transport level (certificate SAN). Use \"receiving application\" for the party that authorizes the peer.\r\n\r\nCloses #228.",
       "createdAt": "2026-06-02T17:23:09Z",
-      "updatedAt": "2026-06-09T14:11:14Z",
+      "updatedAt": "2026-06-18T15:28:29Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "08761f7e68366d3a496fd14d8b395c6eac7f272e",
@@ -17095,7 +17136,7 @@
       "id": "PR_kwDOLJmm787h6RWL",
       "title": "Add trust anchors section; clarify WIT validation (#170)",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/236",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -17104,17 +17145,19 @@
       ],
       "body": "Introduce normative Establishing Trust Anchors (OOB provisioning, multiple keys, `kid`/RFC 7515/8725, WIC pointer). Align `iss` note with trust anchors and RFC 8414 only when configured OOB. Update WIT example signing-key wording.\r\n\r\nCloses #170.",
       "createdAt": "2026-06-02T18:04:46Z",
-      "updatedAt": "2026-06-09T21:12:47Z",
+      "updatedAt": "2026-06-18T15:28:27Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "e38c9541856d4b33725eb4fff3f83a207b940538",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-170",
       "headRefOid": "38c0212c54bc13c643de6a68d3e66b9766f84e6e",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-06-18T14:18:01Z",
+      "mergedAt": "2026-06-18T14:18:01Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "758a08512808f7491380021f7784963796d60853"
+      },
       "comments": [],
       "reviews": [
         {
@@ -17196,6 +17239,32 @@
               "updatedAt": "2026-06-09T14:32:23Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABDb-jcA",
+          "commit": {
+            "abbreviatedOid": "38c0212"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-06-18T14:06:57Z",
+          "updatedAt": "2026-06-18T14:06:57Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABDcBl9g",
+          "commit": {
+            "abbreviatedOid": "38c0212"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-06-18T14:12:10Z",
+          "updatedAt": "2026-06-18T14:12:10Z",
+          "comments": []
         }
       ]
     },
@@ -17346,24 +17415,28 @@
       "id": "PR_kwDOLJmm787meTL3",
       "title": "Add wit expiration security considerations and align across document",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/242",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
       "body": "While working on #198 I noticed that we don't have security considerations about the WIT lifetime, only for the POP.\r\n\r\nFixes #198 too.",
       "createdAt": "2026-06-15T09:45:13Z",
-      "updatedAt": "2026-06-16T13:25:06Z",
+      "updatedAt": "2026-06-18T14:17:43Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "e38c9541856d4b33725eb4fff3f83a207b940538",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "arndt/wit_expiration_consistency_and_security_considerations",
       "headRefOid": "2248ecbaf24c96be3ff9ee23d1a1bf3ed4d233d8",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-06-18T14:17:43Z",
+      "mergedAt": "2026-06-18T14:17:43Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "babf74dae442976131725169ebad70cddf3e01dd"
+      },
       "comments": [],
       "reviews": [
         {
@@ -17378,8 +17451,172 @@
           "createdAt": "2026-06-16T13:25:06Z",
           "updatedAt": "2026-06-16T13:25:06Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABDcEPrw",
+          "commit": {
+            "abbreviatedOid": "2248ecb"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-06-18T14:17:34Z",
+          "updatedAt": "2026-06-18T14:17:34Z",
+          "comments": []
         }
       ]
+    },
+    {
+      "number": 243,
+      "id": "PR_kwDOLJmm787nx-aF",
+      "title": "Other fields for AA",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/243",
+      "state": "MERGED",
+      "author": "jsalowey",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "Note that other fields in the identity credential can be used for authorization and accounting,\r\n\r\nissue #162 ",
+      "createdAt": "2026-06-18T04:54:02Z",
+      "updatedAt": "2026-06-18T14:20:49Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "ffa8bf13e2cb4f64890dcc3d9fa4d73fe45cc33c",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "jsalowey-patch-1",
+      "headRefOid": "97036e8885b64e50c66787eee79ee4fa13e0b756",
+      "closedAt": "2026-06-18T14:20:49Z",
+      "mergedAt": "2026-06-18T14:20:49Z",
+      "mergedBy": "jsalowey",
+      "mergeCommit": {
+        "oid": "4e44e792f031cff205913be2f806207e3fcb999c"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABDZlV6A",
+          "commit": {
+            "abbreviatedOid": "0d8385c"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-18T08:30:04Z",
+          "updatedAt": "2026-06-18T08:30:04Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "I think this is a normative MAY.\n\nI realize this raises a question about the surrounding text, but still.",
+              "createdAt": "2026-06-18T08:30:04Z",
+              "updatedAt": "2026-06-18T08:30:04Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABDcFdXA",
+          "commit": {
+            "abbreviatedOid": "0d8385c"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-18T14:19:54Z",
+          "updatedAt": "2026-06-18T14:19:54Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "```suggestion\r\nA workload MAY use other standard and deployment specific fields in the workload credential for accounting or authorization purposes.\r\n```",
+              "createdAt": "2026-06-18T14:19:54Z",
+              "updatedAt": "2026-06-18T14:19:54Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABDcFs2w",
+          "commit": {
+            "abbreviatedOid": "97036e8"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-06-18T14:20:25Z",
+          "updatedAt": "2026-06-18T14:20:25Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABDcFyrQ",
+          "commit": {
+            "abbreviatedOid": "0d8385c"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-06-18T14:20:37Z",
+          "updatedAt": "2026-06-18T14:20:37Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 245,
+      "id": "PR_kwDOLJmm787n_zCk",
+      "title": "Fix HTTP Sig replay text to reference nonce, not jti (#239)",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/245",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-http-signature"
+      ],
+      "body": "Fix replay protection text: `jti` claim \u2192 `nonce` signature parameter.\n\nCloses #239.\n\nMade with [Cursor](https://cursor.com)",
+      "createdAt": "2026-06-18T14:46:09Z",
+      "updatedAt": "2026-06-18T14:47:04Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "4e44e792f031cff205913be2f806207e3fcb999c",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-239",
+      "headRefOid": "1c1b0ff73fe687907f6427c95d96eabebd258c43",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 246,
+      "id": "PR_kwDOLJmm787oVRl5",
+      "title": "HTTP target URI audience model and response request binding (#173, #175, #240)",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/246",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "- **workload-creds (#173, #175):** Replace the mandatory access-path-to-identifier mapping API with infrastructure support for verifying that an HTTP target URI (RFC 9110 Section 7.1, without query or fragment) is intended for a workload. Document the roles of HTTP target URI (audience) vs Workload Identifier (sender) for WPT, HTTP signatures, and mTLS.\r\n- **WPT (#175):** Tie `aud` to \"Workload Identifiers and Authentication Granularity\" in workload-creds; otherwise unchanged from main.\r\n- **HTTP signatures (#175, #240):** Keep `wimse-aud` as on main (request-only, HTTP target URI). When response signing is enabled, require `wimse-req-nonce` (copy of the request `nonce`) to bind the signed response to the triggering request; register with IANA.\r\n\r\nCloses #173, #175. Addresses #240.",
+      "createdAt": "2026-06-19T10:29:32Z",
+      "updatedAt": "2026-06-19T10:32:33Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "4e44e792f031cff205913be2f806207e3fcb999c",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-175",
+      "headRefOid": "bcccc9f0dca4cd9dfd38f45695441ce4424e27b4",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
