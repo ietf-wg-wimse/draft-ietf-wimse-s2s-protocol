@@ -68,7 +68,7 @@ All terminology in this document follows {{?I-D.ietf-wimse-arch}}.
 
 # Using Mutual TLS for Workload-to-Workload Authentication {#mutual-tls}
 
-As noted in the introduction, for many deployments, transport-level protection of application traffic using TLS is ideal.
+As noted in the introduction, for many deployments, transport-layer protection of application traffic using TLS is ideal.
 
 ## The Workload Identity Certificate {#to-wic}
 
