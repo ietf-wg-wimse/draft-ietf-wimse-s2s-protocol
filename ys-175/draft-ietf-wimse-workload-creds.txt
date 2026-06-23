@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 21 December 2026                                       CyberArk
+Expires: 25 December 2026                                       CyberArk
                                                       A. Schwenkschuster
                                                         Defakto Security
                                                               Y. Sheffer
                                                                   Intuit
                                                             Y. Rosomakho
                                                                  Zscaler
-                                                            19 June 2026
+                                                            23 June 2026
 
 
                        WIMSE Workload Credentials
@@ -67,7 +67,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 21 December 2026.
+   This Internet-Draft will expire on 25 December 2026.
 
 Copyright Notice
 
@@ -276,9 +276,9 @@ Table of Contents
       query or fragment components, is intended for them.
 
    Once these conditions are met, the methods described in this document
-   can be used for the caller and callee to mutually authenticate.
-   Specifically, deployments should use this capability for consistent
-   audience validation within their environment.
+   can be used for the caller and callee to authenticate.  Specifically,
+   deployments should use this capability for consistent audience
+   validation within their environment.
 
    Application-level proof-of-possession mechanisms in
    [I-D.ietf-wimse-wpt] and [I-D.ietf-wimse-http-signature] use the HTTP
