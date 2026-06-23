@@ -182,7 +182,7 @@ Different workload credentials can be used simultaneously at different levels wh
               level                      level
 ~~~
 
-The Workload Identifier presented by the intermediary at the transport-level will typically differ from the Workload Identifier presented end-to-end at the application-level, since they identify different parties (the intermediary versus Workload A). Authorization policy at Workload B MUST treat these as distinct identities and define which identity is authoritative for each authorization decision; see {{security-simultaneous-use}}.
+The Workload Identifier presented by the intermediary at the transport-level will typically differ from the Workload Identifier presented end-to-end at the application-level, since they identify different parties (the intermediary versus Workload A). The authorization implications of this are discussed in {{security-simultaneous-use}}.
 
 When the same workload presents both a Workload Identity Certificate at the transport-level and a Workload Identity Token at the application-level (for example, Workload A in the deployment above), it SHOULD use the same Workload Identifier in both credentials. Using a single identifier across both credentials simplifies policy management and auditing by removing the need to maintain and correlate separate identifiers for the same workload.
 
@@ -476,11 +476,13 @@ Mitigations listed in {{app-level}} can be used to provide some protection from 
 
 Deployments should perform analysis on their situation to determine if it is appropriate to trust and allow traffic to pass through a middle box.
 
-## Simultaneous Use of Credentials {#security-simultaneous-use}
+## Authorization with Simultaneously-Used Credentials {#security-simultaneous-use}
 
 Using both transport-level and application-level authentication between the same pair of workloads (as opposed to the intermediary pattern described in {{simultaneous-use}}) SHOULD NOT be done without careful analysis. When both methods authenticate the same hop directly, it creates ambiguity about which identity is authoritative for authorization decisions and increases the attack surface without a clear security benefit.
 
-When an intermediary is present and the transport-level and application-level credentials carry different Workload Identifiers, the authorization policy MUST account for both identities and define which is authoritative for each authorization decision. Failing to do so can allow a compromised intermediary, or a misrouted request, to be authorized on the basis of the wrong identity.
+Workloads can receive credentials with different Workload Identifiers at both levels, the transport-level and the application-level, for example when an intermediary is present (see {{simultaneous-use}}). In these situations the authorization policy MUST account for both identifiers and define which is authoritative for each authorization decision. Failing to do so can allow a compromised intermediary, or a misrouted request, to be authorized on the basis of the wrong identity.
+
+By contrast, a workload that itself presents credentials at both levels SHOULD ensure that both credentials carry the same Workload Identifiers. This reduces ambiguity about the Workload Identity and reduces authorization complexity. Intermediaries MAY enforce this by ensuring that Workload Identifiers match between credentials.
 
 ## Privacy Considerations
 
