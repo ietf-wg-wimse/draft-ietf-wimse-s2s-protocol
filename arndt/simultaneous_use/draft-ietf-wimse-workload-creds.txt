@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 17 December 2026                                       CyberArk
+Expires: 25 December 2026                                       CyberArk
                                                       A. Schwenkschuster
                                                         Defakto Security
                                                               Y. Sheffer
                                                                   Intuit
                                                             Y. Rosomakho
                                                                  Zscaler
-                                                            15 June 2026
+                                                            23 June 2026
 
 
                        WIMSE Workload Credentials
@@ -67,7 +67,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 17 December 2026.
+   This Internet-Draft will expire on 25 December 2026.
 
 Copyright Notice
 
@@ -108,7 +108,7 @@ Table of Contents
      8.2.  Workload Identity Token and Proof of Possession
      8.3.  Workload Identity Key Management
      8.4.  Middle Boxes
-     8.5.  Simultaneous Use of Credentials
+     8.5.  Authorization with Simultaneously-Used Credentials
      8.6.  Privacy Considerations
    9.  IANA Considerations
      9.1.  Media Type Registration
@@ -305,10 +305,8 @@ Table of Contents
    The Workload Identifier presented by the intermediary at the
    transport-level will typically differ from the Workload Identifier
    presented end-to-end at the application-level, since they identify
-   different parties (the intermediary versus Workload A).
-   Authorization policy at Workload B MUST treat these as distinct
-   identities and define which identity is authoritative for each
-   authorization decision; see Section 8.5.
+   different parties (the intermediary versus Workload A).  The
+   authorization implications of this are discussed in Section 8.5.
 
    When the same workload presents both a Workload Identity Certificate
    at the transport-level and a Workload Identity Token at the
@@ -852,7 +850,7 @@ Table of Contents
    if it is appropriate to trust and allow traffic to pass through a
    middle box.
 
-8.5.  Simultaneous Use of Credentials
+8.5.  Authorization with Simultaneously-Used Credentials
 
    Using both transport-level and application-level authentication
    between the same pair of workloads (as opposed to the intermediary
@@ -862,12 +860,19 @@ Table of Contents
    authorization decisions and increases the attack surface without a
    clear security benefit.
 
-   When an intermediary is present and the transport-level and
-   application-level credentials carry different Workload Identifiers,
-   the authorization policy MUST account for both identities and define
-   which is authoritative for each authorization decision.  Failing to
-   do so can allow a compromised intermediary, or a misrouted request,
-   to be authorized on the basis of the wrong identity.
+   Workloads can receive credentials with different Workload Identifiers
+   at both levels, the transport-level and the application-level, for
+   example when an intermediary is present (see Section 1.4).  In these
+   situations the authorization policy MUST account for both identifiers
+   and define which is authoritative for each authorization decision.
+   Failing to do so can allow a compromised intermediary, or a misrouted
+   request, to be authorized on the basis of the wrong identity.
+
+   By contrast, a workload that itself presents credentials at both
+   levels SHOULD ensure that both credentials carry the same Workload
+   Identifiers.  This reduces ambiguity about the Workload Identity and
+   reduces authorization complexity.  Intermediaries MAY enforce this by
+   ensuring that Workload Identifiers match between credentials.
 
 8.6.  Privacy Considerations
 
