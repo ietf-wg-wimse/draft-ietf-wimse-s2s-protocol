@@ -162,7 +162,7 @@ To enable mutual and granular authentication between workloads, two things must 
 - Each workload must know its own identifier.
 - The infrastructure must make available to workloads some means to verify that an HTTP target URI ({{Section 7.1 of RFC9110}}), without query or fragment components, is intended for them.
 
-Once these conditions are met, the methods described in this document can be used for the caller and callee to mutually authenticate. Specifically, deployments should use this capability for consistent audience validation within their environment.
+Once these conditions are met, the methods described in this document can be used for the caller and callee to authenticate. Specifically, deployments should use this capability for consistent audience validation within their environment.
 
 Application-level proof-of-possession mechanisms in {{?I-D.ietf-wimse-wpt}} and {{?I-D.ietf-wimse-http-signature}} use the HTTP target URI ({{Section 7.1 of RFC9110}}) of the request, without query or fragment components, as audience. The Workload Identifier in a WIT or WIC identifies the sender; the audience identifies the intended recipient. The caller sets the audience to the HTTP target URI; the callee verifies that the audience is intended for it using infrastructure support as described above, including any deployment-specific aliases or normalization. For mutual TLS, the caller uses the same support when validating the server by workload identity rather than DNS hostname (see {{?I-D.ietf-wimse-mutual-tls}}).
 
