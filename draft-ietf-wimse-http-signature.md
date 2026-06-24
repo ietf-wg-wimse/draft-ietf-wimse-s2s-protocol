@@ -58,18 +58,18 @@ This document focuses on HTTP-based services,
 and the workload-to-workload call consists of a single HTTP request and its response.
 
 One option to protect such traffic is through Mutual TLS, and this usage is defined in {{?I-D.ietf-wimse-mutual-tls}}.
-Many deployments prefer application-level approaches, whether for lack of CA infrastructure or because
+Many deployments prefer application-layer approaches, whether for lack of CA infrastructure or because
 inter-service communication consists of multiple separate TLS hops. This document defines one of the two WIMSE
-approaches for application-level protection.
+approaches for application-layer protection.
 
 We define a profile of the HTTP Signatures protocol {{!RFC9421}} to protect the service traffic.
 Service authentication uses the Workload Identity Token (WIT) defined in {{!I-D.ietf-wimse-workload-creds}},
 and the signature uses the private key associated with the WIT and thus proves possession of that key.
 
-As noted, the WIMSE working group is specifying two alternatives for application-level protection, both using the newly introduced
+As noted, the WIMSE working group is specifying two alternatives for application-layer protection, both using the newly introduced
 Workload Identity Token {{I-D.ietf-wimse-workload-creds}}. The first alternative {{?I-D.ietf-wimse-wpt}} is inspired by the OAuth DPoP specification.
 The second is based on the HTTP Message Signatures RFC, and this is the one defined in this document.
-{{app-level-comparison}} includes a comparison of the two alternatives.
+{{app-layer-comparison}} includes a comparison of the two alternatives.
 
 ## Deployment Architecture and Message Flow
 
@@ -249,7 +249,7 @@ The Workload Identity Token (WIT) is bound to a secret cryptographic key and is
 always presented with a proof of possession as described in
 {{I-D.ietf-wimse-workload-creds}}. The WIT is a general purpose token that can be presented
 in multiple contexts. The WIT and its PoP are only used in the
-application-level options, and neither is used in MTLS. The WIT MUST NOT be
+application-layer options, and neither is used in MTLS. The WIT MUST NOT be
 used as a bearer token. While this helps reduce the sensitivity of the token it
 is still possible that a token and its proof of possession may be captured and
 replayed within the PoP's lifetime.
@@ -450,7 +450,7 @@ the Message Signature-based alternative.
 * Initial WG draft, an exact copy of draft-sheffer-wimse-s2s-protocol-00
 * Added this document history section
 
-# Comparing the DPoP Inspired Option with Message Signatures {#app-level-comparison}
+# Comparing the DPoP Inspired Option with Message Signatures {#app-layer-comparison}
 
 The two workload protection options have different strengths and weaknesses regarding implementation
 complexity, extensibility, and security.
