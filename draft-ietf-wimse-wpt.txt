@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                      A. Schwenkschuster
-Expires: 20 December 2026                               Defakto Security
-                                                            18 June 2026
+Expires: 26 December 2026                               Defakto Security
+                                                            24 June 2026
 
 
                        WIMSE Workload Proof Token
@@ -21,7 +21,7 @@ Abstract
    mechanism for workloads to prove possession of the private key
    associated with a Workload Identity Token (WIT).  The WPT is a signed
    JWT that binds the workload's authentication to a specific HTTP
-   request, providing application-level proof of possession for
+   request, providing application-layer proof of possession for
    workload-to-workload communication.  This specification is designed
    to work alongside the WIT credential format defined in draft-ietf-
    wimse-workload-creds and can be combined with other WIMSE protocols
@@ -60,7 +60,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 20 December 2026.
+   This Internet-Draft will expire on 26 December 2026.
 
 Copyright Notice
 
@@ -149,8 +149,8 @@ Table of Contents
    includes credential formats defined in
    [I-D.ietf-wimse-workload-creds] and follows the architectural
    principles in [I-D.ietf-wimse-arch].  The WPT provides application-
-   level proof of possession particularly suited for environments where
-   transport-level solutions are insufficient or where communication
+   layer proof of possession particularly suited for environments where
+   transport-layer solutions are insufficient or where communication
    patterns span multiple protocols.  This document defines the WPT JWT
    format, its HTTP usage, validation requirements, and security
    considerations.  Out of scope are the WIT credential format itself
@@ -433,7 +433,7 @@ Table of Contents
    key and is always presented with a proof of possession as described
    in [I-D.ietf-wimse-workload-creds].  The WIT is a general purpose
    token that can be presented in multiple contexts.  The WIT and WPT
-   are only used in the application-level options, and both are not used
+   are only used in the application-layer options, and both are not used
    in MTLS.  The WIT MUST NOT be used as a bearer token.  While this
    helps reduce the sensitivity of the token it is still possible that a
    token and its proof of possession may be captured and replayed within

@@ -1057,7 +1057,7 @@ svg {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Salowey &amp; Sheffer</td>
-<td class="center">Expires 20 December 2026</td>
+<td class="center">Expires 26 December 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1070,12 +1070,12 @@ svg {
 <dd class="internet-draft">draft-ietf-wimse-http-signature-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-06-18" class="published">18 June 2026</time>
+<time datetime="2026-06-24" class="published">24 June 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-12-20">20 December 2026</time></dd>
+<dd class="expires"><time datetime="2026-12-26">26 December 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1136,7 +1136,7 @@ Authentication is based on the Workload Identity Token (WIT).<a href="#section-a
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 20 December 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 26 December 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1320,16 +1320,16 @@ This is the core component of the WIMSE architecture <span>[<a href="#I-D.ietf-w
 This document focuses on HTTP-based services,
 and the workload-to-workload call consists of a single HTTP request and its response.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">One option to protect such traffic is through Mutual TLS, and this usage is defined in <span>[<a href="#I-D.ietf-wimse-mutual-tls" class="cite xref">I-D.ietf-wimse-mutual-tls</a>]</span>.
-Many deployments prefer application-level approaches, whether for lack of CA infrastructure or because
+Many deployments prefer application-layer approaches, whether for lack of CA infrastructure or because
 inter-service communication consists of multiple separate TLS hops. This document defines one of the two WIMSE
-approaches for application-level protection.<a href="#section-1-2" class="pilcrow">¶</a></p>
+approaches for application-layer protection.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <p id="section-1-3">We define a profile of the HTTP Signatures protocol <span>[<a href="#RFC9421" class="cite xref">RFC9421</a>]</span> to protect the service traffic.
 Service authentication uses the Workload Identity Token (WIT) defined in <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span>,
 and the signature uses the private key associated with the WIT and thus proves possession of that key.<a href="#section-1-3" class="pilcrow">¶</a></p>
-<p id="section-1-4">As noted, the WIMSE working group is specifying two alternatives for application-level protection, both using the newly introduced
+<p id="section-1-4">As noted, the WIMSE working group is specifying two alternatives for application-layer protection, both using the newly introduced
 Workload Identity Token <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span>. The first alternative <span>[<a href="#I-D.ietf-wimse-wpt" class="cite xref">I-D.ietf-wimse-wpt</a>]</span> is inspired by the OAuth DPoP specification.
 The second is based on the HTTP Message Signatures RFC, and this is the one defined in this document.
-<a href="#app-level-comparison" class="auto internal xref">Appendix B</a> includes a comparison of the two alternatives.<a href="#section-1-4" class="pilcrow">¶</a></p>
+<a href="#app-layer-comparison" class="auto internal xref">Appendix B</a> includes a comparison of the two alternatives.<a href="#section-1-4" class="pilcrow">¶</a></p>
 <div id="deployment-architecture-and-message-flow">
 <section id="section-1.1">
         <h3 id="name-deployment-architecture-and">
@@ -1667,7 +1667,7 @@ and its WIT representation.<a href="#section-5-1" class="pilcrow">¶</a></p>
 always presented with a proof of possession as described in
 <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span>. The WIT is a general purpose token that can be presented
 in multiple contexts. The WIT and its PoP are only used in the
-application-level options, and neither is used in MTLS. The WIT <span class="bcp14">MUST NOT</span> be
+application-layer options, and neither is used in MTLS. The WIT <span class="bcp14">MUST NOT</span> be
 used as a bearer token. While this helps reduce the sensitivity of the token it
 is still possible that a token and its proof of possession may be captured and
 replayed within the PoP's lifetime.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
@@ -2195,7 +2195,7 @@ the Message Signature-based alternative.<a href="#appendix-A.11-1.5.1" class="pi
 </div>
 </section>
 </div>
-<div id="app-level-comparison">
+<div id="app-layer-comparison">
 <section id="appendix-B">
       <h2 id="name-comparing-the-dpop-inspired">
 <a href="#appendix-B" class="section-number selfRef">Appendix B. </a><a href="#name-comparing-the-dpop-inspired" class="section-name selfRef">Comparing the DPoP Inspired Option with Message Signatures</a>

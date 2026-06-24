@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments                J. Salowey
 Internet-Draft                                                  CyberArk
 Intended status: Standards Track                              Y. Sheffer
-Expires: 20 December 2026                                         Intuit
-                                                            18 June 2026
+Expires: 26 December 2026                                         Intuit
+                                                            24 June 2026
 
 
      WIMSE Workload-to-Workload Authentication with HTTP Signatures
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 20 December 2026.
+   This Internet-Draft will expire on 26 December 2026.
 
 Copyright Notice
 
@@ -129,10 +129,10 @@ Table of Contents
 
    One option to protect such traffic is through Mutual TLS, and this
    usage is defined in [I-D.ietf-wimse-mutual-tls].  Many deployments
-   prefer application-level approaches, whether for lack of CA
+   prefer application-layer approaches, whether for lack of CA
    infrastructure or because inter-service communication consists of
    multiple separate TLS hops.  This document defines one of the two
-   WIMSE approaches for application-level protection.
+   WIMSE approaches for application-layer protection.
 
    We define a profile of the HTTP Signatures protocol [RFC9421] to
    protect the service traffic.  Service authentication uses the
@@ -141,7 +141,7 @@ Table of Contents
    key associated with the WIT and thus proves possession of that key.
 
    As noted, the WIMSE working group is specifying two alternatives for
-   application-level protection, both using the newly introduced
+   application-layer protection, both using the newly introduced
    Workload Identity Token [I-D.ietf-wimse-workload-creds].  The first
    alternative [I-D.ietf-wimse-wpt] is inspired by the OAuth DPoP
    specification.  The second is based on the HTTP Message Signatures
@@ -466,7 +466,7 @@ Table of Contents
    key and is always presented with a proof of possession as described
    in [I-D.ietf-wimse-workload-creds].  The WIT is a general purpose
    token that can be presented in multiple contexts.  The WIT and its
-   PoP are only used in the application-level options, and neither is
+   PoP are only used in the application-layer options, and neither is
    used in MTLS.  The WIT MUST NOT be used as a bearer token.  While
    this helps reduce the sensitivity of the token it is still possible
    that a token and its proof of possession may be captured and replayed

@@ -1056,7 +1056,7 @@ svg {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Campbell, et al.</td>
-<td class="center">Expires 20 December 2026</td>
+<td class="center">Expires 26 December 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1069,12 +1069,12 @@ svg {
 <dd class="internet-draft">draft-ietf-wimse-workload-creds-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-06-18" class="published">18 June 2026</time>
+<time datetime="2026-06-24" class="published">24 June 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-12-20">20 December 2026</time></dd>
+<dd class="expires"><time datetime="2026-12-26">26 December 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1143,7 +1143,7 @@ multi-service, multi-cloud, multi-tenant deployments.<a href="#section-abstract-
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 20 December 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 26 December 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1196,7 +1196,7 @@ multi-service, multi-cloud, multi-tenant deployments.<a href="#section-abstract-
             <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-one-workload-identity-per-c" class="internal xref">One Workload Identity per Credential</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
-            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-application-level-workload-" class="internal xref">Application-Level Workload-to-Workload Authentication</a></p>
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-application-layer-workload-" class="internal xref">Application-Layer Workload-to-Workload Authentication</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1">
                 <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="auto internal xref">5.1</a>.  <a href="#name-the-workload-identity-token" class="internal xref">The Workload Identity Token</a></p>
@@ -1221,7 +1221,7 @@ multi-service, multi-cloud, multi-tenant deployments.<a href="#section-abstract-
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
-            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-transport-level-workload-to" class="internal xref">Transport-Level Workload-to-Workload Authentication</a></p>
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-transport-layer-workload-to" class="internal xref">Transport-Layer Workload-to-Workload Authentication</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
                 <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-the-workload-identity-certi" class="internal xref">The Workload Identity Certificate</a></p>
@@ -1348,17 +1348,17 @@ This document focuses on the credentials that carry workload identity and bind t
           <p id="section-1-3.2.1">The Workload Identity Certificate (WIC) is an X.509 certificate that represents the identity of a workload and binds a public key to that identity.<a href="#section-1-3.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="section-1-4">The Workload Identity Token is targeted for application-level protocols. The Workload Identity Certificate is targeted for transport-level protocols. This does not preclude the use of the WIT in transport-level protocols or the WIC in application-level protocols, but these are the primary intended uses.<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-1-4">The Workload Identity Token is targeted for application-layer protocols. The Workload Identity Certificate is targeted for transport-layer protocols. This does not preclude the use of the WIT in transport-layer protocols or the WIC in application-layer protocols, but these are the primary intended uses.<a href="#section-1-4" class="pilcrow">¶</a></p>
 <p id="section-1-5">The various protocol bindings that use these credentials to authenticate workloads to each other are specified in separate documents and are out of scope for this document. At the time of writing, three such protocol bindings are defined:<a href="#section-1-5" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-1-6.1">
-          <p id="section-1-6.1.1">Transport-level authentication using mutual TLS with the Workload Identity Certificate, specified in <span>[<a href="#I-D.ietf-wimse-mutual-tls" class="cite xref">I-D.ietf-wimse-mutual-tls</a>]</span>.<a href="#section-1-6.1.1" class="pilcrow">¶</a></p>
+          <p id="section-1-6.1.1">Transport-layer authentication using mutual TLS with the Workload Identity Certificate, specified in <span>[<a href="#I-D.ietf-wimse-mutual-tls" class="cite xref">I-D.ietf-wimse-mutual-tls</a>]</span>.<a href="#section-1-6.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-1-6.2">
-          <p id="section-1-6.2.1">Application-level authentication using the Workload Identity Token in conjunction with a JWT-based proof of possession, the Workload Proof Token (WPT), specified in <span>[<a href="#I-D.ietf-wimse-wpt" class="cite xref">I-D.ietf-wimse-wpt</a>]</span>.<a href="#section-1-6.2.1" class="pilcrow">¶</a></p>
+          <p id="section-1-6.2.1">Application-layer authentication using the Workload Identity Token in conjunction with a JWT-based proof of possession, the Workload Proof Token (WPT), specified in <span>[<a href="#I-D.ietf-wimse-wpt" class="cite xref">I-D.ietf-wimse-wpt</a>]</span>.<a href="#section-1-6.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-1-6.3">
-          <p id="section-1-6.3.1">Application-level authentication using the Workload Identity Token in conjunction with HTTP Message Signatures, specified in <span>[<a href="#I-D.ietf-wimse-http-signature" class="cite xref">I-D.ietf-wimse-http-signature</a>]</span>.<a href="#section-1-6.3.1" class="pilcrow">¶</a></p>
+          <p id="section-1-6.3.1">Application-layer authentication using the Workload Identity Token in conjunction with HTTP Message Signatures, specified in <span>[<a href="#I-D.ietf-wimse-http-signature" class="cite xref">I-D.ietf-wimse-http-signature</a>]</span>.<a href="#section-1-6.3.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <div id="use-in-other-protocols">
@@ -1456,10 +1456,10 @@ policy management and message authorization are out of scope of this document.<a
             <p id="section-1.2-6.1.1">Workload A (and similarly, Workload B) obtains a credential from the Identity Server. This happens periodically, typically on the order of hours.<a href="#section-1.2-6.1.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-1.2-6.2">
-            <p id="section-1.2-6.2.1">A transport connection is set up. This may already include the use of the Workload Identity Certificate with transport-level security, such as TLS.<a href="#section-1.2-6.2.1" class="pilcrow">¶</a></p>
+            <p id="section-1.2-6.2.1">A transport connection is set up. This may already include the use of the Workload Identity Certificate with transport-layer security, such as TLS.<a href="#section-1.2-6.2.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-1.2-6.3">
-            <p id="section-1.2-6.3.1">Workload A prepares to call Workload B. This may include adding application-level authentication information, such as the Workload Identity Token and proof of possession. Workload B authenticates Workload A.<a href="#section-1.2-6.3.1" class="pilcrow">¶</a></p>
+            <p id="section-1.2-6.3.1">Workload A prepares to call Workload B. This may include adding application-layer authentication information, such as the Workload Identity Token and proof of possession. Workload B authenticates Workload A.<a href="#section-1.2-6.3.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-1.2-6.4">
             <p id="section-1.2-6.4.1">Workload B authorizes the call. This policy enforcement (Policy Enforcement Point, PEP) may include consulting with an external server (Policy Decision Point, PDP) when making this decision.<a href="#section-1.2-6.4.1" class="pilcrow">¶</a></p>
@@ -1468,7 +1468,7 @@ policy management and message authorization are out of scope of this document.<a
             <p id="section-1.2-6.5.1">Workload B returns a response to Workload A, which may be an error response or a regular one.<a href="#section-1.2-6.5.1" class="pilcrow">¶</a></p>
 </li>
         </ol>
-<p id="section-1.2-7">Depending on the protocol, the workload authentication may happen during step (2) at the transport-level or at step (3) at the application-level, or both.<a href="#section-1.2-7" class="pilcrow">¶</a></p>
+<p id="section-1.2-7">Depending on the protocol, the workload authentication may happen during step (2) at the transport-layer or at step (3) at the application-layer, or both.<a href="#section-1.2-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="granular-auth">
@@ -1534,12 +1534,12 @@ appear in all capitals, as shown here.<a href="#section-2-2" class="pilcrow">¶<
 <p id="section-4-3">Deployments that distinguish several labels for the same runtime (for example a stable service identity and a specific instance) <span class="bcp14">MUST</span> place the identity required for the access decision in that one credential. Additional correlation for logging or operations <span class="bcp14">MUST NOT</span> be encoded as a second workload identifier in the same WIT or WIC. Deployments <span class="bcp14">MAY</span> use other mechanisms, such as the optional <code>jti</code> claim, separate credentials, or additional claims as described in <a href="#add-claims" class="auto internal xref">Section 5.1.2</a>.<a href="#section-4-3" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="app-level">
+<div id="app-layer">
 <section id="section-5">
-      <h2 id="name-application-level-workload-">
-<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-application-level-workload-" class="section-name selfRef">Application-Level Workload-to-Workload Authentication</a>
+      <h2 id="name-application-layer-workload-">
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-application-layer-workload-" class="section-name selfRef">Application-Layer Workload-to-Workload Authentication</a>
       </h2>
-<p id="section-5-1">In many deployments communication between workloads cannot use end-to-end transport security such as TLS. For these deployment styles, this document proposes a credential that can be used at the application-level.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-1">In many deployments communication between workloads cannot use end-to-end transport security such as TLS. For these deployment styles, this document proposes a credential that can be used at the application-layer.<a href="#section-5-1" class="pilcrow">¶</a></p>
 <div id="to-wit">
 <section id="section-5.1">
         <h3 id="name-the-workload-identity-token">
@@ -1818,12 +1818,12 @@ which specific resources can be accessed.<a href="#section-5.3-2" class="pilcrow
 </div>
 </section>
 </div>
-<div id="transport-level">
+<div id="transport-layer">
 <section id="section-6">
-      <h2 id="name-transport-level-workload-to">
-<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-transport-level-workload-to" class="section-name selfRef">Transport-Level Workload-to-Workload Authentication</a>
+      <h2 id="name-transport-layer-workload-to">
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-transport-layer-workload-to" class="section-name selfRef">Transport-Layer Workload-to-Workload Authentication</a>
       </h2>
-<p id="section-6-1">As noted in the introduction, for many deployments, transport-level protection of application traffic is ideal.<a href="#section-6-1" class="pilcrow">¶</a></p>
+<p id="section-6-1">As noted in the introduction, for many deployments, transport-layer protection of application traffic is ideal.<a href="#section-6-1" class="pilcrow">¶</a></p>
 <div id="to-wic">
 <section id="section-6.1">
         <h3 id="name-the-workload-identity-certi">
@@ -1847,10 +1847,10 @@ See <a href="#granular-auth" class="auto internal xref">Section 1.3</a> on addit
 <p id="section-7-2">How the receiving application obtains the workload identifier depends on the credential used to authenticate the peer:<a href="#section-7-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-7-3.1">
-          <p id="section-7-3.1.1">Application-level: After successfully validating the WIT, the receiving application retrieves the workload identifier from the <code>sub</code> claim.<a href="#section-7-3.1.1" class="pilcrow">¶</a></p>
+          <p id="section-7-3.1.1">Application-layer: After successfully validating the WIT, the receiving application retrieves the workload identifier from the <code>sub</code> claim.<a href="#section-7-3.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-7-3.2">
-          <p id="section-7-3.2.1">Transport-level: When the client is authenticated with a Workload Identity Certificate, the receiving application retrieves the workload identifier from the client certificate's SubjectAltName extension of type URI.<a href="#section-7-3.2.1" class="pilcrow">¶</a></p>
+          <p id="section-7-3.2.1">Transport-layer: When the client is authenticated with a Workload Identity Certificate, the receiving application retrieves the workload identifier from the client certificate's SubjectAltName extension of type URI.<a href="#section-7-3.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <p id="section-7-4">A workload <span class="bcp14">MAY</span> use other standard and deployment specific fields in the workload credential for accounting or authorization purposes.<a href="#section-7-4" class="pilcrow">¶</a></p>
@@ -1954,7 +1954,7 @@ This section records the status of known implementations of the protocol defined
         <h3 id="name-workload-identity-token-and">
 <a href="#section-9.2" class="section-number selfRef">9.2. </a><a href="#name-workload-identity-token-and" class="section-name selfRef">Workload Identity Token and Proof of Possession</a>
         </h3>
-<p id="section-9.2-1">The Workload Identity Token (WIT) is bound to a secret cryptographic key and is always presented with a proof of possession as described in <a href="#to-wit" class="auto internal xref">Section 5.1</a>. The WIT is a general purpose token that can be presented in multiple contexts. The WIT and its PoP are only used in the application-level options, and both are not used in MTLS. The WIT <span class="bcp14">MUST NOT</span> be used as a bearer token. While this helps reduce the sensitivity of the token it is still possible that a token and its proof of possession may be captured and replayed within the PoP's lifetime. The following are some mitigations for the capture and reuse of the WIT and its proof of possession (PoP):<a href="#section-9.2-1" class="pilcrow">¶</a></p>
+<p id="section-9.2-1">The Workload Identity Token (WIT) is bound to a secret cryptographic key and is always presented with a proof of possession as described in <a href="#to-wit" class="auto internal xref">Section 5.1</a>. The WIT is a general purpose token that can be presented in multiple contexts. The WIT and its PoP are only used in the application-layer options, and both are not used in MTLS. The WIT <span class="bcp14">MUST NOT</span> be used as a bearer token. While this helps reduce the sensitivity of the token it is still possible that a token and its proof of possession may be captured and replayed within the PoP's lifetime. The following are some mitigations for the capture and reuse of the WIT and its proof of possession (PoP):<a href="#section-9.2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-9.2-2.1">
             <p id="section-9.2-2.1.1">Preventing Eavesdropping and Interception with TLS<a href="#section-9.2-2.1.1" class="pilcrow">¶</a></p>
@@ -2022,7 +2022,7 @@ token and proof of possession <span class="bcp14">MUST</span> be sent over a sec
 <a href="#section-9.4" class="section-number selfRef">9.4. </a><a href="#name-middle-boxes" class="section-name selfRef">Middle Boxes</a>
         </h3>
 <p id="section-9.4-1">In some deployments the Workload Identity Token and proof of possession may pass through multiple systems. The communication between the systems is over TLS, but the token and PoP are available in the clear at each intermediary.  While the intermediary cannot modify the token or the information within the PoP they can attempt to capture and replay the token or modify the data not protected by the PoP.<a href="#section-9.4-1" class="pilcrow">¶</a></p>
-<p id="section-9.4-2">Mitigations listed in <a href="#app-level" class="auto internal xref">Section 5</a> can be used to provide some protection from middle boxes.<a href="#section-9.4-2" class="pilcrow">¶</a></p>
+<p id="section-9.4-2">Mitigations listed in <a href="#app-layer" class="auto internal xref">Section 5</a> can be used to provide some protection from middle boxes.<a href="#section-9.4-2" class="pilcrow">¶</a></p>
 <p id="section-9.4-3">Deployments should perform analysis on their situation to determine if it is appropriate to trust and allow traffic to pass through a middle box.<a href="#section-9.4-3" class="pilcrow">¶</a></p>
 </section>
 </div>
