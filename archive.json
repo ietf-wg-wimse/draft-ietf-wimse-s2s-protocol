@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-06-21T04:05:54.324020+00:00",
+  "timestamp": "2026-06-25T03:27:20.517694+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -1784,7 +1784,7 @@
       "id": "I_kwDOLJmm786nSu5j",
       "title": "Simultaneous use of authentication methods",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/87",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "NONE",
       "assignees": [
@@ -1796,8 +1796,8 @@
       ],
       "body": "Opened as a working group member, not as chair\n\nThe abstract states that:\n\nThese two protocols are compatible, in the sense that a\n   single call chain can have some calls use one protocol and some use\n   the other.  Service A can call Service B with mutual TLS\n   authentication, while the next call from Service B to Service C would\n   be authenticated at the application level.\n\nIs simultaneous use supported as well? For example I may use mutual TLS for workload-to-workload authentication by deploying a service mesh, but also do application layer authentication? ",
       "createdAt": "2025-01-23T11:52:28Z",
-      "updatedAt": "2025-12-09T15:12:08Z",
-      "closedAt": null,
+      "updatedAt": "2026-06-23T14:15:58Z",
+      "closedAt": "2026-06-23T14:15:58Z",
       "comments": [
         {
           "author": "yaronf",
@@ -1819,6 +1819,13 @@
           "body": "To the last point, we believe that the first character (\"{\" or not) differentiates between a signed JWT and a signed HTTP-Sig [list of components](https://www.rfc-editor.org/rfc/rfc9421#name-http-fields).",
           "createdAt": "2025-08-12T15:12:35Z",
           "updatedAt": "2025-08-12T15:12:35Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Closed in favor of https://github.com/ietf-wg-wimse/draft-ietf-wimse-arch/pull/125",
+          "createdAt": "2026-06-23T14:15:56Z",
+          "updatedAt": "2026-06-23T14:15:56Z"
         }
       ]
     },
@@ -4242,7 +4249,36 @@
       ],
       "body": "POP vs PoP vs Proof of posession",
       "createdAt": "2026-06-18T14:16:24Z",
-      "updatedAt": "2026-06-18T15:30:13Z",
+      "updatedAt": "2026-06-23T12:57:58Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Also Workload Identity & Workload Identifier are not consistently written (e.g., workload identity vs Workload Identity) ",
+          "createdAt": "2026-06-23T12:57:58Z",
+          "updatedAt": "2026-06-23T12:57:58Z"
+        }
+      ]
+    },
+    {
+      "number": 247,
+      "id": "I_kwDOLJmm788AAAABGbwLKw",
+      "title": "Rename level to layer for consistency with architecture draft",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/247",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [
+        "arndt-s"
+      ],
+      "labels": [
+        "draft-ietf-wimse-workload-creds",
+        "pre-wglc"
+      ],
+      "body": "architecture talks about transport and application layer versus these documents talking about transport- and application level",
+      "createdAt": "2026-06-23T14:17:10Z",
+      "updatedAt": "2026-06-23T15:58:44Z",
       "closedAt": null,
       "comments": []
     }
@@ -16407,7 +16443,7 @@
       "id": "PR_kwDOLJmm787UT3_U",
       "title": "Another attempt at simultaneous use",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/223",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -16416,18 +16452,26 @@
       ],
       "body": "Suceeds #192, resolves #87",
       "createdAt": "2026-04-21T13:18:26Z",
-      "updatedAt": "2026-06-16T13:20:29Z",
+      "updatedAt": "2026-06-23T14:16:12Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "e38c9541856d4b33725eb4fff3f83a207b940538",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "arndt/simultaneous_use",
-      "headRefOid": "7e00d8f067dd256850fb3f3e4642acf0dc840f2d",
-      "closedAt": null,
+      "headRefOid": "f7aaa700be4655872ceb9786090a5f66e5afc929",
+      "closedAt": "2026-06-23T14:16:12Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Closed in favor of https://github.com/ietf-wg-wimse/draft-ietf-wimse-arch/pull/125",
+          "createdAt": "2026-06-23T14:16:12Z",
+          "updatedAt": "2026-06-23T14:16:12Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOLJmm7873QslL",
@@ -17604,19 +17648,135 @@
       "labels": [],
       "body": "- **workload-creds (#173, #175):** Replace the mandatory access-path-to-identifier mapping API with infrastructure support for verifying that an HTTP target URI (RFC 9110 Section 7.1, without query or fragment) is intended for a workload. Document the roles of HTTP target URI (audience) vs Workload Identifier (sender) for WPT, HTTP signatures, and mTLS.\r\n- **WPT (#175):** Tie `aud` to \"Workload Identifiers and Authentication Granularity\" in workload-creds; otherwise unchanged from main.\r\n- **HTTP signatures (#175, #240):** Keep `wimse-aud` as on main (request-only, HTTP target URI). When response signing is enabled, require `wimse-req-nonce` (copy of the request `nonce`) to bind the signed response to the triggering request; register with IANA.\r\n\r\nCloses #173, #175. Addresses #240.",
       "createdAt": "2026-06-19T10:29:32Z",
-      "updatedAt": "2026-06-19T10:32:33Z",
+      "updatedAt": "2026-06-23T14:27:55Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "4e44e792f031cff205913be2f806207e3fcb999c",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-175",
-      "headRefOid": "bcccc9f0dca4cd9dfd38f45695441ce4424e27b4",
+      "headRefOid": "1d7bcd00f829f0fb02fde56cf6c565162463ea12",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABD3NzFg",
+          "commit": {
+            "abbreviatedOid": "bcccc9f"
+          },
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-23T14:21:32Z",
+          "updatedAt": "2026-06-23T14:21:33Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "```suggestion\n- Each workload must be able to verify that an HTTP target URI ({{Section 7.1 of RFC9110}}) is intended for it.\n```",
+              "createdAt": "2026-06-23T14:21:32Z",
+              "updatedAt": "2026-06-23T14:21:33Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABD3QadQ",
+          "commit": {
+            "abbreviatedOid": "bcccc9f"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-23T14:27:32Z",
+          "updatedAt": "2026-06-23T14:27:32Z",
+          "comments": [
+            {
+              "originalPosition": 9,
+              "body": "mutually is too much \n\n```suggestion\nOnce these conditions are met, the methods described in this document can be used for the caller and callee to authenticate. Specifically, deployments should use this capability for consistent audience validation within their environment.\n```",
+              "createdAt": "2026-06-23T14:27:32Z",
+              "updatedAt": "2026-06-23T14:27:32Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABD3QbTg",
+          "commit": {
+            "abbreviatedOid": "bcccc9f"
+          },
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-23T14:27:34Z",
+          "updatedAt": "2026-06-23T14:27:34Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "```suggestion\n```",
+              "createdAt": "2026-06-23T14:27:34Z",
+              "updatedAt": "2026-06-23T14:27:34Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 248,
+      "id": "PR_kwDOLJmm787pv3LG",
+      "title": "Rename level to layer",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/248",
+      "state": "MERGED",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Renaming level to layer to be consistent with wording from the architecture document",
+      "createdAt": "2026-06-23T16:50:44Z",
+      "updatedAt": "2026-06-24T09:34:17Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "4e44e792f031cff205913be2f806207e3fcb999c",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "rename-level-to-layer",
+      "headRefOid": "a62cb152ed3002d8b8e5f61a622eae3afca64877",
+      "closedAt": "2026-06-24T09:34:11Z",
+      "mergedAt": "2026-06-24T09:34:11Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "8e5f1d02b83f10fe12cc102246cd9f94d900dcb1"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABD4WeRg",
+          "commit": {
+            "abbreviatedOid": "a62cb15"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-06-23T16:51:55Z",
+          "updatedAt": "2026-06-23T16:51:55Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABD6usYQ",
+          "commit": {
+            "abbreviatedOid": "a62cb15"
+          },
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-06-23T23:38:43Z",
+          "updatedAt": "2026-06-23T23:38:43Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
