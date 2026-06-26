@@ -458,6 +458,8 @@ The Workload Identity Certificate carries the workload identifier in a single UR
 
 Workload Identity Certificates are frequently issued to dynamic and/or short-lived workloads. Deployments SHOULD use certificate lifetimes appropriate to the workload environment. Long-lived certificates increase the impact of private-key compromise.
 
+The lifetime of Workload Identity Certificates is bounded by the lifetime and rotation cadence of the trust anchors of the trust domain ({{trust-anchors}}). Compromise of a trust anchor permits issuance of certificates for the trust domain for as long as that anchor remains trusted. Deployments should therefore consider leaf and trust-anchor lifetimes together rather than the leaf lifetime in isolation.
+
 ## Workload Identity Key Management
 
 Both the Workload Identity Token and the Workload Identity Certificate carry a public key. The corresponding private key:
