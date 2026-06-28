@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-06-25T03:27:20.517694+00:00",
+  "timestamp": "2026-06-28T03:40:41.347151+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -17777,6 +17777,32 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 249,
+      "id": "PR_kwDOLJmm787q8caw",
+      "title": "Revisited security considerations",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/249",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "* Moved WIT section bullet points to sub-sections\r\n* Added WIC security considerations\r\n* Grouped transport security considerations together.\r\n* Privacy considerations is a top-level section now",
+      "createdAt": "2026-06-26T10:52:36Z",
+      "updatedAt": "2026-06-26T10:52:37Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "8e5f1d02b83f10fe12cc102246cd9f94d900dcb1",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "arndt/security-considerations-revisit",
+      "headRefOid": "261ebf4ac459e8e1db4e867874f1a3a864ba3b97",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
