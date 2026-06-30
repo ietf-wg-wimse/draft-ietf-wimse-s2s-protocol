@@ -273,8 +273,8 @@ processing latency, but usually within minutes of the message sending time. Sign
 
 * Replay Protection
 
-A signed message includes the `jti` claim that MUST uniquely identify it, within the scope of a particular sender.
-This claim SHOULD be used by the receiver to perform basic replay protection against messages it has already seen.
+A signed message includes the `nonce` signature parameter that MUST uniquely identify it, within the scope of a particular sender.
+This parameter SHOULD be used by the receiver to perform basic replay protection against messages it has already seen.
 Depending upon the design of the system it may be difficult to synchronize the replay cache across all message validators.
 If an attacker can somehow influence the identity of the validator (e.g. which cluster member receives the message) then
 replay protection would not be effective.
