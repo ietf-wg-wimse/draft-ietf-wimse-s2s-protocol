@@ -426,34 +426,39 @@ Workload Identifiers ({{WIMSE-ID}}) are scoped to a trust domain (the URI author
 
 When a deployment uses the `iss` claim for key distribution as described in {{wit-iss-note}}, validators MUST enforce an allowlist of accepted issuers. Absent such a restriction, any entity could stand up an issuer, present a WIT with that issuer's `iss` value, and have it accepted by a validator that fetches and trusts the corresponding key material without verifying the issuer's legitimacy.
 
-## Workload Identity Token and Proof of Possession
+## Workload Identity Token and Proof of Possession {#wit-pop}
 
 The Workload Identity Token (WIT) is bound to a secret cryptographic key and is always presented with a proof of possession as described in {{to-wit}}. The WIT is a general purpose token that can be presented in multiple contexts. The WIT and its PoP are only used in the application-layer options, and both are not used in MTLS. The WIT MUST NOT be used as a bearer token. While this helps reduce the sensitivity of the token it is still possible that a token and its proof of possession may be captured and replayed within the PoP's lifetime. The following are some mitigations for the capture and reuse of the WIT and its proof of possession (PoP):
 
-* Preventing Eavesdropping and Interception with TLS
-
-An attacker observing or intercepting the communication channel can view the token and its proof of possession and attempt to replay it to gain an advantage. In order to prevent this the
-token and proof of possession MUST be sent over a secure, server authenticated TLS connection unless a secure channel is provided by some other mechanisms.
-
-* Limiting Workload Identity Token Lifespan
+### Limiting Workload Identity Token Lifespan
 
 The WIT MUST have a limited lifetime expressed through the `exp` claim. If both a WIT and its corresponding private key are compromised, an attacker can impersonate the workload until the WIT expires. Because JWT-based credentials such as the WIT are not generally revocable on demand, a short expiration is the primary mitigation against continued use of a compromised WIT and key. WITs SHOULD therefore be short-lived, typically on the order of hours, with the chosen lifetime balancing the operational cost of frequent refresh against the window of exposure if a credential is compromised.
 
-* Limiting Proof of Possession Lifespan
+### Limiting Proof of Possession Lifespan
 
 The proof of possession MUST be time limited. A PoP should only be valid over the time necessary for it to be successfully used for the purpose it is needed. This will typically be on the order of minutes.  PoPs received outside their validity time MUST be rejected.
 
-* Limiting Proof of Possession Scope
+### Limiting Proof of Possession Scope
 
 In order to reduce the risk of theft and replay the PoP should have a limited scope. For example, a PoP may be targeted for use with a specific workload and even a specific transaction to reduce the impact of a stolen PoP. In some cases a workload may wish to reuse a PoP for a period of time or have it accepted by multiple target workloads. A careful analysis is warranted to understand the impacts to the system if a PoP is disclosed allowing it to be presented by an attacker along with a captured WIT.
 
-* Replay Protection
+### Replay Protection
 
 Proof of possession mechanisms should include replay protection to prevent reuse of a captured PoP. Without it an attacker can replay a captured PoP within its validity period.
 
-* Binding to TLS Endpoint
+### Binding to TLS Endpoint
 
 The POP MAY be bound to a transport layer sender such as the client identity of a TLS session or TLS channel binding parameters. The mechanisms for binding are outside the scope of this specification.
+
+## Workload Identity Certificate
+
+The Workload Identity Certificate carries the workload identifier in a single URI SubjectAltName ({{to-wic}}). As with the WIT, the identifier is meaningful only within its trust domain. A relying party MUST validate the certificate against the trust anchors configured for the peer's trust domain ({{trust-anchors}}) and MUST reject the certificate if the workload identifier is not within that trust domain and the trust anchor used. Evaluating the path or other components of the identifier without also considering the trust domain and the trust anchor can allow one trust domain to impersonate workloads in another. Protocol-specific certificate validation requirements are defined in {{!I-D.ietf-wimse-mutual-tls}}.
+
+### Limiting Workload Identity Certificate Lifespan
+
+Workload Identity Certificates are frequently issued to dynamic and/or short-lived workloads. Deployments SHOULD use certificate lifetimes appropriate to the workload environment. Long-lived certificates increase the impact of private-key compromise.
+
+The lifetime of Workload Identity Certificates is bounded by the lifetime and rotation cadence of the trust anchors of the trust domain ({{trust-anchors}}). Compromise of a trust anchor permits issuance of certificates for the trust domain for as long as that anchor remains trusted. Deployments should therefore consider leaf and trust-anchor lifetimes together rather than the leaf lifetime in isolation.
 
 ## Workload Identity Key Management
 
@@ -464,17 +469,15 @@ Both the Workload Identity Token and the Workload Identity Certificate carry a p
 * MUST NOT be used once the credential is expired
 * SHOULD be re-generated for each new Workload Identity Token or Certificate.
 
-## Middle Boxes {#middleboxes}
+## Transport Security {#middleboxes}
 
-In some deployments the Workload Identity Token and proof of possession may pass through multiple systems. The communication between the systems is over TLS, but the token and PoP are available in the clear at each intermediary.  While the intermediary cannot modify the token or the information within the PoP they can attempt to capture and replay the token or modify the data not protected by the PoP.
+An attacker observing or intercepting the communication channel can view the Workload Identity Token and its proof of possession and attempt to replay them to gain an advantage. To prevent this, the WIT and its proof of possession MUST be sent over a secure, server-authenticated TLS connection unless a secure channel is provided by some other mechanism.
 
-Mitigations listed in {{app-layer}} can be used to provide some protection from middle boxes.
+In some deployments the Workload Identity Token and proof of possession may pass through multiple systems. Communication between systems is over TLS, but the token and PoP are available in the clear at each intermediary.  While an intermediary cannot modify the token or the information within the PoP, it can attempt to capture and replay the token or modify data not protected by the PoP. Mitigations listed in {{wit-pop}} can reduce this risk. Deployments should analyze their situation to determine whether it is appropriate to trust and allow traffic to pass through a middle box.
 
-Deployments should perform analysis on their situation to determine if it is appropriate to trust and allow traffic to pass through a middle box.
+# Privacy Considerations
 
-## Privacy Considerations
-
-WITs and the proofs of possession may contain private information such as user names or other identities. Care should be taken to prevent the disclosure of this information. The use of TLS helps protect the privacy of WITs and proofs of possession.
+WITs and the proofs of possession may contain private information such as user names or other identities. Care should be taken to prevent the disclosure of this information. The use of TLS helps protect the privacy of WITs and proofs of possession in transit. Workload Identity Certificates likewise expose the workload identifier, and any attributes carried in the certificate, to the peer, to any TLS-terminating intermediary, and to logs; in particular, client-certificate authentication discloses the client's workload identity to the server during the TLS handshake.
 
 WITs and certificates with workload identifiers are typically associated with a workload and not a specific user, however in some deployments the workload may be associated directly to a user. While these are exceptional cases a deployment should evaluate if the disclosure of WITs or certificates can be used to track a user.
 
