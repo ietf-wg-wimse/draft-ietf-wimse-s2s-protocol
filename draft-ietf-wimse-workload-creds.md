@@ -452,7 +452,7 @@ The POP MAY be bound to a transport layer sender such as the client identity of 
 
 ## Workload Identity Certificate
 
-The Workload Identity Certificate carries the workload identifier in a single URI SubjectAltName ({{to-wic}}). As with the WIT, the identifier is meaningful only within its trust domain. A relying party MUST validate the certificate against the trust anchors configured for the peer's trust domain ({{trust-anchors}}) and MUST bind the workload identifier to that trust domain and the trust anchor used. Evaluating the path or other components of the identifier without also considering the trust domain and the trust anchor can allow one trust domain to impersonate workloads in another. Protocol-specific certificate validation requirements are defined in {{!I-D.ietf-wimse-mutual-tls}}.
+The Workload Identity Certificate carries the workload identifier in a single URI SubjectAltName ({{to-wic}}). As with the WIT, the identifier is meaningful only within its trust domain. A relying party MUST validate the certificate against the trust anchors configured for the peer's trust domain ({{trust-anchors}}) and MUST reject the certificate if the workload identifier is not within that trust domain and the trust anchor used. Evaluating the path or other components of the identifier without also considering the trust domain and the trust anchor can allow one trust domain to impersonate workloads in another. Protocol-specific certificate validation requirements are defined in {{!I-D.ietf-wimse-mutual-tls}}.
 
 ### Limiting Workload Identity Certificate Lifespan
 
