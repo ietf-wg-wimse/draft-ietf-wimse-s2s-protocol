@@ -133,7 +133,7 @@ Table of Contents
 
 3.  Using Mutual TLS for Workload-to-Workload Authentication
 
-   As noted in the introduction, for many deployments, transport-level
+   As noted in the introduction, for many deployments, transport-layer
    protection of application traffic using TLS is ideal.
 
 3.1.  The Workload Identity Certificate
