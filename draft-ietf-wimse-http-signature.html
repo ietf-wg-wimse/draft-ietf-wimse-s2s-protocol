@@ -1057,7 +1057,7 @@ svg {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Salowey &amp; Sheffer</td>
-<td class="center">Expires 26 December 2026</td>
+<td class="center">Expires 1 January 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1070,12 +1070,12 @@ svg {
 <dd class="internet-draft">draft-ietf-wimse-http-signature-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-06-24" class="published">24 June 2026</time>
+<time datetime="2026-06-30" class="published">30 June 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-12-26">26 December 2026</time></dd>
+<dd class="expires"><time datetime="2027-01-01">1 January 2027</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1136,7 +1136,7 @@ Authentication is based on the Workload Identity Token (WIT).<a href="#section-a
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 26 December 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 1 January 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1695,8 +1695,8 @@ processing latency, but usually within minutes of the message sending time. Sign
             <p id="section-5.1-8.1.1">Replay Protection<a href="#section-5.1-8.1.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-5.1-9">A signed message includes the <code>jti</code> claim that <span class="bcp14">MUST</span> uniquely identify it, within the scope of a particular sender.
-This claim <span class="bcp14">SHOULD</span> be used by the receiver to perform basic replay protection against messages it has already seen.
+<p id="section-5.1-9">A signed message includes the <code>nonce</code> signature parameter that <span class="bcp14">MUST</span> uniquely identify it, within the scope of a particular sender.
+This parameter <span class="bcp14">SHOULD</span> be used by the receiver to perform basic replay protection against messages it has already seen.
 Depending upon the design of the system it may be difficult to synchronize the replay cache across all message validators.
 If an attacker can somehow influence the identity of the validator (e.g. which cluster member receives the message) then
 replay protection would not be effective.<a href="#section-5.1-9" class="pilcrow">¶</a></p>
