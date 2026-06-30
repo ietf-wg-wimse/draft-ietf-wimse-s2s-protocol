@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 28 December 2026                                       CyberArk
+Expires: 1 January 2027                                         CyberArk
                                                       A. Schwenkschuster
                                                         Defakto Security
                                                               Y. Sheffer
                                                                   Intuit
                                                             Y. Rosomakho
                                                                  Zscaler
-                                                            26 June 2026
+                                                            30 June 2026
 
 
                        WIMSE Workload Credentials
@@ -67,7 +67,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 28 December 2026.
+   This Internet-Draft will expire on 1 January 2027.
 
 Copyright Notice
 
@@ -835,13 +835,13 @@ Table of Contents
    a single URI SubjectAltName (Section 6.1).  As with the WIT, the
    identifier is meaningful only within its trust domain.  A relying
    party MUST validate the certificate against the trust anchors
-   configured for the peer's trust domain (Section 3) and MUST bind the
-   workload identifier to that trust domain and the trust anchor used.
-   Evaluating the path or other components of the identifier without
-   also considering the trust domain and the trust anchor can allow one
-   trust domain to impersonate workloads in another.  Protocol-specific
-   certificate validation requirements are defined in
-   [I-D.ietf-wimse-mutual-tls].
+   configured for the peer's trust domain (Section 3) and MUST reject
+   the certificate if the workload identifier is not within that trust
+   domain and the trust anchor used.  Evaluating the path or other
+   components of the identifier without also considering the trust
+   domain and the trust anchor can allow one trust domain to impersonate
+   workloads in another.  Protocol-specific certificate validation
+   requirements are defined in [I-D.ietf-wimse-mutual-tls].
 
 9.3.1.  Limiting Workload Identity Certificate Lifespan
 
