@@ -53,7 +53,7 @@ informative:
 
 --- abstract
 
-The WIMSE architecture defines authentication and authorization for software workloads in a variety of runtime environments, from basic deployments to complex multi-service, multi-cloud, multi-tenant systems. This document specifies the Workload Proof Token (WPT), a mechanism for workloads to prove possession of the private key associated with a Workload Identity Token (WIT). The WPT is a signed JWT that binds the workload's authentication to a specific HTTP request, providing application-level proof of possession for workload-to-workload communication. This specification is designed to work alongside the WIT credential format defined in draft-ietf-wimse-workload-creds and can be combined with other WIMSE protocols in multi-hop call chains.
+The WIMSE architecture defines authentication and authorization for software workloads in a variety of runtime environments, from basic deployments to complex multi-service, multi-cloud, multi-tenant systems. This document specifies the Workload Proof Token (WPT), a mechanism for workloads to prove possession of the private key associated with a Workload Identity Token (WIT). The WPT is a signed JWT that binds the workload's authentication to a specific HTTP request, providing application-layer proof of possession for workload-to-workload communication. This specification is designed to work alongside the WIT credential format defined in draft-ietf-wimse-workload-creds and can be combined with other WIMSE protocols in multi-hop call chains.
 
 --- middle
 
@@ -70,7 +70,7 @@ Context Binding: Binds the proof to specific message context through claims such
 Short-Lived: Typically valid for minutes or seconds, limiting replay attack windows.
 Protocol Independent: Core format is not tied to any specific transport protocol.
 
-This specification is part of the WIMSE protocol suite, which includes credential formats defined in {{!I-D.ietf-wimse-workload-creds}} and follows the architectural principles in {{!I-D.ietf-wimse-arch}}. The WPT provides application-level proof of possession particularly suited for environments where transport-level solutions are insufficient or where communication patterns span multiple protocols.
+This specification is part of the WIMSE protocol suite, which includes credential formats defined in {{!I-D.ietf-wimse-workload-creds}} and follows the architectural principles in {{!I-D.ietf-wimse-arch}}. The WPT provides application-layer proof of possession particularly suited for environments where transport-layer solutions are insufficient or where communication patterns span multiple protocols.
 This document defines the WPT JWT format, its HTTP usage, validation requirements, and security considerations. Out of scope are the WIT credential format itself (covered in {{!I-D.ietf-wimse-workload-creds}}), policy enforcement and authorization, credential issuance and lifecycle management, detailed bindings for non-HTTP protocols (to be addressed in future specifications), and alternative proof-of-possession mechanisms such as HTTP Message Signatures.
 
 # Workload Proof Token  {#wpt}
@@ -223,7 +223,7 @@ This, however, could result in interoperability issues, which the following rule
 
 ## Workload Identity Token and Proof of Possession
 
-The Workload Identity Token (WIT) is bound to a secret cryptographic key and is always presented with a proof of possession as described in {{!I-D.ietf-wimse-workload-creds}}. The WIT is a general purpose token that can be presented in multiple contexts. The WIT and WPT are only used in the application-level options, and both are not used in MTLS. The WIT MUST NOT be used as a bearer token. While this helps reduce the sensitivity of the token it is still possible that a token and its proof of possession may be captured and replayed within the PoP's lifetime. The following are some mitigations for the capture and reuse of the proof of possession (PoP):
+The Workload Identity Token (WIT) is bound to a secret cryptographic key and is always presented with a proof of possession as described in {{!I-D.ietf-wimse-workload-creds}}. The WIT is a general purpose token that can be presented in multiple contexts. The WIT and WPT are only used in the application-layer options, and both are not used in MTLS. The WIT MUST NOT be used as a bearer token. While this helps reduce the sensitivity of the token it is still possible that a token and its proof of possession may be captured and replayed within the PoP's lifetime. The following are some mitigations for the capture and reuse of the proof of possession (PoP):
 
 * Preventing Eavesdropping and Interception with TLS
 

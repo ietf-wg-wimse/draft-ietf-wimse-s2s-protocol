@@ -83,15 +83,15 @@ In this document, two credentials are defined:
 
 * The Workload Identity Certificate (WIC) is an X.509 certificate that represents the identity of a workload and binds a public key to that identity.
 
-The Workload Identity Token is targeted for application-level protocols. The Workload Identity Certificate is targeted for transport-level protocols. This does not preclude the use of the WIT in transport-level protocols or the WIC in application-level protocols, but these are the primary intended uses.
+The Workload Identity Token is targeted for application-layer protocols. The Workload Identity Certificate is targeted for transport-layer protocols. This does not preclude the use of the WIT in transport-layer protocols or the WIC in application-layer protocols, but these are the primary intended uses.
 
 The various protocol bindings that use these credentials to authenticate workloads to each other are specified in separate documents and are out of scope for this document. At the time of writing, three such protocol bindings are defined:
 
-* Transport-level authentication using mutual TLS with the Workload Identity Certificate, specified in {{?I-D.ietf-wimse-mutual-tls}}.
+* Transport-layer authentication using mutual TLS with the Workload Identity Certificate, specified in {{?I-D.ietf-wimse-mutual-tls}}.
 
-* Application-level authentication using the Workload Identity Token in conjunction with a JWT-based proof of possession, the Workload Proof Token (WPT), specified in {{?I-D.ietf-wimse-wpt}}.
+* Application-layer authentication using the Workload Identity Token in conjunction with a JWT-based proof of possession, the Workload Proof Token (WPT), specified in {{?I-D.ietf-wimse-wpt}}.
 
-* Application-level authentication using the Workload Identity Token in conjunction with HTTP Message Signatures, specified in {{?I-D.ietf-wimse-http-signature}}.
+* Application-layer authentication using the Workload Identity Token in conjunction with HTTP Message Signatures, specified in {{?I-D.ietf-wimse-http-signature}}.
 
 ## Use In Other Protocols
 
@@ -138,12 +138,12 @@ policy management and message authorization are out of scope of this document.
 The high-level message flow is as follows:
 
 1. Workload A (and similarly, Workload B) obtains a credential from the Identity Server. This happens periodically, typically on the order of hours.
-2. A transport connection is set up. This may already include the use of the Workload Identity Certificate with transport-level security, such as TLS.
-3. Workload A prepares to call Workload B. This may include adding application-level authentication information, such as the Workload Identity Token and proof of possession. Workload B authenticates Workload A.
+2. A transport connection is set up. This may already include the use of the Workload Identity Certificate with transport-layer security, such as TLS.
+3. Workload A prepares to call Workload B. This may include adding application-layer authentication information, such as the Workload Identity Token and proof of possession. Workload B authenticates Workload A.
 4. Workload B authorizes the call. This policy enforcement (Policy Enforcement Point, PEP) may include consulting with an external server (Policy Decision Point, PDP) when making this decision.
 5. Workload B returns a response to Workload A, which may be an error response or a regular one.
 
-Depending on the protocol, the workload authentication may happen during step (2) at the transport-level or at step (3) at the application-level, or both.
+Depending on the protocol, the workload authentication may happen during step (2) at the transport-layer or at step (3) at the application-layer, or both.
 
 ## Workload Identifiers and Authentication Granularity {#granular-auth}
 
@@ -192,9 +192,9 @@ For a Workload Identity Token, that identifier is the value of the `sub` claim. 
 
 Deployments that distinguish several labels for the same runtime (for example a stable service identity and a specific instance) MUST place the identity required for the access decision in that one credential. Additional correlation for logging or operations MUST NOT be encoded as a second workload identifier in the same WIT or WIC. Deployments MAY use other mechanisms, such as the optional `jti` claim, separate credentials, or additional claims as described in {{add-claims}}.
 
-# Application-Level Workload-to-Workload Authentication {#app-level}
+# Application-Layer Workload-to-Workload Authentication {#app-layer}
 
-In many deployments communication between workloads cannot use end-to-end transport security such as TLS. For these deployment styles, this document proposes a credential that can be used at the application-level.
+In many deployments communication between workloads cannot use end-to-end transport security such as TLS. For these deployment styles, this document proposes a credential that can be used at the application-layer.
 
 ## The Workload Identity Token {#to-wit}
 
@@ -359,9 +359,9 @@ authorization policy may take into account both the sending workload's identity 
 identity in the WIT may be used to establish which API calls can be made and information in the context token may be used to determine
 which specific resources can be accessed.
 
-# Transport-Level Workload-to-Workload Authentication {#transport-level}
+# Transport-Layer Workload-to-Workload Authentication {#transport-layer}
 
-As noted in the introduction, for many deployments, transport-level protection of application traffic is ideal.
+As noted in the introduction, for many deployments, transport-layer protection of application traffic is ideal.
 
 ## The Workload Identity Certificate {#to-wic}
 
@@ -378,8 +378,8 @@ See {{granular-auth}} on additional security implications of workload identifier
 
 How the receiving application obtains the workload identifier depends on the credential used to authenticate the peer:
 
-* Application-level: After successfully validating the WIT, the receiving application retrieves the workload identifier from the `sub` claim.
-* Transport-level: When the client is authenticated with a Workload Identity Certificate, the receiving application retrieves the workload identifier from the client certificate's SubjectAltName extension of type URI.
+* Application-layer: After successfully validating the WIT, the receiving application retrieves the workload identifier from the `sub` claim.
+* Transport-layer: When the client is authenticated with a Workload Identity Certificate, the receiving application retrieves the workload identifier from the client certificate's SubjectAltName extension of type URI.
 
 A workload MAY use other standard and deployment specific fields in the workload credential for accounting or authorization purposes.
 
@@ -428,7 +428,7 @@ When a deployment uses the `iss` claim for key distribution as described in {{wi
 
 ## Workload Identity Token and Proof of Possession {#wit-pop}
 
-The Workload Identity Token (WIT) is bound to a secret cryptographic key and is always presented with a proof of possession as described in {{to-wit}}. The WIT is a general purpose token that can be presented in multiple contexts. The WIT and its PoP are only used in the application-level options, and both are not used in MTLS. The WIT MUST NOT be used as a bearer token. While this helps reduce the sensitivity of the token it is still possible that a token and its proof of possession may be captured and replayed within the PoP's lifetime. The following are some mitigations for the capture and reuse of the WIT and its proof of possession (PoP):
+The Workload Identity Token (WIT) is bound to a secret cryptographic key and is always presented with a proof of possession as described in {{to-wit}}. The WIT is a general purpose token that can be presented in multiple contexts. The WIT and its PoP are only used in the application-layer options, and both are not used in MTLS. The WIT MUST NOT be used as a bearer token. While this helps reduce the sensitivity of the token it is still possible that a token and its proof of possession may be captured and replayed within the PoP's lifetime. The following are some mitigations for the capture and reuse of the WIT and its proof of possession (PoP):
 
 ### Limiting Workload Identity Token Lifespan
 
