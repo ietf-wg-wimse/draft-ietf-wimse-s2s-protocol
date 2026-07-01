@@ -13,14 +13,15 @@ import (
 )
 
 const (
-	witJWTType = "wit+jwt"
-	wptJWTType = "wpt+jwt"
-	witIat     = 1745508910
-	witExp     = 1745512510
-	wptExp     = 1745510016
-	subject    = "wimse://example.com/specific-workload"
-	audience   = "https://workload.example.com/path"
-	rawAT      = "16_mAd0GiwaZokU26_0902100" // arbitrary example
+	witJWTType    = "wit+jwt"
+	wptJWTType    = "wpt+jwt"
+	witIat        = 1745508910
+	witExp        = 1745512510
+	wptExp        = 1745510016
+	subject       = "wimse://example.com/specific-workload"
+	audience      = "https://workload.example.com/path"
+	rawAT         = "16_mAd0GiwaZokU26_0902100" // arbitrary example
+	rawOtherToken = "some-example-other-token"  // arbitrary example
 )
 
 func main() {
@@ -33,23 +34,23 @@ func generateExamples() error {
 	wlAlg := jose.EdDSA
 
 	wlJwkJson :=
-        `{
+		`{
           "kty": "OKP",
           "crv": "Ed25519",
           "x": "1CXXvflN_LVVsIsYXsUvB03JmlGWeCHqQVuouCF92bg",
           "d": "sdLX8yCYKqo_XvGBLn-ZWeKT7llYeeQpgeCaXVxb5kY"
          }`
 
-    wlJwk, err := parseJWK(wlJwkJson)
-    if err != nil {
-        return fmt.Errorf("failed to parse wl JWK: %w", err)
-    }
+	wlJwk, err := parseJWK(wlJwkJson)
+	if err != nil {
+		return fmt.Errorf("failed to parse wl JWK: %w", err)
+	}
 
-    wlKeyPriv := wlJwk.Key.(ed25519.PrivateKey)
-    wlKeyPub := wlJwk.Public().Key
+	wlKeyPriv := wlJwk.Key.(ed25519.PrivateKey)
+	wlKeyPub := wlJwk.Public().Key
 
-    signerJwkJson :=
-        `{
+	signerJwkJson :=
+		`{
            "kty": "EC",
            "kid": "June 5",
            "crv": "P-256",
@@ -58,12 +59,12 @@ func generateExamples() error {
            "d": "NRHs9bfMUcF49AV_NIoeh3UGopW4AXZLfv5G2px1WcY"
           }`
 
-    signerJwk, err := parseJWK(signerJwkJson)
+	signerJwk, err := parseJWK(signerJwkJson)
 	if err != nil {
 		return fmt.Errorf("failed to parse authority key: %w", err)
 	}
 
-    keySign := signerJwk.Key.(*ecdsa.PrivateKey)
+	keySign := signerJwk.Key.(*ecdsa.PrivateKey)
 
 	keySigner, err := jose.NewSigner(jose.SigningKey{Algorithm: jose.ES256, Key: keySign}, (&jose.SignerOptions{}).
 		WithType(witJWTType).
@@ -107,8 +108,25 @@ func generateExamples() error {
 		return fmt.Errorf("failed to sign WPT: %w", err)
 	}
 
+	wptOth := wptClaims{
+		Id:        "Cb1fCa3cFESC_x-24CLTL",
+		Aud:       audience,
+		ExpiresAt: wptExp,
+		Wth:       base64UrlEncTokenHash(witEnc),
+		Ath:       base64UrlEncTokenHash(rawAT),
+		Oth: map[string]string{
+			"x-custom-token": base64UrlEncTokenHash(rawOtherToken),
+		},
+	}
+
+	wptOthEnc, err := jwt.Signed(wlSigner).Claims(wptOth).Serialize()
+	if err != nil {
+		return fmt.Errorf("failed to sign WPT with oth: %w", err)
+	}
+
 	fmt.Printf("WIT: %s\n", witEnc)
 	fmt.Printf("WPT: %s\n", wptEnc)
+	fmt.Printf("WPT-OTH: %s\n", wptOthEnc)
 
 	wlPrivJwk := jose.JSONWebKey{
 		Key: wlKeyPriv,
@@ -137,13 +155,13 @@ type witClaims struct {
 }
 
 type wptClaims struct {
-	Aud       interface{} `json:"aud,omitempty"`
-	ExpiresAt int64       `json:"exp,omitempty"`
-	Id        string      `json:"jti,omitempty"`
-	Wth       string      `json:"wth,omitempty"`
-	Ath       string      `json:"ath,omitempty"`
-	Tth       string      `json:"tth,omitempty"`
-	Oth       string      `json:"oth,omitempty"`
+	Aud       interface{}       `json:"aud,omitempty"`
+	ExpiresAt int64             `json:"exp,omitempty"`
+	Id        string            `json:"jti,omitempty"`
+	Wth       string            `json:"wth,omitempty"`
+	Ath       string            `json:"ath,omitempty"`
+	Tth       string            `json:"tth,omitempty"`
+	Oth       map[string]string `json:"oth,omitempty"`
 }
 
 type cnf struct {
