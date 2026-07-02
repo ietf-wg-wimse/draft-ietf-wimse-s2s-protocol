@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 1 January 2027                                         CyberArk
+Expires: 3 January 2027                                         CyberArk
                                                       A. Schwenkschuster
                                                         Defakto Security
                                                               Y. Sheffer
                                                                   Intuit
                                                             Y. Rosomakho
                                                                  Zscaler
-                                                            30 June 2026
+                                                             2 July 2026
 
 
                        WIMSE Workload Credentials
@@ -67,7 +67,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 1 January 2027.
+   This Internet-Draft will expire on 3 January 2027.
 
 Copyright Notice
 
@@ -125,16 +125,17 @@ Table of Contents
      12.1.  Normative References
      12.2.  Informative References
    Appendix A.  Document History
-     A.1.  draft-ietf-wimse-workload-creds-01
-     A.2.  draft-ietf-wimse-workload-creds-00
-     A.3.  draft-ietf-wimse-s2s-protocol-07
-     A.4.  draft-ietf-wimse-s2s-protocol-06
-     A.5.  draft-ietf-wimse-s2s-protocol-05
-     A.6.  draft-ietf-wimse-s2s-protocol-04
-     A.7.  draft-ietf-wimse-s2s-protocol-03
-     A.8.  draft-ietf-wimse-s2s-protocol-02
-     A.9.  draft-ietf-wimse-s2s-protocol-01
-     A.10. draft-ietf-wimse-s2s-protocol-00
+     A.1.  draft-ietf-wimse-workload-creds-02
+     A.2.  draft-ietf-wimse-workload-creds-01
+     A.3.  draft-ietf-wimse-workload-creds-00
+     A.4.  draft-ietf-wimse-s2s-protocol-07
+     A.5.  draft-ietf-wimse-s2s-protocol-06
+     A.6.  draft-ietf-wimse-s2s-protocol-05
+     A.7.  draft-ietf-wimse-s2s-protocol-04
+     A.8.  draft-ietf-wimse-s2s-protocol-03
+     A.9.  draft-ietf-wimse-s2s-protocol-02
+     A.10. draft-ietf-wimse-s2s-protocol-01
+     A.11. draft-ietf-wimse-s2s-protocol-00
    Acknowledgments
    Authors' Addresses
 
@@ -1112,7 +1113,26 @@ Appendix A.  Document History
 
    // RFC Editor: please remove before publication.
 
-A.1.  draft-ietf-wimse-workload-creds-01
+A.1.  draft-ietf-wimse-workload-creds-02
+
+   *  Add a section requiring exactly one Workload Identifier per
+      credential (the sub claim for a WIT, a single URI SubjectAltName
+      for a WIC).
+
+   *  Add a Trust Anchors section and clarify WIT validation, key
+      selection, and key rotation.
+
+   *  Rework the Security Considerations, including WIT lifetime, WIC
+      validation and lifetime, and privacy of the workload identifier.
+
+   *  Generalize client authorization to cover both the WIT and the WIC.
+
+   *  Reference the protocol binding documents (mutual TLS, WPT, and
+      HTTP Message Signatures).
+
+   *  Rename "level" to "layer" throughout.
+
+A.2.  draft-ietf-wimse-workload-creds-01
 
    *  Clarify that the iss claim is RECOMMENDED in part for auditing and
       operations, and that validation of workload identity uses sub, not
@@ -1121,13 +1141,13 @@ A.1.  draft-ietf-wimse-workload-creds-01
    *  Remove the wimse URI scheme definition and IANA registration from
       this document; both are specified in [WIMSE-ID].
 
-A.2.  draft-ietf-wimse-workload-creds-00
+A.3.  draft-ietf-wimse-workload-creds-00
 
    *  Remove WPT, HTTP-Sig and mutual TLS sections, which are going to
       be covered by individual documents.  This includes re-phrasing of
       various sections to focus on the credentials only.
 
-A.3.  draft-ietf-wimse-s2s-protocol-07
+A.4.  draft-ietf-wimse-s2s-protocol-07
 
    *  Rework the WPT's oth claim.
 
@@ -1145,14 +1165,14 @@ A.3.  draft-ietf-wimse-s2s-protocol-07
 
    *  Use of the Accept-Signature header.
 
-A.4.  draft-ietf-wimse-s2s-protocol-06
+A.5.  draft-ietf-wimse-s2s-protocol-06
 
    *  Explicit definition of the Workload Identity Certificate.
 
    *  Definition of the validation of workload identifiers as part of
       workload authentication.  Still work in progress.
 
-A.5.  draft-ietf-wimse-s2s-protocol-05
+A.6.  draft-ietf-wimse-s2s-protocol-05
 
    *  Removed the entire Workload Identity section which is now covered
       in the Architecture document.
@@ -1163,7 +1183,7 @@ A.5.  draft-ietf-wimse-s2s-protocol-05
 
    *  IANA considerations.
 
-A.6.  draft-ietf-wimse-s2s-protocol-04
+A.7.  draft-ietf-wimse-s2s-protocol-04
 
    *  Require cnf.jwk.alg in WIT which restricts signature algorithm of
       WPT or HTTP-Sig.
@@ -1172,7 +1192,7 @@ A.6.  draft-ietf-wimse-s2s-protocol-04
 
    *  Consolidate terminology with the Architecture draft.
 
-A.7.  draft-ietf-wimse-s2s-protocol-03
+A.8.  draft-ietf-wimse-s2s-protocol-03
 
    *  Consistently use "workload".
 
@@ -1187,7 +1207,7 @@ A.7.  draft-ietf-wimse-s2s-protocol-03
 
    *  Error handling for the application-level methods.
 
-A.8.  draft-ietf-wimse-s2s-protocol-02
+A.9.  draft-ietf-wimse-s2s-protocol-02
 
    *  Coexistence with bearer tokens.
 
@@ -1199,7 +1219,7 @@ A.8.  draft-ietf-wimse-s2s-protocol-02
 
    *  Moved an author to acknowledgments.
 
-A.9.  draft-ietf-wimse-s2s-protocol-01
+A.10.  draft-ietf-wimse-s2s-protocol-01
 
    *  Addressed multiple comments from Pieter.
 
@@ -1214,7 +1234,7 @@ A.9.  draft-ietf-wimse-s2s-protocol-01
    *  Added a section comparing the DPoP-inspired app-level security
       option to the Message Signature-based alternative.
 
-A.10.  draft-ietf-wimse-s2s-protocol-00
+A.11.  draft-ietf-wimse-s2s-protocol-00
 
    *  Initial WG draft, an exact copy of draft-sheffer-wimse-s2s-
       protocol-00

@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                      A. Schwenkschuster
-Expires: 1 January 2027                                 Defakto Security
-                                                            30 June 2026
+Expires: 3 January 2027                                 Defakto Security
+                                                             2 July 2026
 
 
                        WIMSE Workload Proof Token
@@ -60,7 +60,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 1 January 2027.
+   This Internet-Draft will expire on 3 January 2027.
 
 Copyright Notice
 
