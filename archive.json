@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-06-28T03:40:41.347151+00:00",
+  "timestamp": "2026-07-02T03:28:18.306075+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -4202,7 +4202,7 @@
       "id": "I_kwDOLJmm788AAAABFHmPaA",
       "title": "HTTP Sig replay section references `jti` instead of `nonce`",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/239",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -4211,8 +4211,8 @@
       ],
       "body": "In `draft-ietf-wimse-http-signature.md`, the *Replay Protection* security consideration (around line 276) says:\n\n> A signed message includes the `jti` claim that MUST uniquely identify it...\n\nThis looks like text copied from the WPT draft. The HTTP Signatures profile uses the **`nonce` signature parameter** in `Signature-Input`, not a JWT `jti` claim. See the mandatory signature parameters in \u00a74 (`nonce`) and the replay guidance at lines 137\u2013139.\n\nSuggested fix: replace `jti` / \"claim\" with `nonce` / \"signature parameter\" in that paragraph.",
       "createdAt": "2026-06-11T08:04:42Z",
-      "updatedAt": "2026-06-11T08:05:27Z",
-      "closedAt": null,
+      "updatedAt": "2026-06-30T04:53:51Z",
+      "closedAt": "2026-06-30T04:53:51Z",
       "comments": []
     },
     {
@@ -4266,7 +4266,7 @@
       "id": "I_kwDOLJmm788AAAABGbwLKw",
       "title": "Rename level to layer for consistency with architecture draft",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/247",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -4278,9 +4278,17 @@
       ],
       "body": "architecture talks about transport and application layer versus these documents talking about transport- and application level",
       "createdAt": "2026-06-23T14:17:10Z",
-      "updatedAt": "2026-06-23T15:58:44Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2026-07-01T11:07:17Z",
+      "closedAt": "2026-07-01T11:07:17Z",
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I think #248 took care of this, no?",
+          "createdAt": "2026-07-01T11:07:03Z",
+          "updatedAt": "2026-07-01T11:07:03Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -17613,7 +17621,7 @@
       "id": "PR_kwDOLJmm787n_zCk",
       "title": "Fix HTTP Sig replay text to reference nonce, not jti (#239)",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/245",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -17622,19 +17630,35 @@
       ],
       "body": "Fix replay protection text: `jti` claim \u2192 `nonce` signature parameter.\n\nCloses #239.\n\nMade with [Cursor](https://cursor.com)",
       "createdAt": "2026-06-18T14:46:09Z",
-      "updatedAt": "2026-06-18T14:47:04Z",
+      "updatedAt": "2026-06-30T04:53:50Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "4e44e792f031cff205913be2f806207e3fcb999c",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-239",
       "headRefOid": "1c1b0ff73fe687907f6427c95d96eabebd258c43",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-06-30T04:53:50Z",
+      "mergedAt": "2026-06-30T04:53:50Z",
+      "mergedBy": "jsalowey",
+      "mergeCommit": {
+        "oid": "674d832e2fb29a0b0bd0268654f7ae8e418d581f"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABEgYbDA",
+          "commit": {
+            "abbreviatedOid": "1c1b0ff"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-06-30T04:53:38Z",
+          "updatedAt": "2026-06-30T04:53:38Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 246,
@@ -17648,7 +17672,7 @@
       "labels": [],
       "body": "- **workload-creds (#173, #175):** Replace the mandatory access-path-to-identifier mapping API with infrastructure support for verifying that an HTTP target URI (RFC 9110 Section 7.1, without query or fragment) is intended for a workload. Document the roles of HTTP target URI (audience) vs Workload Identifier (sender) for WPT, HTTP signatures, and mTLS.\r\n- **WPT (#175):** Tie `aud` to \"Workload Identifiers and Authentication Granularity\" in workload-creds; otherwise unchanged from main.\r\n- **HTTP signatures (#175, #240):** Keep `wimse-aud` as on main (request-only, HTTP target URI). When response signing is enabled, require `wimse-req-nonce` (copy of the request `nonce`) to bind the signed response to the triggering request; register with IANA.\r\n\r\nCloses #173, #175. Addresses #240.",
       "createdAt": "2026-06-19T10:29:32Z",
-      "updatedAt": "2026-06-23T14:27:55Z",
+      "updatedAt": "2026-06-30T05:27:40Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "4e44e792f031cff205913be2f806207e3fcb999c",
@@ -17720,6 +17744,38 @@
               "updatedAt": "2026-06-23T14:27:34Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABEghj7Q",
+          "commit": {
+            "abbreviatedOid": "1d7bcd0"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "I find the granular authentication section confusing.  It doesn't seem like this is the right place to talk about audience.  Perhaps the audience discussion should be in a subsection about the WIT application level usage.  ",
+          "createdAt": "2026-06-30T05:21:29Z",
+          "updatedAt": "2026-06-30T05:27:40Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "I don't understand why this criteria is needed here.  I think the criteria should be.  It needs to have the information to properly validate a workload credential. \n```suggestion\n- A workload must have the information needed to properly validate a workload credential\n```",
+              "createdAt": "2026-06-30T05:21:29Z",
+              "updatedAt": "2026-06-30T05:27:40Z"
+            },
+            {
+              "originalPosition": 9,
+              "body": "This needs to be broken out into a a statement that is general for workload credentials\n\n```suggestion\nOnce these conditions are met, the methods described in this document can be used for the caller and callee to authenticate one another. \n```\nThen there can be discussion that is specific to the application layer credential (WIT) and the transport layer credential (x.509)",
+              "createdAt": "2026-06-30T05:25:43Z",
+              "updatedAt": "2026-06-30T05:27:40Z"
+            },
+            {
+              "originalPosition": 14,
+              "body": "I think this text could be OK if it is called out as specific to WIT and the TLS text is in a separate paragraph/subsection. ",
+              "createdAt": "2026-06-30T05:27:34Z",
+              "updatedAt": "2026-06-30T05:27:40Z"
+            }
+          ]
         }
       ]
     },
@@ -17783,26 +17839,208 @@
       "id": "PR_kwDOLJmm787q8caw",
       "title": "Revisited security considerations",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/249",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "* Moved WIT section bullet points to sub-sections\r\n* Added WIC security considerations\r\n* Grouped transport security considerations together.\r\n* Privacy considerations is a top-level section now",
       "createdAt": "2026-06-26T10:52:36Z",
-      "updatedAt": "2026-06-26T10:52:37Z",
+      "updatedAt": "2026-06-30T19:30:47Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
-      "baseRefOid": "8e5f1d02b83f10fe12cc102246cd9f94d900dcb1",
+      "baseRefOid": "674d832e2fb29a0b0bd0268654f7ae8e418d581f",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "arndt/security-considerations-revisit",
-      "headRefOid": "261ebf4ac459e8e1db4e867874f1a3a864ba3b97",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "e67dc919bb598936f2304a85b59088a3783c62a4",
+      "closedAt": "2026-06-30T19:30:47Z",
+      "mergedAt": "2026-06-30T19:30:47Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "96c70d0fc05b7e18e2f78d9666537cd41638fcc2"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABEgj7lw",
+          "commit": {
+            "abbreviatedOid": "261ebf4"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-30T05:29:58Z",
+          "updatedAt": "2026-06-30T05:29:58Z",
+          "comments": [
+            {
+              "originalPosition": 99,
+              "body": "Shouldn't this section or another section talk about using audience to limit PoP?",
+              "createdAt": "2026-06-30T05:29:58Z",
+              "updatedAt": "2026-06-30T05:29:58Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABEgl19A",
+          "commit": {
+            "abbreviatedOid": "261ebf4"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-30T05:37:38Z",
+          "updatedAt": "2026-06-30T05:37:38Z",
+          "comments": [
+            {
+              "originalPosition": 113,
+              "body": "What do you mean by bind?  The identifier is already bound to the trust domain and trust anchor by the first part of this sentence.  Maybe you want to say the relying party MUST reject workload identifier in a credential that is not validated by a trust anchor for the trust domain in its identifier. ",
+              "createdAt": "2026-06-30T05:37:38Z",
+              "updatedAt": "2026-06-30T05:37:38Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABEi4PXA",
+          "commit": {
+            "abbreviatedOid": "261ebf4"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-30T11:43:32Z",
+          "updatedAt": "2026-06-30T11:43:32Z",
+          "comments": [
+            {
+              "originalPosition": 113,
+              "body": "I think I agree with @jsalowey here. ",
+              "createdAt": "2026-06-30T11:43:32Z",
+              "updatedAt": "2026-06-30T11:43:32Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABEi69Pg",
+          "commit": {
+            "abbreviatedOid": "261ebf4"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-30T11:49:24Z",
+          "updatedAt": "2026-06-30T11:49:25Z",
+          "comments": [
+            {
+              "originalPosition": 113,
+              "body": "something like this? \n```suggestion\nThe Workload Identity Certificate carries the workload identifier in a single URI SubjectAltName ({{to-wic}}). As with the WIT, the identifier is meaningful only within its trust domain. A relying party MUST validate the certificate against the trust anchors configured for the peer's trust domain ({{trust-anchors}}) and MUST reject the certificate if the workload identifier is not within that trust domain and the trust anchor used. Evaluating the path or other components of the identifier without also considering the trust domain and the trust anchor can allow one trust domain to impersonate workloads in another. Protocol-specific certificate validation requirements are defined in {{!I-D.ietf-wimse-mutual-tls}}.\n```",
+              "createdAt": "2026-06-30T11:49:24Z",
+              "updatedAt": "2026-06-30T11:49:25Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABEj5nHA",
+          "commit": {
+            "abbreviatedOid": "261ebf4"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-30T14:04:35Z",
+          "updatedAt": "2026-06-30T14:04:35Z",
+          "comments": [
+            {
+              "originalPosition": 99,
+              "body": "I find audience is too protocol specific. While now both http-sig and WPT have audience I'm not sure every possible binding will have an audience.",
+              "createdAt": "2026-06-30T14:04:35Z",
+              "updatedAt": "2026-06-30T14:04:35Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABElgxGQ",
+          "commit": {
+            "abbreviatedOid": "261ebf4"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-30T17:37:21Z",
+          "updatedAt": "2026-06-30T17:37:21Z",
+          "comments": [
+            {
+              "originalPosition": 99,
+              "body": "http-sig probably shouldn't even have an \"audience\" ",
+              "createdAt": "2026-06-30T17:37:21Z",
+              "updatedAt": "2026-06-30T17:37:21Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABElhKow",
+          "commit": {
+            "abbreviatedOid": "e67dc91"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "thank you @arndt-s ",
+          "createdAt": "2026-06-30T17:38:06Z",
+          "updatedAt": "2026-06-30T17:38:06Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABElhbhg",
+          "commit": {
+            "abbreviatedOid": "e67dc91"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-06-30T17:38:43Z",
+          "updatedAt": "2026-06-30T17:38:43Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABEmEWhQ",
+          "commit": {
+            "abbreviatedOid": "261ebf4"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-30T19:04:55Z",
+          "updatedAt": "2026-06-30T19:04:55Z",
+          "comments": [
+            {
+              "originalPosition": 99,
+              "body": "yea, its a slippery slope, rereading the text I think it captures scope fine. ",
+              "createdAt": "2026-06-30T19:04:55Z",
+              "updatedAt": "2026-06-30T19:04:55Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABEmE65g",
+          "commit": {
+            "abbreviatedOid": "e67dc91"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-06-30T19:06:19Z",
+          "updatedAt": "2026-06-30T19:06:19Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
