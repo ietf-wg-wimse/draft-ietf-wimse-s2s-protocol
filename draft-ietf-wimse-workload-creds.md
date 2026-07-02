@@ -554,6 +554,15 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 # Document History
 <cref>RFC Editor: please remove before publication.</cref>
 
+## draft-ietf-wimse-workload-creds-02
+
+* Add a section requiring exactly one Workload Identifier per credential (the `sub` claim for a WIT, a single URI SubjectAltName for a WIC).
+* Add a Trust Anchors section and clarify WIT validation, key selection, and key rotation.
+* Rework the Security Considerations, including WIT lifetime, WIC validation and lifetime, and privacy of the workload identifier.
+* Generalize client authorization to cover both the WIT and the WIC.
+* Reference the protocol binding documents (mutual TLS, WPT, and HTTP Message Signatures).
+* Rename "level" to "layer" throughout.
+
 ## draft-ietf-wimse-workload-creds-01
 
 * Clarify that the `iss` claim is RECOMMENDED in part for auditing and operations, and that validation of workload identity uses `sub`, not `iss`.
