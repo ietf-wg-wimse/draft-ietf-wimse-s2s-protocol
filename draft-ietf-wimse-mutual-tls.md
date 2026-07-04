@@ -46,23 +46,18 @@ The WIMSE architecture defines authentication and authorization for software wor
 # Introduction
 
 This document defines authentication and authorization in the context of interaction between two workloads.
-This is the core component of the WIMSE architecture {{?I-D.ietf-wimse-arch}}.
-This document focuses on using X.509 workload identity certificates {{!I-D.ietf-wimse-workload-creds}} to authenticate the communication between workloads using TLS.
+This is the core component of the WIMSE architecture {{?WIMSE-ARCH=I-D.ietf-wimse-arch}}.
+This document focuses on using X.509 workload identity certificates as defined in {{Section 6.1 of !WIMSE-CREDS=I-D.ietf-wimse-workload-creds}} to authenticate the communication between workloads using TLS.
 
-The use of TLS for authentication is widely deployed, however it may not be applicable to all environments.  For example, some deployments may lack the PKI infrastructure necessary to manage certificates or inter-service communication consists of multiple separate TLS hops. For these cases, other options based on Workload Identity Tokens (WIT) {{!I-D.ietf-wimse-workload-creds}} may be more appropriate since they are not based on X.509 certificates and are communicated at the application layer rather than the transport layer.
+The use of TLS for authentication is widely deployed, however it may not be applicable to all environments.  For example, some deployments may lack the PKI infrastructure necessary to manage certificates or inter-service communication consists of multiple separate TLS hops. For these cases, other options based on Workload Identity Tokens (WIT) as defined in {{Section 5 of WIMSE-CREDS}} may be more appropriate since they are not based on X.509 certificates and are communicated at the application layer rather than the transport layer.
 
 ## Deployment Architecture and Message Flow
 
-Refer to Sec. 1.2 of {{I-D.ietf-wimse-workload-creds}} for the deployment architecture which is common to all three
-protection options, including the one described here.
-
-## Workload Identity Certificates
-
-Workload identity certificates are X.509 certificates that carry workload identifiers as described in section 4.1 of {{!I-D.ietf-wimse-workload-creds}}
+Refer to {{Section 1.2 of WIMSE-CREDS}} for the deployment architecture which is common to all protection options.
 
 # Conventions and Definitions
 
-All terminology in this document follows {{?I-D.ietf-wimse-arch}}.
+All terminology in this document follows {{WIMSE-ARCH}}.
 
 {::boilerplate bcp14-tagged}
 
@@ -72,30 +67,35 @@ As noted in the introduction, for many deployments, transport-level protection o
 
 ## The Workload Identity Certificate {#to-wic}
 
-Workload identity certificates are X.509 certificates that carry workload identifiers as described in section 4.1 of {{!I-D.ietf-wimse-workload-creds}}
+Workload identity certificates are X.509 certificates that carry workload identifiers as described in {{Section 6.1 of WIMSE-CREDS}}.
 
 ## Workload Identity Certificate Validation {#wic-validation}
 
-Workload Identity Certificates may be used to authenticate both the server and client side of the connections.  When validating a Workload Identity Certificate, the relying party MUST use the trust anchors configured for the trust domain in the workload identity to validate the peer's certificate.  Other PKIX {{!RFC5280}} path validation rules apply. Workloads acting as TLS clients and servers MUST validate that the trust domain portion of the Workload Identity Certificate matches the expected trust domain for the other side of the connection.
+Workload Identity Certificates may be used to authenticate both the server and client side of the connections.  When validating a Workload Identity Certificate, the relying party MUST use the trust anchors configured for the trust domain in the workload identity to validate the peer's certificate.  Other PKIX {{!INET-X509-PROFILE=RFC5280}} path validation rules apply. Workloads acting as TLS clients and servers MUST validate that the trust domain portion of the Workload Identity Certificate matches the expected trust domain for the other side of the connection.
 
 Servers wishing to use the Workload Identity Certificate for authorizing the client MUST require client certificate authentication in the TLS handshake. Other methods of post handshake authentication are not specified by this document.
 
-Workload Identity Certificates used by TLS servers SHOULD have the `id-kp-serverAuth` extended key usage {{!RFC5280}} field set and Workload Identity Certificates used by TLS clients SHOULD have the `id-kp-clientAuth` extended key usage field set. A certificate that is used for both client and server connections may have both fields set. This specification does not make any other requirements beyond {{!RFC5280}} on the contents of Workload Identity Certificates or on the certification authorities that issue workload certificates.
+Workload Identity Certificates used by TLS servers SHOULD have the `id-kp-serverAuth` extended key usage {{!RFC5280}} field set and Workload Identity Certificates used by TLS clients SHOULD have the `id-kp-clientAuth` extended key usage field set. A certificate that is used for both client and server connections may have both fields set. This specification does not make any other requirements beyond {{INET-X509-PROFILE}} on the contents of Workload Identity Certificates or on the certification authorities that issue workload certificates.
 
 ### Server Name Validation {#server-name}
 
-If the WIMSE client uses a hostname to connect to the server and the server certificate contain a DNS SAN the client MUST perform standard host name validation ({{Section 6.3 of RFC9525}}) unless it is configured with the additional information necessary to perform alternate validation of the peer's workload identity.
-If the client did not perform standard host name validation then the WIMSE client SHOULD further use the workload identifier to validate the server.
-The host portion of the workload identifier is NOT treated as a host name as specified in section 6.4 of {{!RFC9525}} but rather as a trust domain. The server identity is encoded in the path portion of the workload identifier in a deployment specific way.
-Validating the workload identity could be a simple match on the trust domain and path portions of the identifier or validation may be based on the specific details on how the identifier is constructed. The path portion of the WIMSE identifier MUST always be considered in the scope of the trust domain.
-In most cases it is preferable to validate the entire workload identifier, see section 1.3 of {{!I-D.ietf-wimse-workload-creds}} for additional implementation advice.
+If a WIMSE client connects to a server using a DNS hostname, the server SHOULD present a certificate containing a matching DNS Subject Alternative Name (DNS-ID), and the client MUST perform standard TLS server identity validation as specified in {{Section 6.3 of !TLS-IDENTITY=RFC9525}}.
+
+In deployments that use Workload Identity Certificates, successful DNS hostname validation authenticates the server endpoint, while the workload identifier provides an additional identity that can be used for workload-specific authorization and policy decisions.
+
+Some deployments may not use DNS names for server discovery. In such cases, the client MUST be configured with sufficient information to determine the expected workload identity of the server and MUST validate that identity before accepting the connection.
+
+The host portion of the workload identifier is NOT treated as a hostname as specified in {{Section 6.4 of TLS-IDENTITY}}, but rather as a trust domain. The server identity is encoded in the path portion of the workload identifier in a deployment-specific way.
+
+Validation of the workload identity may consist of an exact match of the trust domain and path, or may follow deployment-specific rules. The path portion of the workload identifier MUST always be interpreted within the context of the trust domain. In most cases it is preferable to validate the entire workload identifier; see {{Section 1.3 of WIMSE-CREDS}} for additional implementation guidance.
 
 ## Client Authorization Using the Workload Identity {#client-name}
 
 The server application retrieves the workload identifier from the client certificate subjectAltName, which in turn is obtained from the TLS layer. The identifier is used in authorization, accounting and auditing.
 For example, the full workload identifier may be matched against ACLs to authorize actions requested by the peer and the identifier may be included in log messages to associate actions to the client workload for audit purposes.
 A deployment may specify other authorization policies based on the specific details of how the workload identifier is constructed. The path portion of the workload identifier MUST always be considered in the scope of the trust domain.
-See section 1.3 of {{!I-D.ietf-wimse-workload-creds}} on additional security implications of workload identifiers.
+
+See {{Section 1.3 of WIMSE-CREDS}} for additional security implications of workload identifiers.
 
 # IANA Considerations
 
@@ -103,7 +103,7 @@ This document does not include any IANA considerations.
 
 # Security Considerations
 
-This document relies on the security properties of TLS {{!TLS=I-D.ietf-tls-rfc8446bis}}, PKIX path validation {{!RFC5280}}, and workload identity certificate validation as described in {{Section 4.1 of !I-D.ietf-wimse-workload-creds}}. Implementations MUST validate the peer certificate chain, the applicable extended key usage, and the workload identifier according to the rules in this document before using the authenticated identity for authorization decisions.
+This document relies on the security properties of TLS {{!TLS=I-D.ietf-tls-rfc8446bis}}, PKIX path validation {{INET-X509-PROFILE}}, and workload identity certificate validation as described in {{Section 6.1 of WIMSE-CREDS}}. Implementations MUST validate the peer certificate chain, the applicable extended key usage, and the workload identifier according to the rules in this document before using the authenticated identity for authorization decisions.
 
 Workload identifiers are meaningful only within the scope of their trust domain. Authorization policies MUST NOT evaluate only the path or other sub-components of a workload identifier without also considering the trust domain and the trust anchor used to validate the certificate. Failure to bind the workload identifier to the expected trust domain and configured trust anchor can allow one trust domain to impersonate workloads from another domain.
 
@@ -125,6 +125,10 @@ Authorization decisions based on workload identity need to be made using the aut
 
 # Document History
 <cref>RFC Editor: please remove before publication.</cref>
+
+## draft-ietf-wimse-mutual-tls-02
+
+* Improved Server Name Validation section
 
 ## draft-ietf-wimse-mutual-tls-01
 
