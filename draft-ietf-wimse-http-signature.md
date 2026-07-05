@@ -125,6 +125,10 @@ For requests only, the following signature parameter MUST also be included:
 
 * `wimse-aud` ({{wimse-aud-param}})
 
+For responses only, when response signing is enabled, the following signature parameter MUST also be included:
+
+* `wimse-req-nonce` ({{wimse-req-nonce-param}})
+
 The following signature parameters in the `Signature-Input` header MUST NOT be used:
 
 * `keyid` - The signing key is sent along with the message in the WIT. Additionally specifying the key identity would add confusion.
@@ -156,6 +160,14 @@ When the default string is not suitable for verification at the recipient, sende
 
 The recipient MUST be able to verify that the audience refers to it. See "Workload Identifiers and Authentication Granularity" in {{I-D.ietf-wimse-workload-creds}} for more detail.
 
+## The `wimse-req-nonce` Signature Parameter {#wimse-req-nonce-param}
+
+When response signing is enabled, this document defines the `wimse-req-nonce` signature metadata parameter for responses.
+This parameter binds requests to responses and prevents a malicious
+proxy from replaying responses to the wrong client.
+
+The server MUST set `wimse-req-nonce` to the value of the `nonce` signature parameter from the `Signature-Input` of the request that triggered the response.
+
 ## Signing the Response
 
 Protecting the response by signing it with the server's WIT is RECOMMENDED but optional. In particular, if the response
@@ -164,6 +176,8 @@ may be exceptionally large or is expected to be streamed, signing it may not be 
 In practice, we expect response signing to be enabled by local policy. If response signing is enabled for a deployment,
 the client (recipient of the response) MUST check that the signature exists and validate it.
 The response MUST be rejected if a signature is absent or fails to validate.
+The client MUST verify that `wimse-req-nonce` matches the `nonce` it included in its request's `Signature-Input`.
+This binds the signed response to the specific request that triggered it.
 
 As described in {{Section 5 of RFC9421}}, either client or server MAY send an
 `Accept-Signature` header,
@@ -333,7 +347,7 @@ been activated and likewise, the recipient validates this signature.
 * No requests can be modified without detection by the recipient. Integrity of
   all present HTTP headers specified in this document is protected, as well as
 the derived components listed in {{http-sig-auth}}, the signature parameters
-(including `wimse-aud` on requests) as covered by `@signature-params` in {{RFC9421}}, and
+(including `wimse-aud` on requests and `wimse-req-nonce` on responses) as covered by `@signature-params` in {{RFC9421}}, and
 the message body (when present).
 * No responses can be modified without detection, provided that optional response signing has been activated and
 that the recipient validates incoming responses.
@@ -348,6 +362,7 @@ caches across validators). Therefore it is not claimed as
 a goal, though implementations SHOULD attempt to detect replays where feasible.
 We note that since most of the message is signed, replay attacks are only possible in a
 context where the request would be accepted as valid, and this mitigates the risk to some extent.
+* When response signing is enabled, validating `wimse-req-nonce` mitigates replay of a signed response to a client other than the one that sent the triggering request.
 * Unless response signing is mandated by local policy, complete deletion of a request/response pair is possible without detection.
 
 
@@ -355,9 +370,10 @@ context where the request would be accepted as valid, and this mitigates the ris
 
 ## HTTP Signature Metadata Parameters Registration
 
-IANA is requested to register the following entry in the "HTTP Signature Metadata Parameters" registry {{IANA.HTTP.MESSAGE.SIGNATURE}}, per the registration template in Section 6.3.1 of {{RFC9421}}:
+IANA is requested to register the following entries in the "HTTP Signature Metadata Parameters" registry {{IANA.HTTP.MESSAGE.SIGNATURE}}, per the registration template in Section 6.3.1 of {{RFC9421}}:
 
 * `wimse-aud`, per {{iana-wimse-aud-param}}.
+* `wimse-req-nonce`, per {{iana-wimse-req-nonce-param}}.
 
 ### `wimse-aud` {#iana-wimse-aud-param}
 
@@ -365,10 +381,20 @@ IANA is requested to register the following entry in the "HTTP Signature Metadat
 * Description: the WIMSE message audience. Request signatures only; binds the HTTP message signature to the intended recipient.
 * Reference: RFC XXX, {{wimse-aud-param}}.
 
+### `wimse-req-nonce` {#iana-wimse-req-nonce-param}
+
+* Name: `wimse-req-nonce`
+* Description: on response signatures, the `nonce` value from the triggering request's `Signature-Input`; binds the response to that request.
+* Reference: RFC XXX, {{wimse-req-nonce-param}}.
+
 --- back
 
 # Document History
 <cref>RFC Editor: please remove before publication.</cref>
+
+## draft-ietf-wimse-http-signature-04
+
+* On signed responses, require `wimse-req-nonce` (request binding); register with IANA. Non-normative response example not updated accordingly; the `Signature` value was not regenerated (see issue tracker).
 
 ## draft-ietf-wimse-http-signature-03
 
