@@ -29,7 +29,7 @@ author:
     email: bcampbell@pingidentity.com
  -
     fullname: "Joe Salowey"
-    organization: CyberArk
+    organization: Palo Alto Networks
     email: joe@salowey.net
  -
     fullname: "Arndt Schwenkschuster"
