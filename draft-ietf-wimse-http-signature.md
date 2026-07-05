@@ -25,7 +25,7 @@ venue:
 author:
  -
     fullname: "Joe Salowey"
-    organization: CyberArk
+    organization: Palo Alto Networks
     email: joe@salowey.net
  -
     fullname: "Yaron Sheffer"
