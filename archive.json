@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-07-02T03:28:18.306075+00:00",
+  "timestamp": "2026-07-05T02:57:43.638766+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -3942,7 +3942,7 @@
       "id": "I_kwDOLJmm787pxxkh",
       "title": "Clean up security considerations in credentials draft",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/208",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -3953,8 +3953,8 @@
       ],
       "body": "Currently, a lot of the security considerations are POP specific and talk about semantics not described in the credentials document.",
       "createdAt": "2026-02-10T15:32:41Z",
-      "updatedAt": "2026-06-02T14:50:01Z",
-      "closedAt": null,
+      "updatedAt": "2026-07-02T11:41:56Z",
+      "closedAt": "2026-07-02T11:41:56Z",
       "comments": [
         {
           "author": "arndt-s",
@@ -3962,6 +3962,13 @@
           "body": "Notes from sync:\n6.1 - makes sense\n6.2 - level of detail is ok\n6.3 - ok\n6.4 - the sentence that section 3 carries mitigations seems to be outdated.\n6.4 - move into a bullet point into 6.2 after TLS\nOR dedicated section about TLS and move first bullet of 6.2 into it too.\n6.5 - it's very WIT focused, it applies to certificates too.\n\n- 4.1 & 4.2 may also need additional security considerations.",
           "createdAt": "2026-04-07T14:48:18Z",
           "updatedAt": "2026-04-07T14:54:27Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Resolved with #249 ",
+          "createdAt": "2026-07-02T11:41:56Z",
+          "updatedAt": "2026-07-02T11:41:56Z"
         }
       ]
     },
@@ -18041,6 +18048,100 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 250,
+      "id": "PR_kwDOLJmm787tGGMg",
+      "title": "Prepare -02",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/250",
+      "state": "MERGED",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-07-02T11:23:55Z",
+      "updatedAt": "2026-07-02T11:32:57Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "96c70d0fc05b7e18e2f78d9666537cd41638fcc2",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "arndt/prepare-02",
+      "headRefOid": "75b3dba1ad8631358c1614d089b232b7d1b6bff9",
+      "closedAt": "2026-07-02T11:32:53Z",
+      "mergedAt": "2026-07-02T11:32:53Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "264d45ea8f955703fe1eebfd3743e82921968416"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABEzIfeg",
+          "commit": {
+            "abbreviatedOid": "75b3dba"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-07-02T11:30:55Z",
+          "updatedAt": "2026-07-02T11:30:55Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 251,
+      "id": "PR_kwDOLJmm787t8AyI",
+      "title": "Mtls security",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/251",
+      "state": "CLOSED",
+      "author": "yaroslavros",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-07-04T22:04:26Z",
+      "updatedAt": "2026-07-04T22:04:35Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "264d45ea8f955703fe1eebfd3743e82921968416",
+      "headRepository": "yaroslavros/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "mtls-security",
+      "headRefOid": "4a72ed668ec1ff5d562c5dad6d63ca91b4f33f3b",
+      "closedAt": "2026-07-04T22:04:35Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 252,
+      "id": "PR_kwDOLJmm787t8Dzi",
+      "title": "Reworked Server Name Validation section",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/252",
+      "state": "OPEN",
+      "author": "yaroslavros",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-07-04T22:10:59Z",
+      "updatedAt": "2026-07-04T22:12:40Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "264d45ea8f955703fe1eebfd3743e82921968416",
+      "headRepository": "yaroslavros/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "main",
+      "headRefOid": "799ad246770f4f66012caab1fdb9bd3f77190aff",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
