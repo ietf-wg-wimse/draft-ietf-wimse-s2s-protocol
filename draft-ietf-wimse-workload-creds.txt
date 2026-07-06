@@ -1077,9 +1077,9 @@ Table of Contents
    [I-D.ietf-wimse-http-signature]
               Salowey, J. A. and Y. Sheffer, "WIMSE Workload-to-Workload
               Authentication with HTTP Signatures", Work in Progress,
-              Internet-Draft, draft-ietf-wimse-http-signature-03, 7
-              April 2026, <https://datatracker.ietf.org/doc/html/draft-
-              ietf-wimse-http-signature-03>.
+              Internet-Draft, draft-ietf-wimse-http-signature-04, 6 July
+              2026, <https://datatracker.ietf.org/doc/html/draft-ietf-
+              wimse-http-signature-04>.
 
    [I-D.ietf-wimse-wpt]
               Campbell, B. and A. Schwenkschuster, "WIMSE Workload Proof
