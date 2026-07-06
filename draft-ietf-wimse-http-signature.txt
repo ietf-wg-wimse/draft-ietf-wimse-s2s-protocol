@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments                J. Salowey
 Internet-Draft                                        Palo Alto Networks
 Intended status: Standards Track                              Y. Sheffer
-Expires: 6 January 2027                                           Intuit
-                                                             5 July 2026
+Expires: 7 January 2027                                           Intuit
+                                                             6 July 2026
 
 
      WIMSE Workload-to-Workload Authentication with HTTP Signatures
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 6 January 2027.
+   This Internet-Draft will expire on 7 January 2027.
 
 Copyright Notice
 
@@ -81,9 +81,10 @@ Table of Contents
    2.  Conventions and Definitions
    3.  The Protocol: Authentication Based on HTTP Message Signatures
      3.1.  The wimse-aud Signature Parameter
-     3.2.  Signing the Response
-     3.3.  Error Conditions
-     3.4.  Example Requests and Responses
+     3.2.  The wimse-req-nonce Signature Parameter
+     3.3.  Signing the Response
+     3.4.  Error Conditions
+     3.5.  Example Requests and Responses
    4.  Implementation Status
      4.1.  Cofide
    5.  Security Considerations
@@ -98,22 +99,24 @@ Table of Contents
    7.  IANA Considerations
      7.1.  HTTP Signature Metadata Parameters Registration
        7.1.1.  wimse-aud
+       7.1.2.  wimse-req-nonce
    8.  References
      8.1.  Normative References
      8.2.  Informative References
    Appendix A.  Document History
-     A.1.  draft-ietf-wimse-http-signature-03
-     A.2.  draft-ietf-wimse-http-signature-02
-     A.3.  draft-ietf-wimse-http-signature-01
-     A.4.  draft-ietf-wimse-http-signature-00
-     A.5.  draft-ietf-wimse-s2s-protocol-07
-     A.6.  draft-ietf-wimse-s2s-protocol-06
-     A.7.  draft-ietf-wimse-s2s-protocol-05
-     A.8.  draft-ietf-wimse-s2s-protocol-04
-     A.9.  draft-ietf-wimse-s2s-protocol-03
-     A.10. draft-ietf-wimse-s2s-protocol-02
-     A.11. draft-ietf-wimse-s2s-protocol-01
-     A.12. draft-ietf-wimse-s2s-protocol-00
+     A.1.  draft-ietf-wimse-http-signature-04
+     A.2.  draft-ietf-wimse-http-signature-03
+     A.3.  draft-ietf-wimse-http-signature-02
+     A.4.  draft-ietf-wimse-http-signature-01
+     A.5.  draft-ietf-wimse-http-signature-00
+     A.6.  draft-ietf-wimse-s2s-protocol-07
+     A.7.  draft-ietf-wimse-s2s-protocol-06
+     A.8.  draft-ietf-wimse-s2s-protocol-05
+     A.9.  draft-ietf-wimse-s2s-protocol-04
+     A.10. draft-ietf-wimse-s2s-protocol-03
+     A.11. draft-ietf-wimse-s2s-protocol-02
+     A.12. draft-ietf-wimse-s2s-protocol-01
+     A.13. draft-ietf-wimse-s2s-protocol-00
    Appendix B.  Comparing the DPoP Inspired Option with Message
            Signatures
    Acknowledgments
@@ -229,6 +232,11 @@ Table of Contents
 
    *  wimse-aud (Section 3.1)
 
+   For responses only, when response signing is enabled, the following
+   signature parameter MUST also be included:
+
+   *  wimse-req-nonce (Section 3.2)
+
    The following signature parameters in the Signature-Input header MUST
    NOT be used:
 
@@ -285,7 +293,18 @@ Table of Contents
    See "Workload Identifiers and Authentication Granularity" in
    [I-D.ietf-wimse-workload-creds] for more detail.
 
-3.2.  Signing the Response
+3.2.  The wimse-req-nonce Signature Parameter
+
+   When response signing is enabled, this document defines the wimse-
+   req-nonce signature metadata parameter for responses.  This parameter
+   binds requests to responses and prevents a malicious proxy from
+   replaying responses to the wrong client.
+
+   The server MUST set wimse-req-nonce to the value of the nonce
+   signature parameter from the Signature-Input of the request that
+   triggered the response.
+
+3.3.  Signing the Response
 
    Protecting the response by signing it with the server's WIT is
    RECOMMENDED but optional.  In particular, if the response may be
@@ -296,7 +315,9 @@ Table of Contents
    policy.  If response signing is enabled for a deployment, the client
    (recipient of the response) MUST check that the signature exists and
    validate it.  The response MUST be rejected if a signature is absent
-   or fails to validate.
+   or fails to validate.  The client MUST verify that wimse-req-nonce
+   matches the nonce it included in its request's Signature-Input.  This
+   binds the signed response to the specific request that triggered it.
 
    As described in Section 5 of [RFC9421], either client or server MAY
    send an Accept-Signature header, but is not required to do so.  The
@@ -309,7 +330,7 @@ Table of Contents
    signed in subsequent requests (minimally those specified above for
    signed requests).
 
-3.3.  Error Conditions
+3.4.  Error Conditions
 
    Errors may occur during the processing of the message signature.  If
    the signature verification fails for any reason, such as an invalid
@@ -325,7 +346,7 @@ Table of Contents
    of these headers for the WIT is not compatible with this
    specification.
 
-3.4.  Example Requests and Responses
+3.5.  Example Requests and Responses
 
    Following is a non-normative example of a signed request and a signed
    response.
@@ -590,8 +611,9 @@ Table of Contents
       Integrity of all present HTTP headers specified in this document
       is protected, as well as the derived components listed in
       Section 3, the signature parameters (including wimse-aud on
-      requests) as covered by @signature-params in [RFC9421], and the
-      message body (when present).
+      requests and wimse-req-nonce on responses) as covered by
+      @signature-params in [RFC9421], and the message body (when
+      present).
 
    *  No responses can be modified without detection, provided that
       optional response signing has been activated and that the
@@ -612,6 +634,10 @@ Table of Contents
       where the request would be accepted as valid, and this mitigates
       the risk to some extent.
 
+   *  When response signing is enabled, validating wimse-req-nonce
+      mitigates replay of a signed response to a client other than the
+      one that sent the triggering request.
+
    *  Unless response signing is mandated by local policy, complete
       deletion of a request/response pair is possible without detection.
 
@@ -619,12 +645,14 @@ Table of Contents
 
 7.1.  HTTP Signature Metadata Parameters Registration
 
-   IANA is requested to register the following entry in the "HTTP
+   IANA is requested to register the following entries in the "HTTP
    Signature Metadata Parameters" registry
    [IANA.HTTP.MESSAGE.SIGNATURE], per the registration template in
    Section 6.3.1 of [RFC9421]:
 
    *  wimse-aud, per Section 7.1.1.
+
+   *  wimse-req-nonce, per Section 7.1.2.
 
 7.1.1.  wimse-aud
 
@@ -634,6 +662,16 @@ Table of Contents
       binds the HTTP message signature to the intended recipient.
 
    *  Reference: RFC XXX, Section 3.1.
+
+7.1.2.  wimse-req-nonce
+
+   *  Name: wimse-req-nonce
+
+   *  Description: on response signatures, the nonce value from the
+      triggering request's Signature-Input; binds the response to that
+      request.
+
+   *  Reference: RFC XXX, Section 3.2.
 
 8.  References
 
@@ -720,7 +758,14 @@ Appendix A.  Document History
 
    // RFC Editor: please remove before publication.
 
-A.1.  draft-ietf-wimse-http-signature-03
+A.1.  draft-ietf-wimse-http-signature-04
+
+   *  On signed responses, require wimse-req-nonce (request binding);
+      register with IANA.  Non-normative response example not updated
+      accordingly; the Signature value was not regenerated (see issue
+      tracker).
+
+A.2.  draft-ietf-wimse-http-signature-03
 
    *  Replace Wimse-Audience HTTP header with the wimse-aud signature
       metadata parameter ([RFC9421]); register with IANA (HTTP Signature
@@ -728,12 +773,12 @@ A.1.  draft-ietf-wimse-http-signature-03
       accordingly; the Signature value was not regenerated (see issue
       tracker).
 
-A.2.  draft-ietf-wimse-http-signature-02
+A.3.  draft-ietf-wimse-http-signature-02
 
    *  Add new Wimse-Audience HTTP header (superseded by wimse-aud in
       -03).
 
-A.3.  draft-ietf-wimse-http-signature-01
+A.4.  draft-ietf-wimse-http-signature-01
 
    *  Clarified response signing.
 
@@ -743,11 +788,11 @@ A.3.  draft-ietf-wimse-http-signature-01
 
    *  Added an Implementation Status section.
 
-A.4.  draft-ietf-wimse-http-signature-00
+A.5.  draft-ietf-wimse-http-signature-00
 
    *  Initial version, extracted from the -07 draft with minimal edits.
 
-A.5.  draft-ietf-wimse-s2s-protocol-07
+A.6.  draft-ietf-wimse-s2s-protocol-07
 
    *  Rework the WPT's oth claim.
 
@@ -765,14 +810,14 @@ A.5.  draft-ietf-wimse-s2s-protocol-07
 
    *  Use of the Accept-Signature header.
 
-A.6.  draft-ietf-wimse-s2s-protocol-06
+A.7.  draft-ietf-wimse-s2s-protocol-06
 
    *  Explicit definition of the Workload Identity Certificate.
 
    *  Definition of the validation of workload identifiers as part of
       workload authentication.  Still work in progress.
 
-A.7.  draft-ietf-wimse-s2s-protocol-05
+A.8.  draft-ietf-wimse-s2s-protocol-05
 
    *  Removed the entire Workload Identity section which is now covered
       in the Architecture document.
@@ -783,7 +828,7 @@ A.7.  draft-ietf-wimse-s2s-protocol-05
 
    *  IANA considerations.
 
-A.8.  draft-ietf-wimse-s2s-protocol-04
+A.9.  draft-ietf-wimse-s2s-protocol-04
 
    *  Require cnf.jwk.alg in WIT which restricts signature algorithm of
       WPT or HTTP-Sig.
@@ -792,7 +837,7 @@ A.8.  draft-ietf-wimse-s2s-protocol-04
 
    *  Consolidate terminology with the Architecture draft.
 
-A.9.  draft-ietf-wimse-s2s-protocol-03
+A.10.  draft-ietf-wimse-s2s-protocol-03
 
    *  Consistently use "workload".
 
@@ -807,7 +852,7 @@ A.9.  draft-ietf-wimse-s2s-protocol-03
 
    *  Error handling for the application-level methods.
 
-A.10.  draft-ietf-wimse-s2s-protocol-02
+A.11.  draft-ietf-wimse-s2s-protocol-02
 
    *  Coexistence with bearer tokens.
 
@@ -819,7 +864,7 @@ A.10.  draft-ietf-wimse-s2s-protocol-02
 
    *  Moved an author to acknowledgments.
 
-A.11.  draft-ietf-wimse-s2s-protocol-01
+A.12.  draft-ietf-wimse-s2s-protocol-01
 
    *  Addressed multiple comments from Pieter.
 
@@ -834,7 +879,7 @@ A.11.  draft-ietf-wimse-s2s-protocol-01
    *  Added a section comparing the DPoP-inspired app-level security
       option to the Message Signature-based alternative.
 
-A.12.  draft-ietf-wimse-s2s-protocol-00
+A.13.  draft-ietf-wimse-s2s-protocol-00
 
    *  Initial WG draft, an exact copy of draft-sheffer-wimse-s2s-
       protocol-00
