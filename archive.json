@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-07-05T02:57:43.638766+00:00",
+  "timestamp": "2026-07-07T02:57:32.388396+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -18122,26 +18122,174 @@
       "id": "PR_kwDOLJmm787t8Dzi",
       "title": "Reworked Server Name Validation section",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/252",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2026-07-04T22:10:59Z",
-      "updatedAt": "2026-07-04T22:12:40Z",
+      "updatedAt": "2026-07-06T15:06:53Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "264d45ea8f955703fe1eebfd3743e82921968416",
       "headRepository": "yaroslavros/draft-ietf-wimse-s2s-protocol",
       "headRefName": "main",
       "headRefOid": "799ad246770f4f66012caab1fdb9bd3f77190aff",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-07-06T15:06:53Z",
+      "mergedAt": "2026-07-06T15:06:53Z",
+      "mergedBy": "yaroslavros",
+      "mergeCommit": {
+        "oid": "e999d91cab91b0f540ae14235950309c647eef56"
+      },
+      "comments": [
+        {
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I don't think there is any other solution here since TLS cannot present two certificates.\r\n\r\nWe have an unfortunately choice of:\r\n\r\n- Using WIMSE certificates only on client side and hostname certificates on server side. This would make WIMSE incompatible with current SPIFFE practices.\r\n- Require WIMSE certificates (with or without hostname SAN) on server side. This will make WIMSE mTLS spec unusable on public endpoints as such certificates won't be issued by webPKI.\r\n- Provide flexibility to deployments until there is a way to provide two identity certificates in TLS\r\n\r\nAm I missing some other option? Which path would you prefer?",
+          "createdAt": "2026-07-06T12:54:47Z",
+          "updatedAt": "2026-07-06T12:54:47Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> I don't think there is any other solution here since TLS cannot present two certificates.\r\n> \r\n> We have an unfortunately choice of:\r\n> \r\n> * Using WIMSE certificates only on client side and hostname certificates on server side. This would make WIMSE incompatible with current SPIFFE practices.\r\n> * Require WIMSE certificates (with or without hostname SAN) on server side. This will make WIMSE mTLS spec unusable on public endpoints as such certificates won't be issued by webPKI.\r\n> * Provide flexibility to deployments until there is a way to provide two identity certificates in TLS\r\n> \r\n> Am I missing some other option? Which path would you prefer?\r\n\r\nThanks for clarifying the problem. As we all know, \"flexibility\" is where security issues creep in.\r\n\r\nThe question is, is it even realistic to expect public endpoints to use WIMSE/mTLS, because in real-life enterprise deployments you'd have TLS middleboxes on both ingress and egress. Once we abandon this goal, you can use WIMSE certs issued by internal CAs.",
+          "createdAt": "2026-07-06T13:12:55Z",
+          "updatedAt": "2026-07-06T13:12:55Z"
+        },
+        {
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> The question is, is it even realistic to expect public endpoints to use WIMSE/mTLS, because in real-life enterprise deployments you'd have TLS middleboxes on both ingress and egress. Once we abandon this goal, you can use WIMSE certs issued by internal CAs.\r\n\r\nYes, it is. Dedicated public mTLS API endpoint option is becoming quite common - for example https://help.openai.com/en/articles/10876024-openai-mutual-tls-beta-program. WIMSE certificate on client side would work well for this, while server presents webPKI hostname cert.",
+          "createdAt": "2026-07-06T13:26:59Z",
+          "updatedAt": "2026-07-06T13:26:59Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABFBl3WA",
+          "commit": {
+            "abbreviatedOid": "799ad24"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-07-05T23:33:23Z",
+          "updatedAt": "2026-07-05T23:33:23Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABFFNdwQ",
+          "commit": {
+            "abbreviatedOid": "799ad24"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "I'm not very happy with this PR. We are essentially defining two modes of mTLS, with and without SAN. I think this is confusing and potentially less secure. Also, it's important enough that it should be discussed (at a high level) in the Architecture doc.",
+          "createdAt": "2026-07-06T12:48:20Z",
+          "updatedAt": "2026-07-06T12:48:20Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABFGR9mg",
+          "commit": {
+            "abbreviatedOid": "799ad24"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-07-06T15:04:12Z",
+          "updatedAt": "2026-07-06T15:04:12Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 253,
+      "id": "PR_kwDOLJmm787uIBlj",
+      "title": "add request nonce to http signatures",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/253",
+      "state": "MERGED",
+      "author": "jsalowey",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This adds the request nonce from PR #246 so it can be merged without affecting the other documents. ",
+      "createdAt": "2026-07-05T23:03:29Z",
+      "updatedAt": "2026-07-06T12:52:15Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "264d45ea8f955703fe1eebfd3743e82921968416",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "jas-req-nonce",
+      "headRefOid": "e43d2c8210dee9ff98b88c8b655089c2096ce9b3",
+      "closedAt": "2026-07-06T12:52:14Z",
+      "mergedAt": "2026-07-06T12:52:14Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "754913e1f7c24aa49c867a5faf82cc2d6655cebc"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABFFO1aA",
+          "commit": {
+            "abbreviatedOid": "e43d2c8"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-07-06T12:51:03Z",
+          "updatedAt": "2026-07-06T12:51:03Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 254,
+      "id": "PR_kwDOLJmm787uIHyo",
+      "title": "update affiliation",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/254",
+      "state": "MERGED",
+      "author": "jsalowey",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-07-05T23:15:07Z",
+      "updatedAt": "2026-07-05T23:26:38Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "264d45ea8f955703fe1eebfd3743e82921968416",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "update-affiliation",
+      "headRefOid": "06aa51ac20eb6f5069f2c731a29d5f28f9a0789f",
+      "closedAt": "2026-07-05T23:26:32Z",
+      "mergedAt": "2026-07-05T23:26:31Z",
+      "mergedBy": "jsalowey",
+      "mergeCommit": {
+        "oid": "59a66af3fb9764cc4ffd887009c75cdaa48fe512"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABFBkg6Q",
+          "commit": {
+            "abbreviatedOid": "06aa51a"
+          },
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-07-05T23:18:58Z",
+          "updatedAt": "2026-07-05T23:18:58Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
