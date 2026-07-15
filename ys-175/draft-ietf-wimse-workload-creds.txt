@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 25 December 2026                                       CyberArk
+Expires: 16 January 2027                                        CyberArk
                                                       A. Schwenkschuster
                                                         Defakto Security
                                                               Y. Sheffer
                                                                   Intuit
                                                             Y. Rosomakho
                                                                  Zscaler
-                                                            23 June 2026
+                                                            15 July 2026
 
 
                        WIMSE Workload Credentials
@@ -67,7 +67,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 25 December 2026.
+   This Internet-Draft will expire on 16 January 2027.
 
 Copyright Notice
 
@@ -89,6 +89,8 @@ Table of Contents
      1.1.  Use In Other Protocols
      1.2.  Deployment Architecture and Message Flow
      1.3.  Workload Identifiers and Authentication Granularity
+       1.3.1.  Application-Layer Audience
+       1.3.2.  Transport-Layer Recipient Check
    2.  Conventions and Definitions
    3.  Establishing Trust Anchors
    4.  One Workload Identity per Credential
@@ -271,26 +273,51 @@ Table of Contents
 
    *  Each workload must know its own identifier.
 
-   *  The infrastructure must make available to workloads some means to
-      verify that an HTTP target URI (Section 7.1 of [RFC9110]), without
-      query or fragment components, is intended for them.
+   *  Each workload must be able to verify that it is the intended
+      recipient of a given request (that is, that it is the intended
+      audience for that request).
 
    Once these conditions are met, the methods described in this document
-   can be used for the caller and callee to authenticate.  Specifically,
-   deployments should use this capability for consistent audience
-   validation within their environment.
+   can be used for the caller and callee to authenticate one another.
+
+   How that recipient check is expressed depends on whether
+   authentication is performed at the application layer or at the
+   transport layer.
+
+1.3.1.  Application-Layer Audience
 
    Application-level proof-of-possession mechanisms in
-   [I-D.ietf-wimse-wpt] and [I-D.ietf-wimse-http-signature] use the HTTP
-   target URI (Section 7.1 of [RFC9110]) of the request, without query
-   or fragment components, as audience.  The Workload Identifier in a
-   WIT or WIC identifies the sender; the audience identifies the
-   intended recipient.  The caller sets the audience to the HTTP target
-   URI; the callee verifies that the audience is intended for it using
-   infrastructure support as described above, including any deployment-
-   specific aliases or normalization.  For mutual TLS, the caller uses
-   the same support when validating the server by workload identity
-   rather than DNS hostname (see [I-D.ietf-wimse-mutual-tls]).
+   [I-D.ietf-wimse-wpt] and [I-D.ietf-wimse-http-signature] bind a
+   request to an intended recipient using an audience value.  The
+   Workload Identifier in a WIT identifies the sender; the audience
+   identifies the intended recipient.
+
+   By default, the caller sets the audience to the HTTP target URI
+   (Section 7.1 of [RFC9110]) of the request, without query or fragment
+   components.  Intermediaries may rewrite that URI in transit, so the
+   callee MUST NOT rely solely on the request URI as observed on the
+   wire to decide whether it is the intended recipient.  Instead, the
+   callee verifies that the audience value carried in the proof is
+   intended for it.  In some cases this might necessitate infrastructure
+   support to account for deployment-specific aliases or normalization.
+   Deployments SHOULD use this capability for consistent audience
+   validation within their environment.
+
+1.3.2.  Transport-Layer Recipient Check
+
+   At the transport layer there is no separate audience claim analogous
+   to application-layer proof of possession.  HTTP already requires
+   that, once a server has reconstructed the request's target URI, it
+   decide whether it is configured to process that request and whether
+   the connection context is appropriate for it, and an origin server
+   MUST reject requests that appear to have been misdirected
+   (Section 7.4 of [RFC9110]).  When connections are reused across
+   origins — as HTTP/2 permits — a server that is not authoritative for
+   a request indicates that by responding with 421 (Misdirected Request)
+   (Section 9.1.1 of [RFC9113]).  That check — together with ordinary
+   TLS server authentication (including the rules in
+   [I-D.ietf-wimse-mutual-tls]) — is the recipient validation available
+   when relying on mutual TLS alone.
 
 2.  Conventions and Definitions
 
@@ -968,9 +995,9 @@ Table of Contents
    [I-D.ietf-wimse-mutual-tls]
               Salowey, J. A. and Y. Rosomakho, "Workload Authentication
               Using Mutual TLS", Work in Progress, Internet-Draft,
-              draft-ietf-wimse-mutual-tls-01, 5 May 2026,
+              draft-ietf-wimse-mutual-tls-02, 6 July 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
-              mutual-tls-01>.
+              mutual-tls-02>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -1029,33 +1056,33 @@ Table of Contents
 
    [WIMSE-ID] Rosomakho, Y. and J. A. Salowey, "Workload Identifier",
               Work in Progress, Internet-Draft, draft-ietf-wimse-
-              identifier-02, 2 March 2026,
+              identifier-03, 6 July 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
-              identifier-02>.
+              identifier-03>.
 
 11.2.  Informative References
 
    [I-D.ietf-oauth-transaction-tokens]
               Tulshibagwale, A., Fletcher, G., and P. Kasselman,
               "Transaction Tokens", Work in Progress, Internet-Draft,
-              draft-ietf-oauth-transaction-tokens-08, 2 March 2026,
+              draft-ietf-oauth-transaction-tokens-09, 6 July 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              transaction-tokens-08>.
+              transaction-tokens-09>.
 
    [I-D.ietf-wimse-arch]
               Salowey, J. A., Rosomakho, Y., and H. Tschofenig,
               "Workload Identity in a Multi System Environment (WIMSE)
               Architecture", Work in Progress, Internet-Draft, draft-
-              ietf-wimse-arch-07, 2 March 2026,
+              ietf-wimse-arch-08, 6 July 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
-              arch-07>.
+              arch-08>.
 
    [I-D.ietf-wimse-http-signature]
               Salowey, J. A. and Y. Sheffer, "WIMSE Workload-to-Workload
               Authentication with HTTP Signatures", Work in Progress,
-              Internet-Draft, draft-ietf-wimse-http-signature-03, 7
-              April 2026, <https://datatracker.ietf.org/doc/html/draft-
-              ietf-wimse-http-signature-03>.
+              Internet-Draft, draft-ietf-wimse-http-signature-04, 6 July
+              2026, <https://datatracker.ietf.org/doc/html/draft-ietf-
+              wimse-http-signature-04>.
 
    [I-D.ietf-wimse-wpt]
               Campbell, B. and A. Schwenkschuster, "WIMSE Workload Proof
@@ -1080,6 +1107,10 @@ Table of Contents
               IANA, "Media Types",
               <https://www.iana.org/assignments/media-types>.
 
+   [RFC9113]  Thomson, M., Ed. and C. Benfield, Ed., "HTTP/2", RFC 9113,
+              DOI 10.17487/RFC9113, June 2022,
+              <https://www.rfc-editor.org/rfc/rfc9113>.
+
    [RFC9457]  Nottingham, M., Wilde, E., and S. Dalal, "Problem Details
               for HTTP APIs", RFC 9457, DOI 10.17487/RFC9457, July 2023,
               <https://www.rfc-editor.org/rfc/rfc9457>.
@@ -1091,9 +1122,10 @@ Appendix A.  Document History
 
 A.1.  draft-ietf-wimse-workload-creds-02
 
-   *  Clarify that infrastructure must support verifying HTTP target URI
-      against workload; document HTTP URI audience vs Workload
-      Identifier roles.
+   *  Separate general recipient/audience requirements from application-
+      layer audience (WPT, HTTP signatures); for transport/mTLS, rely on
+      HTTP rejecting misdirected requests (RFC 9110 Section 7.4) rather
+      than a separate audience claim.
 
 A.2.  draft-ietf-wimse-workload-creds-01
 
