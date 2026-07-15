@@ -160,11 +160,37 @@ if the server certificate is valid within a trust domain, not if it's tied to a 
 To enable mutual and granular authentication between workloads, two things must be in place:
 
 - Each workload must know its own identifier.
-- The infrastructure must make available to workloads some means to verify that an HTTP target URI ({{Section 7.1 of RFC9110}}), without query or fragment components, is intended for them.
+- Each workload must be able to verify that it is the intended recipient of a given request
+  (that is, that it is the intended audience for that request).
 
-Once these conditions are met, the methods described in this document can be used for the caller and callee to authenticate. Specifically, deployments should use this capability for consistent audience validation within their environment.
+Once these conditions are met, the methods described in this document can be used for the caller and callee to authenticate one another.
 
-Application-level proof-of-possession mechanisms in {{?I-D.ietf-wimse-wpt}} and {{?I-D.ietf-wimse-http-signature}} use the HTTP target URI ({{Section 7.1 of RFC9110}}) of the request, without query or fragment components, as audience. The Workload Identifier in a WIT or WIC identifies the sender; the audience identifies the intended recipient. The caller sets the audience to the HTTP target URI; the callee verifies that the audience is intended for it using infrastructure support as described above, including any deployment-specific aliases or normalization. For mutual TLS, the caller uses the same support when validating the server by workload identity rather than DNS hostname (see {{?I-D.ietf-wimse-mutual-tls}}).
+How that recipient check is expressed depends on whether authentication is performed at the application layer or at the transport layer.
+
+### Application-Layer Audience {#app-audience}
+
+Application-level proof-of-possession mechanisms in {{?I-D.ietf-wimse-wpt}} and {{?I-D.ietf-wimse-http-signature}}
+bind a request to an intended recipient using an audience value.
+The Workload Identifier in a WIT identifies the sender; the audience identifies the intended recipient.
+
+By default, the caller sets the audience to the HTTP target URI ({{Section 7.1 of RFC9110}}) of the request,
+without query or fragment components.
+Intermediaries may rewrite that URI in transit, so the callee MUST NOT rely solely on the request URI as
+observed on the wire to decide whether it is the intended recipient.
+Instead, the callee verifies that the audience value carried in the proof is intended for it.
+In some cases this might necessitate infrastructure support to account for deployment-specific aliases or normalization.
+Deployments SHOULD use this capability for consistent audience validation within their environment.
+
+### Transport-Layer Recipient Check {#transport-identity}
+
+At the transport layer there is no separate audience claim analogous to application-layer proof of possession.
+HTTP already requires that, once a server has reconstructed the request's target URI, it decide whether it is
+configured to process that request and whether the connection context is appropriate for it, and an origin server
+MUST reject requests that appear to have been misdirected ({{Section 7.4 of RFC9110}}).
+When connections are reused across origins — as HTTP/2 permits — a server that is not authoritative for a request
+indicates that by responding with 421 (Misdirected Request) ({{Section 9.1.1 of RFC9113}}).
+That check — together with ordinary TLS server authentication (including the rules in {{?I-D.ietf-wimse-mutual-tls}}) —
+is the recipient validation available when relying on mutual TLS alone.
 
 # Conventions and Definitions
 
@@ -551,7 +577,8 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 
 ## draft-ietf-wimse-workload-creds-02
 
-* Clarify that infrastructure must support verifying HTTP target URI against workload; document HTTP URI audience vs Workload Identifier roles.
+* Separate general recipient/audience requirements from application-layer audience (WPT, HTTP signatures);
+  for transport/mTLS, rely on HTTP rejecting misdirected requests (RFC 9110 Section 7.4) rather than a separate audience claim.
 
 ## draft-ietf-wimse-workload-creds-01
 
