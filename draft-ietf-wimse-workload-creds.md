@@ -59,6 +59,7 @@ informative:
   IANA.JOSE.ALGS: IANA.jose_web-signature-encryption-algorithms
   IANA.JWT.CLAIMS: IANA.jwt_claims
   IANA.MEDIA.TYPES: IANA.media-types
+  RFC9113:
   RFC9457:
 
 --- abstract
