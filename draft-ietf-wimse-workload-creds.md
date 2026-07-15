@@ -59,7 +59,6 @@ informative:
   IANA.JOSE.ALGS: IANA.jose_web-signature-encryption-algorithms
   IANA.JWT.CLAIMS: IANA.jwt_claims
   IANA.MEDIA.TYPES: IANA.media-types
-  RFC9113:
   RFC9457:
 
 --- abstract
@@ -189,7 +188,7 @@ HTTP already requires that, once a server has reconstructed the request's target
 configured to process that request and whether the connection context is appropriate for it, and an origin server
 MUST reject requests that appear to have been misdirected ({{Section 7.4 of RFC9110}}).
 When connections are reused across origins — as HTTP/2 permits — a server that is not authoritative for a request
-indicates that by responding with 421 (Misdirected Request) ({{Section 9.1.1 of RFC9113}}).
+indicates that by responding with 421 (Misdirected Request) ({{Section 9.1.1 of ?RFC9113}}).
 That check — together with ordinary TLS server authentication (including the rules in {{?I-D.ietf-wimse-mutual-tls}}) —
 is the recipient validation available when relying on mutual TLS alone.
 
