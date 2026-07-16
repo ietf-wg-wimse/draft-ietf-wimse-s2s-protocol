@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 16 January 2027                              Palo Alto Networks
+Expires: 17 January 2027                              Palo Alto Networks
                                                       A. Schwenkschuster
                                                         Defakto Security
                                                               Y. Sheffer
                                                                   Intuit
                                                             Y. Rosomakho
                                                                  Zscaler
-                                                            15 July 2026
+                                                            16 July 2026
 
 
                        WIMSE Workload Credentials
@@ -67,7 +67,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 16 January 2027.
+   This Internet-Draft will expire on 17 January 2027.
 
 Copyright Notice
 
@@ -779,10 +779,10 @@ Table of Contents
    identities in another domain.  See Section 3 for binding trust
    domains to issuers and trust anchors.
 
-   When a deployment uses the iss claim for key distribution as required
-   in Section 5.1.3, validators MUST enforce an allowlist of accepted
-   issuers.  Absent such a restriction, any entity could stand up an
-   issuer, present a WIT with that issuer's iss value, and have it
+   When a deployment uses the iss claim for key distribution as
+   described in Section 5.1.3, validators MUST enforce an allowlist of
+   accepted issuers.  Absent such a restriction, any entity could stand
+   up an issuer, present a WIT with that issuer's iss value, and have it
    accepted by a validator that fetches and trusts the corresponding key
    material without verifying the issuer's legitimacy.
 
