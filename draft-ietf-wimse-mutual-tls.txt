@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments                 j Salowey
 Internet-Draft                                        Palo Alto Networks
 Intended status: Standards Track                            Y. Rosomakho
-Expires: 7 January 2027                                          Zscaler
-                                                             6 July 2026
+Expires: 17 January 2027                                         Zscaler
+                                                            16 July 2026
 
 
                 Workload Authentication Using Mutual TLS
@@ -53,7 +53,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 7 January 2027.
+   This Internet-Draft will expire on 17 January 2027.
 
 Copyright Notice
 
@@ -344,9 +344,9 @@ Table of Contents
               Salowey, J. A., Rosomakho, Y., and H. Tschofenig,
               "Workload Identity in a Multi System Environment (WIMSE)
               Architecture", Work in Progress, Internet-Draft, draft-
-              ietf-wimse-arch-07, 2 March 2026,
+              ietf-wimse-arch-08, 6 July 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
-              arch-07>.
+              arch-08>.
 
 Appendix A.  Document History
 
