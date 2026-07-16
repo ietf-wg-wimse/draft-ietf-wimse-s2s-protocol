@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-07-07T02:57:32.388396+00:00",
+  "timestamp": "2026-07-16T02:28:38.179970+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -4227,7 +4227,7 @@
       "id": "I_kwDOLJmm788AAAABFHws4w",
       "title": "Response signing: wimse-aud gap and replay to a different client",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/240",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -4236,9 +4236,17 @@
       ],
       "body": "I think the lack of wimse-aud on the response is a real gap, in that responses can be replayed to a different client. Two ways to address it:\n\n* Bind to the request by including a `nonce-req` value in the response (copying the `nonce` from the request). This is somewhat hacky.\n* Include `wimse-aud` in the response, but that needs to be a WIMSE ID (the caller doesn't necessarily have a request URI) and for symmetry, we would need to change it to a WIMSE ID on the request too. This would change the mapping calculus again.",
       "createdAt": "2026-06-11T08:25:17Z",
-      "updatedAt": "2026-06-11T08:25:17Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2026-07-15T16:32:43Z",
+      "closedAt": "2026-07-15T16:32:43Z",
+      "comments": [
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Addressed by #253.",
+          "createdAt": "2026-07-15T16:32:43Z",
+          "updatedAt": "2026-07-15T16:32:43Z"
+        }
+      ]
     },
     {
       "number": 244,
@@ -4296,6 +4304,222 @@
           "updatedAt": "2026-07-01T11:07:03Z"
         }
       ]
+    },
+    {
+      "number": 255,
+      "id": "I_kwDOLJmm788AAAABIz0cBg",
+      "title": "Section 4 - Presence of additional identifiers in WITs",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/255",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "I agree that a credential should unambiguously identify the primary subject it was issued to, and the access decision keys off that one identity (sub for a WIT, single URI SAN for a WIC). \n\nI think that is in part why  the following sentence prohibit the inclusion of additional workload identifiers for correlation or any other purposes in a WIT.\n\n\"Additional correlation for logging or operations MUST NOT be encoded as a second workload identifier in the same WIT or WIC.\"\n\nHowever, the draft allows this for certificates. Section 6.1 requires the workload identifier in exactly one URI SAN, yet explicitly allows the certificate to carry other identifiers (DNSName SANs and \"SubjectAltName extensions of other types\"), stating that \"only the URI SAN above is the WIMSE workload identity.\" So a WIC can already carry multiple identifiers of different kinds while exactly one uniquely identifies the workload. The Section 4 prohibition for the WIT is inconsistent with Section 6.1.\n\nQuestion: Is the intent to preclude all additional identifiers, or only to guarantee that the primary subject is unambiguous? If the latter, is the MUST NOT really needed or should it be. relaxed so that additional identifiers MAY be included for purposes such as correlation, provided they are clearly distinguished from, and never usable in place of, the authoritative subject (e.g. the WIT could include other claims that contain identifiers, but only the sub claim is treated as the primary identifier)?\n",
+      "createdAt": "2026-07-14T19:01:07Z",
+      "updatedAt": "2026-07-14T19:08:23Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 256,
+      "id": "I_kwDOLJmm788AAAABIz0cnA",
+      "title": "Section 9.2 - inconsistency in use of WIT and MTLS.",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/256",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "The following sentence: \"The WIT and its PoP are only used in the application-layer options, and both are not used in MTLS.\" appears to contradict Section 9.2.5 (which allows binding the PoP to a TLS session's client identity or channel-binding parameters, i.e., mTLS) and Section 1 (\"This does not preclude the use of the WIT in transport-layer protocols...\"). Consider deleting it to be consistent.\n",
+      "createdAt": "2026-07-14T19:01:09Z",
+      "updatedAt": "2026-07-14T19:01:09Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 257,
+      "id": "I_kwDOLJmm788AAAABIz0dqA",
+      "title": "Section 5.1 / Figure 4 - the example uses an \"iat\" claim that the document never defines.",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/257",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "The example WIT (Figures 2 and 4) contains an iat claim, but iat is not listed or defined in the Section 5.1 normative claim list (iss, sub, exp, jti, cnf). The primary example uses a claim the specification does not mention. Either add iat to the claim definitions (it is conventional and underpins the \"refreshed regularly\" / lifetime language) or remove it from the example. My preference would be to add it as an OPTIONAL claim.\n",
+      "createdAt": "2026-07-14T19:01:10Z",
+      "updatedAt": "2026-07-14T19:01:10Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 258,
+      "id": "I_kwDOLJmm788AAAABIz0eNg",
+      "title": "Section 11.1.1 - broken cross-reference markup.",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/258",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "In the Media Type registration, \"Encoding considerations... See [RFC7519].\" uses markdown-link reference syntax instead of the kramdown-rfc {{RFC7519}} used everywhere else, so it will not render as a proper cross-reference. Consider changing to {{RFC7519}}.\n",
+      "createdAt": "2026-07-14T19:01:11Z",
+      "updatedAt": "2026-07-14T19:01:11Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 259,
+      "id": "I_kwDOLJmm788AAAABIz0eyg",
+      "title": "Section 1 -- proof-of-possession sentence.",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/259",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "Consider adding a sentence to the following paragraph to make it clear that authentication is done through a proof of possession mechanism:\n\nThe various protocol bindings that use these credentials to authenticate workloads to each other are specified in separate documents and are out of scope for this document. At the time of writing, three such protocol bindings are defined:\n\nFor example:\n\nThe various protocol bindings that use these credentials to authenticate workloads to each other are specified in separate documents and are out of scope for this document. Each such binding defines how a workload proves possession of the key material bound to its credential in order to authenticate to another workload. At the time of writing, three such protocol bindings are defined:\n",
+      "createdAt": "2026-07-14T19:01:13Z",
+      "updatedAt": "2026-07-14T19:01:13Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 260,
+      "id": "I_kwDOLJmm788AAAABIz0flA",
+      "title": "Section 1.2 - \"regular one\"",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/260",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "The term \"regular one\" coule be more precise. Consider replacing:\n\n\"5. Workload B returns a response to Workload A, which may be an error response or a regular one.\"\n\nWith:\n\n\"5. Workload B returns a response to Workload A, which may be either a success or an error response.\"\n",
+      "createdAt": "2026-07-14T19:01:14Z",
+      "updatedAt": "2026-07-14T19:01:14Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 261,
+      "id": "I_kwDOLJmm788AAAABIz0gEQ",
+      "title": "Section 1.3 - \"fully granular authentication\" is vague, and three synonyms are used for one concept.",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/261",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "The opening paragraph never pins down what granularity is meant. Consider alternate text such as:\n\n\"Prior to WIMSE, many containerized runtime platforms could not authenticate a peer as a specific workload, they could only establish that the peer belonged to a given trust domain. With mutual TLS, for example, there is often no reliable way to map the external access name a client uses to reach a workload (such as a Kubernetes Ingress path, service name, or Host header) to the SubjectAltName in the presented certificate. As a result, the client can verify that the server certificate is valid within a trust domain, but not that it belongs to the particular workload the client intended to reach.\"\n\nSeparately, Section 1.3 uses three undefined synonyms for the same concept: \"external access reference\", \"external handle\", and \"access path\". Consider using a a single term (e.g. \"external access name\" or \"external access reference\").\n",
+      "createdAt": "2026-07-14T19:01:16Z",
+      "updatedAt": "2026-07-14T19:01:16Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 262,
+      "id": "I_kwDOLJmm788AAAABIz0glg",
+      "title": "Section 3 - iss claim: missing antecedent and unclear scope.",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/262",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "The sentence \"the iss claim MUST NOT be used to look up trust anchor material...\" appears in Section 3, but iss is not introduced/defined until Section 5.1 (forward reference). Consider adding a forward reference (e.g. \"as defined in Section 5.1\").\n\nIn addition, Section 3 covers both the WIT and the WIC, yet only the WIT has an iss claim (the WIC has an X.509 Issuer field, which is different from the iss). Consider scoping the sentence to the WIT and identify the claim on first use. For example:\n\n\"For a WIT the iss claim (the JWT issuer claim [RFC7519], defined in Section 5.1) MUST NOT be used to look up trust anchor material directly from information carried only in the token (such as by fetching a JWKS from a URL found only in the WIT).\"\n",
+      "createdAt": "2026-07-14T19:01:17Z",
+      "updatedAt": "2026-07-14T19:01:17Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 263,
+      "id": "I_kwDOLJmm788AAAABIz0hIg",
+      "title": "Section 9.2 - \"as described in Section 5.1\".",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/263",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "Consider changing \"\u2026 as described in Section 5.1\" to \"... as required in Section 5.1\".\n",
+      "createdAt": "2026-07-14T19:01:18Z",
+      "updatedAt": "2026-07-14T19:01:18Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 264,
+      "id": "I_kwDOLJmm788AAAABIz0hyg",
+      "title": "Section 5.1 / Figure 4 -- the primary example omits the RECOMMENDED iss claim.",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/264",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "Consider either including it in the primary example or adding a one-line note that the omission is deliberate.\n",
+      "createdAt": "2026-07-14T19:01:20Z",
+      "updatedAt": "2026-07-14T19:01:20Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 265,
+      "id": "I_kwDOLJmm788AAAABIz0iVw",
+      "title": "Editorial consistency",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/265",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "Some inconcsistency in terminology that the editors might consider cleaning up:\n\n- \"specification\" vs \"document\": pick one.\n- Casing: \"MTLS\" (Section 9.2) vs \"mutual TLS\" (Section 1.3) vs \"mTLS\" (history). Standardize (suggest \"mutual TLS\" on first use, \"mTLS\" thereafter). \"POP\" (Section 9.2.5) vs \"PoP\" elsewhere: use \"PoP\".\n- \"middle box\" (Section 9.5) vs \"middlebox\"/\"intermediary\": standardize.\n- \"e.g.\" without a following comma (Section 5.1) vs \"e.g.,\" / \"for example\" elsewhere: pick one style.\n- Quoting of schemes/media types: wimse (backtick) vs \"spiffe\" (quotes); wit+jwt (backtick) vs \"application/jwt\" (quotes) vs bare application/wit+jwt. Apply one convention (quotes are nice as they survive formatting/post processing)\n- \"Sec. 4.3\" / \"Sec. 4\" (Section 5.1.2) vs \"Section\" spelled out elsewhere.\n- \"http auth mechanisms\" (Section 5.2): Should HTTP be capitalised and auth expanded to authenticate for clarity?\n- \"proof of possession based WITs\" (Section 5.3): consider \"proof-of-possession-based\".\n- \"host header\" (Section 1.3): Did you mean the HTTP Host header field here\n- Contractions (\"there's\", \"it's\") inconsistently used.\n",
+      "createdAt": "2026-07-14T19:01:21Z",
+      "updatedAt": "2026-07-14T19:01:21Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 266,
+      "id": "I_kwDOLJmm788AAAABIz0i5w",
+      "title": "Markup nits (kramdown source).",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/266",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "- Section 5.1: cnf and jwk appear without backticks in two places (\"Within the cnf claim...\", \"Within the jwk object...\") though backticked elsewhere. Consider aligning with one convention throughout.\n- ABNF block: opening fence \"~~~\" but closing fence \"~~~~\" (mismatched length).\n- Implementation Status: no blank line after `</cref>`, so the RFC-Editor note merges into the following paragraph (renders as a malformed \"//\" comment block in the .txt).\n",
+      "createdAt": "2026-07-14T19:01:22Z",
+      "updatedAt": "2026-07-14T19:01:22Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -17679,13 +17903,13 @@
       "labels": [],
       "body": "- **workload-creds (#173, #175):** Replace the mandatory access-path-to-identifier mapping API with infrastructure support for verifying that an HTTP target URI (RFC 9110 Section 7.1, without query or fragment) is intended for a workload. Document the roles of HTTP target URI (audience) vs Workload Identifier (sender) for WPT, HTTP signatures, and mTLS.\r\n- **WPT (#175):** Tie `aud` to \"Workload Identifiers and Authentication Granularity\" in workload-creds; otherwise unchanged from main.\r\n- **HTTP signatures (#175, #240):** Keep `wimse-aud` as on main (request-only, HTTP target URI). When response signing is enabled, require `wimse-req-nonce` (copy of the request `nonce`) to bind the signed response to the triggering request; register with IANA.\r\n\r\nCloses #173, #175. Addresses #240.",
       "createdAt": "2026-06-19T10:29:32Z",
-      "updatedAt": "2026-06-30T05:27:40Z",
+      "updatedAt": "2026-07-15T16:23:13Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "4e44e792f031cff205913be2f806207e3fcb999c",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-175",
-      "headRefOid": "1d7bcd00f829f0fb02fde56cf6c565162463ea12",
+      "headRefOid": "03c70b74688364bbf46708e8de1ab65d75bc8a9f",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -17781,6 +18005,26 @@
               "body": "I think this text could be OK if it is called out as specific to WIT and the TLS text is in a separate paragraph/subsection. ",
               "createdAt": "2026-06-30T05:27:34Z",
               "updatedAt": "2026-06-30T05:27:40Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABGHj1QQ",
+          "commit": {
+            "abbreviatedOid": "1d7bcd0"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-15T15:20:20Z",
+          "updatedAt": "2026-07-15T15:20:21Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "The intent here is for the callee to validate that a request is intended for it, in other words that it is the intended audience.\n\n@yaroslavros although the caller (usually) sets the `aud` to the Request URI, this value might be modified in transit by proxies. So we cannot assume it is seen by the recipient.\n\n@jsalowey this is not about validating the credential but rather about ensuring that it's targeted at this particular recipient.",
+              "createdAt": "2026-07-15T15:20:20Z",
+              "updatedAt": "2026-07-15T15:20:21Z"
             }
           ]
         }
@@ -18287,6 +18531,46 @@
           "body": "",
           "createdAt": "2026-07-05T23:18:58Z",
           "updatedAt": "2026-07-05T23:18:58Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 267,
+      "id": "PR_kwDOLJmm787yIb3V",
+      "title": "Editorial fixes for workload-creds (#258\u2013#266)",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/267",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "## Summary\nEditorial-only updates to `draft-ietf-wimse-workload-creds` based on Pieter's recent issues (keeps backticks for media types/schemes).\n\nFixes #258\nFixes #259\nFixes #260\nFixes #261\nFixes #262\nFixes #263\nFixes #264\nFixes #265\nFixes #266\n\nOut of scope (not editorial / deferred): #255, #256, #257.",
+      "createdAt": "2026-07-15T16:59:11Z",
+      "updatedAt": "2026-07-15T19:30:30Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "e999d91cab91b0f540ae14235950309c647eef56",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-258",
+      "headRefOid": "cbd5884f9a90de34bf4c70403bbf75afc2a37e62",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABGJamVA",
+          "commit": {
+            "abbreviatedOid": "cbd5884"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-07-15T19:30:30Z",
+          "updatedAt": "2026-07-15T19:30:30Z",
           "comments": []
         }
       ]
