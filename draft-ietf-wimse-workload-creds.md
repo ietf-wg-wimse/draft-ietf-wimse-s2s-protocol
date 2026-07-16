@@ -336,7 +336,9 @@ This, however, could result in interoperability issues, which the following rule
 
 ### A note on `iss` claim and key distribution {#wit-iss-note}
 
-It is RECOMMENDED that the WIT carries an `iss` claim, including for the auditing and operational uses described above. Validators are not required to use `iss` when validating the WIT or establishing the workload identity: the trust domain and workload identity are carried in the mandatory `sub` claim ({{WIMSE-ID}}). Implementations MAY include the `iss` claim in the form of a `https` URL to facilitate key distribution via mechanisms like the `jwks_uri` from {{!RFC8414}}, only when the issuer and verification keys (or metadata such as `jwks_uri`) are configured out of band as in {{trust-anchors}}. Alternative key distribution methods may use only the trust domain from the `sub` claim.
+It is RECOMMENDED that the WIT carries an `iss` claim for the auditing and operational uses described above. Validators are not required to use `iss` when validating the WIT or establishing the workload identity: the trust domain and workload identity are carried in the mandatory `sub` claim ({{WIMSE-ID}}).
+
+Implementations MAY include the `iss` claim in the form of a `https` URL to facilitate key distribution via mechanisms like the `jwks_uri` from {{!RFC8414}}, only when the issuer and verification keys (or metadata such as `jwks_uri`) are configured out of band as in {{trust-anchors}}. Alternative key distribution methods may use only the trust domain from the `sub` claim.
 
 ## Error Conditions
 
