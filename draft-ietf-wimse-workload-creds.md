@@ -428,7 +428,7 @@ Teleport - Machine & Workload Identity
 
 Workload Identifiers ({{WIMSE-ID}}) are scoped to a trust domain (the URI authority component) and MUST be interpreted in that trust domain context. Using a Workload Identifier without taking into account the trust domain could allow one domain to issue tokens to spoof identities in another domain. See {{trust-anchors}} for binding trust domains to issuers and trust anchors.
 
-When a deployment uses the `iss` claim for key distribution as required in {{wit-iss-note}}, validators MUST enforce an allowlist of accepted issuers. Absent such a restriction, any entity could stand up an issuer, present a WIT with that issuer's `iss` value, and have it accepted by a validator that fetches and trusts the corresponding key material without verifying the issuer's legitimacy.
+When a deployment uses the `iss` claim for key distribution as described in {{wit-iss-note}}, validators MUST enforce an allowlist of accepted issuers. Absent such a restriction, any entity could stand up an issuer, present a WIT with that issuer's `iss` value, and have it accepted by a validator that fetches and trusts the corresponding key material without verifying the issuer's legitimacy.
 
 ## Workload Identity Token and Proof of Possession {#wit-pop}
 
