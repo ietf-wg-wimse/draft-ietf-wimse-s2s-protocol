@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-07-16T02:28:38.179970+00:00",
+  "timestamp": "2026-07-19T02:34:32.176011+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -4355,16 +4355,31 @@
       ],
       "body": "The example WIT (Figures 2 and 4) contains an iat claim, but iat is not listed or defined in the Section 5.1 normative claim list (iss, sub, exp, jti, cnf). The primary example uses a claim the specification does not mention. Either add iat to the claim definitions (it is conventional and underpins the \"refreshed regularly\" / lifetime language) or remove it from the example. My preference would be to add it as an OPTIONAL claim.\n",
       "createdAt": "2026-07-14T19:01:10Z",
-      "updatedAt": "2026-07-14T19:01:10Z",
+      "updatedAt": "2026-07-16T20:35:58Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "n2ctech",
+          "authorAssociation": "NONE",
+          "body": "One consideration for RECOMMENDED rather than OPTIONAL: with iat present, a validator can cap effective lifetime via exp minus iat, and an auditor can place a token before or after a key rotation. An optional claim gives neither reliably. Removing iat from the examples also works. The current state, where the flagship examples carry a claim the spec never defines, is the worst of both.\n\n(Also raised as item 5 in my WGLC review: https://mailarchive.ietf.org/arch/msg/wimse/S5Zjmr4qneFsAmepgRWhkWtFdPA/)\n",
+          "createdAt": "2026-07-16T11:23:26Z",
+          "updatedAt": "2026-07-16T11:23:26Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "FWIW Section 5.1 has \"WIT MUST contain the following content, except where noted:\" and JWTs allow for other claims unless explicitly prohibited by an application or profile.  So pedantically, this isn't a problem. That said, it might be worthwhile to add mention or guidance of such in general and/or specifically for `iat`. ",
+          "createdAt": "2026-07-16T20:35:58Z",
+          "updatedAt": "2026-07-16T20:35:58Z"
+        }
+      ]
     },
     {
       "number": 258,
       "id": "I_kwDOLJmm788AAAABIz0eNg",
       "title": "Section 11.1.1 - broken cross-reference markup.",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/258",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "NONE",
       "assignees": [],
@@ -4373,8 +4388,8 @@
       ],
       "body": "In the Media Type registration, \"Encoding considerations... See [RFC7519].\" uses markdown-link reference syntax instead of the kramdown-rfc {{RFC7519}} used everywhere else, so it will not render as a proper cross-reference. Consider changing to {{RFC7519}}.\n",
       "createdAt": "2026-07-14T19:01:11Z",
-      "updatedAt": "2026-07-14T19:01:11Z",
-      "closedAt": null,
+      "updatedAt": "2026-07-16T09:21:21Z",
+      "closedAt": "2026-07-16T09:21:21Z",
       "comments": []
     },
     {
@@ -4382,7 +4397,7 @@
       "id": "I_kwDOLJmm788AAAABIz0eyg",
       "title": "Section 1 -- proof-of-possession sentence.",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/259",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "NONE",
       "assignees": [],
@@ -4391,8 +4406,8 @@
       ],
       "body": "Consider adding a sentence to the following paragraph to make it clear that authentication is done through a proof of possession mechanism:\n\nThe various protocol bindings that use these credentials to authenticate workloads to each other are specified in separate documents and are out of scope for this document. At the time of writing, three such protocol bindings are defined:\n\nFor example:\n\nThe various protocol bindings that use these credentials to authenticate workloads to each other are specified in separate documents and are out of scope for this document. Each such binding defines how a workload proves possession of the key material bound to its credential in order to authenticate to another workload. At the time of writing, three such protocol bindings are defined:\n",
       "createdAt": "2026-07-14T19:01:13Z",
-      "updatedAt": "2026-07-14T19:01:13Z",
-      "closedAt": null,
+      "updatedAt": "2026-07-16T09:21:21Z",
+      "closedAt": "2026-07-16T09:21:21Z",
       "comments": []
     },
     {
@@ -4400,7 +4415,7 @@
       "id": "I_kwDOLJmm788AAAABIz0flA",
       "title": "Section 1.2 - \"regular one\"",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/260",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "NONE",
       "assignees": [],
@@ -4409,8 +4424,8 @@
       ],
       "body": "The term \"regular one\" coule be more precise. Consider replacing:\n\n\"5. Workload B returns a response to Workload A, which may be an error response or a regular one.\"\n\nWith:\n\n\"5. Workload B returns a response to Workload A, which may be either a success or an error response.\"\n",
       "createdAt": "2026-07-14T19:01:14Z",
-      "updatedAt": "2026-07-14T19:01:14Z",
-      "closedAt": null,
+      "updatedAt": "2026-07-16T09:21:22Z",
+      "closedAt": "2026-07-16T09:21:22Z",
       "comments": []
     },
     {
@@ -4418,7 +4433,7 @@
       "id": "I_kwDOLJmm788AAAABIz0gEQ",
       "title": "Section 1.3 - \"fully granular authentication\" is vague, and three synonyms are used for one concept.",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/261",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "NONE",
       "assignees": [],
@@ -4427,8 +4442,8 @@
       ],
       "body": "The opening paragraph never pins down what granularity is meant. Consider alternate text such as:\n\n\"Prior to WIMSE, many containerized runtime platforms could not authenticate a peer as a specific workload, they could only establish that the peer belonged to a given trust domain. With mutual TLS, for example, there is often no reliable way to map the external access name a client uses to reach a workload (such as a Kubernetes Ingress path, service name, or Host header) to the SubjectAltName in the presented certificate. As a result, the client can verify that the server certificate is valid within a trust domain, but not that it belongs to the particular workload the client intended to reach.\"\n\nSeparately, Section 1.3 uses three undefined synonyms for the same concept: \"external access reference\", \"external handle\", and \"access path\". Consider using a a single term (e.g. \"external access name\" or \"external access reference\").\n",
       "createdAt": "2026-07-14T19:01:16Z",
-      "updatedAt": "2026-07-14T19:01:16Z",
-      "closedAt": null,
+      "updatedAt": "2026-07-16T09:21:22Z",
+      "closedAt": "2026-07-16T09:21:22Z",
       "comments": []
     },
     {
@@ -4436,7 +4451,7 @@
       "id": "I_kwDOLJmm788AAAABIz0glg",
       "title": "Section 3 - iss claim: missing antecedent and unclear scope.",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/262",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "NONE",
       "assignees": [],
@@ -4445,8 +4460,8 @@
       ],
       "body": "The sentence \"the iss claim MUST NOT be used to look up trust anchor material...\" appears in Section 3, but iss is not introduced/defined until Section 5.1 (forward reference). Consider adding a forward reference (e.g. \"as defined in Section 5.1\").\n\nIn addition, Section 3 covers both the WIT and the WIC, yet only the WIT has an iss claim (the WIC has an X.509 Issuer field, which is different from the iss). Consider scoping the sentence to the WIT and identify the claim on first use. For example:\n\n\"For a WIT the iss claim (the JWT issuer claim [RFC7519], defined in Section 5.1) MUST NOT be used to look up trust anchor material directly from information carried only in the token (such as by fetching a JWKS from a URL found only in the WIT).\"\n",
       "createdAt": "2026-07-14T19:01:17Z",
-      "updatedAt": "2026-07-14T19:01:17Z",
-      "closedAt": null,
+      "updatedAt": "2026-07-16T09:21:22Z",
+      "closedAt": "2026-07-16T09:21:22Z",
       "comments": []
     },
     {
@@ -4454,7 +4469,7 @@
       "id": "I_kwDOLJmm788AAAABIz0hIg",
       "title": "Section 9.2 - \"as described in Section 5.1\".",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/263",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "NONE",
       "assignees": [],
@@ -4463,8 +4478,8 @@
       ],
       "body": "Consider changing \"\u2026 as described in Section 5.1\" to \"... as required in Section 5.1\".\n",
       "createdAt": "2026-07-14T19:01:18Z",
-      "updatedAt": "2026-07-14T19:01:18Z",
-      "closedAt": null,
+      "updatedAt": "2026-07-16T09:21:23Z",
+      "closedAt": "2026-07-16T09:21:23Z",
       "comments": []
     },
     {
@@ -4472,7 +4487,7 @@
       "id": "I_kwDOLJmm788AAAABIz0hyg",
       "title": "Section 5.1 / Figure 4 -- the primary example omits the RECOMMENDED iss claim.",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/264",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "NONE",
       "assignees": [],
@@ -4481,8 +4496,8 @@
       ],
       "body": "Consider either including it in the primary example or adding a one-line note that the omission is deliberate.\n",
       "createdAt": "2026-07-14T19:01:20Z",
-      "updatedAt": "2026-07-14T19:01:20Z",
-      "closedAt": null,
+      "updatedAt": "2026-07-16T09:21:23Z",
+      "closedAt": "2026-07-16T09:21:23Z",
       "comments": []
     },
     {
@@ -4490,7 +4505,7 @@
       "id": "I_kwDOLJmm788AAAABIz0iVw",
       "title": "Editorial consistency",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/265",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "NONE",
       "assignees": [],
@@ -4499,8 +4514,8 @@
       ],
       "body": "Some inconcsistency in terminology that the editors might consider cleaning up:\n\n- \"specification\" vs \"document\": pick one.\n- Casing: \"MTLS\" (Section 9.2) vs \"mutual TLS\" (Section 1.3) vs \"mTLS\" (history). Standardize (suggest \"mutual TLS\" on first use, \"mTLS\" thereafter). \"POP\" (Section 9.2.5) vs \"PoP\" elsewhere: use \"PoP\".\n- \"middle box\" (Section 9.5) vs \"middlebox\"/\"intermediary\": standardize.\n- \"e.g.\" without a following comma (Section 5.1) vs \"e.g.,\" / \"for example\" elsewhere: pick one style.\n- Quoting of schemes/media types: wimse (backtick) vs \"spiffe\" (quotes); wit+jwt (backtick) vs \"application/jwt\" (quotes) vs bare application/wit+jwt. Apply one convention (quotes are nice as they survive formatting/post processing)\n- \"Sec. 4.3\" / \"Sec. 4\" (Section 5.1.2) vs \"Section\" spelled out elsewhere.\n- \"http auth mechanisms\" (Section 5.2): Should HTTP be capitalised and auth expanded to authenticate for clarity?\n- \"proof of possession based WITs\" (Section 5.3): consider \"proof-of-possession-based\".\n- \"host header\" (Section 1.3): Did you mean the HTTP Host header field here\n- Contractions (\"there's\", \"it's\") inconsistently used.\n",
       "createdAt": "2026-07-14T19:01:21Z",
-      "updatedAt": "2026-07-14T19:01:21Z",
-      "closedAt": null,
+      "updatedAt": "2026-07-16T09:21:23Z",
+      "closedAt": "2026-07-16T09:21:23Z",
       "comments": []
     },
     {
@@ -4508,7 +4523,7 @@
       "id": "I_kwDOLJmm788AAAABIz0i5w",
       "title": "Markup nits (kramdown source).",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/266",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "NONE",
       "assignees": [],
@@ -4517,9 +4532,173 @@
       ],
       "body": "- Section 5.1: cnf and jwk appear without backticks in two places (\"Within the cnf claim...\", \"Within the jwk object...\") though backticked elsewhere. Consider aligning with one convention throughout.\n- ABNF block: opening fence \"~~~\" but closing fence \"~~~~\" (mismatched length).\n- Implementation Status: no blank line after `</cref>`, so the RFC-Editor note merges into the following paragraph (renders as a malformed \"//\" comment block in the .txt).\n",
       "createdAt": "2026-07-14T19:01:22Z",
-      "updatedAt": "2026-07-14T19:01:22Z",
+      "updatedAt": "2026-07-16T09:21:24Z",
+      "closedAt": "2026-07-16T09:21:24Z",
+      "comments": []
+    },
+    {
+      "number": 268,
+      "id": "I_kwDOLJmm788AAAABJCbVOA",
+      "title": "Section 9.2 / 9.4: deprovisioning before expiry is not covered",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/268",
+      "state": "OPEN",
+      "author": "n2ctech",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "Section 9 models credential compromise but skips the routine case: a workload is deprovisioned, or flagged as compromised, while its WIT or WIC is still valid. Without a revocation mechanism the only issuer-side control is to stop issuing, so the exposure window equals the remaining credential lifetime. Section 9.2.1 treats lifetime only as a refresh-cost tradeoff. Nothing warns against reassigning a Workload Identifier while the old instance's credentials are still valid. And Section 9.4 forbids using keys once the credential is expired but says nothing about destroying key material at decommissioning. Keys outlive workloads in images, snapshots, and CI caches.\n\nSuggested fix: an end-of-life clause in 9.2 (stop issuing; treat max credential lifetime as the minimum post-deprovisioning exposure window; do not recycle identifiers within that window), plus one addition to 9.4: \"Private key material MUST be destroyed when the workload instance is decommissioned.\"\n\nRaised as item 1 in my WGLC review: https://mailarchive.ietf.org/arch/msg/wimse/S5Zjmr4qneFsAmepgRWhkWtFdPA/\n",
+      "createdAt": "2026-07-16T11:23:22Z",
+      "updatedAt": "2026-07-16T18:23:04Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 269,
+      "id": "I_kwDOLJmm788AAAABJCbVlw",
+      "title": "Section 5.1 vs 9.2.1: jti revocation contradiction",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/269",
+      "state": "OPEN",
+      "author": "n2ctech",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "Section 5.1 says the jti claim is useful \"to revoke\" WITs. Section 9.2.1 says WITs \"are not generally revocable on demand\". A validator implementer cannot tell whether jti deny-listing is a supported capability. jti is also OPTIONAL, so a deny list fails open for tokens issued without it. The 5.1 wording looks like a leftover from before #97 made jti optional.\n\nSuggested fix: either drop \"or to revoke them\" from 5.1, or require that deployments supporting per-WIT revocation include jti in every issued token, with a cross-reference from 9.2.1.\n\nRaised as item 2 in my WGLC review: https://mailarchive.ietf.org/arch/msg/wimse/S5Zjmr4qneFsAmepgRWhkWtFdPA/\n",
+      "createdAt": "2026-07-16T11:23:23Z",
+      "updatedAt": "2026-07-16T18:23:05Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 270,
+      "id": "I_kwDOLJmm788AAAABJCbV-Q",
+      "title": "Section 9.3.1: no stated revocation stance for WICs",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/270",
+      "state": "OPEN",
+      "author": "n2ctech",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "Section 9.2.1 is explicit for WITs: short lifetimes, no general revocation. The certificate side is silent. CRLs and OCSP are absent from the document, and mutual-tls only says \"Other PKIX path validation rules apply\" without saying whether revocation checking is among them. As a relying party I cannot tell whether to fail closed when revocation status is unavailable, or whether WICs should carry CRL Distribution Points at all.\n\nSuggested fix: a paragraph in 9.3.1 explicitly stating the revocation stance, parallel to 9.2.1.\n\nRaised as item 3 in my WGLC review: https://mailarchive.ietf.org/arch/msg/wimse/S5Zjmr4qneFsAmepgRWhkWtFdPA/\n",
+      "createdAt": "2026-07-16T11:23:24Z",
+      "updatedAt": "2026-07-16T18:23:06Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 271,
+      "id": "I_kwDOLJmm788AAAABJCbWdQ",
+      "title": "Sections 7 / 9.2 / 10: WIT and PoP header values end up in logs",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/271",
+      "state": "OPEN",
+      "author": "n2ctech",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-wpt",
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "Section 7 rightly suggests including the workload identifier in log messages. But the WIT and its proof of possession ride in HTTP header fields, and gateways, TLS-terminating proxies, and APM agents dump those headers into logs by default. A logged WIT plus a logged PoP is replayable within the validity window defined in 9.2.2. Section 10 lists logs as an exposure surface for WICs but not WITs, which is backwards: WITs hit header logging at every network hop.\n\nSuggested fix: a note in 9.2 advising implementers to record claims (sub, exp, iss, jti) rather than raw header values, and a matching update to Section 10.\n\nRaised as item 4 in my WGLC review: https://mailarchive.ietf.org/arch/msg/wimse/S5Zjmr4qneFsAmepgRWhkWtFdPA/\n",
+      "createdAt": "2026-07-16T11:23:25Z",
+      "updatedAt": "2026-07-17T12:09:32Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Interestingly @arndt-s recently floated the idea (more or less) of conveying the WPT and WIT together in the Authorization header with a new aauth-scheme, which might help with default logging of headers. Something like:\n\n`Authorization: wimse <WIT>/<WPT>`",
+          "createdAt": "2026-07-16T21:15:29Z",
+          "updatedAt": "2026-07-16T21:15:29Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I don't believe this particular risk applies to HTTP Signatures, because a signature is bound to the complete context of the request (or response) and so there's little value in stealing it from the logs.",
+          "createdAt": "2026-07-17T11:20:29Z",
+          "updatedAt": "2026-07-17T11:20:29Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> I don't believe this particular risk applies to HTTP Signatures, because a signature is bound to the complete context of the request (or response) and so there's little value in stealing it from the logs.\n\nTo the extent this is a real risk though, it does apply to e.g. GET where enough of that context is in the headers. ",
+          "createdAt": "2026-07-17T12:03:58Z",
+          "updatedAt": "2026-07-17T12:03:58Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> > I don't believe this particular risk applies to HTTP Signatures, because a signature is bound to the complete context of the request (or response) and so there's little value in stealing it from the logs.\n> \n> To the extent this is a real risk though, it does apply to e.g. GET where enough of that context is in the headers.\n\nMy point is, unlike for WPT, the attacker would only be able to replay the exact request. Which makes the risk much lower.",
+          "createdAt": "2026-07-17T12:09:32Z",
+          "updatedAt": "2026-07-17T12:09:32Z"
+        }
+      ]
+    },
+    {
+      "number": 272,
+      "id": "I_kwDOLJmm788AAAABJGPUnQ",
+      "title": "followup on Editorial fixes for workload-creds #267",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/272",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "FWIW I tend to agree with Arndt here. \r\n\r\nThe first sentence \"Prior to WIMSE, many containerized runtime platforms could not authenticate a peer as a specific workload\" did seem rather strong but \"many\" was enough of a qualifier to make me unsure and not push back on it.\r\n\r\nI don't think I understand the other part either but it seemed to be text that was mostly their already so didn't seem like a good place to question it.\r\n\r\n_Originally posted by @bc-pi in https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/267#discussion_r3595285661_\r\n            ",
+      "createdAt": "2026-07-16T19:52:56Z",
+      "updatedAt": "2026-07-16T19:53:03Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 273,
+      "id": "I_kwDOLJmm788AAAABJGbsAQ",
+      "title": "WIT/WIC WGLC placeholder",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/273",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "there's a variety of feedback and commentary in the [WGLC for WIMSE Workload Credentials thread ](https://mailarchive.ietf.org/arch/msg/wimse/5kFRCsvSmgjSdlaClnAgQDCm0J8/) some of which shouldn't get lost. This is just a placeholder issue to hopefully help towards that end. ",
+      "createdAt": "2026-07-16T20:20:48Z",
+      "updatedAt": "2026-07-16T20:52:48Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 274,
+      "id": "I_kwDOLJmm788AAAABJO-S_g",
+      "title": "Clarification on `nonce` field Workload-to-Workload Authentication with HTTP Signatures",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/274",
+      "state": "OPEN",
+      "author": "xtrycatchx",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-http-signature"
+      ],
+      "body": "Hi Authors,\n\nI was reading Section [3.2](https://www.ietf.org/archive/id/draft-ietf-wimse-http-signature-04.html#name-the-wimse-req-nonce-signatu) on the Workload-to-Workload Authentication with HTTP Signatures draft, specifically concerning the `wimse-req-nonce` header.\n\nThe draft states:\n```\nThe server MUST set wimse-req-nonce to the value of the nonce signature parameter \nfrom the Signature-Input of the request that triggered the response.\n```\nHowever, I noticed that the provided sample files ([includes/sigs-response.txt](https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/blob/main/includes/sigs-response.txt) and [includes/sigs-request.txt.out](https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/blob/main/includes/sigs-response.txt.out)) do not appear to utilize/use the `wimse-req-nonce` header in any of these examples.\n\nCould you please clarify if this is a typo, or if my understanding of where the `wimse-req-nonce` must be present in the samples is incorrect?\n\nThank you for your time!",
+      "createdAt": "2026-07-17T20:41:09Z",
+      "updatedAt": "2026-07-18T06:58:05Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Good question. The examples are simply lagging behind the text (noted in the Document History section). Sorry for the confusion.",
+          "createdAt": "2026-07-18T06:58:05Z",
+          "updatedAt": "2026-07-18T06:58:05Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -17900,10 +18079,14 @@
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-http-signature",
+        "draft-ietf-wimse-wpt",
+        "draft-ietf-wimse-workload-creds"
+      ],
       "body": "- **workload-creds (#173, #175):** Replace the mandatory access-path-to-identifier mapping API with infrastructure support for verifying that an HTTP target URI (RFC 9110 Section 7.1, without query or fragment) is intended for a workload. Document the roles of HTTP target URI (audience) vs Workload Identifier (sender) for WPT, HTTP signatures, and mTLS.\r\n- **WPT (#175):** Tie `aud` to \"Workload Identifiers and Authentication Granularity\" in workload-creds; otherwise unchanged from main.\r\n- **HTTP signatures (#175, #240):** Keep `wimse-aud` as on main (request-only, HTTP target URI). When response signing is enabled, require `wimse-req-nonce` (copy of the request `nonce`) to bind the signed response to the triggering request; register with IANA.\r\n\r\nCloses #173, #175. Addresses #240.",
       "createdAt": "2026-06-19T10:29:32Z",
-      "updatedAt": "2026-07-15T16:23:13Z",
+      "updatedAt": "2026-07-16T18:22:02Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "4e44e792f031cff205913be2f806207e3fcb999c",
@@ -18540,24 +18723,28 @@
       "id": "PR_kwDOLJmm787yIb3V",
       "title": "Editorial fixes for workload-creds (#258\u2013#266)",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/267",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
       "body": "## Summary\nEditorial-only updates to `draft-ietf-wimse-workload-creds` based on Pieter's recent issues (keeps backticks for media types/schemes).\n\nFixes #258\nFixes #259\nFixes #260\nFixes #261\nFixes #262\nFixes #263\nFixes #264\nFixes #265\nFixes #266\n\nOut of scope (not editorial / deferred): #255, #256, #257.",
       "createdAt": "2026-07-15T16:59:11Z",
-      "updatedAt": "2026-07-15T19:30:30Z",
+      "updatedAt": "2026-07-16T19:54:09Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "e999d91cab91b0f540ae14235950309c647eef56",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-258",
-      "headRefOid": "cbd5884f9a90de34bf4c70403bbf75afc2a37e62",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "8c24f21b994cd843bb53434cc5084bdb60efff42",
+      "closedAt": "2026-07-16T09:21:20Z",
+      "mergedAt": "2026-07-16T09:21:20Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "c1ca35def005abd924d5df15ab949a2f87df263b"
+      },
       "comments": [],
       "reviews": [
         {
@@ -18572,8 +18759,266 @@
           "createdAt": "2026-07-15T19:30:30Z",
           "updatedAt": "2026-07-15T19:30:30Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABGM-zFg",
+          "commit": {
+            "abbreviatedOid": "cbd5884"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-16T06:58:32Z",
+          "updatedAt": "2026-07-16T07:04:38Z",
+          "comments": [
+            {
+              "originalPosition": 28,
+              "body": "I think that's a bit strong. Do you have a runtime platform in mind that doesn't allow authenticating peers?",
+              "createdAt": "2026-07-16T06:58:32Z",
+              "updatedAt": "2026-07-16T07:04:38Z"
+            },
+            {
+              "originalPosition": 40,
+              "body": "Isn't this and line 169 saying the same thing?",
+              "createdAt": "2026-07-16T07:00:43Z",
+              "updatedAt": "2026-07-16T07:04:38Z"
+            },
+            {
+              "originalPosition": 149,
+              "body": "There's no requirement in wit-iss-note about it. If anything it says \"MAY\".",
+              "createdAt": "2026-07-16T07:04:08Z",
+              "updatedAt": "2026-07-16T07:04:38Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABGNSXjQ",
+          "commit": {
+            "abbreviatedOid": "cbd5884"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-16T07:50:23Z",
+          "updatedAt": "2026-07-16T07:50:23Z",
+          "comments": [
+            {
+              "originalPosition": 28,
+              "body": "The section title is granularity, and I think this sentence (propose by Pieter) is formally correct. It does not say \"could not authenticate a peer\", it says \"could not authenticate a peer *as a specific workload*\". And the following text presents an example.",
+              "createdAt": "2026-07-16T07:50:23Z",
+              "updatedAt": "2026-07-16T07:50:23Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABGNTFDQ",
+          "commit": {
+            "abbreviatedOid": "cbd5884"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-16T07:52:00Z",
+          "updatedAt": "2026-07-16T07:52:00Z",
+          "comments": [
+            {
+              "originalPosition": 40,
+              "body": "This whole section will be redone in PR #246, so I wouldn't touch it now.",
+              "createdAt": "2026-07-16T07:52:00Z",
+              "updatedAt": "2026-07-16T07:52:00Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABGNU10Q",
+          "commit": {
+            "abbreviatedOid": "cbd5884"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-16T07:56:10Z",
+          "updatedAt": "2026-07-16T07:56:10Z",
+          "comments": [
+            {
+              "originalPosition": 149,
+              "body": "The first line currently says \"It is RECOMMENDED that the WIT carries an iss claim\", so a SHOULD.",
+              "createdAt": "2026-07-16T07:56:10Z",
+              "updatedAt": "2026-07-16T07:56:11Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABGN2CoQ",
+          "commit": {
+            "abbreviatedOid": "cbd5884"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-16T09:07:01Z",
+          "updatedAt": "2026-07-16T09:07:02Z",
+          "comments": [
+            {
+              "originalPosition": 149,
+              "body": "In the context of key discovery it's a MAY, isn't it? The RECOMMENDED is about the iss claim itself.",
+              "createdAt": "2026-07-16T09:07:01Z",
+              "updatedAt": "2026-07-16T09:07:02Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABGN5YKg",
+          "commit": {
+            "abbreviatedOid": "cbd5884"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-16T09:13:30Z",
+          "updatedAt": "2026-07-16T09:13:30Z",
+          "comments": [
+            {
+              "originalPosition": 149,
+              "body": "You are right, and the text in iss-note is really hard to parse. Even a section break would improve it.",
+              "createdAt": "2026-07-16T09:13:30Z",
+              "updatedAt": "2026-07-16T09:13:30Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABGN6NRQ",
+          "commit": {
+            "abbreviatedOid": "cbd5884"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-16T09:15:06Z",
+          "updatedAt": "2026-07-16T09:15:06Z",
+          "comments": [
+            {
+              "originalPosition": 149,
+              "body": "```suggestion\r\nWhen a deployment uses the `iss` claim for key distribution as described in {{wit-iss-note}}, validators MUST enforce an allowlist of accepted issuers. Absent such a restriction, any entity could stand up an issuer, present a WIT with that issuer's `iss` value, and have it accepted by a validator that fetches and trusts the corresponding key material without verifying the issuer's legitimacy.\r\n```\r\n\r\nUndo the change.",
+              "createdAt": "2026-07-16T09:15:06Z",
+              "updatedAt": "2026-07-16T09:15:07Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABGN8B8w",
+          "commit": {
+            "abbreviatedOid": "145b5d3"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-16T09:18:39Z",
+          "updatedAt": "2026-07-16T09:18:40Z",
+          "comments": [
+            {
+              "originalPosition": 1,
+              "body": "```suggestion\nIt is RECOMMENDED that the WIT carries an `iss` claim for the auditing and operational uses described above. Validators are not required to use `iss` when validating the WIT or establishing the workload identity: the trust domain and workload identity are carried in the mandatory `sub` claim ({{WIMSE-ID}}).\n\nImplementations MAY include the `iss` claim in the form of a `https` URL to facilitate key distribution via mechanisms like the `jwks_uri` from {{!RFC8414}}, only when the issuer and verification keys (or metadata such as `jwks_uri`) are configured out of band as in {{trust-anchors}}. Alternative key distribution methods may use only the trust domain from the `sub` claim.\n```\n\nClarifying the section by breaking it into two paragraphs.",
+              "createdAt": "2026-07-16T09:18:40Z",
+              "updatedAt": "2026-07-16T09:18:40Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABGN-RFQ",
+          "commit": {
+            "abbreviatedOid": "cbd5884"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-16T09:23:46Z",
+          "updatedAt": "2026-07-16T09:23:46Z",
+          "comments": [
+            {
+              "originalPosition": 28,
+              "body": "> Prior to WIMSE, many containerized runtime platforms could not authenticate a peer as a specific workload; \r\n\r\nIf a peer is within the platform it definitely can. If it's coming from the outside it doesn't.\r\n\r\n> they could only establish that the peer belonged to a given trust domain.\r\n\r\nI don't really understand that part. \r\n\r\n> With mutual TLS (mTLS), for example, there is often no reliable way to map the external access name a client uses to reach a workload (such as a Kubernetes Ingress path, service name, or HTTP Host header field) to the SubjectAltName in the presented certificate. As a result, the client can verify that the server certificate is valid within a trust domain, but not that it belongs to the particular workload the client intended to reach.\r\n\r\nI'm reading this one over and over and I'm not sure I understand it. Is it saying that the client cannot map from requestURI to SubjectAltName? But does it need to? And if it cannot map, how can it tell that's part of a trust domain? And after all, are we actually fixing this?",
+              "createdAt": "2026-07-16T09:23:46Z",
+              "updatedAt": "2026-07-16T09:23:46Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABGOG0yw",
+          "commit": {
+            "abbreviatedOid": "8c24f21"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-16T09:43:02Z",
+          "updatedAt": "2026-07-16T09:43:02Z",
+          "comments": [
+            {
+              "originalPosition": 28,
+              "body": "To address only your last question, my understanding of the latest version of the mtls draft is that we're adding an *optional* workload ID to the cert, so you can get granular authz within closed WIMSE environments. It's optional, to accommodate  cross-domain and maybe older environments.",
+              "createdAt": "2026-07-16T09:43:02Z",
+              "updatedAt": "2026-07-16T09:43:02Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABGPK_Kw",
+          "commit": {
+            "abbreviatedOid": "8c24f21"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-16T12:13:18Z",
+          "updatedAt": "2026-07-16T12:13:18Z",
+          "comments": [
+            {
+              "originalPosition": 28,
+              "body": "FWIW I tend to agree with Arndt here. \n\nThe first sentence \"Prior to WIMSE, many containerized runtime platforms could not authenticate a peer as a specific workload\" did seem rather strong but \"many\" was enough of a qualifier to make me unsure and not push back on it.\n\nI don't think I understand the other part either but it seemed to be text that was mostly their already so didn't seem like a good place to question it.",
+              "createdAt": "2026-07-16T12:13:18Z",
+              "updatedAt": "2026-07-16T12:13:18Z"
+            }
+          ]
         }
       ]
+    },
+    {
+      "number": 275,
+      "id": "PR_kwDOLJmm787zUt-V",
+      "title": "Regenerate HTTP signature examples with wimse-req-nonce (#274)",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/275",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "## Summary\nRegenerate the non-normative HTTP signature request/response examples (and related JWKs) from `wimse-s2s-doc` so the signed response includes `wimse-req-nonce` matching the request `nonce`.\n\nFixes #274",
+      "createdAt": "2026-07-18T12:29:27Z",
+      "updatedAt": "2026-07-18T12:29:28Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "c1ca35def005abd924d5df15ab949a2f87df263b",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-274",
+      "headRefOid": "395ef76817b2fc11b50df55568789c8805b7d917",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
