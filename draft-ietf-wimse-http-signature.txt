@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments                J. Salowey
 Internet-Draft                                        Palo Alto Networks
 Intended status: Standards Track                              Y. Sheffer
-Expires: 17 January 2027                                          Intuit
-                                                            16 July 2026
+Expires: 21 January 2027                                          Intuit
+                                                            20 July 2026
 
 
      WIMSE Workload-to-Workload Authentication with HTTP Signatures
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 17 January 2027.
+   This Internet-Draft will expire on 21 January 2027.
 
 Copyright Notice
 
@@ -104,19 +104,20 @@ Table of Contents
      8.1.  Normative References
      8.2.  Informative References
    Appendix A.  Document History
-     A.1.  draft-ietf-wimse-http-signature-04
-     A.2.  draft-ietf-wimse-http-signature-03
-     A.3.  draft-ietf-wimse-http-signature-02
-     A.4.  draft-ietf-wimse-http-signature-01
-     A.5.  draft-ietf-wimse-http-signature-00
-     A.6.  draft-ietf-wimse-s2s-protocol-07
-     A.7.  draft-ietf-wimse-s2s-protocol-06
-     A.8.  draft-ietf-wimse-s2s-protocol-05
-     A.9.  draft-ietf-wimse-s2s-protocol-04
-     A.10. draft-ietf-wimse-s2s-protocol-03
-     A.11. draft-ietf-wimse-s2s-protocol-02
-     A.12. draft-ietf-wimse-s2s-protocol-01
-     A.13. draft-ietf-wimse-s2s-protocol-00
+     A.1.  draft-ietf-wimse-http-signature-05
+     A.2.  draft-ietf-wimse-http-signature-04
+     A.3.  draft-ietf-wimse-http-signature-03
+     A.4.  draft-ietf-wimse-http-signature-02
+     A.5.  draft-ietf-wimse-http-signature-01
+     A.6.  draft-ietf-wimse-http-signature-00
+     A.7.  draft-ietf-wimse-s2s-protocol-07
+     A.8.  draft-ietf-wimse-s2s-protocol-06
+     A.9.  draft-ietf-wimse-s2s-protocol-05
+     A.10. draft-ietf-wimse-s2s-protocol-04
+     A.11. draft-ietf-wimse-s2s-protocol-03
+     A.12. draft-ietf-wimse-s2s-protocol-02
+     A.13. draft-ietf-wimse-s2s-protocol-01
+     A.14. draft-ietf-wimse-s2s-protocol-00
    Appendix B.  Comparing the DPoP Inspired Option with Message
            Signatures
    Acknowledgments
@@ -356,10 +357,10 @@ Table of Contents
    {
      "alg": "EdDSA",
      "crv": "Ed25519",
-     "d": "y1t3DufG7BOgsOO7hl7M3uNvVNjVlZfat-8KPF5nHi8",
+     "d": "GcIoN8JLQTLoNq6y7-KGlwXc632TU3xPpLlUGWLThPM",
      "kid": "svc-a-key",
      "kty": "OKP",
-     "x": "CSsepXyWea5m-nNTfjnHaRfLodpY1gPSPtai1xJ-qJ0"
+     "x": "ODpx5K2eWshinEJJd-Qpq3z_Fp5izA1YhiNdecV0ajQ"
    }
 
                         Figure 1: Caller Private Key
@@ -370,20 +371,20 @@ Table of Contents
 
    GET /gimme-ice-cream?flavor=vanilla HTTP/1.1
    Host: svcb.example.com
-   Signature: wimse=:6QjBIpZW1lUZ64dQTOs4oiMBp4wH1Xzjo/iGa1XtrT9BGG2a0p\
-   MQXddNQ3M2wHE9q+FnxnL86HPtYVQ2fYTTDg==:
+   Signature: wimse=:WuXpe5Hr1+OZvpDP0MPwZn/MK1euq1EJcenos9xC7OXDfkYhkF\
+   yxZdjQgwkDrJdYKOHoO99ULjHmCzQxPof7Dw==:
    Signature-Input: wimse=("@method" "@request-target" "workload-identi\
-   ty-token");created=1774809014;expires=1774809314;nonce="abcd1111";ta\
+   ty-token");created=1784377485;expires=1784377785;nonce="abcd1111";ta\
    g="wimse-workload-to-workload";wimse-aud="https://svcb.example.com/g\
    imme-ice-cream"
    Workload-Identity-Token: eyJhbGciOiJFZERTQSIsImtpZCI6Imlzc3Vlci1rZXk\
    iLCJ0eXAiOiJ3aXQrand0In0.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J\
-   2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1hLWtleSIsImt0eSI6Ik9LUCIsIngiOiJDU3N\
-   lcFh5V2VhNW0tbk5UZmpuSGFSZkxvZHBZMWdQU1B0YWkxeEotcUowIn19LCJleHAiOjE\
-   3NzQ4MDkzMTQsImlhdCI6MTc3NDgwOTAxNCwiaXNzIjoiaHR0cHM6Ly9leGFtcGxlLmN\
-   vbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc3NDgwOTAxNDA4OTM3MjAwMCIsInN1YiI6Ind\
-   pbXNlOi8vZXhhbXBsZS5jb20vc3ZjQSJ9.UwMa_iVUp-0lbNLjWZMItulNEzFlfx_jCC\
-   sWdd-7Cx8fN87ldxamCiESXSMR2u1H17OInKBULCNLZjkfZdSiBw
+   2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1hLWtleSIsImt0eSI6Ik9LUCIsIngiOiJPRHB\
+   4NUsyZVdzaGluRUpKZC1RcHEzel9GcDVpekExWWhpTmRlY1YwYWpRIn19LCJleHAiOjE\
+   3ODQzNzc3ODUsImlhdCI6MTc4NDM3NzQ4NSwiaXNzIjoiaHR0cHM6Ly9leGFtcGxlLmN\
+   vbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc4NDM3NzQ4NTc1MzQyMjEwNCIsInN1YiI6Ind\
+   pbXNlOi8vZXhhbXBsZS5jb20vc3ZjQSJ9.OZj71_u_jpqF5tnwRdDSiHrSGcmmNMqss_\
+   AvgVIuasbaMQV8pgv3otLC8V6bNMGMXoCPCNK3XVBnfeNsICr5DQ
 
                           Figure 2: Signed Request
 
@@ -392,10 +393,10 @@ Table of Contents
    {
      "alg": "EdDSA",
      "crv": "Ed25519",
-     "d": "FYS8IsAD74dDpTYu88MX5XFQP4JYNYiRDIkEplk4DW0",
+     "d": "11tGJZXSalE2YRA9-9bLP3fbIgfd17FDW9b4Xrwcw1s",
      "kid": "svc-b-key",
      "kty": "OKP",
-     "x": "oKbIElQedC-yvw01avHZsh2Vg6CnSV5Pw6wnYZEJazM"
+     "x": "V5Ycp6m1EjmRUAzdaqTwOkmyv71_yI5QMlpJZt5Zgog"
    }
 
                         Figure 3: Callee Private Key
@@ -406,23 +407,23 @@ Table of Contents
 
    HTTP/1.1 404 Not Found
    Connection: close
-   Content-Digest: sha-256=:47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU\
+   Content-Digest: sha-256=:UHKweBl9cpjdVqgTB65El8SexXlJYGG+XIslAYqC1mY\
    =:
    Content-Type: text/plain
-   Signature: wimse=:Zpr07vUQEC8jNyLXUTiIXu2popQiodPBSeejjg6hl+C/0l/iNA\
-   DbJUMKTbDHs3sFiL/Su2cmPMUg1hWHT262Aw==:
+   Signature: wimse=:ZIY1RzouX+83r+DwR7HCfFgTgH6j0hm8Ewlxg3rH/wcrQUr6Ek\
+   vb1C5uvMOEapxTk15VgcjXTiaWy6OIXWd/Dw==:
    Signature-Input: wimse=("@status" "workload-identity-token" "content\
    -type" "content-digest" "@method";req "@request-target";req);created\
-   =1774809014;expires=1774809316;nonce="abcd2222";tag="wimse-workload-\
-   to-workload"
+   =1784377485;expires=1784377787;nonce="abcd2222";tag="wimse-workload-\
+   to-workload";wimse-req-nonce="abcd1111"
    Workload-Identity-Token: eyJhbGciOiJFZERTQSIsImtpZCI6Imlzc3Vlci1rZXk\
    iLCJ0eXAiOiJ3aXQrand0In0.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J\
-   2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1iLWtleSIsImt0eSI6Ik9LUCIsIngiOiJvS2J\
-   JRWxRZWRDLXl2dzAxYXZIWnNoMlZnNkNuU1Y1UHc2d25ZWkVKYXpNIn19LCJleHAiOjE\
-   3NzQ4MDkzMTYsImlhdCI6MTc3NDgwOTAxNiwiaXNzIjoiaHR0cHM6Ly9leGFtcGxlLmN\
-   vbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc3NDgwOTAxNDA4OTQ4MDAwMCIsInN1YiI6Ind\
-   pbXNlOi8vZXhhbXBsZS5jb20vc3ZjQiJ9.fVgW-ieLNhaY59p9OaTEetDtLzbuwnwRe0\
-   Uw-yz1xTZAgrj1SzAinGN3QbdfpE72gCTc2aH3D_LavdQuMUMHDg
+   2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1iLWtleSIsImt0eSI6Ik9LUCIsIngiOiJWNVl\
+   jcDZtMUVqbVJVQXpkYXFUd09rbXl2NzFfeUk1UU1scEpadDVaZ29nIn19LCJleHAiOjE\
+   3ODQzNzc3ODcsImlhdCI6MTc4NDM3NzQ4NywiaXNzIjoiaHR0cHM6Ly9leGFtcGxlLmN\
+   vbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc4NDM3NzQ4NTc1MzU0NjEwNCIsInN1YiI6Ind\
+   pbXNlOi8vZXhhbXBsZS5jb20vc3ZjQiJ9.OxWtp89SLrSM1mEP5p1WQ7sWFUh9zSbxNu\
+   Mgt3QearHFq-uUE7pr6tAxXYpaSUjTPKUDBzHPqySUbTfmTI7SDw
 
    No ice cream today.
 
@@ -758,14 +759,20 @@ Appendix A.  Document History
 
    // RFC Editor: please remove before publication.
 
-A.1.  draft-ietf-wimse-http-signature-04
+A.1.  draft-ietf-wimse-http-signature-05
+
+   *  Regenerate non-normative request/response examples so the signed
+      response includes wimse-req-nonce matching the request nonce
+      (#274).
+
+A.2.  draft-ietf-wimse-http-signature-04
 
    *  On signed responses, require wimse-req-nonce (request binding);
       register with IANA.  Non-normative response example not updated
       accordingly; the Signature value was not regenerated (see issue
       tracker).
 
-A.2.  draft-ietf-wimse-http-signature-03
+A.3.  draft-ietf-wimse-http-signature-03
 
    *  Replace Wimse-Audience HTTP header with the wimse-aud signature
       metadata parameter ([RFC9421]); register with IANA (HTTP Signature
@@ -773,12 +780,12 @@ A.2.  draft-ietf-wimse-http-signature-03
       accordingly; the Signature value was not regenerated (see issue
       tracker).
 
-A.3.  draft-ietf-wimse-http-signature-02
+A.4.  draft-ietf-wimse-http-signature-02
 
    *  Add new Wimse-Audience HTTP header (superseded by wimse-aud in
       -03).
 
-A.4.  draft-ietf-wimse-http-signature-01
+A.5.  draft-ietf-wimse-http-signature-01
 
    *  Clarified response signing.
 
@@ -788,11 +795,11 @@ A.4.  draft-ietf-wimse-http-signature-01
 
    *  Added an Implementation Status section.
 
-A.5.  draft-ietf-wimse-http-signature-00
+A.6.  draft-ietf-wimse-http-signature-00
 
    *  Initial version, extracted from the -07 draft with minimal edits.
 
-A.6.  draft-ietf-wimse-s2s-protocol-07
+A.7.  draft-ietf-wimse-s2s-protocol-07
 
    *  Rework the WPT's oth claim.
 
@@ -810,14 +817,14 @@ A.6.  draft-ietf-wimse-s2s-protocol-07
 
    *  Use of the Accept-Signature header.
 
-A.7.  draft-ietf-wimse-s2s-protocol-06
+A.8.  draft-ietf-wimse-s2s-protocol-06
 
    *  Explicit definition of the Workload Identity Certificate.
 
    *  Definition of the validation of workload identifiers as part of
       workload authentication.  Still work in progress.
 
-A.8.  draft-ietf-wimse-s2s-protocol-05
+A.9.  draft-ietf-wimse-s2s-protocol-05
 
    *  Removed the entire Workload Identity section which is now covered
       in the Architecture document.
@@ -828,7 +835,7 @@ A.8.  draft-ietf-wimse-s2s-protocol-05
 
    *  IANA considerations.
 
-A.9.  draft-ietf-wimse-s2s-protocol-04
+A.10.  draft-ietf-wimse-s2s-protocol-04
 
    *  Require cnf.jwk.alg in WIT which restricts signature algorithm of
       WPT or HTTP-Sig.
@@ -837,7 +844,7 @@ A.9.  draft-ietf-wimse-s2s-protocol-04
 
    *  Consolidate terminology with the Architecture draft.
 
-A.10.  draft-ietf-wimse-s2s-protocol-03
+A.11.  draft-ietf-wimse-s2s-protocol-03
 
    *  Consistently use "workload".
 
@@ -852,7 +859,7 @@ A.10.  draft-ietf-wimse-s2s-protocol-03
 
    *  Error handling for the application-level methods.
 
-A.11.  draft-ietf-wimse-s2s-protocol-02
+A.12.  draft-ietf-wimse-s2s-protocol-02
 
    *  Coexistence with bearer tokens.
 
@@ -864,7 +871,7 @@ A.11.  draft-ietf-wimse-s2s-protocol-02
 
    *  Moved an author to acknowledgments.
 
-A.12.  draft-ietf-wimse-s2s-protocol-01
+A.13.  draft-ietf-wimse-s2s-protocol-01
 
    *  Addressed multiple comments from Pieter.
 
@@ -879,7 +886,7 @@ A.12.  draft-ietf-wimse-s2s-protocol-01
    *  Added a section comparing the DPoP-inspired app-level security
       option to the Message Signature-based alternative.
 
-A.13.  draft-ietf-wimse-s2s-protocol-00
+A.14.  draft-ietf-wimse-s2s-protocol-00
 
    *  Initial WG draft, an exact copy of draft-sheffer-wimse-s2s-
       protocol-00
