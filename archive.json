@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-07-19T02:34:32.176011+00:00",
+  "timestamp": "2026-07-21T02:32:35.802069+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -4679,7 +4679,7 @@
       "id": "I_kwDOLJmm788AAAABJO-S_g",
       "title": "Clarification on `nonce` field Workload-to-Workload Authentication with HTTP Signatures",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/274",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "xtrycatchx",
       "authorAssociation": "NONE",
       "assignees": [],
@@ -4688,8 +4688,8 @@
       ],
       "body": "Hi Authors,\n\nI was reading Section [3.2](https://www.ietf.org/archive/id/draft-ietf-wimse-http-signature-04.html#name-the-wimse-req-nonce-signatu) on the Workload-to-Workload Authentication with HTTP Signatures draft, specifically concerning the `wimse-req-nonce` header.\n\nThe draft states:\n```\nThe server MUST set wimse-req-nonce to the value of the nonce signature parameter \nfrom the Signature-Input of the request that triggered the response.\n```\nHowever, I noticed that the provided sample files ([includes/sigs-response.txt](https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/blob/main/includes/sigs-response.txt) and [includes/sigs-request.txt.out](https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/blob/main/includes/sigs-response.txt.out)) do not appear to utilize/use the `wimse-req-nonce` header in any of these examples.\n\nCould you please clarify if this is a typo, or if my understanding of where the `wimse-req-nonce` must be present in the samples is incorrect?\n\nThank you for your time!",
       "createdAt": "2026-07-17T20:41:09Z",
-      "updatedAt": "2026-07-18T06:58:05Z",
-      "closedAt": null,
+      "updatedAt": "2026-07-20T08:53:28Z",
+      "closedAt": "2026-07-20T08:53:28Z",
       "comments": [
         {
           "author": "yaronf",
@@ -4697,6 +4697,32 @@
           "body": "Good question. The examples are simply lagging behind the text (noted in the Document History section). Sorry for the confusion.",
           "createdAt": "2026-07-18T06:58:05Z",
           "updatedAt": "2026-07-18T06:58:05Z"
+        }
+      ]
+    },
+    {
+      "number": 276,
+      "id": "I_kwDOLJmm788AAAABJXveMQ",
+      "title": "Consider allow JSON key thumbprint in cnf object",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/276",
+      "state": "OPEN",
+      "author": "rohanmahy",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "Currently a JSON web key (jwk) is required in a cnf object. For cases where there is already a public key known at another layer, why not allow the cnf object to contain a JSON key thumbprint (jkt) of the public key instead?",
+      "createdAt": "2026-07-19T18:13:47Z",
+      "updatedAt": "2026-07-19T20:11:21Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "The idea was to have just one cnf method/way to convey the public key and it be the one that could always work without additional knowledge or state. ",
+          "createdAt": "2026-07-19T20:11:21Z",
+          "updatedAt": "2026-07-19T20:11:21Z"
         }
       ]
     }
@@ -18999,26 +19025,42 @@
       "id": "PR_kwDOLJmm787zUt-V",
       "title": "Regenerate HTTP signature examples with wimse-req-nonce (#274)",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/275",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "## Summary\nRegenerate the non-normative HTTP signature request/response examples (and related JWKs) from `wimse-s2s-doc` so the signed response includes `wimse-req-nonce` matching the request `nonce`.\n\nFixes #274",
       "createdAt": "2026-07-18T12:29:27Z",
-      "updatedAt": "2026-07-18T12:29:28Z",
+      "updatedAt": "2026-07-20T08:53:27Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "c1ca35def005abd924d5df15ab949a2f87df263b",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-274",
       "headRefOid": "395ef76817b2fc11b50df55568789c8805b7d917",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-07-20T08:53:27Z",
+      "mergedAt": "2026-07-20T08:53:27Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "7d6da68171b1fb5409bc7411cfe3d1d008213a3f"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABGhVvOA",
+          "commit": {
+            "abbreviatedOid": "395ef76"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-07-20T06:29:03Z",
+          "updatedAt": "2026-07-20T06:29:03Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
