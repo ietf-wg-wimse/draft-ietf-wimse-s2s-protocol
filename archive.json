@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-07-21T02:32:35.802069+00:00",
+  "timestamp": "2026-07-28T02:25:46.161126+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -4725,6 +4725,24 @@
           "updatedAt": "2026-07-19T20:11:21Z"
         }
       ]
+    },
+    {
+      "number": 277,
+      "id": "I_kwDOLJmm788AAAABKUkXHw",
+      "title": "Allow requestor to mandate a signed response",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/277",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-http-signature"
+      ],
+      "body": "Following a comment from @jhoyla, specifying that response signing (and enforcing/validating this signature) is subject to local policy is brittle. One way to strengthen this behavior is for the requestor to signal that response signing is required. Of course the signal itself must be protected.\n\nIn more detail: add a Boolean on the request\u2019s Signature-Input, covered by the signature: `wimse-sign-response=true`.\n\nPros: integrity-protected; rides with the PoP; hard for proxies to strip without breaking the signature\nCons: new IANA signature-metadata param; server must parse the incoming `Signature-Input` before deciding to sign",
+      "createdAt": "2026-07-27T12:00:11Z",
+      "updatedAt": "2026-07-27T12:01:02Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -19061,6 +19079,32 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 278,
+      "id": "PR_kwDOLJmm78726E2y",
+      "title": "Add wimse-sign-response for mandated signed responses",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/278",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "## Summary\n* Add Boolean request signature parameter `wimse-sign-response` so clients can require a signed response (integrity-protected via Signature-Input).\n* Define when response signing is required (parameter or local policy), what to do if the server cannot sign, and regenerate examples accordingly.\n\nFixes #277\n\n\nMade with [Cursor](https://cursor.com)",
+      "createdAt": "2026-07-27T12:42:11Z",
+      "updatedAt": "2026-07-27T12:42:11Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "7d6da68171b1fb5409bc7411cfe3d1d008213a3f",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-277",
+      "headRefOid": "508231c958c2581be11e0b0e2ea45bb3c04dc763",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
