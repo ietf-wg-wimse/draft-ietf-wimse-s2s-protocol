@@ -378,6 +378,7 @@ When the certificate is also used for TLS server authentication, it is RECOMMEND
 
 The receiving application uses the authenticated peer's workload identifier in authorization, accounting, and auditing.
 For example, the full workload identifier may be matched against ACLs to authorize actions requested by the peer and the identifier may be included in log messages to associate actions to the client workload for audit purposes.
+Logging the authenticated workload identifier is appropriate for audit; logging the raw `Workload-Identity-Token` header field value, or the raw proof of possession, is NOT RECOMMENDED, because those values can be used in replay attacks (see {{wit-pop}}).
 A deployment may specify other authorization policies based on the specific details of how the workload identifier is constructed. The path portion of the workload identifier MUST always be considered in the scope of the trust domain.
 See {{granular-auth}} on additional security implications of workload identifiers.
 
@@ -435,6 +436,8 @@ When a deployment uses the `iss` claim for key distribution as described in {{wi
 ## Workload Identity Token and Proof of Possession {#wit-pop}
 
 The Workload Identity Token (WIT) is bound to a secret cryptographic key and is always presented with a proof of possession as described in {{to-wit}}. The WIT is a general purpose token that can be presented in multiple contexts. The WIT and its PoP are only used in the application-layer options, and both are not used in mTLS. The WIT MUST NOT be used as a bearer token. While this helps reduce the sensitivity of the token it is still possible that a token and its proof of possession may be captured and replayed within the PoP's lifetime. The following are some mitigations for the capture and reuse of the WIT and its proof of possession (PoP):
+
+Gateways, TLS-terminating proxies, and observability agents often record HTTP header fields by default. A logged WIT together with a logged proof of possession remains usable for replay within the PoP's lifetime. Implementations SHOULD NOT log these raw header field values; after validation they SHOULD record selected claims useful for audit (for example `sub`, and when present `iss`, `exp`, and `jti`) instead.
 
 ### Limiting Workload Identity Token Lifespan
 
@@ -559,6 +562,10 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 
 # Document History
 <cref>RFC Editor: please remove before publication.</cref>
+
+## draft-ietf-wimse-workload-creds-03
+
+* Advise against logging raw WIT and proof-of-possession header field values; prefer selected claims for audit (#271).
 
 ## draft-ietf-wimse-workload-creds-02
 
