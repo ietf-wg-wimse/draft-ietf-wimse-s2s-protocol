@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-07-28T02:25:46.161126+00:00",
+  "timestamp": "2026-07-30T02:12:10.897840+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -4313,13 +4313,15 @@
       "state": "OPEN",
       "author": "PieterKas",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "arndt-s"
+      ],
       "labels": [
         "draft-ietf-wimse-workload-creds"
       ],
       "body": "I agree that a credential should unambiguously identify the primary subject it was issued to, and the access decision keys off that one identity (sub for a WIT, single URI SAN for a WIC). \n\nI think that is in part why  the following sentence prohibit the inclusion of additional workload identifiers for correlation or any other purposes in a WIT.\n\n\"Additional correlation for logging or operations MUST NOT be encoded as a second workload identifier in the same WIT or WIC.\"\n\nHowever, the draft allows this for certificates. Section 6.1 requires the workload identifier in exactly one URI SAN, yet explicitly allows the certificate to carry other identifiers (DNSName SANs and \"SubjectAltName extensions of other types\"), stating that \"only the URI SAN above is the WIMSE workload identity.\" So a WIC can already carry multiple identifiers of different kinds while exactly one uniquely identifies the workload. The Section 4 prohibition for the WIT is inconsistent with Section 6.1.\n\nQuestion: Is the intent to preclude all additional identifiers, or only to guarantee that the primary subject is unambiguous? If the latter, is the MUST NOT really needed or should it be. relaxed so that additional identifiers MAY be included for purposes such as correlation, provided they are clearly distinguished from, and never usable in place of, the authoritative subject (e.g. the WIT could include other claims that contain identifiers, but only the sub claim is treated as the primary identifier)?\n",
       "createdAt": "2026-07-14T19:01:07Z",
-      "updatedAt": "2026-07-14T19:08:23Z",
+      "updatedAt": "2026-07-28T14:51:31Z",
       "closedAt": null,
       "comments": []
     },
@@ -4331,13 +4333,15 @@
       "state": "OPEN",
       "author": "PieterKas",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "yaronf"
+      ],
       "labels": [
         "draft-ietf-wimse-workload-creds"
       ],
       "body": "The following sentence: \"The WIT and its PoP are only used in the application-layer options, and both are not used in MTLS.\" appears to contradict Section 9.2.5 (which allows binding the PoP to a TLS session's client identity or channel-binding parameters, i.e., mTLS) and Section 1 (\"This does not preclude the use of the WIT in transport-layer protocols...\"). Consider deleting it to be consistent.\n",
       "createdAt": "2026-07-14T19:01:09Z",
-      "updatedAt": "2026-07-14T19:01:09Z",
+      "updatedAt": "2026-07-28T14:46:30Z",
       "closedAt": null,
       "comments": []
     },
@@ -4349,13 +4353,15 @@
       "state": "OPEN",
       "author": "PieterKas",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "bc-pi"
+      ],
       "labels": [
         "draft-ietf-wimse-workload-creds"
       ],
       "body": "The example WIT (Figures 2 and 4) contains an iat claim, but iat is not listed or defined in the Section 5.1 normative claim list (iss, sub, exp, jti, cnf). The primary example uses a claim the specification does not mention. Either add iat to the claim definitions (it is conventional and underpins the \"refreshed regularly\" / lifetime language) or remove it from the example. My preference would be to add it as an OPTIONAL claim.\n",
       "createdAt": "2026-07-14T19:01:10Z",
-      "updatedAt": "2026-07-16T20:35:58Z",
+      "updatedAt": "2026-07-28T14:45:54Z",
       "closedAt": null,
       "comments": [
         {
@@ -4544,13 +4550,15 @@
       "state": "OPEN",
       "author": "n2ctech",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "yaroslavros"
+      ],
       "labels": [
         "draft-ietf-wimse-workload-creds"
       ],
       "body": "Section 9 models credential compromise but skips the routine case: a workload is deprovisioned, or flagged as compromised, while its WIT or WIC is still valid. Without a revocation mechanism the only issuer-side control is to stop issuing, so the exposure window equals the remaining credential lifetime. Section 9.2.1 treats lifetime only as a refresh-cost tradeoff. Nothing warns against reassigning a Workload Identifier while the old instance's credentials are still valid. And Section 9.4 forbids using keys once the credential is expired but says nothing about destroying key material at decommissioning. Keys outlive workloads in images, snapshots, and CI caches.\n\nSuggested fix: an end-of-life clause in 9.2 (stop issuing; treat max credential lifetime as the minimum post-deprovisioning exposure window; do not recycle identifiers within that window), plus one addition to 9.4: \"Private key material MUST be destroyed when the workload instance is decommissioned.\"\n\nRaised as item 1 in my WGLC review: https://mailarchive.ietf.org/arch/msg/wimse/S5Zjmr4qneFsAmepgRWhkWtFdPA/\n",
       "createdAt": "2026-07-16T11:23:22Z",
-      "updatedAt": "2026-07-16T18:23:04Z",
+      "updatedAt": "2026-07-28T14:39:41Z",
       "closedAt": null,
       "comments": []
     },
@@ -4562,13 +4570,15 @@
       "state": "OPEN",
       "author": "n2ctech",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "yaroslavros"
+      ],
       "labels": [
         "draft-ietf-wimse-workload-creds"
       ],
       "body": "Section 5.1 says the jti claim is useful \"to revoke\" WITs. Section 9.2.1 says WITs \"are not generally revocable on demand\". A validator implementer cannot tell whether jti deny-listing is a supported capability. jti is also OPTIONAL, so a deny list fails open for tokens issued without it. The 5.1 wording looks like a leftover from before #97 made jti optional.\n\nSuggested fix: either drop \"or to revoke them\" from 5.1, or require that deployments supporting per-WIT revocation include jti in every issued token, with a cross-reference from 9.2.1.\n\nRaised as item 2 in my WGLC review: https://mailarchive.ietf.org/arch/msg/wimse/S5Zjmr4qneFsAmepgRWhkWtFdPA/\n",
       "createdAt": "2026-07-16T11:23:23Z",
-      "updatedAt": "2026-07-16T18:23:05Z",
+      "updatedAt": "2026-07-28T14:32:36Z",
       "closedAt": null,
       "comments": []
     },
@@ -4580,13 +4590,15 @@
       "state": "OPEN",
       "author": "n2ctech",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "yaronf"
+      ],
       "labels": [
         "draft-ietf-wimse-workload-creds"
       ],
       "body": "Section 9.2.1 is explicit for WITs: short lifetimes, no general revocation. The certificate side is silent. CRLs and OCSP are absent from the document, and mutual-tls only says \"Other PKIX path validation rules apply\" without saying whether revocation checking is among them. As a relying party I cannot tell whether to fail closed when revocation status is unavailable, or whether WICs should carry CRL Distribution Points at all.\n\nSuggested fix: a paragraph in 9.3.1 explicitly stating the revocation stance, parallel to 9.2.1.\n\nRaised as item 3 in my WGLC review: https://mailarchive.ietf.org/arch/msg/wimse/S5Zjmr4qneFsAmepgRWhkWtFdPA/\n",
       "createdAt": "2026-07-16T11:23:24Z",
-      "updatedAt": "2026-07-16T18:23:06Z",
+      "updatedAt": "2026-07-28T14:26:53Z",
       "closedAt": null,
       "comments": []
     },
@@ -4598,14 +4610,16 @@
       "state": "OPEN",
       "author": "n2ctech",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "yaronf"
+      ],
       "labels": [
         "draft-ietf-wimse-wpt",
         "draft-ietf-wimse-workload-creds"
       ],
       "body": "Section 7 rightly suggests including the workload identifier in log messages. But the WIT and its proof of possession ride in HTTP header fields, and gateways, TLS-terminating proxies, and APM agents dump those headers into logs by default. A logged WIT plus a logged PoP is replayable within the validity window defined in 9.2.2. Section 10 lists logs as an exposure surface for WICs but not WITs, which is backwards: WITs hit header logging at every network hop.\n\nSuggested fix: a note in 9.2 advising implementers to record claims (sub, exp, iss, jti) rather than raw header values, and a matching update to Section 10.\n\nRaised as item 4 in my WGLC review: https://mailarchive.ietf.org/arch/msg/wimse/S5Zjmr4qneFsAmepgRWhkWtFdPA/\n",
       "createdAt": "2026-07-16T11:23:25Z",
-      "updatedAt": "2026-07-17T12:09:32Z",
+      "updatedAt": "2026-07-28T14:25:31Z",
       "closedAt": null,
       "comments": [
         {
@@ -4635,6 +4649,13 @@
           "body": "> > I don't believe this particular risk applies to HTTP Signatures, because a signature is bound to the complete context of the request (or response) and so there's little value in stealing it from the logs.\n> \n> To the extent this is a real risk though, it does apply to e.g. GET where enough of that context is in the headers.\n\nMy point is, unlike for WPT, the attacker would only be able to replay the exact request. Which makes the risk much lower.",
           "createdAt": "2026-07-17T12:09:32Z",
           "updatedAt": "2026-07-17T12:09:32Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Needs to be addressed for Creds, but will remain open.",
+          "createdAt": "2026-07-28T14:25:31Z",
+          "updatedAt": "2026-07-28T14:25:31Z"
         }
       ]
     },
@@ -4646,13 +4667,15 @@
       "state": "OPEN",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "bc-pi"
+      ],
       "labels": [
         "draft-ietf-wimse-workload-creds"
       ],
       "body": "FWIW I tend to agree with Arndt here. \r\n\r\nThe first sentence \"Prior to WIMSE, many containerized runtime platforms could not authenticate a peer as a specific workload\" did seem rather strong but \"many\" was enough of a qualifier to make me unsure and not push back on it.\r\n\r\nI don't think I understand the other part either but it seemed to be text that was mostly their already so didn't seem like a good place to question it.\r\n\r\n_Originally posted by @bc-pi in https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/267#discussion_r3595285661_\r\n            ",
       "createdAt": "2026-07-16T19:52:56Z",
-      "updatedAt": "2026-07-16T19:53:03Z",
+      "updatedAt": "2026-07-28T14:14:40Z",
       "closedAt": null,
       "comments": []
     },
@@ -4664,13 +4687,15 @@
       "state": "OPEN",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "bc-pi"
+      ],
       "labels": [
         "draft-ietf-wimse-workload-creds"
       ],
       "body": "there's a variety of feedback and commentary in the [WGLC for WIMSE Workload Credentials thread ](https://mailarchive.ietf.org/arch/msg/wimse/5kFRCsvSmgjSdlaClnAgQDCm0J8/) some of which shouldn't get lost. This is just a placeholder issue to hopefully help towards that end. ",
       "createdAt": "2026-07-16T20:20:48Z",
-      "updatedAt": "2026-07-16T20:52:48Z",
+      "updatedAt": "2026-07-28T14:11:13Z",
       "closedAt": null,
       "comments": []
     },
@@ -19099,6 +19124,84 @@
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-277",
       "headRefOid": "508231c958c2581be11e0b0e2ea45bb3c04dc763",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 279,
+      "id": "PR_kwDOLJmm7873_eMe",
+      "title": "Advise against logging raw WIT and PoP headers",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/279",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "## Summary\n* Clarify that audit logs should use the workload identifier / selected claims, not raw WIT or proof-of-possession header field values.\n* Note that intermediaries and observability agents often dump those headers by default, enabling replay within the PoP lifetime.\n\nRelated to #271 (Creds-only; leaving the issue open for WPT follow-up).\n\n\nMade with [Cursor](https://cursor.com)",
+      "createdAt": "2026-07-29T12:53:24Z",
+      "updatedAt": "2026-07-29T12:53:25Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "7d6da68171b1fb5409bc7411cfe3d1d008213a3f",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-271",
+      "headRefOid": "5275fd3da3c2444634002b6a977888f0b9928fcd",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 280,
+      "id": "PR_kwDOLJmm7874BNgb",
+      "title": "State WIC revocation stance (short lifetime, optional OCSP)",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/280",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "## Summary\n* Clarify that WICs are short-lived like WITs and do not rely on CRLs.\n* Issuers MAY include an OCSP responder location; if present, relying parties MUST check OCSP and fail closed.\n\nFixes #270\n\n\nMade with [Cursor](https://cursor.com)",
+      "createdAt": "2026-07-29T13:47:27Z",
+      "updatedAt": "2026-07-29T13:47:28Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "7d6da68171b1fb5409bc7411cfe3d1d008213a3f",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-270",
+      "headRefOid": "b95cf65540b160c1a3062a5903976591756336c1",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 281,
+      "id": "PR_kwDOLJmm7874Br3C",
+      "title": "Clarify WIT/PoP vs mutual TLS (do not delete the distinction)",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/281",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "## Summary\n* Keep the guidance that WIT and PoP are application-layer credentials and are not used as the mutual TLS credential (WIC is).\n* Rather than deleting that sentence, clarify the apparent contradictions: intro wording about \u201ctransport-layer\u201d use of WIT, and PoP binding to TLS session properties.\n\nFixes #256\n\n\nMade with [Cursor](https://cursor.com)",
+      "createdAt": "2026-07-29T14:02:07Z",
+      "updatedAt": "2026-07-29T14:02:08Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "7d6da68171b1fb5409bc7411cfe3d1d008213a3f",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-256",
+      "headRefOid": "86c47aae9c14196b8f84643a49ae2af35c991a79",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
