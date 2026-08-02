@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-07-30T02:12:10.897840+00:00",
+  "timestamp": "2026-08-02T02:38:13.664322+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -19114,10 +19114,12 @@
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-http-signature"
+      ],
       "body": "## Summary\n* Add Boolean request signature parameter `wimse-sign-response` so clients can require a signed response (integrity-protected via Signature-Input).\n* Define when response signing is required (parameter or local policy), what to do if the server cannot sign, and regenerate examples accordingly.\n\nFixes #277\n\n\nMade with [Cursor](https://cursor.com)",
       "createdAt": "2026-07-27T12:42:11Z",
-      "updatedAt": "2026-07-27T12:42:11Z",
+      "updatedAt": "2026-07-31T13:28:38Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "7d6da68171b1fb5409bc7411cfe3d1d008213a3f",
@@ -19140,10 +19142,12 @@
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
       "body": "## Summary\n* Clarify that audit logs should use the workload identifier / selected claims, not raw WIT or proof-of-possession header field values.\n* Note that intermediaries and observability agents often dump those headers by default, enabling replay within the PoP lifetime.\n\nRelated to #271 (Creds-only; leaving the issue open for WPT follow-up).\n\n\nMade with [Cursor](https://cursor.com)",
       "createdAt": "2026-07-29T12:53:24Z",
-      "updatedAt": "2026-07-29T12:53:25Z",
+      "updatedAt": "2026-07-31T13:28:25Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "7d6da68171b1fb5409bc7411cfe3d1d008213a3f",
@@ -19166,10 +19170,12 @@
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
       "body": "## Summary\n* Clarify that WICs are short-lived like WITs and do not rely on CRLs.\n* Issuers MAY include an OCSP responder location; if present, relying parties MUST check OCSP and fail closed.\n\nFixes #270\n\n\nMade with [Cursor](https://cursor.com)",
       "createdAt": "2026-07-29T13:47:27Z",
-      "updatedAt": "2026-07-29T13:47:28Z",
+      "updatedAt": "2026-07-31T13:27:57Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "7d6da68171b1fb5409bc7411cfe3d1d008213a3f",
@@ -19192,10 +19198,12 @@
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
       "body": "## Summary\n* Keep the guidance that WIT and PoP are application-layer credentials and are not used as the mutual TLS credential (WIC is).\n* Rather than deleting that sentence, clarify the apparent contradictions: intro wording about \u201ctransport-layer\u201d use of WIT, and PoP binding to TLS session properties.\n\nFixes #256\n\n\nMade with [Cursor](https://cursor.com)",
       "createdAt": "2026-07-29T14:02:07Z",
-      "updatedAt": "2026-07-29T14:02:08Z",
+      "updatedAt": "2026-07-31T13:27:35Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "7d6da68171b1fb5409bc7411cfe3d1d008213a3f",
