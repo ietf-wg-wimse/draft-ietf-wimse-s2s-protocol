@@ -365,8 +365,8 @@ receiver, and any TLS-terminating middleboxes that process the traffic.
 ## Authentication
 
 * A workload receiving a request can validate that it is signed correctly, and can identify the sender.
-* A workload receiving a response can similarly authenticate its sender when response signing is required
-({{signing-the-response}}) and the recipient validates this signature.
+* A workload receiving a response can similarly validate the signature and identify the sender when response signing is required
+({{signing-the-response}}).
 * The above implies that a stolen WIT cannot be used by an entity other than its owner.
 
 ## Integrity
