@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments                J. Salowey
 Internet-Draft                                        Palo Alto Networks
 Intended status: Standards Track                              Y. Sheffer
-Expires: 21 January 2027                                          Intuit
-                                                            20 July 2026
+Expires: 5 February 2027                                          Intuit
+                                                           4 August 2026
 
 
      WIMSE Workload-to-Workload Authentication with HTTP Signatures
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 21 January 2027.
+   This Internet-Draft will expire on 5 February 2027.
 
 Copyright Notice
 
@@ -81,10 +81,11 @@ Table of Contents
    2.  Conventions and Definitions
    3.  The Protocol: Authentication Based on HTTP Message Signatures
      3.1.  The wimse-aud Signature Parameter
-     3.2.  The wimse-req-nonce Signature Parameter
-     3.3.  Signing the Response
-     3.4.  Error Conditions
-     3.5.  Example Requests and Responses
+     3.2.  The wimse-sign-response Signature Parameter
+     3.3.  The wimse-req-nonce Signature Parameter
+     3.4.  Signing the Response
+     3.5.  Error Conditions
+     3.6.  Example Requests and Responses
    4.  Implementation Status
      4.1.  Cofide
    5.  Security Considerations
@@ -99,7 +100,8 @@ Table of Contents
    7.  IANA Considerations
      7.1.  HTTP Signature Metadata Parameters Registration
        7.1.1.  wimse-aud
-       7.1.2.  wimse-req-nonce
+       7.1.2.  wimse-sign-response
+       7.1.3.  wimse-req-nonce
    8.  References
      8.1.  Normative References
      8.2.  Informative References
@@ -233,10 +235,15 @@ Table of Contents
 
    *  wimse-aud (Section 3.1)
 
-   For responses only, when response signing is enabled, the following
-   signature parameter MUST also be included:
+   For requests only, the following signature parameter MAY also be
+   included:
 
-   *  wimse-req-nonce (Section 3.2)
+   *  wimse-sign-response (Section 3.2)
+
+   For responses only, when response signing is required (Section 3.4),
+   the following signature parameter MUST also be included:
+
+   *  wimse-req-nonce (Section 3.3)
 
    The following signature parameters in the Signature-Input header MUST
    NOT be used:
@@ -294,7 +301,18 @@ Table of Contents
    See "Workload Identifiers and Authentication Granularity" in
    [I-D.ietf-wimse-workload-creds] for more detail.
 
-3.2.  The wimse-req-nonce Signature Parameter
+3.2.  The wimse-sign-response Signature Parameter
+
+   This document defines the wimse-sign-response signature metadata
+   parameter for requests.  It is a Boolean parameter (Section 3.3.6 of
+   [RFC8941]).  When present with the value true, the client requires
+   the server to sign the HTTP response to this request as specified in
+   Section 3.4.
+
+   This parameter is not mandatory.  Moreover, the server MAY sign the
+   response even if this parameter is missing from the request.
+
+3.3.  The wimse-req-nonce Signature Parameter
 
    When response signing is enabled, this document defines the wimse-
    req-nonce signature metadata parameter for responses.  This parameter
@@ -305,33 +323,48 @@ Table of Contents
    signature parameter from the Signature-Input of the request that
    triggered the response.
 
-3.3.  Signing the Response
+3.4.  Signing the Response
 
    Protecting the response by signing it with the server's WIT is
    RECOMMENDED but optional.  In particular, if the response may be
    exceptionally large or is expected to be streamed, signing it may not
    be practical.
 
-   In practice, we expect response signing to be enabled by local
-   policy.  If response signing is enabled for a deployment, the client
-   (recipient of the response) MUST check that the signature exists and
-   validate it.  The response MUST be rejected if a signature is absent
-   or fails to validate.  The client MUST verify that wimse-req-nonce
-   matches the nonce it included in its request's Signature-Input.  This
-   binds the signed response to the specific request that triggered it.
+   Response signing is required for a given exchange when either of the
+   following is true:
+
+   *  The request's Signature-Input includes wimse-sign-response with
+      the Boolean value true (Section 3.2).
+
+   *  Local policy requires response signing for that exchange.
+
+   If the server is required to sign the response but cannot produce a
+   signed response (for example, because the response is streamed or
+   exceptionally large), it MUST NOT return a successful unsigned
+   response; it MUST return an error as described in Section 3.5.
+
+   If response signing is required, the client (recipient of the
+   response) MUST check that the signature exists and validate it.  The
+   response MUST be rejected if a signature is absent or fails to
+   validate.  The client MUST verify that wimse-req-nonce matches the
+   nonce it included in its request's Signature-Input.
+
+   If response signing is not required, the server MAY still sign the
+   response.  In that case, the client MUST still validate the signed
+   response and reject it if it fails to validate.
 
    As described in Section 5 of [RFC9421], either client or server MAY
    send an Accept-Signature header, but is not required to do so.  The
    Accept-Signature header indicates a preference for signed messages
    but does not mandate that responses be signed.  When a client sends
-   Accept-Signature in a request, it SHOULD list the response components
+   Accept-Signature in a request, it MUST list the response components
    it wishes to have signed (including at least those specified above
    for signed responses).  When a server sends Accept-Signature in a
-   response, it SHOULD list the request components it wishes to have
+   response, it MUST list the request components it wishes to have
    signed in subsequent requests (minimally those specified above for
    signed requests).
 
-3.4.  Error Conditions
+3.5.  Error Conditions
 
    Errors may occur during the processing of the message signature.  If
    the signature verification fails for any reason, such as an invalid
@@ -347,7 +380,13 @@ Table of Contents
    of these headers for the WIT is not compatible with this
    specification.
 
-3.5.  Example Requests and Responses
+   If the client required a signed response via wimse-sign-response and
+   the server cannot sign the response, the server SHOULD return 400
+   (Bad Request) or 501 (Not Implemented), optionally with a [RFC9457]
+   problem details body indicating that a signed response cannot be
+   provided.
+
+3.6.  Example Requests and Responses
 
    Following is a non-normative example of a signed request and a signed
    response.
@@ -357,10 +396,10 @@ Table of Contents
    {
      "alg": "EdDSA",
      "crv": "Ed25519",
-     "d": "GcIoN8JLQTLoNq6y7-KGlwXc632TU3xPpLlUGWLThPM",
+     "d": "HQdG2ekHF4COyoHNYvCh2fMHhIaKvkrStjmyfndFyGI",
      "kid": "svc-a-key",
      "kty": "OKP",
-     "x": "ODpx5K2eWshinEJJd-Qpq3z_Fp5izA1YhiNdecV0ajQ"
+     "x": "ZjlVT4COsCkQO9HIo6tDWAXayQ0MymoFUKJRIQ7S8R8"
    }
 
                         Figure 1: Caller Private Key
@@ -371,20 +410,20 @@ Table of Contents
 
    GET /gimme-ice-cream?flavor=vanilla HTTP/1.1
    Host: svcb.example.com
-   Signature: wimse=:WuXpe5Hr1+OZvpDP0MPwZn/MK1euq1EJcenos9xC7OXDfkYhkF\
-   yxZdjQgwkDrJdYKOHoO99ULjHmCzQxPof7Dw==:
+   Signature: wimse=:zSK+kx5EnoZct9FZ6LMYzfx0mk32oI/hHpB7y4rgHxkRDcAA72\
+   yBW5xgzA03nKviXLjL7nphq840Uwznp6IKAw==:
    Signature-Input: wimse=("@method" "@request-target" "workload-identi\
-   ty-token");created=1784377485;expires=1784377785;nonce="abcd1111";ta\
+   ty-token");created=1785155797;expires=1785156097;nonce="abcd1111";ta\
    g="wimse-workload-to-workload";wimse-aud="https://svcb.example.com/g\
-   imme-ice-cream"
+   imme-ice-cream";wimse-sign-response
    Workload-Identity-Token: eyJhbGciOiJFZERTQSIsImtpZCI6Imlzc3Vlci1rZXk\
    iLCJ0eXAiOiJ3aXQrand0In0.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J\
-   2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1hLWtleSIsImt0eSI6Ik9LUCIsIngiOiJPRHB\
-   4NUsyZVdzaGluRUpKZC1RcHEzel9GcDVpekExWWhpTmRlY1YwYWpRIn19LCJleHAiOjE\
-   3ODQzNzc3ODUsImlhdCI6MTc4NDM3NzQ4NSwiaXNzIjoiaHR0cHM6Ly9leGFtcGxlLmN\
-   vbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc4NDM3NzQ4NTc1MzQyMjEwNCIsInN1YiI6Ind\
-   pbXNlOi8vZXhhbXBsZS5jb20vc3ZjQSJ9.OZj71_u_jpqF5tnwRdDSiHrSGcmmNMqss_\
-   AvgVIuasbaMQV8pgv3otLC8V6bNMGMXoCPCNK3XVBnfeNsICr5DQ
+   2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1hLWtleSIsImt0eSI6Ik9LUCIsIngiOiJaamx\
+   WVDRDT3NDa1FPOUhJbzZ0RFdBWGF5UTBNeW1vRlVLSlJJUTdTOFI4In19LCJleHAiOjE\
+   3ODUxNTYwOTcsImlhdCI6MTc4NTE1NTc5NywiaXNzIjoiaHR0cHM6Ly9leGFtcGxlLmN\
+   vbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc4NTE1NTc5NzIxNjU0NTcxOSIsInN1YiI6Ind\
+   pbXNlOi8vZXhhbXBsZS5jb20vc3ZjQSJ9.BqJfcsbrYlS9GSQ7NpFBBVz4CeszShqleI\
+   yr2sSnd0Ic6l2HXX27giZcdAOGnXjtv_7h-9vV16GZbVcrQt6hCg
 
                           Figure 2: Signed Request
 
@@ -393,10 +432,10 @@ Table of Contents
    {
      "alg": "EdDSA",
      "crv": "Ed25519",
-     "d": "11tGJZXSalE2YRA9-9bLP3fbIgfd17FDW9b4Xrwcw1s",
+     "d": "nn132WU82duEPtUbQtoQLqWoC1hKl8zeWavCDIR0VeI",
      "kid": "svc-b-key",
      "kty": "OKP",
-     "x": "V5Ycp6m1EjmRUAzdaqTwOkmyv71_yI5QMlpJZt5Zgog"
+     "x": "lBtLS8cNt_7pWsdi2xgx760lWpzEvqYe2DpSk9ELH2w"
    }
 
                         Figure 3: Callee Private Key
@@ -410,20 +449,20 @@ Table of Contents
    Content-Digest: sha-256=:UHKweBl9cpjdVqgTB65El8SexXlJYGG+XIslAYqC1mY\
    =:
    Content-Type: text/plain
-   Signature: wimse=:ZIY1RzouX+83r+DwR7HCfFgTgH6j0hm8Ewlxg3rH/wcrQUr6Ek\
-   vb1C5uvMOEapxTk15VgcjXTiaWy6OIXWd/Dw==:
+   Signature: wimse=:57ZChndLoz5toS+/0RGeQJG53gLrZD/bBterOWnHF1vb0cdcee\
+   UOKH/t4A+/bvquC/0VCb5DYFRdFNz4CW8yBQ==:
    Signature-Input: wimse=("@status" "workload-identity-token" "content\
    -type" "content-digest" "@method";req "@request-target";req);created\
-   =1784377485;expires=1784377787;nonce="abcd2222";tag="wimse-workload-\
+   =1785155797;expires=1785156099;nonce="abcd2222";tag="wimse-workload-\
    to-workload";wimse-req-nonce="abcd1111"
    Workload-Identity-Token: eyJhbGciOiJFZERTQSIsImtpZCI6Imlzc3Vlci1rZXk\
    iLCJ0eXAiOiJ3aXQrand0In0.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J\
-   2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1iLWtleSIsImt0eSI6Ik9LUCIsIngiOiJWNVl\
-   jcDZtMUVqbVJVQXpkYXFUd09rbXl2NzFfeUk1UU1scEpadDVaZ29nIn19LCJleHAiOjE\
-   3ODQzNzc3ODcsImlhdCI6MTc4NDM3NzQ4NywiaXNzIjoiaHR0cHM6Ly9leGFtcGxlLmN\
-   vbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc4NDM3NzQ4NTc1MzU0NjEwNCIsInN1YiI6Ind\
-   pbXNlOi8vZXhhbXBsZS5jb20vc3ZjQiJ9.OxWtp89SLrSM1mEP5p1WQ7sWFUh9zSbxNu\
-   Mgt3QearHFq-uUE7pr6tAxXYpaSUjTPKUDBzHPqySUbTfmTI7SDw
+   2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1iLWtleSIsImt0eSI6Ik9LUCIsIngiOiJsQnR\
+   MUzhjTnRfN3BXc2RpMnhneDc2MGxXcHpFdnFZZTJEcFNrOUVMSDJ3In19LCJleHAiOjE\
+   3ODUxNTYwOTksImlhdCI6MTc4NTE1NTc5OSwiaXNzIjoiaHR0cHM6Ly9leGFtcGxlLmN\
+   vbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc4NTE1NTc5NzIxNjY3MDUxOCIsInN1YiI6Ind\
+   pbXNlOi8vZXhhbXBsZS5jb20vc3ZjQiJ9.HIAU2288ryXoym1M9fnKZqd0p2Vl7spOh-\
+   FY2jCFY-05H74-WPUFWrg5lH5f2rHl47TfxEGri3fmMP4zhYzeAw
 
    No ice cream today.
 
@@ -599,9 +638,9 @@ Table of Contents
    *  A workload receiving a request can validate that it is signed
       correctly, and can identify the sender.
 
-   *  A workload receiving a response can similarly authenticate its
-      sender, provided that optional response signing has been activated
-      and likewise, the recipient validates this signature.
+   *  A workload receiving a response can similarly validate the
+      signature and identify the sender when response signing is
+      required (Section 3.4).
 
    *  The above implies that a stolen WIT cannot be used by an entity
       other than its owner.
@@ -611,14 +650,14 @@ Table of Contents
    *  No requests can be modified without detection by the recipient.
       Integrity of all present HTTP headers specified in this document
       is protected, as well as the derived components listed in
-      Section 3, the signature parameters (including wimse-aud on
-      requests and wimse-req-nonce on responses) as covered by
-      @signature-params in [RFC9421], and the message body (when
-      present).
+      Section 3, the signature parameters (including wimse-aud and
+      wimse-sign-response on requests and wimse-req-nonce on responses)
+      as covered by @signature-params in [RFC9421], and the message body
+      (when present).
 
-   *  No responses can be modified without detection, provided that
-      optional response signing has been activated and that the
-      recipient validates incoming responses.
+   *  No responses can be modified without detection when response
+      signing is required (Section 3.4) and the recipient validates
+      incoming responses.
 
    *  Note: Headers not specified in this document may remain unsigned
       and could potentially be modified or deleted by intermediaries
@@ -635,12 +674,13 @@ Table of Contents
       where the request would be accepted as valid, and this mitigates
       the risk to some extent.
 
-   *  When response signing is enabled, validating wimse-req-nonce
+   *  When response signing is required, validating wimse-req-nonce
       mitigates replay of a signed response to a client other than the
       one that sent the triggering request.
 
-   *  Unless response signing is mandated by local policy, complete
-      deletion of a request/response pair is possible without detection.
+   *  Unless response signing is required (via wimse-sign-response or
+      local policy), complete deletion of a request/response pair is
+      possible without detection.
 
 7.  IANA Considerations
 
@@ -653,7 +693,9 @@ Table of Contents
 
    *  wimse-aud, per Section 7.1.1.
 
-   *  wimse-req-nonce, per Section 7.1.2.
+   *  wimse-sign-response, per Section 7.1.2.
+
+   *  wimse-req-nonce, per Section 7.1.3.
 
 7.1.1.  wimse-aud
 
@@ -664,7 +706,16 @@ Table of Contents
 
    *  Reference: RFC XXX, Section 3.1.
 
-7.1.2.  wimse-req-nonce
+7.1.2.  wimse-sign-response
+
+   *  Name: wimse-sign-response
+
+   *  Description: Boolean; when true on a request signature, the client
+      requires the server to sign the corresponding HTTP response.
+
+   *  Reference: RFC XXX, Section 3.2.
+
+7.1.3.  wimse-req-nonce
 
    *  Name: wimse-req-nonce
 
@@ -672,7 +723,7 @@ Table of Contents
       triggering request's Signature-Input; binds the response to that
       request.
 
-   *  Reference: RFC XXX, Section 3.2.
+   *  Reference: RFC XXX, Section 3.3.
 
 8.  References
 
@@ -718,9 +769,9 @@ Table of Contents
    [I-D.ietf-oauth-transaction-tokens]
               Tulshibagwale, A., Fletcher, G., and P. Kasselman,
               "Transaction Tokens", Work in Progress, Internet-Draft,
-              draft-ietf-oauth-transaction-tokens-09, 6 July 2026,
+              draft-ietf-oauth-transaction-tokens-11, 30 July 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              transaction-tokens-09>.
+              transaction-tokens-11>.
 
    [I-D.ietf-wimse-arch]
               Salowey, J. A., Rosomakho, Y., and H. Tschofenig,
@@ -750,6 +801,10 @@ Table of Contents
               http-message-signature.xhtml#signature-metadata-
               parameters>.
 
+   [RFC8941]  Nottingham, M. and P. Kamp, "Structured Field Values for
+              HTTP", RFC 8941, DOI 10.17487/RFC8941, February 2021,
+              <https://www.rfc-editor.org/rfc/rfc8941>.
+
    [RFC9457]  Nottingham, M., Wilde, E., and S. Dalal, "Problem Details
               for HTTP APIs", RFC 9457, DOI 10.17487/RFC9457, July 2023,
               <https://www.rfc-editor.org/rfc/rfc9457>.
@@ -760,6 +815,9 @@ Appendix A.  Document History
    // RFC Editor: please remove before publication.
 
 A.1.  draft-ietf-wimse-http-signature-05
+
+   *  Add wimse-sign-response request signature parameter so clients can
+      mandate a signed response; regenerate examples (#277).
 
    *  Regenerate non-normative request/response examples so the signed
       response includes wimse-req-nonce matching the request nonce
