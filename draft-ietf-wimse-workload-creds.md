@@ -439,6 +439,8 @@ The Workload Identity Token (WIT) is bound to a secret cryptographic key and is 
 
 Gateways, TLS-terminating proxies, and observability agents often record HTTP header fields by default. A logged WIT together with a logged proof of possession remains usable for replay within the PoP's lifetime. Implementations SHOULD NOT log these raw header field values; after validation they SHOULD record selected claims useful for audit (for example `sub`, and when present `iss`, `exp`, and `jti`) instead.
 
+Intermediaries that see a WIT before it has been validated, or that cannot validate it, MUST NOT treat logged claim values as authenticated identity; if they record such values at all, they SHOULD mark them as untrusted.
+
 ### Limiting Workload Identity Token Lifespan
 
 The WIT MUST have a limited lifetime expressed through the `exp` claim. If both a WIT and its corresponding private key are compromised, an attacker can impersonate the workload until the WIT expires. Because JWT-based credentials such as the WIT are not generally revocable on demand, a short expiration is the primary mitigation against continued use of a compromised WIT and key. WITs SHOULD therefore be short-lived, typically on the order of hours, with the chosen lifetime balancing the operational cost of frequent refresh against the window of exposure if a credential is compromised.
