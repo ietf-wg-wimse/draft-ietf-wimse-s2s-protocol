@@ -427,9 +427,12 @@ IANA is requested to register the following entries in the "HTTP Signature Metad
 # Document History
 <cref>RFC Editor: please remove before publication.</cref>
 
-## draft-ietf-wimse-http-signature-05
+## draft-ietf-wimse-http-signature-06
 
 * Add `wimse-sign-response` request signature parameter so clients can mandate a signed response; regenerate examples (#277).
+
+## draft-ietf-wimse-http-signature-05
+
 * Regenerate non-normative request/response examples so the signed response includes `wimse-req-nonce` matching the request `nonce` (#274).
 
 ## draft-ietf-wimse-http-signature-04
