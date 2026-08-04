@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 30 January 2027                              Palo Alto Networks
+Expires: 5 February 2027                              Palo Alto Networks
                                                       A. Schwenkschuster
                                                         Defakto Security
                                                               Y. Sheffer
                                                                   Intuit
                                                             Y. Rosomakho
                                                                  Zscaler
-                                                            29 July 2026
+                                                           4 August 2026
 
 
                        WIMSE Workload Credentials
@@ -67,7 +67,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 30 January 2027.
+   This Internet-Draft will expire on 5 February 2027.
 
 Copyright Notice
 
@@ -813,6 +813,11 @@ Table of Contents
    for audit (for example sub, and when present iss, exp, and jti)
    instead.
 
+   Intermediaries that see a WIT before it has been validated, or that
+   cannot validate it, MUST NOT treat logged claim values as
+   authenticated identity; if they record such values at all, they
+   SHOULD mark them as untrusted.
+
 9.2.1.  Limiting Workload Identity Token Lifespan
 
    The WIT MUST have a limited lifetime expressed through the exp claim.
@@ -1087,9 +1092,9 @@ Table of Contents
    [I-D.ietf-oauth-transaction-tokens]
               Tulshibagwale, A., Fletcher, G., and P. Kasselman,
               "Transaction Tokens", Work in Progress, Internet-Draft,
-              draft-ietf-oauth-transaction-tokens-09, 6 July 2026,
+              draft-ietf-oauth-transaction-tokens-11, 30 July 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              transaction-tokens-09>.
+              transaction-tokens-11>.
 
    [I-D.ietf-wimse-arch]
               Salowey, J. A., Rosomakho, Y., and H. Tschofenig,
