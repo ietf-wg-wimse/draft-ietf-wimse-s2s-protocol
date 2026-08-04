@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-08-02T02:38:13.664322+00:00",
+  "timestamp": "2026-08-04T02:24:01.453148+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -19119,19 +19119,40 @@
       ],
       "body": "## Summary\n* Add Boolean request signature parameter `wimse-sign-response` so clients can require a signed response (integrity-protected via Signature-Input).\n* Define when response signing is required (parameter or local policy), what to do if the server cannot sign, and regenerate examples accordingly.\n\nFixes #277\n\n\nMade with [Cursor](https://cursor.com)",
       "createdAt": "2026-07-27T12:42:11Z",
-      "updatedAt": "2026-07-31T13:28:38Z",
+      "updatedAt": "2026-08-03T16:48:01Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "7d6da68171b1fb5409bc7411cfe3d1d008213a3f",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-277",
-      "headRefOid": "508231c958c2581be11e0b0e2ea45bb3c04dc763",
+      "headRefOid": "282f259c2130f25bb234c0c72ae1e95dfd3b9a0c",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABINHv6w",
+          "commit": {
+            "abbreviatedOid": "508231c"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-03T15:08:39Z",
+          "updatedAt": "2026-08-03T15:08:39Z",
+          "comments": [
+            {
+              "originalPosition": 93,
+              "body": "The and validates this signature seems like odd phrasing or a bit redundant.\n\n```suggestion\n* A workload receiving a response can similarly validate the signature and identify the sender when response signing is required\n({{signing-the-response}}).\n```",
+              "createdAt": "2026-08-03T15:08:39Z",
+              "updatedAt": "2026-08-03T15:08:39Z"
+            }
+          ]
+        }
+      ]
     },
     {
       "number": 279,
