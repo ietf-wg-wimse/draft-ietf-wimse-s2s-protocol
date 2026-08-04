@@ -464,8 +464,6 @@ The Workload Identity Certificate carries the workload identifier in a single UR
 
 Workload Identity Certificates are frequently issued to dynamic and/or short-lived workloads. Deployments SHOULD use certificate lifetimes appropriate to the workload environment, typically on a similar scale to WITs ({{wit-pop}}). Long-lived certificates increase the impact of private-key compromise. As with WITs, short certificate lifetimes are the primary mitigation against continued use of a compromised key; this document does not rely on certificate revocation lists (CRLs) for WICs.
 
-Issuers MAY include an Online Certificate Status Protocol (OCSP) {{?RFC6960}} responder location in the WIC. If a WIC includes such a location, relying parties MUST check the certificate's status using OCSP and MUST fail closed: they MUST reject the certificate if OCSP indicates that it is revoked or if a valid OCSP response cannot be obtained.
-
 The lifetime of Workload Identity Certificates is bounded by the lifetime and rotation cadence of the trust anchors of the trust domain ({{trust-anchors}}). Compromise of a trust anchor permits issuance of certificates for the trust domain for as long as that anchor remains trusted. Deployments should therefore consider leaf and trust-anchor lifetimes together rather than the leaf lifetime in isolation.
 
 ## Workload Identity Key Management
@@ -564,7 +562,7 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 
 ## draft-ietf-wimse-workload-creds-03
 
-* State the WIC revocation stance: short lifetimes like WITs; no CRL reliance; optional OCSP in the certificate, with fail-closed checking when present (#270).
+* State the WIC revocation stance: short lifetimes like WITs; no CRL reliance (#270).
 
 ## draft-ietf-wimse-workload-creds-02
 
