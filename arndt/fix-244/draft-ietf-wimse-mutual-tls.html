@@ -8,7 +8,7 @@
 <meta content="Joe Salowey" name="author">
 <meta content="Yaroslav Rosomakho" name="author">
 <meta content="
-       The WIMSE architecture defines authentication and authorization for software workloads in a variety of runtime environments, from the most basic ones to complex multi-service, multi-cloud, multi-tenant deployments. This document profiles a workload authentication based on X.509 workload identity certificates using mutual TLS (mTLS). 
+       The WIMSE architecture defines authentication and authorization for software workloads in a variety of runtime environments, from the most basic ones to complex multi-service, multi-cloud, multi-tenant deployments. This document profiles a workload authentication based on X.509 Workload Identity Certificates using mutual TLS (mTLS). 
     " name="description">
 <meta content="xml2rfc 3.34.0" name="generator">
 <meta content="workload" name="keyword">
@@ -23,7 +23,7 @@
     Jinja2 3.1.6
     lxml 6.1.1
     natsort 8.4.0
-    platformdirs 4.10.0
+    platformdirs 4.11.0
     pycountry 24.6.1
     PyYAML 6.0.3
     requests 2.33.1
@@ -63,7 +63,6 @@
   src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-latin-ext.woff2') format('woff2');
   unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
-
 @font-face {
   font-family: 'Lora';
   font-style: italic;
@@ -112,7 +111,6 @@
   src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-latin.woff2') format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
-
 @font-face {
   font-family: 'Lora';
   font-style: normal;
@@ -177,7 +175,6 @@
   font-display: swap;
   src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin.woff2') format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
 }
 
 @font-face {
@@ -1046,11 +1043,11 @@ svg {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">Workload MTLS</td>
-<td class="right">July 2026</td>
+<td class="right">August 2026</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">j Salowey &amp; Rosomakho</td>
-<td class="center">Expires 6 January 2027</td>
+<td class="center">Expires 6 February 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1063,17 +1060,17 @@ svg {
 <dd class="internet-draft">draft-ietf-wimse-mutual-tls-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-07-05" class="published">5 July 2026</time>
+<time datetime="2026-08-05" class="published">5 August 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2027-01-06">6 January 2027</time></dd>
+<dd class="expires"><time datetime="2027-02-06">6 February 2027</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
       <div class="author-name">j Salowey</div>
-<div class="org">CyberArk</div>
+<div class="org">Palo Alto Networks</div>
 </div>
 <div class="author">
       <div class="author-name">Y. Rosomakho</div>
@@ -1085,7 +1082,7 @@ svg {
 <h1 id="title">Workload Authentication Using Mutual TLS</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">The WIMSE architecture defines authentication and authorization for software workloads in a variety of runtime environments, from the most basic ones to complex multi-service, multi-cloud, multi-tenant deployments. This document profiles a workload authentication based on X.509 workload identity certificates using mutual TLS (mTLS).<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">The WIMSE architecture defines authentication and authorization for software workloads in a variety of runtime environments, from the most basic ones to complex multi-service, multi-cloud, multi-tenant deployments. This document profiles a workload authentication based on X.509 Workload Identity Certificates using mutual TLS (mTLS).<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-about-this-document">
@@ -1122,7 +1119,7 @@ svg {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 6 January 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 6 February 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1157,13 +1154,10 @@ svg {
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.1">
                 <p id="section-toc.1-1.1.2.1.1" class="keepWithNext"><a href="#section-1.1" class="auto internal xref">1.1</a>.  <a href="#name-deployment-architecture-and" class="internal xref">Deployment Architecture and Message Flow</a></p>
 </li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.2">
-                <p id="section-toc.1-1.1.2.2.1" class="keepWithNext"><a href="#section-1.2" class="auto internal xref">1.2</a>.  <a href="#name-workload-identity-certifica" class="internal xref">Workload Identity Certificates</a></p>
-</li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
-            <p id="section-toc.1-1.2.1"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-conventions-and-definitions" class="internal xref">Conventions and Definitions</a></p>
+            <p id="section-toc.1-1.2.1" class="keepWithNext"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-conventions-and-definitions" class="internal xref">Conventions and Definitions</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
             <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-using-mutual-tls-for-worklo" class="internal xref">Using Mutual TLS for Workload-to-Workload Authentication</a></p>
@@ -1172,7 +1166,7 @@ svg {
                 <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-the-workload-identity-certi" class="internal xref">The Workload Identity Certificate</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
-                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-workload-identity-certificat" class="internal xref">Workload Identity Certificate Validation</a></p>
+                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-workload-identity-certifica" class="internal xref">Workload Identity Certificate Validation</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2.2.1">
                     <p id="section-toc.1-1.3.2.2.2.1.1"><a href="#section-3.2.1" class="auto internal xref">3.2.1</a>.  <a href="#name-server-name-validation" class="internal xref">Server Name Validation</a></p>
@@ -1205,10 +1199,16 @@ svg {
             <p id="section-toc.1-1.7.1"><a href="#appendix-A" class="auto internal xref">Appendix A</a>.  <a href="#name-document-history" class="internal xref">Document History</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1">
-                <p id="section-toc.1-1.7.2.1.1"><a href="#appendix-A.1" class="auto internal xref">A.1</a>.  <a href="#name-draft-ietf-wimse-mutual-tls" class="internal xref">draft-ietf-wimse-mutual-tls-01</a></p>
+                <p id="section-toc.1-1.7.2.1.1"><a href="#appendix-A.1" class="auto internal xref">A.1</a>.  <a href="#name-draft-ietf-wimse-mutual-tls" class="internal xref">draft-ietf-wimse-mutual-tls-03</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2">
-                <p id="section-toc.1-1.7.2.2.1"><a href="#appendix-A.2" class="auto internal xref">A.2</a>.  <a href="#name-draft-ietf-wimse-mutual-tls-" class="internal xref">draft-ietf-wimse-mutual-tls-00</a></p>
+                <p id="section-toc.1-1.7.2.2.1"><a href="#appendix-A.2" class="auto internal xref">A.2</a>.  <a href="#name-draft-ietf-wimse-mutual-tls-" class="internal xref">draft-ietf-wimse-mutual-tls-02</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.3">
+                <p id="section-toc.1-1.7.2.3.1"><a href="#appendix-A.3" class="auto internal xref">A.3</a>.  <a href="#name-draft-ietf-wimse-mutual-tls-0" class="internal xref">draft-ietf-wimse-mutual-tls-01</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.4">
+                <p id="section-toc.1-1.7.2.4.1"><a href="#appendix-A.4" class="auto internal xref">A.4</a>.  <a href="#name-draft-ietf-wimse-mutual-tls-00" class="internal xref">draft-ietf-wimse-mutual-tls-00</a></p>
 </li>
             </ul>
 </li>
@@ -1228,24 +1228,15 @@ svg {
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
 <p id="section-1-1">This document defines authentication and authorization in the context of interaction between two workloads.
-This is the core component of the WIMSE architecture <span>[<a href="#I-D.ietf-wimse-arch" class="cite xref">I-D.ietf-wimse-arch</a>]</span>.
-This document focuses on using X.509 workload identity certificates <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span> to authenticate the communication between workloads using TLS.<a href="#section-1-1" class="pilcrow">¶</a></p>
-<p id="section-1-2">The use of TLS for authentication is widely deployed, however it may not be applicable to all environments.  For example, some deployments may lack the PKI infrastructure necessary to manage certificates or inter-service communication consists of multiple separate TLS hops. For these cases, other options based on Workload Identity Tokens (WIT) <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span> may be more appropriate since they are not based on X.509 certificates and are communicated at the application layer rather than the transport layer.<a href="#section-1-2" class="pilcrow">¶</a></p>
+This is the core component of the WIMSE architecture <span>[<a href="#WIMSE-ARCH" class="cite xref">WIMSE-ARCH</a>]</span>.
+This document focuses on using X.509 Workload Identity Certificates as defined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-workload-creds-02#section-6.1" class="relref">Section 6.1</a> of [<a href="#WIMSE-CREDS" class="cite xref">WIMSE-CREDS</a>]</span> to authenticate the communication between workloads using TLS.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">The use of TLS for authentication is widely deployed, however it may not be applicable to all environments.  For example, some deployments may lack the PKI infrastructure necessary to manage certificates or inter-service communication consists of multiple separate TLS hops. For these cases, other options based on Workload Identity Tokens (WIT) as defined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-workload-creds-02#section-5" class="relref">Section 5</a> of [<a href="#WIMSE-CREDS" class="cite xref">WIMSE-CREDS</a>]</span> may be more appropriate since they are not based on X.509 certificates and are communicated at the application layer rather than the transport layer.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <div id="deployment-architecture-and-message-flow">
 <section id="section-1.1">
         <h3 id="name-deployment-architecture-and">
 <a href="#section-1.1" class="section-number selfRef">1.1. </a><a href="#name-deployment-architecture-and" class="section-name selfRef">Deployment Architecture and Message Flow</a>
         </h3>
-<p id="section-1.1-1">Refer to Sec. 1.2 of <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span> for the deployment architecture which is common to all three
-protection options, including the one described here.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
-</section>
-</div>
-<div id="workload-identity-certificates">
-<section id="section-1.2">
-        <h3 id="name-workload-identity-certifica">
-<a href="#section-1.2" class="section-number selfRef">1.2. </a><a href="#name-workload-identity-certifica" class="section-name selfRef">Workload Identity Certificates</a>
-        </h3>
-<p id="section-1.2-1">Workload identity certificates are X.509 certificates that carry a single workload identifier in one URI SubjectAltName, as defined in <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span>.<a href="#section-1.2-1" class="pilcrow">¶</a></p>
+<p id="section-1.1-1">Refer to <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-workload-creds-02#section-1.2" class="relref">Section 1.2</a> of [<a href="#WIMSE-CREDS" class="cite xref">WIMSE-CREDS</a>]</span> for the deployment architecture which is common to all protection options.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1255,7 +1246,7 @@ protection options, including the one described here.<a href="#section-1.1-1" cl
       <h2 id="name-conventions-and-definitions">
 <a href="#section-2" class="section-number selfRef">2. </a><a href="#name-conventions-and-definitions" class="section-name selfRef">Conventions and Definitions</a>
       </h2>
-<p id="section-2-1">All terminology in this document follows <span>[<a href="#I-D.ietf-wimse-arch" class="cite xref">I-D.ietf-wimse-arch</a>]</span>.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<p id="section-2-1">All terminology in this document follows <span>[<a href="#WIMSE-ARCH" class="cite xref">WIMSE-ARCH</a>]</span>.<a href="#section-2-1" class="pilcrow">¶</a></p>
 <p id="section-2-2">The key words "<span class="bcp14">MUST</span>", "<span class="bcp14">MUST NOT</span>", "<span class="bcp14">REQUIRED</span>", "<span class="bcp14">SHALL</span>", "<span class="bcp14">SHALL NOT</span>", "<span class="bcp14">SHOULD</span>", "<span class="bcp14">SHOULD NOT</span>", "<span class="bcp14">RECOMMENDED</span>", "<span class="bcp14">NOT RECOMMENDED</span>",
 "<span class="bcp14">MAY</span>", and "<span class="bcp14">OPTIONAL</span>" in this document are to be interpreted as
 described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they
@@ -1267,33 +1258,33 @@ appear in all capitals, as shown here.<a href="#section-2-2" class="pilcrow">¶<
       <h2 id="name-using-mutual-tls-for-worklo">
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-using-mutual-tls-for-worklo" class="section-name selfRef">Using Mutual TLS for Workload-to-Workload Authentication</a>
       </h2>
-<p id="section-3-1">As noted in the introduction, for many deployments, transport-layer protection of application traffic using TLS is ideal.<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-3-1">As noted in the introduction, for many deployments, transport-level protection of application traffic using TLS is ideal.<a href="#section-3-1" class="pilcrow">¶</a></p>
 <div id="to-wic">
 <section id="section-3.1">
         <h3 id="name-the-workload-identity-certi">
 <a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-the-workload-identity-certi" class="section-name selfRef">The Workload Identity Certificate</a>
         </h3>
-<p id="section-3.1-1">Workload identity certificates are X.509 certificates that carry a single workload identifier in one URI SubjectAltName, as defined in the "One Workload Identity per Credential" section of <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span>. Other SubjectAltName types (such as DNSName for host name validation) do not carry the WIMSE workload identity.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.1-1">Workload Identity Certificates are X.509 certificates that carry Workload Identifiers as described in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-workload-creds-02#section-6.1" class="relref">Section 6.1</a> of [<a href="#WIMSE-CREDS" class="cite xref">WIMSE-CREDS</a>]</span>.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="wic-validation">
 <section id="section-3.2">
-        <h3 id="name-workload-identity-certificat">
-<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-workload-identity-certificat" class="section-name selfRef">Workload Identity Certificate Validation</a>
+        <h3 id="name-workload-identity-certifica">
+<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-workload-identity-certifica" class="section-name selfRef">Workload Identity Certificate Validation</a>
         </h3>
-<p id="section-3.2-1">Workload Identity Certificates may be used to authenticate both the server and client side of the connections.  When validating a Workload Identity Certificate, the relying party <span class="bcp14">MUST</span> use the trust anchors configured for the trust domain in the workload identity to validate the peer's certificate.  Other PKIX <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span> path validation rules apply. Workloads acting as TLS clients and servers <span class="bcp14">MUST</span> validate that the trust domain portion of the Workload Identity Certificate matches the expected trust domain for the other side of the connection.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.2-1">Workload Identity Certificates may be used to authenticate both the server and client side of the connections.  When validating a Workload Identity Certificate, the relying party <span class="bcp14">MUST</span> use the trust anchors configured for the trust domain in the workload identity to validate the peer's certificate.  Other PKIX <span>[<a href="#INET-X509-PROFILE" class="cite xref">INET-X509-PROFILE</a>]</span> path validation rules apply. Workloads acting as TLS clients and servers <span class="bcp14">MUST</span> validate that the trust domain portion of the Workload Identity Certificate matches the expected trust domain for the other side of the connection.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
 <p id="section-3.2-2">Servers wishing to use the Workload Identity Certificate for authorizing the client <span class="bcp14">MUST</span> require client certificate authentication in the TLS handshake. Other methods of post handshake authentication are not specified by this document.<a href="#section-3.2-2" class="pilcrow">¶</a></p>
-<p id="section-3.2-3">Workload Identity Certificates used by TLS servers <span class="bcp14">SHOULD</span> have the <code>id-kp-serverAuth</code> extended key usage <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span> field set and Workload Identity Certificates used by TLS clients <span class="bcp14">SHOULD</span> have the <code>id-kp-clientAuth</code> extended key usage field set. A certificate that is used for both client and server connections may have both fields set. This specification does not make any other requirements beyond <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span> on the contents of Workload Identity Certificates or on the certification authorities that issue workload certificates.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
+<p id="section-3.2-3">Workload Identity Certificates used by TLS servers <span class="bcp14">SHOULD</span> have the <code>id-kp-serverAuth</code> extended key usage <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span> field set and Workload Identity Certificates used by TLS clients <span class="bcp14">SHOULD</span> have the <code>id-kp-clientAuth</code> extended key usage field set. A certificate that is used for both client and server connections may have both fields set. This specification does not make any other requirements beyond <span>[<a href="#INET-X509-PROFILE" class="cite xref">INET-X509-PROFILE</a>]</span> on the contents of Workload Identity Certificates or on the certification authorities that issue workload certificates.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
 <div id="server-name">
 <section id="section-3.2.1">
           <h4 id="name-server-name-validation">
 <a href="#section-3.2.1" class="section-number selfRef">3.2.1. </a><a href="#name-server-name-validation" class="section-name selfRef">Server Name Validation</a>
           </h4>
-<p id="section-3.2.1-1">If the WIMSE client uses a hostname to connect to the server and the server certificate contain a DNS SAN the client <span class="bcp14">MUST</span> perform standard host name validation (<span><a href="https://rfc-editor.org/rfc/rfc9525#section-6.3" class="relref">Section 6.3</a> of [<a href="#RFC9525" class="cite xref">RFC9525</a>]</span>) unless it is configured with the additional information necessary to perform alternate validation of the peer's workload identity.
-If the client did not perform standard host name validation then the WIMSE client <span class="bcp14">SHOULD</span> further use the workload identifier to validate the server.
-The host portion of the workload identifier is NOT treated as a host name as specified in section 6.4 of <span>[<a href="#RFC9525" class="cite xref">RFC9525</a>]</span> but rather as a trust domain. The server identity is encoded in the path portion of the workload identifier in a deployment specific way.
-Validating the workload identity could be a simple match on the trust domain and path portions of the identifier or validation may be based on the specific details on how the identifier is constructed. The path portion of the WIMSE identifier <span class="bcp14">MUST</span> always be considered in the scope of the trust domain.
-In most cases it is preferable to validate the entire workload identifier, see section 1.3 of <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span> for additional implementation advice.<a href="#section-3.2.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.2.1-1">If a WIMSE client connects to a server using a DNS hostname, the server <span class="bcp14">SHOULD</span> present a certificate containing a matching DNS Subject Alternative Name (DNS-ID), and the client <span class="bcp14">MUST</span> perform standard TLS server identity validation as specified in <span><a href="https://rfc-editor.org/rfc/rfc9525#section-6.3" class="relref">Section 6.3</a> of [<a href="#TLS-IDENTITY" class="cite xref">TLS-IDENTITY</a>]</span>.<a href="#section-3.2.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.2.1-2">In deployments that use Workload Identity Certificates, successful DNS hostname validation authenticates the server endpoint, while the Workload Identifier provides an additional identity that can be used for workload-specific authorization and policy decisions.<a href="#section-3.2.1-2" class="pilcrow">¶</a></p>
+<p id="section-3.2.1-3">Some deployments may not use DNS names for server discovery. In such cases, the client <span class="bcp14">MUST</span> be configured with sufficient information to determine the expected workload identity of the server and <span class="bcp14">MUST</span> validate that identity before accepting the connection.<a href="#section-3.2.1-3" class="pilcrow">¶</a></p>
+<p id="section-3.2.1-4">The host portion of the Workload Identifier is NOT treated as a hostname as specified in <span><a href="https://rfc-editor.org/rfc/rfc9525#section-6.4" class="relref">Section 6.4</a> of [<a href="#TLS-IDENTITY" class="cite xref">TLS-IDENTITY</a>]</span>, but rather as a trust domain. The server identity is encoded in the path portion of the Workload Identifier in a deployment-specific way.<a href="#section-3.2.1-4" class="pilcrow">¶</a></p>
+<p id="section-3.2.1-5">Validation of the workload identity may consist of an exact match of the trust domain and path, or may follow deployment-specific rules. The path portion of the Workload Identifier <span class="bcp14">MUST</span> always be interpreted within the context of the trust domain. In most cases it is preferable to validate the entire Workload Identifier; see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-workload-creds-02#section-1.3" class="relref">Section 1.3</a> of [<a href="#WIMSE-CREDS" class="cite xref">WIMSE-CREDS</a>]</span> for additional implementation guidance.<a href="#section-3.2.1-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1303,10 +1294,10 @@ In most cases it is preferable to validate the entire workload identifier, see s
         <h3 id="name-client-authorization-using-">
 <a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-client-authorization-using-" class="section-name selfRef">Client Authorization Using the Workload Identity</a>
         </h3>
-<p id="section-3.3-1">The server application retrieves the workload identifier from the client certificate's URI SubjectAltName (see <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span>), which in turn is obtained from the TLS layer. The identifier is used in authorization, accounting and auditing.
-For example, the full workload identifier may be matched against ACLs to authorize actions requested by the peer and the identifier may be included in log messages to associate actions to the client workload for audit purposes.
-A deployment may specify other authorization policies based on the specific details of how the workload identifier is constructed. The path portion of the workload identifier <span class="bcp14">MUST</span> always be considered in the scope of the trust domain.
-See section 1.3 of <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span> on additional security implications of workload identifiers.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
+<p id="section-3.3-1">The server application retrieves the Workload Identifier from the client certificate's URI subjectAltName (see <span>[<a href="#WIMSE-CREDS" class="cite xref">WIMSE-CREDS</a>]</span>), which in turn is obtained from the TLS layer. The identifier is used in authorization, accounting and auditing.
+For example, the full Workload Identifier may be matched against ACLs to authorize actions requested by the peer and the identifier may be included in log messages to associate actions to the client workload for audit purposes.
+A deployment may specify other authorization policies based on the specific details of how the Workload Identifier is constructed. The path portion of the Workload Identifier <span class="bcp14">MUST</span> always be considered in the scope of the trust domain.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
+<p id="section-3.3-2">See <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-workload-creds-02#section-1.3" class="relref">Section 1.3</a> of [<a href="#WIMSE-CREDS" class="cite xref">WIMSE-CREDS</a>]</span> for additional security implications of Workload Identifiers.<a href="#section-3.3-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1324,14 +1315,14 @@ See section 1.3 of <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite x
       <h2 id="name-security-considerations">
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<p id="section-5-1">This document relies on the security properties of TLS <span>[<a href="#TLS" class="cite xref">TLS</a>]</span>, PKIX path validation <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span>, and workload identity certificate validation as described in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-workload-creds-02#section-4.1" class="relref">Section 4.1</a> of [<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span>. Implementations <span class="bcp14">MUST</span> validate the peer certificate chain, the applicable extended key usage, and the workload identifier according to the rules in this document before using the authenticated identity for authorization decisions.<a href="#section-5-1" class="pilcrow">¶</a></p>
-<p id="section-5-2">Workload identifiers are meaningful only within the scope of their trust domain. Authorization policies <span class="bcp14">MUST NOT</span> evaluate only the path or other sub-components of a workload identifier without also considering the trust domain and the trust anchor used to validate the certificate. Failure to bind the workload identifier to the expected trust domain and configured trust anchor can allow one trust domain to impersonate workloads from another domain.<a href="#section-5-2" class="pilcrow">¶</a></p>
-<p id="section-5-3">Server authentication can be based on either conventional DNS name validation or workload identity validation, depending on deployment configuration. If DNS name validation is not performed, the client <span class="bcp14">MUST</span> be configured with sufficient information to determine the expected workload identity of the server. Accepting any certificate issued by a trusted workload CA without validating that it represents the intended server workload would allow mis-issued or otherwise valid certificates for other workloads to be used for impersonation.<a href="#section-5-3" class="pilcrow">¶</a></p>
-<p id="section-5-4">Client authentication is based on the workload identity certificate presented by the TLS client. A server performing mTLS authentication <span class="bcp14">MUST</span> validate the client certificate chain, the associated trust domain, and the workload identifier before using that identity for authorization, accounting, or auditing. Accepting any valid client certificate from a trusted CA without checking whether the authenticated workload is authorized for the requested action can allow unintended workloads to gain access.<a href="#section-5-4" class="pilcrow">¶</a></p>
-<p id="section-5-5">Workload identity certificates are often issued to dynamic or short-lived workloads. Deployments <span class="bcp14">SHOULD</span> use certificate lifetimes that are appropriate for the workload environment and <span class="bcp14">SHOULD</span> provide timely revocation or replacement mechanisms when workload identity, authorization, or runtime state changes. Long-lived certificates increase the impact of private key compromise and stale authorization decisions.<a href="#section-5-5" class="pilcrow">¶</a></p>
-<p id="section-5-6">Private keys associated with workload identity certificates <span class="bcp14">MUST</span> be protected against disclosure and unauthorized use. In particular, deployments <span class="bcp14">MUST NOT</span> share private keys across unrelated workload instances. Where possible, private keys <span class="bcp14">SHOULD</span> be generated and held in the workload runtime environment or a dedicated key protection mechanism, rather than distributed over the network.<a href="#section-5-6" class="pilcrow">¶</a></p>
+<p id="section-5-1">This document relies on the security properties of TLS <span>[<a href="#TLS" class="cite xref">TLS</a>]</span>, PKIX path validation <span>[<a href="#INET-X509-PROFILE" class="cite xref">INET-X509-PROFILE</a>]</span>, and Workload Identity Certificate validation as described in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-workload-creds-02#section-6.1" class="relref">Section 6.1</a> of [<a href="#WIMSE-CREDS" class="cite xref">WIMSE-CREDS</a>]</span>. Implementations <span class="bcp14">MUST</span> validate the peer certificate chain, the applicable extended key usage, and the Workload Identifier according to the rules in this document before using the authenticated identity for authorization decisions.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-2">Workload Identifiers are meaningful only within the scope of their trust domain. Authorization policies <span class="bcp14">MUST NOT</span> evaluate only the path or other sub-components of a Workload Identifier without also considering the trust domain and the trust anchor used to validate the certificate. Failure to bind the Workload Identifier to the expected trust domain and configured trust anchor can allow one trust domain to impersonate workloads from another domain.<a href="#section-5-2" class="pilcrow">¶</a></p>
+<p id="section-5-3">When a server is identified by a DNS hostname, clients <span class="bcp14">SHOULD</span> authenticate the server using standard TLS DNS hostname validation as specified in <span>[<a href="#TLS-IDENTITY" class="cite xref">TLS-IDENTITY</a>]</span>. Workload identity validation complements, rather than replaces, DNS-based server authentication by providing an authenticated workload identity for authorization decisions. Only deployments that do not rely on DNS-based server identification should authenticate the server solely using its workload identity. Accepting any certificate issued by a trusted workload CA without validating that it represents the intended server workload would allow mis-issued or otherwise valid certificates for other workloads to be used for impersonation.<a href="#section-5-3" class="pilcrow">¶</a></p>
+<p id="section-5-4">Client authentication is based on the Workload Identity Certificate presented by the TLS client. A server performing mTLS authentication <span class="bcp14">MUST</span> validate the client certificate chain, the associated trust domain, and the Workload Identifier before using that identity for authorization, accounting, or auditing. Accepting any valid client certificate from a trusted CA without checking whether the authenticated workload is authorized for the requested action can allow unintended workloads to gain access.<a href="#section-5-4" class="pilcrow">¶</a></p>
+<p id="section-5-5">Workload Identity Certificates are often issued to dynamic or short-lived workloads. Deployments <span class="bcp14">SHOULD</span> use certificate lifetimes that are appropriate for the workload environment and <span class="bcp14">SHOULD</span> provide timely revocation or replacement mechanisms when workload identity, authorization, or runtime state changes. Long-lived certificates increase the impact of private key compromise and stale authorization decisions.<a href="#section-5-5" class="pilcrow">¶</a></p>
+<p id="section-5-6">Private keys associated with Workload Identity Certificates <span class="bcp14">MUST</span> be protected against disclosure and unauthorized use. In particular, deployments <span class="bcp14">MUST NOT</span> share private keys across unrelated workload instances. Where possible, private keys <span class="bcp14">SHOULD</span> be generated and held in the workload runtime environment or a dedicated key protection mechanism, rather than distributed over the network.<a href="#section-5-6" class="pilcrow">¶</a></p>
 <p id="section-5-7">This document specifies authentication at the TLS layer. If application traffic traverses intermediaries, gateways, service meshes, or other middleboxes that terminate and re-establish TLS, the application endpoint might not be directly authenticated to the peer workload. In such deployments, authorization decisions need to account for where TLS is terminated and whether the authenticated certificate represents the peer workload, an intermediary, or another delegated entity. Where end-to-end workload authentication context is required across such boundaries, deployments <span class="bcp14">SHOULD</span> use an application-layer WIMSE protection mechanism in addition to TLS-layer server authentication.<a href="#section-5-7" class="pilcrow">¶</a></p>
-<p id="section-5-8">Client certificate authentication exposes the client workload identity to the TLS server during the handshake. Deployments should consider whether disclosure of workload identifiers to servers, intermediaries, or logs is acceptable for their threat model. Workload identifiers included in certificates and audit records should avoid embedding unnecessary sensitive information.<a href="#section-5-8" class="pilcrow">¶</a></p>
+<p id="section-5-8">Client certificate authentication exposes the client workload identity to the TLS server during the handshake. Deployments should consider whether disclosure of Workload Identifiers to servers, intermediaries, or logs is acceptable for their threat model. Workload Identifiers included in certificates and audit records should avoid embedding unnecessary sensitive information.<a href="#section-5-8" class="pilcrow">¶</a></p>
 <p id="section-5-9">Authorization decisions based on workload identity need to be made using the authenticated identity obtained from the validated certificate, not from unauthenticated application-layer metadata such as HTTP headers. Application-layer identity assertions can be useful for logging or context, but they <span class="bcp14">MUST NOT</span> override the identity established by mutual TLS unless protected and authorized by another mechanism.<a href="#section-5-9" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1346,9 +1337,9 @@ See section 1.3 of <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite x
 <a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
         </h3>
 <dl class="references">
-<dt id="I-D.ietf-wimse-workload-creds">[I-D.ietf-wimse-workload-creds]</dt>
+<dt id="INET-X509-PROFILE">[INET-X509-PROFILE]</dt>
         <dd>
-<span class="refAuthor">Campbell, B.</span>, <span class="refAuthor">Salowey, J. A.</span>, <span class="refAuthor">Schwenkschuster, A.</span>, <span class="refAuthor">Sheffer, Y.</span>, and <span class="refAuthor">Y. Rosomakho</span>, <span class="refTitle">"WIMSE Workload Credentials"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-workload-creds-02</span>, <time datetime="2026-07-02" class="refDate">2 July 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-workload-creds-02">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-workload-creds-02</a>&gt;</span>. </dd>
+<span class="refAuthor">Cooper, D.</span>, <span class="refAuthor">Santesson, S.</span>, <span class="refAuthor">Farrell, S.</span>, <span class="refAuthor">Boeyen, S.</span>, <span class="refAuthor">Housley, R.</span>, and <span class="refAuthor">W. Polk</span>, <span class="refTitle">"Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile"</span>, <span class="seriesInfo">RFC 5280</span>, <span class="seriesInfo">DOI 10.17487/RFC5280</span>, <time datetime="2008-05" class="refDate">May 2008</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc5280">https://www.rfc-editor.org/rfc/rfc5280</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
         <dd>
@@ -1362,13 +1353,17 @@ See section 1.3 of <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite x
         <dd>
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="RFC9525">[RFC9525]</dt>
+<dt id="TLS">[TLS]</dt>
+        <dd>
+<span class="refAuthor">Rescorla, E.</span>, <span class="refTitle">"The Transport Layer Security (TLS) Protocol Version 1.3"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-tls-rfc8446bis-14</span>, <time datetime="2025-09-13" class="refDate">13 September 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-tls-rfc8446bis-14">https://datatracker.ietf.org/doc/html/draft-ietf-tls-rfc8446bis-14</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="TLS-IDENTITY">[TLS-IDENTITY]</dt>
         <dd>
 <span class="refAuthor">Saint-Andre, P.</span> and <span class="refAuthor">R. Salz</span>, <span class="refTitle">"Service Identity in TLS"</span>, <span class="seriesInfo">RFC 9525</span>, <span class="seriesInfo">DOI 10.17487/RFC9525</span>, <time datetime="2023-11" class="refDate">November 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9525">https://www.rfc-editor.org/rfc/rfc9525</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="TLS">[TLS]</dt>
+<dt id="WIMSE-CREDS">[WIMSE-CREDS]</dt>
       <dd>
-<span class="refAuthor">Rescorla, E.</span>, <span class="refTitle">"The Transport Layer Security (TLS) Protocol Version 1.3"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-tls-rfc8446bis-14</span>, <time datetime="2025-09-13" class="refDate">13 September 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-tls-rfc8446bis-14">https://datatracker.ietf.org/doc/html/draft-ietf-tls-rfc8446bis-14</a>&gt;</span>. </dd>
+<span class="refAuthor">Campbell, B.</span>, <span class="refAuthor">Salowey, J. A.</span>, <span class="refAuthor">Schwenkschuster, A.</span>, <span class="refAuthor">Sheffer, Y.</span>, and <span class="refAuthor">Y. Rosomakho</span>, <span class="refTitle">"WIMSE Workload Credentials"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-workload-creds-02</span>, <time datetime="2026-07-02" class="refDate">2 July 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-workload-creds-02">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-workload-creds-02</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -1379,9 +1374,9 @@ See section 1.3 of <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite x
 <a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
-<dt id="I-D.ietf-wimse-arch">[I-D.ietf-wimse-arch]</dt>
+<dt id="WIMSE-ARCH">[WIMSE-ARCH]</dt>
       <dd>
-<span class="refAuthor">Salowey, J. A.</span>, <span class="refAuthor">Rosomakho, Y.</span>, and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"Workload Identity in a Multi System Environment (WIMSE) Architecture"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-arch-07</span>, <time datetime="2026-03-02" class="refDate">2 March 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-07">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-07</a>&gt;</span>. </dd>
+<span class="refAuthor">Salowey, J. A.</span>, <span class="refAuthor">Rosomakho, Y.</span>, and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"Workload Identity in a Multi System Environment (WIMSE) Architecture"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-arch-08</span>, <time datetime="2026-07-06" class="refDate">6 July 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-08">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-08</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -1394,29 +1389,53 @@ See section 1.3 of <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite x
 <a href="#appendix-A" class="section-number selfRef">Appendix A. </a><a href="#name-document-history" class="section-name selfRef">Document History</a>
       </h2>
 <p id="appendix-A-1"><span class="cref">RFC Editor: please remove before publication.</span><a href="#appendix-A-1" class="pilcrow">¶</a></p>
-<div id="draft-ietf-wimse-mutual-tls-01">
+<div id="draft-ietf-wimse-mutual-tls-03">
 <section id="appendix-A.1">
         <h3 id="name-draft-ietf-wimse-mutual-tls">
-<a href="#appendix-A.1" class="section-number selfRef">A.1. </a><a href="#name-draft-ietf-wimse-mutual-tls" class="section-name selfRef">draft-ietf-wimse-mutual-tls-01</a>
+<a href="#appendix-A.1" class="section-number selfRef">A.1. </a><a href="#name-draft-ietf-wimse-mutual-tls" class="section-name selfRef">draft-ietf-wimse-mutual-tls-03</a>
         </h3>
 <ul class="normal">
 <li class="normal" id="appendix-A.1-1.1">
-            <p id="appendix-A.1-1.1.1">Added security considerations<a href="#appendix-A.1-1.1.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.1.1">Editorial: consistent capitalization of the defined terms "Workload Identifier" and "Workload Identity Certificate".<a href="#appendix-A.1-1.1.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+</section>
+</div>
+<div id="draft-ietf-wimse-mutual-tls-02">
+<section id="appendix-A.2">
+        <h3 id="name-draft-ietf-wimse-mutual-tls-">
+<a href="#appendix-A.2" class="section-number selfRef">A.2. </a><a href="#name-draft-ietf-wimse-mutual-tls-" class="section-name selfRef">draft-ietf-wimse-mutual-tls-02</a>
+        </h3>
+<ul class="normal">
+<li class="normal" id="appendix-A.2-1.1">
+            <p id="appendix-A.2-1.1.1">Improved Server Name Validation section<a href="#appendix-A.2-1.1.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+</section>
+</div>
+<div id="draft-ietf-wimse-mutual-tls-01">
+<section id="appendix-A.3">
+        <h3 id="name-draft-ietf-wimse-mutual-tls-0">
+<a href="#appendix-A.3" class="section-number selfRef">A.3. </a><a href="#name-draft-ietf-wimse-mutual-tls-0" class="section-name selfRef">draft-ietf-wimse-mutual-tls-01</a>
+        </h3>
+<ul class="normal">
+<li class="normal" id="appendix-A.3-1.1">
+            <p id="appendix-A.3-1.1.1">Added security considerations<a href="#appendix-A.3-1.1.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
 </div>
 <div id="draft-ietf-wimse-mutual-tls-00">
-<section id="appendix-A.2">
-        <h3 id="name-draft-ietf-wimse-mutual-tls-">
-<a href="#appendix-A.2" class="section-number selfRef">A.2. </a><a href="#name-draft-ietf-wimse-mutual-tls-" class="section-name selfRef">draft-ietf-wimse-mutual-tls-00</a>
+<section id="appendix-A.4">
+        <h3 id="name-draft-ietf-wimse-mutual-tls-00">
+<a href="#appendix-A.4" class="section-number selfRef">A.4. </a><a href="#name-draft-ietf-wimse-mutual-tls-00" class="section-name selfRef">draft-ietf-wimse-mutual-tls-00</a>
         </h3>
 <ul class="normal">
-<li class="normal" id="appendix-A.2-1.1">
-            <p id="appendix-A.2-1.1.1">Initial version, extracted from the draft-ietf-wimse-s2s-protocol-07 S2s draft with minimal edits.<a href="#appendix-A.2-1.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-A.4-1.1">
+            <p id="appendix-A.4-1.1.1">Initial version, extracted from the draft-ietf-wimse-s2s-protocol-07 S2s draft with minimal edits.<a href="#appendix-A.4-1.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-A.2-1.2">
-            <p id="appendix-A.2-1.2.1">added security consideration for Server Name Validation<a href="#appendix-A.2-1.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-A.4-1.2">
+            <p id="appendix-A.4-1.2.1">added security consideration for Server Name Validation<a href="#appendix-A.4-1.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
@@ -1438,7 +1457,7 @@ See section 1.3 of <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite x
       </h2>
 <address class="vcard">
         <div dir="auto" class="left"><span class="fn nameRole">Joe Salowey</span></div>
-<div dir="auto" class="left"><span class="org">CyberArk</span></div>
+<div dir="auto" class="left"><span class="org">Palo Alto Networks</span></div>
 <div class="email">
 <span>Email:</span>
 <a href="mailto:joe@salowey.net" class="email">joe@salowey.net</a>
