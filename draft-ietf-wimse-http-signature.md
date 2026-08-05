@@ -287,15 +287,15 @@ and its WIT representation.
 ## Workload Identity Token and Proof of Possession
 
 The Workload Identity Token (WIT) is bound to a secret cryptographic key and is
-always presented with a proof of possession as described in
+always presented with a proof of possession (PoP) as described in
 {{I-D.ietf-wimse-workload-creds}}. The WIT is a general purpose token that can be presented
 in multiple contexts. The WIT and its PoP are only used in the
 application-layer options, and neither is used in MTLS. The WIT MUST NOT be
 used as a bearer token. While this helps reduce the sensitivity of the token it
-is still possible that a token and its proof of possession may be captured and
+is still possible that a token and its PoP may be captured and
 replayed within the PoP's lifetime.
 
-The HTTP Signature profile presented here binds the proof of possession to the critical parts of the HTTP request (and potentially
+The HTTP Signature profile presented here binds the PoP to the critical parts of the HTTP request (and potentially
 response), including the Request URI and the message body. This
 eliminates most of the risk associated with active attackers on a middlebox.
 
@@ -303,8 +303,8 @@ In addition, the following mitigations should be used:
 
 * Preventing Eavesdropping and Interception with TLS
 
-An attacker observing or intercepting the communication channel can view the token and its proof of possession and attempt to replay it to gain an advantage. In order to prevent this, the
-token and proof of possession MUST be sent over a secure, server authenticated TLS connection unless a secure channel is provided by some other mechanisms. Hostname validation according
+An attacker observing or intercepting the communication channel can view the token and its PoP and attempt to replay it to gain an advantage. In order to prevent this, the
+token and PoP MUST be sent over a secure, server authenticated TLS connection unless a secure channel is provided by some other mechanisms. Hostname validation according
 to Section 6.3 of {{!RFC9525}} MUST be performed by the client.
 
 * Limiting Signature Lifespan
@@ -322,7 +322,7 @@ replay protection would not be effective.
 
 ## Middle Boxes {#middleboxes}
 
-In some deployments the Workload Identity Token and proof of possession
+In some deployments the Workload Identity Token and PoP
 (signature) may pass through multiple systems. The communication between the
 systems is over TLS, but the WIT and signature are available in the clear at each
 intermediary.  While the intermediary cannot modify the token or the
@@ -334,7 +334,7 @@ if responses are signed in addition to requests.
 
 ## Privacy Considerations
 
-WITs and the signatures may contain private information such as user names or other identities. Care must be taken to prevent disclosure of this information. The use of TLS helps protect the privacy of WITs and proofs of possession.
+WITs and the signatures may contain private information such as user names or other identities. Care must be taken to prevent disclosure of this information. The use of TLS helps protect the privacy of WITs and PoPs.
 
 WITs are typically associated with a workload and not a specific user, however
 in some deployments the workload may be associated directly to a user. While
@@ -426,6 +426,10 @@ IANA is requested to register the following entries in the "HTTP Signature Metad
 
 # Document History
 <cref>RFC Editor: please remove before publication.</cref>
+
+## draft-ietf-wimse-http-signature-07
+
+* Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use.
 
 ## draft-ietf-wimse-http-signature-06
 

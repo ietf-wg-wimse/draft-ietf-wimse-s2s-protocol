@@ -162,11 +162,11 @@ To enable mutual and granular authentication between workloads, two things must 
 
 - Each workload must know its own identifier.
 - There needs to be an explicit mapping from the external access name used to access a workload (such as an Ingress path or service DNS name)
-to its workload identifier.
+to its Workload Identifier.
 
 Once these conditions are met, the methods described in this document can be used for the caller and callee to mutually authenticate.
 
-Implementations MUST allow for defining this mapping between the workload's external access name and the workload identifier (e.g., through
+Implementations MUST allow for defining this mapping between the workload's external access name and the Workload Identifier (e.g., through
 callback functions). Deployments SHOULD use these features to establish a consistent set of identifiers within their environment.
 
 # Conventions and Definitions
@@ -183,7 +183,7 @@ This document does not define a mechanism for discovering trust anchor informati
 
 To validate a WIT, the receiving workload verifies the JWS signature using key material from the trust anchors configured for the trust domain in the `sub` claim. Trust anchor material for WIT validation MAY include more than one public key so that operators can rotate signing keys. Verification follows {{RFC7515}} and the JWT best practices in {{RFC8725}}. In practice, the `alg` header parameter would identify an algorithm that the validator accepts for that trust domain, and the signature would be checked under a key drawn from the configured trust anchors. If the JWS header contains a `kid` parameter, the validator would use the key in the trust anchor material with the same `kid` value. If `kid` is absent, deployment policy would need to provide unambiguous key selection (for example, when only a single key is configured for that trust domain).
 
-For Workload Identity Certificates, validators use the trust anchors for the peer's trust domain to validate the X.509 chain and the workload identifier in the certificate, as described in {{to-wic}} and in companion specifications such as {{!I-D.ietf-wimse-mutual-tls}}.
+For Workload Identity Certificates, validators use the trust anchors for the peer's trust domain to validate the X.509 chain and the Workload Identifier in the certificate, as described in {{to-wic}} and in companion specifications such as {{!I-D.ietf-wimse-mutual-tls}}.
 
 # One Workload Identity per Credential {#single-workload-identity}
 
@@ -191,7 +191,7 @@ Each WIMSE credential carries exactly one Workload Identifier ({{WIMSE-ID}}) tha
 
 For a Workload Identity Token, that identifier is the value of the `sub` claim. For a Workload Identity Certificate, that identifier is carried in the single URI SubjectAltName described in {{to-wic}}.
 
-Deployments that distinguish several labels for the same runtime (for example a stable service identity and a specific instance) MUST place the identity required for the access decision in that one credential. Additional correlation for logging or operations MUST NOT be encoded as a second workload identifier in the same WIT or WIC. Deployments MAY use other mechanisms, such as the optional `jti` claim, separate credentials, or additional claims as described in {{add-claims}}.
+Deployments that distinguish several labels for the same runtime (for example a stable service identity and a specific instance) MUST place the identity required for the access decision in that one credential. Additional correlation for logging or operations MUST NOT be encoded as a second Workload Identifier in the same WIT or WIC. Deployments MAY use other mechanisms, such as the optional `jti` claim, separate credentials, or additional claims as described in {{add-claims}}.
 
 # Application-Layer Workload-to-Workload Authentication {#app-layer}
 
@@ -218,7 +218,7 @@ A WIT MUST contain the following content, except where noted:
         * `jwk`: Within the `cnf` claim, a `jwk` key MUST be present that contains the public key of the workload as defined in {{Section 3.2 of RFC7800}}. The workload MUST prove possession of the corresponding private key when presenting the WIT to another party. As such, it MUST NOT be used as a bearer token and is not intended for use in the `Authorization` header.
             * `alg`: Within the `jwk` object, an `alg` field MUST be present. Allowed values are listed in the IANA "JSON Web Signature and Encryption Algorithms" registry established by {{RFC7518}}. The presented proof MUST be produced with the algorithm specified in this field. The value `none` MUST NOT be used. Algorithms used in combination with symmetric keys MUST NOT be used. Also encryption algorithms MUST NOT be used as this would require additional key distribution outside of the WIT. To promote interoperability, the `ES256` signing algorithm MUST be supported by general purpose implementations of this document.
 
-As noted in {{WIMSE-ID}}, a workload identifier is a URI that includes a trust domain in the authority component.
+As noted in {{WIMSE-ID}}, a Workload Identifier is a URI that includes a trust domain in the authority component.
 The runtime environment often determines which
 URI scheme is used, e.g., if SPIFFE is used to authenticate workloads, it mandates `spiffe` URIs.
 For deployments that do not use an environment-specific scheme, the `wimse` URI scheme MAY be used; it is defined in {{WIMSE-ID}}, which also registers it with IANA.
@@ -370,21 +370,21 @@ As noted in the introduction, for many deployments, transport-layer protection o
 
 ## The Workload Identity Certificate {#to-wic}
 
-The Workload Identity Certificate is an X.509 certificate. The Workload Identifier used for WIMSE authentication and authorization MUST appear in exactly one SubjectAltName extension of type URI, as required by {{single-workload-identity}}. The certificate MUST NOT contain more than one URI SAN that carries a workload identifier.
+The Workload Identity Certificate is an X.509 certificate. The Workload Identifier used for WIMSE authentication and authorization MUST appear in exactly one SubjectAltName extension of type URI, as required by {{single-workload-identity}}. The certificate MUST NOT contain more than one URI SAN that carries a Workload Identifier.
 
 When the certificate is also used for TLS server authentication, it is RECOMMENDED to include SubjectAltName extensions of type DNSName with the appropriate DNS names for clients that validate the server by host name rather than by workload identity. The certificate MAY contain SubjectAltName extensions of other types for PKIX or local policy, but only the URI SAN above is the WIMSE workload identity.
 
 # Client Authorization Using the Workload Identity {#client-name}
 
-The receiving application uses the authenticated peer's workload identifier in authorization, accounting, and auditing.
-For example, the full workload identifier may be matched against ACLs to authorize actions requested by the peer and the identifier may be included in log messages to associate actions to the client workload for audit purposes.
-A deployment may specify other authorization policies based on the specific details of how the workload identifier is constructed. The path portion of the workload identifier MUST always be considered in the scope of the trust domain.
-See {{granular-auth}} on additional security implications of workload identifiers.
+The receiving application uses the authenticated peer's Workload Identifier in authorization, accounting, and auditing.
+For example, the full Workload Identifier may be matched against ACLs to authorize actions requested by the peer and the identifier may be included in log messages to associate actions to the client workload for audit purposes.
+A deployment may specify other authorization policies based on the specific details of how the Workload Identifier is constructed. The path portion of the Workload Identifier MUST always be considered in the scope of the trust domain.
+See {{granular-auth}} on additional security implications of Workload Identifiers.
 
-How the receiving application obtains the workload identifier depends on the credential used to authenticate the peer:
+How the receiving application obtains the Workload Identifier depends on the credential used to authenticate the peer:
 
-* Application-layer: After successfully validating the WIT, the receiving application retrieves the workload identifier from the `sub` claim.
-* Transport-layer: When the client is authenticated with a Workload Identity Certificate, the receiving application retrieves the workload identifier from the client certificate's SubjectAltName extension of type URI.
+* Application-layer: After successfully validating the WIT, the receiving application retrieves the Workload Identifier from the `sub` claim.
+* Transport-layer: When the client is authenticated with a Workload Identity Certificate, the receiving application retrieves the Workload Identifier from the client certificate's SubjectAltName extension of type URI.
 
 A workload MAY use other standard and deployment specific fields in the workload credential for accounting or authorization purposes.
 
@@ -434,7 +434,7 @@ When a deployment uses the `iss` claim for key distribution as described in {{wi
 
 ## Workload Identity Token and Proof of Possession {#wit-pop}
 
-The Workload Identity Token (WIT) is bound to a secret cryptographic key and is always presented with a proof of possession as described in {{to-wit}}. The WIT is a general purpose token that can be presented in multiple contexts. The WIT and its PoP are only used in the application-layer options, and both are not used in mTLS. The WIT MUST NOT be used as a bearer token. While this helps reduce the sensitivity of the token it is still possible that a token and its proof of possession may be captured and replayed within the PoP's lifetime. The following are some mitigations for the capture and reuse of the WIT and its proof of possession (PoP):
+The Workload Identity Token (WIT) is bound to a secret cryptographic key and is always presented with a proof of possession (PoP) as described in {{to-wit}}. The WIT is a general purpose token that can be presented in multiple contexts. The WIT and its PoP are only used in the application-layer options, and both are not used in mTLS. The WIT MUST NOT be used as a bearer token. While this helps reduce the sensitivity of the token it is still possible that a token and its PoP may be captured and replayed within the PoP's lifetime. The following are some mitigations for the capture and reuse of the WIT and its PoP:
 
 ### Limiting Workload Identity Token Lifespan
 
@@ -442,7 +442,7 @@ The WIT MUST have a limited lifetime expressed through the `exp` claim. If both 
 
 ### Limiting Proof of Possession Lifespan
 
-The proof of possession MUST be time limited. A PoP should only be valid over the time necessary for it to be successfully used for the purpose it is needed. This will typically be on the order of minutes.  PoPs received outside their validity time MUST be rejected.
+The PoP MUST be time limited. A PoP should only be valid over the time necessary for it to be successfully used for the purpose it is needed. This will typically be on the order of minutes.  PoPs received outside their validity time MUST be rejected.
 
 ### Limiting Proof of Possession Scope
 
@@ -450,7 +450,7 @@ In order to reduce the risk of theft and replay the PoP should have a limited sc
 
 ### Replay Protection
 
-Proof of possession mechanisms should include replay protection to prevent reuse of a captured PoP. Without it an attacker can replay a captured PoP within its validity period.
+PoP mechanisms should include replay protection to prevent reuse of a captured PoP. Without it an attacker can replay a captured PoP within its validity period.
 
 ### Binding to TLS Endpoint
 
@@ -458,7 +458,7 @@ The PoP MAY be bound to a transport layer sender such as the client identity of 
 
 ## Workload Identity Certificate
 
-The Workload Identity Certificate carries the workload identifier in a single URI SubjectAltName ({{to-wic}}). As with the WIT, the identifier is meaningful only within its trust domain. A relying party MUST validate the certificate against the trust anchors configured for the peer's trust domain ({{trust-anchors}}) and MUST reject the certificate if the workload identifier is not within that trust domain and the trust anchor used. Evaluating the path or other components of the identifier without also considering the trust domain and the trust anchor can allow one trust domain to impersonate workloads in another. Protocol-specific certificate validation requirements are defined in {{!I-D.ietf-wimse-mutual-tls}}.
+The Workload Identity Certificate carries the Workload Identifier in a single URI SubjectAltName ({{to-wic}}). As with the WIT, the identifier is meaningful only within its trust domain. A relying party MUST validate the certificate against the trust anchors configured for the peer's trust domain ({{trust-anchors}}) and MUST reject the certificate if the Workload Identifier is not within that trust domain and the trust anchor used. Evaluating the path or other components of the identifier without also considering the trust domain and the trust anchor can allow one trust domain to impersonate workloads in another. Protocol-specific certificate validation requirements are defined in {{!I-D.ietf-wimse-mutual-tls}}.
 
 ### Limiting Workload Identity Certificate Lifespan
 
@@ -477,15 +477,15 @@ Both the Workload Identity Token and the Workload Identity Certificate carry a p
 
 ## Transport Security {#middleboxes}
 
-An attacker observing or intercepting the communication channel can view the Workload Identity Token and its proof of possession and attempt to replay them to gain an advantage. To prevent this, the WIT and its proof of possession MUST be sent over a secure, server-authenticated TLS connection unless a secure channel is provided by some other mechanism.
+An attacker observing or intercepting the communication channel can view the Workload Identity Token and its PoP and attempt to replay them to gain an advantage. To prevent this, the WIT and its PoP MUST be sent over a secure, server-authenticated TLS connection unless a secure channel is provided by some other mechanism.
 
-In some deployments the Workload Identity Token and proof of possession may pass through multiple systems. Communication between systems is over TLS, but the token and PoP are available in the clear at each intermediary.  While an intermediary cannot modify the token or the information within the PoP, it can attempt to capture and replay the token or modify data not protected by the PoP. Mitigations listed in {{wit-pop}} can reduce this risk. Deployments should analyze their situation to determine whether it is appropriate to trust and allow traffic to pass through a middlebox.
+In some deployments the Workload Identity Token and PoP may pass through multiple systems. Communication between systems is over TLS, but the token and PoP are available in the clear at each intermediary.  While an intermediary cannot modify the token or the information within the PoP, it can attempt to capture and replay the token or modify data not protected by the PoP. Mitigations listed in {{wit-pop}} can reduce this risk. Deployments should analyze their situation to determine whether it is appropriate to trust and allow traffic to pass through a middlebox.
 
 # Privacy Considerations
 
-WITs and the proofs of possession may contain private information such as user names or other identities. Care should be taken to prevent the disclosure of this information. The use of TLS helps protect the privacy of WITs and proofs of possession in transit. Workload Identity Certificates likewise expose the workload identifier, and any attributes carried in the certificate, to the peer, to any TLS-terminating intermediary, and to logs; in particular, client-certificate authentication discloses the client's workload identity to the server during the TLS handshake.
+WITs and PoPs may contain private information such as user names or other identities. Care should be taken to prevent the disclosure of this information. The use of TLS helps protect the privacy of WITs and PoPs in transit. Workload Identity Certificates likewise expose the Workload Identifier, and any attributes carried in the certificate, to the peer, to any TLS-terminating intermediary, and to logs; in particular, client-certificate authentication discloses the client's workload identity to the server during the TLS handshake.
 
-WITs and certificates with workload identifiers are typically associated with a workload and not a specific user, however in some deployments the workload may be associated directly to a user. While these are exceptional cases a deployment should evaluate if the disclosure of WITs or certificates can be used to track a user.
+WITs and certificates with Workload Identifiers are typically associated with a workload and not a specific user, however in some deployments the workload may be associated directly to a user. While these are exceptional cases a deployment should evaluate if the disclosure of WITs or certificates can be used to track a user.
 
 
 # IANA Considerations
@@ -514,7 +514,7 @@ Interoperability considerations: N/A
 
 Published specification: RFC XXX, {{to-wit}}.
 
-Applications that use this media type: Identity servers that vend Workload Identity Tokens, and Workloads that
+Applications that use this media type: Identity Servers that vend Workload Identity Tokens, and workloads that
 use these tokens to authenticate to each other.
 
 Fragment identifier considerations: N/A
@@ -559,6 +559,10 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 
 # Document History
 <cref>RFC Editor: please remove before publication.</cref>
+
+## draft-ietf-wimse-workload-creds-03
+
+* Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use, and consistent capitalization of the defined term "Workload Identifier".
 
 ## draft-ietf-wimse-workload-creds-02
 
