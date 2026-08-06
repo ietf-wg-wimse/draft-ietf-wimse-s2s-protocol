@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-08-04T02:24:01.453148+00:00",
+  "timestamp": "2026-08-06T02:26:17.357506+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -4028,9 +4028,17 @@
       ],
       "body": "maybe instead of the access token w/ Authorization: Bearer\n\nmaybe \n\nthis might be a better conceptual model to have in examples ",
       "createdAt": "2026-03-02T22:28:55Z",
-      "updatedAt": "2026-03-02T22:28:55Z",
+      "updatedAt": "2026-08-04T05:46:50Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "Math1987",
+          "authorAssociation": "NONE",
+          "body": "Hi Brian and @arndt-s,\n\nI watched the IETF 126 WPT discussion and would be happy to work on the Txn-Token example proposed in this issue.\n\nThe current Go example generator already defines a `Tth` field, while the generated request still carries an OAuth bearer token and binds it through `ath`.\n\nMy proposed small PR would:\n- add a deterministic example Txn-Token;\n- carry it in the `Txn-Token` header;\n- compute `tth` over its exact compact value;\n- regenerate the WPT and HTTP request examples;\n- optionally add a small consistency test.\n\nIs anyone already working on this? Also, would you prefer a self-contained signed Txn-Token based on the required claims from `draft-ietf-oauth-transaction-tokens-11`, or an example value derived directly from that draft?\n\nI also noticed that #227 touches the same example area, so I would coordinate with it rather than duplicate or conflict with that work.",
+          "createdAt": "2026-08-04T05:46:49Z",
+          "updatedAt": "2026-08-04T05:46:49Z"
+        }
+      ]
     },
     {
       "number": 217,
@@ -4739,7 +4747,7 @@
       ],
       "body": "Currently a JSON web key (jwk) is required in a cnf object. For cases where there is already a public key known at another layer, why not allow the cnf object to contain a JSON key thumbprint (jkt) of the public key instead?",
       "createdAt": "2026-07-19T18:13:47Z",
-      "updatedAt": "2026-07-19T20:11:21Z",
+      "updatedAt": "2026-08-04T13:55:00Z",
       "closedAt": null,
       "comments": [
         {
@@ -4748,6 +4756,13 @@
           "body": "The idea was to have just one cnf method/way to convey the public key and it be the one that could always work without additional knowledge or state. ",
           "createdAt": "2026-07-19T20:11:21Z",
           "updatedAt": "2026-07-19T20:11:21Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Agreeing with Brian. While I understand that there's specific deployments out there for which passing a key by reference would work it requires certain conditions to be true, for instance that every relying party knows where and how to resolve such reference. This will most likely require additional configuration out of band and increases overall complexity. It also makes generic SDK support and interoperability less likely to succeed.\n\n@rohanmahy do you agree with this assessment or do you have a specific environment/scenario in mind that applies broadly?",
+          "createdAt": "2026-08-04T13:55:00Z",
+          "updatedAt": "2026-08-04T13:55:00Z"
         }
       ]
     },
@@ -4756,7 +4771,7 @@
       "id": "I_kwDOLJmm788AAAABKUkXHw",
       "title": "Allow requestor to mandate a signed response",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/277",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -4765,7 +4780,25 @@
       ],
       "body": "Following a comment from @jhoyla, specifying that response signing (and enforcing/validating this signature) is subject to local policy is brittle. One way to strengthen this behavior is for the requestor to signal that response signing is required. Of course the signal itself must be protected.\n\nIn more detail: add a Boolean on the request\u2019s Signature-Input, covered by the signature: `wimse-sign-response=true`.\n\nPros: integrity-protected; rides with the PoP; hard for proxies to strip without breaking the signature\nCons: new IANA signature-metadata param; server must parse the incoming `Signature-Input` before deciding to sign",
       "createdAt": "2026-07-27T12:00:11Z",
-      "updatedAt": "2026-07-27T12:01:02Z",
+      "updatedAt": "2026-08-04T14:36:59Z",
+      "closedAt": "2026-08-04T14:36:59Z",
+      "comments": []
+    },
+    {
+      "number": 284,
+      "id": "I_kwDOLJmm788AAAABLoJ60w",
+      "title": "maybe switch to something like `Authorization: wimse <WIT>/<WPT>`?",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/284",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-wpt"
+      ],
+      "body": "> Interestingly @arndt-s recently floated the idea (more or less) of conveying the WPT and WIT together in the Authorization header with a new aauth-scheme, which might help with default logging of headers. Something like:\n> \n> `Authorization: wimse <WIT>/<WPT>` \n\n _Originally posted by @bc-pi in [#271](https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/271#issuecomment-4996661207)_",
+      "createdAt": "2026-08-05T21:13:38Z",
+      "updatedAt": "2026-08-05T21:13:38Z",
       "closedAt": null,
       "comments": []
     }
@@ -19110,7 +19143,7 @@
       "id": "PR_kwDOLJmm78726E2y",
       "title": "Add wimse-sign-response for mandated signed responses",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/278",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -19119,17 +19152,19 @@
       ],
       "body": "## Summary\n* Add Boolean request signature parameter `wimse-sign-response` so clients can require a signed response (integrity-protected via Signature-Input).\n* Define when response signing is required (parameter or local policy), what to do if the server cannot sign, and regenerate examples accordingly.\n\nFixes #277\n\n\nMade with [Cursor](https://cursor.com)",
       "createdAt": "2026-07-27T12:42:11Z",
-      "updatedAt": "2026-08-03T16:48:01Z",
+      "updatedAt": "2026-08-04T14:36:58Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "7d6da68171b1fb5409bc7411cfe3d1d008213a3f",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-277",
       "headRefOid": "282f259c2130f25bb234c0c72ae1e95dfd3b9a0c",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-08-04T14:36:58Z",
+      "mergedAt": "2026-08-04T14:36:58Z",
+      "mergedBy": "jsalowey",
+      "mergeCommit": {
+        "oid": "cc8b58b2bca1ae3c830f63b2bcb984d7da31dc25"
+      },
       "comments": [],
       "reviews": [
         {
@@ -19151,6 +19186,19 @@
               "updatedAt": "2026-08-03T15:08:39Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABIWwclw",
+          "commit": {
+            "abbreviatedOid": "282f259"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-08-04T14:36:25Z",
+          "updatedAt": "2026-08-04T14:36:25Z",
+          "comments": []
         }
       ]
     },
@@ -19168,19 +19216,53 @@
       ],
       "body": "## Summary\n* Clarify that audit logs should use the workload identifier / selected claims, not raw WIT or proof-of-possession header field values.\n* Note that intermediaries and observability agents often dump those headers by default, enabling replay within the PoP lifetime.\n\nRelated to #271 (Creds-only; leaving the issue open for WPT follow-up).\n\n\nMade with [Cursor](https://cursor.com)",
       "createdAt": "2026-07-29T12:53:24Z",
-      "updatedAt": "2026-07-31T13:28:25Z",
+      "updatedAt": "2026-08-04T15:01:54Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "7d6da68171b1fb5409bc7411cfe3d1d008213a3f",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-271",
-      "headRefOid": "5275fd3da3c2444634002b6a977888f0b9928fcd",
+      "headRefOid": "fcd98655e6c8e617faf978aee25dddfcf6039150",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABIWdeiw",
+          "commit": {
+            "abbreviatedOid": "5275fd3"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-08-04T14:06:07Z",
+          "updatedAt": "2026-08-04T14:06:07Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABIWhCIg",
+          "commit": {
+            "abbreviatedOid": "5275fd3"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-04T14:11:18Z",
+          "updatedAt": "2026-08-04T14:11:19Z",
+          "comments": [
+            {
+              "originalPosition": 12,
+              "body": "Add some comment re: gateways that see untrusted WITs and whether to log it or mark it as untrusted,",
+              "createdAt": "2026-08-04T14:11:19Z",
+              "updatedAt": "2026-08-04T14:11:19Z"
+            }
+          ]
+        }
+      ]
     },
     {
       "number": 280,
@@ -19196,19 +19278,68 @@
       ],
       "body": "## Summary\n* Clarify that WICs are short-lived like WITs and do not rely on CRLs.\n* Issuers MAY include an OCSP responder location; if present, relying parties MUST check OCSP and fail closed.\n\nFixes #270\n\n\nMade with [Cursor](https://cursor.com)",
       "createdAt": "2026-07-29T13:47:27Z",
-      "updatedAt": "2026-07-31T13:27:57Z",
+      "updatedAt": "2026-08-04T14:54:27Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "7d6da68171b1fb5409bc7411cfe3d1d008213a3f",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-270",
-      "headRefOid": "b95cf65540b160c1a3062a5903976591756336c1",
+      "headRefOid": "af251a2b69aa7b4020935b2abce7421dfeaac587",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
-      "reviews": []
+      "comments": [
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Dropped the OCSP paragraph per @arndt-s \u2014 short lifetimes and no CRL reliance remain.",
+          "createdAt": "2026-08-04T14:54:08Z",
+          "updatedAt": "2026-08-04T14:54:08Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABIWirlw",
+          "commit": {
+            "abbreviatedOid": "b95cf65"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-04T14:13:26Z",
+          "updatedAt": "2026-08-04T14:13:26Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "This requires all compliant validators to add OCSP support which I don't support",
+              "createdAt": "2026-08-04T14:13:26Z",
+              "updatedAt": "2026-08-04T14:13:26Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABIWnIwA",
+          "commit": {
+            "abbreviatedOid": "b95cf65"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-04T14:20:27Z",
+          "updatedAt": "2026-08-04T14:20:28Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "Drop OCSP para.",
+              "createdAt": "2026-08-04T14:20:28Z",
+              "updatedAt": "2026-08-04T14:20:28Z"
+            }
+          ]
+        }
+      ]
     },
     {
       "number": 281,
@@ -19224,19 +19355,143 @@
       ],
       "body": "## Summary\n* Keep the guidance that WIT and PoP are application-layer credentials and are not used as the mutual TLS credential (WIC is).\n* Rather than deleting that sentence, clarify the apparent contradictions: intro wording about \u201ctransport-layer\u201d use of WIT, and PoP binding to TLS session properties.\n\nFixes #256\n\n\nMade with [Cursor](https://cursor.com)",
       "createdAt": "2026-07-29T14:02:07Z",
-      "updatedAt": "2026-07-31T13:27:35Z",
+      "updatedAt": "2026-08-04T14:56:23Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "7d6da68171b1fb5409bc7411cfe3d1d008213a3f",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-256",
-      "headRefOid": "86c47aae9c14196b8f84643a49ae2af35c991a79",
+      "headRefOid": "8b3d8e9809dd30b163e922774e44d0cc2e8f1ce8",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Restored `but these are the primary intended uses.` while keeping the mTLS clarification.",
+          "createdAt": "2026-08-04T14:56:23Z",
+          "updatedAt": "2026-08-04T14:56:23Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABIWriLw",
+          "commit": {
+            "abbreviatedOid": "86c47aa"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-04T14:27:59Z",
+          "updatedAt": "2026-08-04T14:27:59Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "Retain \"but these are the primary intended uses.\"",
+              "createdAt": "2026-08-04T14:27:59Z",
+              "updatedAt": "2026-08-04T14:27:59Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 282,
+      "id": "PR_kwDOLJmm7876m079",
+      "title": "Fix http-sig Document History: -06 for wimse-sign-response",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/282",
+      "state": "MERGED",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "## Summary\n* Published `-05` already includes only the `#274` example regeneration.\n* Move the post-publish `#277` / `wimse-sign-response` history bullet under a new `-06` heading so Document History matches the datatracker.\n\nFollow-up to #278.\n\n\nMade with [Cursor](https://cursor.com)",
+      "createdAt": "2026-08-04T14:47:20Z",
+      "updatedAt": "2026-08-04T15:03:39Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "cc8b58b2bca1ae3c830f63b2bcb984d7da31dc25",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-history-06",
+      "headRefOid": "a37f0a36682e9e9449f02b0dd1600dcc84c1b1cf",
+      "closedAt": "2026-08-04T15:03:39Z",
+      "mergedAt": "2026-08-04T15:03:39Z",
+      "mergedBy": "jsalowey",
+      "mergeCommit": {
+        "oid": "1f46b463e784b2a4ee1af2a63a9b71ffa26815dc"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABIXAVuw",
+          "commit": {
+            "abbreviatedOid": "a37f0a3"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-08-04T15:03:24Z",
+          "updatedAt": "2026-08-04T15:03:24Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 283,
+      "id": "PR_kwDOLJmm7877FwSh",
+      "title": "editorial: Align PoP, Workload Identifier and WIC naming",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/283",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fixes #244 ",
+      "createdAt": "2026-08-05T13:28:35Z",
+      "updatedAt": "2026-08-05T21:10:45Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "1f46b463e784b2a4ee1af2a63a9b71ffa26815dc",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "arndt/fix-244",
+      "headRefOid": "6d07eaefb4c9c1417840b9864579e9a844bd4dfb",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABIgC30w",
+          "commit": {
+            "abbreviatedOid": "6d07eae"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Beautiful. We should also check that the Workload Identifiers draft is aligned.",
+          "createdAt": "2026-08-05T14:27:27Z",
+          "updatedAt": "2026-08-05T14:27:27Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABIjPFqg",
+          "commit": {
+            "abbreviatedOid": "6d07eae"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "thanks @arndt-s ",
+          "createdAt": "2026-08-05T21:10:45Z",
+          "updatedAt": "2026-08-05T21:10:45Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
