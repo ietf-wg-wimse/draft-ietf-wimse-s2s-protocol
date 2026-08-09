@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-08-06T02:26:17.357506+00:00",
+  "timestamp": "2026-08-09T01:37:24.763796+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -4261,7 +4261,7 @@
       "id": "I_kwDOLJmm788AAAABF7xtQQ",
       "title": "PoP definition and consistent writing",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/244",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -4272,8 +4272,8 @@
       ],
       "body": "POP vs PoP vs Proof of posession",
       "createdAt": "2026-06-18T14:16:24Z",
-      "updatedAt": "2026-06-23T12:57:58Z",
-      "closedAt": null,
+      "updatedAt": "2026-08-06T14:15:46Z",
+      "closedAt": "2026-08-06T14:15:46Z",
       "comments": [
         {
           "author": "arndt-s",
@@ -4627,7 +4627,7 @@
       ],
       "body": "Section 7 rightly suggests including the workload identifier in log messages. But the WIT and its proof of possession ride in HTTP header fields, and gateways, TLS-terminating proxies, and APM agents dump those headers into logs by default. A logged WIT plus a logged PoP is replayable within the validity window defined in 9.2.2. Section 10 lists logs as an exposure surface for WICs but not WITs, which is backwards: WITs hit header logging at every network hop.\n\nSuggested fix: a note in 9.2 advising implementers to record claims (sub, exp, iss, jti) rather than raw header values, and a matching update to Section 10.\n\nRaised as item 4 in my WGLC review: https://mailarchive.ietf.org/arch/msg/wimse/S5Zjmr4qneFsAmepgRWhkWtFdPA/\n",
       "createdAt": "2026-07-16T11:23:25Z",
-      "updatedAt": "2026-07-28T14:25:31Z",
+      "updatedAt": "2026-08-07T16:05:43Z",
       "closedAt": null,
       "comments": [
         {
@@ -4664,6 +4664,13 @@
           "body": "Needs to be addressed for Creds, but will remain open.",
           "createdAt": "2026-07-28T14:25:31Z",
           "updatedAt": "2026-07-28T14:25:31Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I think it's clear but the PR #279 kinda goes farther than needed so reiterating that the WIT cannot be used by itself. ",
+          "createdAt": "2026-08-07T16:05:43Z",
+          "updatedAt": "2026-08-07T16:05:43Z"
         }
       ]
     },
@@ -4798,9 +4805,17 @@
       ],
       "body": "> Interestingly @arndt-s recently floated the idea (more or less) of conveying the WPT and WIT together in the Authorization header with a new aauth-scheme, which might help with default logging of headers. Something like:\n> \n> `Authorization: wimse <WIT>/<WPT>` \n\n _Originally posted by @bc-pi in [#271](https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/271#issuecomment-4996661207)_",
       "createdAt": "2026-08-05T21:13:38Z",
-      "updatedAt": "2026-08-05T21:13:38Z",
+      "updatedAt": "2026-08-08T18:16:34Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "...or even just `Authorization: wpt <wpt>` and keep using the WIT header from [draft-ietf-wimse-workload-creds](https://datatracker.ietf.org/doc/html/draft-ietf-wimse-workload-creds-02#wit-http-header)\n\nEither approach or anything that uses the `Authorization` header will mean the `Authorization` header cannot be used for another thing and the `ath` stuff needs to go away. \n",
+          "createdAt": "2026-08-08T13:11:05Z",
+          "updatedAt": "2026-08-08T18:16:34Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -19216,7 +19231,7 @@
       ],
       "body": "## Summary\n* Clarify that audit logs should use the workload identifier / selected claims, not raw WIT or proof-of-possession header field values.\n* Note that intermediaries and observability agents often dump those headers by default, enabling replay within the PoP lifetime.\n\nRelated to #271 (Creds-only; leaving the issue open for WPT follow-up).\n\n\nMade with [Cursor](https://cursor.com)",
       "createdAt": "2026-07-29T12:53:24Z",
-      "updatedAt": "2026-08-04T15:01:54Z",
+      "updatedAt": "2026-08-07T15:49:40Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "7d6da68171b1fb5409bc7411cfe3d1d008213a3f",
@@ -19259,6 +19274,66 @@
               "body": "Add some comment re: gateways that see untrusted WITs and whether to log it or mark it as untrusted,",
               "createdAt": "2026-08-04T14:11:19Z",
               "updatedAt": "2026-08-04T14:11:19Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABIyF5rg",
+          "commit": {
+            "abbreviatedOid": "fcd9865"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-07T15:46:49Z",
+          "updatedAt": "2026-08-07T15:46:49Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "Is raw logging the WIT actually a problem? ",
+              "createdAt": "2026-08-07T15:46:49Z",
+              "updatedAt": "2026-08-07T15:46:49Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABIyGo2g",
+          "commit": {
+            "abbreviatedOid": "fcd9865"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-07T15:48:33Z",
+          "updatedAt": "2026-08-07T15:48:34Z",
+          "comments": [
+            {
+              "originalPosition": 12,
+              "body": "I'm not sure this holds for the WIT.",
+              "createdAt": "2026-08-07T15:48:34Z",
+              "updatedAt": "2026-08-07T15:48:34Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABIyHIrQ",
+          "commit": {
+            "abbreviatedOid": "fcd9865"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-07T15:49:40Z",
+          "updatedAt": "2026-08-07T15:49:40Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "having a pretty hard time w/ this sentence tbh ",
+              "createdAt": "2026-08-07T15:49:40Z",
+              "updatedAt": "2026-08-07T15:49:40Z"
             }
           ]
         }
@@ -19445,24 +19520,26 @@
       "id": "PR_kwDOLJmm7877FwSh",
       "title": "editorial: Align PoP, Workload Identifier and WIC naming",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/283",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Fixes #244 ",
       "createdAt": "2026-08-05T13:28:35Z",
-      "updatedAt": "2026-08-05T21:10:45Z",
+      "updatedAt": "2026-08-06T14:20:13Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "1f46b463e784b2a4ee1af2a63a9b71ffa26815dc",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "arndt/fix-244",
       "headRefOid": "6d07eaefb4c9c1417840b9864579e9a844bd4dfb",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-08-06T14:15:45Z",
+      "mergedAt": "2026-08-06T14:15:45Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "40b1c4161dd1971dc1ac7d5ba718a636116109ca"
+      },
       "comments": [],
       "reviews": [
         {
