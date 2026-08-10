@@ -362,11 +362,10 @@ Table of Contents
    the identity required for the access decision in that one credential.
    Additional correlation for logging or operations MUST NOT be encoded
    as a second Workload Identifier in the same WIT or WIC.  This
-   restriction applies only to Workload Identifiers; a credential MAY
-   carry other identifiers, such as the jti claim or a DNSName
-   SubjectAltName, for correlation, interoperability, or integration
-   purposes.  Deployments MAY use other mechanisms, such as the optional
-   jti claim, separate credentials, or additional claims as described in
+   restriction applies only to Workload Identifiers; deployments MAY use
+   other mechanisms for correlation, interoperability, or integration
+   purposes, such as the optional jti claim, a DNSName SubjectAltName,
+   separate credentials, or additional claims as described in
    Section 5.1.2.
 
 5.  Application-Layer Workload-to-Workload Authentication
