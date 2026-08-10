@@ -2039,7 +2039,7 @@ See <a href="#granular-auth" class="auto internal xref">Section 1.3</a> on addit
           <h4 id="name-limiting-workload-identity-c">
 <a href="#section-9.3.1" class="section-number selfRef">9.3.1. </a><a href="#name-limiting-workload-identity-c" class="section-name selfRef">Limiting Workload Identity Certificate Lifespan</a>
           </h4>
-<p id="section-9.3.1-1">Workload Identity Certificates are frequently issued to dynamic and/or short-lived workloads. Deployments <span class="bcp14">SHOULD</span> use certificate lifetimes appropriate to the workload environment, typically on a similar scale to WITs (<a href="#wit-pop" class="auto internal xref">Section 9.2</a>). Long-lived certificates increase the impact of private-key compromise. As with WITs, short certificate lifetimes are the primary mitigation against continued use of a compromised key; this document does not rely on certificate revocation lists (CRLs) for WICs.<a href="#section-9.3.1-1" class="pilcrow">¶</a></p>
+<p id="section-9.3.1-1">Workload Identity Certificates are frequently issued to dynamic and/or short-lived workloads. Deployments <span class="bcp14">SHOULD</span> use certificate lifetimes appropriate to the workload environment, typically on a similar scale to WITs (<a href="#wit-pop" class="auto internal xref">Section 9.2</a>). Long-lived certificates increase the impact of private-key compromise. As with WITs, short certificate lifetimes are the primary mitigation against continued use of a compromised key; this document does not rely on certificate revocation lists (CRLs) or Online Certificate Status Protocol (OCSP) <span>[<a href="#RFC6960" class="cite xref">RFC6960</a>]</span> for WICs.<a href="#section-9.3.1-1" class="pilcrow">¶</a></p>
 <p id="section-9.3.1-2">The lifetime of Workload Identity Certificates is bounded by the lifetime and rotation cadence of the trust anchors of the trust domain (<a href="#trust-anchors" class="auto internal xref">Section 3</a>). Compromise of a trust anchor permits issuance of certificates for the trust domain for as long as that anchor remains trusted. Deployments should therefore consider leaf and trust-anchor lifetimes together rather than the leaf lifetime in isolation.<a href="#section-9.3.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -2280,6 +2280,10 @@ use these tokens to authenticate to each other.<a href="#section-11.1.1-9" class
 <dt id="IANA.MEDIA.TYPES">[IANA.MEDIA.TYPES]</dt>
         <dd>
 <span class="refAuthor">IANA</span>, <span class="refTitle">"Media Types"</span>, <span>&lt;<a href="https://www.iana.org/assignments/media-types">https://www.iana.org/assignments/media-types</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC6960">[RFC6960]</dt>
+        <dd>
+<span class="refAuthor">Santesson, S.</span>, <span class="refAuthor">Myers, M.</span>, <span class="refAuthor">Ankney, R.</span>, <span class="refAuthor">Malpani, A.</span>, <span class="refAuthor">Galperin, S.</span>, and <span class="refAuthor">C. Adams</span>, <span class="refTitle">"X.509 Internet Public Key Infrastructure Online Certificate Status Protocol - OCSP"</span>, <span class="seriesInfo">RFC 6960</span>, <span class="seriesInfo">DOI 10.17487/RFC6960</span>, <time datetime="2013-06" class="refDate">June 2013</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6960">https://www.rfc-editor.org/rfc/rfc6960</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9457">[RFC9457]</dt>
       <dd>

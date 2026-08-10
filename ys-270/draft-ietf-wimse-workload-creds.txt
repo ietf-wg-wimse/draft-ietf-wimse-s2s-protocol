@@ -866,7 +866,8 @@ Table of Contents
    increase the impact of private-key compromise.  As with WITs, short
    certificate lifetimes are the primary mitigation against continued
    use of a compromised key; this document does not rely on certificate
-   revocation lists (CRLs) for WICs.
+   revocation lists (CRLs) or Online Certificate Status Protocol (OCSP)
+   [RFC6960] for WICs.
 
    The lifetime of Workload Identity Certificates is bounded by the
    lifetime and rotation cadence of the trust anchors of the trust
@@ -1118,6 +1119,12 @@ Table of Contents
    [IANA.MEDIA.TYPES]
               IANA, "Media Types",
               <https://www.iana.org/assignments/media-types>.
+
+   [RFC6960]  Santesson, S., Myers, M., Ankney, R., Malpani, A.,
+              Galperin, S., and C. Adams, "X.509 Internet Public Key
+              Infrastructure Online Certificate Status Protocol - OCSP",
+              RFC 6960, DOI 10.17487/RFC6960, June 2013,
+              <https://www.rfc-editor.org/rfc/rfc6960>.
 
    [RFC9457]  Nottingham, M., Wilde, E., and S. Dalal, "Problem Details
               for HTTP APIs", RFC 9457, DOI 10.17487/RFC9457, July 2023,
