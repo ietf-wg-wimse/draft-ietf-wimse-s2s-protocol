@@ -125,7 +125,11 @@ For requests only, the following signature parameter MUST also be included:
 
 * `wimse-aud` ({{wimse-aud-param}})
 
-For responses only, when response signing is enabled, the following signature parameter MUST also be included:
+For requests only, the following signature parameter MAY also be included:
+
+* `wimse-sign-response` ({{wimse-sign-response-param}})
+
+For responses only, when response signing is required ({{signing-the-response}}), the following signature parameter MUST also be included:
 
 * `wimse-req-nonce` ({{wimse-req-nonce-param}})
 
@@ -160,6 +164,15 @@ When the default string is not suitable for verification at the recipient, sende
 
 The recipient MUST be able to verify that the audience refers to it. See "Workload Identifiers and Authentication Granularity" in {{I-D.ietf-wimse-workload-creds}} for more detail.
 
+## The `wimse-sign-response` Signature Parameter {#wimse-sign-response-param}
+
+This document defines the `wimse-sign-response` signature metadata parameter for requests.
+It is a Boolean parameter ({{Section 3.3.6 of ?RFC8941}}).
+When present with the value true, the client requires the server to sign the HTTP response
+to this request as specified in {{signing-the-response}}.
+
+This parameter is not mandatory. Moreover, the server MAY sign the response even if this parameter is missing from the request.
+
 ## The `wimse-req-nonce` Signature Parameter {#wimse-req-nonce-param}
 
 When response signing is enabled, this document defines the `wimse-req-nonce` signature metadata parameter for responses.
@@ -168,28 +181,38 @@ proxy from replaying responses to the wrong client.
 
 The server MUST set `wimse-req-nonce` to the value of the `nonce` signature parameter from the `Signature-Input` of the request that triggered the response.
 
-## Signing the Response
+## Signing the Response {#signing-the-response}
 
 Protecting the response by signing it with the server's WIT is RECOMMENDED but optional. In particular, if the response
 may be exceptionally large or is expected to be streamed, signing it may not be practical.
 
-In practice, we expect response signing to be enabled by local policy. If response signing is enabled for a deployment,
-the client (recipient of the response) MUST check that the signature exists and validate it.
+Response signing is required for a given exchange when either of the following is true:
+
+* The request's `Signature-Input` includes `wimse-sign-response` with the Boolean value true ({{wimse-sign-response-param}}).
+* Local policy requires response signing for that exchange.
+
+If the server is required to sign the response but cannot produce a signed response (for example, because the response is streamed or
+exceptionally large), it MUST NOT return a successful unsigned response; it MUST return an error
+as described in {{error-conditions}}.
+
+If response signing is required, the client (recipient of the response) MUST check that the signature exists and validate it.
 The response MUST be rejected if a signature is absent or fails to validate.
 The client MUST verify that `wimse-req-nonce` matches the `nonce` it included in its request's `Signature-Input`.
-This binds the signed response to the specific request that triggered it.
+
+If response signing is not required, the server MAY still sign the response. In that case, the client MUST still validate
+the signed response and reject it if it fails to validate.
 
 As described in {{Section 5 of RFC9421}}, either client or server MAY send an
 `Accept-Signature` header,
 but is not required to do so. The `Accept-Signature` header indicates a
 preference for signed messages but does not mandate that responses be signed.
-When a client sends `Accept-Signature` in a request, it SHOULD list the
+When a client sends `Accept-Signature` in a request, it MUST list the
 response components it wishes to have signed (including at least those specified above for signed
-responses). When a server sends `Accept-Signature` in a response, it SHOULD
+responses). When a server sends `Accept-Signature` in a response, it MUST
 list the request components it wishes to have signed in subsequent requests (minimally those
 specified above for signed requests).
 
-## Error Conditions
+## Error Conditions {#error-conditions}
 
 Errors may occur during the processing of the message signature. If the signature verification fails for any reason,
 such as an invalid signature, an expired validity time window, or a malformed data structure, an error is returned. Typically,
@@ -198,6 +221,10 @@ include more details as per {{?RFC9457}}, such as an indicator that the wrong ke
 status code 401 is NOT RECOMMENDED for this purpose because it requires a WWW-Authenticate with acceptable HTTP auth mechanisms in
 the error response and an associated Authorization header in the subsequent request. The use of these headers for the WIT is not compatible
 with this specification.
+
+If the client required a signed response via `wimse-sign-response` and the server cannot sign the response,
+the server SHOULD return 400 (Bad Request) or 501 (Not Implemented), optionally with a
+{{?RFC9457}} problem details body indicating that a signed response cannot be provided.
 
 
 ## Example Requests and Responses
@@ -260,15 +287,15 @@ and its WIT representation.
 ## Workload Identity Token and Proof of Possession
 
 The Workload Identity Token (WIT) is bound to a secret cryptographic key and is
-always presented with a proof of possession as described in
+always presented with a proof of possession (PoP) as described in
 {{I-D.ietf-wimse-workload-creds}}. The WIT is a general purpose token that can be presented
 in multiple contexts. The WIT and its PoP are only used in the
 application-layer options, and neither is used in MTLS. The WIT MUST NOT be
 used as a bearer token. While this helps reduce the sensitivity of the token it
-is still possible that a token and its proof of possession may be captured and
+is still possible that a token and its PoP may be captured and
 replayed within the PoP's lifetime.
 
-The HTTP Signature profile presented here binds the proof of possession to the critical parts of the HTTP request (and potentially
+The HTTP Signature profile presented here binds the PoP to the critical parts of the HTTP request (and potentially
 response), including the Request URI and the message body. This
 eliminates most of the risk associated with active attackers on a middlebox.
 
@@ -276,8 +303,8 @@ In addition, the following mitigations should be used:
 
 * Preventing Eavesdropping and Interception with TLS
 
-An attacker observing or intercepting the communication channel can view the token and its proof of possession and attempt to replay it to gain an advantage. In order to prevent this, the
-token and proof of possession MUST be sent over a secure, server authenticated TLS connection unless a secure channel is provided by some other mechanisms. Hostname validation according
+An attacker observing or intercepting the communication channel can view the token and its PoP and attempt to replay it to gain an advantage. In order to prevent this, the
+token and PoP MUST be sent over a secure, server authenticated TLS connection unless a secure channel is provided by some other mechanisms. Hostname validation according
 to Section 6.3 of {{!RFC9525}} MUST be performed by the client.
 
 * Limiting Signature Lifespan
@@ -295,7 +322,7 @@ replay protection would not be effective.
 
 ## Middle Boxes {#middleboxes}
 
-In some deployments the Workload Identity Token and proof of possession
+In some deployments the Workload Identity Token and PoP
 (signature) may pass through multiple systems. The communication between the
 systems is over TLS, but the WIT and signature are available in the clear at each
 intermediary.  While the intermediary cannot modify the token or the
@@ -307,7 +334,7 @@ if responses are signed in addition to requests.
 
 ## Privacy Considerations
 
-WITs and the signatures may contain private information such as user names or other identities. Care must be taken to prevent disclosure of this information. The use of TLS helps protect the privacy of WITs and proofs of possession.
+WITs and the signatures may contain private information such as user names or other identities. Care must be taken to prevent disclosure of this information. The use of TLS helps protect the privacy of WITs and PoPs.
 
 WITs are typically associated with a workload and not a specific user, however
 in some deployments the workload may be associated directly to a user. While
@@ -338,8 +365,8 @@ receiver, and any TLS-terminating middleboxes that process the traffic.
 ## Authentication
 
 * A workload receiving a request can validate that it is signed correctly, and can identify the sender.
-* A workload receiving a response can similarly authenticate its sender, provided that optional response signing has
-been activated and likewise, the recipient validates this signature.
+* A workload receiving a response can similarly validate the signature and identify the sender when response signing is required
+({{signing-the-response}}).
 * The above implies that a stolen WIT cannot be used by an entity other than its owner.
 
 ## Integrity
@@ -347,10 +374,11 @@ been activated and likewise, the recipient validates this signature.
 * No requests can be modified without detection by the recipient. Integrity of
   all present HTTP headers specified in this document is protected, as well as
 the derived components listed in {{http-sig-auth}}, the signature parameters
-(including `wimse-aud` on requests and `wimse-req-nonce` on responses) as covered by `@signature-params` in {{RFC9421}}, and
+(including `wimse-aud` and `wimse-sign-response` on requests and `wimse-req-nonce` on responses)
+as covered by `@signature-params` in {{RFC9421}}, and
 the message body (when present).
-* No responses can be modified without detection, provided that optional response signing has been activated and
-that the recipient validates incoming responses.
+* No responses can be modified without detection when response signing is required
+({{signing-the-response}}) and the recipient validates incoming responses.
 * Note: Headers not specified in this document may remain unsigned and could
   potentially be modified or deleted by intermediaries without detection.
 
@@ -362,8 +390,8 @@ caches across validators). Therefore it is not claimed as
 a goal, though implementations SHOULD attempt to detect replays where feasible.
 We note that since most of the message is signed, replay attacks are only possible in a
 context where the request would be accepted as valid, and this mitigates the risk to some extent.
-* When response signing is enabled, validating `wimse-req-nonce` mitigates replay of a signed response to a client other than the one that sent the triggering request.
-* Unless response signing is mandated by local policy, complete deletion of a request/response pair is possible without detection.
+* When response signing is required, validating `wimse-req-nonce` mitigates replay of a signed response to a client other than the one that sent the triggering request.
+* Unless response signing is required (via `wimse-sign-response` or local policy), complete deletion of a request/response pair is possible without detection.
 
 
 # IANA Considerations {#iana-considerations}
@@ -373,6 +401,7 @@ context where the request would be accepted as valid, and this mitigates the ris
 IANA is requested to register the following entries in the "HTTP Signature Metadata Parameters" registry {{IANA.HTTP.MESSAGE.SIGNATURE}}, per the registration template in Section 6.3.1 of {{RFC9421}}:
 
 * `wimse-aud`, per {{iana-wimse-aud-param}}.
+* `wimse-sign-response`, per {{iana-wimse-sign-response-param}}.
 * `wimse-req-nonce`, per {{iana-wimse-req-nonce-param}}.
 
 ### `wimse-aud` {#iana-wimse-aud-param}
@@ -380,6 +409,12 @@ IANA is requested to register the following entries in the "HTTP Signature Metad
 * Name: `wimse-aud`
 * Description: the WIMSE message audience. Request signatures only; binds the HTTP message signature to the intended recipient.
 * Reference: RFC XXX, {{wimse-aud-param}}.
+
+### `wimse-sign-response` {#iana-wimse-sign-response-param}
+
+* Name: `wimse-sign-response`
+* Description: Boolean; when true on a request signature, the client requires the server to sign the corresponding HTTP response.
+* Reference: RFC XXX, {{wimse-sign-response-param}}.
 
 ### `wimse-req-nonce` {#iana-wimse-req-nonce-param}
 
@@ -391,6 +426,14 @@ IANA is requested to register the following entries in the "HTTP Signature Metad
 
 # Document History
 <cref>RFC Editor: please remove before publication.</cref>
+
+## draft-ietf-wimse-http-signature-07
+
+* Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use.
+
+## draft-ietf-wimse-http-signature-06
+
+* Add `wimse-sign-response` request signature parameter so clients can mandate a signed response; regenerate examples (#277).
 
 ## draft-ietf-wimse-http-signature-05
 
