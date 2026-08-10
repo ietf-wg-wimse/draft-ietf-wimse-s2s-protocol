@@ -197,7 +197,7 @@ the error response and an associated Authorization header in the subsequent requ
 ## Coexistence with JWT Bearer Tokens {#coexist}
 
 The WIT and WPT define new HTTP headers. They can therefore be presented along with existing headers used for JWT bearer tokens. This
-property allows for transition from mechanisms using identity tokens based on bearer JWTs to proof of possession based WITs.
+property allows for transition from mechanisms using identity tokens based on bearer JWTs to proof-of-possession-based WITs.
 A workload may implement a policy that accepts both bearer tokens and WITs during a transition period. This policy may be configurable
 per-caller to allow the workload to reject bearer tokens from callers that support WITs. Once a deployment fully supports WITs, then the use of
 bearer tokens for identity can be disabled through policy.  Implementations should be careful when implementing such a transition strategy,
@@ -223,16 +223,16 @@ This, however, could result in interoperability issues, which the following rule
 
 ## Workload Identity Token and Proof of Possession
 
-The Workload Identity Token (WIT) is bound to a secret cryptographic key and is always presented with a proof of possession as described in {{!I-D.ietf-wimse-workload-creds}}. The WIT is a general purpose token that can be presented in multiple contexts. The WIT and WPT are only used in the application-layer options, and both are not used in MTLS. The WIT MUST NOT be used as a bearer token. While this helps reduce the sensitivity of the token it is still possible that a token and its proof of possession may be captured and replayed within the PoP's lifetime. The following are some mitigations for the capture and reuse of the proof of possession (PoP):
+The Workload Identity Token (WIT) is bound to a secret cryptographic key and is always presented with a proof of possession (PoP) as described in {{!I-D.ietf-wimse-workload-creds}}. The WIT is a general purpose token that can be presented in multiple contexts. The WIT and WPT are only used in the application-layer options, and both are not used in MTLS. The WIT MUST NOT be used as a bearer token. While this helps reduce the sensitivity of the token it is still possible that a token and its PoP may be captured and replayed within the PoP's lifetime. The following are some mitigations for the capture and reuse of the PoP:
 
 * Preventing Eavesdropping and Interception with TLS
 
-An attacker observing or intercepting the communication channel can view the token and its proof of possession and attempt to replay it to gain an advantage. In order to prevent this the
-token and proof of possession MUST be sent over a secure, server authenticated TLS connection unless a secure channel is provided by some other mechanisms. Host name validation MUST be performed by the client.
+An attacker observing or intercepting the communication channel can view the token and its PoP and attempt to replay it to gain an advantage. In order to prevent this the
+token and PoP MUST be sent over a secure, server authenticated TLS connection unless a secure channel is provided by some other mechanisms. Host name validation MUST be performed by the client.
 
 * Limiting Proof of Possession Lifespan
 
-The proof of possession MUST be time limited. A PoP should only be valid over the time necessary for it to be successfully used for the purpose it is needed. This will typically be on the order of minutes.  PoPs received outside their validity time MUST be rejected.
+The PoP MUST be time limited. A PoP should only be valid over the time necessary for it to be successfully used for the purpose it is needed. This will typically be on the order of minutes.  PoPs received outside their validity time MUST be rejected.
 
 * Limiting Proof of Possession Scope
 
@@ -240,7 +240,7 @@ In order to reduce the risk of theft and replay the PoP should have a limited sc
 
 * Replay Protection
 
-A proof of possession includes the `jti` claim that uniquely identifies it.
+A PoP includes the `jti` claim that uniquely identifies it.
 This claim SHOULD be used by the receiver to perform basic replay protection, within the scope of a particular sender, against tokens it has already seen.
 Depending upon the design of the system it may be difficult to synchronize the replay cache across all token validators.
 If an attacker can somehow influence the identity of the validator (e.g. which cluster member receives the message) then
@@ -248,7 +248,7 @@ replay protection would not be effective.
 
 * Binding to TLS Endpoint
 
-The POP MAY be bound to a transport layer sender such as the client identity of a TLS session or TLS channel binding parameters. The mechanisms for binding are outside the scope of this specification.
+The PoP MAY be bound to a transport layer sender such as the client identity of a TLS session or TLS channel binding parameters. The mechanisms for binding are outside the scope of this specification.
 
 * Audience validation
 
@@ -273,9 +273,9 @@ Deployments should perform analysis on their situation to determine if it is app
 
 ## Privacy Considerations
 
-The Workload Proof Token may contain private information such as user names or other identities. Care should be taken to prevent the disclosure of this information. The use of TLS helps protect the privacy of WITs and proofs of possession.
+The Workload Proof Token may contain private information such as user names or other identities. Care should be taken to prevent the disclosure of this information. The use of TLS helps protect the privacy of WITs and PoPs.
 
-The workload identifier present in the WPT is typically associated with a workload and not a specific user, however in some deployments the workload or the HTTP Target URI may be associated directly to a user. While these are exceptional cases a deployment should evaluate if the disclosure of a WPT can be used to track a user.
+The Workload Identifier present in the WPT is typically associated with a workload and not a specific user, however in some deployments the workload or the HTTP Target URI may be associated directly to a user. While these are exceptional cases a deployment should evaluate if the disclosure of a WPT can be used to track a user.
 
 # IANA Considerations
 
@@ -357,6 +357,10 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 
 # Document History
 <cref>RFC Editor: please remove before publication.</cref>
+
+## draft-ietf-wimse-wpt-02
+
+* Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use, and consistent capitalization of the defined term "Workload Identifier".
 
 ## draft-ietf-wimse-wpt-01
 
