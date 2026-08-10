@@ -1053,7 +1053,7 @@ svg {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Campbell, et al.</td>
-<td class="center">Expires 5 February 2027</td>
+<td class="center">Expires 11 February 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1066,12 +1066,12 @@ svg {
 <dd class="internet-draft">draft-ietf-wimse-workload-creds-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-08-04" class="published">4 August 2026</time>
+<time datetime="2026-08-10" class="published">10 August 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2027-02-05">5 February 2027</time></dd>
+<dd class="expires"><time datetime="2027-02-11">11 February 2027</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1140,7 +1140,7 @@ multi-service, multi-cloud, multi-tenant deployments.<a href="#section-abstract-
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 5 February 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 11 February 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1520,11 +1520,11 @@ but not that it belongs to the particular workload the client intended to reach.
 </li>
           <li class="normal" id="section-1.3-4.2">
             <p id="section-1.3-4.2.1">There needs to be an explicit mapping from the external access name used to access a workload (such as an Ingress path or service DNS name)
-to its workload identifier.<a href="#section-1.3-4.2.1" class="pilcrow">¶</a></p>
+to its Workload Identifier.<a href="#section-1.3-4.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-1.3-5">Once these conditions are met, the methods described in this document can be used for the caller and callee to mutually authenticate.<a href="#section-1.3-5" class="pilcrow">¶</a></p>
-<p id="section-1.3-6">Implementations <span class="bcp14">MUST</span> allow for defining this mapping between the workload's external access name and the workload identifier (e.g., through
+<p id="section-1.3-6">Implementations <span class="bcp14">MUST</span> allow for defining this mapping between the workload's external access name and the Workload Identifier (e.g., through
 callback functions). Deployments <span class="bcp14">SHOULD</span> use these features to establish a consistent set of identifiers within their environment.<a href="#section-1.3-6" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1550,7 +1550,7 @@ appear in all capitals, as shown here.<a href="#section-2-2" class="pilcrow">¶<
 <p id="section-3-1">This document expects that trust anchors used to validate Workload Identity Certificates and Workload Identity Tokens are associated with a trust domain and are provisioned to consumers together with trust domain metadata for that domain. Trust anchors can be represented in different ways depending on the deployment; for example, as a set of public keys (such as a JWKS), as an X.509 certification authority used to validate certificate chains, or as other deployment-specific material.<a href="#section-3-1" class="pilcrow">¶</a></p>
 <p id="section-3-2">This document does not define a mechanism for discovering trust anchor information. Consumers <span class="bcp14">MUST</span> bind each trust domain to an authorized issuer (or set of issuers) and to the corresponding trust anchors. That mapping <span class="bcp14">MUST</span> be distributed via a secure out-of-band mechanism. In particular, for a WIT the <code>iss</code> claim (the JWT issuer claim <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>, defined in <a href="#to-wit" class="auto internal xref">Section 5.1</a>) <span class="bcp14">MUST NOT</span> be used to look up trust anchor material directly from information carried only in the token (such as by fetching a JWKS from a URL found only in the WIT).<a href="#section-3-2" class="pilcrow">¶</a></p>
 <p id="section-3-3">To validate a WIT, the receiving workload verifies the JWS signature using key material from the trust anchors configured for the trust domain in the <code>sub</code> claim. Trust anchor material for WIT validation <span class="bcp14">MAY</span> include more than one public key so that operators can rotate signing keys. Verification follows <span>[<a href="#RFC7515" class="cite xref">RFC7515</a>]</span> and the JWT best practices in <span>[<a href="#RFC8725" class="cite xref">RFC8725</a>]</span>. In practice, the <code>alg</code> header parameter would identify an algorithm that the validator accepts for that trust domain, and the signature would be checked under a key drawn from the configured trust anchors. If the JWS header contains a <code>kid</code> parameter, the validator would use the key in the trust anchor material with the same <code>kid</code> value. If <code>kid</code> is absent, deployment policy would need to provide unambiguous key selection (for example, when only a single key is configured for that trust domain).<a href="#section-3-3" class="pilcrow">¶</a></p>
-<p id="section-3-4">For Workload Identity Certificates, validators use the trust anchors for the peer's trust domain to validate the X.509 chain and the workload identifier in the certificate, as described in <a href="#to-wic" class="auto internal xref">Section 6.1</a> and in companion specifications such as <span>[<a href="#I-D.ietf-wimse-mutual-tls" class="cite xref">I-D.ietf-wimse-mutual-tls</a>]</span>.<a href="#section-3-4" class="pilcrow">¶</a></p>
+<p id="section-3-4">For Workload Identity Certificates, validators use the trust anchors for the peer's trust domain to validate the X.509 chain and the Workload Identifier in the certificate, as described in <a href="#to-wic" class="auto internal xref">Section 6.1</a> and in companion specifications such as <span>[<a href="#I-D.ietf-wimse-mutual-tls" class="cite xref">I-D.ietf-wimse-mutual-tls</a>]</span>.<a href="#section-3-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="single-workload-identity">
@@ -1560,7 +1560,7 @@ appear in all capitals, as shown here.<a href="#section-2-2" class="pilcrow">¶<
       </h2>
 <p id="section-4-1">Each WIMSE credential carries exactly one Workload Identifier (<span>[<a href="#WIMSE-ID" class="cite xref">WIMSE-ID</a>]</span>) that is used for authentication and authorization. Requiring a single identifier per credential keeps authorization and auditing unambiguous and aligns with common practice for workload X.509 certificates (for example, a single URI in an X.509-SVID).<a href="#section-4-1" class="pilcrow">¶</a></p>
 <p id="section-4-2">For a Workload Identity Token, that identifier is the value of the <code>sub</code> claim. For a Workload Identity Certificate, that identifier is carried in the single URI SubjectAltName described in <a href="#to-wic" class="auto internal xref">Section 6.1</a>.<a href="#section-4-2" class="pilcrow">¶</a></p>
-<p id="section-4-3">Deployments that distinguish several labels for the same runtime (for example a stable service identity and a specific instance) <span class="bcp14">MUST</span> place the identity required for the access decision in that one credential. Additional correlation for logging or operations <span class="bcp14">MUST NOT</span> be encoded as a second workload identifier in the same WIT or WIC. Deployments <span class="bcp14">MAY</span> use other mechanisms, such as the optional <code>jti</code> claim, separate credentials, or additional claims as described in <a href="#add-claims" class="auto internal xref">Section 5.1.2</a>.<a href="#section-4-3" class="pilcrow">¶</a></p>
+<p id="section-4-3">Deployments that distinguish several labels for the same runtime (for example a stable service identity and a specific instance) <span class="bcp14">MUST</span> place the identity required for the access decision in that one credential. Additional correlation for logging or operations <span class="bcp14">MUST NOT</span> be encoded as a second Workload Identifier in the same WIT or WIC. Deployments <span class="bcp14">MAY</span> use other mechanisms, such as the optional <code>jti</code> claim, separate credentials, or additional claims as described in <a href="#add-claims" class="auto internal xref">Section 5.1.2</a>.<a href="#section-4-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="app-layer">
@@ -1622,7 +1622,7 @@ WITs should be refreshed regularly, e.g., on the order of hours.<a href="#sectio
             </ul>
 </li>
         </ul>
-<p id="section-5.1-4">As noted in <span>[<a href="#WIMSE-ID" class="cite xref">WIMSE-ID</a>]</span>, a workload identifier is a URI that includes a trust domain in the authority component.
+<p id="section-5.1-4">As noted in <span>[<a href="#WIMSE-ID" class="cite xref">WIMSE-ID</a>]</span>, a Workload Identifier is a URI that includes a trust domain in the authority component.
 The runtime environment often determines which
 URI scheme is used, e.g., if SPIFFE is used to authenticate workloads, it mandates <code>spiffe</code> URIs.
 For deployments that do not use an environment-specific scheme, the <code>wimse</code> URI scheme <span class="bcp14">MAY</span> be used; it is defined in <span>[<a href="#WIMSE-ID" class="cite xref">WIMSE-ID</a>]</span>, which also registers it with IANA.<a href="#section-5.1-4" class="pilcrow">¶</a></p>
@@ -1860,7 +1860,7 @@ which specific resources can be accessed.<a href="#section-5.3-2" class="pilcrow
         <h3 id="name-the-workload-identity-certi">
 <a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-the-workload-identity-certi" class="section-name selfRef">The Workload Identity Certificate</a>
         </h3>
-<p id="section-6.1-1">The Workload Identity Certificate is an X.509 certificate. The Workload Identifier used for WIMSE authentication and authorization <span class="bcp14">MUST</span> appear in exactly one SubjectAltName extension of type URI, as required by <a href="#single-workload-identity" class="auto internal xref">Section 4</a>. The certificate <span class="bcp14">MUST NOT</span> contain more than one URI SAN that carries a workload identifier.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
+<p id="section-6.1-1">The Workload Identity Certificate is an X.509 certificate. The Workload Identifier used for WIMSE authentication and authorization <span class="bcp14">MUST</span> appear in exactly one SubjectAltName extension of type URI, as required by <a href="#single-workload-identity" class="auto internal xref">Section 4</a>. The certificate <span class="bcp14">MUST NOT</span> contain more than one URI SAN that carries a Workload Identifier.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
 <p id="section-6.1-2">When the certificate is also used for TLS server authentication, it is <span class="bcp14">RECOMMENDED</span> to include SubjectAltName extensions of type DNSName with the appropriate DNS names for clients that validate the server by host name rather than by workload identity. The certificate <span class="bcp14">MAY</span> contain SubjectAltName extensions of other types for PKIX or local policy, but only the URI SAN above is the WIMSE workload identity.<a href="#section-6.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1871,17 +1871,17 @@ which specific resources can be accessed.<a href="#section-5.3-2" class="pilcrow
       <h2 id="name-client-authorization-using-">
 <a href="#section-7" class="section-number selfRef">7. </a><a href="#name-client-authorization-using-" class="section-name selfRef">Client Authorization Using the Workload Identity</a>
       </h2>
-<p id="section-7-1">The receiving application uses the authenticated peer's workload identifier in authorization, accounting, and auditing.
-For example, the full workload identifier may be matched against ACLs to authorize actions requested by the peer and the identifier may be included in log messages to associate actions to the client workload for audit purposes.
-A deployment may specify other authorization policies based on the specific details of how the workload identifier is constructed. The path portion of the workload identifier <span class="bcp14">MUST</span> always be considered in the scope of the trust domain.
-See <a href="#granular-auth" class="auto internal xref">Section 1.3</a> on additional security implications of workload identifiers.<a href="#section-7-1" class="pilcrow">¶</a></p>
-<p id="section-7-2">How the receiving application obtains the workload identifier depends on the credential used to authenticate the peer:<a href="#section-7-2" class="pilcrow">¶</a></p>
+<p id="section-7-1">The receiving application uses the authenticated peer's Workload Identifier in authorization, accounting, and auditing.
+For example, the full Workload Identifier may be matched against ACLs to authorize actions requested by the peer and the identifier may be included in log messages to associate actions to the client workload for audit purposes.
+A deployment may specify other authorization policies based on the specific details of how the Workload Identifier is constructed. The path portion of the Workload Identifier <span class="bcp14">MUST</span> always be considered in the scope of the trust domain.
+See <a href="#granular-auth" class="auto internal xref">Section 1.3</a> on additional security implications of Workload Identifiers.<a href="#section-7-1" class="pilcrow">¶</a></p>
+<p id="section-7-2">How the receiving application obtains the Workload Identifier depends on the credential used to authenticate the peer:<a href="#section-7-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-7-3.1">
-          <p id="section-7-3.1.1">Application-layer: After successfully validating the WIT, the receiving application retrieves the workload identifier from the <code>sub</code> claim.<a href="#section-7-3.1.1" class="pilcrow">¶</a></p>
+          <p id="section-7-3.1.1">Application-layer: After successfully validating the WIT, the receiving application retrieves the Workload Identifier from the <code>sub</code> claim.<a href="#section-7-3.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-7-3.2">
-          <p id="section-7-3.2.1">Transport-layer: When the client is authenticated with a Workload Identity Certificate, the receiving application retrieves the workload identifier from the client certificate's SubjectAltName extension of type URI.<a href="#section-7-3.2.1" class="pilcrow">¶</a></p>
+          <p id="section-7-3.2.1">Transport-layer: When the client is authenticated with a Workload Identity Certificate, the receiving application retrieves the Workload Identifier from the client certificate's SubjectAltName extension of type URI.<a href="#section-7-3.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <p id="section-7-4">A workload <span class="bcp14">MAY</span> use other standard and deployment specific fields in the workload credential for accounting or authorization purposes.<a href="#section-7-4" class="pilcrow">¶</a></p>
@@ -1985,7 +1985,7 @@ See <a href="#granular-auth" class="auto internal xref">Section 1.3</a> on addit
         <h3 id="name-workload-identity-token-and">
 <a href="#section-9.2" class="section-number selfRef">9.2. </a><a href="#name-workload-identity-token-and" class="section-name selfRef">Workload Identity Token and Proof of Possession</a>
         </h3>
-<p id="section-9.2-1">The Workload Identity Token (WIT) is bound to a secret cryptographic key and is always presented with a proof of possession as described in <a href="#to-wit" class="auto internal xref">Section 5.1</a>. The WIT is a general purpose token that can be presented in multiple contexts. The WIT and its PoP are used for application-layer authentication; they are not used as the client or server credential for mutual TLS, which uses the Workload Identity Certificate (<a href="#to-wic" class="auto internal xref">Section 6.1</a>). The WIT <span class="bcp14">MUST NOT</span> be used as a bearer token. While this helps reduce the sensitivity of the token it is still possible that a token and its proof of possession may be captured and replayed within the PoP's lifetime. The following are some mitigations for the capture and reuse of the WIT and its proof of possession (PoP):<a href="#section-9.2-1" class="pilcrow">¶</a></p>
+<p id="section-9.2-1">The Workload Identity Token (WIT) is bound to a secret cryptographic key and is always presented with a proof of possession (PoP) as described in <a href="#to-wit" class="auto internal xref">Section 5.1</a>. The WIT is a general purpose token that can be presented in multiple contexts. The WIT and its PoP are used for application-layer authentication; they are not used as the client or server credential for mutual TLS, which uses the Workload Identity Certificate (<a href="#to-wic" class="auto internal xref">Section 6.1</a>). The WIT <span class="bcp14">MUST NOT</span> be used as a bearer token. While this helps reduce the sensitivity of the token it is still possible that a token and its PoP may be captured and replayed within the PoP's lifetime. The following are some mitigations for the capture and reuse of the WIT and its PoP:<a href="#section-9.2-1" class="pilcrow">¶</a></p>
 <div id="limiting-workload-identity-token-lifespan">
 <section id="section-9.2.1">
           <h4 id="name-limiting-workload-identity-">
@@ -1999,7 +1999,7 @@ See <a href="#granular-auth" class="auto internal xref">Section 1.3</a> on addit
           <h4 id="name-limiting-proof-of-possessio">
 <a href="#section-9.2.2" class="section-number selfRef">9.2.2. </a><a href="#name-limiting-proof-of-possessio" class="section-name selfRef">Limiting Proof of Possession Lifespan</a>
           </h4>
-<p id="section-9.2.2-1">The proof of possession <span class="bcp14">MUST</span> be time limited. A PoP should only be valid over the time necessary for it to be successfully used for the purpose it is needed. This will typically be on the order of minutes.  PoPs received outside their validity time <span class="bcp14">MUST</span> be rejected.<a href="#section-9.2.2-1" class="pilcrow">¶</a></p>
+<p id="section-9.2.2-1">The PoP <span class="bcp14">MUST</span> be time limited. A PoP should only be valid over the time necessary for it to be successfully used for the purpose it is needed. This will typically be on the order of minutes.  PoPs received outside their validity time <span class="bcp14">MUST</span> be rejected.<a href="#section-9.2.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="limiting-proof-of-possession-scope">
@@ -2015,7 +2015,7 @@ See <a href="#granular-auth" class="auto internal xref">Section 1.3</a> on addit
           <h4 id="name-replay-protection">
 <a href="#section-9.2.4" class="section-number selfRef">9.2.4. </a><a href="#name-replay-protection" class="section-name selfRef">Replay Protection</a>
           </h4>
-<p id="section-9.2.4-1">Proof of possession mechanisms should include replay protection to prevent reuse of a captured PoP. Without it an attacker can replay a captured PoP within its validity period.<a href="#section-9.2.4-1" class="pilcrow">¶</a></p>
+<p id="section-9.2.4-1">PoP mechanisms should include replay protection to prevent reuse of a captured PoP. Without it an attacker can replay a captured PoP within its validity period.<a href="#section-9.2.4-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="binding-to-tls-endpoint">
@@ -2033,7 +2033,7 @@ See <a href="#granular-auth" class="auto internal xref">Section 1.3</a> on addit
         <h3 id="name-workload-identity-certifica">
 <a href="#section-9.3" class="section-number selfRef">9.3. </a><a href="#name-workload-identity-certifica" class="section-name selfRef">Workload Identity Certificate</a>
         </h3>
-<p id="section-9.3-1">The Workload Identity Certificate carries the workload identifier in a single URI SubjectAltName (<a href="#to-wic" class="auto internal xref">Section 6.1</a>). As with the WIT, the identifier is meaningful only within its trust domain. A relying party <span class="bcp14">MUST</span> validate the certificate against the trust anchors configured for the peer's trust domain (<a href="#trust-anchors" class="auto internal xref">Section 3</a>) and <span class="bcp14">MUST</span> reject the certificate if the workload identifier is not within that trust domain and the trust anchor used. Evaluating the path or other components of the identifier without also considering the trust domain and the trust anchor can allow one trust domain to impersonate workloads in another. Protocol-specific certificate validation requirements are defined in <span>[<a href="#I-D.ietf-wimse-mutual-tls" class="cite xref">I-D.ietf-wimse-mutual-tls</a>]</span>.<a href="#section-9.3-1" class="pilcrow">¶</a></p>
+<p id="section-9.3-1">The Workload Identity Certificate carries the Workload Identifier in a single URI SubjectAltName (<a href="#to-wic" class="auto internal xref">Section 6.1</a>). As with the WIT, the identifier is meaningful only within its trust domain. A relying party <span class="bcp14">MUST</span> validate the certificate against the trust anchors configured for the peer's trust domain (<a href="#trust-anchors" class="auto internal xref">Section 3</a>) and <span class="bcp14">MUST</span> reject the certificate if the Workload Identifier is not within that trust domain and the trust anchor used. Evaluating the path or other components of the identifier without also considering the trust domain and the trust anchor can allow one trust domain to impersonate workloads in another. Protocol-specific certificate validation requirements are defined in <span>[<a href="#I-D.ietf-wimse-mutual-tls" class="cite xref">I-D.ietf-wimse-mutual-tls</a>]</span>.<a href="#section-9.3-1" class="pilcrow">¶</a></p>
 <div id="limiting-workload-identity-certificate-lifespan">
 <section id="section-9.3.1">
           <h4 id="name-limiting-workload-identity-c">
@@ -2072,8 +2072,8 @@ See <a href="#granular-auth" class="auto internal xref">Section 1.3</a> on addit
         <h3 id="name-transport-security">
 <a href="#section-9.5" class="section-number selfRef">9.5. </a><a href="#name-transport-security" class="section-name selfRef">Transport Security</a>
         </h3>
-<p id="section-9.5-1">An attacker observing or intercepting the communication channel can view the Workload Identity Token and its proof of possession and attempt to replay them to gain an advantage. To prevent this, the WIT and its proof of possession <span class="bcp14">MUST</span> be sent over a secure, server-authenticated TLS connection unless a secure channel is provided by some other mechanism.<a href="#section-9.5-1" class="pilcrow">¶</a></p>
-<p id="section-9.5-2">In some deployments the Workload Identity Token and proof of possession may pass through multiple systems. Communication between systems is over TLS, but the token and PoP are available in the clear at each intermediary.  While an intermediary cannot modify the token or the information within the PoP, it can attempt to capture and replay the token or modify data not protected by the PoP. Mitigations listed in <a href="#wit-pop" class="auto internal xref">Section 9.2</a> can reduce this risk. Deployments should analyze their situation to determine whether it is appropriate to trust and allow traffic to pass through a middlebox.<a href="#section-9.5-2" class="pilcrow">¶</a></p>
+<p id="section-9.5-1">An attacker observing or intercepting the communication channel can view the Workload Identity Token and its PoP and attempt to replay them to gain an advantage. To prevent this, the WIT and its PoP <span class="bcp14">MUST</span> be sent over a secure, server-authenticated TLS connection unless a secure channel is provided by some other mechanism.<a href="#section-9.5-1" class="pilcrow">¶</a></p>
+<p id="section-9.5-2">In some deployments the Workload Identity Token and PoP may pass through multiple systems. Communication between systems is over TLS, but the token and PoP are available in the clear at each intermediary.  While an intermediary cannot modify the token or the information within the PoP, it can attempt to capture and replay the token or modify data not protected by the PoP. Mitigations listed in <a href="#wit-pop" class="auto internal xref">Section 9.2</a> can reduce this risk. Deployments should analyze their situation to determine whether it is appropriate to trust and allow traffic to pass through a middlebox.<a href="#section-9.5-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2083,8 +2083,8 @@ See <a href="#granular-auth" class="auto internal xref">Section 1.3</a> on addit
       <h2 id="name-privacy-considerations">
 <a href="#section-10" class="section-number selfRef">10. </a><a href="#name-privacy-considerations" class="section-name selfRef">Privacy Considerations</a>
       </h2>
-<p id="section-10-1">WITs and the proofs of possession may contain private information such as user names or other identities. Care should be taken to prevent the disclosure of this information. The use of TLS helps protect the privacy of WITs and proofs of possession in transit. Workload Identity Certificates likewise expose the workload identifier, and any attributes carried in the certificate, to the peer, to any TLS-terminating intermediary, and to logs; in particular, client-certificate authentication discloses the client's workload identity to the server during the TLS handshake.<a href="#section-10-1" class="pilcrow">¶</a></p>
-<p id="section-10-2">WITs and certificates with workload identifiers are typically associated with a workload and not a specific user, however in some deployments the workload may be associated directly to a user. While these are exceptional cases a deployment should evaluate if the disclosure of WITs or certificates can be used to track a user.<a href="#section-10-2" class="pilcrow">¶</a></p>
+<p id="section-10-1">WITs and PoPs may contain private information such as user names or other identities. Care should be taken to prevent the disclosure of this information. The use of TLS helps protect the privacy of WITs and PoPs in transit. Workload Identity Certificates likewise expose the Workload Identifier, and any attributes carried in the certificate, to the peer, to any TLS-terminating intermediary, and to logs; in particular, client-certificate authentication discloses the client's workload identity to the server during the TLS handshake.<a href="#section-10-1" class="pilcrow">¶</a></p>
+<p id="section-10-2">WITs and certificates with Workload Identifiers are typically associated with a workload and not a specific user, however in some deployments the workload may be associated directly to a user. While these are exceptional cases a deployment should evaluate if the disclosure of WITs or certificates can be used to track a user.<a href="#section-10-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="iana-considerations">
@@ -2116,7 +2116,7 @@ See <a href="#granular-auth" class="auto internal xref">Section 1.3</a> on addit
 <p id="section-11.1.1-6">Security considerations: See the Security Considerations section of RFC XXX.<a href="#section-11.1.1-6" class="pilcrow">¶</a></p>
 <p id="section-11.1.1-7">Interoperability considerations: N/A<a href="#section-11.1.1-7" class="pilcrow">¶</a></p>
 <p id="section-11.1.1-8">Published specification: RFC XXX, <a href="#to-wit" class="auto internal xref">Section 5.1</a>.<a href="#section-11.1.1-8" class="pilcrow">¶</a></p>
-<p id="section-11.1.1-9">Applications that use this media type: Identity servers that vend Workload Identity Tokens, and Workloads that
+<p id="section-11.1.1-9">Applications that use this media type: Identity Servers that vend Workload Identity Tokens, and workloads that
 use these tokens to authenticate to each other.<a href="#section-11.1.1-9" class="pilcrow">¶</a></p>
 <p id="section-11.1.1-10">Fragment identifier considerations: N/A<a href="#section-11.1.1-10" class="pilcrow">¶</a></p>
 <p id="section-11.1.1-11">Additional information:<a href="#section-11.1.1-11" class="pilcrow">¶</a></p>
@@ -2259,7 +2259,7 @@ use these tokens to authenticate to each other.<a href="#section-11.1.1-9" class
 <dd class="break"></dd>
 <dt id="I-D.ietf-wimse-http-signature">[I-D.ietf-wimse-http-signature]</dt>
         <dd>
-<span class="refAuthor">Salowey, J. A.</span> and <span class="refAuthor">Y. Sheffer</span>, <span class="refTitle">"WIMSE Workload-to-Workload Authentication with HTTP Signatures"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-http-signature-05</span>, <time datetime="2026-07-20" class="refDate">20 July 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-http-signature-05">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-http-signature-05</a>&gt;</span>. </dd>
+<span class="refAuthor">Salowey, J. A.</span> and <span class="refAuthor">Y. Sheffer</span>, <span class="refTitle">"WIMSE Workload-to-Workload Authentication with HTTP Signatures"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-http-signature-06</span>, <time datetime="2026-08-04" class="refDate">4 August 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-http-signature-06">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-http-signature-06</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-wimse-wpt">[I-D.ietf-wimse-wpt]</dt>
         <dd>
@@ -2304,6 +2304,9 @@ use these tokens to authenticate to each other.<a href="#section-11.1.1-9" class
 <ul class="normal">
 <li class="normal" id="appendix-A.1-1.1">
             <p id="appendix-A.1-1.1.1">Clarify that WIT/PoP are application-layer credentials and are not used for mutual TLS; TLS binding does not change that (#256).<a href="#appendix-A.1-1.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.1-1.2">
+            <p id="appendix-A.1-1.2.1">Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use, and consistent capitalization of the defined term "Workload Identifier".<a href="#appendix-A.1-1.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
