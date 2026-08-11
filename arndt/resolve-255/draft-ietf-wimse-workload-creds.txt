@@ -358,7 +358,7 @@ Table of Contents
    carried in the single URI SubjectAltName described in Section 6.1.
    Deployments that distinguish several labels for the same runtime (for
    example a stable service identity and a specific instance) MUST place
-   only one identity into it.
+   only one identifier into it.
 
    Additional correlation for logging or operations MUST NOT be encoded
    as a second Workload Identifier in the same WIT or WIC.  This
