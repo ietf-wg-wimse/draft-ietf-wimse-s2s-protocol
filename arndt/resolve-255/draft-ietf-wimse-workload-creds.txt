@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 11 February 2027                             Palo Alto Networks
+Expires: 12 February 2027                             Palo Alto Networks
                                                       A. Schwenkschuster
                                                         Defakto Security
                                                               Y. Sheffer
                                                                   Intuit
                                                             Y. Rosomakho
                                                                  Zscaler
-                                                          10 August 2026
+                                                          11 August 2026
 
 
                        WIMSE Workload Credentials
@@ -67,7 +67,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 11 February 2027.
+   This Internet-Draft will expire on 12 February 2027.
 
 Copyright Notice
 
@@ -356,10 +356,10 @@ Table of Contents
    For a Workload Identity Token, that identifier is the value of the
    sub claim.  For a Workload Identity Certificate, that identifier is
    carried in the single URI SubjectAltName described in Section 6.1.
-
    Deployments that distinguish several labels for the same runtime (for
    example a stable service identity and a specific instance) MUST place
-   the identity required for the access decision in that one credential.
+   only one identity into it.
+
    Additional correlation for logging or operations MUST NOT be encoded
    as a second Workload Identifier in the same WIT or WIC.  This
    restriction applies only to Workload Identifiers; deployments MAY use
