@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-08-09T01:37:24.763796+00:00",
+  "timestamp": "2026-08-11T01:37:19.264681+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -4329,9 +4329,45 @@
       ],
       "body": "I agree that a credential should unambiguously identify the primary subject it was issued to, and the access decision keys off that one identity (sub for a WIT, single URI SAN for a WIC). \n\nI think that is in part why  the following sentence prohibit the inclusion of additional workload identifiers for correlation or any other purposes in a WIT.\n\n\"Additional correlation for logging or operations MUST NOT be encoded as a second workload identifier in the same WIT or WIC.\"\n\nHowever, the draft allows this for certificates. Section 6.1 requires the workload identifier in exactly one URI SAN, yet explicitly allows the certificate to carry other identifiers (DNSName SANs and \"SubjectAltName extensions of other types\"), stating that \"only the URI SAN above is the WIMSE workload identity.\" So a WIC can already carry multiple identifiers of different kinds while exactly one uniquely identifies the workload. The Section 4 prohibition for the WIT is inconsistent with Section 6.1.\n\nQuestion: Is the intent to preclude all additional identifiers, or only to guarantee that the primary subject is unambiguous? If the latter, is the MUST NOT really needed or should it be. relaxed so that additional identifiers MAY be included for purposes such as correlation, provided they are clearly distinguished from, and never usable in place of, the authoritative subject (e.g. the WIT could include other claims that contain identifiers, but only the sub claim is treated as the primary identifier)?\n",
       "createdAt": "2026-07-14T19:01:07Z",
-      "updatedAt": "2026-07-28T14:51:31Z",
+      "updatedAt": "2026-08-10T22:59:32Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@PieterKas the way I see the document currently written is that \"only one workload identifier is permitted per credential\". This does not exclude other identifiers such as DNSName because they are not Workload Identifiers as defined by WIMSE. Same applies for WITs, jti and other correlating identifiers are totally valid.\n\nI believe that the draft is in this consistent between WIT and WIC. Both say that additional identifiers MUST NOT be encoded as workload identifiers.\n\nNow, do you believe additional workload identifiers as defined by WIMSE should be allowed or do you agree with our assessment?",
+          "createdAt": "2026-08-10T10:48:11Z",
+          "updatedAt": "2026-08-10T10:48:11Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Generally concur with @arndt-s's perspective. The differences are largely due to differences in the underling structure of the credential and common usage thereof. \n\nAlso server side credentials are kind of a special case. Even if you accept the idea of server side WIMSE credentials, and I'm not sure I do, you probably still need a DNSName SAN for fallback or coexistence with regular old TLS/HTTPS. ",
+          "createdAt": "2026-08-10T11:40:28Z",
+          "updatedAt": "2026-08-10T11:40:28Z"
+        },
+        {
+          "author": "PieterKas",
+          "authorAssociation": "NONE",
+          "body": "I think some text to clarify this nuanced view would be a good thing (it did not immediately occur to me to read it this way). \n\nI read it (perhaps bluntly) as a prohibition on additional identifiers. If additional identifiers are allowed, it may be helpful to readers to get guidance on what identifiers and what they may be used for (e.g. \"only one identifier that uniquely identifies the workload. Additional identifiers may be included for interoperability, correlation and integration purposes - or something to that effect).",
+          "createdAt": "2026-08-10T12:24:51Z",
+          "updatedAt": "2026-08-10T12:24:51Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@PieterKas @bc-pi can you take a look at https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/285 please? ",
+          "createdAt": "2026-08-10T12:34:03Z",
+          "updatedAt": "2026-08-10T12:34:03Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "#285 looks okay to me ",
+          "createdAt": "2026-08-10T22:59:31Z",
+          "updatedAt": "2026-08-10T22:59:31Z"
+        }
+      ]
     },
     {
       "number": 256,
@@ -4369,7 +4405,7 @@
       ],
       "body": "The example WIT (Figures 2 and 4) contains an iat claim, but iat is not listed or defined in the Section 5.1 normative claim list (iss, sub, exp, jti, cnf). The primary example uses a claim the specification does not mention. Either add iat to the claim definitions (it is conventional and underpins the \"refreshed regularly\" / lifetime language) or remove it from the example. My preference would be to add it as an OPTIONAL claim.\n",
       "createdAt": "2026-07-14T19:01:10Z",
-      "updatedAt": "2026-07-28T14:45:54Z",
+      "updatedAt": "2026-08-10T21:58:37Z",
       "closedAt": null,
       "comments": [
         {
@@ -4385,6 +4421,48 @@
           "body": "FWIW Section 5.1 has \"WIT MUST contain the following content, except where noted:\" and JWTs allow for other claims unless explicitly prohibited by an application or profile.  So pedantically, this isn't a problem. That said, it might be worthwhile to add mention or guidance of such in general and/or specifically for `iat`. ",
           "createdAt": "2026-07-16T20:35:58Z",
           "updatedAt": "2026-07-16T20:35:58Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "The the best of my recollection, which admittedly isn't very good, `iat` was originally in the list of \"WIT MUST contain the following content\" and therefor required. I need to look back and see if that's true, and if so, why it changed. But barring some great revelation from that, do folks see any problem with making `iat` required? ",
+          "createdAt": "2026-08-09T12:34:03Z",
+          "updatedAt": "2026-08-09T12:34:03Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "What benefit would it bring to make `iat` required? Like apart from that we'd be consistent with the example? I see deployment-specific benefits but I am unsure if there's interoperability benefits that directly support a MUST.\n\n",
+          "createdAt": "2026-08-10T14:43:46Z",
+          "updatedAt": "2026-08-10T14:43:46Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> The the best of my recollection, which admittedly isn't very good, `iat` was originally in the list of \"WIT MUST contain the following content\" and therefor required. \n\nLooking back over some of the history, it seems I was wrong about that. Apologies. \n\n",
+          "createdAt": "2026-08-10T21:35:49Z",
+          "updatedAt": "2026-08-10T21:35:49Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> What benefit would it bring to make `iat` required? Like apart from that we'd be consistent with the example? I see deployment-specific benefits but I am unsure if there's interoperability benefits that directly support a MUST.\n\nThat's a good question. I don't really agree with the stated benefits at https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/257#issuecomment-4991247809 and I think I might have gotten a little overzealous in thinking about it in https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/257#issuecomment-5231544502\n\n",
+          "createdAt": "2026-08-10T21:44:48Z",
+          "updatedAt": "2026-08-10T21:44:48Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Which leads me back to https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/257#issuecomment-5231544502 and thinking that there is no reason to mention `iat` at all other than maybe to remind folks that it and other stuff might be in a JWT and other stuff is allowed by JWT. \n\n",
+          "createdAt": "2026-08-10T21:55:24Z",
+          "updatedAt": "2026-08-10T21:55:24Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Perhaps some words about `iat` aimed at avoidance of this might help interoperability https://mailarchive.ietf.org/arch/msg/oauth/tKBlR1ITdAVz2Lh6UVfwJPgf0DI/ but I'm straying from the original intent (I think) of this issue. ",
+          "createdAt": "2026-08-10T21:58:37Z",
+          "updatedAt": "2026-08-10T21:58:37Z"
         }
       ]
     },
@@ -4627,15 +4705,15 @@
       ],
       "body": "Section 7 rightly suggests including the workload identifier in log messages. But the WIT and its proof of possession ride in HTTP header fields, and gateways, TLS-terminating proxies, and APM agents dump those headers into logs by default. A logged WIT plus a logged PoP is replayable within the validity window defined in 9.2.2. Section 10 lists logs as an exposure surface for WICs but not WITs, which is backwards: WITs hit header logging at every network hop.\n\nSuggested fix: a note in 9.2 advising implementers to record claims (sub, exp, iss, jti) rather than raw header values, and a matching update to Section 10.\n\nRaised as item 4 in my WGLC review: https://mailarchive.ietf.org/arch/msg/wimse/S5Zjmr4qneFsAmepgRWhkWtFdPA/\n",
       "createdAt": "2026-07-16T11:23:25Z",
-      "updatedAt": "2026-08-07T16:05:43Z",
+      "updatedAt": "2026-08-09T17:38:48Z",
       "closedAt": null,
       "comments": [
         {
           "author": "bc-pi",
           "authorAssociation": "COLLABORATOR",
-          "body": "Interestingly @arndt-s recently floated the idea (more or less) of conveying the WPT and WIT together in the Authorization header with a new aauth-scheme, which might help with default logging of headers. Something like:\n\n`Authorization: wimse <WIT>/<WPT>`",
+          "body": "Interestingly @arndt-s recently floated the idea (more or less) of conveying the WPT and WIT together in the Authorization header with a new auth-scheme, which might help with default logging of headers. Something like:\n\n`Authorization: wimse <WIT>/<WPT>`",
           "createdAt": "2026-07-16T21:15:29Z",
-          "updatedAt": "2026-07-16T21:15:29Z"
+          "updatedAt": "2026-08-09T17:38:48Z"
         },
         {
           "author": "yaronf",
@@ -4683,6 +4761,7 @@
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
+        "arndt-s",
         "bc-pi"
       ],
       "labels": [
@@ -4690,7 +4769,7 @@
       ],
       "body": "FWIW I tend to agree with Arndt here. \r\n\r\nThe first sentence \"Prior to WIMSE, many containerized runtime platforms could not authenticate a peer as a specific workload\" did seem rather strong but \"many\" was enough of a qualifier to make me unsure and not push back on it.\r\n\r\nI don't think I understand the other part either but it seemed to be text that was mostly their already so didn't seem like a good place to question it.\r\n\r\n_Originally posted by @bc-pi in https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/267#discussion_r3595285661_\r\n            ",
       "createdAt": "2026-07-16T19:52:56Z",
-      "updatedAt": "2026-07-28T14:14:40Z",
+      "updatedAt": "2026-08-10T14:39:50Z",
       "closedAt": null,
       "comments": []
     },
@@ -4799,13 +4878,15 @@
       "state": "OPEN",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "arndt-s"
+      ],
       "labels": [
         "draft-ietf-wimse-wpt"
       ],
-      "body": "> Interestingly @arndt-s recently floated the idea (more or less) of conveying the WPT and WIT together in the Authorization header with a new aauth-scheme, which might help with default logging of headers. Something like:\n> \n> `Authorization: wimse <WIT>/<WPT>` \n\n _Originally posted by @bc-pi in [#271](https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/271#issuecomment-4996661207)_",
+      "body": "> Interestingly @arndt-s recently floated the idea (more or less) of conveying the WPT and WIT together in the Authorization header with a new auth-scheme, which might help with default logging of headers. Something like:\n> \n> `Authorization: wimse <WIT>/<WPT>` \n\n _Originally posted by @bc-pi in [#271](https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/271#issuecomment-4996661207)_",
       "createdAt": "2026-08-05T21:13:38Z",
-      "updatedAt": "2026-08-08T18:16:34Z",
+      "updatedAt": "2026-08-10T20:49:09Z",
       "closedAt": null,
       "comments": [
         {
@@ -4814,6 +4895,20 @@
           "body": "...or even just `Authorization: wpt <wpt>` and keep using the WIT header from [draft-ietf-wimse-workload-creds](https://datatracker.ietf.org/doc/html/draft-ietf-wimse-workload-creds-02#wit-http-header)\n\nEither approach or anything that uses the `Authorization` header will mean the `Authorization` header cannot be used for another thing and the `ath` stuff needs to go away. \n",
           "createdAt": "2026-08-08T13:11:05Z",
           "updatedAt": "2026-08-08T18:16:34Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "* \"aauth-scheme\" in your top comment is a typo, right? (I'm thinking https://www.aauth.dev/).\n* I like the `Authorization` header idea.\n* The advantage of keeping the WIT in its own header is that when it comes to logging, secret information (WPT) is separated from less-secret information (WIT).\n* The reference to RFC 9449 in the bullet that defines `ath` is very confusing, I suggest to drop it (if `ath` stays).",
+          "createdAt": "2026-08-09T13:24:17Z",
+          "updatedAt": "2026-08-09T13:24:17Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> * \"aauth-scheme\" in your top comment is a typo, right? (I'm thinking https://www.aauth.dev/).\n\nYes, my mistake, I had an extra 'a' there. I meant `auth-scheme` as shorthand for [Authentication Scheme from RFC9110](https://datatracker.ietf.org/doc/html/rfc9110#name-authentication-scheme). Please don't mistake my mistake as any affiliation or endorsement of [that aauth](https://datatracker.ietf.org/doc/draft-hardt-oauth-aauth-protocol/) or the[ other aauth](https://datatracker.ietf.org/doc/draft-rosenberg-oauth-aauth/). \n\n> \n> * I like the `Authorization` header idea.\n\nI'm coming around to it more and more.\n\n> \n> * The advantage of keeping the WIT in its own header is that when it comes to logging, secret information (WPT) is separated from less-secret information (WIT).\n\nYeah, this is one of the advantages that @arndt-s and I chatted about last week (or so).\n\n> \n> * The reference to RFC 9449 in the bullet that defines `ath` is very confusing, I suggest to drop it (if `ath` stays).\n\nRFC9449 does define `ath` so a reference seems appropriate. Maybe that could be clarified somehow? But HTTP only allows a single Authorization header and OAuth access tokens are (almost) always sent via the Authorization header. So if the Authorization header was used to send the WPT, it means an access token can't go there and sort of obviates the utility of `ath`. So it's use in WPTs could be removed and that would remove that point of confusion. I like also that it sort of implicitly discourages using access tokens in 'backend' workload-to-workload invocations too.   ",
+          "createdAt": "2026-08-10T19:16:25Z",
+          "updatedAt": "2026-08-10T20:49:09Z"
         }
       ]
     }
@@ -19231,13 +19326,13 @@
       ],
       "body": "## Summary\n* Clarify that audit logs should use the workload identifier / selected claims, not raw WIT or proof-of-possession header field values.\n* Note that intermediaries and observability agents often dump those headers by default, enabling replay within the PoP lifetime.\n\nRelated to #271 (Creds-only; leaving the issue open for WPT follow-up).\n\n\nMade with [Cursor](https://cursor.com)",
       "createdAt": "2026-07-29T12:53:24Z",
-      "updatedAt": "2026-08-07T15:49:40Z",
+      "updatedAt": "2026-08-10T12:25:27Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
-      "baseRefOid": "7d6da68171b1fb5409bc7411cfe3d1d008213a3f",
+      "baseRefOid": "40b1c4161dd1971dc1ac7d5ba718a636116109ca",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-271",
-      "headRefOid": "fcd98655e6c8e617faf978aee25dddfcf6039150",
+      "headRefOid": "5375122bb093b20ca9df9317488c8c16969c5705",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -19336,13 +19431,73 @@
               "updatedAt": "2026-08-07T15:49:40Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABI9p6Jw",
+          "commit": {
+            "abbreviatedOid": "fcd9865"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-10T12:04:20Z",
+          "updatedAt": "2026-08-10T12:04:21Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "Why? What we're saying is, if you cannot validate a signed JWT (e.g. you're a mere proxy and nobody configured you with a trust store), you cannot trust it.",
+              "createdAt": "2026-08-10T12:04:20Z",
+              "updatedAt": "2026-08-10T12:04:21Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABI9tpyw",
+          "commit": {
+            "abbreviatedOid": "fcd9865"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-10T12:12:34Z",
+          "updatedAt": "2026-08-10T12:12:34Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "It is clear that logging the WIT is only a risk if it is captured along with the PoP. I see our proposal here (L440 below) as a belt-and-suspenders yet easy to implement solution: parse the WIT and log the few things that you want to see in the log file anyway.",
+              "createdAt": "2026-08-10T12:12:34Z",
+              "updatedAt": "2026-08-10T12:12:34Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABI9vU-A",
+          "commit": {
+            "abbreviatedOid": "fcd9865"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-10T12:15:35Z",
+          "updatedAt": "2026-08-10T12:15:36Z",
+          "comments": [
+            {
+              "originalPosition": 12,
+              "body": "See my comment above.",
+              "createdAt": "2026-08-10T12:15:36Z",
+              "updatedAt": "2026-08-10T12:15:36Z"
+            }
+          ]
         }
       ]
     },
     {
       "number": 280,
       "id": "PR_kwDOLJmm7874BNgb",
-      "title": "State WIC revocation stance (short lifetime, optional OCSP)",
+      "title": "State WIC revocation stance (short lifetime as mitigation)",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/280",
       "state": "OPEN",
       "author": "yaronf",
@@ -19351,15 +19506,15 @@
       "labels": [
         "draft-ietf-wimse-workload-creds"
       ],
-      "body": "## Summary\n* Clarify that WICs are short-lived like WITs and do not rely on CRLs.\n* Issuers MAY include an OCSP responder location; if present, relying parties MUST check OCSP and fail closed.\n\nFixes #270\n\n\nMade with [Cursor](https://cursor.com)",
+      "body": "## Summary\r\n* Clarify that WICs are short-lived like WITs and do not rely on CRLs.\r\n\r\nFixes #270\r\n\r\n\r\nMade with [Cursor](https://cursor.com)",
       "createdAt": "2026-07-29T13:47:27Z",
-      "updatedAt": "2026-08-04T14:54:27Z",
+      "updatedAt": "2026-08-10T20:11:25Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
-      "baseRefOid": "7d6da68171b1fb5409bc7411cfe3d1d008213a3f",
+      "baseRefOid": "40b1c4161dd1971dc1ac7d5ba718a636116109ca",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-270",
-      "headRefOid": "af251a2b69aa7b4020935b2abce7421dfeaac587",
+      "headRefOid": "514b615df4196fe1785eeafcd00369c4c729a10f",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -19413,6 +19568,39 @@
               "updatedAt": "2026-08-04T14:20:28Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABJBRmMA",
+          "commit": {
+            "abbreviatedOid": "04e1f2c"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-10T19:31:16Z",
+          "updatedAt": "2026-08-10T19:31:16Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\nWorkload Identity Certificates are frequently issued to dynamic and/or short-lived workloads. Deployments SHOULD use certificate lifetimes appropriate to the workload environment, typically on a similar scale to WITs ({{wit-pop}}). Long-lived certificates increase the impact of private-key compromise. As with WITs, short certificate lifetimes are the primary mitigation against continued use of a compromised key; this document does not rely on certificate revocation lists (CRLs) or Online Certificate Status Protocol (OCSP) {{?RFC6960}} for WICs.\n```",
+              "createdAt": "2026-08-10T19:31:16Z",
+              "updatedAt": "2026-08-10T19:31:16Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABJBi-Ew",
+          "commit": {
+            "abbreviatedOid": "514b615"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-08-10T20:11:25Z",
+          "updatedAt": "2026-08-10T20:11:25Z",
+          "comments": []
         }
       ]
     },
@@ -19430,13 +19618,13 @@
       ],
       "body": "## Summary\n* Keep the guidance that WIT and PoP are application-layer credentials and are not used as the mutual TLS credential (WIC is).\n* Rather than deleting that sentence, clarify the apparent contradictions: intro wording about \u201ctransport-layer\u201d use of WIT, and PoP binding to TLS session properties.\n\nFixes #256\n\n\nMade with [Cursor](https://cursor.com)",
       "createdAt": "2026-07-29T14:02:07Z",
-      "updatedAt": "2026-08-04T14:56:23Z",
+      "updatedAt": "2026-08-10T12:31:54Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
-      "baseRefOid": "7d6da68171b1fb5409bc7411cfe3d1d008213a3f",
+      "baseRefOid": "40b1c4161dd1971dc1ac7d5ba718a636116109ca",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-256",
-      "headRefOid": "8b3d8e9809dd30b163e922774e44d0cc2e8f1ce8",
+      "headRefOid": "8b62362d250e2d4228106214aedcd16027034895",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -19567,6 +19755,293 @@
           "createdAt": "2026-08-05T21:10:45Z",
           "updatedAt": "2026-08-05T21:10:45Z",
           "comments": []
+        }
+      ]
+    },
+    {
+      "number": 285,
+      "id": "PR_kwDOLJmm7879AI82",
+      "title": "clarify multiple identifiers",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/285",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves #255 by making it more clear that other identifiers are allowed in WIC and WIT.",
+      "createdAt": "2026-08-10T12:33:46Z",
+      "updatedAt": "2026-08-10T22:58:41Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "40b1c4161dd1971dc1ac7d5ba718a636116109ca",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "arndt/resolve-255",
+      "headRefOid": "5abb5a842e110be0dfd238abf4b224d91b950171",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABI9-Xag",
+          "commit": {
+            "abbreviatedOid": "091e1d7"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-10T12:42:43Z",
+          "updatedAt": "2026-08-10T12:42:43Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "This is confusing: `jti` appears in both the 3rd and the last sentence. I think the two sentences should be consolidated.",
+              "createdAt": "2026-08-10T12:42:43Z",
+              "updatedAt": "2026-08-10T12:43:25Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABI-DV8w",
+          "commit": {
+            "abbreviatedOid": "091e1d7"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-10T12:51:33Z",
+          "updatedAt": "2026-08-10T12:51:33Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "Updated, please take a look",
+              "createdAt": "2026-08-10T12:51:33Z",
+              "updatedAt": "2026-08-10T12:51:33Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABI-D0Ag",
+          "commit": {
+            "abbreviatedOid": "091e1d7"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-10T12:52:32Z",
+          "updatedAt": "2026-08-10T12:52:33Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "Is this really about the value that is acceptable as a sub claim in the WIT? Perhaps something like this (although this does not quite work for WICs).\r\n\r\n```suggestion\r\nDeployments that distinguish several labels for the same runtime (for example a stable service identity and a specific instance) MUST use the identity required for the access decision as the `sub` claim in the credential. Additional correlation for logging or operations MUST NOT be encoded as a second Workload Identifier in the `sub` claim in the same WIT or WIC. This restriction applies only to Workload Identifiers; a credential MAY carry other identifiers, such as the `jti` claim or a DNSName SubjectAltName, for correlation, interoperability, or integration purposes. Deployments MAY use other mechanisms, such as the optional `jti` claim, separate credentials, or additional claims as described in {{add-claims}}.\r\n```",
+              "createdAt": "2026-08-10T12:52:33Z",
+              "updatedAt": "2026-08-10T12:52:33Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABI-MXrQ",
+          "commit": {
+            "abbreviatedOid": "091e1d7"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-10T13:09:37Z",
+          "updatedAt": "2026-08-10T13:09:37Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "I believe that context is already given by the previous paragraph.\r\n\r\n> For a Workload Identity Token, that identifier is the value of the `sub` claim. For a Workload Identity Certificate, that identifier is carried in the single URI SubjectAltName described in {{to-wic}}.",
+              "createdAt": "2026-08-10T13:09:37Z",
+              "updatedAt": "2026-08-10T13:09:37Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABI-Tt9A",
+          "commit": {
+            "abbreviatedOid": "5abb5a8"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-08-10T13:23:20Z",
+          "updatedAt": "2026-08-10T13:23:20Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABJBSPow",
+          "commit": {
+            "abbreviatedOid": "5abb5a8"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "wfm, thanks @arndt-s ",
+          "createdAt": "2026-08-10T19:32:45Z",
+          "updatedAt": "2026-08-10T19:32:45Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABJChBsg",
+          "commit": {
+            "abbreviatedOid": "5abb5a8"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-08-10T22:58:41Z",
+          "updatedAt": "2026-08-10T22:58:41Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 286,
+      "id": "PR_kwDOLJmm7879CGuH",
+      "title": "Clarify workload identifier and add security considerations",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/286",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The current text does not align with what this document actually does. We do not solve the \"dial target != workload identifier\" problem.\r\n\r\nSo I rephrased the section a bit and also added security considerations which I believe matter here. \r\n\r\nResolves #272 ",
+      "createdAt": "2026-08-10T13:42:14Z",
+      "updatedAt": "2026-08-10T20:04:22Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "40b1c4161dd1971dc1ac7d5ba718a636116109ca",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "arndt/resolve_272",
+      "headRefOid": "4fad020340b3cd6b9ea52882368c6b708547046f",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This is an alternative text to the still open #246 - we should discuss both of them together.",
+          "createdAt": "2026-08-10T14:53:13Z",
+          "updatedAt": "2026-08-10T14:53:13Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABI_Ct0Q",
+          "commit": {
+            "abbreviatedOid": "4fad020"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2026-08-10T14:45:27Z",
+          "updatedAt": "2026-08-10T14:51:59Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "I think this context/motivation is important.",
+              "createdAt": "2026-08-10T14:45:28Z",
+              "updatedAt": "2026-08-10T14:51:59Z"
+            },
+            {
+              "originalPosition": 28,
+              "body": "In the case of WPT, most of the authentication happens on the *server* side, by (1) validating the incoming WIT/WPT and (2) verifying the audience.",
+              "createdAt": "2026-08-10T14:51:41Z",
+              "updatedAt": "2026-08-10T14:51:59Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABI_JOug",
+          "commit": {
+            "abbreviatedOid": "4fad020"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-10T14:55:21Z",
+          "updatedAt": "2026-08-10T14:55:22Z",
+          "comments": [
+            {
+              "originalPosition": 30,
+              "body": "My proposed text avoids the \"mapping\" notion (which is hard to define precisely) and instead focuses on the information that needs to be available to the endpoints so that each of them can enforce its security requirements.",
+              "createdAt": "2026-08-10T14:55:22Z",
+              "updatedAt": "2026-08-10T14:55:22Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABI_JibA",
+          "commit": {
+            "abbreviatedOid": "4fad020"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-10T14:55:48Z",
+          "updatedAt": "2026-08-10T14:55:48Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "I'm not sure I agree with that statement though. It's also that we don't really solve the problem. The mapping between location identifier and workload identifier is out of scope. ",
+              "createdAt": "2026-08-10T14:55:48Z",
+              "updatedAt": "2026-08-10T14:55:48Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABJBdPzg",
+          "commit": {
+            "abbreviatedOid": "4fad020"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-10T19:58:03Z",
+          "updatedAt": "2026-08-10T19:58:03Z",
+          "comments": [
+            {
+              "originalPosition": 22,
+              "body": "I realize the wording is difficult (see the terrible words in my suggestion below) but I think \"dials\" might be a little too colloquial for a document that aspires to be an RFC. \n\n```suggestion\nA Workload Identifier is generally not a name that a client uses to initiate invocation of a service. Clients reach a workload through an external access name,\n```",
+              "createdAt": "2026-08-10T19:58:03Z",
+              "updatedAt": "2026-08-10T19:58:03Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABJBf9Xw",
+          "commit": {
+            "abbreviatedOid": "4fad020"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-10T20:04:22Z",
+          "updatedAt": "2026-08-10T20:04:22Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "Similar to https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/267#discussion_r3595285661 and #272 which it begat, I tend to agree with @arndt-s here. ",
+              "createdAt": "2026-08-10T20:04:22Z",
+              "updatedAt": "2026-08-10T20:04:22Z"
+            }
+          ]
         }
       ]
     }
