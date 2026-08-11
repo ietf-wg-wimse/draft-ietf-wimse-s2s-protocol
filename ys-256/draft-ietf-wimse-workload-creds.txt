@@ -361,14 +361,17 @@ Table of Contents
    For a Workload Identity Token, that identifier is the value of the
    sub claim.  For a Workload Identity Certificate, that identifier is
    carried in the single URI SubjectAltName described in Section 6.1.
-
    Deployments that distinguish several labels for the same runtime (for
    example a stable service identity and a specific instance) MUST place
-   the identity required for the access decision in that one credential.
+   only one identifier into it.
+
    Additional correlation for logging or operations MUST NOT be encoded
-   as a second Workload Identifier in the same WIT or WIC.  Deployments
-   MAY use other mechanisms, such as the optional jti claim, separate
-   credentials, or additional claims as described in Section 5.1.2.
+   as a second Workload Identifier in the same WIT or WIC.  This
+   restriction applies only to Workload Identifiers; deployments MAY use
+   other mechanisms for correlation, interoperability, or integration
+   purposes, such as the optional jti claim, a DNSName SubjectAltName,
+   separate credentials, or additional claims as described in
+   Section 5.1.2.
 
 5.  Application-Layer Workload-to-Workload Authentication
 
@@ -867,8 +870,13 @@ Table of Contents
 
    Workload Identity Certificates are frequently issued to dynamic and/
    or short-lived workloads.  Deployments SHOULD use certificate
-   lifetimes appropriate to the workload environment.  Long-lived
-   certificates increase the impact of private-key compromise.
+   lifetimes appropriate to the workload environment, typically on a
+   similar scale to WITs (Section 9.2).  Long-lived certificates
+   increase the impact of private-key compromise.  As with WITs, short
+   certificate lifetimes are the primary mitigation against continued
+   use of a compromised key; this document does not rely on certificate
+   revocation lists (CRLs) or Online Certificate Status Protocol (OCSP)
+   [RFC6960] for WICs.
 
    The lifetime of Workload Identity Certificates is bounded by the
    lifetime and rotation cadence of the trust anchors of the trust
@@ -1121,6 +1129,12 @@ Table of Contents
               IANA, "Media Types",
               <https://www.iana.org/assignments/media-types>.
 
+   [RFC6960]  Santesson, S., Myers, M., Ankney, R., Malpani, A.,
+              Galperin, S., and C. Adams, "X.509 Internet Public Key
+              Infrastructure Online Certificate Status Protocol - OCSP",
+              RFC 6960, DOI 10.17487/RFC6960, June 2013,
+              <https://www.rfc-editor.org/rfc/rfc6960>.
+
    [RFC9457]  Nottingham, M., Wilde, E., and S. Dalal, "Problem Details
               for HTTP APIs", RFC 9457, DOI 10.17487/RFC9457, July 2023,
               <https://www.rfc-editor.org/rfc/rfc9457>.
@@ -1134,6 +1148,13 @@ A.1.  draft-ietf-wimse-workload-creds-03
 
    *  Clarify that WIT/PoP are application-layer credentials and are not
       used for mutual TLS; TLS binding does not change that (#256).
+
+   *  Clarify that the one-Workload-Identifier-per-credential rule
+      restricts only Workload Identifiers, not other identifiers in the
+      credential.
+
+   *  State the WIC revocation stance: short lifetimes like WITs; no CRL
+      reliance (#270).
 
    *  Editorial: consistent use of "proof of possession"/"PoP", with the
       abbreviation expanded on first use, and consistent capitalization
