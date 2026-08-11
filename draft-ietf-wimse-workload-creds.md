@@ -189,9 +189,9 @@ For Workload Identity Certificates, validators use the trust anchors for the pee
 
 Each WIMSE credential carries exactly one Workload Identifier ({{WIMSE-ID}}) that is used for authentication and authorization. Requiring a single identifier per credential keeps authorization and auditing unambiguous and aligns with common practice for workload X.509 certificates (for example, a single URI in an X.509-SVID).
 
-For a Workload Identity Token, that identifier is the value of the `sub` claim. For a Workload Identity Certificate, that identifier is carried in the single URI SubjectAltName described in {{to-wic}}.
+For a Workload Identity Token, that identifier is the value of the `sub` claim. For a Workload Identity Certificate, that identifier is carried in the single URI SubjectAltName described in {{to-wic}}. Deployments that distinguish several labels for the same runtime (for example a stable service identity and a specific instance) MUST place only one identity into it.
 
-Deployments that distinguish several labels for the same runtime (for example a stable service identity and a specific instance) MUST place the identity required for the access decision in that one credential. Additional correlation for logging or operations MUST NOT be encoded as a second Workload Identifier in the same WIT or WIC. This restriction applies only to Workload Identifiers; deployments MAY use other mechanisms for correlation, interoperability, or integration purposes, such as the optional `jti` claim, a DNSName SubjectAltName, separate credentials, or additional claims as described in {{add-claims}}.
+Additional correlation for logging or operations MUST NOT be encoded as a second Workload Identifier in the same WIT or WIC. This restriction applies only to Workload Identifiers; deployments MAY use other mechanisms for correlation, interoperability, or integration purposes, such as the optional `jti` claim, a DNSName SubjectAltName, separate credentials, or additional claims as described in {{add-claims}}.
 
 # Application-Layer Workload-to-Workload Authentication {#app-layer}
 
