@@ -1376,7 +1376,7 @@ This document focuses on the credentials that carry workload identity and bind t
           <p id="section-1-3.2.1">The Workload Identity Certificate (WIC) is an X.509 certificate that represents the identity of a workload and binds a public key to that identity.<a href="#section-1-3.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="section-1-4">The Workload Identity Token is targeted for application-layer protocols. The Workload Identity Certificate is targeted for transport-layer protocols. This does not preclude the use of the WIT in transport-layer protocols or the WIC in application-layer protocols, but these are the primary intended uses.<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-1-4">The Workload Identity Token is targeted for application-layer protocols. The Workload Identity Certificate is targeted for transport-layer protocols, primarily mutual TLS. Presenting a WIT over a TLS-protected channel, or binding an application-layer proof of possession to TLS session properties (see <a href="#wit-pop" class="auto internal xref">Section 9.2</a>), does not make the WIT a transport-layer credential: mutual TLS authentication uses the Workload Identity Certificate, not the WIT. This does not preclude the use of the WIC in application-layer protocols or the WIT in transport-layer protocols, but these are the primary intended uses.<a href="#section-1-4" class="pilcrow">¶</a></p>
 <p id="section-1-5">The various protocol bindings that use these credentials to authenticate workloads to each other are specified in separate documents and are out of scope for this document. Each such binding defines how a workload proves possession of the key material bound to its credential in order to authenticate to another workload. At the time of writing, three such protocol bindings are defined:<a href="#section-1-5" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-1-6.1">
@@ -1985,7 +1985,7 @@ See <a href="#granular-auth" class="auto internal xref">Section 1.3</a> on addit
         <h3 id="name-workload-identity-token-and">
 <a href="#section-9.2" class="section-number selfRef">9.2. </a><a href="#name-workload-identity-token-and" class="section-name selfRef">Workload Identity Token and Proof of Possession</a>
         </h3>
-<p id="section-9.2-1">The Workload Identity Token (WIT) is bound to a secret cryptographic key and is always presented with a proof of possession (PoP) as described in <a href="#to-wit" class="auto internal xref">Section 5.1</a>. The WIT is a general purpose token that can be presented in multiple contexts. The WIT and its PoP are only used in the application-layer options, and both are not used in mTLS. The WIT <span class="bcp14">MUST NOT</span> be used as a bearer token. While this helps reduce the sensitivity of the token it is still possible that a token and its PoP may be captured and replayed within the PoP's lifetime. The following are some mitigations for the capture and reuse of the WIT and its PoP:<a href="#section-9.2-1" class="pilcrow">¶</a></p>
+<p id="section-9.2-1">The Workload Identity Token (WIT) is bound to a secret cryptographic key and is always presented with a proof of possession (PoP) as described in <a href="#to-wit" class="auto internal xref">Section 5.1</a>. The WIT is a general purpose token that can be presented in multiple contexts. The WIT and its PoP are used for application-layer authentication; they are not used as the client or server credential for mutual TLS, which uses the Workload Identity Certificate (<a href="#to-wic" class="auto internal xref">Section 6.1</a>). The WIT <span class="bcp14">MUST NOT</span> be used as a bearer token. While this helps reduce the sensitivity of the token it is still possible that a token and its PoP may be captured and replayed within the PoP's lifetime. The following are some mitigations for the capture and reuse of the WIT and its PoP:<a href="#section-9.2-1" class="pilcrow">¶</a></p>
 <div id="limiting-workload-identity-token-lifespan">
 <section id="section-9.2.1">
           <h4 id="name-limiting-workload-identity-">
@@ -2307,13 +2307,16 @@ use these tokens to authenticate to each other.<a href="#section-11.1.1-9" class
         </h3>
 <ul class="normal">
 <li class="normal" id="appendix-A.1-1.1">
-            <p id="appendix-A.1-1.1.1">Clarify that the one-Workload-Identifier-per-credential rule restricts only Workload Identifiers, not other identifiers in the credential.<a href="#appendix-A.1-1.1.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.1.1">Clarify that WIT/PoP are application-layer credentials and are not used for mutual TLS; TLS binding does not change that (#256).<a href="#appendix-A.1-1.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.2">
-            <p id="appendix-A.1-1.2.1">State the WIC revocation stance: short lifetimes like WITs; no CRL reliance (#270).<a href="#appendix-A.1-1.2.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.2.1">Clarify that the one-Workload-Identifier-per-credential rule restricts only Workload Identifiers, not other identifiers in the credential.<a href="#appendix-A.1-1.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.3">
-            <p id="appendix-A.1-1.3.1">Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use, and consistent capitalization of the defined term "Workload Identifier".<a href="#appendix-A.1-1.3.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.3.1">State the WIC revocation stance: short lifetimes like WITs; no CRL reliance (#270).<a href="#appendix-A.1-1.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.1-1.4">
+            <p id="appendix-A.1-1.4.1">Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use, and consistent capitalization of the defined term "Workload Identifier".<a href="#appendix-A.1-1.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>

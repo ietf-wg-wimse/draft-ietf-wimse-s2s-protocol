@@ -161,9 +161,14 @@ Table of Contents
 
    The Workload Identity Token is targeted for application-layer
    protocols.  The Workload Identity Certificate is targeted for
-   transport-layer protocols.  This does not preclude the use of the WIT
-   in transport-layer protocols or the WIC in application-layer
-   protocols, but these are the primary intended uses.
+   transport-layer protocols, primarily mutual TLS.  Presenting a WIT
+   over a TLS-protected channel, or binding an application-layer proof
+   of possession to TLS session properties (see Section 9.2), does not
+   make the WIT a transport-layer credential: mutual TLS authentication
+   uses the Workload Identity Certificate, not the WIT.  This does not
+   preclude the use of the WIC in application-layer protocols or the WIT
+   in transport-layer protocols, but these are the primary intended
+   uses.
 
    The various protocol bindings that use these credentials to
    authenticate workloads to each other are specified in separate
@@ -796,13 +801,14 @@ Table of Contents
    The Workload Identity Token (WIT) is bound to a secret cryptographic
    key and is always presented with a proof of possession (PoP) as
    described in Section 5.1.  The WIT is a general purpose token that
-   can be presented in multiple contexts.  The WIT and its PoP are only
-   used in the application-layer options, and both are not used in mTLS.
-   The WIT MUST NOT be used as a bearer token.  While this helps reduce
-   the sensitivity of the token it is still possible that a token and
-   its PoP may be captured and replayed within the PoP's lifetime.  The
-   following are some mitigations for the capture and reuse of the WIT
-   and its PoP:
+   can be presented in multiple contexts.  The WIT and its PoP are used
+   for application-layer authentication; they are not used as the client
+   or server credential for mutual TLS, which uses the Workload Identity
+   Certificate (Section 6.1).  The WIT MUST NOT be used as a bearer
+   token.  While this helps reduce the sensitivity of the token it is
+   still possible that a token and its PoP may be captured and replayed
+   within the PoP's lifetime.  The following are some mitigations for
+   the capture and reuse of the WIT and its PoP:
 
 9.2.1.  Limiting Workload Identity Token Lifespan
 
@@ -1139,6 +1145,9 @@ Appendix A.  Document History
    // RFC Editor: please remove before publication.
 
 A.1.  draft-ietf-wimse-workload-creds-03
+
+   *  Clarify that WIT/PoP are application-layer credentials and are not
+      used for mutual TLS; TLS binding does not change that (#256).
 
    *  Clarify that the one-Workload-Identifier-per-credential rule
       restricts only Workload Identifiers, not other identifiers in the
