@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 11 February 2027                             Palo Alto Networks
+Expires: 12 February 2027                             Palo Alto Networks
                                                       A. Schwenkschuster
                                                         Defakto Security
                                                               Y. Sheffer
                                                                   Intuit
                                                             Y. Rosomakho
                                                                  Zscaler
-                                                          10 August 2026
+                                                          11 August 2026
 
 
                        WIMSE Workload Credentials
@@ -67,7 +67,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 11 February 2027.
+   This Internet-Draft will expire on 12 February 2027.
 
 Copyright Notice
 
@@ -166,8 +166,9 @@ Table of Contents
    of possession to TLS session properties (see Section 9.2), does not
    make the WIT a transport-layer credential: mutual TLS authentication
    uses the Workload Identity Certificate, not the WIT.  This does not
-   preclude the use of the WIC in application-layer protocols, but these
-   are the primary intended uses.
+   preclude the use of the WIC in application-layer protocols or the WIT
+   in transport-layer protocols, but these are the primary intended
+   uses.
 
    The various protocol bindings that use these credentials to
    authenticate workloads to each other are specified in separate
