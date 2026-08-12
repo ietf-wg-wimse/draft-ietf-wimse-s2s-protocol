@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 11 February 2027                             Palo Alto Networks
+Expires: 13 February 2027                             Palo Alto Networks
                                                       A. Schwenkschuster
                                                         Defakto Security
                                                               Y. Sheffer
                                                                   Intuit
                                                             Y. Rosomakho
                                                                  Zscaler
-                                                          10 August 2026
+                                                          12 August 2026
 
 
                        WIMSE Workload Credentials
@@ -67,7 +67,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 11 February 2027.
+   This Internet-Draft will expire on 13 February 2027.
 
 Copyright Notice
 
@@ -161,9 +161,14 @@ Table of Contents
 
    The Workload Identity Token is targeted for application-layer
    protocols.  The Workload Identity Certificate is targeted for
-   transport-layer protocols.  This does not preclude the use of the WIT
-   in transport-layer protocols or the WIC in application-layer
-   protocols, but these are the primary intended uses.
+   transport-layer protocols, primarily mutual TLS.  Presenting a WIT
+   over a TLS-protected channel, or binding an application-layer proof
+   of possession to TLS session properties (see Section 9.2), does not
+   make the WIT a transport-layer credential: mutual TLS authentication
+   uses the Workload Identity Certificate, not the WIT.  This does not
+   preclude the use of the WIC in application-layer protocols or the WIT
+   in transport-layer protocols, but these are the primary intended
+   uses.
 
    The various protocol bindings that use these credentials to
    authenticate workloads to each other are specified in separate
@@ -356,14 +361,17 @@ Table of Contents
    For a Workload Identity Token, that identifier is the value of the
    sub claim.  For a Workload Identity Certificate, that identifier is
    carried in the single URI SubjectAltName described in Section 6.1.
-
    Deployments that distinguish several labels for the same runtime (for
    example a stable service identity and a specific instance) MUST place
-   the identity required for the access decision in that one credential.
+   only one identifier into it.
+
    Additional correlation for logging or operations MUST NOT be encoded
-   as a second Workload Identifier in the same WIT or WIC.  Deployments
-   MAY use other mechanisms, such as the optional jti claim, separate
-   credentials, or additional claims as described in Section 5.1.2.
+   as a second Workload Identifier in the same WIT or WIC.  This
+   restriction applies only to Workload Identifiers; deployments MAY use
+   other mechanisms for correlation, interoperability, or integration
+   purposes, such as the optional jti claim, a DNSName SubjectAltName,
+   separate credentials, or additional claims as described in
+   Section 5.1.2.
 
 5.  Application-Layer Workload-to-Workload Authentication
 
@@ -797,13 +805,14 @@ Table of Contents
    The Workload Identity Token (WIT) is bound to a secret cryptographic
    key and is always presented with a proof of possession (PoP) as
    described in Section 5.1.  The WIT is a general purpose token that
-   can be presented in multiple contexts.  The WIT and its PoP are only
-   used in the application-layer options, and both are not used in mTLS.
-   The WIT MUST NOT be used as a bearer token.  While this helps reduce
-   the sensitivity of the token it is still possible that a token and
-   its PoP may be captured and replayed within the PoP's lifetime.  The
-   following are some mitigations for the capture and reuse of the WIT
-   and its PoP:
+   can be presented in multiple contexts.  The WIT and its PoP are used
+   for application-layer authentication; they are not used as the client
+   or server credential for mutual TLS, which uses the Workload Identity
+   Certificate (Section 6.1).  The WIT MUST NOT be used as a bearer
+   token.  While this helps reduce the sensitivity of the token it is
+   still possible that a token and its PoP may be captured and replayed
+   within the PoP's lifetime.  The following are some mitigations for
+   the capture and reuse of the WIT and its PoP:
 
    Gateways, TLS-terminating proxies, and observability agents often
    record HTTP header fields by default.  A logged WIT together with a
@@ -877,8 +886,13 @@ Table of Contents
 
    Workload Identity Certificates are frequently issued to dynamic and/
    or short-lived workloads.  Deployments SHOULD use certificate
-   lifetimes appropriate to the workload environment.  Long-lived
-   certificates increase the impact of private-key compromise.
+   lifetimes appropriate to the workload environment, typically on a
+   similar scale to WITs (Section 9.2).  Long-lived certificates
+   increase the impact of private-key compromise.  As with WITs, short
+   certificate lifetimes are the primary mitigation against continued
+   use of a compromised key; this document does not rely on certificate
+   revocation lists (CRLs) or Online Certificate Status Protocol (OCSP)
+   [RFC6960] for WICs.
 
    The lifetime of Workload Identity Certificates is bounded by the
    lifetime and rotation cadence of the trust anchors of the trust
@@ -1131,6 +1145,12 @@ Table of Contents
               IANA, "Media Types",
               <https://www.iana.org/assignments/media-types>.
 
+   [RFC6960]  Santesson, S., Myers, M., Ankney, R., Malpani, A.,
+              Galperin, S., and C. Adams, "X.509 Internet Public Key
+              Infrastructure Online Certificate Status Protocol - OCSP",
+              RFC 6960, DOI 10.17487/RFC6960, June 2013,
+              <https://www.rfc-editor.org/rfc/rfc6960>.
+
    [RFC9457]  Nottingham, M., Wilde, E., and S. Dalal, "Problem Details
               for HTTP APIs", RFC 9457, DOI 10.17487/RFC9457, July 2023,
               <https://www.rfc-editor.org/rfc/rfc9457>.
@@ -1142,8 +1162,17 @@ Appendix A.  Document History
 
 A.1.  draft-ietf-wimse-workload-creds-03
 
-   *  Advise against logging raw WIT and proof-of-possession header
-      field values; prefer selected claims for audit (#271).
+   *  Advise against logging proof-of-possession values (#271).
+
+   *  Clarify that WIT/PoP are application-layer credentials and are not
+      used for mutual TLS; TLS binding does not change that (#256).
+
+   *  Clarify that the one-Workload-Identifier-per-credential rule
+      restricts only Workload Identifiers, not other identifiers in the
+      credential.
+
+   *  State the WIC revocation stance: short lifetimes like WITs; no CRL
+      reliance (#270).
 
    *  Editorial: consistent use of "proof of possession"/"PoP", with the
       abbreviation expanded on first use, and consistent capitalization
