@@ -83,7 +83,7 @@ In this document, two credentials are defined:
 
 * The Workload Identity Certificate (WIC) is an X.509 certificate that represents the identity of a workload and binds a public key to that identity.
 
-The Workload Identity Token is targeted for application-layer protocols. The Workload Identity Certificate is targeted for transport-layer protocols. This does not preclude the use of the WIT in transport-layer protocols or the WIC in application-layer protocols, but these are the primary intended uses.
+The Workload Identity Token is targeted for application-layer protocols. The Workload Identity Certificate is targeted for transport-layer protocols, primarily mutual TLS. Presenting a WIT over a TLS-protected channel, or binding an application-layer proof of possession to TLS session properties (see {{wit-pop}}), does not make the WIT a transport-layer credential: mutual TLS authentication uses the Workload Identity Certificate, not the WIT. This does not preclude the use of the WIC in application-layer protocols or the WIT in transport-layer protocols, but these are the primary intended uses.
 
 The various protocol bindings that use these credentials to authenticate workloads to each other are specified in separate documents and are out of scope for this document. Each such binding defines how a workload proves possession of the key material bound to its credential in order to authenticate to another workload. At the time of writing, three such protocol bindings are defined:
 
@@ -189,9 +189,9 @@ For Workload Identity Certificates, validators use the trust anchors for the pee
 
 Each WIMSE credential carries exactly one Workload Identifier ({{WIMSE-ID}}) that is used for authentication and authorization. Requiring a single identifier per credential keeps authorization and auditing unambiguous and aligns with common practice for workload X.509 certificates (for example, a single URI in an X.509-SVID).
 
-For a Workload Identity Token, that identifier is the value of the `sub` claim. For a Workload Identity Certificate, that identifier is carried in the single URI SubjectAltName described in {{to-wic}}.
+For a Workload Identity Token, that identifier is the value of the `sub` claim. For a Workload Identity Certificate, that identifier is carried in the single URI SubjectAltName described in {{to-wic}}. Deployments that distinguish several labels for the same runtime (for example a stable service identity and a specific instance) MUST place only one identifier into it.
 
-Deployments that distinguish several labels for the same runtime (for example a stable service identity and a specific instance) MUST place the identity required for the access decision in that one credential. Additional correlation for logging or operations MUST NOT be encoded as a second Workload Identifier in the same WIT or WIC. Deployments MAY use other mechanisms, such as the optional `jti` claim, separate credentials, or additional claims as described in {{add-claims}}.
+Additional correlation for logging or operations MUST NOT be encoded as a second Workload Identifier in the same WIT or WIC. This restriction applies only to Workload Identifiers; deployments MAY use other mechanisms for correlation, interoperability, or integration purposes, such as the optional `jti` claim, a DNSName SubjectAltName, separate credentials, or additional claims as described in {{add-claims}}.
 
 # Application-Layer Workload-to-Workload Authentication {#app-layer}
 
@@ -435,7 +435,7 @@ When a deployment uses the `iss` claim for key distribution as described in {{wi
 
 ## Workload Identity Token and Proof of Possession {#wit-pop}
 
-The Workload Identity Token (WIT) is bound to a secret cryptographic key and is always presented with a proof of possession (PoP) as described in {{to-wit}}. The WIT is a general purpose token that can be presented in multiple contexts. The WIT and its PoP are only used in the application-layer options, and both are not used in mTLS. The WIT MUST NOT be used as a bearer token. While this helps reduce the sensitivity of the token it is still possible that a token and its PoP may be captured and replayed within the PoP's lifetime. The following are some mitigations for the capture and reuse of the WIT and its PoP:
+The Workload Identity Token (WIT) is bound to a secret cryptographic key and is always presented with a proof of possession (PoP) as described in {{to-wit}}. The WIT is a general purpose token that can be presented in multiple contexts. The WIT and its PoP are used for application-layer authentication; they are not used as the client or server credential for mutual TLS, which uses the Workload Identity Certificate ({{to-wic}}). The WIT MUST NOT be used as a bearer token. While this helps reduce the sensitivity of the token it is still possible that a token and its PoP may be captured and replayed within the PoP's lifetime. The following are some mitigations for the capture and reuse of the WIT and its PoP:
 
 Gateways, TLS-terminating proxies, and observability agents often record HTTP header fields by default. A logged WIT together with a logged PoP remains usable for replay within the PoP's lifetime. Implementations SHOULD NOT log these raw header field values; after validation they SHOULD record selected claims useful for audit (for example `sub`, and when present `iss`, `exp`, and `jti`) instead.
 
@@ -467,7 +467,7 @@ The Workload Identity Certificate carries the Workload Identifier in a single UR
 
 ### Limiting Workload Identity Certificate Lifespan
 
-Workload Identity Certificates are frequently issued to dynamic and/or short-lived workloads. Deployments SHOULD use certificate lifetimes appropriate to the workload environment. Long-lived certificates increase the impact of private-key compromise.
+Workload Identity Certificates are frequently issued to dynamic and/or short-lived workloads. Deployments SHOULD use certificate lifetimes appropriate to the workload environment, typically on a similar scale to WITs ({{wit-pop}}). Long-lived certificates increase the impact of private-key compromise. As with WITs, short certificate lifetimes are the primary mitigation against continued use of a compromised key; this document does not rely on certificate revocation lists (CRLs) or Online Certificate Status Protocol (OCSP) {{?RFC6960}} for WICs.
 
 The lifetime of Workload Identity Certificates is bounded by the lifetime and rotation cadence of the trust anchors of the trust domain ({{trust-anchors}}). Compromise of a trust anchor permits issuance of certificates for the trust domain for as long as that anchor remains trusted. Deployments should therefore consider leaf and trust-anchor lifetimes together rather than the leaf lifetime in isolation.
 
@@ -567,7 +567,10 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 
 ## draft-ietf-wimse-workload-creds-03
 
-* Advise against logging raw WIT and proof-of-possession header field values; prefer selected claims for audit (#271).
+* Advise against logging proof-of-possession values (#271).
+* Clarify that WIT/PoP are application-layer credentials and are not used for mutual TLS; TLS binding does not change that (#256).
+* Clarify that the one-Workload-Identifier-per-credential rule restricts only Workload Identifiers, not other identifiers in the credential.
+* State the WIC revocation stance: short lifetimes like WITs; no CRL reliance (#270).
 * Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use, and consistent capitalization of the defined term "Workload Identifier".
 
 ## draft-ietf-wimse-workload-creds-02
