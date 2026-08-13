@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-08-11T01:37:19.264681+00:00",
+  "timestamp": "2026-08-13T01:50:28.413517+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -4318,9 +4318,9 @@
       "id": "I_kwDOLJmm788AAAABIz0cBg",
       "title": "Section 4 - Presence of additional identifiers in WITs",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/255",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "PieterKas",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [
         "arndt-s"
       ],
@@ -4329,8 +4329,8 @@
       ],
       "body": "I agree that a credential should unambiguously identify the primary subject it was issued to, and the access decision keys off that one identity (sub for a WIT, single URI SAN for a WIC). \n\nI think that is in part why  the following sentence prohibit the inclusion of additional workload identifiers for correlation or any other purposes in a WIT.\n\n\"Additional correlation for logging or operations MUST NOT be encoded as a second workload identifier in the same WIT or WIC.\"\n\nHowever, the draft allows this for certificates. Section 6.1 requires the workload identifier in exactly one URI SAN, yet explicitly allows the certificate to carry other identifiers (DNSName SANs and \"SubjectAltName extensions of other types\"), stating that \"only the URI SAN above is the WIMSE workload identity.\" So a WIC can already carry multiple identifiers of different kinds while exactly one uniquely identifies the workload. The Section 4 prohibition for the WIT is inconsistent with Section 6.1.\n\nQuestion: Is the intent to preclude all additional identifiers, or only to guarantee that the primary subject is unambiguous? If the latter, is the MUST NOT really needed or should it be. relaxed so that additional identifiers MAY be included for purposes such as correlation, provided they are clearly distinguished from, and never usable in place of, the authoritative subject (e.g. the WIT could include other claims that contain identifiers, but only the sub claim is treated as the primary identifier)?\n",
       "createdAt": "2026-07-14T19:01:07Z",
-      "updatedAt": "2026-08-10T22:59:32Z",
-      "closedAt": null,
+      "updatedAt": "2026-08-11T12:07:03Z",
+      "closedAt": "2026-08-11T12:07:03Z",
       "comments": [
         {
           "author": "arndt-s",
@@ -4348,7 +4348,7 @@
         },
         {
           "author": "PieterKas",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "I think some text to clarify this nuanced view would be a good thing (it did not immediately occur to me to read it this way). \n\nI read it (perhaps bluntly) as a prohibition on additional identifiers. If additional identifiers are allowed, it may be helpful to readers to get guidance on what identifiers and what they may be used for (e.g. \"only one identifier that uniquely identifies the workload. Additional identifiers may be included for interoperability, correlation and integration purposes - or something to that effect).",
           "createdAt": "2026-08-10T12:24:51Z",
           "updatedAt": "2026-08-10T12:24:51Z"
@@ -4366,6 +4366,13 @@
           "body": "#285 looks okay to me ",
           "createdAt": "2026-08-10T22:59:31Z",
           "updatedAt": "2026-08-10T22:59:31Z"
+        },
+        {
+          "author": "PieterKas",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I left a comment in #285 - perhaps some minor word-smithing is still needed",
+          "createdAt": "2026-08-11T11:24:04Z",
+          "updatedAt": "2026-08-11T11:24:04Z"
         }
       ]
     },
@@ -4374,9 +4381,9 @@
       "id": "I_kwDOLJmm788AAAABIz0cnA",
       "title": "Section 9.2 - inconsistency in use of WIT and MTLS.",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/256",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "PieterKas",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [
         "yaronf"
       ],
@@ -4385,8 +4392,8 @@
       ],
       "body": "The following sentence: \"The WIT and its PoP are only used in the application-layer options, and both are not used in MTLS.\" appears to contradict Section 9.2.5 (which allows binding the PoP to a TLS session's client identity or channel-binding parameters, i.e., mTLS) and Section 1 (\"This does not preclude the use of the WIT in transport-layer protocols...\"). Consider deleting it to be consistent.\n",
       "createdAt": "2026-07-14T19:01:09Z",
-      "updatedAt": "2026-07-28T14:46:30Z",
-      "closedAt": null,
+      "updatedAt": "2026-08-11T14:56:41Z",
+      "closedAt": "2026-08-11T14:56:41Z",
       "comments": []
     },
     {
@@ -4396,7 +4403,7 @@
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/257",
       "state": "OPEN",
       "author": "PieterKas",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [
         "bc-pi"
       ],
@@ -4405,7 +4412,7 @@
       ],
       "body": "The example WIT (Figures 2 and 4) contains an iat claim, but iat is not listed or defined in the Section 5.1 normative claim list (iss, sub, exp, jti, cnf). The primary example uses a claim the specification does not mention. Either add iat to the claim definitions (it is conventional and underpins the \"refreshed regularly\" / lifetime language) or remove it from the example. My preference would be to add it as an OPTIONAL claim.\n",
       "createdAt": "2026-07-14T19:01:10Z",
-      "updatedAt": "2026-08-10T21:58:37Z",
+      "updatedAt": "2026-08-11T13:35:00Z",
       "closedAt": null,
       "comments": [
         {
@@ -4463,6 +4470,27 @@
           "body": "Perhaps some words about `iat` aimed at avoidance of this might help interoperability https://mailarchive.ietf.org/arch/msg/oauth/tKBlR1ITdAVz2Lh6UVfwJPgf0DI/ but I'm straying from the original intent (I think) of this issue. ",
           "createdAt": "2026-08-10T21:58:37Z",
           "updatedAt": "2026-08-10T21:58:37Z"
+        },
+        {
+          "author": "PieterKas",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "My comment came from the observation that the example contained a claim that is not required or explained. Although examples are non-normative they carry weight with implementors (perhaps more than normative language), so if it is in the example a sentence (or comment in the example) about what it is doing there might be helpful guidance (even if it is just to remind folks of the extensibility, or any other deployment benefit it might have).",
+          "createdAt": "2026-08-11T11:20:31Z",
+          "updatedAt": "2026-08-11T11:20:31Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@arndt-s's approach of removing it from the example in #288 works too ",
+          "createdAt": "2026-08-11T13:08:21Z",
+          "updatedAt": "2026-08-11T13:08:21Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I'm not at all sure, I would put it as a SHOULD. We are issuing an identity to a workload, and including `iat` makes auditing a lot more convenient. Granted not a MUST - you can live without it.",
+          "createdAt": "2026-08-11T13:34:59Z",
+          "updatedAt": "2026-08-11T13:34:59Z"
         }
       ]
     },
@@ -4673,7 +4701,7 @@
       "id": "I_kwDOLJmm788AAAABJCbV-Q",
       "title": "Section 9.3.1: no stated revocation stance for WICs",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/270",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "n2ctech",
       "authorAssociation": "NONE",
       "assignees": [
@@ -4684,8 +4712,8 @@
       ],
       "body": "Section 9.2.1 is explicit for WITs: short lifetimes, no general revocation. The certificate side is silent. CRLs and OCSP are absent from the document, and mutual-tls only says \"Other PKIX path validation rules apply\" without saying whether revocation checking is among them. As a relying party I cannot tell whether to fail closed when revocation status is unavailable, or whether WICs should carry CRL Distribution Points at all.\n\nSuggested fix: a paragraph in 9.3.1 explicitly stating the revocation stance, parallel to 9.2.1.\n\nRaised as item 3 in my WGLC review: https://mailarchive.ietf.org/arch/msg/wimse/S5Zjmr4qneFsAmepgRWhkWtFdPA/\n",
       "createdAt": "2026-07-16T11:23:24Z",
-      "updatedAt": "2026-07-28T14:26:53Z",
-      "closedAt": null,
+      "updatedAt": "2026-08-11T10:42:23Z",
+      "closedAt": "2026-08-11T10:42:23Z",
       "comments": []
     },
     {
@@ -19326,13 +19354,13 @@
       ],
       "body": "## Summary\n* Clarify that audit logs should use the workload identifier / selected claims, not raw WIT or proof-of-possession header field values.\n* Note that intermediaries and observability agents often dump those headers by default, enabling replay within the PoP lifetime.\n\nRelated to #271 (Creds-only; leaving the issue open for WPT follow-up).\n\n\nMade with [Cursor](https://cursor.com)",
       "createdAt": "2026-07-29T12:53:24Z",
-      "updatedAt": "2026-08-10T12:25:27Z",
+      "updatedAt": "2026-08-12T08:19:36Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
-      "baseRefOid": "40b1c4161dd1971dc1ac7d5ba718a636116109ca",
+      "baseRefOid": "c96037d5ffc4bc70541de347affe7ab708bc01cb",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-271",
-      "headRefOid": "5375122bb093b20ca9df9317488c8c16969c5705",
+      "headRefOid": "a859bbcf0bec1f0e50c3df2a14d55bb317170566",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -19491,6 +19519,66 @@
               "updatedAt": "2026-08-10T12:15:36Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABJH5uOw",
+          "commit": {
+            "abbreviatedOid": "5375122"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-11T14:20:59Z",
+          "updatedAt": "2026-08-11T14:20:59Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "drop guidance on WIT, keep in Security Considerations where it's clear that it's only an issue if accompanied by a POP.",
+              "createdAt": "2026-08-11T14:20:59Z",
+              "updatedAt": "2026-08-11T14:20:59Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABJH6X3A",
+          "commit": {
+            "abbreviatedOid": "5375122"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-11T14:22:05Z",
+          "updatedAt": "2026-08-11T14:22:06Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "specific words in mind per @arndt-s in a call \n```suggestion\n```",
+              "createdAt": "2026-08-11T14:22:06Z",
+              "updatedAt": "2026-08-11T14:22:06Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABJISA9g",
+          "commit": {
+            "abbreviatedOid": "5375122"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-11T15:01:54Z",
+          "updatedAt": "2026-08-11T15:01:54Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "@bc-pi Sorry, we discussed logging WITs in general, hence my comment above.\r\n\r\n> drop guidance on WIT, keep in Security Considerations where it's clear that it's only an issue if accompanied by a POP.\r\n\r\nWhat we did not discuss is the question of unvalidated WITs seen by middleboxes. IMHO L442 is still totally fine.",
+              "createdAt": "2026-08-11T15:01:54Z",
+              "updatedAt": "2026-08-11T15:01:55Z"
+            }
+          ]
         }
       ]
     },
@@ -19499,7 +19587,7 @@
       "id": "PR_kwDOLJmm7874BNgb",
       "title": "State WIC revocation stance (short lifetime as mitigation)",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/280",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -19508,17 +19596,19 @@
       ],
       "body": "## Summary\r\n* Clarify that WICs are short-lived like WITs and do not rely on CRLs.\r\n\r\nFixes #270\r\n\r\n\r\nMade with [Cursor](https://cursor.com)",
       "createdAt": "2026-07-29T13:47:27Z",
-      "updatedAt": "2026-08-10T20:11:25Z",
+      "updatedAt": "2026-08-11T10:42:22Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "40b1c4161dd1971dc1ac7d5ba718a636116109ca",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-270",
       "headRefOid": "514b615df4196fe1785eeafcd00369c4c729a10f",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-08-11T10:42:22Z",
+      "mergedAt": "2026-08-11T10:42:22Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "52ac1fc5d05d2f048ac9a1c487f980699174dfab"
+      },
       "comments": [
         {
           "author": "yaronf",
@@ -19601,6 +19691,19 @@
           "createdAt": "2026-08-10T20:11:25Z",
           "updatedAt": "2026-08-10T20:11:25Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABJExEew",
+          "commit": {
+            "abbreviatedOid": "514b615"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-08-11T07:37:16Z",
+          "updatedAt": "2026-08-11T07:37:16Z",
+          "comments": []
         }
       ]
     },
@@ -19609,7 +19712,7 @@
       "id": "PR_kwDOLJmm7874Br3C",
       "title": "Clarify WIT/PoP vs mutual TLS (do not delete the distinction)",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/281",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -19618,17 +19721,19 @@
       ],
       "body": "## Summary\n* Keep the guidance that WIT and PoP are application-layer credentials and are not used as the mutual TLS credential (WIC is).\n* Rather than deleting that sentence, clarify the apparent contradictions: intro wording about \u201ctransport-layer\u201d use of WIT, and PoP binding to TLS session properties.\n\nFixes #256\n\n\nMade with [Cursor](https://cursor.com)",
       "createdAt": "2026-07-29T14:02:07Z",
-      "updatedAt": "2026-08-10T12:31:54Z",
+      "updatedAt": "2026-08-11T14:56:42Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
-      "baseRefOid": "40b1c4161dd1971dc1ac7d5ba718a636116109ca",
+      "baseRefOid": "e9bb59a0cf3ed79ec48ed30e629974937382033c",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-256",
-      "headRefOid": "8b62362d250e2d4228106214aedcd16027034895",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "bad6d764ee0c6a1f8968ced112ea71cc55b966a4",
+      "closedAt": "2026-08-11T14:56:40Z",
+      "mergedAt": "2026-08-11T14:56:40Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "c96037d5ffc4bc70541de347affe7ab708bc01cb"
+      },
       "comments": [
         {
           "author": "yaronf",
@@ -19658,6 +19763,39 @@
               "updatedAt": "2026-08-04T14:27:59Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABJIAJRQ",
+          "commit": {
+            "abbreviatedOid": "8b62362"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-11T14:31:51Z",
+          "updatedAt": "2026-08-11T14:31:52Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\nThe Workload Identity Token is targeted for application-layer protocols. The Workload Identity Certificate is targeted for transport-layer protocols, primarily mutual TLS. Presenting a WIT over a TLS-protected channel, or binding an application-layer proof of possession to TLS session properties (see {{wit-pop}}), does not make the WIT a transport-layer credential: mutual TLS authentication uses the Workload Identity Certificate, not the WIT. This does not preclude the use of the WIC in application-layer protocols or the WIT in transport-layer protocols, but these are the primary intended uses.\n```",
+              "createdAt": "2026-08-11T14:31:51Z",
+              "updatedAt": "2026-08-11T14:31:52Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABJIA78Q",
+          "commit": {
+            "abbreviatedOid": "8b62362"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-08-11T14:33:15Z",
+          "updatedAt": "2026-08-11T14:33:15Z",
+          "comments": []
         }
       ]
     },
@@ -19763,24 +19901,26 @@
       "id": "PR_kwDOLJmm7879AI82",
       "title": "clarify multiple identifiers",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/285",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Resolves #255 by making it more clear that other identifiers are allowed in WIC and WIT.",
       "createdAt": "2026-08-10T12:33:46Z",
-      "updatedAt": "2026-08-10T22:58:41Z",
+      "updatedAt": "2026-08-11T12:07:02Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
-      "baseRefOid": "40b1c4161dd1971dc1ac7d5ba718a636116109ca",
+      "baseRefOid": "52ac1fc5d05d2f048ac9a1c487f980699174dfab",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "arndt/resolve-255",
-      "headRefOid": "5abb5a842e110be0dfd238abf4b224d91b950171",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "bf06d5dc278e5f556fc4817953c1d5e616f59552",
+      "closedAt": "2026-08-11T12:07:02Z",
+      "mergedAt": "2026-08-11T12:07:02Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "e9bb59a0cf3ed79ec48ed30e629974937382033c"
+      },
       "comments": [],
       "reviews": [
         {
@@ -19829,7 +19969,7 @@
             "abbreviatedOid": "091e1d7"
           },
           "author": "PieterKas",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2026-08-10T12:52:32Z",
@@ -19901,6 +20041,86 @@
           "createdAt": "2026-08-10T22:58:41Z",
           "updatedAt": "2026-08-10T22:58:41Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABJGTGbQ",
+          "commit": {
+            "abbreviatedOid": "091e1d7"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-11T11:07:22Z",
+          "updatedAt": "2026-08-11T11:07:22Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "It did not carry over for me, so perhaps just being explicit helps other readers (reading\"that credential\" did not build the bridge to the previous paragraph - but I was also in a rush reading it)? Alternatively reference back to the previous paragraph perhaps?\r\n\r\nThe term Worklod Identitfier itself becomes nuanced - I can imagine someone using a WIMSE/SPIFFE workload identifier for the 'sub' claim and then also using it for another identifier (or maybe just using a URI). so being explicit about which claim carries the workload identifier is perhaps the real thing to make sure readers understand.",
+              "createdAt": "2026-08-11T11:07:22Z",
+              "updatedAt": "2026-08-11T11:07:23Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABJGnaAg",
+          "commit": {
+            "abbreviatedOid": "091e1d7"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-11T11:50:33Z",
+          "updatedAt": "2026-08-11T11:50:34Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "@PieterKas I moved the sentence in question into the prior paragraph. I think that makes it a bit more clear. WDYT? ",
+              "createdAt": "2026-08-11T11:50:34Z",
+              "updatedAt": "2026-08-11T11:50:34Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABJGpmeQ",
+          "commit": {
+            "abbreviatedOid": "de9342b"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-11T11:55:20Z",
+          "updatedAt": "2026-08-11T11:55:20Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "suggest replacing \"identity\" with \"identifier'\n\n```suggestion\nFor a Workload Identity Token, that identifier is the value of the `sub` claim. For a Workload Identity Certificate, that identifier is carried in the single URI SubjectAltName described in {{to-wic}}. Deployments that distinguish several labels for the same runtime (for example a stable service identity and a specific instance) MUST place only one identifier into it.\n```",
+              "createdAt": "2026-08-11T11:55:20Z",
+              "updatedAt": "2026-08-11T11:55:20Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABJGp7eA",
+          "commit": {
+            "abbreviatedOid": "091e1d7"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-11T11:55:56Z",
+          "updatedAt": "2026-08-11T11:55:56Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "The change works, I made on editorial suggestion.",
+              "createdAt": "2026-08-11T11:55:56Z",
+              "updatedAt": "2026-08-11T11:55:56Z"
+            }
+          ]
         }
       ]
     },
@@ -20042,6 +20262,121 @@
               "updatedAt": "2026-08-10T20:04:22Z"
             }
           ]
+        }
+      ]
+    },
+    {
+      "number": 287,
+      "id": "PR_kwDOLJmm7879avtH",
+      "title": "Move WPT to Authorization header",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/287",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Preview PR for #284. This is not mergeable yet but want to start conversations about certain aspects of that potential change.",
+      "createdAt": "2026-08-11T08:52:23Z",
+      "updatedAt": "2026-08-11T10:51:20Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "40b1c4161dd1971dc1ac7d5ba718a636116109ca",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "arndt/resolve_284",
+      "headRefOid": "65da4528947d7b24b36755b6fba934c8f2631d51",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABJFS0OA",
+          "commit": {
+            "abbreviatedOid": "65da452"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-11T08:54:14Z",
+          "updatedAt": "2026-08-11T08:54:14Z",
+          "comments": [
+            {
+              "originalPosition": 50,
+              "body": "@bc-pi you have much more experience here, can you take a closer look at this abnf update please?",
+              "createdAt": "2026-08-11T08:54:14Z",
+              "updatedAt": "2026-08-11T08:54:14Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABJFTeCg",
+          "commit": {
+            "abbreviatedOid": "65da452"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-11T08:55:43Z",
+          "updatedAt": "2026-08-11T08:55:43Z",
+          "comments": [
+            {
+              "originalPosition": 172,
+              "body": "I like the idea that this change makes support for Proxy-Authorization much more viable. Curious to get thoughts on whether we should talk about it directly in this document and have security considerations on it? ",
+              "createdAt": "2026-08-11T08:55:43Z",
+              "updatedAt": "2026-08-11T08:55:43Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 288,
+      "id": "PR_kwDOLJmm7879giT-",
+      "title": "Remove iat from WIT examples",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/288",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves #257",
+      "createdAt": "2026-08-11T12:30:11Z",
+      "updatedAt": "2026-08-11T13:35:50Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "e9bb59a0cf3ed79ec48ed30e629974937382033c",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "arndt/resolve_257",
+      "headRefOid": "d7de3cd2fe024cfc7f8594d168cef2dbc79ace60",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I'm not on the same page: https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/257#issuecomment-5253888781",
+          "createdAt": "2026-08-11T13:35:50Z",
+          "updatedAt": "2026-08-11T13:35:50Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABJHOMUg",
+          "commit": {
+            "abbreviatedOid": "d7de3cd"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-08-11T13:06:11Z",
+          "updatedAt": "2026-08-11T13:06:11Z",
+          "comments": []
         }
       ]
     }
