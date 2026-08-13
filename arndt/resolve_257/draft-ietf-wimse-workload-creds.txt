@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 12 February 2027                             Palo Alto Networks
+Expires: 14 February 2027                             Palo Alto Networks
                                                       A. Schwenkschuster
                                                         Defakto Security
                                                               Y. Sheffer
                                                                   Intuit
                                                             Y. Rosomakho
                                                                  Zscaler
-                                                          11 August 2026
+                                                          13 August 2026
 
 
                        WIMSE Workload Credentials
@@ -67,7 +67,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 12 February 2027.
+   This Internet-Draft will expire on 14 February 2027.
 
 Copyright Notice
 
@@ -458,10 +458,10 @@ Table of Contents
    eyJhbGciOiJFUzI1NiIsImtpZCI6Ikp1bmUgNSIsInR5cCI6IndpdCtqd3QifQ.eyJjb\
    mYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J2IjoiRWQyNTUxOSIsImt0eSI6Ik9LU\
    CIsIngiOiIxQ1hYdmZsTl9MVlZzSXNZWHNVdkIwM0ptbEdXZUNIcVFWdW91Q0Y5MmJnI\
-   n19LCJleHAiOjE3NDU1MTI1MTAsImp0aSI6IngtXzFDVEwyY2NhM0NTRTRjd2JfbCIsI\
-   nN1YiI6IndpbXNlOi8vZXhhbXBsZS5jb20vc3BlY2lmaWMtd29ya2xvYWQifQ.3L9bmv\
-   SETBKZFBw6Klf9t_Xx8J9Y_O02VxRVp2ILyXWK6Oh8YhrtfTa94LBMBqLG8k4BGpr3tn\
-   J7JuKVMFFDSA
+   n19LCJleHAiOjE3NDU1MTI1MTAsImlhdCI6MTc0NTUwODkxMCwianRpIjoieC1fMUNUT\
+   DJjY2EzQ1NFNGN3Yl9sIiwic3ViIjoid2ltc2U6Ly9leGFtcGxlLmNvbS9zcGVjaWZpY\
+   y13b3JrbG9hZCJ9.6KraSQUxWdl9dxFQ3Fj6dPY0Vi88OkwFwZpAIOhLeq6AbXAnLLQg\
+   Op8U9UDGcBuYF3KiNv6oKQD1ZWAzrMZOJw
 
              Figure 2: An example Workload Identity Token (WIT)
 
@@ -489,11 +489,13 @@ Table of Contents
        }
      },
      "exp": 1745512510,
+     "iat": 1745508910,
      "jti": "x-_1CTL2cca3CSE4cwb_l",
      "sub": "wimse://example.com/specific-workload"
    }
 
-                        Figure 4: Example WIT Claims
+          Figure 4: Example WIT claims, including an `iat` claim,
+                     demonstrating WIT's extensibility
 
    The example omits the RECOMMENDED iss claim; see Section 5.1 and
    Section 5.1.3.
@@ -567,10 +569,10 @@ Table of Contents
    Workload-Identity-Token: eyJhbGciOiJFUzI1NiIsImtpZCI6Ikp1bmUgNSIsInR\
    5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J2Ijoi\
    RWQyNTUxOSIsImt0eSI6Ik9LUCIsIngiOiIxQ1hYdmZsTl9MVlZzSXNZWHNVdkIwM0pt\
-   bEdXZUNIcVFWdW91Q0Y5MmJnIn19LCJleHAiOjE3NDU1MTI1MTAsImp0aSI6IngtXzFD\
-   VEwyY2NhM0NTRTRjd2JfbCIsInN1YiI6IndpbXNlOi8vZXhhbXBsZS5jb20vc3BlY2lm\
-   aWMtd29ya2xvYWQifQ.3L9bmvSETBKZFBw6Klf9t_Xx8J9Y_O02VxRVp2ILyXWK6Oh8Y\
-   hrtfTa94LBMBqLG8k4BGpr3tnJ7JuKVMFFDSA
+   bEdXZUNIcVFWdW91Q0Y5MmJnIn19LCJleHAiOjE3NDU1MTI1MTAsImlhdCI6MTc0NTUw\
+   ODkxMCwianRpIjoieC1fMUNUTDJjY2EzQ1NFNGN3Yl9sIiwic3ViIjoid2ltc2U6Ly9l\
+   eGFtcGxlLmNvbS9zcGVjaWZpYy13b3JrbG9hZCJ9.6KraSQUxWdl9dxFQ3Fj6dPY0Vi8\
+   8OkwFwZpAIOhLeq6AbXAnLLQgOp8U9UDGcBuYF3KiNv6oKQD1ZWAzrMZOJw
 
        Figure 8: An example Workload Identity Token HTTP Header Field
 
@@ -1149,9 +1151,6 @@ A.1.  draft-ietf-wimse-workload-creds-03
    *  Editorial: consistent use of "proof of possession"/"PoP", with the
       abbreviation expanded on first use, and consistent capitalization
       of the defined term "Workload Identifier".
-
-   *  Remove the iat claim from the WIT example, since it is not one of
-      the claims this document defines for a WIT.
 
 A.2.  draft-ietf-wimse-workload-creds-02
 

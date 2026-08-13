@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                      A. Schwenkschuster
-Expires: 12 February 2027                               Defakto Security
-                                                          11 August 2026
+Expires: 14 February 2027                               Defakto Security
+                                                          13 August 2026
 
 
                        WIMSE Workload Proof Token
@@ -60,7 +60,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 12 February 2027.
+   This Internet-Draft will expire on 14 February 2027.
 
 Copyright Notice
 
@@ -258,9 +258,9 @@ Table of Contents
    eyJhbGciOiJFZERTQSIsInR5cCI6IndwdCtqd3QifQ.eyJhdGgiOiJDTDR3amZwUm1OZ\
    i1iZFlJYllMblY5ZDVyTUFSR3dLWUUxMHdVd3pDMGpJIiwiYXVkIjoiaHR0cHM6Ly93b\
    3JrbG9hZC5leGFtcGxlLmNvbS9wYXRoIiwiZXhwIjoxNzQ1NTEwMDE2LCJqdGkiOiJfX\
-   2J3YzRFU0MzYWNjMkxUQzEtX3giLCJ3dGgiOiJVcUlUeUNPTE5TNFg0X1M0dDZBOFRtb\
-   XRqZURqeno0NU9zX2FGc3BST2RFIn0.9D9iIPhp3IGJau9ooeJmEnSyovccsJEkCseoE\
-   0fvNuahpleR6pr-auPHI7OvFPe4XxNvVt3pYiVURScroMP3AA
+   2J3YzRFU0MzYWNjMkxUQzEtX3giLCJ3dGgiOiJBYVlVZkMzNEQxZGkyRnhRTHBpSUpKN\
+   1NnOFZaNm84T0Nkd1NmOUlUb0xnIn0.PI7d9AcYhLoEgPgbJvcM132lkBKnM1NXU-5hZ\
+   UzVTIyj2dRJaTLFs6e5NYv5gg6AqcV7NvkYCwfgMgWasWQzCA
 
                 Figure 2: Example Workload Proof Token (WPT)
 
@@ -282,7 +282,7 @@ Table of Contents
      "aud": "https://workload.example.com/path",
      "exp": 1745510016,
      "jti": "__bwc4ESC3acc2LTC1-_x",
-     "wth": "UqITyCOLNS4X4_S4t6A8TmmtjeDjzz45Os_aFspROdE"
+     "wth": "AaYUfC34D1di2FxQLpiIJJ7Sg8VZ6o8OCdwSf9IToLg"
    }
 
                         Figure 4: Example WPT Claims
@@ -299,17 +299,17 @@ Table of Contents
    Workload-Identity-Token: eyJhbGciOiJFUzI1NiIsImtpZCI6Ikp1bmUgNSIsInR\
    5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J2Ijoi\
    RWQyNTUxOSIsImt0eSI6Ik9LUCIsIngiOiIxQ1hYdmZsTl9MVlZzSXNZWHNVdkIwM0pt\
-   bEdXZUNIcVFWdW91Q0Y5MmJnIn19LCJleHAiOjE3NDU1MTI1MTAsImp0aSI6IngtXzFD\
-   VEwyY2NhM0NTRTRjd2JfbCIsInN1YiI6IndpbXNlOi8vZXhhbXBsZS5jb20vc3BlY2lm\
-   aWMtd29ya2xvYWQifQ.3L9bmvSETBKZFBw6Klf9t_Xx8J9Y_O02VxRVp2ILyXWK6Oh8Y\
-   hrtfTa94LBMBqLG8k4BGpr3tnJ7JuKVMFFDSA
+   bEdXZUNIcVFWdW91Q0Y5MmJnIn19LCJleHAiOjE3NDU1MTI1MTAsImlhdCI6MTc0NTUw\
+   ODkxMCwianRpIjoieC1fMUNUTDJjY2EzQ1NFNGN3Yl9sIiwic3ViIjoid2ltc2U6Ly9l\
+   eGFtcGxlLmNvbS9zcGVjaWZpYy13b3JrbG9hZCJ9.6KraSQUxWdl9dxFQ3Fj6dPY0Vi8\
+   8OkwFwZpAIOhLeq6AbXAnLLQgOp8U9UDGcBuYF3KiNv6oKQD1ZWAzrMZOJw
    Workload-Proof-Token: eyJhbGciOiJFZERTQSIsInR5cCI6IndwdCtqd3QifQ.eyJ\
    hdGgiOiJDTDR3amZwUm1OZi1iZFlJYllMblY5ZDVyTUFSR3dLWUUxMHdVd3pDMGpJIiw\
    iYXVkIjoiaHR0cHM6Ly93b3JrbG9hZC5leGFtcGxlLmNvbS9wYXRoIiwiZXhwIjoxNzQ\
-   1NTEwMDE2LCJqdGkiOiJfX2J3YzRFU0MzYWNjMkxUQzEtX3giLCJ3dGgiOiJVcUlUeUN\
-   PTE5TNFg0X1M0dDZBOFRtbXRqZURqeno0NU9zX2FGc3BST2RFIn0.9D9iIPhp3IGJau9\
-   ooeJmEnSyovccsJEkCseoE0fvNuahpleR6pr-auPHI7OvFPe4XxNvVt3pYiVURScroMP\
-   3AA
+   1NTEwMDE2LCJqdGkiOiJfX2J3YzRFU0MzYWNjMkxUQzEtX3giLCJ3dGgiOiJBYVlVZkM\
+   zNEQxZGkyRnhRTHBpSUpKN1NnOFZaNm84T0Nkd1NmOUlUb0xnIn0.PI7d9AcYhLoEgPg\
+   bJvcM132lkBKnM1NXU-5hZUzVTIyj2dRJaTLFs6e5NYv5gg6AqcV7NvkYCwfgMgWasWQ\
+   zCA
 
    {"do stuff":"please"}
 
