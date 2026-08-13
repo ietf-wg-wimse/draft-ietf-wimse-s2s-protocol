@@ -150,18 +150,24 @@ Depending on the protocol, the workload authentication may happen during step (2
 The Workload Identifier is a URI and its baseline syntax and processing requirements are defined in {{!WIMSE-ID=I-D.ietf-wimse-identifier}}.
 While deployments define how they assign identifiers and what the path portion means, implementations MUST enforce the URI requirements outlined in {{Section 4.1 of WIMSE-ID}}.
 
-A Workload Identifier is generally not a name that a client dials. Clients reach a workload through an external access name,
-such as a DNS name or a Kubernetes Service or Ingress host, while the authority component of a Workload Identifier is a
-trust domain rather than a resolvable host. Validating a peer's credential against the trust anchors of its trust domain
-({{trust-anchors}}) therefore establishes only that the peer holds a credential issued within that domain, not that it is
-the workload the client intended to reach.
+Prior to WIMSE, many containerized runtime platforms could not authenticate a peer as a specific workload;  
+they could only establish that the peer belonged to a given trust domain.
+With mutual TLS (mTLS), for example, there is often no reliable way to map the external access name a client uses to reach a workload
+(such as a Kubernetes Ingress path, service name, or HTTP Host header field)
+to the SubjectAltName in the presented certificate.
+As a result, the client can verify that the server certificate is valid within a trust domain,
+but not that it belongs to the particular workload the client intended to reach.
 
-To authenticate a specific peer, a client MUST compare the Workload Identifier in the presented credential against the
-identifier it expects for the workload it is calling; successful trust anchor validation alone MUST NOT be treated as
-authentication of that workload (see {{trust-domain-membership}} for security considerations). This requires a mapping from
-the external access name to the expected Workload Identifier, and agreement between the peers on the granularity of
-identifiers, for example one per service or one per running instance. This document does not define how that mapping is
-established or distributed.
+To enable mutual and granular authentication between workloads, two things must be in place:
+
+- Each workload must know its own identifier.
+- There needs to be an explicit mapping from the external access name used to access a workload (such as an Ingress path or service DNS name)
+to its Workload Identifier.
+
+Once these conditions are met, the methods described in this document can be used for the caller and callee to mutually authenticate.
+
+Implementations MUST allow for defining this mapping between the workload's external access name and the Workload Identifier (e.g., through
+callback functions). Deployments SHOULD use these features to establish a consistent set of identifiers within their environment.
 
 # Conventions and Definitions
 
@@ -566,7 +572,7 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 
 ## draft-ietf-wimse-workload-creds-03
 
-* Rework the Workload Identifiers and Authentication Granularity section and added a new Security Considerations subsection to describe the impact.
+* Added a section to describe the security considerations of granular authentication.
 * Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use, and consistent capitalization of the defined term "Workload Identifier".
 
 ## draft-ietf-wimse-workload-creds-02
