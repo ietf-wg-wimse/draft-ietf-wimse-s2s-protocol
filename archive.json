@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-08-13T01:50:28.413517+00:00",
+  "timestamp": "2026-08-16T01:11:34.650961+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -4028,7 +4028,7 @@
       ],
       "body": "maybe instead of the access token w/ Authorization: Bearer\n\nmaybe \n\nthis might be a better conceptual model to have in examples ",
       "createdAt": "2026-03-02T22:28:55Z",
-      "updatedAt": "2026-08-04T05:46:50Z",
+      "updatedAt": "2026-08-14T20:00:31Z",
       "closedAt": null,
       "comments": [
         {
@@ -4037,6 +4037,20 @@
           "body": "Hi Brian and @arndt-s,\n\nI watched the IETF 126 WPT discussion and would be happy to work on the Txn-Token example proposed in this issue.\n\nThe current Go example generator already defines a `Tth` field, while the generated request still carries an OAuth bearer token and binds it through `ath`.\n\nMy proposed small PR would:\n- add a deterministic example Txn-Token;\n- carry it in the `Txn-Token` header;\n- compute `tth` over its exact compact value;\n- regenerate the WPT and HTTP request examples;\n- optionally add a small consistency test.\n\nIs anyone already working on this? Also, would you prefer a self-contained signed Txn-Token based on the required claims from `draft-ietf-oauth-transaction-tokens-11`, or an example value derived directly from that draft?\n\nI also noticed that #227 touches the same example area, so I would coordinate with it rather than duplicate or conflict with that work.",
           "createdAt": "2026-08-04T05:46:49Z",
           "updatedAt": "2026-08-04T05:46:49Z"
+        },
+        {
+          "author": "Math1987",
+          "authorAssociation": "NONE",
+          "body": "Hi @arndt-s,\n\nI\u2019m following up on my offer to prepare the Txn Token example. Is anyone already working on this area? If not, would you prefer a standalone signed example based on the transaction token draft, or a value derived directly from it? I will coordinate with #227 and keep the PR narrow.",
+          "createdAt": "2026-08-14T09:54:13Z",
+          "updatedAt": "2026-08-14T09:54:13Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you for the offer @Math1987 and apologies for the silence on here. This area depends on or overlaps with work happening for #284 and I think we'd rather not work on it before that issue is resolved.",
+          "createdAt": "2026-08-14T20:00:31Z",
+          "updatedAt": "2026-08-14T20:00:31Z"
         }
       ]
     },
@@ -18326,7 +18340,7 @@
       ],
       "body": "- **workload-creds (#173, #175):** Replace the mandatory access-path-to-identifier mapping API with infrastructure support for verifying that an HTTP target URI (RFC 9110 Section 7.1, without query or fragment) is intended for a workload. Document the roles of HTTP target URI (audience) vs Workload Identifier (sender) for WPT, HTTP signatures, and mTLS.\r\n- **WPT (#175):** Tie `aud` to \"Workload Identifiers and Authentication Granularity\" in workload-creds; otherwise unchanged from main.\r\n- **HTTP signatures (#175, #240):** Keep `wimse-aud` as on main (request-only, HTTP target URI). When response signing is enabled, require `wimse-req-nonce` (copy of the request `nonce`) to bind the signed response to the triggering request; register with IANA.\r\n\r\nCloses #173, #175. Addresses #240.",
       "createdAt": "2026-06-19T10:29:32Z",
-      "updatedAt": "2026-07-16T18:22:02Z",
+      "updatedAt": "2026-08-13T11:44:43Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "4e44e792f031cff205913be2f806207e3fcb999c",
@@ -18448,6 +18462,38 @@
               "body": "The intent here is for the callee to validate that a request is intended for it, in other words that it is the intended audience.\n\n@yaroslavros although the caller (usually) sets the `aud` to the Request URI, this value might be modified in transit by proxies. So we cannot assume it is seen by the recipient.\n\n@jsalowey this is not about validating the credential but rather about ensuring that it's targeted at this particular recipient.",
               "createdAt": "2026-07-15T15:20:20Z",
               "updatedAt": "2026-07-15T15:20:21Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABJaVkvQ",
+          "commit": {
+            "abbreviatedOid": "03c70b7"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-13T11:40:32Z",
+          "updatedAt": "2026-08-13T11:44:43Z",
+          "comments": [
+            {
+              "originalPosition": 24,
+              "body": "I think it's worth to clarify that the URI of the request is re-written, not the URI of the audience.\n```suggestion\nIntermediaries may rewrite the URI of the request in transit, so the callee MUST NOT rely solely on the request URI as\n```",
+              "createdAt": "2026-08-13T11:40:32Z",
+              "updatedAt": "2026-08-13T11:44:43Z"
+            },
+            {
+              "originalPosition": 28,
+              "body": "It's critical for the security aspects of this draft, shouldn't this be a MUST?",
+              "createdAt": "2026-08-13T11:42:01Z",
+              "updatedAt": "2026-08-13T11:44:43Z"
+            },
+            {
+              "originalPosition": 32,
+              "body": "Does it need HTTP in this section? What if TLS is used with a different application protocol? I suggest keeping it to TLS only?",
+              "createdAt": "2026-08-13T11:44:39Z",
+              "updatedAt": "2026-08-13T11:44:43Z"
             }
           ]
         }
@@ -20134,15 +20180,15 @@
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
-      "body": "The current text does not align with what this document actually does. We do not solve the \"dial target != workload identifier\" problem.\r\n\r\nSo I rephrased the section a bit and also added security considerations which I believe matter here. \r\n\r\nResolves #272 ",
+      "body": "Added security considerations for granular auth section.\r\n\r\nRelated to #272 ",
       "createdAt": "2026-08-10T13:42:14Z",
-      "updatedAt": "2026-08-10T20:04:22Z",
+      "updatedAt": "2026-08-14T11:25:42Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "40b1c4161dd1971dc1ac7d5ba718a636116109ca",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "arndt/resolve_272",
-      "headRefOid": "4fad020340b3cd6b9ea52882368c6b708547046f",
+      "headRefOid": "16bfa15202850734d760c8d19c2cda6edcb88ce0",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -20154,6 +20200,13 @@
           "body": "This is an alternative text to the still open #246 - we should discuss both of them together.",
           "createdAt": "2026-08-10T14:53:13Z",
           "updatedAt": "2026-08-10T14:53:13Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@bc-pi @yaronf as discussed on Tuesday, I removed the main part and kept the security considerations.",
+          "createdAt": "2026-08-13T11:38:14Z",
+          "updatedAt": "2026-08-13T11:38:14Z"
         }
       ],
       "reviews": [
@@ -20262,6 +20315,52 @@
               "updatedAt": "2026-08-10T20:04:22Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABJa1CyA",
+          "commit": {
+            "abbreviatedOid": "16bfa15"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-13T12:35:24Z",
+          "updatedAt": "2026-08-13T12:35:24Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "I am not well versed in containerized runtime platforms but this sentence and the paragraph below were the impetus for #272. ",
+              "createdAt": "2026-08-13T12:35:24Z",
+              "updatedAt": "2026-08-13T12:35:24Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABJj-IhA",
+          "commit": {
+            "abbreviatedOid": "16bfa15"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2026-08-14T11:21:33Z",
+          "updatedAt": "2026-08-14T11:25:42Z",
+          "comments": [
+            {
+              "originalPosition": 19,
+              "body": "I would add a comment at the end of this paragraph that the exact security properties (who authenticates whom etc.) are dependent on the WIMSE mechanism being used (MTLS vs. http-sig vs. WPT).",
+              "createdAt": "2026-08-14T11:21:33Z",
+              "updatedAt": "2026-08-14T11:25:42Z"
+            },
+            {
+              "originalPosition": 21,
+              "body": "I disagree with this paragraph. Take the (reasonable) assumptions that the credential was correctly issued (that the workload possessed the private key at that time), *and* that private keys are hard to steal. Then the PoP does show that the credential is correct.",
+              "createdAt": "2026-08-14T11:25:01Z",
+              "updatedAt": "2026-08-14T11:25:42Z"
+            }
+          ]
         }
       ]
     },
@@ -20335,7 +20434,7 @@
     {
       "number": 288,
       "id": "PR_kwDOLJmm7879giT-",
-      "title": "Remove iat from WIT examples",
+      "title": "Clarify `iat` in example",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/288",
       "state": "OPEN",
       "author": "arndt-s",
@@ -20344,13 +20443,13 @@
       "labels": [],
       "body": "Resolves #257",
       "createdAt": "2026-08-11T12:30:11Z",
-      "updatedAt": "2026-08-11T13:35:50Z",
+      "updatedAt": "2026-08-14T11:27:35Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
-      "baseRefOid": "e9bb59a0cf3ed79ec48ed30e629974937382033c",
+      "baseRefOid": "c96037d5ffc4bc70541de347affe7ab708bc01cb",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "arndt/resolve_257",
-      "headRefOid": "d7de3cd2fe024cfc7f8594d168cef2dbc79ace60",
+      "headRefOid": "c76b2438c9e34cf8cd62c6bdbfc436c7ab415f79",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -20362,6 +20461,13 @@
           "body": "I'm not on the same page: https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/257#issuecomment-5253888781",
           "createdAt": "2026-08-11T13:35:50Z",
           "updatedAt": "2026-08-11T13:35:50Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@bc-pi @yaronf please review latest suggestion",
+          "createdAt": "2026-08-13T11:33:42Z",
+          "updatedAt": "2026-08-13T11:33:42Z"
         }
       ],
       "reviews": [
@@ -20376,6 +20482,32 @@
           "body": "",
           "createdAt": "2026-08-11T13:06:11Z",
           "updatedAt": "2026-08-11T13:06:11Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABJaudhw",
+          "commit": {
+            "abbreviatedOid": "c76b243"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "if this makes it all go away, then great ",
+          "createdAt": "2026-08-13T12:23:08Z",
+          "updatedAt": "2026-08-13T12:23:08Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABJkAUkg",
+          "commit": {
+            "abbreviatedOid": "c76b243"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-08-14T11:27:35Z",
+          "updatedAt": "2026-08-14T11:27:35Z",
           "comments": []
         }
       ]
