@@ -150,7 +150,7 @@ Depending on the protocol, the workload authentication may happen during step (2
 The Workload Identifier is a URI and its baseline syntax and processing requirements are defined in {{!WIMSE-ID=I-D.ietf-wimse-identifier}}.
 While deployments define how they assign identifiers and what the path portion means, implementations MUST enforce the URI requirements outlined in {{Section 4.1 of WIMSE-ID}}.
 
-Prior to WIMSE, many containerized runtime platforms could not authenticate a peer as a specific workload;  
+Prior to WIMSE, many containerized runtime platforms could not authenticate a peer as a specific workload;
 they could only establish that the peer belonged to a given trust domain.
 With mutual TLS (mTLS), for example, there is often no reliable way to map the external access name a client uses to reach a workload
 (such as a Kubernetes Ingress path, service name, or HTTP Host header field)
