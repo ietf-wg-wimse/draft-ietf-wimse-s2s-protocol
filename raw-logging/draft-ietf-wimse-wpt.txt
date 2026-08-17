@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                      A. Schwenkschuster
-Expires: 19 January 2027                                Defakto Security
-                                                            18 July 2026
+Expires: 18 February 2027                               Defakto Security
+                                                          17 August 2026
 
 
                        WIMSE Workload Proof Token
@@ -60,7 +60,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 19 January 2027.
+   This Internet-Draft will expire on 18 February 2027.
 
 Copyright Notice
 
@@ -85,6 +85,13 @@ Table of Contents
      2.3.  Including Additional Claims
    3.  Security Considerations
      3.1.  Workload Identity Token and Proof of Possession
+       3.1.1.  Preventing Eavesdropping and Interception with TLS
+       3.1.2.  Limiting Proof of Possession Lifespan
+       3.1.3.  Limiting Proof of Possession Scope
+       3.1.4.  Replay Protection
+       3.1.5.  Avoid Logging Raw WPT Values
+       3.1.6.  Binding to TLS Endpoint
+       3.1.7.  Audience validation
      3.2.  Workload Identity Key Management
      3.3.  Middle Boxes
      3.4.  Privacy Considerations
@@ -98,16 +105,17 @@ Table of Contents
      5.1.  Normative References
      5.2.  Informative References
    Appendix A.  Document History
-     A.1.  draft-ietf-wimse-wpt-01
-     A.2.  draft-ietf-wimse-wpt-00
-     A.3.  draft-ietf-wimse-s2s-protocol-07
-     A.4.  draft-ietf-wimse-s2s-protocol-06
-     A.5.  draft-ietf-wimse-s2s-protocol-05
-     A.6.  draft-ietf-wimse-s2s-protocol-04
-     A.7.  draft-ietf-wimse-s2s-protocol-03
-     A.8.  draft-ietf-wimse-s2s-protocol-02
-     A.9.  draft-ietf-wimse-s2s-protocol-01
-     A.10. draft-ietf-wimse-s2s-protocol-00
+     A.1.  draft-ietf-wimse-wpt-02
+     A.2.  draft-ietf-wimse-wpt-01
+     A.3.  draft-ietf-wimse-wpt-00
+     A.4.  draft-ietf-wimse-s2s-protocol-07
+     A.5.  draft-ietf-wimse-s2s-protocol-06
+     A.6.  draft-ietf-wimse-s2s-protocol-05
+     A.7.  draft-ietf-wimse-s2s-protocol-04
+     A.8.  draft-ietf-wimse-s2s-protocol-03
+     A.9.  draft-ietf-wimse-s2s-protocol-02
+     A.10. draft-ietf-wimse-s2s-protocol-01
+     A.11. draft-ietf-wimse-s2s-protocol-00
    Acknowledgments
    Authors' Addresses
 
@@ -385,7 +393,7 @@ Table of Contents
    The WIT and WPT define new HTTP headers.  They can therefore be
    presented along with existing headers used for JWT bearer tokens.
    This property allows for transition from mechanisms using identity
-   tokens based on bearer JWTs to proof of possession based WITs.  A
+   tokens based on bearer JWTs to proof-of-possession-based WITs.  A
    workload may implement a policy that accepts both bearer tokens and
    WITs during a transition period.  This policy may be configurable
    per-caller to allow the workload to reject bearer tokens from callers
@@ -430,33 +438,33 @@ Table of Contents
 3.1.  Workload Identity Token and Proof of Possession
 
    The Workload Identity Token (WIT) is bound to a secret cryptographic
-   key and is always presented with a proof of possession as described
-   in [I-D.ietf-wimse-workload-creds].  The WIT is a general purpose
-   token that can be presented in multiple contexts.  The WIT and WPT
-   are only used in the application-layer options, and both are not used
-   in MTLS.  The WIT MUST NOT be used as a bearer token.  While this
-   helps reduce the sensitivity of the token it is still possible that a
-   token and its proof of possession may be captured and replayed within
-   the PoP's lifetime.  The following are some mitigations for the
-   capture and reuse of the proof of possession (PoP):
+   key and is always presented with a proof of possession (PoP) as
+   described in [I-D.ietf-wimse-workload-creds].  The WIT is a general
+   purpose token that can be presented in multiple contexts.  The WIT
+   and WPT are only used in the application-layer options, and both are
+   not used in MTLS.  The WIT MUST NOT be used as a bearer token.  While
+   this helps reduce the sensitivity of the token it is still possible
+   that a token and its PoP may be captured and replayed within the
+   PoP's lifetime.  The following are some mitigations for the capture
+   and reuse of the PoP:
 
-   *  Preventing Eavesdropping and Interception with TLS
+3.1.1.  Preventing Eavesdropping and Interception with TLS
 
    An attacker observing or intercepting the communication channel can
-   view the token and its proof of possession and attempt to replay it
-   to gain an advantage.  In order to prevent this the token and proof
-   of possession MUST be sent over a secure, server authenticated TLS
-   connection unless a secure channel is provided by some other
-   mechanisms.  Host name validation MUST be performed by the client.
+   view the token and its PoP and attempt to replay it to gain an
+   advantage.  In order to prevent this the token and PoP MUST be sent
+   over a secure, server authenticated TLS connection unless a secure
+   channel is provided by some other mechanisms.  Host name validation
+   MUST be performed by the client.
 
-   *  Limiting Proof of Possession Lifespan
+3.1.2.  Limiting Proof of Possession Lifespan
 
-   The proof of possession MUST be time limited.  A PoP should only be
-   valid over the time necessary for it to be successfully used for the
-   purpose it is needed.  This will typically be on the order of
-   minutes.  PoPs received outside their validity time MUST be rejected.
+   The PoP MUST be time limited.  A PoP should only be valid over the
+   time necessary for it to be successfully used for the purpose it is
+   needed.  This will typically be on the order of minutes.  PoPs
+   received outside their validity time MUST be rejected.
 
-   *  Limiting Proof of Possession Scope
+3.1.3.  Limiting Proof of Possession Scope
 
    In order to reduce the risk of theft and replay the PoP should have a
    limited scope.  For example, a PoP may be targeted for use with a
@@ -467,24 +475,32 @@ Table of Contents
    to the system if a PoP is disclosed allowing it to be presented by an
    attacker along with a captured WIT.
 
-   *  Replay Protection
+3.1.4.  Replay Protection
 
-   A proof of possession includes the jti claim that uniquely identifies
-   it.  This claim SHOULD be used by the receiver to perform basic
-   replay protection, within the scope of a particular sender, against
-   tokens it has already seen.  Depending upon the design of the system
-   it may be difficult to synchronize the replay cache across all token
+   A PoP includes the jti claim that uniquely identifies it.  This claim
+   SHOULD be used by the receiver to perform basic replay protection,
+   within the scope of a particular sender, against tokens it has
+   already seen.  Depending upon the design of the system it may be
+   difficult to synchronize the replay cache across all token
    validators.  If an attacker can somehow influence the identity of the
    validator (e.g. which cluster member receives the message) then
    replay protection would not be effective.
 
-   *  Binding to TLS Endpoint
+3.1.5.  Avoid Logging Raw WPT Values
 
-   The POP MAY be bound to a transport layer sender such as the client
+   Implementations MUST NOT log raw WPT values by default.  Depending on
+   the aggressiveness of the replay protection mechinism, a WPT
+   harvested from logs could potentially be replayed and accepted as a
+   legitimate proof.  Implementations should therefore treat WPT values
+   as sensitive and avoid persisting them in logs.
+
+3.1.6.  Binding to TLS Endpoint
+
+   The PoP MAY be bound to a transport layer sender such as the client
    identity of a TLS session or TLS channel binding parameters.  The
    mechanisms for binding are outside the scope of this specification.
 
-   *  Audience validation
+3.1.7.  Audience validation
 
    Validators MUST check that the audience field of the WPT is a URI or
    other value that is for their consumption.  In some cases when a URI
@@ -537,9 +553,9 @@ Table of Contents
    The Workload Proof Token may contain private information such as user
    names or other identities.  Care should be taken to prevent the
    disclosure of this information.  The use of TLS helps protect the
-   privacy of WITs and proofs of possession.
+   privacy of WITs and PoPs.
 
-   The workload identifier present in the WPT is typically associated
+   The Workload Identifier present in the WPT is typically associated
    with a workload and not a specific user, however in some deployments
    the workload or the HTTP Target URI may be associated directly to a
    user.  While these are exceptional cases a deployment should evaluate
@@ -707,9 +723,9 @@ Table of Contents
    [I-D.ietf-oauth-transaction-tokens]
               Tulshibagwale, A., Fletcher, G., and P. Kasselman,
               "Transaction Tokens", Work in Progress, Internet-Draft,
-              draft-ietf-oauth-transaction-tokens-09, 6 July 2026,
+              draft-ietf-oauth-transaction-tokens-11, 30 July 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              transaction-tokens-09>.
+              transaction-tokens-11>.
 
    [IANA.HTTP.FIELDS]
               IANA, "Hypertext Transfer Protocol (HTTP) Field Name
@@ -740,7 +756,17 @@ Appendix A.  Document History
 
    // RFC Editor: please remove before publication.
 
-A.1.  draft-ietf-wimse-wpt-01
+A.1.  draft-ietf-wimse-wpt-02
+
+   *  Editorial: consistent use of "proof of possession"/"PoP", with the
+      abbreviation expanded on first use, and consistent capitalization
+      of the defined term "Workload Identifier".
+
+   *  Advise against logging proof-of-possession values (#271).
+
+   *  Security Considerations formating fixup (#217).
+
+A.2.  draft-ietf-wimse-wpt-01
 
    *  Clairify treatment of "jti" claim
 
@@ -751,7 +777,7 @@ A.1.  draft-ietf-wimse-wpt-01
 
    *  Add audience security considerations
 
-A.2.  draft-ietf-wimse-wpt-00
+A.3.  draft-ietf-wimse-wpt-00
 
    *  Focus on Workload Proof Token (WPT) only.
 
@@ -759,7 +785,7 @@ A.2.  draft-ietf-wimse-wpt-00
 
       -  Remove HTTP-Message-Signature profile
 
-A.3.  draft-ietf-wimse-s2s-protocol-07
+A.4.  draft-ietf-wimse-s2s-protocol-07
 
    *  Rework the WPT's oth claim.
 
@@ -777,14 +803,14 @@ A.3.  draft-ietf-wimse-s2s-protocol-07
 
    *  Use of the Accept-Signature header.
 
-A.4.  draft-ietf-wimse-s2s-protocol-06
+A.5.  draft-ietf-wimse-s2s-protocol-06
 
    *  Explicit definition of the Workload Identity Certificate.
 
    *  Definition of the validation of workload identifiers as part of
       workload authentication.  Still work in progress.
 
-A.5.  draft-ietf-wimse-s2s-protocol-05
+A.6.  draft-ietf-wimse-s2s-protocol-05
 
    *  Removed the entire Workload Identity section which is now covered
       in the Architecture document.
@@ -795,7 +821,7 @@ A.5.  draft-ietf-wimse-s2s-protocol-05
 
    *  IANA considerations.
 
-A.6.  draft-ietf-wimse-s2s-protocol-04
+A.7.  draft-ietf-wimse-s2s-protocol-04
 
    *  Require cnf.jwk.alg in WIT which restricts signature algorithm of
       WPT or HTTP-Sig.
@@ -804,7 +830,7 @@ A.6.  draft-ietf-wimse-s2s-protocol-04
 
    *  Consolidate terminology with the Architecture draft.
 
-A.7.  draft-ietf-wimse-s2s-protocol-03
+A.8.  draft-ietf-wimse-s2s-protocol-03
 
    *  Consistently use "workload".
 
@@ -819,7 +845,7 @@ A.7.  draft-ietf-wimse-s2s-protocol-03
 
    *  Error handling for the application-level methods.
 
-A.8.  draft-ietf-wimse-s2s-protocol-02
+A.9.  draft-ietf-wimse-s2s-protocol-02
 
    *  Coexistence with bearer tokens.
 
@@ -831,7 +857,7 @@ A.8.  draft-ietf-wimse-s2s-protocol-02
 
    *  Moved an author to acknowledgments.
 
-A.9.  draft-ietf-wimse-s2s-protocol-01
+A.10.  draft-ietf-wimse-s2s-protocol-01
 
    *  Addressed multiple comments from Pieter.
 
@@ -846,7 +872,7 @@ A.9.  draft-ietf-wimse-s2s-protocol-01
    *  Added a section comparing the DPoP-inspired app-level security
       option to the Message Signature-based alternative.
 
-A.10.  draft-ietf-wimse-s2s-protocol-00
+A.11.  draft-ietf-wimse-s2s-protocol-00
 
    *  Initial WG draft, an exact copy of draft-sheffer-wimse-s2s-
       protocol-00

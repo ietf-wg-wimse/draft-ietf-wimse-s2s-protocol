@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 19 January 2027                              Palo Alto Networks
+Expires: 18 February 2027                             Palo Alto Networks
                                                       A. Schwenkschuster
                                                         Defakto Security
                                                               Y. Sheffer
                                                                   Intuit
                                                             Y. Rosomakho
                                                                  Zscaler
-                                                            18 July 2026
+                                                          17 August 2026
 
 
                        WIMSE Workload Credentials
@@ -67,7 +67,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 19 January 2027.
+   This Internet-Draft will expire on 18 February 2027.
 
 Copyright Notice
 
@@ -110,7 +110,8 @@ Table of Contents
        9.2.2.  Limiting Proof of Possession Lifespan
        9.2.3.  Limiting Proof of Possession Scope
        9.2.4.  Replay Protection
-       9.2.5.  Binding to TLS Endpoint
+       9.2.5.  Avoid Logging Raw PoP Values
+       9.2.6.  Binding to TLS Endpoint
      9.3.  Workload Identity Certificate
        9.3.1.  Limiting Workload Identity Certificate Lifespan
      9.4.  Workload Identity Key Management
@@ -125,17 +126,18 @@ Table of Contents
      12.1.  Normative References
      12.2.  Informative References
    Appendix A.  Document History
-     A.1.  draft-ietf-wimse-workload-creds-02
-     A.2.  draft-ietf-wimse-workload-creds-01
-     A.3.  draft-ietf-wimse-workload-creds-00
-     A.4.  draft-ietf-wimse-s2s-protocol-07
-     A.5.  draft-ietf-wimse-s2s-protocol-06
-     A.6.  draft-ietf-wimse-s2s-protocol-05
-     A.7.  draft-ietf-wimse-s2s-protocol-04
-     A.8.  draft-ietf-wimse-s2s-protocol-03
-     A.9.  draft-ietf-wimse-s2s-protocol-02
-     A.10. draft-ietf-wimse-s2s-protocol-01
-     A.11. draft-ietf-wimse-s2s-protocol-00
+     A.1.  draft-ietf-wimse-workload-creds-03
+     A.2.  draft-ietf-wimse-workload-creds-02
+     A.3.  draft-ietf-wimse-workload-creds-01
+     A.4.  draft-ietf-wimse-workload-creds-00
+     A.5.  draft-ietf-wimse-s2s-protocol-07
+     A.6.  draft-ietf-wimse-s2s-protocol-06
+     A.7.  draft-ietf-wimse-s2s-protocol-05
+     A.8.  draft-ietf-wimse-s2s-protocol-04
+     A.9.  draft-ietf-wimse-s2s-protocol-03
+     A.10. draft-ietf-wimse-s2s-protocol-02
+     A.11. draft-ietf-wimse-s2s-protocol-01
+     A.12. draft-ietf-wimse-s2s-protocol-00
    Acknowledgments
    Authors' Addresses
 
@@ -160,9 +162,14 @@ Table of Contents
 
    The Workload Identity Token is targeted for application-layer
    protocols.  The Workload Identity Certificate is targeted for
-   transport-layer protocols.  This does not preclude the use of the WIT
-   in transport-layer protocols or the WIC in application-layer
-   protocols, but these are the primary intended uses.
+   transport-layer protocols, primarily mutual TLS.  Presenting a WIT
+   over a TLS-protected channel, or binding an application-layer proof
+   of possession to TLS session properties (see Section 9.2), does not
+   make the WIT a transport-layer credential: mutual TLS authentication
+   uses the Workload Identity Certificate, not the WIT.  This does not
+   preclude the use of the WIC in application-layer protocols or the WIT
+   in transport-layer protocols, but these are the primary intended
+   uses.
 
    The various protocol bindings that use these credentials to
    authenticate workloads to each other are specified in separate
@@ -284,13 +291,13 @@ Table of Contents
 
    *  There needs to be an explicit mapping from the external access
       name used to access a workload (such as an Ingress path or service
-      DNS name) to its workload identifier.
+      DNS name) to its Workload Identifier.
 
    Once these conditions are met, the methods described in this document
    can be used for the caller and callee to mutually authenticate.
 
    Implementations MUST allow for defining this mapping between the
-   workload's external access name and the workload identifier (e.g.,
+   workload's external access name and the Workload Identifier (e.g.,
    through callback functions).  Deployments SHOULD use these features
    to establish a consistent set of identifiers within their
    environment.
@@ -341,7 +348,7 @@ Table of Contents
 
    For Workload Identity Certificates, validators use the trust anchors
    for the peer's trust domain to validate the X.509 chain and the
-   workload identifier in the certificate, as described in Section 6.1
+   Workload Identifier in the certificate, as described in Section 6.1
    and in companion specifications such as [I-D.ietf-wimse-mutual-tls].
 
 4.  One Workload Identity per Credential
@@ -355,14 +362,17 @@ Table of Contents
    For a Workload Identity Token, that identifier is the value of the
    sub claim.  For a Workload Identity Certificate, that identifier is
    carried in the single URI SubjectAltName described in Section 6.1.
-
    Deployments that distinguish several labels for the same runtime (for
    example a stable service identity and a specific instance) MUST place
-   the identity required for the access decision in that one credential.
+   only one identifier into it.
+
    Additional correlation for logging or operations MUST NOT be encoded
-   as a second workload identifier in the same WIT or WIC.  Deployments
-   MAY use other mechanisms, such as the optional jti claim, separate
-   credentials, or additional claims as described in Section 5.1.2.
+   as a second Workload Identifier in the same WIT or WIC.  This
+   restriction applies only to Workload Identifiers; deployments MAY use
+   other mechanisms for correlation, interoperability, or integration
+   purposes, such as the optional jti claim, a DNSName SubjectAltName,
+   separate credentials, or additional claims as described in
+   Section 5.1.2.
 
 5.  Application-Layer Workload-to-Workload Authentication
 
@@ -439,7 +449,7 @@ Table of Contents
                MUST be supported by general purpose implementations of
                this document.
 
-   As noted in [WIMSE-ID], a workload identifier is a URI that includes
+   As noted in [WIMSE-ID], a Workload Identifier is a URI that includes
    a trust domain in the authority component.  The runtime environment
    often determines which URI scheme is used, e.g., if SPIFFE is used to
    authenticate workloads, it mandates spiffe URIs.  For deployments
@@ -662,7 +672,7 @@ Table of Contents
    Workload Identifier used for WIMSE authentication and authorization
    MUST appear in exactly one SubjectAltName extension of type URI, as
    required by Section 4.  The certificate MUST NOT contain more than
-   one URI SAN that carries a workload identifier.
+   one URI SAN that carries a Workload Identifier.
 
    When the certificate is also used for TLS server authentication, it
    is RECOMMENDED to include SubjectAltName extensions of type DNSName
@@ -673,27 +683,27 @@ Table of Contents
 
 7.  Client Authorization Using the Workload Identity
 
-   The receiving application uses the authenticated peer's workload
-   identifier in authorization, accounting, and auditing.  For example,
-   the full workload identifier may be matched against ACLs to authorize
+   The receiving application uses the authenticated peer's Workload
+   Identifier in authorization, accounting, and auditing.  For example,
+   the full Workload Identifier may be matched against ACLs to authorize
    actions requested by the peer and the identifier may be included in
    log messages to associate actions to the client workload for audit
    purposes.  A deployment may specify other authorization policies
-   based on the specific details of how the workload identifier is
-   constructed.  The path portion of the workload identifier MUST always
+   based on the specific details of how the Workload Identifier is
+   constructed.  The path portion of the Workload Identifier MUST always
    be considered in the scope of the trust domain.  See Section 1.3 on
-   additional security implications of workload identifiers.
+   additional security implications of Workload Identifiers.
 
-   How the receiving application obtains the workload identifier depends
+   How the receiving application obtains the Workload Identifier depends
    on the credential used to authenticate the peer:
 
    *  Application-layer: After successfully validating the WIT, the
-      receiving application retrieves the workload identifier from the
+      receiving application retrieves the Workload Identifier from the
       sub claim.
 
    *  Transport-layer: When the client is authenticated with a Workload
       Identity Certificate, the receiving application retrieves the
-      workload identifier from the client certificate's SubjectAltName
+      Workload Identifier from the client certificate's SubjectAltName
       extension of type URI.
 
    A workload MAY use other standard and deployment specific fields in
@@ -790,15 +800,16 @@ Table of Contents
 9.2.  Workload Identity Token and Proof of Possession
 
    The Workload Identity Token (WIT) is bound to a secret cryptographic
-   key and is always presented with a proof of possession as described
-   in Section 5.1.  The WIT is a general purpose token that can be
-   presented in multiple contexts.  The WIT and its PoP are only used in
-   the application-layer options, and both are not used in mTLS.  The
-   WIT MUST NOT be used as a bearer token.  While this helps reduce the
-   sensitivity of the token it is still possible that a token and its
-   proof of possession may be captured and replayed within the PoP's
-   lifetime.  The following are some mitigations for the capture and
-   reuse of the WIT and its proof of possession (PoP):
+   key and is always presented with a proof of possession (PoP) as
+   described in Section 5.1.  The WIT is a general purpose token that
+   can be presented in multiple contexts.  The WIT and its PoP are used
+   for application-layer authentication; they are not used as the client
+   or server credential for mutual TLS, which uses the Workload Identity
+   Certificate (Section 6.1).  The WIT MUST NOT be used as a bearer
+   token.  While this helps reduce the sensitivity of the token it is
+   still possible that a token and its PoP may be captured and replayed
+   within the PoP's lifetime.  The following are some mitigations for
+   the capture and reuse of the WIT and its PoP:
 
 9.2.1.  Limiting Workload Identity Token Lifespan
 
@@ -814,10 +825,10 @@ Table of Contents
 
 9.2.2.  Limiting Proof of Possession Lifespan
 
-   The proof of possession MUST be time limited.  A PoP should only be
-   valid over the time necessary for it to be successfully used for the
-   purpose it is needed.  This will typically be on the order of
-   minutes.  PoPs received outside their validity time MUST be rejected.
+   The PoP MUST be time limited.  A PoP should only be valid over the
+   time necessary for it to be successfully used for the purpose it is
+   needed.  This will typically be on the order of minutes.  PoPs
+   received outside their validity time MUST be rejected.
 
 9.2.3.  Limiting Proof of Possession Scope
 
@@ -832,11 +843,19 @@ Table of Contents
 
 9.2.4.  Replay Protection
 
-   Proof of possession mechanisms should include replay protection to
-   prevent reuse of a captured PoP.  Without it an attacker can replay a
-   captured PoP within its validity period.
+   PoP mechanisms should include replay protection to prevent reuse of a
+   captured PoP.  Without it an attacker can replay a captured PoP
+   within its validity period.
 
-9.2.5.  Binding to TLS Endpoint
+9.2.5.  Avoid Logging Raw PoP Values
+
+   Implementations MUST NOT log raw PoP values by default.  Depending on
+   the nature and validation of the PoP, a value harvested from logs
+   could potentially be replayed and accepted as a legitimate proof.
+   Implementations should therefore treat PoP values as sensitive and
+   avoid persisting them in logs.
+
+9.2.6.  Binding to TLS Endpoint
 
    The PoP MAY be bound to a transport layer sender such as the client
    identity of a TLS session or TLS channel binding parameters.  The
@@ -844,12 +863,12 @@ Table of Contents
 
 9.3.  Workload Identity Certificate
 
-   The Workload Identity Certificate carries the workload identifier in
+   The Workload Identity Certificate carries the Workload Identifier in
    a single URI SubjectAltName (Section 6.1).  As with the WIT, the
    identifier is meaningful only within its trust domain.  A relying
    party MUST validate the certificate against the trust anchors
    configured for the peer's trust domain (Section 3) and MUST reject
-   the certificate if the workload identifier is not within that trust
+   the certificate if the Workload Identifier is not within that trust
    domain and the trust anchor used.  Evaluating the path or other
    components of the identifier without also considering the trust
    domain and the trust anchor can allow one trust domain to impersonate
@@ -860,8 +879,13 @@ Table of Contents
 
    Workload Identity Certificates are frequently issued to dynamic and/
    or short-lived workloads.  Deployments SHOULD use certificate
-   lifetimes appropriate to the workload environment.  Long-lived
-   certificates increase the impact of private-key compromise.
+   lifetimes appropriate to the workload environment, typically on a
+   similar scale to WITs (Section 9.2).  Long-lived certificates
+   increase the impact of private-key compromise.  As with WITs, short
+   certificate lifetimes are the primary mitigation against continued
+   use of a compromised key; this document does not rely on certificate
+   revocation lists (CRLs) or Online Certificate Status Protocol (OCSP)
+   [RFC6960] for WICs.
 
    The lifetime of Workload Identity Certificates is bounded by the
    lifetime and rotation cadence of the trust anchors of the trust
@@ -887,35 +911,33 @@ Table of Contents
 9.5.  Transport Security
 
    An attacker observing or intercepting the communication channel can
-   view the Workload Identity Token and its proof of possession and
-   attempt to replay them to gain an advantage.  To prevent this, the
-   WIT and its proof of possession MUST be sent over a secure, server-
-   authenticated TLS connection unless a secure channel is provided by
-   some other mechanism.
+   view the Workload Identity Token and its PoP and attempt to replay
+   them to gain an advantage.  To prevent this, the WIT and its PoP MUST
+   be sent over a secure, server-authenticated TLS connection unless a
+   secure channel is provided by some other mechanism.
 
-   In some deployments the Workload Identity Token and proof of
-   possession may pass through multiple systems.  Communication between
-   systems is over TLS, but the token and PoP are available in the clear
-   at each intermediary.  While an intermediary cannot modify the token
-   or the information within the PoP, it can attempt to capture and
-   replay the token or modify data not protected by the PoP.
-   Mitigations listed in Section 9.2 can reduce this risk.  Deployments
-   should analyze their situation to determine whether it is appropriate
-   to trust and allow traffic to pass through a middlebox.
+   In some deployments the Workload Identity Token and PoP may pass
+   through multiple systems.  Communication between systems is over TLS,
+   but the token and PoP are available in the clear at each
+   intermediary.  While an intermediary cannot modify the token or the
+   information within the PoP, it can attempt to capture and replay the
+   token or modify data not protected by the PoP.  Mitigations listed in
+   Section 9.2 can reduce this risk.  Deployments should analyze their
+   situation to determine whether it is appropriate to trust and allow
+   traffic to pass through a middlebox.
 
 10.  Privacy Considerations
 
-   WITs and the proofs of possession may contain private information
-   such as user names or other identities.  Care should be taken to
-   prevent the disclosure of this information.  The use of TLS helps
-   protect the privacy of WITs and proofs of possession in transit.
-   Workload Identity Certificates likewise expose the workload
-   identifier, and any attributes carried in the certificate, to the
-   peer, to any TLS-terminating intermediary, and to logs; in
-   particular, client-certificate authentication discloses the client's
-   workload identity to the server during the TLS handshake.
+   WITs and PoPs may contain private information such as user names or
+   other identities.  Care should be taken to prevent the disclosure of
+   this information.  The use of TLS helps protect the privacy of WITs
+   and PoPs in transit.  Workload Identity Certificates likewise expose
+   the Workload Identifier, and any attributes carried in the
+   certificate, to the peer, to any TLS-terminating intermediary, and to
+   logs; in particular, client-certificate authentication discloses the
+   client's workload identity to the server during the TLS handshake.
 
-   WITs and certificates with workload identifiers are typically
+   WITs and certificates with Workload Identifiers are typically
    associated with a workload and not a specific user, however in some
    deployments the workload may be associated directly to a user.  While
    these are exceptional cases a deployment should evaluate if the
@@ -950,8 +972,8 @@ Table of Contents
 
    Published specification: RFC XXX, Section 5.1.
 
-   Applications that use this media type: Identity servers that vend
-   Workload Identity Tokens, and Workloads that use these tokens to
+   Applications that use this media type: Identity Servers that vend
+   Workload Identity Tokens, and workloads that use these tokens to
    authenticate to each other.
 
    Fragment identifier considerations: N/A
@@ -1074,9 +1096,9 @@ Table of Contents
    [I-D.ietf-oauth-transaction-tokens]
               Tulshibagwale, A., Fletcher, G., and P. Kasselman,
               "Transaction Tokens", Work in Progress, Internet-Draft,
-              draft-ietf-oauth-transaction-tokens-09, 6 July 2026,
+              draft-ietf-oauth-transaction-tokens-11, 30 July 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              transaction-tokens-09>.
+              transaction-tokens-11>.
 
    [I-D.ietf-wimse-arch]
               Salowey, J. A., Rosomakho, Y., and H. Tschofenig,
@@ -1089,9 +1111,9 @@ Table of Contents
    [I-D.ietf-wimse-http-signature]
               Salowey, J. A. and Y. Sheffer, "WIMSE Workload-to-Workload
               Authentication with HTTP Signatures", Work in Progress,
-              Internet-Draft, draft-ietf-wimse-http-signature-04, 6 July
-              2026, <https://datatracker.ietf.org/doc/html/draft-ietf-
-              wimse-http-signature-04>.
+              Internet-Draft, draft-ietf-wimse-http-signature-06, 4
+              August 2026, <https://datatracker.ietf.org/doc/html/draft-
+              ietf-wimse-http-signature-06>.
 
    [I-D.ietf-wimse-wpt]
               Campbell, B. and A. Schwenkschuster, "WIMSE Workload Proof
@@ -1116,6 +1138,12 @@ Table of Contents
               IANA, "Media Types",
               <https://www.iana.org/assignments/media-types>.
 
+   [RFC6960]  Santesson, S., Myers, M., Ankney, R., Malpani, A.,
+              Galperin, S., and C. Adams, "X.509 Internet Public Key
+              Infrastructure Online Certificate Status Protocol - OCSP",
+              RFC 6960, DOI 10.17487/RFC6960, June 2013,
+              <https://www.rfc-editor.org/rfc/rfc6960>.
+
    [RFC9457]  Nottingham, M., Wilde, E., and S. Dalal, "Problem Details
               for HTTP APIs", RFC 9457, DOI 10.17487/RFC9457, July 2023,
               <https://www.rfc-editor.org/rfc/rfc9457>.
@@ -1125,7 +1153,25 @@ Appendix A.  Document History
 
    // RFC Editor: please remove before publication.
 
-A.1.  draft-ietf-wimse-workload-creds-02
+A.1.  draft-ietf-wimse-workload-creds-03
+
+   *  Clarify that WIT/PoP are application-layer credentials and are not
+      used for mutual TLS; TLS binding does not change that (#256).
+
+   *  Clarify that the one-Workload-Identifier-per-credential rule
+      restricts only Workload Identifiers, not other identifiers in the
+      credential.
+
+   *  State the WIC revocation stance: short lifetimes like WITs; no CRL
+      reliance (#270).
+
+   *  Editorial: consistent use of "proof of possession"/"PoP", with the
+      abbreviation expanded on first use, and consistent capitalization
+      of the defined term "Workload Identifier".
+
+   *  Advise against logging proof-of-possession values (#271).
+
+A.2.  draft-ietf-wimse-workload-creds-02
 
    *  Add a section requiring exactly one Workload Identifier per
       credential (the sub claim for a WIT, a single URI SubjectAltName
@@ -1144,7 +1190,7 @@ A.1.  draft-ietf-wimse-workload-creds-02
 
    *  Rename "level" to "layer" throughout.
 
-A.2.  draft-ietf-wimse-workload-creds-01
+A.3.  draft-ietf-wimse-workload-creds-01
 
    *  Clarify that the iss claim is RECOMMENDED in part for auditing and
       operations, and that validation of workload identity uses sub, not
@@ -1153,13 +1199,13 @@ A.2.  draft-ietf-wimse-workload-creds-01
    *  Remove the wimse URI scheme definition and IANA registration from
       this document; both are specified in [WIMSE-ID].
 
-A.3.  draft-ietf-wimse-workload-creds-00
+A.4.  draft-ietf-wimse-workload-creds-00
 
    *  Remove WPT, HTTP-Sig and mutual TLS sections, which are going to
       be covered by individual documents.  This includes re-phrasing of
       various sections to focus on the credentials only.
 
-A.4.  draft-ietf-wimse-s2s-protocol-07
+A.5.  draft-ietf-wimse-s2s-protocol-07
 
    *  Rework the WPT's oth claim.
 
@@ -1177,14 +1223,14 @@ A.4.  draft-ietf-wimse-s2s-protocol-07
 
    *  Use of the Accept-Signature header.
 
-A.5.  draft-ietf-wimse-s2s-protocol-06
+A.6.  draft-ietf-wimse-s2s-protocol-06
 
    *  Explicit definition of the Workload Identity Certificate.
 
    *  Definition of the validation of workload identifiers as part of
       workload authentication.  Still work in progress.
 
-A.6.  draft-ietf-wimse-s2s-protocol-05
+A.7.  draft-ietf-wimse-s2s-protocol-05
 
    *  Removed the entire Workload Identity section which is now covered
       in the Architecture document.
@@ -1195,7 +1241,7 @@ A.6.  draft-ietf-wimse-s2s-protocol-05
 
    *  IANA considerations.
 
-A.7.  draft-ietf-wimse-s2s-protocol-04
+A.8.  draft-ietf-wimse-s2s-protocol-04
 
    *  Require cnf.jwk.alg in WIT which restricts signature algorithm of
       WPT or HTTP-Sig.
@@ -1204,7 +1250,7 @@ A.7.  draft-ietf-wimse-s2s-protocol-04
 
    *  Consolidate terminology with the Architecture draft.
 
-A.8.  draft-ietf-wimse-s2s-protocol-03
+A.9.  draft-ietf-wimse-s2s-protocol-03
 
    *  Consistently use "workload".
 
@@ -1219,7 +1265,7 @@ A.8.  draft-ietf-wimse-s2s-protocol-03
 
    *  Error handling for the application-level methods.
 
-A.9.  draft-ietf-wimse-s2s-protocol-02
+A.10.  draft-ietf-wimse-s2s-protocol-02
 
    *  Coexistence with bearer tokens.
 
@@ -1231,7 +1277,7 @@ A.9.  draft-ietf-wimse-s2s-protocol-02
 
    *  Moved an author to acknowledgments.
 
-A.10.  draft-ietf-wimse-s2s-protocol-01
+A.11.  draft-ietf-wimse-s2s-protocol-01
 
    *  Addressed multiple comments from Pieter.
 
@@ -1246,7 +1292,7 @@ A.10.  draft-ietf-wimse-s2s-protocol-01
    *  Added a section comparing the DPoP-inspired app-level security
       option to the Message Signature-based alternative.
 
-A.11.  draft-ietf-wimse-s2s-protocol-00
+A.12.  draft-ietf-wimse-s2s-protocol-00
 
    *  Initial WG draft, an exact copy of draft-sheffer-wimse-s2s-
       protocol-00
