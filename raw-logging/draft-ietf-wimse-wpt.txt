@@ -764,7 +764,7 @@ A.1.  draft-ietf-wimse-wpt-02
 
    *  Advise against logging proof-of-possession values (#271).
 
-   *  Security Considerations formating fixup (#217).
+   *  Security Considerations formatting fixup (#217).
 
 A.2.  draft-ietf-wimse-wpt-01
 
