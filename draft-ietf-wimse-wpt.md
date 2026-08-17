@@ -369,7 +369,7 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 
 * Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use, and consistent capitalization of the defined term "Workload Identifier".
 * Advise against logging proof-of-possession values (#271).
-* Security Considerations formating fixup (#217).
+* Security Considerations formatting fixup (#217).
 
 ## draft-ietf-wimse-wpt-01
 
