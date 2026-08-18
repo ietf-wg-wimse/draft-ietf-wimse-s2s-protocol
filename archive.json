@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-08-16T01:11:34.650961+00:00",
+  "timestamp": "2026-08-18T01:06:46.480644+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -4747,7 +4747,7 @@
       ],
       "body": "Section 7 rightly suggests including the workload identifier in log messages. But the WIT and its proof of possession ride in HTTP header fields, and gateways, TLS-terminating proxies, and APM agents dump those headers into logs by default. A logged WIT plus a logged PoP is replayable within the validity window defined in 9.2.2. Section 10 lists logs as an exposure surface for WICs but not WITs, which is backwards: WITs hit header logging at every network hop.\n\nSuggested fix: a note in 9.2 advising implementers to record claims (sub, exp, iss, jti) rather than raw header values, and a matching update to Section 10.\n\nRaised as item 4 in my WGLC review: https://mailarchive.ietf.org/arch/msg/wimse/S5Zjmr4qneFsAmepgRWhkWtFdPA/\n",
       "createdAt": "2026-07-16T11:23:25Z",
-      "updatedAt": "2026-08-09T17:38:48Z",
+      "updatedAt": "2026-08-17T21:31:17Z",
       "closedAt": null,
       "comments": [
         {
@@ -4791,6 +4791,13 @@
           "body": "I think it's clear but the PR #279 kinda goes farther than needed so reiterating that the WIT cannot be used by itself. ",
           "createdAt": "2026-08-07T16:05:43Z",
           "updatedAt": "2026-08-07T16:05:43Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "#289 attempts to add an appropriate bit of text for this ",
+          "createdAt": "2026-08-17T21:31:17Z",
+          "updatedAt": "2026-08-17T21:31:17Z"
         }
       ]
     },
@@ -19400,7 +19407,7 @@
       ],
       "body": "## Summary\n* Clarify that audit logs should use the workload identifier / selected claims, not raw WIT or proof-of-possession header field values.\n* Note that intermediaries and observability agents often dump those headers by default, enabling replay within the PoP lifetime.\n\nRelated to #271 (Creds-only; leaving the issue open for WPT follow-up).\n\n\nMade with [Cursor](https://cursor.com)",
       "createdAt": "2026-07-29T12:53:24Z",
-      "updatedAt": "2026-08-12T08:19:36Z",
+      "updatedAt": "2026-08-17T21:31:48Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "c96037d5ffc4bc70541de347affe7ab708bc01cb",
@@ -19625,6 +19632,19 @@
               "updatedAt": "2026-08-11T15:01:55Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABJ1NM3g",
+          "commit": {
+            "abbreviatedOid": "a859bbc"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "#289 instead ",
+          "createdAt": "2026-08-17T21:31:47Z",
+          "updatedAt": "2026-08-17T21:31:47Z",
+          "comments": []
         }
       ]
     },
@@ -20182,13 +20202,13 @@
       "labels": [],
       "body": "Added security considerations for granular auth section.\r\n\r\nRelated to #272 ",
       "createdAt": "2026-08-10T13:42:14Z",
-      "updatedAt": "2026-08-14T11:25:42Z",
+      "updatedAt": "2026-08-17T19:57:12Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "40b1c4161dd1971dc1ac7d5ba718a636116109ca",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "arndt/resolve_272",
-      "headRefOid": "16bfa15202850734d760c8d19c2cda6edcb88ce0",
+      "headRefOid": "41dd7e94fe6f04b93948b7328e1cebc291aac44e",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -20361,6 +20381,46 @@
               "updatedAt": "2026-08-14T11:25:42Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABJxUgcg",
+          "commit": {
+            "abbreviatedOid": "16bfa15"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-17T10:29:31Z",
+          "updatedAt": "2026-08-17T10:29:31Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "This PR doesn't target #272 anymore, see #246",
+              "createdAt": "2026-08-17T10:29:31Z",
+              "updatedAt": "2026-08-17T10:29:31Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABJ0li_w",
+          "commit": {
+            "abbreviatedOid": "16bfa15"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-17T19:57:11Z",
+          "updatedAt": "2026-08-17T19:57:12Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "I have seen #246 (more than I care for) and it also doesn't address #272.",
+              "createdAt": "2026-08-17T19:57:11Z",
+              "updatedAt": "2026-08-17T19:57:12Z"
+            }
+          ]
         }
       ]
     },
@@ -20373,10 +20433,12 @@
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-wpt"
+      ],
       "body": "Preview PR for #284. This is not mergeable yet but want to start conversations about certain aspects of that potential change.",
       "createdAt": "2026-08-11T08:52:23Z",
-      "updatedAt": "2026-08-11T10:51:20Z",
+      "updatedAt": "2026-08-17T22:08:21Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "40b1c4161dd1971dc1ac7d5ba718a636116109ca",
@@ -20428,6 +20490,146 @@
               "updatedAt": "2026-08-11T08:55:43Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABJ1T9CQ",
+          "commit": {
+            "abbreviatedOid": "65da452"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-17T21:46:24Z",
+          "updatedAt": "2026-08-17T21:46:24Z",
+          "comments": [
+            {
+              "originalPosition": 50,
+              "body": "This is probably okay but with the move to the Authorization header I think a lot of this abnf isn't needed anymore (if it ever was \"needed\"). \n\nI had something more like the top bits of https://datatracker.ietf.org/doc/html/rfc9449#name-the-dpop-authentication-sch in mind. Where the abnf is really just restating/showing how the new scheme and token fit in the HTTP auth framework. ",
+              "createdAt": "2026-08-17T21:46:24Z",
+              "updatedAt": "2026-08-17T21:46:24Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABJ1Vg5A",
+          "commit": {
+            "abbreviatedOid": "65da452"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-17T21:50:10Z",
+          "updatedAt": "2026-08-17T21:50:11Z",
+          "comments": [
+            {
+              "originalPosition": 50,
+              "body": "I think this section could be adapted towards that end without too much difficulty. ",
+              "createdAt": "2026-08-17T21:50:10Z",
+              "updatedAt": "2026-08-17T21:50:11Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABJ1W72Q",
+          "commit": {
+            "abbreviatedOid": "65da452"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-17T21:52:50Z",
+          "updatedAt": "2026-08-17T21:52:50Z",
+          "comments": [
+            {
+              "originalPosition": 99,
+              "body": "If the changes I suggested / implied in https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/287/changes#r3799048449 happen this ref prob isn't quite right. \n```suggestion\n* The credentials of the `WPT` authentication scheme are a single and well-formed JWT.\n```",
+              "createdAt": "2026-08-17T21:52:50Z",
+              "updatedAt": "2026-08-17T21:52:50Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABJ1Xs1g",
+          "commit": {
+            "abbreviatedOid": "65da452"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-17T21:54:41Z",
+          "updatedAt": "2026-08-17T21:54:41Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "gonna miss madogiwazoku but this change feels like the right direction",
+              "createdAt": "2026-08-17T21:54:41Z",
+              "updatedAt": "2026-08-17T21:54:41Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABJ1ZQPQ",
+          "commit": {
+            "abbreviatedOid": "65da452"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-17T21:58:50Z",
+          "updatedAt": "2026-08-17T21:58:51Z",
+          "comments": [
+            {
+              "originalPosition": 136,
+              "body": "did we want to consider parameter(s) to indicate acceptable audience value(s)? Although, even as I type that prior sentence, I start to have doubts about that would really work... ",
+              "createdAt": "2026-08-17T21:58:51Z",
+              "updatedAt": "2026-08-17T21:58:51Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABJ1Zuaw",
+          "commit": {
+            "abbreviatedOid": "65da452"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-17T22:00:08Z",
+          "updatedAt": "2026-08-17T22:00:09Z",
+          "comments": [
+            {
+              "originalPosition": 153,
+              "body": "I think... \n```suggestion\nauthentication scheme, including the `Bearer` scheme ({{Section 2.1 of RFC6750}}) or the `DPoP` scheme\n```",
+              "createdAt": "2026-08-17T22:00:08Z",
+              "updatedAt": "2026-08-17T22:00:09Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABJ1cpIw",
+          "commit": {
+            "abbreviatedOid": "65da452"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-17T22:08:20Z",
+          "updatedAt": "2026-08-17T22:08:20Z",
+          "comments": [
+            {
+              "originalPosition": 172,
+              "body": "I think I could get onboard with that idea but it seems like this paragraph says it's undefined but then goes on to kinda define it. ",
+              "createdAt": "2026-08-17T22:08:20Z",
+              "updatedAt": "2026-08-17T22:08:21Z"
+            }
+          ]
         }
       ]
     },
@@ -20440,10 +20642,12 @@
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
       "body": "Resolves #257",
       "createdAt": "2026-08-11T12:30:11Z",
-      "updatedAt": "2026-08-14T11:27:35Z",
+      "updatedAt": "2026-08-17T21:32:57Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "c96037d5ffc4bc70541de347affe7ab708bc01cb",
@@ -20509,6 +20713,56 @@
           "createdAt": "2026-08-14T11:27:35Z",
           "updatedAt": "2026-08-14T11:27:35Z",
           "comments": []
+        }
+      ]
+    },
+    {
+      "number": 289,
+      "id": "PR_kwDOLJmm788AAAABAEMiGw",
+      "title": "Advise against logging PoP values",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/289",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-wpt",
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "* Advise against logging proof-of-possession values (#271).\r\n* Security Considerations formatting fixup (#217).",
+      "createdAt": "2026-08-17T21:27:50Z",
+      "updatedAt": "2026-08-17T21:32:17Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "c96037d5ffc4bc70541de347affe7ab708bc01cb",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "raw-logging",
+      "headRefOid": "53f45ea9c0ee3af31280b9710fd3211ea5724fbd",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABJ1LuSw",
+          "commit": {
+            "abbreviatedOid": "1731912"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-17T21:28:16Z",
+          "updatedAt": "2026-08-17T21:28:16Z",
+          "comments": [
+            {
+              "originalPosition": 51,
+              "body": "```suggestion\n* Security Considerations formatting fixup (#217).\n```",
+              "createdAt": "2026-08-17T21:28:16Z",
+              "updatedAt": "2026-08-17T21:28:16Z"
+            }
+          ]
         }
       ]
     }
