@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-08-18T01:06:46.480644+00:00",
+  "timestamp": "2026-08-20T01:06:57.864130+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -4216,15 +4216,25 @@
       "state": "OPEN",
       "author": "sorindumitru",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "arndt-s"
+      ],
       "labels": [
         "draft-ietf-wimse-wpt"
       ],
       "body": "AFAICT, the draft does not require validating the WIT when validating the WPT, just that the the hash matches but that doesn't give any security.\n\nOn top of that, AFAICT, there's nothing defining how to validate a WIT. It's specified as a JWS and that the workload needs to have the key from somewhere, but is that enough? Should it specify fetching the trust domain from the `sub` field and then determine the key[s] to use for validating it?",
       "createdAt": "2026-05-10T09:33:22Z",
-      "updatedAt": "2026-06-03T18:24:20Z",
+      "updatedAt": "2026-08-18T14:35:05Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "body": "The procedure for validating the WIT probably should go in the creds draft. \n\n#290 ",
+          "createdAt": "2026-08-18T14:32:34Z",
+          "updatedAt": "2026-08-18T14:35:05Z"
+        }
+      ]
     },
     {
       "number": 239,
@@ -4960,6 +4970,26 @@
           "updatedAt": "2026-08-10T20:49:09Z"
         }
       ]
+    },
+    {
+      "number": 290,
+      "id": "I_kwDOLJmm788AAAABNO4KWw",
+      "title": "Guidance for validating the WIT",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/290",
+      "state": "OPEN",
+      "author": "jsalowey",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [
+        "yaronf"
+      ],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "The creds draft seems to me missing guidance for validating the WIT.  Both the WIT and HTTP signatures drafts will need to reference it. ",
+      "createdAt": "2026-08-18T14:34:43Z",
+      "updatedAt": "2026-08-18T14:43:19Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -20765,6 +20795,32 @@
           ]
         }
       ]
+    },
+    {
+      "number": 291,
+      "id": "PR_kwDOLJmm788AAAABASOt7w",
+      "title": "Add WIT validation procedure for recipients",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/291",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "## Summary\n* Add Section 5.1.4 in workload-creds with a MUST checklist for validating a presented WIT (signature, `typ`, `sub`, `exp`, `cnf`).\n* Point WPT and HTTP signatures at that procedure instead of restating WIT checks.\n\nFixes #290\n\n\nMade with [Cursor](https://cursor.com)",
+      "createdAt": "2026-08-19T13:15:36Z",
+      "updatedAt": "2026-08-19T13:15:37Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "c96037d5ffc4bc70541de347affe7ab708bc01cb",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-290",
+      "headRefOid": "5133c71ceff4d2933ba3f2a4b1a734b6f744d4ad",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
