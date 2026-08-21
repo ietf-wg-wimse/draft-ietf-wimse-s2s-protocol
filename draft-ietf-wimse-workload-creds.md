@@ -181,7 +181,7 @@ This document expects that trust anchors used to validate Workload Identity Cert
 
 This document does not define a mechanism for discovering trust anchor information. Consumers MUST bind each trust domain to an authorized issuer (or set of issuers) and to the corresponding trust anchors. That mapping MUST be distributed via a secure out-of-band mechanism. In particular, for a WIT the `iss` claim (the JWT issuer claim {{RFC7519}}, defined in {{to-wit}}) MUST NOT be used to look up trust anchor material directly from information carried only in the token (such as by fetching a JWKS from a URL found only in the WIT).
 
-To validate a WIT, the receiving workload verifies the JWS signature using key material from the trust anchors configured for the trust domain in the `sub` claim. Trust anchor material for WIT validation MAY include more than one public key so that operators can rotate signing keys. Verification follows {{RFC7515}} and the JWT best practices in {{RFC8725}}. In practice, the `alg` header parameter would identify an algorithm that the validator accepts for that trust domain, and the signature would be checked under a key drawn from the configured trust anchors. If the JWS header contains a `kid` parameter, the validator would use the key in the trust anchor material with the same `kid` value. If `kid` is absent, deployment policy would need to provide unambiguous key selection (for example, when only a single key is configured for that trust domain). Recipient processing of a presented WIT is specified in {{wit-validation}}.
+To validate a WIT, the receiving workload verifies the JWS signature using key material from the trust anchors configured for the trust domain in the `sub` claim. Trust anchor material for WIT validation MAY include more than one public key so that operators can rotate signing keys. In practice, the `alg` header parameter would identify an algorithm that the validator accepts for that trust domain, and the signature would be checked under a key drawn from the configured trust anchors. If the JWS header contains a `kid` parameter, the validator would use the key in the trust anchor material with the same `kid` value. If `kid` is absent, deployment policy would need to provide unambiguous key selection (for example, when only a single key is configured for that trust domain). Recipient processing of a presented WIT is specified in {{wit-validation}}.
 
 For Workload Identity Certificates, validators use the trust anchors for the peer's trust domain to validate the X.509 chain and the Workload Identifier in the certificate, as described in {{to-wic}} and in companion specifications such as {{!I-D.ietf-wimse-mutual-tls}}.
 
@@ -342,7 +342,7 @@ Implementations MAY include the `iss` claim in the form of a `https` URL to faci
 
 ### Validating the WIT {#wit-validation}
 
-To validate a WIT, the recipient MUST ensure the following:
+Verification of a WIT follows {{RFC7515}} and the JWT best practices in {{RFC8725}}, with the WIMSE-specific requirements below. To validate a WIT, the recipient MUST ensure the following:
 
 * The token is a single well-formed JWT using JWS compact serialization ({{RFC7515}}, {{RFC7519}}).
 * The `typ` JOSE header parameter conveys a media type of `wit+jwt`.
