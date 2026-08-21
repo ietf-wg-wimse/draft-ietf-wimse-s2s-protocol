@@ -259,7 +259,7 @@ The decoded JWT claims of the WIT from the example above are shown here:
   "sub": "wimse://example.com/specific-workload"
 }
 ~~~
-{: title="Example WIT Claims"}
+{: title="Example WIT claims, including an `iat` claim, demonstrating WIT's extensibility"}
 
 The example omits the RECOMMENDED `iss` claim; see {{to-wit}} and {{wit-iss-note}}.
 
