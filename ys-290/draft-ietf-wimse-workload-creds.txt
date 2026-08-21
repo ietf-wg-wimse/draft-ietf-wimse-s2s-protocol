@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 20 February 2027                             Palo Alto Networks
+Expires: 22 February 2027                             Palo Alto Networks
                                                       A. Schwenkschuster
                                                         Defakto Security
                                                               Y. Sheffer
                                                                   Intuit
                                                             Y. Rosomakho
                                                                  Zscaler
-                                                          19 August 2026
+                                                          21 August 2026
 
 
                        WIMSE Workload Credentials
@@ -67,7 +67,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 20 February 2027.
+   This Internet-Draft will expire on 22 February 2027.
 
 Copyright Notice
 
@@ -336,17 +336,15 @@ Table of Contents
    using key material from the trust anchors configured for the trust
    domain in the sub claim.  Trust anchor material for WIT validation
    MAY include more than one public key so that operators can rotate
-   signing keys.  Verification follows [RFC7515] and the JWT best
-   practices in [RFC8725].  In practice, the alg header parameter would
-   identify an algorithm that the validator accepts for that trust
-   domain, and the signature would be checked under a key drawn from the
-   configured trust anchors.  If the JWS header contains a kid
-   parameter, the validator would use the key in the trust anchor
-   material with the same kid value.  If kid is absent, deployment
-   policy would need to provide unambiguous key selection (for example,
-   when only a single key is configured for that trust domain).
-   Recipient processing of a presented WIT is specified in
-   Section 5.1.4.
+   signing keys.  In practice, the alg header parameter would identify
+   an algorithm that the validator accepts for that trust domain, and
+   the signature would be checked under a key drawn from the configured
+   trust anchors.  If the JWS header contains a kid parameter, the
+   validator would use the key in the trust anchor material with the
+   same kid value.  If kid is absent, deployment policy would need to
+   provide unambiguous key selection (for example, when only a single
+   key is configured for that trust domain).  Recipient processing of a
+   presented WIT is specified in Section 5.1.4.
 
    For Workload Identity Certificates, validators use the trust anchors
    for the peer's trust domain to validate the X.509 chain and the
@@ -625,7 +623,9 @@ Table of Contents
 
 5.1.4.  Validating the WIT
 
-   To validate a WIT, the recipient MUST ensure the following:
+   Verification of a WIT follows [RFC7515] and the JWT best practices in
+   [RFC8725], with the WIMSE-specific requirements below.  To validate a
+   WIT, the recipient MUST ensure the following:
 
    *  The token is a single well-formed JWT using JWS compact
       serialization ([RFC7515], [RFC7519]).

@@ -1053,7 +1053,7 @@ svg {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Campbell, et al.</td>
-<td class="center">Expires 20 February 2027</td>
+<td class="center">Expires 22 February 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1066,12 +1066,12 @@ svg {
 <dd class="internet-draft">draft-ietf-wimse-workload-creds-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-08-19" class="published">19 August 2026</time>
+<time datetime="2026-08-21" class="published">21 August 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2027-02-20">20 February 2027</time></dd>
+<dd class="expires"><time datetime="2027-02-22">22 February 2027</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1140,7 +1140,7 @@ multi-service, multi-cloud, multi-tenant deployments.<a href="#section-abstract-
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 20 February 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 22 February 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1552,7 +1552,7 @@ appear in all capitals, as shown here.<a href="#section-2-2" class="pilcrow">¶<
       </h2>
 <p id="section-3-1">This document expects that trust anchors used to validate Workload Identity Certificates and Workload Identity Tokens are associated with a trust domain and are provisioned to consumers together with trust domain metadata for that domain. Trust anchors can be represented in different ways depending on the deployment; for example, as a set of public keys (such as a JWKS), as an X.509 certification authority used to validate certificate chains, or as other deployment-specific material.<a href="#section-3-1" class="pilcrow">¶</a></p>
 <p id="section-3-2">This document does not define a mechanism for discovering trust anchor information. Consumers <span class="bcp14">MUST</span> bind each trust domain to an authorized issuer (or set of issuers) and to the corresponding trust anchors. That mapping <span class="bcp14">MUST</span> be distributed via a secure out-of-band mechanism. In particular, for a WIT the <code>iss</code> claim (the JWT issuer claim <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>, defined in <a href="#to-wit" class="auto internal xref">Section 5.1</a>) <span class="bcp14">MUST NOT</span> be used to look up trust anchor material directly from information carried only in the token (such as by fetching a JWKS from a URL found only in the WIT).<a href="#section-3-2" class="pilcrow">¶</a></p>
-<p id="section-3-3">To validate a WIT, the receiving workload verifies the JWS signature using key material from the trust anchors configured for the trust domain in the <code>sub</code> claim. Trust anchor material for WIT validation <span class="bcp14">MAY</span> include more than one public key so that operators can rotate signing keys. Verification follows <span>[<a href="#RFC7515" class="cite xref">RFC7515</a>]</span> and the JWT best practices in <span>[<a href="#RFC8725" class="cite xref">RFC8725</a>]</span>. In practice, the <code>alg</code> header parameter would identify an algorithm that the validator accepts for that trust domain, and the signature would be checked under a key drawn from the configured trust anchors. If the JWS header contains a <code>kid</code> parameter, the validator would use the key in the trust anchor material with the same <code>kid</code> value. If <code>kid</code> is absent, deployment policy would need to provide unambiguous key selection (for example, when only a single key is configured for that trust domain). Recipient processing of a presented WIT is specified in <a href="#wit-validation" class="auto internal xref">Section 5.1.4</a>.<a href="#section-3-3" class="pilcrow">¶</a></p>
+<p id="section-3-3">To validate a WIT, the receiving workload verifies the JWS signature using key material from the trust anchors configured for the trust domain in the <code>sub</code> claim. Trust anchor material for WIT validation <span class="bcp14">MAY</span> include more than one public key so that operators can rotate signing keys. In practice, the <code>alg</code> header parameter would identify an algorithm that the validator accepts for that trust domain, and the signature would be checked under a key drawn from the configured trust anchors. If the JWS header contains a <code>kid</code> parameter, the validator would use the key in the trust anchor material with the same <code>kid</code> value. If <code>kid</code> is absent, deployment policy would need to provide unambiguous key selection (for example, when only a single key is configured for that trust domain). Recipient processing of a presented WIT is specified in <a href="#wit-validation" class="auto internal xref">Section 5.1.4</a>.<a href="#section-3-3" class="pilcrow">¶</a></p>
 <p id="section-3-4">For Workload Identity Certificates, validators use the trust anchors for the peer's trust domain to validate the X.509 chain and the Workload Identifier in the certificate, as described in <a href="#to-wic" class="auto internal xref">Section 6.1</a> and in companion specifications such as <span>[<a href="#I-D.ietf-wimse-mutual-tls" class="cite xref">I-D.ietf-wimse-mutual-tls</a>]</span>.<a href="#section-3-4" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1822,7 +1822,7 @@ This, however, could result in interoperability issues, which the following rule
           <h4 id="name-validating-the-wit">
 <a href="#section-5.1.4" class="section-number selfRef">5.1.4. </a><a href="#name-validating-the-wit" class="section-name selfRef">Validating the WIT</a>
           </h4>
-<p id="section-5.1.4-1">To validate a WIT, the recipient <span class="bcp14">MUST</span> ensure the following:<a href="#section-5.1.4-1" class="pilcrow">¶</a></p>
+<p id="section-5.1.4-1">Verification of a WIT follows <span>[<a href="#RFC7515" class="cite xref">RFC7515</a>]</span> and the JWT best practices in <span>[<a href="#RFC8725" class="cite xref">RFC8725</a>]</span>, with the WIMSE-specific requirements below. To validate a WIT, the recipient <span class="bcp14">MUST</span> ensure the following:<a href="#section-5.1.4-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.1.4-2.1">
               <p id="section-5.1.4-2.1.1">The token is a single well-formed JWT using JWS compact serialization (<span>[<a href="#RFC7515" class="cite xref">RFC7515</a>]</span>, <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>).<a href="#section-5.1.4-2.1.1" class="pilcrow">¶</a></p>
