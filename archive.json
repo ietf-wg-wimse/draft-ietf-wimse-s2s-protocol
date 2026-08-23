@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-08-20T01:06:57.864130+00:00",
+  "timestamp": "2026-08-23T01:12:43.876530+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -4425,7 +4425,7 @@
       "id": "I_kwDOLJmm788AAAABIz0dqA",
       "title": "Section 5.1 / Figure 4 - the example uses an \"iat\" claim that the document never defines.",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/257",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [
@@ -4436,8 +4436,8 @@
       ],
       "body": "The example WIT (Figures 2 and 4) contains an iat claim, but iat is not listed or defined in the Section 5.1 normative claim list (iss, sub, exp, jti, cnf). The primary example uses a claim the specification does not mention. Either add iat to the claim definitions (it is conventional and underpins the \"refreshed regularly\" / lifetime language) or remove it from the example. My preference would be to add it as an OPTIONAL claim.\n",
       "createdAt": "2026-07-14T19:01:10Z",
-      "updatedAt": "2026-08-11T13:35:00Z",
-      "closedAt": null,
+      "updatedAt": "2026-08-21T12:03:19Z",
+      "closedAt": "2026-08-21T12:03:19Z",
       "comments": [
         {
           "author": "n2ctech",
@@ -17492,7 +17492,7 @@
       "id": "PR_kwDOLJmm787WCd0w",
       "title": "Add oth example",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/227",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -17501,14 +17501,14 @@
       ],
       "body": "Resolves #150 ",
       "createdAt": "2026-04-27T16:27:44Z",
-      "updatedAt": "2026-04-30T09:08:44Z",
+      "updatedAt": "2026-08-21T12:09:38Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "6af86bb41598bb17d40931006d6bd6d9341b5f97",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "arndt/add_oth_example",
       "headRefOid": "d2a575504fc3c772af0fbb18d52cff4355edafd6",
-      "closedAt": null,
+      "closedAt": "2026-08-21T12:09:38Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
@@ -20232,7 +20232,7 @@
       "labels": [],
       "body": "Added security considerations for granular auth section.\r\n\r\nRelated to #272 ",
       "createdAt": "2026-08-10T13:42:14Z",
-      "updatedAt": "2026-08-17T19:57:12Z",
+      "updatedAt": "2026-08-21T12:09:22Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "40b1c4161dd1971dc1ac7d5ba718a636116109ca",
@@ -20449,6 +20449,46 @@
               "body": "I have seen #246 (more than I care for) and it also doesn't address #272.",
               "createdAt": "2026-08-17T19:57:11Z",
               "updatedAt": "2026-08-17T19:57:12Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABKZvyVw",
+          "commit": {
+            "abbreviatedOid": "41dd7e9"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-21T12:08:24Z",
+          "updatedAt": "2026-08-21T12:08:25Z",
+          "comments": [
+            {
+              "originalPosition": 21,
+              "body": "This section is about situations where a peer only validates a credential against the trust domain anchor and basically ignores the identifier for access control. Every workload will be the same. ",
+              "createdAt": "2026-08-21T12:08:24Z",
+              "updatedAt": "2026-08-21T12:08:25Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABKZwK9g",
+          "commit": {
+            "abbreviatedOid": "41dd7e9"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-21T12:09:21Z",
+          "updatedAt": "2026-08-21T12:09:21Z",
+          "comments": [
+            {
+              "originalPosition": 19,
+              "body": "I don't think proof of possession matters here. It's generic, no matter what PoP mechanism is used.",
+              "createdAt": "2026-08-21T12:09:21Z",
+              "updatedAt": "2026-08-21T12:09:22Z"
             }
           ]
         }
@@ -20668,7 +20708,7 @@
       "id": "PR_kwDOLJmm7879giT-",
       "title": "Clarify `iat` in example",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/288",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -20677,17 +20717,19 @@
       ],
       "body": "Resolves #257",
       "createdAt": "2026-08-11T12:30:11Z",
-      "updatedAt": "2026-08-17T21:32:57Z",
+      "updatedAt": "2026-08-21T12:03:18Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "c96037d5ffc4bc70541de347affe7ab708bc01cb",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "arndt/resolve_257",
       "headRefOid": "c76b2438c9e34cf8cd62c6bdbfc436c7ab415f79",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-08-21T12:03:18Z",
+      "mergedAt": "2026-08-21T12:03:18Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "ff799384c8ee6b3f5b7e058296efdd38cfb5448b"
+      },
       "comments": [
         {
           "author": "yaronf",
@@ -20808,19 +20850,60 @@
       "labels": [],
       "body": "## Summary\n* Add Section 5.1.4 in workload-creds with a MUST checklist for validating a presented WIT (signature, `typ`, `sub`, `exp`, `cnf`).\n* Point WPT and HTTP signatures at that procedure instead of restating WIT checks.\n\nFixes #290\n\n\nMade with [Cursor](https://cursor.com)",
       "createdAt": "2026-08-19T13:15:36Z",
-      "updatedAt": "2026-08-19T13:15:37Z",
+      "updatedAt": "2026-08-21T18:01:01Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "c96037d5ffc4bc70541de347affe7ab708bc01cb",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-290",
-      "headRefOid": "5133c71ceff4d2933ba3f2a4b1a734b6f744d4ad",
+      "headRefOid": "7cd83b2ca3fabe83eaab09e874f2fdff38ff220e",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABKZ_Kww",
+          "commit": {
+            "abbreviatedOid": "5133c71"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-21T12:40:32Z",
+          "updatedAt": "2026-08-21T12:40:32Z",
+          "comments": [
+            {
+              "originalPosition": 13,
+              "body": "This now stands in contrast to what is said in the section above:\n\n> Verification follows {{RFC7515}} and the JWT best practices in {{RFC8725}}.",
+              "createdAt": "2026-08-21T12:40:32Z",
+              "updatedAt": "2026-08-21T12:40:32Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABKcm1Ig",
+          "commit": {
+            "abbreviatedOid": "5133c71"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-21T18:00:54Z",
+          "updatedAt": "2026-08-21T18:00:54Z",
+          "comments": [
+            {
+              "originalPosition": 13,
+              "body": "Agree. Should be fixed now.",
+              "createdAt": "2026-08-21T18:00:54Z",
+              "updatedAt": "2026-08-21T18:00:54Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
