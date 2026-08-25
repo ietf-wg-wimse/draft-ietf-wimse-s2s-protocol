@@ -1843,7 +1843,7 @@ This, however, could result in interoperability issues, which the following rule
               <p id="section-5.1.4-2.6.1">Additional claims that are not understood are ignored, as specified in <a href="#add-claims" class="auto internal xref">Section 5.1.2</a>.<a href="#section-5.1.4-2.6.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
-<p id="section-5.1.4-3">WITs with an expiration time unreasonably far in the future <span class="bcp14">SHOULD</span> be rejected.<a href="#section-5.1.4-3" class="pilcrow">¶</a></p>
+<p id="section-5.1.4-3">See <a href="#wit-lifetime" class="auto internal xref">Section 9.2.1</a> for WIT lifetime considerations.<a href="#section-5.1.4-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2018,7 +2018,7 @@ See <a href="#granular-auth" class="auto internal xref">Section 1.3</a> on addit
 <a href="#section-9.2" class="section-number selfRef">9.2. </a><a href="#name-workload-identity-token-and" class="section-name selfRef">Workload Identity Token and Proof of Possession</a>
         </h3>
 <p id="section-9.2-1">The Workload Identity Token (WIT) is bound to a secret cryptographic key and is always presented with a proof of possession (PoP) as described in <a href="#to-wit" class="auto internal xref">Section 5.1</a>. The WIT is a general purpose token that can be presented in multiple contexts. The WIT and its PoP are used for application-layer authentication; they are not used as the client or server credential for mutual TLS, which uses the Workload Identity Certificate (<a href="#to-wic" class="auto internal xref">Section 6.1</a>). The WIT <span class="bcp14">MUST NOT</span> be used as a bearer token. While this helps reduce the sensitivity of the token it is still possible that a token and its PoP may be captured and replayed within the PoP's lifetime. The following are some mitigations for the capture and reuse of the WIT and its PoP:<a href="#section-9.2-1" class="pilcrow">¶</a></p>
-<div id="limiting-workload-identity-token-lifespan">
+<div id="wit-lifetime">
 <section id="section-9.2.1">
           <h4 id="name-limiting-workload-identity-">
 <a href="#section-9.2.1" class="section-number selfRef">9.2.1. </a><a href="#name-limiting-workload-identity-" class="section-name selfRef">Limiting Workload Identity Token Lifespan</a>

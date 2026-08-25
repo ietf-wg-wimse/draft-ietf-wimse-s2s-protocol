@@ -648,8 +648,7 @@ Table of Contents
    *  Additional claims that are not understood are ignored, as
       specified in Section 5.1.2.
 
-   WITs with an expiration time unreasonably far in the future SHOULD be
-   rejected.
+   See Section 9.2.1 for WIT lifetime considerations.
 
 5.2.  Error Conditions
 
