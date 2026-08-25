@@ -398,7 +398,8 @@ Table of Contents
          none MUST NOT be used.
 
       -  typ: the WIT is explicitly typed, as recommended in
-         Section 3.11 of [RFC8725], using the wit+jwt media type.
+         Section 3.11 of [I-D.ietf-oauth-rfc8725bis], using the wit+jwt
+         media type.
 
    *  in the JWT claims:
 
@@ -625,8 +626,8 @@ Table of Contents
 5.1.4.  Validating the WIT
 
    Verification of a WIT follows [RFC7515] and the JWT best practices in
-   [RFC8725], with the WIMSE-specific requirements below.  To validate a
-   WIT, the recipient MUST ensure the following:
+   [I-D.ietf-oauth-rfc8725bis], with the WIMSE-specific requirements
+   below.  To validate a WIT, the recipient MUST ensure the following:
 
    *  The token is a single well-formed JWT using JWS compact
       serialization ([RFC7515], [RFC7519]).
@@ -1044,6 +1045,13 @@ Table of Contents
 
 12.1.  Normative References
 
+   [I-D.ietf-oauth-rfc8725bis]
+              Sheffer, Y., Hardt, D., and M. B. Jones, "JSON Web Token
+              Best Current Practices", Work in Progress, Internet-Draft,
+              draft-ietf-oauth-rfc8725bis-10, 21 August 2026,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
+              rfc8725bis-10>.
+
    [I-D.ietf-wimse-mutual-tls]
               Salowey, J. A. and Y. Rosomakho, "Workload Authentication
               Using Mutual TLS", Work in Progress, Internet-Draft,
@@ -1095,11 +1103,6 @@ Table of Contents
               Authorization Server Metadata", RFC 8414,
               DOI 10.17487/RFC8414, June 2018,
               <https://www.rfc-editor.org/rfc/rfc8414>.
-
-   [RFC8725]  Sheffer, Y., Hardt, D., and M. Jones, "JSON Web Token Best
-              Current Practices", BCP 225, RFC 8725,
-              DOI 10.17487/RFC8725, February 2020,
-              <https://www.rfc-editor.org/rfc/rfc8725>.
 
    [RFC9110]  Fielding, R., Ed., Nottingham, M., Ed., and J. Reschke,
               Ed., "HTTP Semantics", STD 97, RFC 9110,

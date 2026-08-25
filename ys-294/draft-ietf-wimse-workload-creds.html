@@ -1589,7 +1589,7 @@ It is issued by the Identity Server and binds a public key to the workload ident
    (registered algorithm identifiers are listed in the IANA JOSE Algorithms registry <span>[<a href="#IANA.JOSE.ALGS" class="cite xref">IANA.JOSE.ALGS</a>]</span>). The value <code>none</code> <span class="bcp14">MUST NOT</span> be used.<a href="#section-5.1-3.1.2.1.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-5.1-3.1.2.2">
-                <p id="section-5.1-3.1.2.2.1"><code>typ</code>: the WIT is explicitly typed, as recommended in <span><a href="https://rfc-editor.org/rfc/rfc8725#section-3.11" class="relref">Section 3.11</a> of [<a href="#RFC8725" class="cite xref">RFC8725</a>]</span>, using the <code>wit+jwt</code> media type.<a href="#section-5.1-3.1.2.2.1" class="pilcrow">¶</a></p>
+                <p id="section-5.1-3.1.2.2.1"><code>typ</code>: the WIT is explicitly typed, as recommended in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-rfc8725bis-10#section-3.11" class="relref">Section 3.11</a> of [<a href="#I-D.ietf-oauth-rfc8725bis" class="cite xref">I-D.ietf-oauth-rfc8725bis</a>]</span>, using the <code>wit+jwt</code> media type.<a href="#section-5.1-3.1.2.2.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 </li>
@@ -1822,7 +1822,7 @@ This, however, could result in interoperability issues, which the following rule
           <h4 id="name-validating-the-wit">
 <a href="#section-5.1.4" class="section-number selfRef">5.1.4. </a><a href="#name-validating-the-wit" class="section-name selfRef">Validating the WIT</a>
           </h4>
-<p id="section-5.1.4-1">Verification of a WIT follows <span>[<a href="#RFC7515" class="cite xref">RFC7515</a>]</span> and the JWT best practices in <span>[<a href="#RFC8725" class="cite xref">RFC8725</a>]</span>, with the WIMSE-specific requirements below. To validate a WIT, the recipient <span class="bcp14">MUST</span> ensure the following:<a href="#section-5.1.4-1" class="pilcrow">¶</a></p>
+<p id="section-5.1.4-1">Verification of a WIT follows <span>[<a href="#RFC7515" class="cite xref">RFC7515</a>]</span> and the JWT best practices in <span>[<a href="#I-D.ietf-oauth-rfc8725bis" class="cite xref">I-D.ietf-oauth-rfc8725bis</a>]</span>, with the WIMSE-specific requirements below. To validate a WIT, the recipient <span class="bcp14">MUST</span> ensure the following:<a href="#section-5.1.4-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.1.4-2.1">
               <p id="section-5.1.4-2.1.1">The token is a single well-formed JWT using JWS compact serialization (<span>[<a href="#RFC7515" class="cite xref">RFC7515</a>]</span>, <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>).<a href="#section-5.1.4-2.1.1" class="pilcrow">¶</a></p>
@@ -2216,6 +2216,10 @@ use these tokens to authenticate to each other.<a href="#section-11.1.1-9" class
 <a href="#section-12.1" class="section-number selfRef">12.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
         </h3>
 <dl class="references">
+<dt id="I-D.ietf-oauth-rfc8725bis">[I-D.ietf-oauth-rfc8725bis]</dt>
+        <dd>
+<span class="refAuthor">Sheffer, Y.</span>, <span class="refAuthor">Hardt, D.</span>, and <span class="refAuthor">M. B. Jones</span>, <span class="refTitle">"JSON Web Token Best Current Practices"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-rfc8725bis-10</span>, <time datetime="2026-08-21" class="refDate">21 August 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-rfc8725bis-10">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-rfc8725bis-10</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="I-D.ietf-wimse-mutual-tls">[I-D.ietf-wimse-mutual-tls]</dt>
         <dd>
 <span class="refAuthor">Salowey, J. A.</span> and <span class="refAuthor">Y. Rosomakho</span>, <span class="refTitle">"Workload Authentication Using Mutual TLS"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-mutual-tls-02</span>, <time datetime="2026-07-06" class="refDate">6 July 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-mutual-tls-02">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-mutual-tls-02</a>&gt;</span>. </dd>
@@ -2259,10 +2263,6 @@ use these tokens to authenticate to each other.<a href="#section-11.1.1-9" class
 <dt id="RFC8414">[RFC8414]</dt>
         <dd>
 <span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Sakimura, N.</span>, and <span class="refAuthor">J. Bradley</span>, <span class="refTitle">"OAuth 2.0 Authorization Server Metadata"</span>, <span class="seriesInfo">RFC 8414</span>, <span class="seriesInfo">DOI 10.17487/RFC8414</span>, <time datetime="2018-06" class="refDate">June 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8414">https://www.rfc-editor.org/rfc/rfc8414</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="RFC8725">[RFC8725]</dt>
-        <dd>
-<span class="refAuthor">Sheffer, Y.</span>, <span class="refAuthor">Hardt, D.</span>, and <span class="refAuthor">M. Jones</span>, <span class="refTitle">"JSON Web Token Best Current Practices"</span>, <span class="seriesInfo">BCP 225</span>, <span class="seriesInfo">RFC 8725</span>, <span class="seriesInfo">DOI 10.17487/RFC8725</span>, <time datetime="2020-02" class="refDate">February 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8725">https://www.rfc-editor.org/rfc/rfc8725</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9110">[RFC9110]</dt>
         <dd>
