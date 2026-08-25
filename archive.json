@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-08-23T01:12:43.876530+00:00",
+  "timestamp": "2026-08-25T01:09:20.548120+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -4990,6 +4990,44 @@
       "updatedAt": "2026-08-18T14:43:19Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 292,
+      "id": "I_kwDOLJmm788AAAABN_PJ8g",
+      "title": "Clarify wth calculation",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/292",
+      "state": "OPEN",
+      "author": "sorindumitru",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "The `wth` claim is defined as:\n```\n      -  wth: Hash of the Workload Identity Token, defined in\n         [I-D.ietf-wimse-workload-creds].  The value is the base64url\n         encoding of the SHA-256 hash of the ASCII encoding of the WIT's\n         value.\n```\n\nWhat is the ASCII encoding of the WIT's value?",
+      "createdAt": "2026-08-24T10:27:38Z",
+      "updatedAt": "2026-08-24T13:11:25Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "sorindumitru",
+          "authorAssociation": "NONE",
+          "body": "Maybe this should say JWS compact serialisation?",
+          "createdAt": "2026-08-24T12:33:33Z",
+          "updatedAt": "2026-08-24T12:33:33Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Hi Sorin,\n\nIMHO the current text is fine.\n\n* Yes, a WIT is a JWT which implies that it uses compact serialization - and that's already mentioned.\n* The WIT (as a JWT/JWS) is header.payload.signature, where each part is a base64 string. If you represented it as UTF-16 it would be two bytes per character. So ASCII encoding simply means the normal representation of this string.",
+          "createdAt": "2026-08-24T12:56:12Z",
+          "updatedAt": "2026-08-24T12:56:12Z"
+        },
+        {
+          "author": "sorindumitru",
+          "authorAssociation": "NONE",
+          "body": "I agree most users would arrive at that interpretation, it's the only one that makes sense. I still had to search what the \"ASCII encoding of a JWT's value\" is, so being a bit more specific here wouldn't hurt.\n\nI'm also fine with closing this as not needed.",
+          "createdAt": "2026-08-24T13:11:25Z",
+          "updatedAt": "2026-08-24T13:11:25Z"
+        }
+      ]
     }
   ],
   "pulls": [
