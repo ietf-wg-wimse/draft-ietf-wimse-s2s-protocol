@@ -248,7 +248,7 @@ replay protection would not be effective.
 
 ### Avoid Logging Raw WPT Values
 
-Implementations MUST NOT log raw WPT values by default. Depending on the aggressiveness
+Implementations MUST NOT log raw WPTs by default. Depending on the aggressiveness
 of the replay protection mechinism, a WPT harvested from logs could potentially be replayed
 and accepted as a legitimate proof. Implementations should therefore treat WPT values as
 sensitive and avoid persisting them in logs.
