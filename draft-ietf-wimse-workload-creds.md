@@ -351,7 +351,7 @@ Verification of a WIT follows {{RFC7515}} and the JWT best practices in {{I-D.ie
 * The `cnf` claim is present and contains a `jwk` object with an `alg` member as specified in {{to-wit}}.
 * Additional claims that are not understood are ignored, as specified in {{add-claims}}.
 
-WITs with an expiration time unreasonably far in the future SHOULD be rejected.
+See {{wit-lifetime}} for WIT lifetime considerations.
 
 ## Error Conditions
 
@@ -449,7 +449,7 @@ When a deployment uses the `iss` claim for key distribution as described in {{wi
 
 The Workload Identity Token (WIT) is bound to a secret cryptographic key and is always presented with a proof of possession (PoP) as described in {{to-wit}}. The WIT is a general purpose token that can be presented in multiple contexts. The WIT and its PoP are used for application-layer authentication; they are not used as the client or server credential for mutual TLS, which uses the Workload Identity Certificate ({{to-wic}}). The WIT MUST NOT be used as a bearer token. While this helps reduce the sensitivity of the token it is still possible that a token and its PoP may be captured and replayed within the PoP's lifetime. The following are some mitigations for the capture and reuse of the WIT and its PoP:
 
-### Limiting Workload Identity Token Lifespan
+### Limiting Workload Identity Token Lifespan {#wit-lifetime}
 
 The WIT MUST have a limited lifetime expressed through the `exp` claim. If both a WIT and its corresponding private key are compromised, an attacker can impersonate the workload until the WIT expires. Because JWT-based credentials such as the WIT are not generally revocable on demand, a short expiration is the primary mitigation against continued use of a compromised WIT and key. WITs SHOULD therefore be short-lived, typically on the order of hours, with the chosen lifetime balancing the operational cost of frequent refresh against the window of exposure if a credential is compromised.
 
