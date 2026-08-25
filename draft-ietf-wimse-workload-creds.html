@@ -1589,7 +1589,7 @@ It is issued by the Identity Server and binds a public key to the workload ident
    (registered algorithm identifiers are listed in the IANA JOSE Algorithms registry <span>[<a href="#IANA.JOSE.ALGS" class="cite xref">IANA.JOSE.ALGS</a>]</span>). The value <code>none</code> <span class="bcp14">MUST NOT</span> be used.<a href="#section-5.1-3.1.2.1.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-5.1-3.1.2.2">
-                <p id="section-5.1-3.1.2.2.1"><code>typ</code>: the WIT is explicitly typed, as recommended in <span><a href="https://rfc-editor.org/rfc/rfc8725#section-3.11" class="relref">Section 3.11</a> of [<a href="#RFC8725" class="cite xref">RFC8725</a>]</span>, using the <code>wit+jwt</code> media type.<a href="#section-5.1-3.1.2.2.1" class="pilcrow">¶</a></p>
+                <p id="section-5.1-3.1.2.2.1"><code>typ</code>: the WIT is explicitly typed, as recommended in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-rfc8725bis-10#section-3.11" class="relref">Section 3.11</a> of [<a href="#I-D.ietf-oauth-rfc8725bis" class="cite xref">I-D.ietf-oauth-rfc8725bis</a>]</span>, using the <code>wit+jwt</code> media type.<a href="#section-5.1-3.1.2.2.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 </li>
@@ -1822,33 +1822,28 @@ This, however, could result in interoperability issues, which the following rule
           <h4 id="name-validating-the-wit">
 <a href="#section-5.1.4" class="section-number selfRef">5.1.4. </a><a href="#name-validating-the-wit" class="section-name selfRef">Validating the WIT</a>
           </h4>
-<p id="section-5.1.4-1">Verification of a WIT follows <span>[<a href="#RFC7515" class="cite xref">RFC7515</a>]</span> and the JWT best practices in <span>[<a href="#RFC8725" class="cite xref">RFC8725</a>]</span>, with the WIMSE-specific requirements below. To validate a WIT, the recipient <span class="bcp14">MUST</span> ensure the following:<a href="#section-5.1.4-1" class="pilcrow">¶</a></p>
+<p id="section-5.1.4-1">Verification of a WIT follows <span>[<a href="#RFC7515" class="cite xref">RFC7515</a>]</span> and the JWT best practices in <span>[<a href="#I-D.ietf-oauth-rfc8725bis" class="cite xref">I-D.ietf-oauth-rfc8725bis</a>]</span>, with the WIMSE-specific requirements below. To validate a WIT, the recipient <span class="bcp14">MUST</span> ensure the following:<a href="#section-5.1.4-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.1.4-2.1">
               <p id="section-5.1.4-2.1.1">The token is a single well-formed JWT using JWS compact serialization (<span>[<a href="#RFC7515" class="cite xref">RFC7515</a>]</span>, <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>).<a href="#section-5.1.4-2.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-5.1.4-2.2">
-              <p id="section-5.1.4-2.2.1">The <code>typ</code> JOSE header parameter conveys a media type of <code>wit+jwt</code>.<a href="#section-5.1.4-2.2.1" class="pilcrow">¶</a></p>
+              <p id="section-5.1.4-2.2.1">The <code>sub</code> claim is present and is a single Workload Identifier (<span>[<a href="#WIMSE-ID" class="cite xref">WIMSE-ID</a>]</span>, <a href="#single-workload-identity" class="auto internal xref">Section 4</a>). The recipient uses the trust domain of that identifier to select the configured trust anchors (<a href="#trust-anchors" class="auto internal xref">Section 3</a>).<a href="#section-5.1.4-2.2.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-5.1.4-2.3">
-              <p id="section-5.1.4-2.3.1">The <code>alg</code> JOSE header parameter identifies an asymmetric digital signature algorithm that is acceptable per the trust domain's policy; the value <code>none</code> <span class="bcp14">MUST NOT</span> be accepted. Algorithms used with symmetric keys and encryption algorithms <span class="bcp14">MUST NOT</span> be accepted.<a href="#section-5.1.4-2.3.1" class="pilcrow">¶</a></p>
+              <p id="section-5.1.4-2.3.1">The <code>typ</code> JOSE header parameter conveys a media type of <code>wit+jwt</code>.<a href="#section-5.1.4-2.3.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-5.1.4-2.4">
-              <p id="section-5.1.4-2.4.1">The signature is valid using key material from the trust anchors configured for the trust domain in the <code>sub</code> claim, as described in <a href="#trust-anchors" class="auto internal xref">Section 3</a>. If the JWS header contains a <code>kid</code> parameter, the recipient <span class="bcp14">MUST</span> use the configured key with that <code>kid</code> value. If <code>kid</code> is absent, key selection <span class="bcp14">MUST</span> follow the deployment policy in <a href="#trust-anchors" class="auto internal xref">Section 3</a>.<a href="#section-5.1.4-2.4.1" class="pilcrow">¶</a></p>
+              <p id="section-5.1.4-2.4.1">The JWS signature is valid under those trust anchors, as described in <a href="#trust-anchors" class="auto internal xref">Section 3</a>.<a href="#section-5.1.4-2.4.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-5.1.4-2.5">
-              <p id="section-5.1.4-2.5.1">The <code>sub</code> claim is present and is a single Workload Identifier (<span>[<a href="#WIMSE-ID" class="cite xref">WIMSE-ID</a>]</span>, <a href="#single-workload-identity" class="auto internal xref">Section 4</a>) whose trust domain matches the trust anchors used.<a href="#section-5.1.4-2.5.1" class="pilcrow">¶</a></p>
+              <p id="section-5.1.4-2.5.1">The <code>cnf</code> claim is present and contains a <code>jwk</code> object with an <code>alg</code> member as specified in <a href="#to-wit" class="auto internal xref">Section 5.1</a>.<a href="#section-5.1.4-2.5.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-5.1.4-2.6">
-              <p id="section-5.1.4-2.6.1">The <code>exp</code> claim is present and conveys a time that has not passed. WITs with an expiration time unreasonably far in the future <span class="bcp14">SHOULD</span> be rejected.<a href="#section-5.1.4-2.6.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-5.1.4-2.7">
-              <p id="section-5.1.4-2.7.1">The <code>cnf</code> claim is present and contains a <code>jwk</code> object with an <code>alg</code> member as specified in <a href="#to-wit" class="auto internal xref">Section 5.1</a>.<a href="#section-5.1.4-2.7.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-5.1.4-2.8">
-              <p id="section-5.1.4-2.8.1">Additional claims that are not understood are ignored, as specified in <a href="#add-claims" class="auto internal xref">Section 5.1.2</a>.<a href="#section-5.1.4-2.8.1" class="pilcrow">¶</a></p>
+              <p id="section-5.1.4-2.6.1">Additional claims that are not understood are ignored, as specified in <a href="#add-claims" class="auto internal xref">Section 5.1.2</a>.<a href="#section-5.1.4-2.6.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
+<p id="section-5.1.4-3">See <a href="#wit-lifetime" class="auto internal xref">Section 9.2.1</a> for WIT lifetime considerations.<a href="#section-5.1.4-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2023,7 +2018,7 @@ See <a href="#granular-auth" class="auto internal xref">Section 1.3</a> on addit
 <a href="#section-9.2" class="section-number selfRef">9.2. </a><a href="#name-workload-identity-token-and" class="section-name selfRef">Workload Identity Token and Proof of Possession</a>
         </h3>
 <p id="section-9.2-1">The Workload Identity Token (WIT) is bound to a secret cryptographic key and is always presented with a proof of possession (PoP) as described in <a href="#to-wit" class="auto internal xref">Section 5.1</a>. The WIT is a general purpose token that can be presented in multiple contexts. The WIT and its PoP are used for application-layer authentication; they are not used as the client or server credential for mutual TLS, which uses the Workload Identity Certificate (<a href="#to-wic" class="auto internal xref">Section 6.1</a>). The WIT <span class="bcp14">MUST NOT</span> be used as a bearer token. While this helps reduce the sensitivity of the token it is still possible that a token and its PoP may be captured and replayed within the PoP's lifetime. The following are some mitigations for the capture and reuse of the WIT and its PoP:<a href="#section-9.2-1" class="pilcrow">¶</a></p>
-<div id="limiting-workload-identity-token-lifespan">
+<div id="wit-lifetime">
 <section id="section-9.2.1">
           <h4 id="name-limiting-workload-identity-">
 <a href="#section-9.2.1" class="section-number selfRef">9.2.1. </a><a href="#name-limiting-workload-identity-" class="section-name selfRef">Limiting Workload Identity Token Lifespan</a>
@@ -2221,6 +2216,10 @@ use these tokens to authenticate to each other.<a href="#section-11.1.1-9" class
 <a href="#section-12.1" class="section-number selfRef">12.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
         </h3>
 <dl class="references">
+<dt id="I-D.ietf-oauth-rfc8725bis">[I-D.ietf-oauth-rfc8725bis]</dt>
+        <dd>
+<span class="refAuthor">Sheffer, Y.</span>, <span class="refAuthor">Hardt, D.</span>, and <span class="refAuthor">M. B. Jones</span>, <span class="refTitle">"JSON Web Token Best Current Practices"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-rfc8725bis-10</span>, <time datetime="2026-08-21" class="refDate">21 August 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-rfc8725bis-10">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-rfc8725bis-10</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="I-D.ietf-wimse-mutual-tls">[I-D.ietf-wimse-mutual-tls]</dt>
         <dd>
 <span class="refAuthor">Salowey, J. A.</span> and <span class="refAuthor">Y. Rosomakho</span>, <span class="refTitle">"Workload Authentication Using Mutual TLS"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-mutual-tls-02</span>, <time datetime="2026-07-06" class="refDate">6 July 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-mutual-tls-02">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-mutual-tls-02</a>&gt;</span>. </dd>
@@ -2264,10 +2263,6 @@ use these tokens to authenticate to each other.<a href="#section-11.1.1-9" class
 <dt id="RFC8414">[RFC8414]</dt>
         <dd>
 <span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Sakimura, N.</span>, and <span class="refAuthor">J. Bradley</span>, <span class="refTitle">"OAuth 2.0 Authorization Server Metadata"</span>, <span class="seriesInfo">RFC 8414</span>, <span class="seriesInfo">DOI 10.17487/RFC8414</span>, <time datetime="2018-06" class="refDate">June 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8414">https://www.rfc-editor.org/rfc/rfc8414</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="RFC8725">[RFC8725]</dt>
-        <dd>
-<span class="refAuthor">Sheffer, Y.</span>, <span class="refAuthor">Hardt, D.</span>, and <span class="refAuthor">M. Jones</span>, <span class="refTitle">"JSON Web Token Best Current Practices"</span>, <span class="seriesInfo">BCP 225</span>, <span class="seriesInfo">RFC 8725</span>, <span class="seriesInfo">DOI 10.17487/RFC8725</span>, <time datetime="2020-02" class="refDate">February 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8725">https://www.rfc-editor.org/rfc/rfc8725</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9110">[RFC9110]</dt>
         <dd>
@@ -2344,7 +2339,7 @@ use these tokens to authenticate to each other.<a href="#section-11.1.1-9" class
         </h3>
 <ul class="normal">
 <li class="normal" id="appendix-A.1-1.1">
-            <p id="appendix-A.1-1.1.1">Add a WIT validation procedure for recipients (#290).<a href="#appendix-A.1-1.1.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.1.1">Add a WIT validation procedure for recipients (#290, #294).<a href="#appendix-A.1-1.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.2">
             <p id="appendix-A.1-1.2.1">Clarify that WIT/PoP are application-layer credentials and are not used for mutual TLS; TLS binding does not change that (#256).<a href="#appendix-A.1-1.2.1" class="pilcrow">¶</a></p>
