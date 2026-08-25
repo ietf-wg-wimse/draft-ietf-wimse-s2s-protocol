@@ -51,7 +51,7 @@ normative:
   RFC7518:
   RFC7519:
   RFC7800:
-  RFC8725:
+  I-D.ietf-oauth-rfc8725bis:
   RFC9110:
 
 informative:
@@ -207,7 +207,7 @@ A WIT MUST contain the following content, except where noted:
 * in the JOSE header:
     * `alg`: An identifier for a JWS asymmetric digital signature algorithm
      (registered algorithm identifiers are listed in the IANA JOSE Algorithms registry {{IANA.JOSE.ALGS}}). The value `none` MUST NOT be used.
-    * `typ`: the WIT is explicitly typed, as recommended in {{Section 3.11 of RFC8725}}, using the `wit+jwt` media type.
+    * `typ`: the WIT is explicitly typed, as recommended in {{Section 3.11 of I-D.ietf-oauth-rfc8725bis}}, using the `wit+jwt` media type.
 * in the JWT claims:
     * `iss`: The issuer of the token, which is the Identity Server, represented by a URI. The `iss` claim is RECOMMENDED but optional; when present, it is particularly useful for auditing and operations (for example, identifying which Identity Server issued the WIT in logs or compliance records). See {{wit-iss-note}} for key distribution and validation context.
     * `sub`: The subject of the token, which is the single Workload Identifier for the workload used for authentication and authorization, as defined in {{WIMSE-ID}} and {{single-workload-identity}}. {{granular-auth}} provides additional requirements associated with these identifiers, so they can be used to secure workload-to-workload communication.
@@ -342,7 +342,7 @@ Implementations MAY include the `iss` claim in the form of a `https` URL to faci
 
 ### Validating the WIT {#wit-validation}
 
-Verification of a WIT follows {{RFC7515}} and the JWT best practices in {{RFC8725}}, with the WIMSE-specific requirements below. To validate a WIT, the recipient MUST ensure the following:
+Verification of a WIT follows {{RFC7515}} and the JWT best practices in {{I-D.ietf-oauth-rfc8725bis}}, with the WIMSE-specific requirements below. To validate a WIT, the recipient MUST ensure the following:
 
 * The token is a single well-formed JWT using JWS compact serialization ({{RFC7515}}, {{RFC7519}}).
 * The `sub` claim is present and is a single Workload Identifier ({{WIMSE-ID}}, {{single-workload-identity}}). The recipient uses the trust domain of that identifier to select the configured trust anchors ({{trust-anchors}}).
