@@ -148,7 +148,7 @@ a recipient SHOULD reject a message (request or response) if a nonce generated b
 
 For clarity: the signature's lifetime (the `expires` signature parameter) is different and typically much shorter than the WIT's lifetime, denoted by its `exp` claim.
 
-Implementors need to be aware that the WIT is extracted from the message before the message signature is validated. Recipients of signed HTTP messages MUST validate the signature and content of the WIT before validating the HTTP message signature. They MUST ensure that the message is not processed further before it has been fully validated.
+Implementors need to be aware that the WIT is extracted from the message before the message signature is validated. Recipients of signed HTTP messages MUST validate the WIT as specified in {{Section 5.1.4 of I-D.ietf-wimse-workload-creds}} before validating the HTTP message signature. They MUST ensure that the message is not processed further before it has been fully validated.
 
 ## The `wimse-aud` Signature Parameter {#wimse-aud-param}
 
@@ -430,6 +430,7 @@ IANA is requested to register the following entries in the "HTTP Signature Metad
 ## draft-ietf-wimse-http-signature-07
 
 * Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use.
+* Reference the WIT validation procedure in {{I-D.ietf-wimse-workload-creds}} (#290).
 
 ## draft-ietf-wimse-http-signature-06
 
