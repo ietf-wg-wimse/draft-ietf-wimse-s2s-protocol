@@ -345,13 +345,13 @@ Implementations MAY include the `iss` claim in the form of a `https` URL to faci
 Verification of a WIT follows {{RFC7515}} and the JWT best practices in {{RFC8725}}, with the WIMSE-specific requirements below. To validate a WIT, the recipient MUST ensure the following:
 
 * The token is a single well-formed JWT using JWS compact serialization ({{RFC7515}}, {{RFC7519}}).
+* The `sub` claim is present and is a single Workload Identifier ({{WIMSE-ID}}, {{single-workload-identity}}). The recipient uses the trust domain of that identifier to select the configured trust anchors ({{trust-anchors}}).
 * The `typ` JOSE header parameter conveys a media type of `wit+jwt`.
-* The `alg` JOSE header parameter identifies an asymmetric digital signature algorithm that is acceptable per the trust domain's policy; the value `none` MUST NOT be accepted. Algorithms used with symmetric keys and encryption algorithms MUST NOT be accepted.
-* The signature is valid using key material from the trust anchors configured for the trust domain in the `sub` claim, as described in {{trust-anchors}}. If the JWS header contains a `kid` parameter, the recipient MUST use the configured key with that `kid` value. If `kid` is absent, key selection MUST follow the deployment policy in {{trust-anchors}}.
-* The `sub` claim is present and is a single Workload Identifier ({{WIMSE-ID}}, {{single-workload-identity}}) whose trust domain matches the trust anchors used.
-* The `exp` claim is present and conveys a time that has not passed. WITs with an expiration time unreasonably far in the future SHOULD be rejected.
+* The JWS signature is valid under those trust anchors, as described in {{trust-anchors}}.
 * The `cnf` claim is present and contains a `jwk` object with an `alg` member as specified in {{to-wit}}.
 * Additional claims that are not understood are ignored, as specified in {{add-claims}}.
+
+WITs with an expiration time unreasonably far in the future SHOULD be rejected.
 
 ## Error Conditions
 
@@ -575,7 +575,7 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 
 ## draft-ietf-wimse-workload-creds-03
 
-* Add a WIT validation procedure for recipients (#290).
+* Add a WIT validation procedure for recipients (#290, #294).
 * Clarify that WIT/PoP are application-layer credentials and are not used for mutual TLS; TLS binding does not change that (#256).
 * Clarify that the one-Workload-Identifier-per-credential rule restricts only Workload Identifiers, not other identifiers in the credential.
 * State the WIC revocation stance: short lifetimes like WITs; no CRL reliance (#270).
