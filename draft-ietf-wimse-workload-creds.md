@@ -465,13 +465,6 @@ In order to reduce the risk of theft and replay the PoP should have a limited sc
 
 PoP mechanisms should include replay protection to prevent reuse of a captured PoP. Without it an attacker can replay a captured PoP within its validity period.
 
-### Avoid Logging Raw PoP Values
-
-Implementations MUST NOT log a raw PoP by default. Depending on the nature and
-validation of the PoP, a value harvested from logs could potentially be replayed
-and accepted as a legitimate proof. Implementations should therefore treat PoP values
-as sensitive and avoid persisting them in logs.
-
 ### Binding to TLS Endpoint
 
 The PoP MAY be bound to a transport layer sender such as the client identity of a TLS session or TLS channel binding parameters. The mechanisms for binding are outside the scope of this document.
@@ -587,7 +580,6 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 * Clarify that the one-Workload-Identifier-per-credential rule restricts only Workload Identifiers, not other identifiers in the credential.
 * State the WIC revocation stance: short lifetimes like WITs; no CRL reliance (#270).
 * Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use, and consistent capitalization of the defined term "Workload Identifier".
-* Advise against logging proof-of-possession tokens (#271).
 
 ## draft-ietf-wimse-workload-creds-02
 
