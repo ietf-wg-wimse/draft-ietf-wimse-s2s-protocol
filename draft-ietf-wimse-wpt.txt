@@ -85,6 +85,13 @@ Table of Contents
      2.3.  Including Additional Claims
    3.  Security Considerations
      3.1.  Workload Identity Token and Proof of Possession
+       3.1.1.  Preventing Eavesdropping and Interception with TLS
+       3.1.2.  Limiting Proof of Possession Lifespan
+       3.1.3.  Limiting Proof of Possession Scope
+       3.1.4.  Replay Protection
+       3.1.5.  Avoid Logging Raw WPT Values
+       3.1.6.  Binding to TLS Endpoint
+       3.1.7.  Audience validation
      3.2.  Workload Identity Key Management
      3.3.  Middle Boxes
      3.4.  Privacy Considerations
@@ -445,7 +452,7 @@ Table of Contents
    PoP's lifetime.  The following are some mitigations for the capture
    and reuse of the PoP:
 
-   *  Preventing Eavesdropping and Interception with TLS
+3.1.1.  Preventing Eavesdropping and Interception with TLS
 
    An attacker observing or intercepting the communication channel can
    view the token and its PoP and attempt to replay it to gain an
@@ -454,14 +461,14 @@ Table of Contents
    channel is provided by some other mechanisms.  Host name validation
    MUST be performed by the client.
 
-   *  Limiting Proof of Possession Lifespan
+3.1.2.  Limiting Proof of Possession Lifespan
 
    The PoP MUST be time limited.  A PoP should only be valid over the
    time necessary for it to be successfully used for the purpose it is
    needed.  This will typically be on the order of minutes.  PoPs
    received outside their validity time MUST be rejected.
 
-   *  Limiting Proof of Possession Scope
+3.1.3.  Limiting Proof of Possession Scope
 
    In order to reduce the risk of theft and replay the PoP should have a
    limited scope.  For example, a PoP may be targeted for use with a
@@ -472,7 +479,7 @@ Table of Contents
    to the system if a PoP is disclosed allowing it to be presented by an
    attacker along with a captured WIT.
 
-   *  Replay Protection
+3.1.4.  Replay Protection
 
    A PoP includes the jti claim that uniquely identifies it.  This claim
    SHOULD be used by the receiver to perform basic replay protection,
@@ -483,13 +490,21 @@ Table of Contents
    validator (e.g. which cluster member receives the message) then
    replay protection would not be effective.
 
-   *  Binding to TLS Endpoint
+3.1.5.  Avoid Logging Raw WPT Values
+
+   Implementations MUST NOT log raw WPTs by default.  Depending on the
+   aggressiveness of the replay protection mechinism, a WPT harvested
+   from logs could potentially be replayed and accepted as a legitimate
+   proof.  Implementations should therefore treat WPT values as
+   sensitive and avoid persisting them in logs.
+
+3.1.6.  Binding to TLS Endpoint
 
    The PoP MAY be bound to a transport layer sender such as the client
    identity of a TLS session or TLS channel binding parameters.  The
    mechanisms for binding are outside the scope of this specification.
 
-   *  Audience validation
+3.1.7.  Audience validation
 
    Validators MUST check that the audience field of the WPT is a URI or
    other value that is for their consumption.  In some cases when a URI
@@ -750,6 +765,10 @@ A.1.  draft-ietf-wimse-wpt-02
    *  Editorial: consistent use of "proof of possession"/"PoP", with the
       abbreviation expanded on first use, and consistent capitalization
       of the defined term "Workload Identifier".
+
+   *  Advise against logging proof-of-possession values (#271).
+
+   *  Security Considerations formatting fixup (#217).
 
    *  Try to be more clear on how the various token hash claims are done
 
