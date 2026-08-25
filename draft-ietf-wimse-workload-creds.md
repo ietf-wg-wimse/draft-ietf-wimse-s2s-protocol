@@ -587,7 +587,7 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 * Clarify that the one-Workload-Identifier-per-credential rule restricts only Workload Identifiers, not other identifiers in the credential.
 * State the WIC revocation stance: short lifetimes like WITs; no CRL reliance (#270).
 * Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use, and consistent capitalization of the defined term "Workload Identifier".
-* Advise against logging proof-of-possession values (#271).
+* Advise against logging proof-of-possession tokens (#271).
 
 ## draft-ietf-wimse-workload-creds-02
 
