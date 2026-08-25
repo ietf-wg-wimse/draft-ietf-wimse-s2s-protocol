@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                      A. Schwenkschuster
-Expires: 18 February 2027                               Defakto Security
-                                                          17 August 2026
+Expires: 26 February 2027                               Defakto Security
+                                                          25 August 2026
 
 
                        WIMSE Workload Proof Token
@@ -60,7 +60,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 18 February 2027.
+   This Internet-Draft will expire on 26 February 2027.
 
 Copyright Notice
 
@@ -322,8 +322,9 @@ Table of Contents
 
               Figure 5: Example HTTP Request with WIT and WPT
 
-   To validate the WPT in the request, the recipient MUST ensure the
-   following:
+   To validate the WPT in the request, the recipient MUST first validate
+   the WIT as specified in Section 5.1.4 of
+   [I-D.ietf-wimse-workload-creds], then ensure the following:
 
    *  There is exactly one Workload-Proof-Token header field in the
       request.
@@ -765,6 +766,9 @@ A.1.  draft-ietf-wimse-wpt-02
    *  Advise against logging proof-of-possession values (#271).
 
    *  Security Considerations formatting fixup (#217).
+
+   *  Reference the WIT validation procedure in
+      [I-D.ietf-wimse-workload-creds] (#290).
 
 A.2.  draft-ietf-wimse-wpt-01
 

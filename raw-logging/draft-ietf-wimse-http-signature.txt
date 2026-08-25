@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments                J. Salowey
 Internet-Draft                                        Palo Alto Networks
 Intended status: Standards Track                              Y. Sheffer
-Expires: 18 February 2027                                         Intuit
-                                                          17 August 2026
+Expires: 26 February 2027                                         Intuit
+                                                          25 August 2026
 
 
      WIMSE Workload-to-Workload Authentication with HTTP Signatures
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 18 February 2027.
+   This Internet-Draft will expire on 26 February 2027.
 
 Copyright Notice
 
@@ -273,10 +273,10 @@ Table of Contents
 
    Implementors need to be aware that the WIT is extracted from the
    message before the message signature is validated.  Recipients of
-   signed HTTP messages MUST validate the signature and content of the
-   WIT before validating the HTTP message signature.  They MUST ensure
-   that the message is not processed further before it has been fully
-   validated.
+   signed HTTP messages MUST validate the WIT as specified in
+   Section 5.1.4 of [I-D.ietf-wimse-workload-creds] before validating
+   the HTTP message signature.  They MUST ensure that the message is not
+   processed further before it has been fully validated.
 
 3.1.  The wimse-aud Signature Parameter
 
@@ -818,6 +818,9 @@ A.1.  draft-ietf-wimse-http-signature-07
 
    *  Editorial: consistent use of "proof of possession"/"PoP", with the
       abbreviation expanded on first use.
+
+   *  Reference the WIT validation procedure in
+      [I-D.ietf-wimse-workload-creds] (#290).
 
 A.2.  draft-ietf-wimse-http-signature-06
 
