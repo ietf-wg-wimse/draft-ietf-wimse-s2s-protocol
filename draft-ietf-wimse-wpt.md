@@ -162,7 +162,7 @@ An example of an HTTP request with both the WIT and WPT from prior examples is s
 ~~~
 {: title="Example HTTP Request with WIT and WPT"}
 
-To validate the WPT in the request, the recipient MUST ensure the following:
+To validate the WPT in the request, the recipient MUST first validate the WIT as specified in {{Section 5.1.4 of I-D.ietf-wimse-workload-creds}}, then ensure the following:
 
 * There is exactly one `Workload-Proof-Token` header field in the request.
 * The `Workload-Proof-Token` header field value is a single and well-formed JWT.
@@ -362,6 +362,7 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 
 * Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use, and consistent capitalization of the defined term "Workload Identifier".
 * Try to be more clear on how the various token hash claims are done
+* Reference the WIT validation procedure in {{I-D.ietf-wimse-workload-creds}} (#290).
 
 ## draft-ietf-wimse-wpt-01
 
