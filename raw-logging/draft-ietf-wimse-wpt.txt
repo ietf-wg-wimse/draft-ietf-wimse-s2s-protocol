@@ -489,11 +489,11 @@ Table of Contents
 
 3.1.5.  Avoid Logging Raw WPT Values
 
-   Implementations MUST NOT log raw WPT values by default.  Depending on
-   the aggressiveness of the replay protection mechinism, a WPT
-   harvested from logs could potentially be replayed and accepted as a
-   legitimate proof.  Implementations should therefore treat WPT values
-   as sensitive and avoid persisting them in logs.
+   Implementations MUST NOT log raw WPTs by default.  Depending on the
+   aggressiveness of the replay protection mechinism, a WPT harvested
+   from logs could potentially be replayed and accepted as a legitimate
+   proof.  Implementations should therefore treat WPT values as
+   sensitive and avoid persisting them in logs.
 
 3.1.6.  Binding to TLS Endpoint
 
