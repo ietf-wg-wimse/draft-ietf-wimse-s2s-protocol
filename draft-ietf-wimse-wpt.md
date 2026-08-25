@@ -102,19 +102,19 @@ A WPT MUST contain the following:
     * `exp`: The expiration time of the WPT (as defined in {{Section 4.1.4 of RFC7519}}). WPT lifetimes MUST be short,
      e.g., on the order of minutes or seconds.
     * `jti`: A unique identifier for the WPT. The value MUST be assigned such that there is a negligible probability that the same value will be assigned to any other WPT. Such uniqueness can be accomplished by encoding (base64url or any other suitable encoding) 128 bits of pseudorandom data.
-    * `wth`: Hash of the Workload Identity Token, defined in {{!I-D.ietf-wimse-workload-creds}}. The value is the base64url encoding of the
-     SHA-256 hash of the ASCII encoding of the WIT's value.
+    * `wth`: Hash of the Workload Identity Token, defined in {{!I-D.ietf-wimse-workload-creds}}. The value is the base64url encoding (as defined in {{Section 2 of RFC7515}}) of the
+     SHA-256 hash of the bytes of the ASCII representation of the WIT's value.
     * `ath`: Hash of the OAuth access token, if present in the request, which might convey end-user identity and/or
      authorization context of the request. The value, as per {{Section 4.1 of RFC9449}},
-     is the base64url encoding of the SHA-256 hash of the ASCII encoding of the access token's value.
+     is the base64url encoding (as defined in {{Section 2 of RFC7515}}) of the SHA-256 hash of the bytes of the ASCII representation of the access token's value.
     * `tth`: Hash of the Txn-Token {{?I-D.ietf-oauth-transaction-tokens}}, if present in the request,
      which might convey end-user identity and/or authorization context of the request. The value MUST be the result of
-     a base64url encoding (as defined in {{Section 2 of RFC7515}}) of the SHA-256 hash of
-     the ASCII encoding of the associated token's value.
+     base64url encoding (as defined in {{Section 2 of RFC7515}}) the SHA-256 hash of
+     the bytes of the ASCII representation of the associated token's value.
     * `oth`: Hash(es) of other token(s) in the request that convey end-user identity and/or authorization context of the
      request. The value is a JSON object with a key-value pair for each such token. For each, in the absence of an
      application profile specifying details, the key corresponds to the header field name containing the token,
-     and the value is the base64url encoding of the SHA-256 hash of the ASCII bytes of the header field value with any
+     and the value is the base64url encoding (as defined in {{Section 2 of RFC7515}}) of the SHA-256 hash of the bytes of the ASCII representation of the header field value with any
      leading or trailing spaces removed. The header field name MUST be normalized by converting
      it to all lower case.
      Header fields occurring multiple times in the request are not supported by default.
@@ -361,6 +361,7 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 ## draft-ietf-wimse-wpt-02
 
 * Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use, and consistent capitalization of the defined term "Workload Identifier".
+* Try to be more clear on how the various token hash claims are done
 
 ## draft-ietf-wimse-wpt-01
 
