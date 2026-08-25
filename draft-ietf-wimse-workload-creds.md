@@ -467,7 +467,7 @@ PoP mechanisms should include replay protection to prevent reuse of a captured P
 
 ### Avoid Logging Raw PoP Values
 
-Implementations MUST NOT log raw PoP values by default. Depending on the nature and
+Implementations MUST NOT log a raw PoP by default. Depending on the nature and
 validation of the PoP, a value harvested from logs could potentially be replayed
 and accepted as a legitimate proof. Implementations should therefore treat PoP values
 as sensitive and avoid persisting them in logs.
