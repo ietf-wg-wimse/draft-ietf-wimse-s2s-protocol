@@ -111,8 +111,7 @@ Table of Contents
        9.2.2.  Limiting Proof of Possession Lifespan
        9.2.3.  Limiting Proof of Possession Scope
        9.2.4.  Replay Protection
-       9.2.5.  Avoid Logging Raw PoP Values
-       9.2.6.  Binding to TLS Endpoint
+       9.2.5.  Binding to TLS Endpoint
      9.3.  Workload Identity Certificate
        9.3.1.  Limiting Workload Identity Certificate Lifespan
      9.4.  Workload Identity Key Management
@@ -886,15 +885,7 @@ Table of Contents
    captured PoP.  Without it an attacker can replay a captured PoP
    within its validity period.
 
-9.2.5.  Avoid Logging Raw PoP Values
-
-   Implementations MUST NOT log a raw PoP by default.  Depending on the
-   nature and validation of the PoP, a value harvested from logs could
-   potentially be replayed and accepted as a legitimate proof.
-   Implementations should therefore treat PoP values as sensitive and
-   avoid persisting them in logs.
-
-9.2.6.  Binding to TLS Endpoint
+9.2.5.  Binding to TLS Endpoint
 
    The PoP MAY be bound to a transport layer sender such as the client
    identity of a TLS session or TLS channel binding parameters.  The
@@ -1209,8 +1200,6 @@ A.1.  draft-ietf-wimse-workload-creds-03
    *  Editorial: consistent use of "proof of possession"/"PoP", with the
       abbreviation expanded on first use, and consistent capitalization
       of the defined term "Workload Identifier".
-
-   *  Advise against logging proof-of-possession tokens (#271).
 
 A.2.  draft-ietf-wimse-workload-creds-02
 

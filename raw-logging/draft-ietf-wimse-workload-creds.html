@@ -1256,10 +1256,7 @@ multi-service, multi-cloud, multi-tenant deployments.<a href="#section-abstract-
                     <p id="section-toc.1-1.9.2.2.2.4.1"><a href="#section-9.2.4" class="auto internal xref">9.2.4</a>.  <a href="#name-replay-protection" class="internal xref">Replay Protection</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.2.2.5">
-                    <p id="section-toc.1-1.9.2.2.2.5.1"><a href="#section-9.2.5" class="auto internal xref">9.2.5</a>.  <a href="#name-avoid-logging-raw-pop-value" class="internal xref">Avoid Logging Raw PoP Values</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.2.2.6">
-                    <p id="section-toc.1-1.9.2.2.2.6.1"><a href="#section-9.2.6" class="auto internal xref">9.2.6</a>.  <a href="#name-binding-to-tls-endpoint" class="internal xref">Binding to TLS Endpoint</a></p>
+                    <p id="section-toc.1-1.9.2.2.2.5.1"><a href="#section-9.2.5" class="auto internal xref">9.2.5</a>.  <a href="#name-binding-to-tls-endpoint" class="internal xref">Binding to TLS Endpoint</a></p>
 </li>
                 </ul>
 </li>
@@ -2058,23 +2055,12 @@ See <a href="#granular-auth" class="auto internal xref">Section 1.3</a> on addit
 <p id="section-9.2.4-1">PoP mechanisms should include replay protection to prevent reuse of a captured PoP. Without it an attacker can replay a captured PoP within its validity period.<a href="#section-9.2.4-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="avoid-logging-raw-pop-values">
-<section id="section-9.2.5">
-          <h4 id="name-avoid-logging-raw-pop-value">
-<a href="#section-9.2.5" class="section-number selfRef">9.2.5. </a><a href="#name-avoid-logging-raw-pop-value" class="section-name selfRef">Avoid Logging Raw PoP Values</a>
-          </h4>
-<p id="section-9.2.5-1">Implementations <span class="bcp14">MUST NOT</span> log a raw PoP by default. Depending on the nature and
-validation of the PoP, a value harvested from logs could potentially be replayed
-and accepted as a legitimate proof. Implementations should therefore treat PoP values
-as sensitive and avoid persisting them in logs.<a href="#section-9.2.5-1" class="pilcrow">¶</a></p>
-</section>
-</div>
 <div id="binding-to-tls-endpoint">
-<section id="section-9.2.6">
+<section id="section-9.2.5">
           <h4 id="name-binding-to-tls-endpoint">
-<a href="#section-9.2.6" class="section-number selfRef">9.2.6. </a><a href="#name-binding-to-tls-endpoint" class="section-name selfRef">Binding to TLS Endpoint</a>
+<a href="#section-9.2.5" class="section-number selfRef">9.2.5. </a><a href="#name-binding-to-tls-endpoint" class="section-name selfRef">Binding to TLS Endpoint</a>
           </h4>
-<p id="section-9.2.6-1">The PoP <span class="bcp14">MAY</span> be bound to a transport layer sender such as the client identity of a TLS session or TLS channel binding parameters. The mechanisms for binding are outside the scope of this document.<a href="#section-9.2.6-1" class="pilcrow">¶</a></p>
+<p id="section-9.2.5-1">The PoP <span class="bcp14">MAY</span> be bound to a transport layer sender such as the client identity of a TLS session or TLS channel binding parameters. The mechanisms for binding are outside the scope of this document.<a href="#section-9.2.5-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2371,9 +2357,6 @@ use these tokens to authenticate to each other.<a href="#section-11.1.1-9" class
 </li>
           <li class="normal" id="appendix-A.1-1.5">
             <p id="appendix-A.1-1.5.1">Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use, and consistent capitalization of the defined term "Workload Identifier".<a href="#appendix-A.1-1.5.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="appendix-A.1-1.6">
-            <p id="appendix-A.1-1.6.1">Advise against logging proof-of-possession tokens (#271).<a href="#appendix-A.1-1.6.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
