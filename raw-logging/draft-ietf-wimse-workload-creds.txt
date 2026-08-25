@@ -1210,7 +1210,7 @@ A.1.  draft-ietf-wimse-workload-creds-03
       abbreviation expanded on first use, and consistent capitalization
       of the defined term "Workload Identifier".
 
-   *  Advise against logging proof-of-possession values (#271).
+   *  Advise against logging proof-of-possession tokens (#271).
 
 A.2.  draft-ietf-wimse-workload-creds-02
 
