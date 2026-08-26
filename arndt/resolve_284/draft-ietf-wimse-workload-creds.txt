@@ -97,6 +97,7 @@ Table of Contents
        5.1.1.  The WIT HTTP Header
        5.1.2.  Including Additional Claims
        5.1.3.  A note on iss claim and key distribution
+       5.1.4.  Validating the WIT
      5.2.  Error Conditions
      5.3.  Coexistence with JWT Bearer Tokens
    6.  Transport-Layer Workload-to-Workload Authentication
@@ -161,9 +162,14 @@ Table of Contents
 
    The Workload Identity Token is targeted for application-layer
    protocols.  The Workload Identity Certificate is targeted for
-   transport-layer protocols.  This does not preclude the use of the WIT
-   in transport-layer protocols or the WIC in application-layer
-   protocols, but these are the primary intended uses.
+   transport-layer protocols, primarily mutual TLS.  Presenting a WIT
+   over a TLS-protected channel, or binding an application-layer proof
+   of possession to TLS session properties (see Section 9.2), does not
+   make the WIT a transport-layer credential: mutual TLS authentication
+   uses the Workload Identity Certificate, not the WIT.  This does not
+   preclude the use of the WIC in application-layer protocols or the WIT
+   in transport-layer protocols, but these are the primary intended
+   uses.
 
    The various protocol bindings that use these credentials to
    authenticate workloads to each other are specified in separate
@@ -330,15 +336,15 @@ Table of Contents
    using key material from the trust anchors configured for the trust
    domain in the sub claim.  Trust anchor material for WIT validation
    MAY include more than one public key so that operators can rotate
-   signing keys.  Verification follows [RFC7515] and the JWT best
-   practices in [RFC8725].  In practice, the alg header parameter would
-   identify an algorithm that the validator accepts for that trust
-   domain, and the signature would be checked under a key drawn from the
-   configured trust anchors.  If the JWS header contains a kid
-   parameter, the validator would use the key in the trust anchor
-   material with the same kid value.  If kid is absent, deployment
-   policy would need to provide unambiguous key selection (for example,
-   when only a single key is configured for that trust domain).
+   signing keys.  In practice, the alg header parameter would identify
+   an algorithm that the validator accepts for that trust domain, and
+   the signature would be checked under a key drawn from the configured
+   trust anchors.  If the JWS header contains a kid parameter, the
+   validator would use the key in the trust anchor material with the
+   same kid value.  If kid is absent, deployment policy would need to
+   provide unambiguous key selection (for example, when only a single
+   key is configured for that trust domain).  Recipient processing of a
+   presented WIT is specified in Section 5.1.4.
 
    For Workload Identity Certificates, validators use the trust anchors
    for the peer's trust domain to validate the X.509 chain and the
@@ -356,14 +362,17 @@ Table of Contents
    For a Workload Identity Token, that identifier is the value of the
    sub claim.  For a Workload Identity Certificate, that identifier is
    carried in the single URI SubjectAltName described in Section 6.1.
-
    Deployments that distinguish several labels for the same runtime (for
    example a stable service identity and a specific instance) MUST place
-   the identity required for the access decision in that one credential.
+   only one identifier into it.
+
    Additional correlation for logging or operations MUST NOT be encoded
-   as a second Workload Identifier in the same WIT or WIC.  Deployments
-   MAY use other mechanisms, such as the optional jti claim, separate
-   credentials, or additional claims as described in Section 5.1.2.
+   as a second Workload Identifier in the same WIT or WIC.  This
+   restriction applies only to Workload Identifiers; deployments MAY use
+   other mechanisms for correlation, interoperability, or integration
+   purposes, such as the optional jti claim, a DNSName SubjectAltName,
+   separate credentials, or additional claims as described in
+   Section 5.1.2.
 
 5.  Application-Layer Workload-to-Workload Authentication
 
@@ -389,7 +398,8 @@ Table of Contents
          none MUST NOT be used.
 
       -  typ: the WIT is explicitly typed, as recommended in
-         Section 3.11 of [RFC8725], using the wit+jwt media type.
+         Section 3.11 of [I-D.ietf-oauth-rfc8725bis], using the wit+jwt
+         media type.
 
    *  in the JWT claims:
 
@@ -491,7 +501,8 @@ Table of Contents
      "sub": "wimse://example.com/specific-workload"
    }
 
-                        Figure 4: Example WIT Claims
+          Figure 4: Example WIT claims, including an `iat` claim,
+                     demonstrating WIT's extensibility
 
    The example omits the RECOMMENDED iss claim; see Section 5.1 and
    Section 5.1.3.
@@ -611,6 +622,33 @@ Table of Contents
    such as jwks_uri) are configured out of band as in Section 3.
    Alternative key distribution methods may use only the trust domain
    from the sub claim.
+
+5.1.4.  Validating the WIT
+
+   Verification of a WIT follows [RFC7515] and the JWT best practices in
+   [I-D.ietf-oauth-rfc8725bis], with the WIMSE-specific requirements
+   below.  To validate a WIT, the recipient MUST ensure the following:
+
+   *  The token is a single well-formed JWT using JWS compact
+      serialization ([RFC7515], [RFC7519]).
+
+   *  The sub claim is present and is a single Workload Identifier
+      ([WIMSE-ID], Section 4).  The recipient uses the trust domain of
+      that identifier to select the configured trust anchors
+      (Section 3).
+
+   *  The typ JOSE header parameter conveys a media type of wit+jwt.
+
+   *  The JWS signature is valid under those trust anchors, as described
+      in Section 3.
+
+   *  The cnf claim is present and contains a jwk object with an alg
+      member as specified in Section 5.1.
+
+   *  Additional claims that are not understood are ignored, as
+      specified in Section 5.1.2.
+
+   See Section 9.2.1 for WIT lifetime considerations.
 
 5.2.  Error Conditions
 
@@ -793,13 +831,14 @@ Table of Contents
    The Workload Identity Token (WIT) is bound to a secret cryptographic
    key and is always presented with a proof of possession (PoP) as
    described in Section 5.1.  The WIT is a general purpose token that
-   can be presented in multiple contexts.  The WIT and its PoP are only
-   used in the application-layer options, and both are not used in mTLS.
-   The WIT MUST NOT be used as a bearer token.  While this helps reduce
-   the sensitivity of the token it is still possible that a token and
-   its PoP may be captured and replayed within the PoP's lifetime.  The
-   following are some mitigations for the capture and reuse of the WIT
-   and its PoP:
+   can be presented in multiple contexts.  The WIT and its PoP are used
+   for application-layer authentication; they are not used as the client
+   or server credential for mutual TLS, which uses the Workload Identity
+   Certificate (Section 6.1).  The WIT MUST NOT be used as a bearer
+   token.  While this helps reduce the sensitivity of the token it is
+   still possible that a token and its PoP may be captured and replayed
+   within the PoP's lifetime.  The following are some mitigations for
+   the capture and reuse of the WIT and its PoP:
 
 9.2.1.  Limiting Workload Identity Token Lifespan
 
@@ -861,8 +900,13 @@ Table of Contents
 
    Workload Identity Certificates are frequently issued to dynamic and/
    or short-lived workloads.  Deployments SHOULD use certificate
-   lifetimes appropriate to the workload environment.  Long-lived
-   certificates increase the impact of private-key compromise.
+   lifetimes appropriate to the workload environment, typically on a
+   similar scale to WITs (Section 9.2).  Long-lived certificates
+   increase the impact of private-key compromise.  As with WITs, short
+   certificate lifetimes are the primary mitigation against continued
+   use of a compromised key; this document does not rely on certificate
+   revocation lists (CRLs) or Online Certificate Status Protocol (OCSP)
+   [RFC6960] for WICs.
 
    The lifetime of Workload Identity Certificates is bounded by the
    lifetime and rotation cadence of the trust anchors of the trust
@@ -1000,6 +1044,13 @@ Table of Contents
 
 12.1.  Normative References
 
+   [I-D.ietf-oauth-rfc8725bis]
+              Sheffer, Y., Hardt, D., and M. B. Jones, "JSON Web Token
+              Best Current Practices", Work in Progress, Internet-Draft,
+              draft-ietf-oauth-rfc8725bis-10, 21 August 2026,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
+              rfc8725bis-10>.
+
    [I-D.ietf-wimse-mutual-tls]
               Salowey, J. A. and Y. Rosomakho, "Workload Authentication
               Using Mutual TLS", Work in Progress, Internet-Draft,
@@ -1051,11 +1102,6 @@ Table of Contents
               Authorization Server Metadata", RFC 8414,
               DOI 10.17487/RFC8414, June 2018,
               <https://www.rfc-editor.org/rfc/rfc8414>.
-
-   [RFC8725]  Sheffer, Y., Hardt, D., and M. Jones, "JSON Web Token Best
-              Current Practices", BCP 225, RFC 8725,
-              DOI 10.17487/RFC8725, February 2020,
-              <https://www.rfc-editor.org/rfc/rfc8725>.
 
    [RFC9110]  Fielding, R., Ed., Nottingham, M., Ed., and J. Reschke,
               Ed., "HTTP Semantics", STD 97, RFC 9110,
@@ -1115,6 +1161,12 @@ Table of Contents
               IANA, "Media Types",
               <https://www.iana.org/assignments/media-types>.
 
+   [RFC6960]  Santesson, S., Myers, M., Ankney, R., Malpani, A.,
+              Galperin, S., and C. Adams, "X.509 Internet Public Key
+              Infrastructure Online Certificate Status Protocol - OCSP",
+              RFC 6960, DOI 10.17487/RFC6960, June 2013,
+              <https://www.rfc-editor.org/rfc/rfc6960>.
+
    [RFC9457]  Nottingham, M., Wilde, E., and S. Dalal, "Problem Details
               for HTTP APIs", RFC 9457, DOI 10.17487/RFC9457, July 2023,
               <https://www.rfc-editor.org/rfc/rfc9457>.
@@ -1125,6 +1177,18 @@ Appendix A.  Document History
    // RFC Editor: please remove before publication.
 
 A.1.  draft-ietf-wimse-workload-creds-03
+
+   *  Add a WIT validation procedure for recipients (#290, #294).
+
+   *  Clarify that WIT/PoP are application-layer credentials and are not
+      used for mutual TLS; TLS binding does not change that (#256).
+
+   *  Clarify that the one-Workload-Identifier-per-credential rule
+      restricts only Workload Identifiers, not other identifiers in the
+      credential.
+
+   *  State the WIC revocation stance: short lifetimes like WITs; no CRL
+      reliance (#270).
 
    *  Editorial: consistent use of "proof of possession"/"PoP", with the
       abbreviation expanded on first use, and consistent capitalization
