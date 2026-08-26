@@ -1535,10 +1535,7 @@ which specific resources can be accessed.<a href="#section-2.2-3" class="pilcrow
 <code>WPT</code> scheme, so a workload can still authenticate to an intermediary that challenges it. Those credentials
 authenticate the sender to that intermediary rather than to the target workload, are consumed by the intermediary
 that issued the challenge, and are not covered by the proof of possession presented to the target workload.
-This document does not define the use of the <code>WPT</code> scheme with <code>Proxy-Authenticate</code> and <code>Proxy-Authorization</code>.
-A deployment that does so MUST use a separate WPT whose audience identifies the intermediary; the WPT addressed to
-the target workload MUST NOT be presented to, or accepted by, an intermediary, as required by the audience
-validation rules in <a href="#pop-considerations" class="auto internal xref">Section 3.1</a>.<a href="#section-2.2-4" class="pilcrow">¶</a></p>
+The use of the <code>WPT</code> scheme with <code>Proxy-Authenticate</code> and <code>Proxy-Authorization</code> is out of scope for this document.<a href="#section-2.2-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="add-claims">

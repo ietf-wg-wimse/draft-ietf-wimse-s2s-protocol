@@ -426,13 +426,9 @@ Table of Contents
    credentials authenticate the sender to that intermediary rather than
    to the target workload, are consumed by the intermediary that issued
    the challenge, and are not covered by the proof of possession
-   presented to the target workload.  This document does not define the
-   use of the WPT scheme with Proxy-Authenticate and Proxy-
-   Authorization.  A deployment that does so MUST use a separate WPT
-   whose audience identifies the intermediary; the WPT addressed to the
-   target workload MUST NOT be presented to, or accepted by, an
-   intermediary, as required by the audience validation rules in
-   Section 3.1.
+   presented to the target workload.  The use of the WPT scheme with
+   Proxy-Authenticate and Proxy-Authorization is out of scope for this
+   document.
 
 2.3.  Including Additional Claims
 
