@@ -49,7 +49,7 @@ informative:
   IANA.MEDIA.TYPES: IANA.media-types
   IANA.URI.SCHEMES: IANA.uri-schemes
   RFC6750:
-  RFC9449:
+  RFC7617:
   RFC9457:
 
 --- abstract
