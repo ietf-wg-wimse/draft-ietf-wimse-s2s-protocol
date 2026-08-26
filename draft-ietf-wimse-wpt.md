@@ -236,7 +236,6 @@ authenticate the sender to that intermediary rather than to the target workload,
 that issued the challenge, and are not covered by the proof of possession presented to the target workload.
 The use of the `WPT` scheme with `Proxy-Authenticate` and `Proxy-Authorization` is out of scope for this document.
 
-
 ## Including Additional Claims {#add-claims}
 
 The WPT contains JSON structures and therefore can be trivially extended by adding more claims beyond those defined in the current specification.
@@ -249,7 +248,7 @@ This, however, could result in interoperability issues, which the following rule
 
 # Security Considerations
 
-## Workload Identity Token and Proof of Possession {#pop-considerations}
+## Workload Identity Token and Proof of Possession
 
 The Workload Identity Token (WIT) is bound to a secret cryptographic key and is always presented with a proof of possession (PoP) as described in {{!I-D.ietf-wimse-workload-creds}}. The WIT is a general purpose token that can be presented in multiple contexts. The WIT and WPT are only used in the application-layer options, and both are not used in MTLS. The WIT MUST NOT be used as a bearer token. While this helps reduce the sensitivity of the token it is still possible that a token and its PoP may be captured and replayed within the PoP's lifetime. The following are some mitigations for the capture and reuse of the PoP:
 
