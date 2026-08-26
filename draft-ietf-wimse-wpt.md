@@ -211,7 +211,7 @@ The WPT occupies the `Authorization` header field of the request. That field is 
 `Authorization = credentials` ({{Section 11.6.2 of RFC9110}}); its value is a single set of credentials rather than a
 comma-separated list, and a sender therefore MUST NOT generate more than one `Authorization` header field
 ({{Section 5.3 of RFC9110}}). A request that presents a WPT consequently cannot present a token with any other
-authentication scheme, including the `Bearer` scheme ({{Section 2.1 of RFC6750}}) and the `DPoP` scheme
+authentication scheme, including the `Bearer` scheme ({{Section 2.1 of RFC6750}}) or the `DPoP` scheme
 ({{Section 7.1 of RFC9449}}).
 
 This exclusivity is intended. A workload that authenticates with a WIT and a WPT MUST NOT rely on a bearer token
