@@ -403,7 +403,7 @@ Table of Contents
    than one Authorization header field (Section 5.3 of [RFC9110]).  A
    request that presents a WPT consequently cannot present a token with
    any other authentication scheme, including the Bearer scheme
-   (Section 2.1 of [RFC6750]) and the DPoP scheme (Section 7.1 of
+   (Section 2.1 of [RFC6750]) or the DPoP scheme (Section 7.1 of
    [RFC9449]).
 
    This exclusivity is intended.  A workload that authenticates with a

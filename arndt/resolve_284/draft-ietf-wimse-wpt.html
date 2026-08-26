@@ -1538,7 +1538,7 @@ material or algorithm was used.<a href="#section-2.1-3" class="pilcrow">¶</a></
 <code>Authorization = credentials</code> (<span><a href="https://rfc-editor.org/rfc/rfc9110#section-11.6.2" class="relref">Section 11.6.2</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>); its value is a single set of credentials rather than a
 comma-separated list, and a sender therefore MUST NOT generate more than one <code>Authorization</code> header field
 (<span><a href="https://rfc-editor.org/rfc/rfc9110#section-5.3" class="relref">Section 5.3</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>). A request that presents a WPT consequently cannot present a token with any other
-authentication scheme, including the <code>Bearer</code> scheme (<span><a href="https://rfc-editor.org/rfc/rfc6750#section-2.1" class="relref">Section 2.1</a> of [<a href="#RFC6750" class="cite xref">RFC6750</a>]</span>) and the <code>DPoP</code> scheme
+authentication scheme, including the <code>Bearer</code> scheme (<span><a href="https://rfc-editor.org/rfc/rfc6750#section-2.1" class="relref">Section 2.1</a> of [<a href="#RFC6750" class="cite xref">RFC6750</a>]</span>) or the <code>DPoP</code> scheme
 (<span><a href="https://rfc-editor.org/rfc/rfc9449#section-7.1" class="relref">Section 7.1</a> of [<a href="#RFC9449" class="cite xref">RFC9449</a>]</span>).<a href="#section-2.2-1" class="pilcrow">¶</a></p>
 <p id="section-2.2-2">This exclusivity is intended. A workload that authenticates with a WIT and a WPT MUST NOT rely on a bearer token
 presented in the same request to authenticate the calling workload, and a recipient MUST NOT use such a token to make
