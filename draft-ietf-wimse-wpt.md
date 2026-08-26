@@ -108,16 +108,16 @@ A WPT MUST contain the following:
     * `exp`: The expiration time of the WPT (as defined in {{Section 4.1.4 of RFC7519}}). WPT lifetimes MUST be short,
      e.g., on the order of minutes or seconds.
     * `jti`: A unique identifier for the WPT. The value MUST be assigned such that there is a negligible probability that the same value will be assigned to any other WPT. Such uniqueness can be accomplished by encoding (base64url or any other suitable encoding) 128 bits of pseudorandom data.
-    * `wth`: Hash of the Workload Identity Token, defined in {{!I-D.ietf-wimse-workload-creds}}. The value is the base64url encoding of the
-     SHA-256 hash of the ASCII encoding of the WIT's value.
+    * `wth`: Hash of the Workload Identity Token, defined in {{!I-D.ietf-wimse-workload-creds}}. The value is the base64url encoding (as defined in {{Section 2 of RFC7515}}) of the
+     SHA-256 hash of the bytes of the ASCII representation of the WIT's value.
     * `tth`: Hash of the Txn-Token {{?I-D.ietf-oauth-transaction-tokens}}, if present in the request,
      which might convey end-user identity and/or authorization context of the request. The value MUST be the result of
-     a base64url encoding (as defined in {{Section 2 of RFC7515}}) of the SHA-256 hash of
-     the ASCII encoding of the associated token's value.
+     base64url encoding (as defined in {{Section 2 of RFC7515}}) the SHA-256 hash of
+     the bytes of the ASCII representation of the associated token's value.
     * `oth`: Hash(es) of other token(s) in the request that convey end-user identity and/or authorization context of the
      request. The value is a JSON object with a key-value pair for each such token. For each, in the absence of an
      application profile specifying details, the key corresponds to the header field name containing the token,
-     and the value is the base64url encoding of the SHA-256 hash of the ASCII bytes of the header field value with any
+     and the value is the base64url encoding (as defined in {{Section 2 of RFC7515}}) of the SHA-256 hash of the bytes of the ASCII representation of the header field value with any
      leading or trailing spaces removed. The header field name MUST be normalized by converting
      it to all lower case.
      Header fields occurring multiple times in the request are not supported by default.
@@ -164,7 +164,7 @@ An example of an HTTP request with both the WIT and WPT from prior examples is s
 ~~~
 {: title="Example HTTP Request with WIT and WPT"}
 
-To validate the WPT in the request, the recipient MUST ensure the following:
+To validate the WPT in the request, the recipient MUST first validate the WIT as specified in {{Section 5.1.4 of I-D.ietf-wimse-workload-creds}}, then ensure the following:
 
 * There is exactly one `Authorization` header field in the request and it uses the `WPT` authentication scheme.
 * The credentials of the `WPT` authentication scheme are a single and well-formed JWT, as per {{wpt-scheme-abnf}}.
@@ -252,20 +252,20 @@ This, however, could result in interoperability issues, which the following rule
 
 The Workload Identity Token (WIT) is bound to a secret cryptographic key and is always presented with a proof of possession (PoP) as described in {{!I-D.ietf-wimse-workload-creds}}. The WIT is a general purpose token that can be presented in multiple contexts. The WIT and WPT are only used in the application-layer options, and both are not used in MTLS. The WIT MUST NOT be used as a bearer token. While this helps reduce the sensitivity of the token it is still possible that a token and its PoP may be captured and replayed within the PoP's lifetime. The following are some mitigations for the capture and reuse of the PoP:
 
-* Preventing Eavesdropping and Interception with TLS
+### Preventing Eavesdropping and Interception with TLS
 
 An attacker observing or intercepting the communication channel can view the token and its PoP and attempt to replay it to gain an advantage. In order to prevent this the
 token and PoP MUST be sent over a secure, server authenticated TLS connection unless a secure channel is provided by some other mechanisms. Host name validation MUST be performed by the client.
 
-* Limiting Proof of Possession Lifespan
+### Limiting Proof of Possession Lifespan
 
 The PoP MUST be time limited. A PoP should only be valid over the time necessary for it to be successfully used for the purpose it is needed. This will typically be on the order of minutes.  PoPs received outside their validity time MUST be rejected.
 
-* Limiting Proof of Possession Scope
+### Limiting Proof of Possession Scope
 
 In order to reduce the risk of theft and replay the PoP should have a limited scope. For example, a PoP may be targeted for use with a specific workload and even a specific transaction to reduce the impact of a stolen PoP. In some cases a workload may wish to reuse a PoP for a period of time or have it accepted by multiple target workloads. A careful analysis is warranted to understand the impacts to the system if a PoP is disclosed allowing it to be presented by an attacker along with a captured WIT.
 
-* Replay Protection
+### Replay Protection
 
 A PoP includes the `jti` claim that uniquely identifies it.
 This claim SHOULD be used by the receiver to perform basic replay protection, within the scope of a particular sender, against tokens it has already seen.
@@ -273,11 +273,18 @@ Depending upon the design of the system it may be difficult to synchronize the r
 If an attacker can somehow influence the identity of the validator (e.g. which cluster member receives the message) then
 replay protection would not be effective.
 
-* Binding to TLS Endpoint
+### Avoid Logging Raw WPT Values
+
+Implementations MUST NOT log raw WPTs by default. Depending on the aggressiveness
+of the replay protection mechinism, a WPT harvested from logs could potentially be replayed
+and accepted as a legitimate proof. Implementations should therefore treat WPT values as
+sensitive and avoid persisting them in logs.
+
+### Binding to TLS Endpoint
 
 The PoP MAY be bound to a transport layer sender such as the client identity of a TLS session or TLS channel binding parameters. The mechanisms for binding are outside the scope of this specification.
 
-* Audience validation
+### Audience validation
 
 Validators MUST check that the audience field of the WPT is a URI or other value that is for their consumption.  In some cases when a URI is used as the audience some information, such as the authority portion, may be generated by an external requester who sees a different host name for the service than is used internally.  Validators MUST NOT use untrusted information obtained from the request to determine if the hostname belongs to an authorized authority.  Doing so could allow attackers to trick validators into accepting a WPT generated for a different receiver by sending a fabricated request. The validator MUST get the information about allowed URL authorities from a trusted source such as out-of-band configuration. The Host of the request or an "X-Forwarded-Host" header is an example of untrusted data and cannot be trusted and MUST NOT be used.
 
@@ -386,6 +393,10 @@ replacing the `Workload-Proof-Token` header field. Along with this, recommend HT
 `WWW-Authenticate: WPT` challenge, remove the `ath` claim, rework {{coexist}} since a request has at most one
 `Authorization` header field, move the DPoP specification to the informative references, and update the examples.
 * Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use, and consistent capitalization of the defined term "Workload Identifier".
+* Advise against logging proof-of-possession values (#271).
+* Security Considerations formatting fixup (#217).
+* Try to be more clear on how the various token hash claims are done
+* Reference the WIT validation procedure in {{I-D.ietf-wimse-workload-creds}} (#290).
 
 ## draft-ietf-wimse-wpt-01
 
