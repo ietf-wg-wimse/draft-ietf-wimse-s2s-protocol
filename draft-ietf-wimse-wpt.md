@@ -77,20 +77,21 @@ This document defines the WPT JWT format, its HTTP usage, validation requirement
 # Workload Proof Token  {#wpt}
 
 The Workload Proof Token (WPT) is a JWT that provides proof of possession of the private key associated with a Workload Identity Token (WIT). The Workload Identity Token is sent in the request as described in {{!I-D.ietf-wimse-workload-creds}}. The WPT is sent in the `Authorization` header field ({{Section 11.6.2 of RFC9110}}) of the request, using the `WPT` authentication scheme defined by this document.
-The ABNF {{RFC5234}} syntax of the credentials of the `WPT` authentication scheme is shown in {{wpt-scheme-abnf}} below.
-As with any HTTP authentication scheme, the scheme name is case-insensitive ({{Section 11.1 of RFC9110}}).
+The syntax of the credentials of the `WPT` authentication scheme uses the `token68` syntax
+defined in {{Section 11.2 of RFC9110}}, whose ABNF {{RFC5234}} is repeated in {{wpt-scheme-abnf}} below
+for ease of reference.
+As with any HTTP authentication scheme, the scheme name is case-insensitive ({{Section 11.1 of RFC9110}}),
+while case is significant in the credentials.
 
 ~~~ abnf
-ALPHA = %x41-5A / %x61-7A ; A-Z / a-z
-DIGIT = %x30-39 ; 0-9
-SP = %x20 ; space
-base64url = 1*(ALPHA / DIGIT / "-" / "_")
-JWT =  base64url "." base64url "." base64url
-credentials = "WPT" 1*SP JWT
-~~~~
+token68     = 1*( ALPHA / DIGIT /
+                  "-" / "." / "_" / "~" / "+" / "/" ) *"="
+
+credentials = "WPT" 1*SP token68
+~~~
 {: #wpt-scheme-abnf title="WPT Authentication Scheme ABNF"}
 
-The `JWT` production above is also a valid `token68` as defined in {{Section 11.2 of RFC9110}}, so the credentials
+The credentials are a JWT {{RFC7519}}, whose serialization is a valid `token68`, so requests
 can be parsed by generic HTTP authentication implementations.
 
 A WPT MUST contain the following:
