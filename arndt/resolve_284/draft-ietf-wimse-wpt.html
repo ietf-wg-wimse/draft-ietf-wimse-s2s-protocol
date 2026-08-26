@@ -1463,7 +1463,7 @@ J2rrMnE7TBHBB47ZUT7yoiyz2lcGY5XAnpGPjPnzeRroJJiR7Nr_C5J7mexxrsHM3CQ
           <p id="section-2-17.1.1">There is exactly one <code>Authorization</code> header field in the request and it uses the <code>WPT</code> authentication scheme.<a href="#section-2-17.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-2-17.2">
-          <p id="section-2-17.2.1">The credentials of the <code>WPT</code> authentication scheme are a single and well-formed JWT, as per <a href="#wpt-scheme-abnf" class="auto internal xref">Figure 1</a>.<a href="#section-2-17.2.1" class="pilcrow">¶</a></p>
+          <p id="section-2-17.2.1">The credentials of the <code>WPT</code> authentication scheme are a single and well-formed JWT.<a href="#section-2-17.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-2-17.3">
           <p id="section-2-17.3.1">The signature algorithm in the <code>alg</code> JOSE header string-equal matches the <code>alg</code> attribute of the <code>jwk</code> in the <code>cnf</code> claim of the WIT.<a href="#section-2-17.3.1" class="pilcrow">¶</a></p>
@@ -1508,7 +1508,7 @@ J2rrMnE7TBHBB47ZUT7yoiyz2lcGY5XAnpGPjPnzeRroJJiR7Nr_C5J7mexxrsHM3CQ
         <h3 id="name-error-conditions">
 <a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-error-conditions" class="section-name selfRef">Error Conditions</a>
         </h3>
-<p id="section-2.1-1">Errors may occur during the processing of the WPT. If the signature verification fails for any reason,
+<p id="section-2.1-1">Errors may occur during the processing of the WPT. If the validation fails for any reason,
 such as an invalid signature, an expired validity time window, or a malformed data structure, an error is returned.
 Because the WPT is conveyed with an HTTP authentication scheme, a recipient that rejects the request for a reason
 related to the WPT SHOULD use the HTTP status code 401 (Unauthorized). Such a response carries a <code>WWW-Authenticate</code>
