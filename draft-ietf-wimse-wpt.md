@@ -167,7 +167,7 @@ An example of an HTTP request with both the WIT and WPT from prior examples is s
 To validate the WPT in the request, the recipient MUST first validate the WIT as specified in {{Section 5.1.4 of I-D.ietf-wimse-workload-creds}}, then ensure the following:
 
 * There is exactly one `Authorization` header field in the request and it uses the `WPT` authentication scheme.
-* The credentials of the `WPT` authentication scheme are a single and well-formed JWT, as per {{wpt-scheme-abnf}}.
+* The credentials of the `WPT` authentication scheme are a single and well-formed JWT.
 * The signature algorithm in the `alg` JOSE header string-equal matches the `alg` attribute of the `jwk` in the `cnf` claim of the WIT.
 * The WPT signature is valid using the public key from the confirmation claim of the WIT.
 * The `typ` JOSE header parameter of the WPT conveys a media type of `wpt+jwt`.
