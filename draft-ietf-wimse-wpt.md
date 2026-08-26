@@ -234,10 +234,7 @@ The `Proxy-Authorization` header field ({{Section 11.7.2 of RFC9110}}) is a dist
 `WPT` scheme, so a workload can still authenticate to an intermediary that challenges it. Those credentials
 authenticate the sender to that intermediary rather than to the target workload, are consumed by the intermediary
 that issued the challenge, and are not covered by the proof of possession presented to the target workload.
-This document does not define the use of the `WPT` scheme with `Proxy-Authenticate` and `Proxy-Authorization`.
-A deployment that does so MUST use a separate WPT whose audience identifies the intermediary; the WPT addressed to
-the target workload MUST NOT be presented to, or accepted by, an intermediary, as required by the audience
-validation rules in {{pop-considerations}}.
+The use of the `WPT` scheme with `Proxy-Authenticate` and `Proxy-Authorization` is out of scope for this document.
 
 
 ## Including Additional Claims {#add-claims}
