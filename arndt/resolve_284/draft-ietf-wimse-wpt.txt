@@ -372,10 +372,10 @@ Table of Contents
 
 2.1.  Error Conditions
 
-   Errors may occur during the processing of the WPT.  If the signature
-   verification fails for any reason, such as an invalid signature, an
-   expired validity time window, or a malformed data structure, an error
-   is returned.  Because the WPT is conveyed with an HTTP authentication
+   Errors may occur during the processing of the WPT.  If the validation
+   fails for any reason, such as an invalid signature, an expired
+   validity time window, or a malformed data structure, an error is
+   returned.  Because the WPT is conveyed with an HTTP authentication
    scheme, a recipient that rejects the request for a reason related to
    the WPT SHOULD use the HTTP status code 401 (Unauthorized).  Such a
    response carries a WWW-Authenticate header field with at least one
@@ -403,8 +403,7 @@ Table of Contents
    than one Authorization header field (Section 5.3 of [RFC9110]).  A
    request that presents a WPT consequently cannot present a token with
    any other authentication scheme, including the Bearer scheme
-   (Section 2.1 of [RFC6750]) or the DPoP scheme (Section 7.1 of
-   [RFC9449]).
+   (Section 2.1 of [RFC6750]) or the Basic scheme ([RFC7617]).
 
    This exclusivity is intended.  A workload that authenticates with a
    WIT and a WPT MUST NOT rely on a bearer token presented in the same
@@ -770,10 +769,9 @@ Table of Contents
               DOI 10.17487/RFC6750, October 2012,
               <https://www.rfc-editor.org/rfc/rfc6750>.
 
-   [RFC9449]  Fett, D., Campbell, B., Bradley, J., Lodderstedt, T.,
-              Jones, M., and D. Waite, "OAuth 2.0 Demonstrating Proof of
-              Possession (DPoP)", RFC 9449, DOI 10.17487/RFC9449,
-              September 2023, <https://www.rfc-editor.org/rfc/rfc9449>.
+   [RFC7617]  Reschke, J., "The 'Basic' HTTP Authentication Scheme",
+              RFC 7617, DOI 10.17487/RFC7617, September 2015,
+              <https://www.rfc-editor.org/rfc/rfc7617>.
 
    [RFC9457]  Nottingham, M., Wilde, E., and S. Dalal, "Problem Details
               for HTTP APIs", RFC 9457, DOI 10.17487/RFC9457, July 2023,
