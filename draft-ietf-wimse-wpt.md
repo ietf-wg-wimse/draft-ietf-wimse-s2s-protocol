@@ -188,7 +188,7 @@ To validate the WPT in the request, the recipient MUST first validate the WIT as
 
 ## Error Conditions
 
-Errors may occur during the processing of the WPT. If the signature verification fails for any reason,
+Errors may occur during the processing of the WPT. If the validation fails for any reason,
 such as an invalid signature, an expired validity time window, or a malformed data structure, an error is returned.
 Because the WPT is conveyed with an HTTP authentication scheme, a recipient that rejects the request for a reason
 related to the WPT SHOULD use the HTTP status code 401 (Unauthorized). Such a response carries a `WWW-Authenticate`
