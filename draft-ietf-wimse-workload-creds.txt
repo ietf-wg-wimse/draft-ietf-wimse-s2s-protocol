@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 26 February 2027                             Palo Alto Networks
+Expires: 28 February 2027                             Palo Alto Networks
                                                       A. Schwenkschuster
                                                         Defakto Security
                                                               Y. Sheffer
                                                                   Intuit
                                                             Y. Rosomakho
                                                                  Zscaler
-                                                          25 August 2026
+                                                          27 August 2026
 
 
                        WIMSE Workload Credentials
@@ -67,7 +67,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 February 2027.
+   This Internet-Draft will expire on 28 February 2027.
 
 Copyright Notice
 
@@ -467,8 +467,8 @@ Table of Contents
    CIsIngiOiIxQ1hYdmZsTl9MVlZzSXNZWHNVdkIwM0ptbEdXZUNIcVFWdW91Q0Y5MmJnI\
    n19LCJleHAiOjE3NDU1MTI1MTAsImlhdCI6MTc0NTUwODkxMCwianRpIjoieC1fMUNUT\
    DJjY2EzQ1NFNGN3Yl9sIiwic3ViIjoid2ltc2U6Ly9leGFtcGxlLmNvbS9zcGVjaWZpY\
-   y13b3JrbG9hZCJ9.6KraSQUxWdl9dxFQ3Fj6dPY0Vi88OkwFwZpAIOhLeq6AbXAnLLQg\
-   Op8U9UDGcBuYF3KiNv6oKQD1ZWAzrMZOJw
+   y13b3JrbG9hZCJ9.ohKJ50QaW8ydALJwaA0Sz4ys3hcN_1S-aTZBytMGc3u8QWUmn5ux\
+   UDSonoZFAfZk1Ro1kR4vE_xa7mvoE37R-Q
 
              Figure 2: An example Workload Identity Token (WIT)
 
@@ -578,8 +578,8 @@ Table of Contents
    RWQyNTUxOSIsImt0eSI6Ik9LUCIsIngiOiIxQ1hYdmZsTl9MVlZzSXNZWHNVdkIwM0pt\
    bEdXZUNIcVFWdW91Q0Y5MmJnIn19LCJleHAiOjE3NDU1MTI1MTAsImlhdCI6MTc0NTUw\
    ODkxMCwianRpIjoieC1fMUNUTDJjY2EzQ1NFNGN3Yl9sIiwic3ViIjoid2ltc2U6Ly9l\
-   eGFtcGxlLmNvbS9zcGVjaWZpYy13b3JrbG9hZCJ9.6KraSQUxWdl9dxFQ3Fj6dPY0Vi8\
-   8OkwFwZpAIOhLeq6AbXAnLLQgOp8U9UDGcBuYF3KiNv6oKQD1ZWAzrMZOJw
+   eGFtcGxlLmNvbS9zcGVjaWZpYy13b3JrbG9hZCJ9.ohKJ50QaW8ydALJwaA0Sz4ys3hc\
+   N_1S-aTZBytMGc3u8QWUmn5uxUDSonoZFAfZk1Ro1kR4vE_xa7mvoE37R-Q
 
        Figure 8: An example Workload Identity Token HTTP Header Field
 
