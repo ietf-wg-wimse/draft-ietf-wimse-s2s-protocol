@@ -441,21 +441,10 @@ wimsey
 * Organization: independent
 * Implementation: <https://github.com/kanywst/wimsey>
 * Maturity:
-    * Workload Identity Token: alpha, not for production
-    * Workload Identity Certificate: alpha, not for production
-* Coverage: WIT issuance and verification against
-  `draft-ietf-wimse-workload-creds-02`, with the mandatory `sub`, `exp` and
-  `cnf` claims, the optional `iss`, `iat` and `jti`, and the `alg` member
-  inside the `cnf` JWK, which is enforced as the algorithm the proof of
-  possession must use. Both `EdDSA` and `ES256`, in any combination: an EdDSA
-  issuer with an ES256 confirmation key is exercised by a test vector.
-  Workload Identity Certificate issuance and verification with the identifier
-  in a URI SAN; certificates are Ed25519 only, since the mutual-TLS document
-  carries no equivalent of Section 5.1.
-* License: Apache 2.0
+    * Workload Identity Token: alpha
+    * Workload Identity Certificate: alpha
+* Coverage: WIT, Workload Identity Certificate
 * Contact: [kanywst on GitHub](https://github.com/kanywst)
-* Last updated: 27-Aug-2026
-
 
 # Security Considerations
 

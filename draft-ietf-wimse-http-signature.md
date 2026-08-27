@@ -283,24 +283,11 @@ According to RFC 7942, "this will allow reviewers and working groups to assign d
 * Organization: independent
 * Implementation: <https://github.com/kanywst/wimsey>
 * Maturity:
-    * WIT + HTTP Message Signatures: alpha, not for production
-* Coverage: The Section 3 profile for both requests and responses, against
-  `draft-ietf-wimse-http-signature-06`. Requests: the mandatory covered
-  components, `created`/`expires`/`nonce`/`tag`, `wimse-aud`, and rejection of
-  the forbidden `keyid` and `alg` parameters. Responses: `@status`, the `;req`
-  covered components, `wimse-req-nonce`, and a response profile in which
-  `wimse-aud` is forbidden. Signing is `EdDSA` or `ES256`. Replay detection is
-  left to the caller: the implementation checks that a `nonce` is present but
-  does not remember the ones it has seen.
+    * WIT + HTTP Message Signatures: alpha
+* Coverage: WIT, HTTP Message Signatures, signed responses
 * License: Apache 2.0
 * Contact: [kanywst on GitHub](https://github.com/kanywst)
 * Last updated: 27-Aug-2026
-* Notes: Publishes cross-implementation test vectors in which every negative
-  case names the reason the input must be rejected, so an input turned away
-  for the wrong reason counts as a failure:
-  <https://github.com/kanywst/wimsey/tree/main/conformance>. Two independent
-  implementations have run them and reported results on the working group
-  list.
 
 # Security Considerations
 
