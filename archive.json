@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-08-25T01:09:20.548120+00:00",
+  "timestamp": "2026-08-27T07:24:09.019341+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -4059,7 +4059,7 @@
       "id": "I_kwDOLJmm787vO0Xw",
       "title": "WPT Sec 3.1 Formating seems funky",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/217",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -4068,8 +4068,8 @@
       ],
       "body": "https://www.ietf.org/archive/id/draft-ietf-wimse-wpt-01.html#section-3.1 the bullets don't seem right... ",
       "createdAt": "2026-03-02T22:31:24Z",
-      "updatedAt": "2026-03-02T22:31:24Z",
-      "closedAt": null,
+      "updatedAt": "2026-08-25T15:03:36Z",
+      "closedAt": "2026-08-25T15:03:36Z",
       "comments": []
     },
     {
@@ -4745,7 +4745,7 @@
       "id": "I_kwDOLJmm788AAAABJCbWdQ",
       "title": "Sections 7 / 9.2 / 10: WIT and PoP header values end up in logs",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/271",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "n2ctech",
       "authorAssociation": "NONE",
       "assignees": [
@@ -4757,8 +4757,8 @@
       ],
       "body": "Section 7 rightly suggests including the workload identifier in log messages. But the WIT and its proof of possession ride in HTTP header fields, and gateways, TLS-terminating proxies, and APM agents dump those headers into logs by default. A logged WIT plus a logged PoP is replayable within the validity window defined in 9.2.2. Section 10 lists logs as an exposure surface for WICs but not WITs, which is backwards: WITs hit header logging at every network hop.\n\nSuggested fix: a note in 9.2 advising implementers to record claims (sub, exp, iss, jti) rather than raw header values, and a matching update to Section 10.\n\nRaised as item 4 in my WGLC review: https://mailarchive.ietf.org/arch/msg/wimse/S5Zjmr4qneFsAmepgRWhkWtFdPA/\n",
       "createdAt": "2026-07-16T11:23:25Z",
-      "updatedAt": "2026-08-17T21:31:17Z",
-      "closedAt": null,
+      "updatedAt": "2026-08-25T15:03:36Z",
+      "closedAt": "2026-08-25T15:03:36Z",
       "comments": [
         {
           "author": "bc-pi",
@@ -4883,7 +4883,7 @@
       "id": "I_kwDOLJmm788AAAABJXveMQ",
       "title": "Consider allow JSON key thumbprint in cnf object",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/276",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "rohanmahy",
       "authorAssociation": "NONE",
       "assignees": [],
@@ -4892,8 +4892,8 @@
       ],
       "body": "Currently a JSON web key (jwk) is required in a cnf object. For cases where there is already a public key known at another layer, why not allow the cnf object to contain a JSON key thumbprint (jkt) of the public key instead?",
       "createdAt": "2026-07-19T18:13:47Z",
-      "updatedAt": "2026-08-04T13:55:00Z",
-      "closedAt": null,
+      "updatedAt": "2026-08-25T12:51:57Z",
+      "closedAt": "2026-08-25T12:51:56Z",
       "comments": [
         {
           "author": "bc-pi",
@@ -4976,7 +4976,7 @@
       "id": "I_kwDOLJmm788AAAABNO4KWw",
       "title": "Guidance for validating the WIT",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/290",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "jsalowey",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -4987,8 +4987,8 @@
       ],
       "body": "The creds draft seems to me missing guidance for validating the WIT.  Both the WIT and HTTP signatures drafts will need to reference it. ",
       "createdAt": "2026-08-18T14:34:43Z",
-      "updatedAt": "2026-08-18T14:43:19Z",
-      "closedAt": null,
+      "updatedAt": "2026-08-25T11:44:01Z",
+      "closedAt": "2026-08-25T11:44:01Z",
       "comments": []
     },
     {
@@ -4996,15 +4996,17 @@
       "id": "I_kwDOLJmm788AAAABN_PJ8g",
       "title": "Clarify wth calculation",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/292",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "sorindumitru",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-wpt"
+      ],
       "body": "The `wth` claim is defined as:\n```\n      -  wth: Hash of the Workload Identity Token, defined in\n         [I-D.ietf-wimse-workload-creds].  The value is the base64url\n         encoding of the SHA-256 hash of the ASCII encoding of the WIT's\n         value.\n```\n\nWhat is the ASCII encoding of the WIT's value?",
       "createdAt": "2026-08-24T10:27:38Z",
-      "updatedAt": "2026-08-24T13:11:25Z",
-      "closedAt": null,
+      "updatedAt": "2026-08-25T12:48:35Z",
+      "closedAt": "2026-08-25T12:48:35Z",
       "comments": [
         {
           "author": "sorindumitru",
@@ -5026,8 +5028,52 @@
           "body": "I agree most users would arrive at that interpretation, it's the only one that makes sense. I still had to search what the \"ASCII encoding of a JWT's value\" is, so being a bit more specific here wouldn't hurt.\n\nI'm also fine with closing this as not needed.",
           "createdAt": "2026-08-24T13:11:25Z",
           "updatedAt": "2026-08-24T13:11:25Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Even though I wrote (I think) those words and even borrowed them (I think) from an existing rfc [here](https://datatracker.ietf.org/doc/html/rfc9449#section-4.2-6.2), they do read pretty weird. The SHA-256 hash function takes bytes as the input. But the WIT is a string. So you need to use the bytes that are the representation of that string value in ASCII encoding (or UTF8, which is the same for those characters). The wording in the draft could definitely be improved. But, as you can probably tell from my poor words here, good concise text is a little hard to write for this. ",
+          "createdAt": "2026-08-25T01:39:01Z",
+          "updatedAt": "2026-08-25T01:39:01Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "What about this?\n\n> The value is the base64url encoding of the SHA-256 hash of the bytes of the ASCII representation of the WIT's value.",
+          "createdAt": "2026-08-25T02:23:02Z",
+          "updatedAt": "2026-08-25T02:23:02Z"
+        },
+        {
+          "author": "sorindumitru",
+          "authorAssociation": "NONE",
+          "body": "Looking at it now, we should probably specify if padding or no padding is used, so:\n> The value is the base64url encoding (without padding) of the SHA-256 hash of the bytes of the ASCII representation of the WIT's value.\n\nOr maybe the exact wording from that OAuth RFC\n\n",
+          "createdAt": "2026-08-25T05:19:40Z",
+          "updatedAt": "2026-08-25T06:59:25Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "see #293 for an attempt to improve all the token hashing text ",
+          "createdAt": "2026-08-25T11:22:08Z",
+          "updatedAt": "2026-08-25T11:22:08Z"
         }
       ]
+    },
+    {
+      "number": 294,
+      "id": "I_kwDOLJmm788AAAABOK-3xw",
+      "title": "WIT validation: address Arndt's comments",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/294",
+      "state": "CLOSED",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "See https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/291 (PR was merged before the comments).",
+      "createdAt": "2026-08-25T12:48:00Z",
+      "updatedAt": "2026-08-25T15:23:06Z",
+      "closedAt": "2026-08-25T15:23:06Z",
+      "comments": []
     }
   ],
   "pulls": [
@@ -18415,7 +18461,7 @@
       ],
       "body": "- **workload-creds (#173, #175):** Replace the mandatory access-path-to-identifier mapping API with infrastructure support for verifying that an HTTP target URI (RFC 9110 Section 7.1, without query or fragment) is intended for a workload. Document the roles of HTTP target URI (audience) vs Workload Identifier (sender) for WPT, HTTP signatures, and mTLS.\r\n- **WPT (#175):** Tie `aud` to \"Workload Identifiers and Authentication Granularity\" in workload-creds; otherwise unchanged from main.\r\n- **HTTP signatures (#175, #240):** Keep `wimse-aud` as on main (request-only, HTTP target URI). When response signing is enabled, require `wimse-req-nonce` (copy of the request `nonce`) to bind the signed response to the triggering request; register with IANA.\r\n\r\nCloses #173, #175. Addresses #240.",
       "createdAt": "2026-06-19T10:29:32Z",
-      "updatedAt": "2026-08-13T11:44:43Z",
+      "updatedAt": "2026-08-25T14:31:53Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "4e44e792f031cff205913be2f806207e3fcb999c",
@@ -18569,6 +18615,86 @@
               "body": "Does it need HTTP in this section? What if TLS is used with a different application protocol? I suggest keeping it to TLS only?",
               "createdAt": "2026-08-13T11:44:39Z",
               "updatedAt": "2026-08-13T11:44:43Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABKzcI8w",
+          "commit": {
+            "abbreviatedOid": "03c70b7"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-25T14:16:28Z",
+          "updatedAt": "2026-08-25T14:16:28Z",
+          "comments": [
+            {
+              "originalPosition": 20,
+              "body": "```suggestion\nThe Workload Identifier in a WIT identifies the sender; the audience of the PoP identifies the intended recipient.\n```",
+              "createdAt": "2026-08-25T14:16:28Z",
+              "updatedAt": "2026-08-25T14:16:28Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABKzm_ZA",
+          "commit": {
+            "abbreviatedOid": "03c70b7"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-25T14:31:13Z",
+          "updatedAt": "2026-08-25T14:31:13Z",
+          "comments": [
+            {
+              "originalPosition": 30,
+              "body": "1. It's not strictly \"transport\". 2. Consider removing this subsection altogether.",
+              "createdAt": "2026-08-25T14:31:13Z",
+              "updatedAt": "2026-08-25T14:31:13Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABKzncnA",
+          "commit": {
+            "abbreviatedOid": "03c70b7"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-25T14:31:53Z",
+          "updatedAt": "2026-08-25T14:31:53Z",
+          "comments": [
+            {
+              "originalPosition": 39,
+              "body": "as discussed on 8/25 \n```suggestion\n```",
+              "createdAt": "2026-08-25T14:31:53Z",
+              "updatedAt": "2026-08-25T14:31:53Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABKznelA",
+          "commit": {
+            "abbreviatedOid": "03c70b7"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-25T14:31:56Z",
+          "updatedAt": "2026-08-25T14:31:56Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "Remove http-sig parts of this PR.",
+              "createdAt": "2026-08-25T14:31:56Z",
+              "updatedAt": "2026-08-25T14:31:56Z"
             }
           ]
         }
@@ -19466,7 +19592,7 @@
       "id": "PR_kwDOLJmm7873_eMe",
       "title": "Advise against logging raw WIT and PoP headers",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/279",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -19475,18 +19601,26 @@
       ],
       "body": "## Summary\n* Clarify that audit logs should use the workload identifier / selected claims, not raw WIT or proof-of-possession header field values.\n* Note that intermediaries and observability agents often dump those headers by default, enabling replay within the PoP lifetime.\n\nRelated to #271 (Creds-only; leaving the issue open for WPT follow-up).\n\n\nMade with [Cursor](https://cursor.com)",
       "createdAt": "2026-07-29T12:53:24Z",
-      "updatedAt": "2026-08-17T21:31:48Z",
+      "updatedAt": "2026-08-25T14:45:54Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "c96037d5ffc4bc70541de347affe7ab708bc01cb",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-271",
       "headRefOid": "a859bbcf0bec1f0e50c3df2a14d55bb317170566",
-      "closedAt": null,
+      "closedAt": "2026-08-25T14:45:53Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Closing, replaced by #289 ",
+          "createdAt": "2026-08-25T14:45:53Z",
+          "updatedAt": "2026-08-25T14:45:53Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOLJmm788AAAABIWdeiw",
@@ -20267,10 +20401,12 @@
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
       "body": "Added security considerations for granular auth section.\r\n\r\nRelated to #272 ",
       "createdAt": "2026-08-10T13:42:14Z",
-      "updatedAt": "2026-08-21T12:09:22Z",
+      "updatedAt": "2026-08-26T16:53:52Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "40b1c4161dd1971dc1ac7d5ba718a636116109ca",
@@ -20546,13 +20682,13 @@
       ],
       "body": "Preview PR for #284. This is not mergeable yet but want to start conversations about certain aspects of that potential change.",
       "createdAt": "2026-08-11T08:52:23Z",
-      "updatedAt": "2026-08-17T22:08:21Z",
+      "updatedAt": "2026-08-26T19:21:36Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
-      "baseRefOid": "40b1c4161dd1971dc1ac7d5ba718a636116109ca",
+      "baseRefOid": "4b3fb82dd8ffd27f224bb1e85206164486f4b903",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "arndt/resolve_284",
-      "headRefOid": "65da4528947d7b24b36755b6fba934c8f2631d51",
+      "headRefOid": "45ff94e280958660004249834e4a11e03e38acc2",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -20738,6 +20874,259 @@
               "updatedAt": "2026-08-17T22:08:21Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABK8bRKw",
+          "commit": {
+            "abbreviatedOid": "65da452"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-26T10:34:51Z",
+          "updatedAt": "2026-08-26T10:34:51Z",
+          "comments": [
+            {
+              "originalPosition": 50,
+              "body": "Updated.",
+              "createdAt": "2026-08-26T10:34:51Z",
+              "updatedAt": "2026-08-26T10:34:51Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABK9H8RA",
+          "commit": {
+            "abbreviatedOid": "65da452"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-26T12:07:01Z",
+          "updatedAt": "2026-08-26T12:07:01Z",
+          "comments": [
+            {
+              "originalPosition": 172,
+              "body": "Removed the second part of the paragraph and now only say that it's out of scope.",
+              "createdAt": "2026-08-26T12:07:01Z",
+              "updatedAt": "2026-08-26T12:07:01Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABK9IF8Q",
+          "commit": {
+            "abbreviatedOid": "65da452"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-26T12:07:20Z",
+          "updatedAt": "2026-08-26T12:07:20Z",
+          "comments": [
+            {
+              "originalPosition": 99,
+              "body": "{{wpt-scheme-abnf}} is still there so I think it still applies?",
+              "createdAt": "2026-08-26T12:07:20Z",
+              "updatedAt": "2026-08-26T12:07:20Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABK_tQRA",
+          "commit": {
+            "abbreviatedOid": "8353cec"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-26T16:39:49Z",
+          "updatedAt": "2026-08-26T16:39:50Z",
+          "comments": [
+            {
+              "originalPosition": 99,
+              "body": "{{wpt-scheme-abnf}} is still there but doesn't add anything useful to this step. A a single and well-formed JWT is valid token68 but being a valid token68 thing doesn't tell you anything more of value and there are tons of valid token68 things that aren't well-formed JWTs. ",
+              "createdAt": "2026-08-26T16:39:49Z",
+              "updatedAt": "2026-08-26T16:39:50Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABK_u56w",
+          "commit": {
+            "abbreviatedOid": "9b5a102"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-26T16:43:14Z",
+          "updatedAt": "2026-08-26T16:43:15Z",
+          "comments": [
+            {
+              "originalPosition": 120,
+              "body": "```suggestion\nErrors may occur during the processing of the WPT. If the validation fails for any reason,\n```",
+              "createdAt": "2026-08-26T16:43:14Z",
+              "updatedAt": "2026-08-26T16:43:15Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABK_vn_A",
+          "commit": {
+            "abbreviatedOid": "99dff3a"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-26T16:44:44Z",
+          "updatedAt": "2026-08-26T16:44:44Z",
+          "comments": [
+            {
+              "originalPosition": 136,
+              "body": "meh",
+              "createdAt": "2026-08-26T16:44:44Z",
+              "updatedAt": "2026-08-26T16:44:45Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABK_yyxA",
+          "commit": {
+            "abbreviatedOid": "99dff3a"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-26T16:51:15Z",
+          "updatedAt": "2026-08-26T16:51:15Z",
+          "comments": [
+            {
+              "originalPosition": 161,
+              "body": "It feels a little weird to me to talk about DPoP in a section called Coexistence with Bearer Tokens. \n```suggestion\nauthentication scheme, including the `Bearer` scheme ({{Section 2.1 of RFC6750}}) or the `Basic` scheme ({{RFC7617}}).\n```\n",
+              "createdAt": "2026-08-26T16:51:15Z",
+              "updatedAt": "2026-08-26T16:51:15Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABK_zvLQ",
+          "commit": {
+            "abbreviatedOid": "008339b"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "thank you for doing this and the recent updates",
+          "createdAt": "2026-08-26T16:53:09Z",
+          "updatedAt": "2026-08-26T16:53:09Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABLAn_SA",
+          "commit": {
+            "abbreviatedOid": "45ff94e"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-26T18:27:30Z",
+          "updatedAt": "2026-08-26T18:27:31Z",
+          "comments": [
+            {
+              "originalPosition": 104,
+              "body": "A separate PR mentions that we need to validate the WIT, too. Please make sure you don't lose it.",
+              "createdAt": "2026-08-26T18:27:30Z",
+              "updatedAt": "2026-08-26T18:27:31Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABLApKbg",
+          "commit": {
+            "abbreviatedOid": "45ff94e"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-26T18:29:38Z",
+          "updatedAt": "2026-08-26T18:29:38Z",
+          "comments": [
+            {
+              "originalPosition": 148,
+              "body": "Are you sure the name \"challenge\" still applies? I have always thought that the name refers to a random nonce included in the www-authenticate header.",
+              "createdAt": "2026-08-26T18:29:38Z",
+              "updatedAt": "2026-08-26T18:29:38Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABLAscFg",
+          "commit": {
+            "abbreviatedOid": "45ff94e"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-26T18:36:12Z",
+          "updatedAt": "2026-08-26T18:36:13Z",
+          "comments": [
+            {
+              "originalPosition": 148,
+              "body": "sorry, my mistake. Closing.",
+              "createdAt": "2026-08-26T18:36:12Z",
+              "updatedAt": "2026-08-26T18:36:13Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABLAyEcA",
+          "commit": {
+            "abbreviatedOid": "45ff94e"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-26T18:47:18Z",
+          "updatedAt": "2026-08-26T18:47:19Z",
+          "comments": [
+            {
+              "originalPosition": 57,
+              "body": "I don't see a reason NOT to use the `auth-param` syntax, i.e.\n\n```\nAuthorization: WPT token=\"<jwt>\"\n```\n\nwhich RFC 9110 sec. 16.4.2 says we ought to do. It's a bit uglier and a bit more extensible, and we stay on the good side of the HTTP community.",
+              "createdAt": "2026-08-26T18:47:18Z",
+              "updatedAt": "2026-08-26T18:47:19Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABLBDLNg",
+          "commit": {
+            "abbreviatedOid": "45ff94e"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-26T19:21:35Z",
+          "updatedAt": "2026-08-26T19:21:36Z",
+          "comments": [
+            {
+              "originalPosition": 104,
+              "body": "the line right above this one?",
+              "createdAt": "2026-08-26T19:21:35Z",
+              "updatedAt": "2026-08-26T19:21:36Z"
+            }
+          ]
         }
       ]
     },
@@ -20831,7 +21220,7 @@
       "id": "PR_kwDOLJmm788AAAABAEMiGw",
       "title": "Advise against logging PoP values",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/289",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -20841,17 +21230,19 @@
       ],
       "body": "* Advise against logging proof-of-possession values (#271).\r\n* Security Considerations formatting fixup (#217).",
       "createdAt": "2026-08-17T21:27:50Z",
-      "updatedAt": "2026-08-17T21:32:17Z",
+      "updatedAt": "2026-08-25T15:03:35Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
-      "baseRefOid": "c96037d5ffc4bc70541de347affe7ab708bc01cb",
+      "baseRefOid": "25108d664372c8436720d10d11e012740fc4f820",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "raw-logging",
-      "headRefOid": "53f45ea9c0ee3af31280b9710fd3211ea5724fbd",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "7215db142aab9ea42f9041699693f442411ea05b",
+      "closedAt": "2026-08-25T15:03:35Z",
+      "mergedAt": "2026-08-25T15:03:35Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "3fe6dcc1c850baf00ddd8c625785b44f56377b2d"
+      },
       "comments": [],
       "reviews": [
         {
@@ -20873,6 +21264,139 @@
               "updatedAt": "2026-08-17T21:28:16Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABKzwhZw",
+          "commit": {
+            "abbreviatedOid": "9e17fe1"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-25T14:45:39Z",
+          "updatedAt": "2026-08-25T14:45:40Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "per @arndt-s's suggestion \n\n```suggestion\nImplementations MUST NOT log raw PoP tokens by default. Depending on the nature and\n```",
+              "createdAt": "2026-08-25T14:45:39Z",
+              "updatedAt": "2026-08-25T14:45:40Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABKzvx5Q",
+          "commit": {
+            "abbreviatedOid": "9e17fe1"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-08-25T14:44:34Z",
+          "updatedAt": "2026-08-25T14:46:04Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "```suggestion\nImplementations MUST NOT log a raw PoP by default. Depending on the nature and\n```",
+              "createdAt": "2026-08-25T14:44:34Z",
+              "updatedAt": "2026-08-25T14:46:04Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABKzwztQ",
+          "commit": {
+            "abbreviatedOid": "9e17fe1"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-25T14:46:06Z",
+          "updatedAt": "2026-08-25T14:46:06Z",
+          "comments": [
+            {
+              "originalPosition": 18,
+              "body": "```suggestion\n* Advise against logging proof-of-possession tokens (#271).\n```",
+              "createdAt": "2026-08-25T14:46:06Z",
+              "updatedAt": "2026-08-25T14:46:06Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABKzxy0w",
+          "commit": {
+            "abbreviatedOid": "07a7beb"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-25T14:47:33Z",
+          "updatedAt": "2026-08-25T14:47:33Z",
+          "comments": [
+            {
+              "originalPosition": 32,
+              "body": "```suggestion\nImplementations MUST NOT log raw WPTs by default. Depending on the aggressiveness\n```",
+              "createdAt": "2026-08-25T14:47:33Z",
+              "updatedAt": "2026-08-25T14:47:33Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABKz3NYQ",
+          "commit": {
+            "abbreviatedOid": "413891d"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-25T14:55:03Z",
+          "updatedAt": "2026-08-25T14:55:03Z",
+          "comments": [
+            {
+              "originalPosition": 10,
+              "body": "remove this to unblock the discussion \n```suggestion\n```",
+              "createdAt": "2026-08-25T14:55:03Z",
+              "updatedAt": "2026-08-25T14:55:03Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABKz3Wgg",
+          "commit": {
+            "abbreviatedOid": "413891d"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-25T14:55:16Z",
+          "updatedAt": "2026-08-25T14:55:16Z",
+          "comments": [
+            {
+              "originalPosition": 18,
+              "body": "ffs \n```suggestion\n```",
+              "createdAt": "2026-08-25T14:55:16Z",
+              "updatedAt": "2026-08-25T14:55:16Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABKz4Oqg",
+          "commit": {
+            "abbreviatedOid": "ae1b7cb"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-08-25T14:56:28Z",
+          "updatedAt": "2026-08-25T14:56:28Z",
+          "comments": []
         }
       ]
     },
@@ -20881,24 +21405,26 @@
       "id": "PR_kwDOLJmm788AAAABASOt7w",
       "title": "Add WIT validation procedure for recipients",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/291",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "## Summary\n* Add Section 5.1.4 in workload-creds with a MUST checklist for validating a presented WIT (signature, `typ`, `sub`, `exp`, `cnf`).\n* Point WPT and HTTP signatures at that procedure instead of restating WIT checks.\n\nFixes #290\n\n\nMade with [Cursor](https://cursor.com)",
       "createdAt": "2026-08-19T13:15:36Z",
-      "updatedAt": "2026-08-21T18:01:01Z",
+      "updatedAt": "2026-08-25T11:56:36Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "c96037d5ffc4bc70541de347affe7ab708bc01cb",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-290",
       "headRefOid": "7cd83b2ca3fabe83eaab09e874f2fdff38ff220e",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-08-25T11:44:00Z",
+      "mergedAt": "2026-08-25T11:43:59Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "0ed889ef9a88f413118f4fcb1dab88f392ba52e8"
+      },
       "comments": [],
       "reviews": [
         {
@@ -20940,6 +21466,191 @@
               "updatedAt": "2026-08-21T18:00:54Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABKx5xcg",
+          "commit": {
+            "abbreviatedOid": "7cd83b2"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-08-25T11:33:00Z",
+          "updatedAt": "2026-08-25T11:33:00Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABKZ_fQg",
+          "commit": {
+            "abbreviatedOid": "7cd83b2"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-21T12:41:18Z",
+          "updatedAt": "2026-08-25T11:56:36Z",
+          "comments": [
+            {
+              "originalPosition": 21,
+              "body": "Prior step already covers this. Maybe we need to move this one step up?",
+              "createdAt": "2026-08-21T12:41:18Z",
+              "updatedAt": "2026-08-25T11:56:36Z"
+            },
+            {
+              "originalPosition": 19,
+              "body": "This step already requires knowing the trust domain, which is only identified at later steps.",
+              "createdAt": "2026-08-21T12:42:05Z",
+              "updatedAt": "2026-08-25T11:56:36Z"
+            },
+            {
+              "originalPosition": 13,
+              "body": "I now recall a discussion about this. We considered between referencing other drafts for JWT validation or specifying it on our own and potentially duplicating most of it.\n\nI'm not sure if it makes sense to bring all the details about `exp` validation, clock skew and what not into this draft. It also means we need to talk about the security considerations of it. So I'm in favor of just referencing other drafts that focus on that part. \n\nBut I also agree that we're currently a bit too shallow on it. There's specific stuff in here such as the `wit+jwt` type, the trust anchors (somewhat covered in the {{trust-anchors}} section and that the `cnf` claim must be present. ",
+              "createdAt": "2026-08-21T12:46:15Z",
+              "updatedAt": "2026-08-25T11:56:36Z"
+            },
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\nTo validate a WIT, the receiving workload verifies the JWS signature using key material from the trust anchors configured for the trust domain in the `sub` claim. Trust anchor material for WIT validation MAY include more than one public key so that operators can rotate signing keys. Verification follows {{RFC7515}} and the JWT best practices in {{RFC8725}}. In practice, the `alg` header parameter would identify an algorithm that the validator accepts for that trust domain, and the signature would be checked under a key drawn from the configured trust anchors. If the JWS header contains a `kid` parameter, the validator would use the key in the trust anchor material with the same `kid` value. If `kid` is absent, deployment policy would need to provide unambiguous key selection (for example, when only a single key is configured for that trust domain).\n\nExtra validation steps of the WIT in addition to RFC7515 and RFC8725 are:\n\n* The `typ` JOSE header parameter conveys a media type of `wit+jwt`.\n* The `sub` is a Workload Identifier and identifies a trust domain.\n* The `cnf` claim is present and contains a `jwk` object with an `alg` member as specified in {{to-wit}}.\n* The signature is valid based on the rules described above.\n```\n\nThe last bullet point needs refinement.",
+              "createdAt": "2026-08-21T12:50:34Z",
+              "updatedAt": "2026-08-25T11:56:36Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 293,
+      "id": "PR_kwDOLJmm788AAAABA7WEDA",
+      "title": "Try to be more clear on how the various token hash claims are done",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/293",
+      "state": "MERGED",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-wpt"
+      ],
+      "body": "related to #292 ",
+      "createdAt": "2026-08-25T11:21:00Z",
+      "updatedAt": "2026-08-25T12:48:34Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "0ed889ef9a88f413118f4fcb1dab88f392ba52e8",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "xth",
+      "headRefOid": "e2931d20fc88496b8bb01595e21dc8dd7f68bf91",
+      "closedAt": "2026-08-25T12:48:34Z",
+      "mergedAt": "2026-08-25T12:48:34Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "25108d664372c8436720d10d11e012740fc4f820"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABKyFZDA",
+          "commit": {
+            "abbreviatedOid": "a8f14b0"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Approved, though it would be nicer to define base64url once instead of quarce (4 times).\n\n(I so wanted a word like \"thrice\", and the chat says: there is an archaic/rare \u201cquarce\u201d (also historically fourice), but essentially nobody uses it today.)",
+          "createdAt": "2026-08-25T11:55:43Z",
+          "updatedAt": "2026-08-25T11:55:43Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABKyJSbw",
+          "commit": {
+            "abbreviatedOid": "a8f14b0"
+          },
+          "author": "sorindumitru",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-08-25T12:03:35Z",
+          "updatedAt": "2026-08-25T12:03:35Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 295,
+      "id": "PR_kwDOLJmm788AAAABA8JSMQ",
+      "title": "Shorten/clarify WIT validation",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/295",
+      "state": "MERGED",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "## Summary\n- Reorder WIT validation so `sub` selects trust anchors before signature checks.\n- Rely on RFC 7515 and draft-ietf-oauth-rfc8725bis for generic JWT rules; list only WIMSE-specific MUST requirements.\n- Keep the long-lifetime rejection as a separate SHOULD after the list.\n\nFixes #294\n\nMade with [Cursor](https://cursor.com)",
+      "createdAt": "2026-08-25T13:12:16Z",
+      "updatedAt": "2026-08-25T15:23:05Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "25108d664372c8436720d10d11e012740fc4f820",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-294",
+      "headRefOid": "f06f1eedb0dd7ddf82467a2ac666f394feaf5037",
+      "closedAt": "2026-08-25T15:23:04Z",
+      "mergedAt": "2026-08-25T15:23:04Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "4b3fb82dd8ffd27f224bb1e85206164486f4b903"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABKzXRPw",
+          "commit": {
+            "abbreviatedOid": "466a7b5"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-25T14:10:19Z",
+          "updatedAt": "2026-08-25T14:10:20Z",
+          "comments": [
+            {
+              "originalPosition": 36,
+              "body": "Replace by ref to 9.2.1",
+              "createdAt": "2026-08-25T14:10:20Z",
+              "updatedAt": "2026-08-25T14:10:20Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABK0HlcQ",
+          "commit": {
+            "abbreviatedOid": "466a7b5"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "needs https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/295#discussion_r3853828570 after which i'm good with it ",
+          "createdAt": "2026-08-25T15:20:36Z",
+          "updatedAt": "2026-08-25T15:20:36Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABK0IWew",
+          "commit": {
+            "abbreviatedOid": "f06f1ee"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-08-25T15:21:52Z",
+          "updatedAt": "2026-08-25T15:21:52Z",
+          "comments": []
         }
       ]
     }
