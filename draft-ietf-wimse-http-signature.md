@@ -91,7 +91,10 @@ Formally, this is a profile of the Message Signatures specification {{!RFC9421}}
 The request is signed as per {{RFC9421}}. The following derived components MUST be signed:
 
 * `@method`
-* `@request-target`
+* `@path`
+* `@query`
+
+This profile uses `@path` and `@query` rather than `@request-target`, which is NOT RECOMMENDED outside HTTP/1.1 ({{Section 2.2.5 of RFC9421}}). `@query` is included even when the request has no query component; in that case its value is `?` ({{Section 2.2.7 of RFC9421}}).
 
 In addition, the following request headers MUST be signed when they exist:
 
@@ -105,7 +108,8 @@ If the response is signed, the following components MUST be signed:
 
 * `@status`
 * `@method;req`
-* `@request-target;req`
+* `@path;req`
+* `@query;req`
 * `Content-Type` if it exists
 * `Content-Digest` if it exists
 * `Workload-Identity-Token`
@@ -296,7 +300,7 @@ is still possible that a token and its PoP may be captured and
 replayed within the PoP's lifetime.
 
 The HTTP Signature profile presented here binds the PoP to the critical parts of the HTTP request (and potentially
-response), including the Request URI and the message body. This
+response), including the request method, path, query, and the message body. This
 eliminates most of the risk associated with active attackers on a middlebox.
 
 In addition, the following mitigations should be used:
@@ -429,6 +433,8 @@ IANA is requested to register the following entries in the "HTTP Signature Metad
 
 ## draft-ietf-wimse-http-signature-07
 
+* WGLC: replace `@request-target` with `@path` and `@query` (#297).
+* Non-normative examples are not updated in this revision; they still show `@request-target`.
 * Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use.
 * Reference the WIT validation procedure in {{I-D.ietf-wimse-workload-creds}} (#290).
 
