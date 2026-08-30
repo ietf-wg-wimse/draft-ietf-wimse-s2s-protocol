@@ -143,8 +143,7 @@ The following signature parameters in the `Signature-Input` header MUST NOT be u
 * `alg` - The signature algorithm is specified in the `jwk` section of the `cnf` claim in the WIT. See {{I-D.ietf-wimse-workload-creds}} and Sec. 3.3.7 of {{RFC9421}} for details.
 
 It is RECOMMENDED to include only one signature with the HTTP message.
-If multiple ones are included, then the signature label included in both the `Signature-Input` and `Signature` headers SHOULD
-be `wimse`.
+The WIMSE signature is the one whose `tag` parameter is `wimse-workload-to-workload` ({{Section 7.2.7 of RFC9421}}). If no signature has that `tag` value, the message does not carry a WIMSE HTTP signature. If more than one signature has that `tag` value, the recipient MUST reject the message. When more than one signature is present, recipients MUST use that `tag` to find the WIMSE signature; they MUST NOT choose by label ({{Section 7.2.5 of RFC9421}}).
 
 A sender MUST ensure that each nonce it generates is unique. Nonces are random and MUST be long enough that the probability of collision among honest senders is negligible. A sender cluster therefore need not share nonce state.
 To detect message replays,
@@ -435,7 +434,8 @@ IANA is requested to register the following entries in the "HTTP Signature Metad
 * WGLC: require `wimse-req-nonce` on every signed response, not only when the client required one (#297).
 * WGLC: recipients reject duplicate nonces without regard to sender (#297).
 * WGLC: a signed-response requirement that exists only at the server is not enforceable by the client (#301).
-* Non-normative examples are not updated in this revision; they still show `@request-target`.
+* WGLC: select the WIMSE signature by `tag`, not by label (#301).
+* Non-normative examples are not updated in this revision; they still show `@request-target` and a `wimse` signature label.
 * Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use.
 * Reference the WIT validation procedure in {{I-D.ietf-wimse-workload-creds}} (#290).
 
