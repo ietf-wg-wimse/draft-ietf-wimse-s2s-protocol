@@ -133,7 +133,7 @@ For requests only, the following signature parameter MAY also be included:
 
 * `wimse-sign-response` ({{wimse-sign-response-param}})
 
-For responses only, when response signing is required ({{signing-the-response}}), the following signature parameter MUST also be included:
+For responses only, the following signature parameter MUST also be included:
 
 * `wimse-req-nonce` ({{wimse-req-nonce-param}})
 
@@ -179,11 +179,11 @@ This parameter is not mandatory. Moreover, the server MAY sign the response even
 
 ## The `wimse-req-nonce` Signature Parameter {#wimse-req-nonce-param}
 
-When response signing is enabled, this document defines the `wimse-req-nonce` signature metadata parameter for responses.
+This document defines the `wimse-req-nonce` signature metadata parameter for signed responses.
 This parameter binds requests to responses and prevents a malicious
 proxy from replaying responses to the wrong client.
 
-The server MUST set `wimse-req-nonce` to the value of the `nonce` signature parameter from the `Signature-Input` of the request that triggered the response.
+Every signed response MUST include `wimse-req-nonce`. The server MUST set it to the value of the `nonce` signature parameter from the `Signature-Input` of the request that triggered the response.
 
 ## Signing the Response {#signing-the-response}
 
@@ -201,10 +201,11 @@ as described in {{error-conditions}}.
 
 If response signing is required, the client (recipient of the response) MUST check that the signature exists and validate it.
 The response MUST be rejected if a signature is absent or fails to validate.
-The client MUST verify that `wimse-req-nonce` matches the `nonce` it included in its request's `Signature-Input`.
 
 If response signing is not required, the server MAY still sign the response. In that case, the client MUST still validate
 the signed response and reject it if it fails to validate.
+
+When validating a signed response, the client MUST verify that `wimse-req-nonce` is present and equals the `nonce` from the corresponding request.
 
 As described in {{Section 5 of RFC9421}}, either client or server MAY send an
 `Accept-Signature` header,
@@ -394,7 +395,7 @@ caches across validators). Therefore it is not claimed as
 a goal, though implementations SHOULD attempt to detect replays where feasible.
 We note that since most of the message is signed, replay attacks are only possible in a
 context where the request would be accepted as valid, and this mitigates the risk to some extent.
-* When response signing is required, validating `wimse-req-nonce` mitigates replay of a signed response to a client other than the one that sent the triggering request.
+* When a signed response is present, validating `wimse-req-nonce` mitigates replay of that response to a client other than the one that sent the triggering request.
 * Unless response signing is required (via `wimse-sign-response` or local policy), complete deletion of a request/response pair is possible without detection.
 
 
@@ -434,6 +435,7 @@ IANA is requested to register the following entries in the "HTTP Signature Metad
 ## draft-ietf-wimse-http-signature-07
 
 * WGLC: replace `@request-target` with `@path` and `@query` (#297).
+* WGLC: require `wimse-req-nonce` on every signed response, not only when the client required one (#297).
 * Non-normative examples are not updated in this revision; they still show `@request-target`.
 * Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use.
 * Reference the WIT validation procedure in {{I-D.ietf-wimse-workload-creds}} (#290).
