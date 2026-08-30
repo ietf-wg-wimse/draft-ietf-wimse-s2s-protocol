@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-08-27T07:24:09.019341+00:00",
+  "timestamp": "2026-08-30T03:45:00.605494+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -4934,7 +4934,7 @@
       "id": "I_kwDOLJmm788AAAABLoJ60w",
       "title": "maybe switch to something like `Authorization: wimse <WIT>/<WPT>`?",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/284",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -4945,8 +4945,8 @@
       ],
       "body": "> Interestingly @arndt-s recently floated the idea (more or less) of conveying the WPT and WIT together in the Authorization header with a new auth-scheme, which might help with default logging of headers. Something like:\n> \n> `Authorization: wimse <WIT>/<WPT>` \n\n _Originally posted by @bc-pi in [#271](https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/271#issuecomment-4996661207)_",
       "createdAt": "2026-08-05T21:13:38Z",
-      "updatedAt": "2026-08-10T20:49:09Z",
-      "closedAt": null,
+      "updatedAt": "2026-08-28T18:20:03Z",
+      "closedAt": "2026-08-28T18:20:02Z",
       "comments": [
         {
           "author": "bc-pi",
@@ -4968,6 +4968,13 @@
           "body": "> * \"aauth-scheme\" in your top comment is a typo, right? (I'm thinking https://www.aauth.dev/).\n\nYes, my mistake, I had an extra 'a' there. I meant `auth-scheme` as shorthand for [Authentication Scheme from RFC9110](https://datatracker.ietf.org/doc/html/rfc9110#name-authentication-scheme). Please don't mistake my mistake as any affiliation or endorsement of [that aauth](https://datatracker.ietf.org/doc/draft-hardt-oauth-aauth-protocol/) or the[ other aauth](https://datatracker.ietf.org/doc/draft-rosenberg-oauth-aauth/). \n\n> \n> * I like the `Authorization` header idea.\n\nI'm coming around to it more and more.\n\n> \n> * The advantage of keeping the WIT in its own header is that when it comes to logging, secret information (WPT) is separated from less-secret information (WIT).\n\nYeah, this is one of the advantages that @arndt-s and I chatted about last week (or so).\n\n> \n> * The reference to RFC 9449 in the bullet that defines `ath` is very confusing, I suggest to drop it (if `ath` stays).\n\nRFC9449 does define `ath` so a reference seems appropriate. Maybe that could be clarified somehow? But HTTP only allows a single Authorization header and OAuth access tokens are (almost) always sent via the Authorization header. So if the Authorization header was used to send the WPT, it means an access token can't go there and sort of obviates the utility of `ath`. So it's use in WPTs could be removed and that would remove that point of confusion. I like also that it sort of implicitly discourages using access tokens in 'backend' workload-to-workload invocations too.   ",
           "createdAt": "2026-08-10T19:16:25Z",
           "updatedAt": "2026-08-10T20:49:09Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I think with WPT -02 this can be considered done https://mailarchive.ietf.org/arch/msg/wimse/h-uKXiiTT9LfkL7NmA-8mYuOhj8/ ",
+          "createdAt": "2026-08-28T18:20:02Z",
+          "updatedAt": "2026-08-28T18:20:02Z"
         }
       ]
     },
@@ -5073,6 +5080,78 @@
       "createdAt": "2026-08-25T12:48:00Z",
       "updatedAt": "2026-08-25T15:23:06Z",
       "closedAt": "2026-08-25T15:23:06Z",
+      "comments": []
+    },
+    {
+      "number": 297,
+      "id": "I_kwDOLJmm788AAAABOqSfKA",
+      "title": "WGLC: @request-target, voluntary response signing, nonce scope (Kieran Sweeney)",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/297",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-http-signature"
+      ],
+      "body": "WGLC review of `draft-ietf-wimse-http-signature-06` from @kierandotai (Kieran Sweeney), [mail archive](https://mailarchive.ietf.org/arch/msg/wimse/PhjX6Pc4l7DSqJCBHG5w8fKEg5k/).\n\nOverall: layering and design are sound (`wimse-aud`, forbidding `keyid`/`alg`, credentials out of scope). Not ready yet for the reasons below.\n\n## 1. `@request-target` (blocking)\n\nSection 3 mandates `@request-target` as a covered component. RFC 9421 Section 2.2.5 says this is difficult to construct reliably outside HTTP/1.1 and is NOT RECOMMENDED when other HTTP versions may be in use.\n\nThe deployments this draft targets (multi-hop TLS proxies/LBs, often HTTP/2) are exactly where `@request-target` can diverge across hops (origin-form vs absolute-form, version translation), breaking end-to-end verification.\n\n**Suggested fix:** replace `@request-target` / `@request-target;req` with `@path` and `@query` (when a query is present). Recipient binding is already carried by mandatory `wimse-aud` and Section 3.1.\n\n## 2. Voluntary signed responses without `wimse-req-nonce`\n\nSection 3 requires `wimse-req-nonce` only when response signing is required, but Section 3.4 allows the server to sign a response voluntarily. A voluntarily signed response need not carry `wimse-req-nonce`, and the client is not told to check it \u2014 a middlebox could replay one client's signed response to another.\n\n**Suggested fix:** require `wimse-req-nonce` on every signed response (request `nonce` is already mandatory).\n\n## 3. Nonce uniqueness scope\n\nSection 3: unique among messages to the same recipient. Section 5.1: unique within the scope of a particular sender. Pick one scope and use it in both places.",
+      "createdAt": "2026-08-28T13:46:04Z",
+      "updatedAt": "2026-08-28T13:46:04Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 298,
+      "id": "I_kwDOLJmm788AAAABOsakDw",
+      "title": "WPT-02 sec 3",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/298",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-wpt"
+      ],
+      "body": "as mentioned in https://mailarchive.ietf.org/arch/msg/wimse/aEhoJl7WUmeREk_bKmrlVxXMk7Q/ the target/context of [3.2. ](https://datatracker.ietf.org/doc/html/draft-ietf-wimse-wpt-02#section-3.2)[Workload Identity Key Management](https://datatracker.ietf.org/doc/html/draft-ietf-wimse-wpt-02#name-workload-identity-key-manag) is confusing to me ",
+      "createdAt": "2026-08-28T18:18:38Z",
+      "updatedAt": "2026-08-28T18:21:36Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 299,
+      "id": "I_kwDOLJmm788AAAABOsbsAQ",
+      "title": "params in WPT challenge?",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/299",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-wpt"
+      ],
+      "body": "https://mailarchive.ietf.org/arch/msg/wimse/aEhoJl7WUmeREk_bKmrlVxXMk7Q/ mentions it ",
+      "createdAt": "2026-08-28T18:21:14Z",
+      "updatedAt": "2026-08-28T18:21:37Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 301,
+      "id": "I_kwDOLJmm788AAAABOztOhw",
+      "title": "WGLC: local-policy response signing and signature label selection (Anton Sokolov)",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/301",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-http-signature"
+      ],
+      "body": "WGLC follow-up on `draft-ietf-wimse-http-signature-06` from @tyche-dev (Anton Sokolov, Tyche Institute). Agrees with the points in #297 and raises two additional issues.\n\n## 1. Local-policy response signing is not client-verifiable\n\nSection 3.4 makes a response signature mandatory both when `wimse-sign-response` is present and when server local policy requires it. In the former case the client can reject an unsigned response. In the latter, the client may not know the policy, so a proxy that strips the signature yields an ordinary unsigned response.\n\nThe document should either require such a policy to be advertised or negotiated in authenticated request semantics available to the client, or state that a policy-only requirement does not provide a client-verifiable mandatory-signature guarantee.\n\nDistinct from the voluntary-signing / `wimse-req-nonce` replay issue in #297.\n\n## 2. Do not select the WIMSE signature by label\n\nSection 3's suggestion to use `wimse` as the signature label is incompatible with RFC 9421's treatment of labels (unique identifiers; intermediaries may relabel; applications should not put semantic meaning on labels \u2014 see RFC 9421 Sections 4 and 7.2.5). Application selection is what `tag` is for (RFC 9421 Section 7.2.7); this profile already requires `tag=\"wimse-workload-to-workload\"`.\n\nThe label guidance should be removed or made explicitly non-semantic. Recipients should select by `tag`, then validate the profile's requirements on the chosen signature (rather than matching on the full covered-component list as a discovery mechanism).",
+      "createdAt": "2026-08-29T20:32:14Z",
+      "updatedAt": "2026-08-29T20:32:14Z",
+      "closedAt": null,
       "comments": []
     }
   ],
@@ -20673,7 +20752,7 @@
       "id": "PR_kwDOLJmm7879avtH",
       "title": "Move WPT to Authorization header",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/287",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -20682,17 +20761,19 @@
       ],
       "body": "Preview PR for #284. This is not mergeable yet but want to start conversations about certain aspects of that potential change.",
       "createdAt": "2026-08-11T08:52:23Z",
-      "updatedAt": "2026-08-26T19:21:36Z",
+      "updatedAt": "2026-08-27T08:35:58Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "4b3fb82dd8ffd27f224bb1e85206164486f4b903",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "arndt/resolve_284",
       "headRefOid": "45ff94e280958660004249834e4a11e03e38acc2",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-08-27T08:35:58Z",
+      "mergedAt": "2026-08-27T08:35:57Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "49a50d638398310f98634c491b697838eb886a67"
+      },
       "comments": [],
       "reviews": [
         {
@@ -21653,6 +21734,74 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 296,
+      "id": "PR_kwDOLJmm788AAAABBMg94w",
+      "title": "Add an implementation status entry for wimsey",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/296",
+      "state": "OPEN",
+      "author": "kanywst",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "An entry for `wimsey`, a Rust implementation of these documents, per Yaron's invitation on the list: <https://github.com/kanywst/wimsey>.\n\nThe WPT and mutual-TLS documents have no Implementation Status section. `wimsey` implements both \u2014 happy to add the RFC 7942 boilerplate and an entry to each if you want it.\n\n`Contact:` is a GitHub link rather than an email, following the SPIFFE entry. Both documents build locally.",
+      "createdAt": "2026-08-27T11:10:23Z",
+      "updatedAt": "2026-08-27T16:29:37Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "49a50d638398310f98634c491b697838eb886a67",
+      "headRepository": "kanywst/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "implementation-status-wimsey",
+      "headRefOid": "3205fe3457afe06326b2efd83bc0d4df34068c95",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABLJjEIQ",
+          "commit": {
+            "abbreviatedOid": "3205fe3"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Thank you for the PR!",
+          "createdAt": "2026-08-27T16:29:37Z",
+          "updatedAt": "2026-08-27T16:29:37Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 300,
+      "id": "PR_kwDOLJmm788AAAABBYYYOQ",
+      "title": "Remove Workload Identity Key Management section from WPT...",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/300",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-wpt"
+      ],
+      "body": "which seems more appropriate in ietf-wimse-workload-creds where it already is \r\nfor #298 ",
+      "createdAt": "2026-08-28T19:51:31Z",
+      "updatedAt": "2026-08-28T19:52:45Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "49a50d638398310f98634c491b697838eb886a67",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "wtf-wpt-02-sec-3",
+      "headRefOid": "68c52e9915f9b4918701faff19133f1371bc7ba8",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
