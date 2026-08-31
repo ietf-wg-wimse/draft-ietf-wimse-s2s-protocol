@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 28 February 2027                             Palo Alto Networks
+Expires: 4 March 2027                                 Palo Alto Networks
                                                       A. Schwenkschuster
                                                         Defakto Security
                                                               Y. Sheffer
                                                                   Intuit
                                                             Y. Rosomakho
                                                                  Zscaler
-                                                          27 August 2026
+                                                          31 August 2026
 
 
                        WIMSE Workload Credentials
@@ -67,7 +67,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 28 February 2027.
+   This Internet-Draft will expire on 4 March 2027.
 
 Copyright Notice
 
@@ -1141,9 +1141,9 @@ Table of Contents
    [I-D.ietf-wimse-wpt]
               Campbell, B. and A. Schwenkschuster, "WIMSE Workload Proof
               Token", Work in Progress, Internet-Draft, draft-ietf-
-              wimse-wpt-01, 2 March 2026,
+              wimse-wpt-02, 27 August 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
-              wpt-01>.
+              wpt-02>.
 
    [IANA.HTTP.FIELDS]
               IANA, "Hypertext Transfer Protocol (HTTP) Field Name
