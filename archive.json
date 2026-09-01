@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-08-30T03:45:00.605494+00:00",
+  "timestamp": "2026-09-01T03:40:12.924624+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -5105,7 +5105,7 @@
       "id": "I_kwDOLJmm788AAAABOsakDw",
       "title": "WPT-02 sec 3",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/298",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -5114,8 +5114,8 @@
       ],
       "body": "as mentioned in https://mailarchive.ietf.org/arch/msg/wimse/aEhoJl7WUmeREk_bKmrlVxXMk7Q/ the target/context of [3.2. ](https://datatracker.ietf.org/doc/html/draft-ietf-wimse-wpt-02#section-3.2)[Workload Identity Key Management](https://datatracker.ietf.org/doc/html/draft-ietf-wimse-wpt-02#name-workload-identity-key-manag) is confusing to me ",
       "createdAt": "2026-08-28T18:18:38Z",
-      "updatedAt": "2026-08-28T18:21:36Z",
-      "closedAt": null,
+      "updatedAt": "2026-08-31T07:39:49Z",
+      "closedAt": "2026-08-31T07:39:48Z",
       "comments": []
     },
     {
@@ -21780,7 +21780,7 @@
       "id": "PR_kwDOLJmm788AAAABBYYYOQ",
       "title": "Remove Workload Identity Key Management section from WPT...",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/300",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -21789,19 +21789,102 @@
       ],
       "body": "which seems more appropriate in ietf-wimse-workload-creds where it already is \r\nfor #298 ",
       "createdAt": "2026-08-28T19:51:31Z",
-      "updatedAt": "2026-08-28T19:52:45Z",
+      "updatedAt": "2026-08-31T07:39:51Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "49a50d638398310f98634c491b697838eb886a67",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "wtf-wpt-02-sec-3",
       "headRefOid": "68c52e9915f9b4918701faff19133f1371bc7ba8",
+      "closedAt": "2026-08-31T07:39:47Z",
+      "mergedAt": "2026-08-31T07:39:47Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "07c8a14c1c2a78d318343faff6d4027c0cb0439b"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABLdinIA",
+          "commit": {
+            "abbreviatedOid": "68c52e9"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "There's probably more of these leftovers from the split",
+          "createdAt": "2026-08-31T07:39:42Z",
+          "updatedAt": "2026-08-31T07:39:42Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 302,
+      "id": "PR_kwDOLJmm788AAAABBhnmpQ",
+      "title": "HTTP-Sig WGLC comments from Kieran and Anton",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/302",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "5 commits, each addressing one comment.\r\n\r\nCloses #297 and #301.",
+      "createdAt": "2026-08-30T19:55:53Z",
+      "updatedAt": "2026-08-31T23:44:41Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "49a50d638398310f98634c491b697838eb886a67",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-httpsig-wglc",
+      "headRefOid": "a56d820f3554991a509223abf4267039b1b38ace",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABLlfFGQ",
+          "commit": {
+            "abbreviatedOid": "a56d820"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-31T23:35:59Z",
+          "updatedAt": "2026-08-31T23:35:59Z",
+          "comments": [
+            {
+              "originalPosition": 40,
+              "body": "DO nonces need to be random (unpredictable) or just unique?   Also the the bit about sharing nonce state seems ambiguous. \n\n```suggestion\nA sender MUST ensure that each nonce it generates is unique. Nonces MUST be long enough that the probability of collision among honest senders is negligible. A sender cluster therefore needs to make sure servers do not send the same nonce.\n```",
+              "createdAt": "2026-08-31T23:35:59Z",
+              "updatedAt": "2026-08-31T23:35:59Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABLljhAw",
+          "commit": {
+            "abbreviatedOid": "a56d820"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-31T23:44:40Z",
+          "updatedAt": "2026-08-31T23:44:41Z",
+          "comments": [
+            {
+              "originalPosition": 78,
+              "body": "The local policy seems redundant here.  If the local policy is sent then the client sends wimse-sign-response.  Is there a case where it wouldn't?  \nWe might what to have a sentence like:\n\"If the client is configured to required a signed response then it MUST send include the wimse-sign-response parameter with the Boolean value of true. \"\nthen you can leave off the either by sending  wimse-sign-response or by local configuration. ",
+              "createdAt": "2026-08-31T23:44:41Z",
+              "updatedAt": "2026-08-31T23:44:41Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
