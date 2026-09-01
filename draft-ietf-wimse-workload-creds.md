@@ -166,7 +166,7 @@ To enable mutual and granular authentication between workloads, two things must 
 
 Once these conditions are met, the methods described in this document can be used for the caller and callee to mutually authenticate.
 
-How that recipient check is expressed depends on whether authentication is performed at the application layer or at the transport layer.
+For application-level proof of possession, that recipient check is expressed as follows.
 
 ### Application-Layer Audience {#app-audience}
 
@@ -181,17 +181,6 @@ observed on the wire to decide whether it is the intended recipient.
 Instead, the callee verifies that the audience value carried in the proof is intended for it.
 In some cases this might necessitate infrastructure support to account for deployment-specific aliases or normalization.
 Deployments SHOULD use this capability for consistent audience validation within their environment.
-
-### Transport-Layer Recipient Check {#transport-identity}
-
-At the transport layer there is no separate audience claim analogous to application-layer proof of possession.
-HTTP already requires that, once a server has reconstructed the request's target URI, it decide whether it is
-configured to process that request and whether the connection context is appropriate for it, and an origin server
-MUST reject requests that appear to have been misdirected ({{Section 7.4 of RFC9110}}).
-When connections are reused across origins — as HTTP/2 permits — a server that is not authoritative for a request
-indicates that by responding with 421 (Misdirected Request) ({{Section 9.1.1 of ?RFC9113}}).
-That check — together with ordinary TLS server authentication (including the rules in {{?I-D.ietf-wimse-mutual-tls}}) —
-is the recipient validation available when relying on mutual TLS alone.
 
 # Conventions and Definitions
 
@@ -599,8 +588,7 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 
 ## draft-ietf-wimse-workload-creds-04
 
-* Separate general recipient/audience requirements from application-layer audience (WPT, HTTP signatures);
-  for transport/mTLS, rely on HTTP rejecting misdirected requests (RFC 9110 Section 7.4) rather than a separate audience claim (#173, #175).
+* Replace the access-path-to-identifier mapping API with application-layer audience for WPT and HTTP signatures (#173, #175).
 
 ## draft-ietf-wimse-workload-creds-03
 
