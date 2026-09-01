@@ -436,6 +436,15 @@ Teleport - Machine & Workload Identity
 * Coverage: Workload Identity Certificate
 * Contact: noah@goteleport.com
 
+wimsey
+
+* Organization: independent
+* Implementation: <https://github.com/kanywst/wimsey>
+* Maturity:
+    * Workload Identity Token: alpha
+    * Workload Identity Certificate: alpha
+* Coverage: WIT, Workload Identity Certificate
+* Contact: [kanywst on GitHub](https://github.com/kanywst)
 
 # Security Considerations
 

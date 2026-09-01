@@ -278,6 +278,17 @@ According to RFC 7942, "this will allow reviewers and working groups to assign d
 * Contact: jason@cofide.io
 * Last updated: 13-Nov-2025
 
+## wimsey
+
+* Organization: independent
+* Implementation: <https://github.com/kanywst/wimsey>
+* Maturity:
+    * WIT + HTTP Message Signatures: alpha
+* Coverage: WIT, HTTP Message Signatures, signed responses
+* License: Apache 2.0
+* Contact: [kanywst on GitHub](https://github.com/kanywst)
+* Last updated: 27-Aug-2026
+
 # Security Considerations
 
 This section includes security considerations that are specific to the HTTP Signature protocol defined here. Refer to
