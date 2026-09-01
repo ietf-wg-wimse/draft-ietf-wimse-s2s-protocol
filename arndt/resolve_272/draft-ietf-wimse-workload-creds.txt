@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 18 February 2027                             Palo Alto Networks
+Expires: 5 March 2027                                 Palo Alto Networks
                                                       A. Schwenkschuster
                                                         Defakto Security
                                                               Y. Sheffer
                                                                   Intuit
                                                             Y. Rosomakho
                                                                  Zscaler
-                                                          17 August 2026
+                                                        1 September 2026
 
 
                        WIMSE Workload Credentials
@@ -67,7 +67,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 18 February 2027.
+   This Internet-Draft will expire on 5 March 2027.
 
 Copyright Notice
 
@@ -803,14 +803,8 @@ Table of Contents
    the access of all of them, even if the workload they compromised had
    little access of its own.  A credential issued by mistake, or one
    belonging to a workload that no longer exists, can be used in the
-   same way until it expires.
-
-   Both sides of a call are affected.  A client that does not check
-   which workload it reached can be tricked into sending its requests,
-   along with its own credential and proof of possession, to a workload
-   the attacker controls in the same trust domain.  A receiving
-   application that only checks trust domain membership gives every
-   workload in the domain the access it meant to give to one.
+   same way until it expires.  This affects both sides of a call,
+   workloads acting a clients and workloads acting as servers.
 
    Proof of possession does not help here.  It shows that the peer holds
    the private key for the credential it presented (Section 9.3).  It
@@ -1125,9 +1119,9 @@ Table of Contents
    [I-D.ietf-wimse-wpt]
               Campbell, B. and A. Schwenkschuster, "WIMSE Workload Proof
               Token", Work in Progress, Internet-Draft, draft-ietf-
-              wimse-wpt-01, 2 March 2026,
+              wimse-wpt-02, 27 August 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
-              wpt-01>.
+              wpt-02>.
 
    [IANA.HTTP.FIELDS]
               IANA, "Hypertext Transfer Protocol (HTTP) Field Name
