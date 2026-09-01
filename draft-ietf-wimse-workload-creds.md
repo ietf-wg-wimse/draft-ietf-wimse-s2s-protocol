@@ -436,9 +436,7 @@ When a deployment uses the `iss` claim for key distribution as described in {{wi
 
 A workload that validates its peer's credential against the trust anchors for a trust domain and then stops has learned only that its peer belongs to that trust domain. It has not learned which workload the peer is. {{granular-auth}} requires the comparison that closes this gap.
 
-Without that comparison, every workload in the trust domain looks the same. Any workload holding a valid credential can be accepted in place of any other, so an attacker who compromises one workload gains the access of all of them, even if the workload they compromised had little access of its own. A credential issued by mistake, or one belonging to a workload that no longer exists, can be used in the same way until it expires.
-
-Both sides of a call are affected. A client that does not check which workload it reached can be tricked into sending its requests, along with its own credential and proof of possession, to a workload the attacker controls in the same trust domain. A receiving application that only checks trust domain membership gives every workload in the domain the access it meant to give to one.
+Without that comparison, every workload in the trust domain looks the same. Any workload holding a valid credential can be accepted in place of any other, so an attacker who compromises one workload gains the access of all of them, even if the workload they compromised had little access of its own. A credential issued by mistake, or one belonging to a workload that no longer exists, can be used in the same way until it expires. This affects both sides of a call, workloads acting a clients and workloads acting as servers.
 
 Proof of possession does not help here. It shows that the peer holds the private key for the credential it presented ({{wit-pop}}). It does not show that this credential is the one the peer was supposed to present. The same is true when a Workload Identity Certificate is used at the transport layer.
 
