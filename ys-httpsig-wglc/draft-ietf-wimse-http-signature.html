@@ -1591,10 +1591,10 @@ the server <span class="bcp14">SHOULD</span> return 400 (Bad Request) or 501 (No
 {
   "alg": "EdDSA",
   "crv": "Ed25519",
-  "d": "HQdG2ekHF4COyoHNYvCh2fMHhIaKvkrStjmyfndFyGI",
+  "d": "CUJccgL4-6a8pI4sE3QgxF_h3VM6aqLAzESr40cGg4A",
   "kid": "svc-a-key",
   "kty": "OKP",
-  "x": "ZjlVT4COsCkQO9HIo6tDWAXayQ0MymoFUKJRIQ7S8R8"
+  "x": "5IsFdO1vz8oZWgwfCTLK3K6aWIHFIz3l0vZKcCs_C3k"
 }
 </pre>
 </div>
@@ -1609,20 +1609,20 @@ the server <span class="bcp14">SHOULD</span> return 400 (Bad Request) or 501 (No
 
 GET /gimme-ice-cream?flavor=vanilla HTTP/1.1
 Host: svcb.example.com
-Signature: wimse=:zSK+kx5EnoZct9FZ6LMYzfx0mk32oI/hHpB7y4rgHxkRDcAA72\
-yBW5xgzA03nKviXLjL7nphq840Uwznp6IKAw==:
-Signature-Input: wimse=("@method" "@request-target" "workload-identi\
-ty-token");created=1785155797;expires=1785156097;nonce="abcd1111";ta\
-g="wimse-workload-to-workload";wimse-aud="https://svcb.example.com/g\
-imme-ice-cream";wimse-sign-response
+Signature: sig1=:rMpSBQIFBnFHVlukNhJS2+xEy0aOlB0sPfmgMmZBv+8fDoB8QFo\
+EkgbXhAlIfqhA5Xmttq1rtR+Hg4mpcMpbAQ==:
+Signature-Input: sig1=("@method" "@path" "@query" "workload-identity\
+-token");created=1788298924;expires=1788299224;nonce="abcd1111";tag=\
+"wimse-workload-to-workload";wimse-aud="https://svcb.example.com/gim\
+me-ice-cream";wimse-sign-response
 Workload-Identity-Token: eyJhbGciOiJFZERTQSIsImtpZCI6Imlzc3Vlci1rZXk\
 iLCJ0eXAiOiJ3aXQrand0In0.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J\
-2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1hLWtleSIsImt0eSI6Ik9LUCIsIngiOiJaamx\
-WVDRDT3NDa1FPOUhJbzZ0RFdBWGF5UTBNeW1vRlVLSlJJUTdTOFI4In19LCJleHAiOjE\
-3ODUxNTYwOTcsImlhdCI6MTc4NTE1NTc5NywiaXNzIjoiaHR0cHM6Ly9leGFtcGxlLmN\
-vbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc4NTE1NTc5NzIxNjU0NTcxOSIsInN1YiI6Ind\
-pbXNlOi8vZXhhbXBsZS5jb20vc3ZjQSJ9.BqJfcsbrYlS9GSQ7NpFBBVz4CeszShqleI\
-yr2sSnd0Ic6l2HXX27giZcdAOGnXjtv_7h-9vV16GZbVcrQt6hCg
+2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1hLWtleSIsImt0eSI6Ik9LUCIsIngiOiI1SXN\
+GZE8xdno4b1pXZ3dmQ1RMSzNLNmFXSUhGSXozbDB2WktjQ3NfQzNrIn19LCJleHAiOjE\
+3ODgyOTkyMjQsImlhdCI6MTc4ODI5ODkyNCwiaXNzIjoiaHR0cHM6Ly9leGFtcGxlLmN\
+vbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc4ODI5ODkyNDI4MTA3NzA3OSIsInN1YiI6Ind\
+pbXNlOi8vZXhhbXBsZS5jb20vc3ZjQSJ9.vCWuTey47Aom9frOm1pfcB2TzL1IdwXl5m\
+vs0Plf7S4zcsZjY7qJkiCfAgkrDVXYt1hBhjgvrxsi6E1QoT1nDA
 
 </pre>
 </div>
@@ -1636,10 +1636,10 @@ yr2sSnd0Ic6l2HXX27giZcdAOGnXjtv_7h-9vV16GZbVcrQt6hCg
 {
   "alg": "EdDSA",
   "crv": "Ed25519",
-  "d": "nn132WU82duEPtUbQtoQLqWoC1hKl8zeWavCDIR0VeI",
+  "d": "QFQjrIFl29D0HaTCgJMm-g1332QiQCSZhs0PyjY0gis",
   "kid": "svc-b-key",
   "kty": "OKP",
-  "x": "lBtLS8cNt_7pWsdi2xgx760lWpzEvqYe2DpSk9ELH2w"
+  "x": "6q34u4Yn6JUcymh4QwxzpIQr9uEos19pNfK1S5dVb8s"
 }
 </pre>
 </div>
@@ -1657,20 +1657,20 @@ Connection: close
 Content-Digest: sha-256=:UHKweBl9cpjdVqgTB65El8SexXlJYGG+XIslAYqC1mY\
 =:
 Content-Type: text/plain
-Signature: wimse=:57ZChndLoz5toS+/0RGeQJG53gLrZD/bBterOWnHF1vb0cdcee\
-UOKH/t4A+/bvquC/0VCb5DYFRdFNz4CW8yBQ==:
-Signature-Input: wimse=("@status" "workload-identity-token" "content\
--type" "content-digest" "@method";req "@request-target";req);created\
-=1785155797;expires=1785156099;nonce="abcd2222";tag="wimse-workload-\
-to-workload";wimse-req-nonce="abcd1111"
+Signature: sig1=:+yKE34YoWGkdD6iK0VJEhS3ZCQpHGh/pYlDut9+Wf3xOWYvq8td\
+Wnyknaut8dAYJ4GFTzltZkvIcjmEnnj+BAA==:
+Signature-Input: sig1=("@status" "workload-identity-token" "content-\
+type" "content-digest" "@method";req "@path";req "@query";req);creat\
+ed=1788298924;expires=1788299226;nonce="abcd2222";tag="wimse-workloa\
+d-to-workload";wimse-req-nonce="abcd1111"
 Workload-Identity-Token: eyJhbGciOiJFZERTQSIsImtpZCI6Imlzc3Vlci1rZXk\
 iLCJ0eXAiOiJ3aXQrand0In0.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J\
-2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1iLWtleSIsImt0eSI6Ik9LUCIsIngiOiJsQnR\
-MUzhjTnRfN3BXc2RpMnhneDc2MGxXcHpFdnFZZTJEcFNrOUVMSDJ3In19LCJleHAiOjE\
-3ODUxNTYwOTksImlhdCI6MTc4NTE1NTc5OSwiaXNzIjoiaHR0cHM6Ly9leGFtcGxlLmN\
-vbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc4NTE1NTc5NzIxNjY3MDUxOCIsInN1YiI6Ind\
-pbXNlOi8vZXhhbXBsZS5jb20vc3ZjQiJ9.HIAU2288ryXoym1M9fnKZqd0p2Vl7spOh-\
-FY2jCFY-05H74-WPUFWrg5lH5f2rHl47TfxEGri3fmMP4zhYzeAw
+2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1iLWtleSIsImt0eSI6Ik9LUCIsIngiOiI2cTM\
+0dTRZbjZKVWN5bWg0UXd4enBJUXI5dUVvczE5cE5mSzFTNWRWYjhzIn19LCJleHAiOjE\
+3ODgyOTkyMjYsImlhdCI6MTc4ODI5ODkyNiwiaXNzIjoiaHR0cHM6Ly9leGFtcGxlLmN\
+vbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc4ODI5ODkyNDI4MTIwOTY3OSIsInN1YiI6Ind\
+pbXNlOi8vZXhhbXBsZS5jb20vc3ZjQiJ9.iSl0qBzfv29LfIaYkYoCgRlc2_IQrbj9wL\
+HpOOUdnUzImhLHXjt_zGnXIoQInc9fQKqwdVeNRgmeiR5pPumiBQ
 
 No ice cream today.
 
@@ -2106,7 +2106,7 @@ context where the request would be accepted as valid, and this mitigates the ris
             <p id="appendix-A.1-1.5.1">WGLC: select the WIMSE signature by <code>tag</code>, not by label (#301).<a href="#appendix-A.1-1.5.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.6">
-            <p id="appendix-A.1-1.6.1">Non-normative examples are not updated in this revision; they still show <code>@request-target</code> and a <code>wimse</code> signature label.<a href="#appendix-A.1-1.6.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.6.1">Regenerate non-normative examples for <code>@path</code>/<code>@query</code>, <code>wimse-sign-response</code>, and <code>wimse-req-nonce</code>.<a href="#appendix-A.1-1.6.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.7">
             <p id="appendix-A.1-1.7.1">Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use.<a href="#appendix-A.1-1.7.1" class="pilcrow">¶</a></p>
@@ -2445,6 +2445,7 @@ trying to reinvent Message Signatures.<a href="#appendix-B-2.6.1" class="pilcrow
 <a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
       </h2>
 <p id="appendix-C-1">The authors would like to thank Pieter Kasselman for his detailed comments,
+Kieran Sweeney and Anton Sokolov for their WGLC reviews,
 as well as Jason Costello, Maartje Eyskens and Radosław Piliszek for implementing this draft and sharing their learnings.<a href="#appendix-C-1" class="pilcrow">¶</a></p>
 <p id="appendix-C-2">We thank Daniel Feldman for his contributions to earlier versions of this document. We also thank Arndt Schwenkschuster and Brian Campbell who coauthored
 the grand unified WIMSE Workload to Workload protocol draft.<a href="#appendix-C-2" class="pilcrow">¶</a></p>
