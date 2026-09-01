@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments                J. Salowey
 Internet-Draft                                        Palo Alto Networks
 Intended status: Standards Track                              Y. Sheffer
-Expires: 3 March 2027                                             Intuit
-                                                          30 August 2026
+Expires: 5 March 2027                                             Intuit
+                                                        1 September 2026
 
 
      WIMSE Workload-to-Workload Authentication with HTTP Signatures
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 3 March 2027.
+   This Internet-Draft will expire on 5 March 2027.
 
 Copyright Notice
 
@@ -326,6 +326,10 @@ Table of Contents
    the server to sign the HTTP response to this request as specified in
    Section 3.4.
 
+   If the client is configured to require a signed response, it MUST
+   include wimse-sign-response with the Boolean value true in the
+   request's Signature-Input.
+
    This parameter is not mandatory.  Moreover, the server MAY sign the
    response even if this parameter is missing from the request.
 
@@ -361,11 +365,9 @@ Table of Contents
    exceptionally large), it MUST NOT return a successful unsigned
    response; it MUST return an error as described in Section 3.5.
 
-   The client MUST reject an unsigned response when it required a signed
-   response, either by sending wimse-sign-response or by local
-   configuration.  A requirement that exists only at the server cannot
-   be enforced by the client: a stripped signature looks like an
-   ordinary unsigned response.
+   The client MUST reject an unsigned response when the request's
+   Signature-Input included wimse-sign-response with the Boolean value
+   true.
 
    If the client did not require a signed response, the server MAY still
    sign.  Whenever a signed response is present, the client MUST
@@ -699,9 +701,9 @@ Table of Contents
       mitigates replay of that response to a client other than the one
       that sent the triggering request.
 
-   *  Unless the client requires and enforces a signed response (via
-      wimse-sign-response or local configuration), complete deletion of
-      a request/response pair is possible without detection.
+   *  Unless the client requires and enforces a signed response via
+      wimse-sign-response, complete deletion of a request/response pair
+      is possible without detection.
 
 7.  IANA Considerations
 
@@ -845,8 +847,8 @@ A.1.  draft-ietf-wimse-http-signature-07
    *  WGLC: recipients reject duplicate nonces without regard to sender
       (#297).
 
-   *  WGLC: a signed-response requirement that exists only at the server
-      is not enforceable by the client (#301).
+   *  WGLC: require wimse-sign-response when the client is configured to
+      require a signed response (#301).
 
    *  WGLC: select the WIMSE signature by tag, not by label (#301).
 
