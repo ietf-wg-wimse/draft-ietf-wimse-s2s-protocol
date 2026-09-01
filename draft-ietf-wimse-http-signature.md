@@ -437,7 +437,7 @@ IANA is requested to register the following entries in the "HTTP Signature Metad
 * WGLC: recipients reject duplicate nonces without regard to sender (#297).
 * WGLC: require `wimse-sign-response` when the client is configured to require a signed response (#301).
 * WGLC: select the WIMSE signature by `tag`, not by label (#301).
-* Non-normative examples are not updated in this revision; they still show `@request-target` and a `wimse` signature label.
+* Regenerate non-normative examples for `@path`/`@query`, `wimse-sign-response`, and `wimse-req-nonce`.
 * Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use.
 * Reference the WIT validation procedure in {{I-D.ietf-wimse-workload-creds}} (#290).
 
