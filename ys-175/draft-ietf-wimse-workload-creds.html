@@ -1543,14 +1543,14 @@ but not that it belongs to the particular workload the client intended to reach.
           </h4>
 <p id="section-1.3.1-1">Application-level proof-of-possession mechanisms in <span>[<a href="#I-D.ietf-wimse-wpt" class="cite xref">I-D.ietf-wimse-wpt</a>]</span> and <span>[<a href="#I-D.ietf-wimse-http-signature" class="cite xref">I-D.ietf-wimse-http-signature</a>]</span>
 bind a request to an intended recipient using an audience value.
-The Workload Identifier in a WIT identifies the sender; the audience identifies the intended recipient.<a href="#section-1.3.1-1" class="pilcrow">¶</a></p>
+The Workload Identifier in a WIT identifies the sender; the audience of the PoP identifies the intended recipient.<a href="#section-1.3.1-1" class="pilcrow">¶</a></p>
 <p id="section-1.3.1-2">By default, the caller sets the audience to the HTTP target URI (<span><a href="https://rfc-editor.org/rfc/rfc9110#section-7.1" class="relref">Section 7.1</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>) of the request,
 without query or fragment components.
-Intermediaries may rewrite that URI in transit, so the callee <span class="bcp14">MUST NOT</span> rely solely on the request URI as
+Intermediaries may rewrite the URI of the request in transit, so the callee <span class="bcp14">MUST NOT</span> rely solely on the request URI as
 observed on the wire to decide whether it is the intended recipient.
-Instead, the callee verifies that the audience value carried in the proof is intended for it.
-In some cases this might necessitate infrastructure support to account for deployment-specific aliases or normalization.
-Deployments <span class="bcp14">SHOULD</span> use this capability for consistent audience validation within their environment.<a href="#section-1.3.1-2" class="pilcrow">¶</a></p>
+The callee <span class="bcp14">MUST</span> verify that the audience value carried in the proof is intended for it.
+Deployments <span class="bcp14">MUST</span> provide the configuration or infrastructure needed for that verification,
+including support for deployment-specific aliases or normalization where request URIs may be rewritten in transit.<a href="#section-1.3.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
