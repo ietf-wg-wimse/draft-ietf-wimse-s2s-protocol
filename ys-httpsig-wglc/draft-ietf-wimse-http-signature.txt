@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments                J. Salowey
 Internet-Draft                                        Palo Alto Networks
 Intended status: Standards Track                              Y. Sheffer
-Expires: 5 March 2027                                             Intuit
-                                                        1 September 2026
+Expires: 6 March 2027                                             Intuit
+                                                        2 September 2026
 
 
      WIMSE Workload-to-Workload Authentication with HTTP Signatures
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 5 March 2027.
+   This Internet-Draft will expire on 6 March 2027.
 
 Copyright Notice
 
@@ -275,12 +275,17 @@ Table of Contents
    present, recipients MUST use that tag to find the WIMSE signature;
    they MUST NOT choose by label (Section 7.2.5 of [RFC9421]).
 
-   A sender MUST ensure that each nonce it generates is unique.  Nonces
-   are random and MUST be long enough that the probability of collision
-   among honest senders is negligible.  A sender cluster therefore need
-   not share nonce state.  To detect message replays, a recipient SHOULD
-   reject a message (request or response) if it has already seen that
-   nonce.
+   Senders MUST generate each nonce at random with sufficient length
+   that the probability of collision is negligible among all nonces a
+   recipient might observe within the lifetime of a signature.  Members
+   of a sender cluster therefore need not coordinate nonce generation.
+
+   Recipients MAY maintain a replay cache and SHOULD reject a message
+   (request or response) whose nonce they have already seen.  What
+   nonces are remembered, and for how long, is a local policy matter;
+   this document does not require replay caches to be shared across
+   validators.  Without such sharing, replay to a different cluster
+   member can still succeed.
 
    For clarity: the signature's lifetime (the expires signature
    parameter) is different and typically much shorter than the WIT's
