@@ -88,6 +88,7 @@ Table of Contents
      3.6.  Example Requests and Responses
    4.  Implementation Status
      4.1.  Cofide
+     4.2.  wimsey
    5.  Security Considerations
      5.1.  Workload Identity Token and Proof of Possession
      5.2.  Middle Boxes
@@ -135,12 +136,12 @@ Table of Contents
    on HTTP-based services, and the workload-to-workload call consists of
    a single HTTP request and its response.
 
-   One option to protect such traffic is through Mutual TLS, and this
-   usage is defined in [I-D.ietf-wimse-mutual-tls].  Many deployments
-   prefer application-layer approaches, whether for lack of CA
-   infrastructure or because inter-service communication consists of
-   multiple separate TLS hops.  This document defines one of the two
-   WIMSE approaches for application-layer protection.
+   One option to protect such traffic is through Mutual TLS (mTLS), and
+   this usage is defined in [I-D.ietf-wimse-mutual-tls].  Many
+   deployments prefer application-layer approaches, whether for lack of
+   Certification Authority (CA) infrastructure or because inter-service
+   communication consists of multiple TLS hops.  This document defines
+   one such WIMSE approach for application-layer protection.
 
    We define a profile of the HTTP Signatures protocol [RFC9421] to
    protect the service traffic.  Service authentication uses the
@@ -148,19 +149,19 @@ Table of Contents
    [I-D.ietf-wimse-workload-creds], and the signature uses the private
    key associated with the WIT and thus proves possession of that key.
 
-   As noted, the WIMSE working group is specifying two alternatives for
-   application-layer protection, both using the newly introduced
-   Workload Identity Token [I-D.ietf-wimse-workload-creds].  The first
-   alternative [I-D.ietf-wimse-wpt] is inspired by the OAuth DPoP
-   specification.  The second is based on the HTTP Message Signatures
-   RFC, and this is the one defined in this document.  Appendix B
-   includes a comparison of the two alternatives.
+   WIMSE is specifying two approaches for application-layer protection,
+   both using the newly introduced Workload Identity Token
+   [I-D.ietf-wimse-workload-creds].  The first alternative
+   [I-D.ietf-wimse-wpt] is inspired by the OAuth DPoP specification
+   [RFC9449].  The second is based on the HTTP Message Signatures RFC
+   [RFC9421], and it is defined in this document.  Appendix B includes a
+   comparison of the two approaches.
 
 1.1.  Deployment Architecture and Message Flow
 
    Refer to Sec. 1.2 of [I-D.ietf-wimse-workload-creds] for the
-   deployment architecture which is common to all three protection
-   options, including the one described here.
+   deployment architecture which is common to both application-level
+   approaches, as well as the transport-level one.
 
 2.  Conventions and Definitions
 
@@ -176,9 +177,9 @@ Table of Contents
 
    This protocol uses the Workload Identity Token
    [I-D.ietf-wimse-workload-creds] and the private key associated with
-   its public key, to sign the request and optionally, the response.
-   Formally, this is a profile of the Message Signatures specification
-   [RFC9421].
+   its public key, to sign the HTTP request and optionally, the
+   response.  Formally, this is a profile of the Message Signatures
+   specification [RFC9421].
 
    The request is signed as per [RFC9421].  The following derived
    components MUST be signed:
@@ -225,7 +226,10 @@ Table of Contents
 
    To ensure the message is fully integrity-protected, if the request or
    response includes a message body, the sender MUST include (and the
-   receiver MUST verify) a Content-Digest header.
+   receiver MUST verify) a Content-Digest header.  This implies the
+   receiver MUST compute the Content-Digest value for the message
+   content received and compare it with the Content-Digest value
+   provided in the message.
 
    For both requests and responses, the following signature parameters
    MUST be included:
@@ -291,7 +295,7 @@ Table of Contents
    parameter) is different and typically much shorter than the WIT's
    lifetime, denoted by its exp claim.
 
-   Implementors need to be aware that the WIT is extracted from the
+   Implementers need to be aware that the WIT is extracted from the
    message before the message signature is validated.  Recipients of
    signed HTTP messages MUST validate the WIT as specified in
    Section 5.1.4 of [I-D.ietf-wimse-workload-creds] before validating
@@ -342,8 +346,8 @@ Table of Contents
 
    This document defines the wimse-req-nonce signature metadata
    parameter for signed responses.  This parameter binds requests to
-   responses and prevents a malicious proxy from replaying responses to
-   the wrong client.
+   responses and prevents a malicious server-side component or middlebox
+   from replaying responses to the wrong client.
 
    Every signed response MUST include wimse-req-nonce.  The server MUST
    set it to the value of the nonce signature parameter from the
@@ -352,7 +356,7 @@ Table of Contents
 3.4.  Signing the Response
 
    Protecting the response by signing it with the server's WIT is
-   RECOMMENDED but optional.  In particular, if the response may be
+   RECOMMENDED but not required.  In particular, if the response may be
    exceptionally large or is expected to be streamed, signing it may not
    be practical.
 
@@ -542,6 +546,25 @@ Table of Contents
 
    *  Last updated: 13-Nov-2025
 
+4.2.  wimsey
+
+   *  Organization: independent
+
+   *  Implementation: https://github.com/kanywst/wimsey
+      (https://github.com/kanywst/wimsey)
+
+   *  Maturity:
+
+      -  WIT + HTTP Message Signatures: alpha
+
+   *  Coverage: WIT, HTTP Message Signatures, signed responses
+
+   *  License: Apache 2.0
+
+   *  Contact: kanywst on GitHub (https://github.com/kanywst)
+
+   *  Last updated: 27-Aug-2026
+
 5.  Security Considerations
 
    This section includes security considerations that are specific to
@@ -557,14 +580,14 @@ Table of Contents
    described in [I-D.ietf-wimse-workload-creds].  The WIT is a general
    purpose token that can be presented in multiple contexts.  The WIT
    and its PoP are only used in the application-layer options, and
-   neither is used in MTLS.  The WIT MUST NOT be used as a bearer token.
+   neither is used in mTLS.  The WIT MUST NOT be used as a bearer token.
    While this helps reduce the sensitivity of the token it is still
    possible that a token and its PoP may be captured and replayed within
    the PoP's lifetime.
 
    The HTTP Signature profile presented here binds the PoP to the
    critical parts of the HTTP request (and potentially response),
-   including the request method, path, query, and the message body.
+   including the request method, path, query, and the message content.
    This eliminates most of the risk associated with active attackers on
    a middlebox.
 
@@ -606,7 +629,7 @@ Table of Contents
    clear at each intermediary.  While the intermediary cannot modify the
    token or the information within the signature they can attempt to
    capture and replay the message or modify unsigned information, such
-   as proprietary HTTP headers that may remain unsigned.
+   as any HTTP headers that remain unsigned.
 
    Mitigations listed in the protocol provide a reasonable level of
    security in these situations, in particular if responses are signed
@@ -621,9 +644,8 @@ Table of Contents
 
    WITs are typically associated with a workload and not a specific
    user, however in some deployments the workload may be associated
-   directly to a user.  While these are exceptional cases a deployment
-   should evaluate if the disclosure of WITs or signatures can be used
-   to track a user.
+   directly to a user.  In those cases a deployment should evaluate if
+   the disclosure of WITs or signatures can be used to track a user.
 
 6.  Security Goals
 
@@ -680,8 +702,8 @@ Table of Contents
       is protected, as well as the derived components listed in
       Section 3, the signature parameters (including wimse-aud and
       wimse-sign-response on requests and wimse-req-nonce on responses)
-      as covered by @signature-params in [RFC9421], and the message body
-      (when present).
+      as covered by @signature-params in [RFC9421], and the message
+      content (when present).
 
    *  No responses can be modified without detection when response
       signing is required (Section 3.4) and the recipient validates
@@ -832,6 +854,11 @@ Table of Contents
    [RFC8941]  Nottingham, M. and P. Kamp, "Structured Field Values for
               HTTP", RFC 8941, DOI 10.17487/RFC8941, February 2021,
               <https://www.rfc-editor.org/rfc/rfc8941>.
+
+   [RFC9449]  Fett, D., Campbell, B., Bradley, J., Lodderstedt, T.,
+              Jones, M., and D. Waite, "OAuth 2.0 Demonstrating Proof of
+              Possession (DPoP)", RFC 9449, DOI 10.17487/RFC9449,
+              September 2023, <https://www.rfc-editor.org/rfc/rfc9449>.
 
    [RFC9457]  Nottingham, M., Wilde, E., and S. Dalal, "Problem Details
               for HTTP APIs", RFC 9457, DOI 10.17487/RFC9457, July 2023,
@@ -1041,14 +1068,14 @@ Appendix B.  Comparing the DPoP Inspired Option with Message Signatures
 
    *  In general, Message Signatures provide greater flexibility
       compared to the DPoP-inspired approach.  Future versions of this
-      draft (and subsequent implementations) can decide whether specific
-      aspects of message signing, such as coverage of particular fields,
-      should be mandatory or optional.  Covering more fields will
-      constrain the proof so it cannot be easily reused in another
-      context, which is often a security improvement.  The DPoP inspired
-      approach could be designed to include extensibility to sign other
-      fields, but this would make it closer to trying to reinvent
-      Message Signatures.
+      specification (and subsequent implementations) can decide whether
+      specific aspects of message signing, such as coverage of
+      particular fields, should be mandatory or optional.  Covering more
+      fields will constrain the proof so it cannot be easily reused in
+      another context, which is often a security improvement.  The DPoP
+      inspired approach could be designed to include extensibility to
+      sign other fields, but this would make it closer to trying to
+      reinvent Message Signatures.
 
 Acknowledgments
 
