@@ -145,9 +145,9 @@ The following signature parameters in the `Signature-Input` header MUST NOT be u
 It is RECOMMENDED to include only one signature with the HTTP message.
 The WIMSE signature is the one whose `tag` parameter is `wimse-workload-to-workload` ({{Section 7.2.7 of RFC9421}}). If no signature has that `tag` value, the message does not carry a WIMSE HTTP signature. If more than one signature has that `tag` value, the recipient MUST reject the message. When more than one signature is present, recipients MUST use that `tag` to find the WIMSE signature; they MUST NOT choose by label ({{Section 7.2.5 of RFC9421}}).
 
-A sender MUST ensure that each nonce it generates is unique. Nonces are random and MUST be long enough that the probability of collision among honest senders is negligible. A sender cluster therefore need not share nonce state.
-To detect message replays,
-a recipient SHOULD reject a message (request or response) if it has already seen that nonce.
+Senders MUST generate each `nonce` at random with sufficient length that the probability of collision is negligible among all nonces a recipient might observe within the lifetime of a signature. Members of a sender cluster therefore need not coordinate nonce generation.
+
+Recipients MAY maintain a replay cache and SHOULD reject a message (request or response) whose `nonce` they have already seen. What nonces are remembered, and for how long, is a local policy matter; this document does not require replay caches to be shared across validators. Without such sharing, replay to a different cluster member can still succeed.
 
 For clarity: the signature's lifetime (the `expires` signature parameter) is different and typically much shorter than the WIT's lifetime, denoted by its `exp` claim.
 
