@@ -71,7 +71,7 @@ Workload Identity Certificates are X.509 certificates that carry Workload Identi
 
 ## Workload Identity Certificate Validation {#wic-validation}
 
-Workload Identity Certificates may be used to authenticate both the server and client side of the connections.  When validating a Workload Identity Certificate, the relying party MUST use the trust anchors configured for the trust domain in the workload identity to validate the peer's certificate.  Other PKIX {{!INET-X509-PROFILE=RFC5280}} path validation rules apply. Workloads acting as TLS clients and servers MUST validate that the trust domain portion of the Workload Identity Certificate matches the expected trust domain for the other side of the connection.
+Workload Identity Certificates may be used to authenticate both the server and client side of the connection.  When validating a Workload Identity Certificate, the relying party MUST use the trust anchors configured for the trust domain in the workload identifier to validate the peer's certificate.  Other PKIX {{!INET-X509-PROFILE=RFC5280}} path validation rules apply. Workloads acting as TLS clients or servers MUST validate that the trust domain portion of the Workload Identifier in the Workload Identity Certificate matches the expected trust domain for the other side of the connection.
 
 Servers wishing to use the Workload Identity Certificate for authorizing the client MUST require client certificate authentication in the TLS handshake. Other methods of post handshake authentication are not specified by this document.
 
@@ -83,17 +83,17 @@ If a WIMSE client connects to a server using a DNS hostname, the server SHOULD p
 
 In deployments that use Workload Identity Certificates, successful DNS hostname validation authenticates the server endpoint, while the Workload Identifier provides an additional identity that can be used for workload-specific authorization and policy decisions.
 
-Some deployments may not use DNS names for server discovery. In such cases, the client MUST be configured with sufficient information to determine the expected workload identity of the server and MUST validate that identity before accepting the connection.
+Some deployments may not use DNS names for server discovery. In such cases, the client MUST be configured with sufficient information to determine the expected workload identity of the server and the client MUST validate that identity before accepting the connection.
 
-The host portion of the Workload Identifier is NOT treated as a hostname as specified in {{Section 6.4 of TLS-IDENTITY}}, but rather as a trust domain. The server identity is encoded in the path portion of the Workload Identifier in a deployment-specific way.
+The authority part of a URI that is a Workload Identifier is NOT treated as a hostname as otherwise specified in {{Section 6.4 of TLS-IDENTITY}}, but rather as a trust domain as specified in {{Section 4.4 of !WIMSE-IDENTIFIER=I-D.ietf-wimse-identifier}}. The server identity is encoded in the path portion of the Workload Identifier in a deployment-specific way.
 
 Validation of the workload identity may consist of an exact match of the trust domain and path, or may follow deployment-specific rules. The path portion of the Workload Identifier MUST always be interpreted within the context of the trust domain. In most cases it is preferable to validate the entire Workload Identifier; see {{Section 1.3 of WIMSE-CREDS}} for additional implementation guidance.
 
 ## Client Authorization Using the Workload Identity {#client-name}
 
 The server application retrieves the Workload Identifier from the client certificate's URI subjectAltName (see {{WIMSE-CREDS}}), which in turn is obtained from the TLS layer. The identifier is used in authorization, accounting and auditing.
-For example, the full Workload Identifier may be matched against ACLs to authorize actions requested by the peer and the identifier may be included in log messages to associate actions to the client workload for audit purposes.
-A deployment may specify other authorization policies based on the specific details of how the Workload Identifier is constructed. The path portion of the Workload Identifier MUST always be considered in the scope of the trust domain.
+For example, the full Workload Identifier may be matched against ACLs to authorize actions requested by the peer and the identifier may be included in log messages to associate actions with the client workload for audit purposes.
+A deployment may specify other authorization policies based on the specific details of how the Workload Identifier is constructed. The path portion of the Workload Identifier MUST always be considered in the scope of the trust domain of the Workload Identifier.
 
 See {{Section 1.3 of WIMSE-CREDS}} for additional security implications of Workload Identifiers.
 
