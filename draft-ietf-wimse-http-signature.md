@@ -73,7 +73,7 @@ The second is based on the HTTP Message Signatures RFC {{!RFC9421}}, and it is d
 
 ## Deployment Architecture and Message Flow
 
-Refer to Sec. 1.2 of {{I-D.ietf-wimse-workload-creds}} for the deployment architecture which is common to both approaches.
+Refer to Sec. 1.2 of {{I-D.ietf-wimse-workload-creds}} for the deployment architecture which is common to both application-level approaches, as well as the transport-level one.
 
 # Conventions and Definitions
 
@@ -176,7 +176,7 @@ This parameter is not mandatory. Moreover, the server MAY sign the response even
 
 When response signing is enabled, this document defines the `wimse-req-nonce` signature metadata parameter for responses.
 This parameter binds requests to responses and prevents a malicious
-entity from replaying responses to the wrong client.
+server-side component or middlebox from replaying responses to the wrong client.
 
 The server MUST set `wimse-req-nonce` to the value of the `nonce` signature parameter from the `Signature-Input` of the request that triggered the response.
 
@@ -344,10 +344,10 @@ if responses are signed in addition to requests.
 
 ## Privacy Considerations
 
-WITs and the signatures may contain private information such as user names or other identities. Care MUST be taken to prevent disclosure of this information. The use of TLS helps protect the privacy of WITs and PoPs.
+WITs and the signatures may contain private information such as user names or other identities. Care must be taken to prevent disclosure of this information. The use of TLS helps protect the privacy of WITs and PoPs.
 
 WITs are typically associated with a workload and not a specific user, however
-in some deployments the workload may be associated directly to a user. In those cases a deployment SHOULD evaluate if the disclosure of
+in some deployments the workload may be associated directly to a user. In those cases a deployment should evaluate if the disclosure of
 WITs or signatures can be used to track a user.
 
 # Security Goals
@@ -374,7 +374,7 @@ receiver, and any TLS-terminating middleboxes that process the traffic.
 ## Authentication
 
 * A workload receiving a request can validate that it is signed correctly, and can identify the sender.
-* A workload receiving a response can similarly validate the signature and identify the sender when response signing is used
+* A workload receiving a response can similarly validate the signature and identify the sender when response signing is required
 ({{signing-the-response}}).
 * The above implies that a stolen WIT cannot be used by an entity other than its owner.
 
@@ -386,7 +386,7 @@ the derived components listed in {{http-sig-auth}}, the signature parameters
 (including `wimse-aud` and `wimse-sign-response` on requests and `wimse-req-nonce` on responses)
 as covered by `@signature-params` in {{RFC9421}}, and
 the message content (when present).
-* No responses can be modified without detection when response signing is used
+* No responses can be modified without detection when response signing is required
 ({{signing-the-response}}) and the recipient validates incoming responses.
 * Note: Headers not specified in this document may remain unsigned and could
   potentially be modified or deleted by intermediaries without detection.
