@@ -58,7 +58,7 @@ This document focuses on HTTP-based services,
 and the workload-to-workload call consists of a single HTTP request and its response.
 
 One option to protect such traffic is through Mutual TLS (mTLS), and this usage is defined in {{?I-D.ietf-wimse-mutual-tls}}.
-Many deployments prefer application-layer approaches, whether for lack of Certificate Authority (CA) infrastructure or because
+Many deployments prefer application-layer approaches, whether for lack of Certification Authority (CA) infrastructure or because
 inter-service communication consists of multiple TLS hops. This document defines one such WIMSE
 approach for application-layer protection.
 
