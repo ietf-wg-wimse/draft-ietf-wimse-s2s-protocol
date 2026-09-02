@@ -110,7 +110,7 @@ If the response is signed, the following components MUST be signed:
 * `Workload-Identity-Token`
 
 To ensure the message is fully integrity-protected, if the request or response includes a message body, the sender MUST include
-(and the receiver MUST verify) a Content-Digest header. This implies the receiver MUST compute the Content-Digest value for the message content received and compare it with the Content-Digest value provided in the message. 
+(and the receiver MUST verify) a Content-Digest header. This implies the receiver MUST compute the Content-Digest value for the message content received and compare it with the Content-Digest value provided in the message.
 
 For both requests and responses, the following signature parameters MUST be included:
 
