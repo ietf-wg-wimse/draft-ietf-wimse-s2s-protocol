@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments                J. Salowey
 Internet-Draft                                        Palo Alto Networks
 Intended status: Standards Track                              Y. Sheffer
-Expires: 6 March 2027                                             Intuit
-                                                        2 September 2026
+Expires: 7 March 2027                                             Intuit
+                                                        3 September 2026
 
 
      WIMSE Workload-to-Workload Authentication with HTTP Signatures
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 6 March 2027.
+   This Internet-Draft will expire on 7 March 2027.
 
 Copyright Notice
 
@@ -1081,8 +1081,8 @@ Acknowledgments
 
    The authors would like to thank Pieter Kasselman for his detailed
    comments, Kieran Sweeney and Anton Sokolov for their WGLC reviews, as
-   well as Jason Costello, Maartje Eyskens and Radosław Piliszek for
-   implementing this draft and sharing their learnings.
+   well as Jason Costello, Maartje Eyskens, Radosław Piliszek and
+   kanywst for implementing this draft and sharing their learnings.
 
    We thank Daniel Feldman for his contributions to earlier versions of
    this document.  We also thank Arndt Schwenkschuster and Brian
