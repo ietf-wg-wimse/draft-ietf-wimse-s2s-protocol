@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-09-01T03:40:12.924624+00:00",
+  "timestamp": "2026-09-03T03:00:58.184260+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -3472,7 +3472,8 @@
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
-        "jsalowey"
+        "jsalowey",
+        "arndt-s"
       ],
       "labels": [
         "draft-ietf-wimse-workload-creds",
@@ -3480,7 +3481,7 @@
       ],
       "body": "Much of Sec. 1.2 and in particular Figure 1 describes a view on authorization that's high level enough to fit the Architecture draft, and in fact is missing from that draft.\n\n@jsalowey WDYT?",
       "createdAt": "2025-10-19T11:40:09Z",
-      "updatedAt": "2026-04-23T00:42:14Z",
+      "updatedAt": "2026-09-01T14:53:17Z",
       "closedAt": null,
       "comments": [
         {
@@ -5153,6 +5154,34 @@
       "updatedAt": "2026-08-29T20:32:14Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 305,
+      "id": "I_kwDOLJmm788AAAABPT4Tng",
+      "title": "WGLC: Flemming Andreasen review of draft-ietf-wimse-http-signature-06",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/305",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [
+        "yaronf"
+      ],
+      "labels": [
+        "draft-ietf-wimse-http-signature"
+      ],
+      "body": "WGLC review of `draft-ietf-wimse-http-signature-06` from Flemming Andreasen (@fandreas), [mail archive](https://mailarchive.ietf.org/arch/msg/wimse/K7t1qHNXVEbkaOyTd2O6qDOfkzc/).\n\nOverall: not ready yet. Editorial comments/suggested edits to come as a separate PR. Also suggests an RFC 9421 expert review if not already done.\n\nProgress note: some items already in [#302](https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/302), [#304](https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/304), [#308](https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/308). Remaining items split across smaller follow-up PRs.\n\n## Checklist\n\n### Section 3 \u2014 The Protocol\n\n- [x] **\u00a73a** `@request-target` is HTTP/1-specific (as noted by others). Decompose into constituent components while considering possible transformations between HTTP versions. \u2014 Done in #302 (`@path` + `@query`).\n- [ ] **\u00a73b** Why is `@authority` not included?\n- [x] **\u00a73c** `expires` text says \"The WIMSE architecture will provide separate mechanisms in support of long-lived compute processes.\" Clarify what that refers to. \u2014 #308: short expires; long-lived batch out of scope.\n- [ ] **\u00a73d** Which JWS/JWA algorithms and key types MUST be supported at a minimum (interop baseline)?\n- [ ] **\u00a73e** Downgrade-attack considerations and local policies around acceptable algorithms?\n- [ ] **\u00a73d/e note** Consider algorithm/key baseline and downgrade policy in the workload-creds draft too.\n- [x] **\u00a73f** Nonce uniqueness requirement: for how long, or assign a cryptographic collision probability instead? \u2014 Addressed in #302: random nonces with negligible collision probability within a signature lifetime; replay-cache retention is local policy (not a fixed window).\n\n### Section 3.1 \u2014 `wimse-aud`\n\n- [x] **\u00a73.1a** Missing a proper type definition (string?). \u2014 #308: String.\n- [ ] **\u00a73.1b** What does \"default value\" imply? If `wimse-aud` is omitted from the message, can you still refer to it in a signature?\n- [ ] **\u00a73.1c** \"When the default string is not suitable\u2026\" \u2014 sender may not know this; what is the downside of always specifying `wimse-aud`?\n\n### Section 3.2 \u2014 `wimse-sign-response`\n\n- [x] **\u00a73.2a** RFC 8941 has been obsoleted by RFC 9651. \u2014 #308: dropped the RFC 8941 cite (no SFV re-cite).\n- [x] **\u00a73.2b** Clarify behavior when the parameter is set to `false` (vs missing). \u2014 #308: both mean not required; server MAY still sign.\n\n### Section 3.3 \u2014 `wimse-req-nonce`\n\n- [x] **\u00a73.3a** Missing a proper type definition (string?). \u2014 #308: String.\n- [x] **\u00a73.3b** What if the request had no signature (and hence no nonce), but the server still signs the response? \u2014 Not addressing: this profile always signs the request, so a request `nonce` is always available.\n\n### Section 3.4 \u2014 Signing the Response\n\n- [ ] **\u00a73.4a** Specify interaction and conflict resolution between `wimse-sign-response` and `Accept-Signature` (RFC 9421).\n\n### Section 5.1 \u2014 WIT and Proof of Possession\n\n- [ ] **\u00a75.1a** Profile is said to protect the Request URI, but `@authority` is not covered; either include it or explain reliance on `wimse-aud` in more detail. \u2014 Partial: #302 updated the security text to method/path/query (no longer \"Request URI\"), but the `@authority` / `wimse-aud` design question remains open with \u00a73b.\n\n### Section 5.2 \u2014 Middle Boxes\n\n- [ ] **\u00a75.2a** RFC 9421 specifies proxy behavior (message changes + new proxy signature). Need similar considerations for WIMSE HTTP signatures.\n\n### Section 6.3 \u2014 Integrity\n\n- [x] **\u00a76.3a** First two paragraphs overclaim that no requests/responses can be modified without detection; protection only covers signed components (3rd paragraph notes this, but 1\u20132 are still misleading). \u2014 #308: covered components + typical REST note.\n\n### Section 6.4 \u2014 Replay and Deletion\n\n- [ ] **\u00a76.4a** Clarify how response signing prevents undetected deletion of a request/response pair. \u2014 Partial: #302 tightened enforcement to `wimse-sign-response` on the wire, but Flemming's \"how does signing solve deletion?\" question is still open.\n\n### Section 7.1 \u2014 IANA Considerations\n\n- [x] **\u00a77.1a** Add type info to `wimse-aud` and `wimse-req-nonce` registrations. \u2014 #308.\n\n### Section 8 \u2014 References\n\n- [x] **\u00a78a** `transaction-tokens`, `wimse-arch`, RFC 8941 (\u2192 RFC 9651), and RFC 9457 appear normative but are listed as informative. \u2014 #308: `wimse-arch` and RFC 9457 normative; RFC 8941 dropped; `transaction-tokens` left informative (optional header).\n\n### Process / follow-ups\n\n- [x] Editorial comments \u2014 Flemming will submit a separate PR. \u2014 Done in #304.\n- [ ] Consider requesting an RFC 9421 expert review.",
+      "createdAt": "2026-09-02T09:57:00Z",
+      "updatedAt": "2026-09-02T18:12:28Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "cc @fandreas",
+          "createdAt": "2026-09-02T09:57:33Z",
+          "updatedAt": "2026-09-02T09:57:33Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -18538,15 +18567,15 @@
         "draft-ietf-wimse-wpt",
         "draft-ietf-wimse-workload-creds"
       ],
-      "body": "- **workload-creds (#173, #175):** Replace the mandatory access-path-to-identifier mapping API with infrastructure support for verifying that an HTTP target URI (RFC 9110 Section 7.1, without query or fragment) is intended for a workload. Document the roles of HTTP target URI (audience) vs Workload Identifier (sender) for WPT, HTTP signatures, and mTLS.\r\n- **WPT (#175):** Tie `aud` to \"Workload Identifiers and Authentication Granularity\" in workload-creds; otherwise unchanged from main.\r\n- **HTTP signatures (#175, #240):** Keep `wimse-aud` as on main (request-only, HTTP target URI). When response signing is enabled, require `wimse-req-nonce` (copy of the request `nonce`) to bind the signed response to the triggering request; register with IANA.\r\n\r\nCloses #173, #175. Addresses #240.",
+      "body": "- **workload-creds (#173, #175):** Replace the mandatory access-path-to-identifier mapping API with infrastructure support for verifying that an HTTP target URI (RFC 9110 Section 7.1, without query or fragment) is intended for a workload. Document the roles of HTTP target URI (audience) vs Workload Identifier (sender) for WPT, HTTP signatures, and mTLS.\r\n- **WPT (#175):** Tie `aud` to \"Workload Identifiers and Authentication Granularity\" in workload-creds; otherwise unchanged from main.\r\n\r\nCloses #173, #175. Addresses #240.",
       "createdAt": "2026-06-19T10:29:32Z",
-      "updatedAt": "2026-08-25T14:31:53Z",
+      "updatedAt": "2026-09-01T14:52:00Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
-      "baseRefOid": "4e44e792f031cff205913be2f806207e3fcb999c",
+      "baseRefOid": "07c8a14c1c2a78d318343faff6d4027c0cb0439b",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-175",
-      "headRefOid": "03c70b74688364bbf46708e8de1ab65d75bc8a9f",
+      "headRefOid": "b607001e35e45d6aeb06672f563f5acdf2401676",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -18774,6 +18803,66 @@
               "body": "Remove http-sig parts of this PR.",
               "createdAt": "2026-08-25T14:31:56Z",
               "updatedAt": "2026-08-25T14:31:56Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABLsHavQ",
+          "commit": {
+            "abbreviatedOid": "b607001"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-09-01T14:40:22Z",
+          "updatedAt": "2026-09-01T14:40:22Z",
+          "comments": [
+            {
+              "originalPosition": 35,
+              "body": "Needs to be -03.",
+              "createdAt": "2026-09-01T14:40:22Z",
+              "updatedAt": "2026-09-01T14:40:22Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABLsOllw",
+          "commit": {
+            "abbreviatedOid": "b607001"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-09-01T14:51:26Z",
+          "updatedAt": "2026-09-01T14:51:26Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "and workloads need to know the identifier of the intended target of a given request.\n\nIt could be DNSName SAN, but also URI SAN.",
+              "createdAt": "2026-09-01T14:51:26Z",
+              "updatedAt": "2026-09-01T14:51:26Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABLsO9nQ",
+          "commit": {
+            "abbreviatedOid": "b607001"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-09-01T14:51:59Z",
+          "updatedAt": "2026-09-01T14:52:00Z",
+          "comments": [
+            {
+              "originalPosition": 37,
+              "body": "needs to go to draft-ietf-wimse-workload-creds-03 - it isn't published yet.",
+              "createdAt": "2026-09-01T14:51:59Z",
+              "updatedAt": "2026-09-01T14:52:00Z"
             }
           ]
         }
@@ -20485,13 +20574,13 @@
       ],
       "body": "Added security considerations for granular auth section.\r\n\r\nRelated to #272 ",
       "createdAt": "2026-08-10T13:42:14Z",
-      "updatedAt": "2026-08-26T16:53:52Z",
+      "updatedAt": "2026-09-01T14:27:20Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "40b1c4161dd1971dc1ac7d5ba718a636116109ca",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "arndt/resolve_272",
-      "headRefOid": "41dd7e94fe6f04b93948b7328e1cebc291aac44e",
+      "headRefOid": "f71bd1891a1a4a5d5a8909feb0705c59e40de9e0",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -20742,6 +20831,46 @@
               "body": "I don't think proof of possession matters here. It's generic, no matter what PoP mechanism is used.",
               "createdAt": "2026-08-21T12:09:21Z",
               "updatedAt": "2026-08-21T12:09:22Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABLr1uWA",
+          "commit": {
+            "abbreviatedOid": "41dd7e9"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-09-01T14:14:03Z",
+          "updatedAt": "2026-09-01T14:14:03Z",
+          "comments": [
+            {
+              "originalPosition": 10,
+              "body": "```suggestion\nBoth sides of a call are affected. A receiving application that only checks trust domain membership gives every workload in the domain the access it meant to give to one. The same applies when a server presents a Workload Identity Certificate and a client only validates the trust domain membership. It does not apply when DNS SAN is used.\n```",
+              "createdAt": "2026-09-01T14:14:03Z",
+              "updatedAt": "2026-09-01T14:20:03Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABLr-gDQ",
+          "commit": {
+            "abbreviatedOid": "16bfa15"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-09-01T14:27:20Z",
+          "updatedAt": "2026-09-01T14:27:20Z",
+          "comments": [
+            {
+              "originalPosition": 19,
+              "body": "Discussed in the call today and removed that section. Instead, the prior section received a \"both sides of a call are affected\" sentence.",
+              "createdAt": "2026-09-01T14:27:20Z",
+              "updatedAt": "2026-09-01T14:27:21Z"
             }
           ]
         }
@@ -21740,24 +21869,26 @@
       "id": "PR_kwDOLJmm788AAAABBMg94w",
       "title": "Add an implementation status entry for wimsey",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/296",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "kanywst",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "An entry for `wimsey`, a Rust implementation of these documents, per Yaron's invitation on the list: <https://github.com/kanywst/wimsey>.\n\nThe WPT and mutual-TLS documents have no Implementation Status section. `wimsey` implements both \u2014 happy to add the RFC 7942 boilerplate and an entry to each if you want it.\n\n`Contact:` is a GitHub link rather than an email, following the SPIFFE entry. Both documents build locally.",
       "createdAt": "2026-08-27T11:10:23Z",
-      "updatedAt": "2026-08-27T16:29:37Z",
+      "updatedAt": "2026-09-01T14:09:16Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "49a50d638398310f98634c491b697838eb886a67",
       "headRepository": "kanywst/draft-ietf-wimse-s2s-protocol",
       "headRefName": "implementation-status-wimsey",
       "headRefOid": "3205fe3457afe06326b2efd83bc0d4df34068c95",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-09-01T14:05:30Z",
+      "mergedAt": "2026-09-01T14:05:30Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "edeebeb004b81e4eb3cd9da4ef64609731c96d17"
+      },
       "comments": [],
       "reviews": [
         {
@@ -21771,6 +21902,19 @@
           "body": "Thank you for the PR!",
           "createdAt": "2026-08-27T16:29:37Z",
           "updatedAt": "2026-08-27T16:29:37Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABLrvvDw",
+          "commit": {
+            "abbreviatedOid": "3205fe3"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-09-01T14:05:24Z",
+          "updatedAt": "2026-09-01T14:05:24Z",
           "comments": []
         }
       ]
@@ -21828,16 +21972,18 @@
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-http-signature"
+      ],
       "body": "5 commits, each addressing one comment.\r\n\r\nCloses #297 and #301.",
       "createdAt": "2026-08-30T19:55:53Z",
-      "updatedAt": "2026-08-31T23:44:41Z",
+      "updatedAt": "2026-09-02T15:35:22Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
-      "baseRefOid": "49a50d638398310f98634c491b697838eb886a67",
+      "baseRefOid": "25d22143e69f214a0abadb8873d47a8076ead864",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-httpsig-wglc",
-      "headRefOid": "a56d820f3554991a509223abf4267039b1b38ace",
+      "headRefOid": "6f8e735011fe212d5806629f64c8e9cf7b557cc0",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -21883,8 +22029,421 @@
               "updatedAt": "2026-08-31T23:44:41Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABLqv2ig",
+          "commit": {
+            "abbreviatedOid": "a56d820"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-09-01T12:25:54Z",
+          "updatedAt": "2026-09-01T12:25:54Z",
+          "comments": [
+            {
+              "originalPosition": 40,
+              "body": "Practically it's easiest to mandate that they are random - easier for devs to understand and easier to implement. In fact I would rather add:\n> Nonces MUST be generated at random.\n\nThe alternative is not only more confusing, it could easily result in complicated solutions where cluster members share state to avoid nonce duplication. This is what my \"ambiguous\" text tried to address.",
+              "createdAt": "2026-09-01T12:25:54Z",
+              "updatedAt": "2026-09-01T12:26:56Z"
+            }
+          ]
         }
       ]
+    },
+    {
+      "number": 303,
+      "id": "PR_kwDOLJmm788AAAABBxHF-w",
+      "title": "Remove PEP and Identity issuer from diagram",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/303",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fixes #177 ",
+      "createdAt": "2026-09-01T15:14:36Z",
+      "updatedAt": "2026-09-01T17:06:15Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "edeebeb004b81e4eb3cd9da4ef64609731c96d17",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "arndt/177-authz",
+      "headRefOid": "7d534f64a0426a1e8f0c6eca2e7a0c17ada2ea69",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABLsfFLA",
+          "commit": {
+            "abbreviatedOid": "7d534f6"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-09-01T15:15:16Z",
+          "updatedAt": "2026-09-01T15:15:16Z",
+          "comments": [
+            {
+              "originalPosition": 55,
+              "body": "Not sure about the wording here, happy to get suggestions",
+              "createdAt": "2026-09-01T15:15:16Z",
+              "updatedAt": "2026-09-01T15:15:16Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABLtg6Tg",
+          "commit": {
+            "abbreviatedOid": "7d534f6"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-09-01T17:06:15Z",
+          "updatedAt": "2026-09-01T17:06:15Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 304,
+      "id": "PR_kwDOLJmm788AAAABB1XQAA",
+      "title": "Editorial changes",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/304",
+      "state": "MERGED",
+      "author": "fandreas",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-http-signature"
+      ],
+      "body": "Various suggested editorial updates. ",
+      "createdAt": "2026-09-02T02:16:04Z",
+      "updatedAt": "2026-09-02T15:30:59Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "edeebeb004b81e4eb3cd9da4ef64609731c96d17",
+      "headRepository": "fandreas/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "editorial",
+      "headRefOid": "fdb3e3558d1e64bcda61cbefc91e9f9db659bb4d",
+      "closedAt": "2026-09-02T15:30:59Z",
+      "mergedAt": "2026-09-02T15:30:59Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "25d22143e69f214a0abadb8873d47a8076ead864"
+      },
+      "comments": [
+        {
+          "author": "fandreas",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "\r\n\r\nOn 9/2/26 05:20, Yaron Sheffer wrote:\r\n\r\n@yaronf requested changes on this pull request.\r\n\r\nThanks Fleming. I think a smaller PR would have been more helpful, as it is, too many changes are debatable matters of style.\r\n\r\nUnderstood - I'm not sure where to draw the line though as opening a PR for every editorial change seems excessive. If you have some guidance for future reference, please let me know.\r\n\r\nThanks\r\n\r\n-- Flemming\r\n\r\n\r\n________________________________\r\n\r\nIn draft-ietf-wimse-http-signature.md<https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/304#discussion_r3912416221>:\r\n\r\n> @@ -57,24 +57,23 @@ This is the core component of the WIMSE architecture {{?I-D.ietf-wimse-arch}}.\r\n This document focuses on HTTP-based services,\r\n and the workload-to-workload call consists of a single HTTP request and its response.\r\n\r\n-One option to protect such traffic is through Mutual TLS, and this usage is defined in {{?I-D.ietf-wimse-mutual-tls}}.\r\n-Many deployments prefer application-layer approaches, whether for lack of CA infrastructure or because\r\n-inter-service communication consists of multiple separate TLS hops. This document defines one of the two WIMSE\r\n-approaches for application-layer protection.\r\n+One option to protect such traffic is through Mutual TLS (mTLS), and this usage is defined in {{?I-D.ietf-wimse-mutual-tls}}.\r\n+Many deployments prefer application-layer approaches, whether for lack of Certificate Authority (CA) infrastructure or because\r\n\r\n\r\n\u2b07\ufe0f Suggested change\r\n\r\n-Many deployments prefer application-layer approaches, whether for lack of Certificate Authority (CA) infrastructure or because\r\n+Many deployments prefer application-layer approaches, whether for lack of Certification Authority (CA) infrastructure or because\r\n\r\n\r\n(That's the accepted IETF term.)\r\n\r\n________________________________\r\n\r\nIn draft-ietf-wimse-http-signature.md<https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/304#discussion_r3912426245>:\r\n\r\n>\r\n ## Deployment Architecture and Message Flow\r\n\r\n-Refer to Sec. 1.2 of {{I-D.ietf-wimse-workload-creds}} for the deployment architecture which is common to all three\r\n-protection options, including the one described here.\r\n+Refer to Sec. 1.2 of {{I-D.ietf-wimse-workload-creds}} for the deployment architecture which is common to both approaches.\r\n\r\n\r\n\u2b07\ufe0f Suggested change\r\n\r\n-Refer to Sec. 1.2 of {{I-D.ietf-wimse-workload-creds}} for the deployment architecture which is common to both approaches.\r\n+Refer to Sec. 1.2 of {{I-D.ietf-wimse-workload-creds}} for the deployment architecture which is common to both application-level approaches, as well as the transport-level one.\r\n\r\n\r\n________________________________\r\n\r\nIn draft-ietf-wimse-http-signature.md<https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/304#discussion_r3912544160>:\r\n\r\n> @@ -177,13 +176,13 @@ This parameter is not mandatory. Moreover, the server MAY sign the response even\r\n\r\n When response signing is enabled, this document defines the `wimse-req-nonce` signature metadata parameter for responses.\r\n This parameter binds requests to responses and prevents a malicious\r\n-proxy from replaying responses to the wrong client.\r\n+entity from replaying responses to the wrong client.\r\n\r\n\r\nproxy is clearer IMO.\r\n\r\n________________________________\r\n\r\nIn draft-ietf-wimse-http-signature.md<https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/304#discussion_r3912552010>:\r\n\r\n> @@ -338,18 +337,17 @@ In some deployments the Workload Identity Token and PoP\r\n systems is over TLS, but the WIT and signature are available in the clear at each\r\n intermediary.  While the intermediary cannot modify the token or the\r\n information within the signature they can attempt to capture and replay the message or modify\r\n-unsigned information, such as proprietary HTTP headers that may remain unsigned.\r\n+unsigned information, such as any HTTP headers that remain unsigned.\r\n\r\n\r\nThis is an example, and \"proprietary\" is just fine.\r\n\r\n________________________________\r\n\r\nIn draft-ietf-wimse-http-signature.md<https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/304#discussion_r3912557502>:\r\n\r\n>\r\n Mitigations listed in the protocol provide a reasonable level of security in these situations, in particular\r\n if responses are signed in addition to requests.\r\n\r\n ## Privacy Considerations\r\n\r\n-WITs and the signatures may contain private information such as user names or other identities. Care must be taken to prevent disclosure of this information. The use of TLS helps protect the privacy of WITs and PoPs.\r\n+WITs and the signatures may contain private information such as user names or other identities. Care MUST be taken to prevent disclosure of this information. The use of TLS helps protect the privacy of WITs and PoPs.\r\n\r\n\r\nNo, this is non-normative.\r\n\r\n________________________________\r\n\r\nIn draft-ietf-wimse-http-signature.md<https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/304#discussion_r3912563227>:\r\n\r\n>\r\n WITs are typically associated with a workload and not a specific user, however\r\n-in some deployments the workload may be associated directly to a user. While\r\n-these are exceptional cases a deployment should evaluate if the disclosure of\r\n+in some deployments the workload may be associated directly to a user. In those cases a deployment SHOULD evaluate if the disclosure of\r\n\r\n\r\nAgain, non-normative.\r\n\r\n________________________________\r\n\r\nIn draft-ietf-wimse-http-signature.md<https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/304#discussion_r3912580980>:\r\n\r\n> @@ -376,7 +374,7 @@ receiver, and any TLS-terminating middleboxes that process the traffic.\r\n ## Authentication\r\n\r\n * A workload receiving a request can validate that it is signed correctly, and can identify the sender.\r\n-* A workload receiving a response can similarly validate the signature and identify the sender when response signing is required\r\n+* A workload receiving a response can similarly validate the signature and identify the sender when response signing is used\r\n\r\n\r\n  1.  This is about policy, so \"required\" is in order. 2. This section is being rewritten as part of addressing other comments, better not touch it now.\r\n\r\n\u2014\r\nReply to this email directly, view it on GitHub<https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/304?email_source=notifications&email_token=ABZ3PKU7RHGWGKM6SGVFQQ35M7Q7JA5CNFSNUABKM5UWIORPF5TWS5BNNB2WEL2QOVWGYUTFOF2WK43UKJSXM2LFO4XTKMBYG43DANJZGQ22M4TFMFZW63VGMF2XI2DPOKSWK5TFNZ2KYZTPN52GK4S7MNWGSY3L#pullrequestreview-5087605945>, or unsubscribe<https://github.com/notifications/unsubscribe-auth/ABZ3PKXWZ6TER74R3344QSD5M7Q7JAVCNFSNUABFKJSXA33TNF2G64TZHM3TIOBSGY3TENBXHNEXG43VMU5TKMZRHA4TCOBYG44KC5QC>.\r\nTriage notifications, keep track of coding agent tasks and review pull requests on the go with GitHub Mobile for iOS<https://github.com/notifications/mobile/ios/ABZ3PKXAZLE3NHOCSUJH4UD5M7Q7JA5CNFSNUABKM5UWIORPF5TWS5BNNB2WEL2QOVWGYUTFOF2WK43UKJSXM2LFO4XTKMBYG43DANJZGQ22M4TFMFZW63VGMF2XI2DPOKSWK5TFNZ2KUZTPN52GK4S7NFXXG> and Android<https://github.com/notifications/mobile/android/ABZ3PKSQWPTLJYRA4WLOJMT5M7Q7JA5CNFSNUABKM5UWIORPF5TWS5BNNB2WEL2QOVWGYUTFOF2WK43UKJSXM2LFO4XTKMBYG43DANJZGQ22M4TFMFZW63VGMF2XI2DPOKSWK5TFNZ2K4ZTPN52GK4S7MFXGI4TPNFSA>. Download it today!\r\nYou are receiving this because you authored the thread.Message ID: ***@***.***>\r\n\r\n",
+          "createdAt": "2026-09-02T14:02:59Z",
+          "updatedAt": "2026-09-02T14:02:59Z"
+        },
+        {
+          "author": "fandreas",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I should have added: I addressed your comments directly on GitHub\r\n\r\nThanks\r\n\r\n-- Flemming\r\n\r\nOn 9/2/26 10:02, Flemming Andreasen (fandreas) wrote:\r\n\r\n\r\nOn 9/2/26 05:20, Yaron Sheffer wrote:\r\n\r\n@yaronf requested changes on this pull request.\r\n\r\nThanks Fleming. I think a smaller PR would have been more helpful, as it is, too many changes are debatable matters of style.\r\n\r\nUnderstood - I'm not sure where to draw the line though as opening a PR for every editorial change seems excessive. If you have some guidance for future reference, please let me know.\r\n\r\nThanks\r\n\r\n-- Flemming\r\n\r\n\r\n________________________________\r\n\r\nIn draft-ietf-wimse-http-signature.md<https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/304#discussion_r3912416221>:\r\n\r\n> @@ -57,24 +57,23 @@ This is the core component of the WIMSE architecture {{?I-D.ietf-wimse-arch}}.\r\n This document focuses on HTTP-based services,\r\n and the workload-to-workload call consists of a single HTTP request and its response.\r\n\r\n-One option to protect such traffic is through Mutual TLS, and this usage is defined in {{?I-D.ietf-wimse-mutual-tls}}.\r\n-Many deployments prefer application-layer approaches, whether for lack of CA infrastructure or because\r\n-inter-service communication consists of multiple separate TLS hops. This document defines one of the two WIMSE\r\n-approaches for application-layer protection.\r\n+One option to protect such traffic is through Mutual TLS (mTLS), and this usage is defined in {{?I-D.ietf-wimse-mutual-tls}}.\r\n+Many deployments prefer application-layer approaches, whether for lack of Certificate Authority (CA) infrastructure or because\r\n\r\n\r\n\u2b07\ufe0f Suggested change\r\n\r\n-Many deployments prefer application-layer approaches, whether for lack of Certificate Authority (CA) infrastructure or because\r\n+Many deployments prefer application-layer approaches, whether for lack of Certification Authority (CA) infrastructure or because\r\n\r\n\r\n(That's the accepted IETF term.)\r\n\r\n________________________________\r\n\r\nIn draft-ietf-wimse-http-signature.md<https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/304#discussion_r3912426245>:\r\n\r\n>\r\n ## Deployment Architecture and Message Flow\r\n\r\n-Refer to Sec. 1.2 of {{I-D.ietf-wimse-workload-creds}} for the deployment architecture which is common to all three\r\n-protection options, including the one described here.\r\n+Refer to Sec. 1.2 of {{I-D.ietf-wimse-workload-creds}} for the deployment architecture which is common to both approaches.\r\n\r\n\r\n\u2b07\ufe0f Suggested change\r\n\r\n-Refer to Sec. 1.2 of {{I-D.ietf-wimse-workload-creds}} for the deployment architecture which is common to both approaches.\r\n+Refer to Sec. 1.2 of {{I-D.ietf-wimse-workload-creds}} for the deployment architecture which is common to both application-level approaches, as well as the transport-level one.\r\n\r\n\r\n________________________________\r\n\r\nIn draft-ietf-wimse-http-signature.md<https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/304#discussion_r3912544160>:\r\n\r\n> @@ -177,13 +176,13 @@ This parameter is not mandatory. Moreover, the server MAY sign the response even\r\n\r\n When response signing is enabled, this document defines the `wimse-req-nonce` signature metadata parameter for responses.\r\n This parameter binds requests to responses and prevents a malicious\r\n-proxy from replaying responses to the wrong client.\r\n+entity from replaying responses to the wrong client.\r\n\r\n\r\nproxy is clearer IMO.\r\n\r\n________________________________\r\n\r\nIn draft-ietf-wimse-http-signature.md<https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/304#discussion_r3912552010>:\r\n\r\n> @@ -338,18 +337,17 @@ In some deployments the Workload Identity Token and PoP\r\n systems is over TLS, but the WIT and signature are available in the clear at each\r\n intermediary.  While the intermediary cannot modify the token or the\r\n information within the signature they can attempt to capture and replay the message or modify\r\n-unsigned information, such as proprietary HTTP headers that may remain unsigned.\r\n+unsigned information, such as any HTTP headers that remain unsigned.\r\n\r\n\r\nThis is an example, and \"proprietary\" is just fine.\r\n\r\n________________________________\r\n\r\nIn draft-ietf-wimse-http-signature.md<https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/304#discussion_r3912557502>:\r\n\r\n>\r\n Mitigations listed in the protocol provide a reasonable level of security in these situations, in particular\r\n if responses are signed in addition to requests.\r\n\r\n ## Privacy Considerations\r\n\r\n-WITs and the signatures may contain private information such as user names or other identities. Care must be taken to prevent disclosure of this information. The use of TLS helps protect the privacy of WITs and PoPs.\r\n+WITs and the signatures may contain private information such as user names or other identities. Care MUST be taken to prevent disclosure of this information. The use of TLS helps protect the privacy of WITs and PoPs.\r\n\r\n\r\nNo, this is non-normative.\r\n\r\n________________________________\r\n\r\nIn draft-ietf-wimse-http-signature.md<https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/304#discussion_r3912563227>:\r\n\r\n>\r\n WITs are typically associated with a workload and not a specific user, however\r\n-in some deployments the workload may be associated directly to a user. While\r\n-these are exceptional cases a deployment should evaluate if the disclosure of\r\n+in some deployments the workload may be associated directly to a user. In those cases a deployment SHOULD evaluate if the disclosure of\r\n\r\n\r\nAgain, non-normative.\r\n\r\n________________________________\r\n\r\nIn draft-ietf-wimse-http-signature.md<https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/304#discussion_r3912580980>:\r\n\r\n> @@ -376,7 +374,7 @@ receiver, and any TLS-terminating middleboxes that process the traffic.\r\n ## Authentication\r\n\r\n * A workload receiving a request can validate that it is signed correctly, and can identify the sender.\r\n-* A workload receiving a response can similarly validate the signature and identify the sender when response signing is required\r\n+* A workload receiving a response can similarly validate the signature and identify the sender when response signing is used\r\n\r\n\r\n  1.  This is about policy, so \"required\" is in order. 2. This section is being rewritten as part of addressing other comments, better not touch it now.\r\n\r\n\u2014\r\nReply to this email directly, view it on GitHub<https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/304?email_source=notifications&email_token=ABZ3PKU7RHGWGKM6SGVFQQ35M7Q7JA5CNFSNUABKM5UWIORPF5TWS5BNNB2WEL2QOVWGYUTFOF2WK43UKJSXM2LFO4XTKMBYG43DANJZGQ22M4TFMFZW63VGMF2XI2DPOKSWK5TFNZ2KYZTPN52GK4S7MNWGSY3L#pullrequestreview-5087605945>, or unsubscribe<https://github.com/notifications/unsubscribe-auth/ABZ3PKXWZ6TER74R3344QSD5M7Q7JAVCNFSNUABFKJSXA33TNF2G64TZHM3TIOBSGY3TENBXHNEXG43VMU5TKMZRHA4TCOBYG44KC5QC>.\r\nTriage notifications, keep track of coding agent tasks and review pull requests on the go with GitHub Mobile for iOS<https://github.com/notifications/mobile/ios/ABZ3PKXAZLE3NHOCSUJH4UD5M7Q7JA5CNFSNUABKM5UWIORPF5TWS5BNNB2WEL2QOVWGYUTFOF2WK43UKJSXM2LFO4XTKMBYG43DANJZGQ22M4TFMFZW63VGMF2XI2DPOKSWK5TFNZ2KUZTPN52GK4S7NFXXG> and Android<https://github.com/notifications/mobile/android/ABZ3PKSQWPTLJYRA4WLOJMT5M7Q7JA5CNFSNUABKM5UWIORPF5TWS5BNNB2WEL2QOVWGYUTFOF2WK43UKJSXM2LFO4XTKMBYG43DANJZGQ22M4TFMFZW63VGMF2XI2DPOKSWK5TFNZ2K4ZTPN52GK4S7MFXGI4TPNFSA>. Download it today!\r\nYou are receiving this because you authored the thread.Message ID: ***@***.***>\r\n\r\n\r\n",
+          "createdAt": "2026-09-02T14:04:36Z",
+          "updatedAt": "2026-09-02T14:04:36Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABLz60uQ",
+          "commit": {
+            "abbreviatedOid": "94443a2"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "Thanks Fleming. I think a smaller PR would have been more helpful, as it is, too many changes are debatable matters of style.",
+          "createdAt": "2026-09-02T08:57:20Z",
+          "updatedAt": "2026-09-02T09:20:29Z",
+          "comments": [
+            {
+              "originalPosition": 9,
+              "body": "```suggestion\nMany deployments prefer application-layer approaches, whether for lack of Certification Authority (CA) infrastructure or because\n```\n\n(That's the accepted IETF term.)",
+              "createdAt": "2026-09-02T08:57:20Z",
+              "updatedAt": "2026-09-02T09:20:29Z"
+            },
+            {
+              "originalPosition": 30,
+              "body": "```suggestion\nRefer to Sec. 1.2 of {{I-D.ietf-wimse-workload-creds}} for the deployment architecture which is common to both application-level approaches, as well as the transport-level one.\n```",
+              "createdAt": "2026-09-02T08:58:36Z",
+              "updatedAt": "2026-09-02T09:20:29Z"
+            },
+            {
+              "originalPosition": 72,
+              "body": "proxy is clearer IMO.",
+              "createdAt": "2026-09-02T09:13:15Z",
+              "updatedAt": "2026-09-02T09:20:29Z"
+            },
+            {
+              "originalPosition": 104,
+              "body": "This is an example, and \"proprietary\" is just fine.",
+              "createdAt": "2026-09-02T09:14:17Z",
+              "updatedAt": "2026-09-02T09:20:29Z"
+            },
+            {
+              "originalPosition": 112,
+              "body": "No, this is non-normative.",
+              "createdAt": "2026-09-02T09:14:57Z",
+              "updatedAt": "2026-09-02T09:20:29Z"
+            },
+            {
+              "originalPosition": 117,
+              "body": "Again, non-normative.",
+              "createdAt": "2026-09-02T09:15:40Z",
+              "updatedAt": "2026-09-02T09:20:29Z"
+            },
+            {
+              "originalPosition": 126,
+              "body": "1. This is about policy, so \"required\" is in order. 2. This section is being rewritten as part of addressing other comments, better not touch it now.",
+              "createdAt": "2026-09-02T09:17:57Z",
+              "updatedAt": "2026-09-02T09:20:29Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABL0JkpQ",
+          "commit": {
+            "abbreviatedOid": "94443a2"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-09-02T09:23:17Z",
+          "updatedAt": "2026-09-02T09:23:17Z",
+          "comments": [
+            {
+              "originalPosition": 48,
+              "body": "```suggestion\n(and the receiver MUST verify) a Content-Digest header. This implies the receiver MUST compute the Content-Digest value for the message content received and compare it with the Content-Digest value provided in the message.\n```",
+              "createdAt": "2026-09-02T09:23:17Z",
+              "updatedAt": "2026-09-02T09:23:17Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABL2uh0Q",
+          "commit": {
+            "abbreviatedOid": "94443a2"
+          },
+          "author": "fandreas",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-09-02T13:53:24Z",
+          "updatedAt": "2026-09-02T13:53:25Z",
+          "comments": [
+            {
+              "originalPosition": 9,
+              "body": "ok",
+              "createdAt": "2026-09-02T13:53:24Z",
+              "updatedAt": "2026-09-02T13:53:25Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABL2u9Fw",
+          "commit": {
+            "abbreviatedOid": "94443a2"
+          },
+          "author": "fandreas",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-09-02T13:53:55Z",
+          "updatedAt": "2026-09-02T13:53:55Z",
+          "comments": [
+            {
+              "originalPosition": 72,
+              "body": "My point is that it's not limited to proxies doing this. ",
+              "createdAt": "2026-09-02T13:53:55Z",
+              "updatedAt": "2026-09-02T13:53:55Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABL2xI0Q",
+          "commit": {
+            "abbreviatedOid": "94443a2"
+          },
+          "author": "fandreas",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-09-02T13:56:23Z",
+          "updatedAt": "2026-09-02T13:56:23Z",
+          "comments": [
+            {
+              "originalPosition": 104,
+              "body": "I think the example is misleading - unsigned information in the document has nothing to do with whether they are proprietary headers or not. ",
+              "createdAt": "2026-09-02T13:56:23Z",
+              "updatedAt": "2026-09-02T13:56:23Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABL2x_cg",
+          "commit": {
+            "abbreviatedOid": "94443a2"
+          },
+          "author": "fandreas",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-09-02T13:57:24Z",
+          "updatedAt": "2026-09-02T13:57:24Z",
+          "comments": [
+            {
+              "originalPosition": 112,
+              "body": "ok",
+              "createdAt": "2026-09-02T13:57:24Z",
+              "updatedAt": "2026-09-02T13:57:24Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABL2yOiw",
+          "commit": {
+            "abbreviatedOid": "94443a2"
+          },
+          "author": "fandreas",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-09-02T13:57:40Z",
+          "updatedAt": "2026-09-02T13:57:40Z",
+          "comments": [
+            {
+              "originalPosition": 117,
+              "body": "ok",
+              "createdAt": "2026-09-02T13:57:40Z",
+              "updatedAt": "2026-09-02T13:57:41Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABL2ywlg",
+          "commit": {
+            "abbreviatedOid": "94443a2"
+          },
+          "author": "fandreas",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-09-02T13:58:19Z",
+          "updatedAt": "2026-09-02T13:58:19Z",
+          "comments": [
+            {
+              "originalPosition": 126,
+              "body": "ok - I'll leave it open for now. ",
+              "createdAt": "2026-09-02T13:58:19Z",
+              "updatedAt": "2026-09-02T13:58:19Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABL30tPA",
+          "commit": {
+            "abbreviatedOid": "fdb3e35"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Remaining comments addressed on the branch.",
+          "createdAt": "2026-09-02T15:30:55Z",
+          "updatedAt": "2026-09-02T15:30:55Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 306,
+      "id": "PR_kwDOLJmm788AAAABB65vaw",
+      "title": "Update draft-ietf-wimse-mutual-tls.md",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/306",
+      "state": "OPEN",
+      "author": "fandreas",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Editorial changes: Section 3",
+      "createdAt": "2026-09-02T15:26:21Z",
+      "updatedAt": "2026-09-02T15:26:22Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "edeebeb004b81e4eb3cd9da4ef64609731c96d17",
+      "headRepository": "fandreas/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "patch-1",
+      "headRefOid": "01f1c96ebb3a34cfdf152e1b6cee4b01289c0d47",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 307,
+      "id": "PR_kwDOLJmm788AAAABB7A_CQ",
+      "title": "Update draft-ietf-wimse-mutual-tls.md",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/307",
+      "state": "OPEN",
+      "author": "fandreas",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Editorial updates: Section 5 and duplicate RFC 5280 reference.",
+      "createdAt": "2026-09-02T15:40:00Z",
+      "updatedAt": "2026-09-02T15:40:01Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "25d22143e69f214a0abadb8873d47a8076ead864",
+      "headRepository": "fandreas/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "patch-2",
+      "headRefOid": "3f35179e6cd781d74ac6fbcafa5ff336806765a1",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 308,
+      "id": "PR_kwDOLJmm788AAAABB8OVxQ",
+      "title": "HTTP-Sig: Flemming WGLC comments (part 1)",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/308",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "## Summary\n- Address the mechanical items from Flemming's WGLC review (#305): parameter types, `wimse-sign-response` false vs omitted, short `expires` scope, Integrity/Replay wording, and normative refs (`wimse-arch`, RFC 9457).\n- Drop the obsolete RFC 8941 citation (SFV typing inherited from RFC 9421).\n- Leave design items (`@authority`/aud, Accept-Signature, middleboxes, deletion explanation, algorithms) for follow-up PRs.\n\n\nMade with [Cursor](https://cursor.com)",
+      "createdAt": "2026-09-02T18:06:58Z",
+      "updatedAt": "2026-09-02T18:17:24Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "25d22143e69f214a0abadb8873d47a8076ead864",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "httpsig-wglc-fandreas-p1",
+      "headRefOid": "f58076767ce8ecd83e36d245b2609c83f1c99552",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
