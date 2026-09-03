@@ -583,7 +583,7 @@ trying to reinvent Message Signatures.
 
 The authors would like to thank Pieter Kasselman for his detailed comments,
 Kieran Sweeney and Anton Sokolov for their WGLC reviews,
-as well as Jason Costello, Maartje Eyskens and Radosław Piliszek for implementing this draft and sharing their learnings.
+as well as Jason Costello, Maartje Eyskens, Radosław Piliszek and kanywst for implementing this draft and sharing their learnings.
 
 We thank Daniel Feldman for his contributions to earlier versions of this document. We also thank Arndt Schwenkschuster and Brian Campbell who coauthored
 the grand unified WIMSE Workload to Workload protocol draft.
