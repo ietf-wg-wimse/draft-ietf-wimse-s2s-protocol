@@ -161,13 +161,26 @@ but not that it belongs to the particular workload the client intended to reach.
 To enable mutual and granular authentication between workloads, two things must be in place:
 
 - Each workload must know its own identifier.
-- There needs to be an explicit mapping from the external access name used to access a workload (such as an Ingress path or service DNS name)
-to its Workload Identifier.
+- Each workload must be able to verify that it is the intended recipient of a given request
+  (that is, that it is the intended audience for that request).
 
 Once these conditions are met, the methods described in this document can be used for the caller and callee to mutually authenticate.
 
-Implementations MUST allow for defining this mapping between the workload's external access name and the Workload Identifier (e.g., through
-callback functions). Deployments SHOULD use these features to establish a consistent set of identifiers within their environment.
+For application-level proof of possession, that recipient check is expressed as follows.
+
+### Application-Layer Audience {#app-audience}
+
+Application-level proof-of-possession mechanisms in {{?I-D.ietf-wimse-wpt}} and {{?I-D.ietf-wimse-http-signature}}
+bind a request to an intended recipient using an audience value.
+The Workload Identifier in a WIT identifies the sender; the audience of the PoP identifies the intended recipient.
+
+By default, the caller sets the audience to the HTTP target URI ({{Section 7.1 of RFC9110}}) of the request,
+without query or fragment components.
+Intermediaries may rewrite the URI of the request in transit, so the callee MUST NOT rely solely on the request URI as
+observed on the wire to decide whether it is the intended recipient.
+The callee MUST verify that the audience value carried in the proof is intended for it.
+Deployments MUST provide the configuration or infrastructure needed for that verification,
+including support for deployment-specific aliases or normalization where request URIs may be rewritten in transit.
 
 # Conventions and Definitions
 
@@ -581,6 +594,10 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 
 # Document History
 <cref>RFC Editor: please remove before publication.</cref>
+
+## draft-ietf-wimse-workload-creds-04
+
+* Replace the access-path-to-identifier mapping API with application-layer audience for WPT and HTTP signatures (#173, #175).
 
 ## draft-ietf-wimse-workload-creds-03
 
