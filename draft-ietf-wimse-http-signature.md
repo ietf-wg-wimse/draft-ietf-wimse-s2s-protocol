@@ -164,7 +164,7 @@ It is a String parameter.
 Using a signature parameter carries the audience explicitly in `Signature-Input`, so the value is protected by the signature and is not affected by hop-by-hop rewriting of the request URI.
 
 The sender MUST set `wimse-aud` to an audience value that identifies the intended recipient of the request.
-By default, the sender uses the HTTP target URI ({{Section 7.1 of RFC9110}}) of the request, without query or fragment components, as known to the sender.
+By default, the sender uses the HTTP target URI ({{Section 7.1 of !RFC9110}}) of the request, without query or fragment components, as known to the sender.
 When intermediaries rewrite the request URI, or when that string would not match what the recipient expects, the sender uses a deployment-specific audience value that the recipient can recognize.
 The audience identifies the intended recipient of the proof; it is distinct from the sender's Workload Identifier in the WIT `sub` claim.
 The recipient MUST be able to verify that the audience refers to it, using trusted configuration rather than untrusted request fields such as `Host`.
