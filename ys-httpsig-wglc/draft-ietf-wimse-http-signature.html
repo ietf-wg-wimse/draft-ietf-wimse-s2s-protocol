@@ -1396,7 +1396,8 @@ Formally, this is a profile of the Message Signatures specification <span>[<a hr
           <p id="section-3-3.3.1"><code>@query</code><a href="#section-3-3.3.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="section-3-4">This profile uses <code>@path</code> and <code>@query</code> rather than <code>@request-target</code>, which is <span class="bcp14">NOT RECOMMENDED</span> outside HTTP/1.1 (<span><a href="https://rfc-editor.org/rfc/rfc9421#section-2.2.5" class="relref">Section 2.2.5</a> of [<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>). <code>@query</code> is included even when the request has no query component; in that case its value is <code>?</code> (<span><a href="https://rfc-editor.org/rfc/rfc9421#section-2.2.7" class="relref">Section 2.2.7</a> of [<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>).<a href="#section-3-4" class="pilcrow">¶</a></p>
+<p id="section-3-4">This profile uses <code>@path</code> and <code>@query</code> rather than <code>@request-target</code>, which is <span class="bcp14">NOT RECOMMENDED</span> outside HTTP/1.1 (<span><a href="https://rfc-editor.org/rfc/rfc9421#section-2.2.5" class="relref">Section 2.2.5</a> of [<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>). <code>@query</code> is included even when the request has no query component; in that case its value is <code>?</code> (<span><a href="https://rfc-editor.org/rfc/rfc9421#section-2.2.7" class="relref">Section 2.2.7</a> of [<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>).
+The <code>@authority</code> derived component is not included: TLS-terminating proxies and load balancers commonly rewrite the authority (see <span>[<a href="#I-D.ietf-wimse-arch" class="cite xref">I-D.ietf-wimse-arch</a>]</span> and <a href="#middleboxes" class="auto internal xref">Section 5.2</a>), so signing it would break those deployments. Recipient binding is carried instead by the mandatory <code>wimse-aud</code> signature parameter (<a href="#wimse-aud-param" class="auto internal xref">Section 3.1</a>).<a href="#section-3-4" class="pilcrow">¶</a></p>
 <p id="section-3-5">In addition, the following request headers <span class="bcp14">MUST</span> be signed when they exist:<a href="#section-3-5" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3-6.1">
@@ -1498,11 +1499,15 @@ The WIMSE signature is the one whose <code>tag</code> parameter is <code>wimse-w
 <p id="section-3.1-1"><span>[<a href="#RFC9421" class="cite xref">RFC9421</a>]</span> defines signature parameters for HTTP message signatures: metadata carried in the <code>Signature-Input</code> field
 alongside the covered components. That metadata is covered by the signature as the <code>@signature-params</code> component value
 (Section 2.3 of <span>[<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>), which is always the last line of the signature base.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
-<p id="section-3.1-2">This document defines the <code>wimse-aud</code> signature metadata parameter for requests. Using a signature parameter carries the audience explicitly in <code>Signature-Input</code>.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
-<p id="section-3.1-3">The default value for <code>wimse-aud</code> is the request's HTTP target URI (<span><a href="https://rfc-editor.org/rfc/rfc9110#section-7.1" class="relref">Section 7.1</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>), without query or fragment components.
-Senders, recipients, and intermediaries do not always derive the same string for that URI: normalization and rewriting differ by implementation and hop, so the audience that verification should use is a deployment-specific choice.
-When the default string is not suitable for verification at the recipient, senders <span class="bcp14">SHOULD</span> set <code>wimse-aud</code> to an explicit audience value as appropriate for that deployment.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
-<p id="section-3.1-4">The recipient <span class="bcp14">MUST</span> be able to verify that the audience refers to it. See "Workload Identifiers and Authentication Granularity" in <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span> for more detail.<a href="#section-3.1-4" class="pilcrow">¶</a></p>
+<p id="section-3.1-2">This document defines the <code>wimse-aud</code> signature metadata parameter for requests.
+It is a String parameter.
+Using a signature parameter carries the audience explicitly in <code>Signature-Input</code>, so the value is protected by the signature and is not affected by hop-by-hop rewriting of the request URI.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
+<p id="section-3.1-3">The sender <span class="bcp14">MUST</span> set <code>wimse-aud</code> to an audience value that identifies the intended recipient of the request.
+By default, the sender uses the HTTP target URI (<span><a href="https://rfc-editor.org/rfc/rfc9110#section-7.1" class="relref">Section 7.1</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>) of the request, without query or fragment components, as known to the sender.
+When intermediaries rewrite the request URI, or when that string would not match what the recipient expects, the sender uses a deployment-specific audience value that the recipient can recognize.
+The audience identifies the intended recipient of the proof; it is distinct from the sender's Workload Identifier in the WIT <code>sub</code> claim.
+The recipient <span class="bcp14">MUST</span> be able to verify that the audience refers to it, using trusted configuration rather than untrusted request fields such as <code>Host</code>.
+See "Workload Identifiers and Authentication Granularity" in <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span>.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="wimse-sign-response-param">
@@ -1786,8 +1791,10 @@ used as a bearer token. While this helps reduce the sensitivity of the token it
 is still possible that a token and its PoP may be captured and
 replayed within the PoP's lifetime.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
 <p id="section-5.1-2">The HTTP Signature profile presented here binds the PoP to the critical parts of the HTTP request (and potentially
-response), including the request method, path, query, and the message content. This
-eliminates most of the risk associated with active attackers on a middlebox.<a href="#section-5.1-2" class="pilcrow">¶</a></p>
+response), including the request method, path, query, the intended audience (<code>wimse-aud</code>), and the message content.
+The audience is a signed signature parameter rather than a re-derived URI component, so it survives intermediaries that rewrite the authority.
+This profile does not cover <code>@authority</code> for that reason (<a href="#http-sig-auth" class="auto internal xref">Section 3</a>).
+This eliminates most of the risk associated with active attackers on a middlebox.<a href="#section-5.1-2" class="pilcrow">¶</a></p>
 <p id="section-5.1-3">In addition, the following mitigations should be used:<a href="#section-5.1-3" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.1-4.1">
@@ -2147,13 +2154,16 @@ context where the request would be accepted as valid, and this mitigates the ris
             <p id="appendix-A.1-1.6.1">WGLC: clarify that deletion detection and mandatory-response guarantees require <code>wimse-sign-response</code>; local-policy signing is opportunistic for the client (#305).<a href="#appendix-A.1-1.6.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.7">
-            <p id="appendix-A.1-1.7.1">Regenerate non-normative examples for <code>@path</code>/<code>@query</code>, <code>wimse-sign-response</code>, and <code>wimse-req-nonce</code>.<a href="#appendix-A.1-1.7.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.7.1">WGLC: clarify <code>wimse-aud</code> (always present; sender default is target URI; deployment-specific when needed); omit <code>@authority</code>; state audience binding in the WIT and PoP security considerations (#305, #297).<a href="#appendix-A.1-1.7.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.8">
-            <p id="appendix-A.1-1.8.1">Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use.<a href="#appendix-A.1-1.8.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.8.1">Regenerate non-normative examples for <code>@path</code>/<code>@query</code>, <code>wimse-sign-response</code>, and <code>wimse-req-nonce</code>.<a href="#appendix-A.1-1.8.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.9">
-            <p id="appendix-A.1-1.9.1">Reference the WIT validation procedure in <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span> (#290).<a href="#appendix-A.1-1.9.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.9.1">Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use.<a href="#appendix-A.1-1.9.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.1-1.10">
+            <p id="appendix-A.1-1.10.1">Reference the WIT validation procedure in <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span> (#290).<a href="#appendix-A.1-1.10.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
