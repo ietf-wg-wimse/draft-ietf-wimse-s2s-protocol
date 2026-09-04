@@ -201,7 +201,7 @@ as described in {{error-conditions}}.
 
 The client MUST reject an unsigned response when the request's `Signature-Input` included `wimse-sign-response` with the Boolean value true.
 
-If the client did not require a signed response, the server MAY still sign. Whenever a signed response is present, the client MUST validate it and reject it if validation fails.
+If the client did not require a signed response via `wimse-sign-response`, server-side local-policy signing is opportunistic from the client's point of view: the client has no signal that a signature was expected, so a middlebox that strips a signed response leaves an ordinary unsigned response that the client MUST accept. The server MAY still sign in that case. Whenever a signed response is present, the client MUST validate it and reject it if validation fails.
 
 When validating a signed response, the client MUST verify that `wimse-req-nonce` is present and equals the `nonce` from the corresponding request.
 
@@ -377,8 +377,7 @@ receiver, and any TLS-terminating middleboxes that process the traffic.
 ## Authentication
 
 * A workload receiving a request can validate that it is signed correctly, and can identify the sender.
-* A workload receiving a response can similarly validate the signature and identify the sender when response signing is required
-({{signing-the-response}}).
+* A workload receiving a response can similarly validate the signature and identify the sender when a signed response is present.
 * The above implies that a stolen WIT cannot be used by an entity other than its owner.
 
 ## Integrity
@@ -403,7 +402,7 @@ a goal, though implementations SHOULD attempt to detect replays where feasible.
 We note that since most of the message is signed, replay attacks are only possible in a
 context where the request would be accepted as valid, and this mitigates the risk to some extent.
 * When a signed response is present, validating `wimse-req-nonce` mitigates replay of that response to a client other than the one that sent the triggering request.
-* Unless the client requires and enforces a signed response via `wimse-sign-response`, complete deletion of a request/response pair is possible without detection.
+* Undetected deletion of a request/response pair is prevented only when the client required a signed response via `wimse-sign-response` with the Boolean value true and rejects an unsigned response. Server local-policy signing alone does not provide that guarantee ({{signing-the-response}}).
 
 
 # IANA Considerations {#iana-considerations}
@@ -446,6 +445,7 @@ IANA is requested to register the following entries in the "HTTP Signature Metad
 * WGLC: recipients reject duplicate nonces without regard to sender (#297).
 * WGLC: require `wimse-sign-response` when the client is configured to require a signed response (#301).
 * WGLC: select the WIMSE signature by `tag`, not by label (#301).
+* WGLC: clarify that deletion detection and mandatory-response guarantees require `wimse-sign-response`; local-policy signing is opportunistic for the client (#305).
 * Regenerate non-normative examples for `@path`/`@query`, `wimse-sign-response`, and `wimse-req-nonce`.
 * Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use.
 * Reference the WIT validation procedure in {{I-D.ietf-wimse-workload-creds}} (#290).
