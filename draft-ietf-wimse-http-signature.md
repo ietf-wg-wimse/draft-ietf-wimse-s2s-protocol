@@ -94,6 +94,7 @@ The request is signed as per {{RFC9421}}. The following derived components MUST 
 * `@query`
 
 This profile uses `@path` and `@query` rather than `@request-target`, which is NOT RECOMMENDED outside HTTP/1.1 ({{Section 2.2.5 of RFC9421}}). `@query` is included even when the request has no query component; in that case its value is `?` ({{Section 2.2.7 of RFC9421}}).
+The `@authority` derived component is not included: TLS-terminating proxies and load balancers commonly rewrite the authority (see {{I-D.ietf-wimse-arch}} and {{middleboxes}}), so signing it would break those deployments. Recipient binding is carried instead by the mandatory `wimse-aud` signature parameter ({{wimse-aud-param}}).
 
 In addition, the following request headers MUST be signed when they exist:
 
@@ -158,13 +159,16 @@ Implementers need to be aware that the WIT is extracted from the message before 
 alongside the covered components. That metadata is covered by the signature as the `@signature-params` component value
 (Section 2.3 of {{RFC9421}}), which is always the last line of the signature base.
 
-This document defines the `wimse-aud` signature metadata parameter for requests. Using a signature parameter carries the audience explicitly in `Signature-Input`.
+This document defines the `wimse-aud` signature metadata parameter for requests.
+It is a String parameter.
+Using a signature parameter carries the audience explicitly in `Signature-Input`, so the value is protected by the signature and is not affected by hop-by-hop rewriting of the request URI.
 
-The default value for `wimse-aud` is the request's HTTP target URI ({{Section 7.1 of !RFC9110}}), without query or fragment components.
-Senders, recipients, and intermediaries do not always derive the same string for that URI: normalization and rewriting differ by implementation and hop, so the audience that verification should use is a deployment-specific choice.
-When the default string is not suitable for verification at the recipient, senders SHOULD set `wimse-aud` to an explicit audience value as appropriate for that deployment.
-
-The recipient MUST be able to verify that the audience refers to it. See "Workload Identifiers and Authentication Granularity" in {{I-D.ietf-wimse-workload-creds}} for more detail.
+The sender MUST set `wimse-aud` to an audience value that identifies the intended recipient of the request.
+By default, the sender uses the HTTP target URI ({{Section 7.1 of RFC9110}}) of the request, without query or fragment components, as known to the sender.
+When intermediaries rewrite the request URI, or when that string would not match what the recipient expects, the sender uses a deployment-specific audience value that the recipient can recognize.
+The audience identifies the intended recipient of the proof; it is distinct from the sender's Workload Identifier in the WIT `sub` claim.
+The recipient MUST be able to verify that the audience refers to it, using trusted configuration rather than untrusted request fields such as `Host`.
+See "Workload Identifiers and Authentication Granularity" in {{I-D.ietf-wimse-workload-creds}}.
 
 ## The `wimse-sign-response` Signature Parameter {#wimse-sign-response-param}
 
@@ -310,8 +314,10 @@ is still possible that a token and its PoP may be captured and
 replayed within the PoP's lifetime.
 
 The HTTP Signature profile presented here binds the PoP to the critical parts of the HTTP request (and potentially
-response), including the request method, path, query, and the message content. This
-eliminates most of the risk associated with active attackers on a middlebox.
+response), including the request method, path, query, the intended audience (`wimse-aud`), and the message content.
+The audience is a signed signature parameter rather than a re-derived URI component, so it survives intermediaries that rewrite the authority.
+This profile does not cover `@authority` for that reason ({{http-sig-auth}}).
+This eliminates most of the risk associated with active attackers on a middlebox.
 
 In addition, the following mitigations should be used:
 
@@ -446,6 +452,7 @@ IANA is requested to register the following entries in the "HTTP Signature Metad
 * WGLC: require `wimse-sign-response` when the client is configured to require a signed response (#301).
 * WGLC: select the WIMSE signature by `tag`, not by label (#301).
 * WGLC: clarify that deletion detection and mandatory-response guarantees require `wimse-sign-response`; local-policy signing is opportunistic for the client (#305).
+* WGLC: clarify `wimse-aud` (always present; sender default is target URI; deployment-specific when needed); omit `@authority`; state audience binding in the WIT and PoP security considerations (#305, #297).
 * Regenerate non-normative examples for `@path`/`@query`, `wimse-sign-response`, and `wimse-req-nonce`.
 * Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use.
 * Reference the WIT validation procedure in {{I-D.ietf-wimse-workload-creds}} (#290).
