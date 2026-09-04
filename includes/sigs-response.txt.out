@@ -5,20 +5,20 @@ Connection: close
 Content-Digest: sha-256=:UHKweBl9cpjdVqgTB65El8SexXlJYGG+XIslAYqC1mY\
 =:
 Content-Type: text/plain
-Signature: wimse=:57ZChndLoz5toS+/0RGeQJG53gLrZD/bBterOWnHF1vb0cdcee\
-UOKH/t4A+/bvquC/0VCb5DYFRdFNz4CW8yBQ==:
-Signature-Input: wimse=("@status" "workload-identity-token" "content\
--type" "content-digest" "@method";req "@request-target";req);created\
-=1785155797;expires=1785156099;nonce="abcd2222";tag="wimse-workload-\
-to-workload";wimse-req-nonce="abcd1111"
+Signature: sig1=:+yKE34YoWGkdD6iK0VJEhS3ZCQpHGh/pYlDut9+Wf3xOWYvq8td\
+Wnyknaut8dAYJ4GFTzltZkvIcjmEnnj+BAA==:
+Signature-Input: sig1=("@status" "workload-identity-token" "content-\
+type" "content-digest" "@method";req "@path";req "@query";req);creat\
+ed=1788298924;expires=1788299226;nonce="abcd2222";tag="wimse-workloa\
+d-to-workload";wimse-req-nonce="abcd1111"
 Workload-Identity-Token: eyJhbGciOiJFZERTQSIsImtpZCI6Imlzc3Vlci1rZXk\
 iLCJ0eXAiOiJ3aXQrand0In0.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J\
-2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1iLWtleSIsImt0eSI6Ik9LUCIsIngiOiJsQnR\
-MUzhjTnRfN3BXc2RpMnhneDc2MGxXcHpFdnFZZTJEcFNrOUVMSDJ3In19LCJleHAiOjE\
-3ODUxNTYwOTksImlhdCI6MTc4NTE1NTc5OSwiaXNzIjoiaHR0cHM6Ly9leGFtcGxlLmN\
-vbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc4NTE1NTc5NzIxNjY3MDUxOCIsInN1YiI6Ind\
-pbXNlOi8vZXhhbXBsZS5jb20vc3ZjQiJ9.HIAU2288ryXoym1M9fnKZqd0p2Vl7spOh-\
-FY2jCFY-05H74-WPUFWrg5lH5f2rHl47TfxEGri3fmMP4zhYzeAw
+2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1iLWtleSIsImt0eSI6Ik9LUCIsIngiOiI2cTM\
+0dTRZbjZKVWN5bWg0UXd4enBJUXI5dUVvczE5cE5mSzFTNWRWYjhzIn19LCJleHAiOjE\
+3ODgyOTkyMjYsImlhdCI6MTc4ODI5ODkyNiwiaXNzIjoiaHR0cHM6Ly9leGFtcGxlLmN\
+vbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc4ODI5ODkyNDI4MTIwOTY3OSIsInN1YiI6Ind\
+pbXNlOi8vZXhhbXBsZS5jb20vc3ZjQiJ9.iSl0qBzfv29LfIaYkYoCgRlc2_IQrbj9wL\
+HpOOUdnUzImhLHXjt_zGnXIoQInc9fQKqwdVeNRgmeiR5pPumiBQ
 
 No ice cream today.
 
