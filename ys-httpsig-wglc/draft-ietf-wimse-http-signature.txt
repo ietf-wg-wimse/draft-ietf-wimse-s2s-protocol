@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments                J. Salowey
 Internet-Draft                                        Palo Alto Networks
 Intended status: Standards Track                              Y. Sheffer
-Expires: 7 March 2027                                             Intuit
-                                                        3 September 2026
+Expires: 8 March 2027                                             Intuit
+                                                        4 September 2026
 
 
      WIMSE Workload-to-Workload Authentication with HTTP Signatures
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 7 March 2027.
+   This Internet-Draft will expire on 8 March 2027.
 
 Copyright Notice
 
@@ -378,9 +378,13 @@ Table of Contents
    Signature-Input included wimse-sign-response with the Boolean value
    true.
 
-   If the client did not require a signed response, the server MAY still
-   sign.  Whenever a signed response is present, the client MUST
-   validate it and reject it if validation fails.
+   If the client did not require a signed response via wimse-sign-
+   response, server-side local-policy signing is opportunistic from the
+   client's point of view: the client has no signal that a signature was
+   expected, so a middlebox that strips a signed response leaves an
+   ordinary unsigned response that the client MUST accept.  The server
+   MAY still sign in that case.  Whenever a signed response is present,
+   the client MUST validate it and reject it if validation fails.
 
    When validating a signed response, the client MUST verify that wimse-
    req-nonce is present and equals the nonce from the corresponding
@@ -689,8 +693,8 @@ Table of Contents
       correctly, and can identify the sender.
 
    *  A workload receiving a response can similarly validate the
-      signature and identify the sender when response signing is
-      required (Section 3.4).
+      signature and identify the sender when a signed response is
+      present.
 
    *  The above implies that a stolen WIT cannot be used by an entity
       other than its owner.
@@ -728,9 +732,11 @@ Table of Contents
       mitigates replay of that response to a client other than the one
       that sent the triggering request.
 
-   *  Unless the client requires and enforces a signed response via
-      wimse-sign-response, complete deletion of a request/response pair
-      is possible without detection.
+   *  Undetected deletion of a request/response pair is prevented only
+      when the client required a signed response via wimse-sign-response
+      with the Boolean value true and rejects an unsigned response.
+      Server local-policy signing alone does not provide that guarantee
+      (Section 3.4).
 
 7.  IANA Considerations
 
@@ -883,6 +889,10 @@ A.1.  draft-ietf-wimse-http-signature-07
       require a signed response (#301).
 
    *  WGLC: select the WIMSE signature by tag, not by label (#301).
+
+   *  WGLC: clarify that deletion detection and mandatory-response
+      guarantees require wimse-sign-response; local-policy signing is
+      opportunistic for the client (#305).
 
    *  Regenerate non-normative examples for @path/@query, wimse-sign-
       response, and wimse-req-nonce.
