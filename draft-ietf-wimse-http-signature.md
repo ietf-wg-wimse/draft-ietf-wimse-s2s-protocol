@@ -286,7 +286,7 @@ According to RFC 7942, "this will allow reviewers and working groups to assign d
 * Coverage: WIT, HTTP Message Signatures, signed responses
 * License: Apache 2.0
 * Contact: [kanywst on GitHub](https://github.com/kanywst)
-* Last updated: 27-Aug-2026
+* Last updated: 08-Sep-2026
 
 # Security Considerations
 
