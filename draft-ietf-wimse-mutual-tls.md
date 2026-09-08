@@ -101,6 +101,32 @@ See {{Section 1.3 of WIMSE-CREDS}} for additional security implications of Workl
 
 This document does not include any IANA considerations.
 
+# Implementation Status
+
+<cref>Note to RFC Editor: please remove this section, as well as the reference to RFC 7942, before publication.</cref>
+
+This section records the status of known implementations of the protocol defined by this specification at the time of posting of this Internet-Draft, and is based on a proposal described in {{!RFC7942}}. The description of implementations in this section is intended to assist the IETF in its decision processes in progressing drafts to RFCs.  Please note that the listing of any individual implementation here does not imply endorsement by the IETF.  Furthermore, no effort has been spent to verify the information presented here that was supplied by IETF contributors. This is not intended as, and must not be construed to be, a catalog of available implementations or their features.  Readers are advised to note that other implementations may exist.
+
+According to RFC 7942, "this will allow reviewers and working groups to assign due consideration to documents that have the benefit of running code, which may serve as evidence of valuable experimentation and feedback that have made the implemented protocols more mature.  It is up to the individual working groups to use this information as they see fit".
+
+## wimsey
+
+* Organization: independent
+* Implementation: <https://github.com/kanywst/wimsey>
+* Maturity:
+    * Workload Identity Certificate: alpha
+* Coverage: Issues and verifies a Workload Identity Certificate carrying the
+  Workload Identifier in a URI SubjectAltName, with `id-kp-clientAuth` and
+  `id-kp-serverAuth`. Issuance takes the workload's public key only, so the CA
+  never holds the key it certifies. Verification is a single-issuer model
+  against a directly provided CA: it does not build a chain, and does not
+  enforce `basicConstraints`, `keyUsage` or name constraints. Server name
+  validation and the TLS stack wiring are left to the caller, which is why the
+  identifier is returned for the caller to compare.
+* License: Apache 2.0
+* Contact: [kanywst on GitHub](https://github.com/kanywst)
+* Last updated: 08-Sep-2026
+
 # Security Considerations
 
 This document relies on the security properties of TLS {{!TLS=I-D.ietf-tls-rfc8446bis}}, PKIX path validation {{INET-X509-PROFILE}}, and Workload Identity Certificate validation as described in {{Section 6.1 of WIMSE-CREDS}}. Implementations MUST validate the peer certificate chain, the applicable extended key usage, and the Workload Identifier according to the rules in this document before using the authenticated identity for authorization decisions.
