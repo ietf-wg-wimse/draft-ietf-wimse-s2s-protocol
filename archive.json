@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-09-06T03:01:36.173699+00:00",
+  "timestamp": "2026-09-10T03:11:00.712906+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -2857,7 +2857,7 @@
       ],
       "body": "Per the recent definition in #149.\n\nBrian: let's consider that as a separate PR. and perhaps a separate example. I'd prefer to not clutter the main example",
       "createdAt": "2025-08-12T12:22:40Z",
-      "updatedAt": "2025-12-09T15:22:17Z",
+      "updatedAt": "2026-09-08T12:46:15Z",
       "closedAt": null,
       "comments": [
         {
@@ -2866,6 +2866,13 @@
           "body": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/149/files#r2269193849 is the specific comment thread in that PR ",
           "createdAt": "2025-08-12T14:52:04Z",
           "updatedAt": "2025-08-12T14:52:04Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/149/files#r2269193849 is the specific comment thread in that PR\n\nperhaps too subtle in those comments was the implication that it might not be needed at all  ",
+          "createdAt": "2026-09-08T12:46:15Z",
+          "updatedAt": "2026-09-08T12:46:15Z"
         }
       ]
     },
@@ -4214,7 +4221,7 @@
       "id": "I_kwDOLJmm788AAAABBytPGQ",
       "title": "WPT validation doesn't seem to require WIT validation",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/234",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "sorindumitru",
       "authorAssociation": "NONE",
       "assignees": [
@@ -4225,8 +4232,8 @@
       ],
       "body": "AFAICT, the draft does not require validating the WIT when validating the WPT, just that the the hash matches but that doesn't give any security.\n\nOn top of that, AFAICT, there's nothing defining how to validate a WIT. It's specified as a JWS and that the workload needs to have the key from somewhere, but is that enough? Should it specify fetching the trust domain from the `sub` field and then determine the key[s] to use for validating it?",
       "createdAt": "2026-05-10T09:33:22Z",
-      "updatedAt": "2026-08-18T14:35:05Z",
-      "closedAt": null,
+      "updatedAt": "2026-09-08T14:41:58Z",
+      "closedAt": "2026-09-08T14:41:58Z",
       "comments": [
         {
           "author": "jsalowey",
@@ -4234,6 +4241,13 @@
           "body": "The procedure for validating the WIT probably should go in the creds draft. \n\n#290 ",
           "createdAt": "2026-08-18T14:32:34Z",
           "updatedAt": "2026-08-18T14:35:05Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I think #291 addresses this? ",
+          "createdAt": "2026-09-08T14:41:58Z",
+          "updatedAt": "2026-09-08T14:41:58Z"
         }
       ]
     },
@@ -5122,7 +5136,7 @@
     {
       "number": 299,
       "id": "I_kwDOLJmm788AAAABOsbsAQ",
-      "title": "params in WPT challenge?",
+      "title": "params in WPT 401 challenge?",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/299",
       "state": "OPEN",
       "author": "bc-pi",
@@ -5131,9 +5145,9 @@
       "labels": [
         "draft-ietf-wimse-wpt"
       ],
-      "body": "https://mailarchive.ietf.org/arch/msg/wimse/aEhoJl7WUmeREk_bKmrlVxXMk7Q/ mentions it ",
+      "body": "https://mailarchive.ietf.org/arch/msg/wimse/aEhoJl7WUmeREk_bKmrlVxXMk7Q/ mentions it \n\n<img width=\"679\" height=\"244\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/5774a399-fca4-42bb-a899-3ca1494a33ca\" />",
       "createdAt": "2026-08-28T18:21:14Z",
-      "updatedAt": "2026-08-28T18:21:37Z",
+      "updatedAt": "2026-09-08T12:47:29Z",
       "closedAt": null,
       "comments": []
     },
@@ -5180,6 +5194,33 @@
           "body": "cc @fandreas",
           "createdAt": "2026-09-02T09:57:33Z",
           "updatedAt": "2026-09-02T09:57:33Z"
+        }
+      ]
+    },
+    {
+      "number": 312,
+      "id": "I_kwDOLJmm788AAAABQi0epQ",
+      "title": "Consistent algorithms across the documents",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/312",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-http-signature",
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "The three drafts are consistent in deriving the workload PoP algorithm from `cnf.jwk.alg`, but their examples do not use the MTI algorithm.\n\n`workload-creds` requires support for `ES256`, while its `cnf.jwk` example uses `EdDSA`/Ed25519. The WPT and HTTP-Sig examples follow that choice.\n\nProposed change:\n\n- Change the workload PoP examples in all three drafts to P-256/`ES256`.\n- Keep EdDSA and other permitted asymmetric JWS algorithms as optional alternatives.\n- In `workload-creds`, tighten the wording for `cnf.jwk.alg` to say directly that it identifies an asymmetric JWS signature algorithm.\n\nThe MTI requirement should remain defined only in `workload-creds`; WPT and HTTP-Sig should inherit it.",
+      "createdAt": "2026-09-09T22:04:01Z",
+      "updatedAt": "2026-09-09T23:20:53Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "the examples don't need to have consistent algorithms",
+          "createdAt": "2026-09-09T23:20:53Z",
+          "updatedAt": "2026-09-09T23:20:53Z"
         }
       ]
     }
@@ -22459,6 +22500,137 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 309,
+      "id": "PR_kwDOLJmm788AAAABCridug",
+      "title": "Refresh the wimsey implementation status date",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/309",
+      "state": "MERGED",
+      "author": "kanywst",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Refreshes the `Last updated` date on the wimsey entry in the Implementation\nStatus section of draft-ietf-wimse-http-signature.\n\nThe coverage was re-verified against the implementation today rather than\njust re-dated. The `Coverage` line still holds as written:\n\n- the Section 3 request profile, including `wimse-aud` and rejection of the\n  forbidden `keyid` and `alg` parameters;\n- the response profile, including `@status`, the `;req` covered components\n  and the `wimse-req-nonce` binding;\n- `wimse-sign-response`, added in -06, is implemented and serializes as a\n  bare Boolean.\n\nSo only the date changes. Flagging it now because the editors' copy is\nheading for -07, and a stale date in a published revision is the thing\nRFC 7942 asks implementers not to leave lying around.\n",
+      "createdAt": "2026-09-08T13:38:48Z",
+      "updatedAt": "2026-09-08T14:16:40Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "25d22143e69f214a0abadb8873d47a8076ead864",
+      "headRepository": "kanywst/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "implementation-status-wimsey-refresh",
+      "headRefOid": "d9df0a701baf2ce62872e973ece2a81ef4a8c11d",
+      "closedAt": "2026-09-08T14:05:04Z",
+      "mergedAt": "2026-09-08T14:05:04Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "748717184dd388f1c014891aa3b886af45744237"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABMogJlA",
+          "commit": {
+            "abbreviatedOid": "d9df0a7"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-09-08T14:04:45Z",
+          "updatedAt": "2026-09-08T14:04:45Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 310,
+      "id": "PR_kwDOLJmm788AAAABCrxNQA",
+      "title": "Add an Implementation Status section to the WPT draft",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/310",
+      "state": "CLOSED",
+      "author": "kanywst",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "An Implementation Status entry for `wimsey` (<https://github.com/kanywst/wimsey>), which implements the WPT. The document has no Implementation Status section yet, so this adds one, worded as in draft-ietf-wimse-http-signature.\n\nThe coverage line states what is not implemented: the `WPT` HTTP authentication scheme introduced in -02, and single-use `jti` tracking, are left to the caller.\n",
+      "createdAt": "2026-09-08T14:05:06Z",
+      "updatedAt": "2026-09-08T15:16:43Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "748717184dd388f1c014891aa3b886af45744237",
+      "headRepository": "kanywst/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "implementation-status-wpt",
+      "headRefOid": "9956f4428b0f58ea31bec00ba6a40638992f5cae",
+      "closedAt": "2026-09-08T15:15:33Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "My preference would be not to have an Implementation Status section. ",
+          "createdAt": "2026-09-08T14:38:46Z",
+          "updatedAt": "2026-09-08T14:38:46Z"
+        },
+        {
+          "author": "kanywst",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Understood, dropping this. If a section is added later, I'll contribute the entry then.",
+          "createdAt": "2026-09-08T15:15:31Z",
+          "updatedAt": "2026-09-08T15:15:31Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABMo7weg",
+          "commit": {
+            "abbreviatedOid": "9956f44"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "see prior",
+          "createdAt": "2026-09-08T14:43:11Z",
+          "updatedAt": "2026-09-08T14:43:11Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 311,
+      "id": "PR_kwDOLJmm788AAAABCr30Vw",
+      "title": "Add an Implementation Status section to the mutual TLS draft",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/311",
+      "state": "CLOSED",
+      "author": "kanywst",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "An Implementation Status entry for `wimsey` (<https://github.com/kanywst/wimsey>), which issues and verifies Workload Identity Certificates. The document has no Implementation Status section yet, so this adds one, worded as in draft-ietf-wimse-http-signature.\n\nThe coverage line states the limits: verification is a single-issuer model against a directly provided CA, with no chain building, and server name validation is left to the caller.\n\n`wimsey` is already listed in draft-ietf-wimse-workload-creds for the WIC itself; this entry is about the mutual TLS binding.\n",
+      "createdAt": "2026-09-08T14:16:56Z",
+      "updatedAt": "2026-09-08T15:15:37Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "748717184dd388f1c014891aa3b886af45744237",
+      "headRepository": "kanywst/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "implementation-status-mutual-tls",
+      "headRefOid": "f2a1111cc7a19b4ae591136c707dfd948bfd0880",
+      "closedAt": "2026-09-08T15:15:37Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "kanywst",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Closing this one too: the same proposal for the WPT draft (#310) drew a preference against adding an Implementation Status section, and that applies here as well. Happy to contribute an entry if a section is added later.",
+          "createdAt": "2026-09-08T15:15:35Z",
+          "updatedAt": "2026-09-08T15:15:35Z"
+        }
+      ],
       "reviews": []
     }
   ]
