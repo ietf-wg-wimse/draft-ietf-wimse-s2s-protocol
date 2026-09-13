@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-09-10T03:11:00.712906+00:00",
+  "timestamp": "2026-09-13T03:16:23.758670+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -5212,7 +5212,7 @@
       ],
       "body": "The three drafts are consistent in deriving the workload PoP algorithm from `cnf.jwk.alg`, but their examples do not use the MTI algorithm.\n\n`workload-creds` requires support for `ES256`, while its `cnf.jwk` example uses `EdDSA`/Ed25519. The WPT and HTTP-Sig examples follow that choice.\n\nProposed change:\n\n- Change the workload PoP examples in all three drafts to P-256/`ES256`.\n- Keep EdDSA and other permitted asymmetric JWS algorithms as optional alternatives.\n- In `workload-creds`, tighten the wording for `cnf.jwk.alg` to say directly that it identifies an asymmetric JWS signature algorithm.\n\nThe MTI requirement should remain defined only in `workload-creds`; WPT and HTTP-Sig should inherit it.",
       "createdAt": "2026-09-09T22:04:01Z",
-      "updatedAt": "2026-09-09T23:20:53Z",
+      "updatedAt": "2026-09-10T13:00:16Z",
       "closedAt": null,
       "comments": [
         {
@@ -5221,6 +5221,13 @@
           "body": "the examples don't need to have consistent algorithms",
           "createdAt": "2026-09-09T23:20:53Z",
           "updatedAt": "2026-09-09T23:20:53Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "True. But it's awkward that our examples never use the MTI algorithm. In other words, if you only implement ECDSA, there's no test vector for you.",
+          "createdAt": "2026-09-10T13:00:16Z",
+          "updatedAt": "2026-09-10T13:00:16Z"
         }
       ]
     }
@@ -22018,7 +22025,7 @@
       ],
       "body": "5 commits, each addressing one comment.\r\n\r\nCloses #297 and #301.",
       "createdAt": "2026-08-30T19:55:53Z",
-      "updatedAt": "2026-09-04T10:29:46Z",
+      "updatedAt": "2026-09-12T17:44:22Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "25d22143e69f214a0abadb8873d47a8076ead864",
@@ -22090,6 +22097,19 @@
               "updatedAt": "2026-09-01T12:26:56Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABNTFNCQ",
+          "commit": {
+            "abbreviatedOid": "3590df4"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-09-12T17:44:22Z",
+          "updatedAt": "2026-09-12T17:44:22Z",
+          "comments": []
         }
       ]
     },
@@ -22105,7 +22125,7 @@
       "labels": [],
       "body": "Fixes #177 ",
       "createdAt": "2026-09-01T15:14:36Z",
-      "updatedAt": "2026-09-01T17:06:15Z",
+      "updatedAt": "2026-09-11T18:54:18Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "edeebeb004b81e4eb3cd9da4ef64609731c96d17",
@@ -22149,6 +22169,19 @@
           "body": "",
           "createdAt": "2026-09-01T17:06:15Z",
           "updatedAt": "2026-09-01T17:06:15Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABNOVDnA",
+          "commit": {
+            "abbreviatedOid": "7d534f6"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-09-11T18:54:18Z",
+          "updatedAt": "2026-09-11T18:54:18Z",
           "comments": []
         }
       ]
@@ -22488,7 +22521,7 @@
       ],
       "body": "## Summary\n- Address the mechanical items from Flemming's WGLC review (#305): parameter types, `wimse-sign-response` false vs omitted, short `expires` scope, Integrity/Replay wording, and normative refs (`wimse-arch`, RFC 9457).\n- Drop the obsolete RFC 8941 citation (SFV typing inherited from RFC 9421).\n- Leave design items (`@authority`/aud, Accept-Signature, middleboxes, deletion explanation, algorithms) for follow-up PRs.\n\n\nMade with [Cursor](https://cursor.com)",
       "createdAt": "2026-09-02T18:06:58Z",
-      "updatedAt": "2026-09-04T10:32:46Z",
+      "updatedAt": "2026-09-12T17:47:15Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "25d22143e69f214a0abadb8873d47a8076ead864",
@@ -22500,7 +22533,21 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABNTFnDw",
+          "commit": {
+            "abbreviatedOid": "f580767"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-09-12T17:47:15Z",
+          "updatedAt": "2026-09-12T17:47:15Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 309,
