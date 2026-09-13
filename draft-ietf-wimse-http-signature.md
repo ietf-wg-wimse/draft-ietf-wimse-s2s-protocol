@@ -211,14 +211,17 @@ If the client did not require a signed response via `wimse-sign-response`, serve
 When validating a signed response, the client MUST verify that `wimse-req-nonce` is present and equals the `nonce` from the corresponding request.
 
 As described in {{Section 5 of RFC9421}}, either client or server MAY send an
-`Accept-Signature` header,
-but is not required to do so. The `Accept-Signature` header indicates a
-preference for signed messages but does not mandate that responses be signed.
+`Accept-Signature` header.
+That header indicates a preference for signed messages; it does not mandate that a response be signed.
+Only `wimse-sign-response` with the Boolean value true creates such a mandate ({{wimse-sign-response-param}}, {{signing-the-response}}).
+When both are present, the server MUST treat `wimse-sign-response` as authoritative for whether a signed response is required.
 When a client sends `Accept-Signature` in a request, it MUST list the
-response components it wishes to have signed (including at least those specified above for signed
-responses). When a server sends `Accept-Signature` in a response, it MUST
-list the request components it wishes to have signed in subsequent requests (minimally those
-specified above for signed requests).
+response components it wishes to have signed, including at least those specified above for signed
+responses.
+When a server sends `Accept-Signature` in a response, it MUST
+list the request components it wishes to have signed in subsequent requests, minimally those
+specified above for signed requests.
+`Accept-Signature` MUST NOT be used to request coverage weaker than this profile.
 
 ## Error Conditions {#error-conditions}
 
@@ -457,6 +460,7 @@ IANA is requested to register the following entries in the "HTTP Signature Metad
 * WGLC: select the WIMSE signature by `tag`, not by label (#301).
 * WGLC: clarify that deletion detection and mandatory-response guarantees require `wimse-sign-response`; local-policy signing is opportunistic for the client (#305).
 * WGLC: clarify `wimse-aud` (always present; sender default is target URI; deployment-specific when needed); omit `@authority`; state audience binding in the WIT and PoP security considerations (#305, #297).
+* WGLC: clarify interaction of `Accept-Signature` and `wimse-sign-response` (#305).
 * Regenerate non-normative examples for `@path`/`@query`, `wimse-sign-response`, and `wimse-req-nonce`.
 * Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use.
 * Reference the WIT validation procedure in {{I-D.ietf-wimse-workload-creds}} (#290).
