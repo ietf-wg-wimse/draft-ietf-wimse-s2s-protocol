@@ -650,13 +650,31 @@ Table of Contents
    may pass through multiple systems.  The communication between the
    systems is over TLS, but the WIT and signature are available in the
    clear at each intermediary.  While the intermediary cannot modify the
-   token or the information within the signature they can attempt to
-   capture and replay the message or modify unsigned information, such
-   as any HTTP headers that remain unsigned.
+   token or the information within the signature without detection, it
+   can attempt to capture and replay the message or modify unsigned
+   information, such as any HTTP headers that remain unsigned.
+
+   HTTP permits intermediaries to transform messages ([RFC9421]).  This
+   profile is intended to remain verifiable across common TLS-
+   terminating proxies and load balancers: it does not cover @authority,
+   and it carries recipient binding in wimse-aud (Section 3).  An
+   intermediary MAY add its own HTTP message signature to a message that
+   already carries a WIMSE signature.  Recipients continue to identify
+   the WIMSE signature by its tag value wimse-workload-to-workload and
+   MUST NOT select by label (Section 3).
+
+   If an intermediary changes a component covered by the WIMSE
+   signature, verification of that signature fails.  This document does
+   not define a profile for stripping the origin WIMSE signature and
+   replacing it with a new WIMSE signature at the intermediary.  Such
+   resigning would authenticate the intermediary rather than the origin
+   workload and is left to deployment-specific policy outside this
+   specification.
 
    Mitigations listed in the protocol provide a reasonable level of
    security in these situations, in particular if responses are signed
-   in addition to requests.
+   in addition to requests.  See also Section 3.4 for the distinction
+   between client-mandated and opportunistic response signing.
 
 5.3.  Privacy Considerations
 
@@ -929,6 +947,9 @@ A.1.  draft-ietf-wimse-http-signature-07
 
    *  WGLC: clarify interaction of Accept-Signature and wimse-sign-
       response (#305).
+
+   *  WGLC: expand middlebox considerations for intermediaries and proxy
+      signatures (#305).
 
    *  Regenerate non-normative examples for @path/@query, wimse-sign-
       response, and wimse-req-nonce.

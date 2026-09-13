@@ -1834,11 +1834,23 @@ replay protection would not be effective.<a href="#section-5.1-9" class="pilcrow
 <p id="section-5.2-1">In some deployments the Workload Identity Token and PoP
 (signature) may pass through multiple systems. The communication between the
 systems is over TLS, but the WIT and signature are available in the clear at each
-intermediary.  While the intermediary cannot modify the token or the
-information within the signature they can attempt to capture and replay the message or modify
+intermediary. While the intermediary cannot modify the token or the
+information within the signature without detection, it can attempt to capture and replay the message or modify
 unsigned information, such as any HTTP headers that remain unsigned.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
-<p id="section-5.2-2">Mitigations listed in the protocol provide a reasonable level of security in these situations, in particular
-if responses are signed in addition to requests.<a href="#section-5.2-2" class="pilcrow">¶</a></p>
+<p id="section-5.2-2">HTTP permits intermediaries to transform messages (<span>[<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>).
+This profile is intended to remain verifiable across common TLS-terminating proxies and load balancers:
+it does not cover <code>@authority</code>, and it carries recipient binding in <code>wimse-aud</code> (<a href="#http-sig-auth" class="auto internal xref">Section 3</a>).
+An intermediary <span class="bcp14">MAY</span> add its own HTTP message signature to a message that already carries a WIMSE signature.
+Recipients continue to identify the WIMSE signature by its <code>tag</code> value <code>wimse-workload-to-workload</code>
+and <span class="bcp14">MUST NOT</span> select by label (<a href="#http-sig-auth" class="auto internal xref">Section 3</a>).<a href="#section-5.2-2" class="pilcrow">¶</a></p>
+<p id="section-5.2-3">If an intermediary changes a component covered by the WIMSE signature, verification of that signature fails.
+This document does not define a profile for stripping the origin WIMSE signature and replacing it with a new
+WIMSE signature at the intermediary.
+Such resigning would authenticate the intermediary rather than the origin workload and is left to
+deployment-specific policy outside this specification.<a href="#section-5.2-3" class="pilcrow">¶</a></p>
+<p id="section-5.2-4">Mitigations listed in the protocol provide a reasonable level of security in these situations, in particular
+if responses are signed in addition to requests.
+See also <a href="#signing-the-response" class="auto internal xref">Section 3.4</a> for the distinction between client-mandated and opportunistic response signing.<a href="#section-5.2-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="privacy-considerations">
@@ -2173,13 +2185,16 @@ context where the request would be accepted as valid, and this mitigates the ris
             <p id="appendix-A.1-1.12.1">WGLC: clarify interaction of <code>Accept-Signature</code> and <code>wimse-sign-response</code> (#305).<a href="#appendix-A.1-1.12.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.13">
-            <p id="appendix-A.1-1.13.1">Regenerate non-normative examples for <code>@path</code>/<code>@query</code>, <code>wimse-sign-response</code>, and <code>wimse-req-nonce</code>.<a href="#appendix-A.1-1.13.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.13.1">WGLC: expand middlebox considerations for intermediaries and proxy signatures (#305).<a href="#appendix-A.1-1.13.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.14">
-            <p id="appendix-A.1-1.14.1">Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use.<a href="#appendix-A.1-1.14.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.14.1">Regenerate non-normative examples for <code>@path</code>/<code>@query</code>, <code>wimse-sign-response</code>, and <code>wimse-req-nonce</code>.<a href="#appendix-A.1-1.14.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.15">
-            <p id="appendix-A.1-1.15.1">Reference the WIT validation procedure in <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span> (#290).<a href="#appendix-A.1-1.15.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.15.1">Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use.<a href="#appendix-A.1-1.15.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.1-1.16">
+            <p id="appendix-A.1-1.16.1">Reference the WIT validation procedure in <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span> (#290).<a href="#appendix-A.1-1.16.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
