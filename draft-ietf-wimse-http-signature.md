@@ -348,12 +348,26 @@ replay protection would not be effective.
 In some deployments the Workload Identity Token and PoP
 (signature) may pass through multiple systems. The communication between the
 systems is over TLS, but the WIT and signature are available in the clear at each
-intermediary.  While the intermediary cannot modify the token or the
-information within the signature they can attempt to capture and replay the message or modify
+intermediary. While the intermediary cannot modify the token or the
+information within the signature without detection, it can attempt to capture and replay the message or modify
 unsigned information, such as any HTTP headers that remain unsigned.
+
+HTTP permits intermediaries to transform messages ({{RFC9421}}).
+This profile is intended to remain verifiable across common TLS-terminating proxies and load balancers:
+it does not cover `@authority`, and it carries recipient binding in `wimse-aud` ({{http-sig-auth}}).
+An intermediary MAY add its own HTTP message signature to a message that already carries a WIMSE signature.
+Recipients continue to identify the WIMSE signature by its `tag` value `wimse-workload-to-workload`
+and MUST NOT select by label ({{http-sig-auth}}).
+
+If an intermediary changes a component covered by the WIMSE signature, verification of that signature fails.
+This document does not define a profile for stripping the origin WIMSE signature and replacing it with a new
+WIMSE signature at the intermediary.
+Such resigning would authenticate the intermediary rather than the origin workload and is left to
+deployment-specific policy outside this specification.
 
 Mitigations listed in the protocol provide a reasonable level of security in these situations, in particular
 if responses are signed in addition to requests.
+See also {{signing-the-response}} for the distinction between client-mandated and opportunistic response signing.
 
 ## Privacy Considerations
 
@@ -461,6 +475,7 @@ IANA is requested to register the following entries in the "HTTP Signature Metad
 * WGLC: clarify that deletion detection and mandatory-response guarantees require `wimse-sign-response`; local-policy signing is opportunistic for the client (#305).
 * WGLC: clarify `wimse-aud` (always present; sender default is target URI; deployment-specific when needed); omit `@authority`; state audience binding in the WIT and PoP security considerations (#305, #297).
 * WGLC: clarify interaction of `Accept-Signature` and `wimse-sign-response` (#305).
+* WGLC: expand middlebox considerations for intermediaries and proxy signatures (#305).
 * Regenerate non-normative examples for `@path`/`@query`, `wimse-sign-response`, and `wimse-req-nonce`.
 * Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use.
 * Reference the WIT validation procedure in {{I-D.ietf-wimse-workload-creds}} (#290).
