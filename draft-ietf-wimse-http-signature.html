@@ -1448,8 +1448,7 @@ The <code>@authority</code> derived component is not included: TLS-terminating p
           <p id="section-3-11.1.1"><code>created</code><a href="#section-3-11.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-3-11.2">
-          <p id="section-3-11.2.1"><code>expires</code> - expiration <span class="bcp14">MUST</span> be short, e.g. on the order of minutes. The WIMSE architecture will provide separate
-mechanisms in support of long-lived compute processes.<a href="#section-3-11.2.1" class="pilcrow">¶</a></p>
+          <p id="section-3-11.2.1"><code>expires</code> - expiration <span class="bcp14">MUST</span> be short, e.g. on the order of minutes. This profile is for individual request/response exchanges; mechanisms for long-lived batch-style workloads are out of scope.<a href="#section-3-11.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-3-11.3">
           <p id="section-3-11.3.1"><code>nonce</code><a href="#section-3-11.3.1" class="pilcrow">¶</a></p>
@@ -1516,11 +1515,12 @@ See "Workload Identifiers and Authentication Granularity" in <span>[<a href="#I-
 <a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-the-wimse-sign-response-sig" class="section-name selfRef">The <code>wimse-sign-response</code> Signature Parameter</a>
         </h3>
 <p id="section-3.2-1">This document defines the <code>wimse-sign-response</code> signature metadata parameter for requests.
-It is a Boolean parameter (<span><a href="https://rfc-editor.org/rfc/rfc8941#section-3.3.6" class="relref">Section 3.3.6</a> of [<a href="#RFC8941" class="cite xref">RFC8941</a>]</span>).
+It is a Boolean parameter.
 When present with the value true, the client requires the server to sign the HTTP response
-to this request as specified in <a href="#signing-the-response" class="auto internal xref">Section 3.4</a>.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
+to this request as specified in <a href="#signing-the-response" class="auto internal xref">Section 3.4</a>.
+When the parameter is omitted, or present with the value false, the client does not require a signed response via this parameter.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
 <p id="section-3.2-2">If the client is configured to require a signed response, it <span class="bcp14">MUST</span> include <code>wimse-sign-response</code> with the Boolean value true in the request's <code>Signature-Input</code>.<a href="#section-3.2-2" class="pilcrow">¶</a></p>
-<p id="section-3.2-3">This parameter is not mandatory. Moreover, the server <span class="bcp14">MAY</span> sign the response even if this parameter is missing from the request.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
+<p id="section-3.2-3">This parameter is not mandatory. Moreover, the server <span class="bcp14">MAY</span> sign the response even if this parameter is missing from the request or is present with the value false.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="wimse-req-nonce-param">
@@ -1529,6 +1529,7 @@ to this request as specified in <a href="#signing-the-response" class="auto inte
 <a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-the-wimse-req-nonce-signatu" class="section-name selfRef">The <code>wimse-req-nonce</code> Signature Parameter</a>
         </h3>
 <p id="section-3.3-1">This document defines the <code>wimse-req-nonce</code> signature metadata parameter for signed responses.
+It is a String parameter.
 This parameter binds requests to responses and prevents a malicious
 server-side component or middlebox from replaying responses to the wrong client.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
 <p id="section-3.3-2">Every signed response <span class="bcp14">MUST</span> include <code>wimse-req-nonce</code>. The server <span class="bcp14">MUST</span> set it to the value of the <code>nonce</code> signature parameter from the <code>Signature-Input</code> of the request that triggered the response.<a href="#section-3.3-2" class="pilcrow">¶</a></p>
@@ -1915,7 +1916,7 @@ receiver, and any TLS-terminating middleboxes that process the traffic.<a href="
         </h3>
 <ul class="normal">
 <li class="normal" id="section-6.3-1.1">
-            <p id="section-6.3-1.1.1">No requests can be modified without detection by the recipient. Integrity of
+            <p id="section-6.3-1.1.1">Covered components of a request cannot be modified without detection by the recipient. Integrity of
 all present HTTP headers specified in this document is protected, as well as
 the derived components listed in <a href="#http-sig-auth" class="auto internal xref">Section 3</a>, the signature parameters
 (including <code>wimse-aud</code> and <code>wimse-sign-response</code> on requests and <code>wimse-req-nonce</code> on responses)
@@ -1923,12 +1924,13 @@ as covered by <code>@signature-params</code> in <span>[<a href="#RFC9421" class=
 the message content (when present).<a href="#section-6.3-1.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-6.3-1.2">
-            <p id="section-6.3-1.2.1">No responses can be modified without detection when response signing is required
-(<a href="#signing-the-response" class="auto internal xref">Section 3.4</a>) and the recipient validates incoming responses.<a href="#section-6.3-1.2.1" class="pilcrow">¶</a></p>
+            <p id="section-6.3-1.2.1">Covered components of a signed response cannot be modified without detection by the recipient.<a href="#section-6.3-1.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-6.3-1.3">
-            <p id="section-6.3-1.3.1">Note: Headers not specified in this document may remain unsigned and could
-potentially be modified or deleted by intermediaries without detection.<a href="#section-6.3-1.3.1" class="pilcrow">¶</a></p>
+            <p id="section-6.3-1.3.1">This profile is designed so that, for typical REST APIs, the essential parts of the message are covered by the signature.<a href="#section-6.3-1.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-6.3-1.4">
+            <p id="section-6.3-1.4.1">Headers not specified in this document may remain unsigned and could potentially be modified or deleted by intermediaries without detection.<a href="#section-6.3-1.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
@@ -1990,7 +1992,7 @@ context where the request would be accepted as valid, and this mitigates the ris
               <p id="section-7.1.1-1.1.1">Name: <code>wimse-aud</code><a href="#section-7.1.1-1.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-7.1.1-1.2">
-              <p id="section-7.1.1-1.2.1">Description: the WIMSE message audience. Request signatures only; binds the HTTP message signature to the intended recipient.<a href="#section-7.1.1-1.2.1" class="pilcrow">¶</a></p>
+              <p id="section-7.1.1-1.2.1">Description: String; the WIMSE message audience. Request signatures only; binds the HTTP message signature to the intended recipient.<a href="#section-7.1.1-1.2.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-7.1.1-1.3">
               <p id="section-7.1.1-1.3.1">Reference: RFC XXX, <a href="#wimse-aud-param" class="auto internal xref">Section 3.1</a>.<a href="#section-7.1.1-1.3.1" class="pilcrow">¶</a></p>
@@ -2026,7 +2028,7 @@ context where the request would be accepted as valid, and this mitigates the ris
               <p id="section-7.1.3-1.1.1">Name: <code>wimse-req-nonce</code><a href="#section-7.1.3-1.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-7.1.3-1.2">
-              <p id="section-7.1.3-1.2.1">Description: on response signatures, the <code>nonce</code> value from the triggering request's <code>Signature-Input</code>; binds the response to that request.<a href="#section-7.1.3-1.2.1" class="pilcrow">¶</a></p>
+              <p id="section-7.1.3-1.2.1">Description: String; on response signatures, the <code>nonce</code> value from the triggering request's <code>Signature-Input</code>; binds the response to that request.<a href="#section-7.1.3-1.2.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-7.1.3-1.3">
               <p id="section-7.1.3-1.3.1">Reference: RFC XXX, <a href="#wimse-req-nonce-param" class="auto internal xref">Section 3.3</a>.<a href="#section-7.1.3-1.3.1" class="pilcrow">¶</a></p>
@@ -2049,6 +2051,10 @@ context where the request would be accepted as valid, and this mitigates the ris
 <a href="#section-8.1" class="section-number selfRef">8.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
         </h3>
 <dl class="references">
+<dt id="I-D.ietf-wimse-arch">[I-D.ietf-wimse-arch]</dt>
+        <dd>
+<span class="refAuthor">Salowey, J. A.</span>, <span class="refAuthor">Rosomakho, Y.</span>, and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"Workload Identity in a Multi System Environment (WIMSE) Architecture"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-arch-08</span>, <time datetime="2026-07-06" class="refDate">6 July 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-08">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-08</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="I-D.ietf-wimse-workload-creds">[I-D.ietf-wimse-workload-creds]</dt>
         <dd>
 <span class="refAuthor">Campbell, B.</span>, <span class="refAuthor">Salowey, J. A.</span>, <span class="refAuthor">Schwenkschuster, A.</span>, <span class="refAuthor">Sheffer, Y.</span>, and <span class="refAuthor">Y. Rosomakho</span>, <span class="refTitle">"WIMSE Workload Credentials"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-workload-creds-02</span>, <time datetime="2026-07-02" class="refDate">2 July 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-workload-creds-02">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-workload-creds-02</a>&gt;</span>. </dd>
@@ -2073,6 +2079,10 @@ context where the request would be accepted as valid, and this mitigates the ris
         <dd>
 <span class="refAuthor">Backman, A., Ed.</span>, <span class="refAuthor">Richer, J., Ed.</span>, and <span class="refAuthor">M. Sporny</span>, <span class="refTitle">"HTTP Message Signatures"</span>, <span class="seriesInfo">RFC 9421</span>, <span class="seriesInfo">DOI 10.17487/RFC9421</span>, <time datetime="2024-02" class="refDate">February 2024</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9421">https://www.rfc-editor.org/rfc/rfc9421</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="RFC9457">[RFC9457]</dt>
+        <dd>
+<span class="refAuthor">Nottingham, M.</span>, <span class="refAuthor">Wilde, E.</span>, and <span class="refAuthor">S. Dalal</span>, <span class="refTitle">"Problem Details for HTTP APIs"</span>, <span class="seriesInfo">RFC 9457</span>, <span class="seriesInfo">DOI 10.17487/RFC9457</span>, <time datetime="2023-07" class="refDate">July 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9457">https://www.rfc-editor.org/rfc/rfc9457</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC9525">[RFC9525]</dt>
       <dd>
 <span class="refAuthor">Saint-Andre, P.</span> and <span class="refAuthor">R. Salz</span>, <span class="refTitle">"Service Identity in TLS"</span>, <span class="seriesInfo">RFC 9525</span>, <span class="seriesInfo">DOI 10.17487/RFC9525</span>, <time datetime="2023-11" class="refDate">November 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9525">https://www.rfc-editor.org/rfc/rfc9525</a>&gt;</span>. </dd>
@@ -2090,10 +2100,6 @@ context where the request would be accepted as valid, and this mitigates the ris
         <dd>
 <span class="refAuthor">Tulshibagwale, A.</span>, <span class="refAuthor">Fletcher, G.</span>, and <span class="refAuthor">P. Kasselman</span>, <span class="refTitle">"Transaction Tokens"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-transaction-tokens-11</span>, <time datetime="2026-07-30" class="refDate">30 July 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-transaction-tokens-11">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-transaction-tokens-11</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="I-D.ietf-wimse-arch">[I-D.ietf-wimse-arch]</dt>
-        <dd>
-<span class="refAuthor">Salowey, J. A.</span>, <span class="refAuthor">Rosomakho, Y.</span>, and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"Workload Identity in a Multi System Environment (WIMSE) Architecture"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-arch-08</span>, <time datetime="2026-07-06" class="refDate">6 July 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-08">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-08</a>&gt;</span>. </dd>
-<dd class="break"></dd>
 <dt id="I-D.ietf-wimse-mutual-tls">[I-D.ietf-wimse-mutual-tls]</dt>
         <dd>
 <span class="refAuthor">Salowey, J. A.</span> and <span class="refAuthor">Y. Rosomakho</span>, <span class="refTitle">"Workload Authentication Using Mutual TLS"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-mutual-tls-02</span>, <time datetime="2026-07-06" class="refDate">6 July 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-mutual-tls-02">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-mutual-tls-02</a>&gt;</span>. </dd>
@@ -2106,17 +2112,9 @@ context where the request would be accepted as valid, and this mitigates the ris
         <dd>
 <span class="refTitle">"HTTP Message Signature"</span>, <span>n.d.</span>, <span>&lt;<a href="https://www.iana.org/assignments/http-message-signature/http-message-signature.xhtml#signature-metadata-parameters">https://www.iana.org/assignments/http-message-signature/http-message-signature.xhtml#signature-metadata-parameters</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="RFC8941">[RFC8941]</dt>
-        <dd>
-<span class="refAuthor">Nottingham, M.</span> and <span class="refAuthor">P. Kamp</span>, <span class="refTitle">"Structured Field Values for HTTP"</span>, <span class="seriesInfo">RFC 8941</span>, <span class="seriesInfo">DOI 10.17487/RFC8941</span>, <time datetime="2021-02" class="refDate">February 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8941">https://www.rfc-editor.org/rfc/rfc8941</a>&gt;</span>. </dd>
-<dd class="break"></dd>
 <dt id="RFC9449">[RFC9449]</dt>
-        <dd>
-<span class="refAuthor">Fett, D.</span>, <span class="refAuthor">Campbell, B.</span>, <span class="refAuthor">Bradley, J.</span>, <span class="refAuthor">Lodderstedt, T.</span>, <span class="refAuthor">Jones, M.</span>, and <span class="refAuthor">D. Waite</span>, <span class="refTitle">"OAuth 2.0 Demonstrating Proof of Possession (DPoP)"</span>, <span class="seriesInfo">RFC 9449</span>, <span class="seriesInfo">DOI 10.17487/RFC9449</span>, <time datetime="2023-09" class="refDate">September 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9449">https://www.rfc-editor.org/rfc/rfc9449</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="RFC9457">[RFC9457]</dt>
       <dd>
-<span class="refAuthor">Nottingham, M.</span>, <span class="refAuthor">Wilde, E.</span>, and <span class="refAuthor">S. Dalal</span>, <span class="refTitle">"Problem Details for HTTP APIs"</span>, <span class="seriesInfo">RFC 9457</span>, <span class="seriesInfo">DOI 10.17487/RFC9457</span>, <time datetime="2023-07" class="refDate">July 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9457">https://www.rfc-editor.org/rfc/rfc9457</a>&gt;</span>. </dd>
+<span class="refAuthor">Fett, D.</span>, <span class="refAuthor">Campbell, B.</span>, <span class="refAuthor">Bradley, J.</span>, <span class="refAuthor">Lodderstedt, T.</span>, <span class="refAuthor">Jones, M.</span>, and <span class="refAuthor">D. Waite</span>, <span class="refTitle">"OAuth 2.0 Demonstrating Proof of Possession (DPoP)"</span>, <span class="seriesInfo">RFC 9449</span>, <span class="seriesInfo">DOI 10.17487/RFC9449</span>, <time datetime="2023-09" class="refDate">September 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9449">https://www.rfc-editor.org/rfc/rfc9449</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -2136,34 +2134,46 @@ context where the request would be accepted as valid, and this mitigates the ris
         </h3>
 <ul class="normal">
 <li class="normal" id="appendix-A.1-1.1">
-            <p id="appendix-A.1-1.1.1">WGLC: replace <code>@request-target</code> with <code>@path</code> and <code>@query</code> (#297).<a href="#appendix-A.1-1.1.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.1.1">Clarify signature parameter types (String/Boolean) and drop the obsolete RFC 8941 citation (#305).<a href="#appendix-A.1-1.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.2">
-            <p id="appendix-A.1-1.2.1">WGLC: require <code>wimse-req-nonce</code> on every signed response, not only when the client required one (#297).<a href="#appendix-A.1-1.2.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.2.1">Clarify <code>wimse-sign-response</code> false vs omitted (#305).<a href="#appendix-A.1-1.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.3">
-            <p id="appendix-A.1-1.3.1">WGLC: recipients reject duplicate nonces without regard to sender (#297).<a href="#appendix-A.1-1.3.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.3.1">Soften integrity goals to covered components; note typical REST coverage; clarify short <code>expires</code> vs long-lived workloads (#305).<a href="#appendix-A.1-1.3.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.4">
-            <p id="appendix-A.1-1.4.1">WGLC: require <code>wimse-sign-response</code> when the client is configured to require a signed response (#301).<a href="#appendix-A.1-1.4.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.4.1">Make <code>wimse-arch</code> and RFC 9457 normative references (#305).<a href="#appendix-A.1-1.4.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.5">
-            <p id="appendix-A.1-1.5.1">WGLC: select the WIMSE signature by <code>tag</code>, not by label (#301).<a href="#appendix-A.1-1.5.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.5.1">WGLC: replace <code>@request-target</code> with <code>@path</code> and <code>@query</code> (#297).<a href="#appendix-A.1-1.5.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.6">
-            <p id="appendix-A.1-1.6.1">WGLC: clarify that deletion detection and mandatory-response guarantees require <code>wimse-sign-response</code>; local-policy signing is opportunistic for the client (#305).<a href="#appendix-A.1-1.6.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.6.1">WGLC: require <code>wimse-req-nonce</code> on every signed response, not only when the client required one (#297).<a href="#appendix-A.1-1.6.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.7">
-            <p id="appendix-A.1-1.7.1">WGLC: clarify <code>wimse-aud</code> (always present; sender default is target URI; deployment-specific when needed); omit <code>@authority</code>; state audience binding in the WIT and PoP security considerations (#305, #297).<a href="#appendix-A.1-1.7.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.7.1">WGLC: recipients reject duplicate nonces without regard to sender (#297).<a href="#appendix-A.1-1.7.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.8">
-            <p id="appendix-A.1-1.8.1">Regenerate non-normative examples for <code>@path</code>/<code>@query</code>, <code>wimse-sign-response</code>, and <code>wimse-req-nonce</code>.<a href="#appendix-A.1-1.8.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.8.1">WGLC: require <code>wimse-sign-response</code> when the client is configured to require a signed response (#301).<a href="#appendix-A.1-1.8.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.9">
-            <p id="appendix-A.1-1.9.1">Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use.<a href="#appendix-A.1-1.9.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.9.1">WGLC: select the WIMSE signature by <code>tag</code>, not by label (#301).<a href="#appendix-A.1-1.9.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.10">
-            <p id="appendix-A.1-1.10.1">Reference the WIT validation procedure in <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span> (#290).<a href="#appendix-A.1-1.10.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.10.1">WGLC: clarify that deletion detection and mandatory-response guarantees require <code>wimse-sign-response</code>; local-policy signing is opportunistic for the client (#305).<a href="#appendix-A.1-1.10.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.1-1.11">
+            <p id="appendix-A.1-1.11.1">WGLC: clarify <code>wimse-aud</code> (always present; sender default is target URI; deployment-specific when needed); omit <code>@authority</code>; state audience binding in the WIT and PoP security considerations (#305, #297).<a href="#appendix-A.1-1.11.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.1-1.12">
+            <p id="appendix-A.1-1.12.1">Regenerate non-normative examples for <code>@path</code>/<code>@query</code>, <code>wimse-sign-response</code>, and <code>wimse-req-nonce</code>.<a href="#appendix-A.1-1.12.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.1-1.13">
+            <p id="appendix-A.1-1.13.1">Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use.<a href="#appendix-A.1-1.13.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.1-1.14">
+            <p id="appendix-A.1-1.14.1">Reference the WIT validation procedure in <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span> (#290).<a href="#appendix-A.1-1.14.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
@@ -2496,7 +2506,7 @@ trying to reinvent Message Signatures.<a href="#appendix-B-2.6.1" class="pilcrow
 <a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
       </h2>
 <p id="appendix-C-1">The authors would like to thank Pieter Kasselman for his detailed comments,
-Kieran Sweeney and Anton Sokolov for their WGLC reviews,
+Flemming Andreasen, Kieran Sweeney and Anton Sokolov for their WGLC reviews,
 as well as Jason Costello, Maartje Eyskens, Radosław Piliszek and kanywst for implementing this draft and sharing their learnings.<a href="#appendix-C-1" class="pilcrow">¶</a></p>
 <p id="appendix-C-2">We thank Daniel Feldman for his contributions to earlier versions of this document. We also thank Arndt Schwenkschuster and Brian Campbell who coauthored
 the grand unified WIMSE Workload to Workload protocol draft.<a href="#appendix-C-2" class="pilcrow">¶</a></p>

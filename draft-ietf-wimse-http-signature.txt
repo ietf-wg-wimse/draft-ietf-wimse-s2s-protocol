@@ -242,8 +242,8 @@ Table of Contents
    *  created
 
    *  expires - expiration MUST be short, e.g. on the order of minutes.
-      The WIMSE architecture will provide separate mechanisms in support
-      of long-lived compute processes.
+      This profile is for individual request/response exchanges;
+      mechanisms for long-lived batch-style workloads are out of scope.
 
    *  nonce
 
@@ -338,24 +338,27 @@ Table of Contents
 3.2.  The wimse-sign-response Signature Parameter
 
    This document defines the wimse-sign-response signature metadata
-   parameter for requests.  It is a Boolean parameter (Section 3.3.6 of
-   [RFC8941]).  When present with the value true, the client requires
-   the server to sign the HTTP response to this request as specified in
-   Section 3.4.
+   parameter for requests.  It is a Boolean parameter.  When present
+   with the value true, the client requires the server to sign the HTTP
+   response to this request as specified in Section 3.4.  When the
+   parameter is omitted, or present with the value false, the client
+   does not require a signed response via this parameter.
 
    If the client is configured to require a signed response, it MUST
    include wimse-sign-response with the Boolean value true in the
    request's Signature-Input.
 
    This parameter is not mandatory.  Moreover, the server MAY sign the
-   response even if this parameter is missing from the request.
+   response even if this parameter is missing from the request or is
+   present with the value false.
 
 3.3.  The wimse-req-nonce Signature Parameter
 
    This document defines the wimse-req-nonce signature metadata
-   parameter for signed responses.  This parameter binds requests to
-   responses and prevents a malicious server-side component or middlebox
-   from replaying responses to the wrong client.
+   parameter for signed responses.  It is a String parameter.  This
+   parameter binds requests to responses and prevents a malicious
+   server-side component or middlebox from replaying responses to the
+   wrong client.
 
    Every signed response MUST include wimse-req-nonce.  The server MUST
    set it to the value of the nonce signature parameter from the
@@ -713,21 +716,23 @@ Table of Contents
 
 6.3.  Integrity
 
-   *  No requests can be modified without detection by the recipient.
-      Integrity of all present HTTP headers specified in this document
-      is protected, as well as the derived components listed in
-      Section 3, the signature parameters (including wimse-aud and
-      wimse-sign-response on requests and wimse-req-nonce on responses)
-      as covered by @signature-params in [RFC9421], and the message
-      content (when present).
+   *  Covered components of a request cannot be modified without
+      detection by the recipient.  Integrity of all present HTTP headers
+      specified in this document is protected, as well as the derived
+      components listed in Section 3, the signature parameters
+      (including wimse-aud and wimse-sign-response on requests and
+      wimse-req-nonce on responses) as covered by @signature-params in
+      [RFC9421], and the message content (when present).
 
-   *  No responses can be modified without detection when response
-      signing is required (Section 3.4) and the recipient validates
-      incoming responses.
+   *  Covered components of a signed response cannot be modified without
+      detection by the recipient.
 
-   *  Note: Headers not specified in this document may remain unsigned
-      and could potentially be modified or deleted by intermediaries
-      without detection.
+   *  This profile is designed so that, for typical REST APIs, the
+      essential parts of the message are covered by the signature.
+
+   *  Headers not specified in this document may remain unsigned and
+      could potentially be modified or deleted by intermediaries without
+      detection.
 
 6.4.  Replay and Deletion
 
@@ -769,8 +774,9 @@ Table of Contents
 
    *  Name: wimse-aud
 
-   *  Description: the WIMSE message audience.  Request signatures only;
-      binds the HTTP message signature to the intended recipient.
+   *  Description: String; the WIMSE message audience.  Request
+      signatures only; binds the HTTP message signature to the intended
+      recipient.
 
    *  Reference: RFC XXX, Section 3.1.
 
@@ -787,15 +793,23 @@ Table of Contents
 
    *  Name: wimse-req-nonce
 
-   *  Description: on response signatures, the nonce value from the
-      triggering request's Signature-Input; binds the response to that
-      request.
+   *  Description: String; on response signatures, the nonce value from
+      the triggering request's Signature-Input; binds the response to
+      that request.
 
    *  Reference: RFC XXX, Section 3.3.
 
 8.  References
 
 8.1.  Normative References
+
+   [I-D.ietf-wimse-arch]
+              Salowey, J. A., Rosomakho, Y., and H. Tschofenig,
+              "Workload Identity in a Multi System Environment (WIMSE)
+              Architecture", Work in Progress, Internet-Draft, draft-
+              ietf-wimse-arch-08, 6 July 2026,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
+              arch-08>.
 
    [I-D.ietf-wimse-workload-creds]
               Campbell, B., Salowey, J. A., Schwenkschuster, A.,
@@ -828,6 +842,10 @@ Table of Contents
               Message Signatures", RFC 9421, DOI 10.17487/RFC9421,
               February 2024, <https://www.rfc-editor.org/rfc/rfc9421>.
 
+   [RFC9457]  Nottingham, M., Wilde, E., and S. Dalal, "Problem Details
+              for HTTP APIs", RFC 9457, DOI 10.17487/RFC9457, July 2023,
+              <https://www.rfc-editor.org/rfc/rfc9457>.
+
    [RFC9525]  Saint-Andre, P. and R. Salz, "Service Identity in TLS",
               RFC 9525, DOI 10.17487/RFC9525, November 2023,
               <https://www.rfc-editor.org/rfc/rfc9525>.
@@ -840,14 +858,6 @@ Table of Contents
               draft-ietf-oauth-transaction-tokens-11, 30 July 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
               transaction-tokens-11>.
-
-   [I-D.ietf-wimse-arch]
-              Salowey, J. A., Rosomakho, Y., and H. Tschofenig,
-              "Workload Identity in a Multi System Environment (WIMSE)
-              Architecture", Work in Progress, Internet-Draft, draft-
-              ietf-wimse-arch-08, 6 July 2026,
-              <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
-              arch-08>.
 
    [I-D.ietf-wimse-mutual-tls]
               Salowey, J. A. and Y. Rosomakho, "Workload Authentication
@@ -869,18 +879,10 @@ Table of Contents
               http-message-signature.xhtml#signature-metadata-
               parameters>.
 
-   [RFC8941]  Nottingham, M. and P. Kamp, "Structured Field Values for
-              HTTP", RFC 8941, DOI 10.17487/RFC8941, February 2021,
-              <https://www.rfc-editor.org/rfc/rfc8941>.
-
    [RFC9449]  Fett, D., Campbell, B., Bradley, J., Lodderstedt, T.,
               Jones, M., and D. Waite, "OAuth 2.0 Demonstrating Proof of
               Possession (DPoP)", RFC 9449, DOI 10.17487/RFC9449,
               September 2023, <https://www.rfc-editor.org/rfc/rfc9449>.
-
-   [RFC9457]  Nottingham, M., Wilde, E., and S. Dalal, "Problem Details
-              for HTTP APIs", RFC 9457, DOI 10.17487/RFC9457, July 2023,
-              <https://www.rfc-editor.org/rfc/rfc9457>.
 
 Appendix A.  Document History
 
@@ -888,6 +890,16 @@ Appendix A.  Document History
    // RFC Editor: please remove before publication.
 
 A.1.  draft-ietf-wimse-http-signature-07
+
+   *  Clarify signature parameter types (String/Boolean) and drop the
+      obsolete RFC 8941 citation (#305).
+
+   *  Clarify wimse-sign-response false vs omitted (#305).
+
+   *  Soften integrity goals to covered components; note typical REST
+      coverage; clarify short expires vs long-lived workloads (#305).
+
+   *  Make wimse-arch and RFC 9457 normative references (#305).
 
    *  WGLC: replace @request-target with @path and @query (#297).
 
@@ -1107,9 +1119,10 @@ Appendix B.  Comparing the DPoP Inspired Option with Message Signatures
 Acknowledgments
 
    The authors would like to thank Pieter Kasselman for his detailed
-   comments, Kieran Sweeney and Anton Sokolov for their WGLC reviews, as
-   well as Jason Costello, Maartje Eyskens, Radosław Piliszek and
-   kanywst for implementing this draft and sharing their learnings.
+   comments, Flemming Andreasen, Kieran Sweeney and Anton Sokolov for
+   their WGLC reviews, as well as Jason Costello, Maartje Eyskens,
+   Radosław Piliszek and kanywst for implementing this draft and sharing
+   their learnings.
 
    We thank Daniel Feldman for his contributions to earlier versions of
    this document.  We also thank Arndt Schwenkschuster and Brian
