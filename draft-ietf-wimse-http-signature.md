@@ -152,6 +152,18 @@ For clarity: the signature's lifetime (the `expires` signature parameter) is dif
 
 Implementers need to be aware that the WIT is extracted from the message before the message signature is validated. Recipients of signed HTTP messages MUST validate the WIT as specified in {{Section 5.1.4 of I-D.ietf-wimse-workload-creds}} before validating the HTTP message signature. They MUST ensure that the message is not processed further before it has been fully validated.
 
+## Signature Algorithms {#sig-algs}
+
+The HTTP message signature algorithm is determined by the `alg` member of the `cnf.jwk` object in the WIT
+("The Workload Identity Token" in {{I-D.ietf-wimse-workload-creds}}).
+This profile does not define a separate algorithm baseline; general-purpose implementations inherit the
+requirement that `ES256` MUST be supported from that document.
+The `alg` signature parameter MUST NOT be used, as specified above.
+
+Recipients MUST verify the HTTP message signature using the algorithm identified by `cnf.jwk.alg`
+and MUST reject the message if that algorithm is not acceptable under local policy for the peer's trust domain.
+See also {{Section 7.3.6 of RFC9421}} on key and algorithm specification downgrades.
+
 ## The `wimse-aud` Signature Parameter {#wimse-aud-param}
 
 {{RFC9421}} defines signature parameters for HTTP message signatures: metadata carried in the `Signature-Input` field
@@ -476,6 +488,7 @@ IANA is requested to register the following entries in the "HTTP Signature Metad
 * WGLC: clarify `wimse-aud` (always present; sender default is target URI; deployment-specific when needed); omit `@authority`; state audience binding in the WIT and PoP security considerations (#305, #297).
 * WGLC: clarify interaction of `Accept-Signature` and `wimse-sign-response` (#305).
 * WGLC: expand middlebox considerations for intermediaries and proxy signatures (#305).
+* WGLC: point HTTP signature algorithms and downgrade checks at `cnf.jwk.alg` in {{I-D.ietf-wimse-workload-creds}} (#305).
 * Regenerate non-normative examples for `@path`/`@query`, `wimse-sign-response`, and `wimse-req-nonce`.
 * Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use.
 * Reference the WIT validation procedure in {{I-D.ietf-wimse-workload-creds}} (#290).
