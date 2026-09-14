@@ -1,0 +1,24 @@
+=============== NOTE: '\' line wrapping per RFC 8792 ================
+
+HTTP/1.1 409 Conflict
+Content-Length: 43
+Content-Digest: sha-256=:xKyvC1Ob10QItKe0NdnKhtZ/6R7/JkpTxdH20RccxFY\
+=:
+Content-Type: application/json
+Signature: sig1=:opZnqGnxaozdrf8ecfV+pAQ2wH2aIOtM5+dS6NI/MozKaVF3OUf\
+xFyAC34i2+KbMNZHYlTzJzCPqXRucMbgFlA==:
+Signature-Input: sig1=("@status" "workload-identity-token" "content-\
+type" "content-digest" "@method";req "@path";req "@query";req);creat\
+ed=1789405135;expires=1789405439;nonce="abcd4444";tag="wimse-workloa\
+d-to-workload";wimse-req-nonce="abcd3333"
+Workload-Identity-Token: eyJhbGciOiJFZDI1NTE5Iiwia2lkIjoiaXNzdWVyLWt\
+leSIsInR5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVTMjU2Iiwi\
+Y3J2IjoiUC0yNTYiLCJraWQiOiJzdmMtYy1rZXkiLCJrdHkiOiJFQyIsIngiOiJkcXV4\
+TTBMSEJiV2xZQ0R4Y05SSGU5a2I0MWxybkwwaF85bnROWEt4enh3IiwieSI6IkhQcVJs\
+cy1FWm9QckhZOWdOUmNaR3E1cGt5cGVvdmZuekxTZnNZUDJMNm8ifX0sImV4cCI6MTc4\
+OTQwNTQzOSwiaWF0IjoxNzg5NDA1MTM5LCJpc3MiOiJodHRwczovL2V4YW1wbGUuY29t\
+L2lzc3VlciIsImp0aSI6IndpdC0xNzg5NDA1MTM1OTUxNTcwODY2Iiwic3ViIjoid2lt\
+c2U6Ly9leGFtcGxlLmNvbS9zdmNDIn0.kaMHAoW7nZ5NrkwOzHE1zGEm-S9Dk5rWICPj\
+KQenhHuwksZqhW2EO1MV0vh_dcBQzvnMS710Do9KEZkcg4QyDQ
+
+{"error":"out_of_stock","flavor":"vanilla"}
