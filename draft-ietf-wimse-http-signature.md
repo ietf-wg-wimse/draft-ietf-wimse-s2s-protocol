@@ -237,35 +237,68 @@ the server SHOULD return 400 (Bad Request) or 501 (Not Implemented), optionally 
 
 ## Example Requests and Responses
 
-Following is a non-normative example of a signed request and a signed response.
+The following non-normative examples illustrate this profile with two algorithms:
+`Ed25519` ({{?RFC9864}}) for svcA/svcB, and `ES256` for svcC.
 
-The caller uses this keypair:
+The first exchange is svcA calling svcB; the second is svcB calling svcC.
+
+### Ed25519: svcA calling svcB
+
+Following is a signed request and a signed response using `Ed25519`.
+
+The caller (svcA) uses this keypair:
 
 ~~~ jwk
 {::include includes/sigs-svca-jwk.txt}
 ~~~
-{: title="Caller Private Key"}
+{: title="svcA Private Key (Ed25519)"}
 
 The caller uses its keypair and generates the following HTTP request:
 
 ~~~ http
 {::include includes/sigs-request.txt.out}
 ~~~
-{: title="Signed Request"}
+{: title="Signed Request (svcA to svcB)"}
 
-Assuming that the workload being called has the following keypair:
+Assuming that the workload being called (svcB) has the following keypair:
 
 ~~~ jwk
 {::include includes/sigs-svcb-jwk.txt}
 ~~~
-{: title="Callee Private Key"}
+{: title="svcB Private Key (Ed25519)"}
 
 A signed response would be:
 
 ~~~ http
 {::include includes/sigs-response.txt.out}
 ~~~
-{: title="Signed Response"}
+{: title="Signed Response (svcB to svcA)"}
+
+### ES256: svcB calling svcC
+
+The following exchange uses `ES256` at the callee (svcC).
+The caller is svcB, using the `Ed25519` keypair above.
+
+The callee (svcC) uses this keypair:
+
+~~~ jwk
+{::include includes/sigs-svcc-jwk.txt}
+~~~
+{: title="svcC Private Key (ES256)"}
+
+A signed request from svcB to svcC:
+
+~~~ http
+{::include includes/sigs-request-b-c.txt.out}
+~~~
+{: title="Signed Request (svcB to svcC)"}
+
+A signed response from svcC:
+
+~~~ http
+{::include includes/sigs-response-c.txt.out}
+~~~
+{: title="Signed Response (svcC to svcB)"}
 
 # Implementation Status
 
@@ -458,6 +491,7 @@ IANA is requested to register the following entries in the "HTTP Signature Metad
 * WGLC: clarify that deletion detection and mandatory-response guarantees require `wimse-sign-response`; local-policy signing is opportunistic for the client (#305).
 * WGLC: clarify `wimse-aud` (always present; sender default is target URI; deployment-specific when needed); omit `@authority`; state audience binding in the WIT and PoP security considerations (#305, #297).
 * Regenerate non-normative examples for `@path`/`@query`, `wimse-sign-response`, and `wimse-req-nonce`.
+* Add an `ES256` example (svcB to svcC) alongside the svcA/svcB `Ed25519` exchange (#312, {{?RFC9864}}).
 * Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use.
 * Reference the WIT validation procedure in {{I-D.ietf-wimse-workload-creds}} (#290).
 
