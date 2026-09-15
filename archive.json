@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-09-13T03:16:23.758670+00:00",
+  "timestamp": "2026-09-15T03:29:53.678914+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -5102,7 +5102,7 @@
       "id": "I_kwDOLJmm788AAAABOqSfKA",
       "title": "WGLC: @request-target, voluntary response signing, nonce scope (Kieran Sweeney)",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/297",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -5111,8 +5111,8 @@
       ],
       "body": "WGLC review of `draft-ietf-wimse-http-signature-06` from @kierandotai (Kieran Sweeney), [mail archive](https://mailarchive.ietf.org/arch/msg/wimse/PhjX6Pc4l7DSqJCBHG5w8fKEg5k/).\n\nOverall: layering and design are sound (`wimse-aud`, forbidding `keyid`/`alg`, credentials out of scope). Not ready yet for the reasons below.\n\n## 1. `@request-target` (blocking)\n\nSection 3 mandates `@request-target` as a covered component. RFC 9421 Section 2.2.5 says this is difficult to construct reliably outside HTTP/1.1 and is NOT RECOMMENDED when other HTTP versions may be in use.\n\nThe deployments this draft targets (multi-hop TLS proxies/LBs, often HTTP/2) are exactly where `@request-target` can diverge across hops (origin-form vs absolute-form, version translation), breaking end-to-end verification.\n\n**Suggested fix:** replace `@request-target` / `@request-target;req` with `@path` and `@query` (when a query is present). Recipient binding is already carried by mandatory `wimse-aud` and Section 3.1.\n\n## 2. Voluntary signed responses without `wimse-req-nonce`\n\nSection 3 requires `wimse-req-nonce` only when response signing is required, but Section 3.4 allows the server to sign a response voluntarily. A voluntarily signed response need not carry `wimse-req-nonce`, and the client is not told to check it \u2014 a middlebox could replay one client's signed response to another.\n\n**Suggested fix:** require `wimse-req-nonce` on every signed response (request `nonce` is already mandatory).\n\n## 3. Nonce uniqueness scope\n\nSection 3: unique among messages to the same recipient. Section 5.1: unique within the scope of a particular sender. Pick one scope and use it in both places.",
       "createdAt": "2026-08-28T13:46:04Z",
-      "updatedAt": "2026-08-28T13:46:04Z",
-      "closedAt": null,
+      "updatedAt": "2026-09-13T08:26:58Z",
+      "closedAt": "2026-09-13T08:26:58Z",
       "comments": []
     },
     {
@@ -5183,9 +5183,9 @@
       "labels": [
         "draft-ietf-wimse-http-signature"
       ],
-      "body": "WGLC review of `draft-ietf-wimse-http-signature-06` from Flemming Andreasen (@fandreas), [mail archive](https://mailarchive.ietf.org/arch/msg/wimse/K7t1qHNXVEbkaOyTd2O6qDOfkzc/).\n\nOverall: not ready yet. Editorial comments/suggested edits to come as a separate PR. Also suggests an RFC 9421 expert review if not already done.\n\nProgress note: some items already in [#302](https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/302), [#304](https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/304), [#308](https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/308). Remaining items split across smaller follow-up PRs.\n\n## Checklist\n\n### Section 3 \u2014 The Protocol\n\n- [x] **\u00a73a** `@request-target` is HTTP/1-specific (as noted by others). Decompose into constituent components while considering possible transformations between HTTP versions. \u2014 Done in #302 (`@path` + `@query`).\n- [x] **\u00a73b** Why is `@authority` not included? \u2014 #302: omitted because proxies rewrite authority; binding is via `wimse-aud`.\n- [x] **\u00a73c** `expires` text says \"The WIMSE architecture will provide separate mechanisms in support of long-lived compute processes.\" Clarify what that refers to. \u2014 #308: short expires; long-lived batch out of scope.\n- [ ] **\u00a73d** Which JWS/JWA algorithms and key types MUST be supported at a minimum (interop baseline)?\n- [ ] **\u00a73e** Downgrade-attack considerations and local policies around acceptable algorithms?\n- [ ] **\u00a73d/e note** Consider algorithm/key baseline and downgrade policy in the workload-creds draft too.\n- [x] **\u00a73f** Nonce uniqueness requirement: for how long, or assign a cryptographic collision probability instead? \u2014 Addressed in #302: random nonces with negligible collision probability within a signature lifetime; replay-cache retention is local policy (not a fixed window).\n\n### Section 3.1 \u2014 `wimse-aud`\n\n- [x] **\u00a73.1a** Missing a proper type definition (string?). \u2014 #308: String.\n- [x] **\u00a73.1b** What does \"default value\" imply? If `wimse-aud` is omitted from the message, can you still refer to it in a signature? \u2014 #302: parameter always present; default is the sender's usual value (target URI), not omission.\n- [x] **\u00a73.1c** \"When the default string is not suitable\u2026\" \u2014 sender may not know this; what is the downside of always specifying `wimse-aud`? \u2014 #302: always specified; deployment-specific value when target URI would not verify after rewrite.\n\n### Section 3.2 \u2014 `wimse-sign-response`\n\n- [x] **\u00a73.2a** RFC 8941 has been obsoleted by RFC 9651. \u2014 #308: dropped the RFC 8941 cite (no SFV re-cite).\n- [x] **\u00a73.2b** Clarify behavior when the parameter is set to `false` (vs missing). \u2014 #308: both mean not required; server MAY still sign.\n\n### Section 3.3 \u2014 `wimse-req-nonce`\n\n- [x] **\u00a73.3a** Missing a proper type definition (string?). \u2014 #308: String.\n- [x] **\u00a73.3b** What if the request had no signature (and hence no nonce), but the server still signs the response? \u2014 Not addressing: this profile always signs the request, so a request `nonce` is always available.\n\n### Section 3.4 \u2014 Signing the Response\n\n- [ ] **\u00a73.4a** Specify interaction and conflict resolution between `wimse-sign-response` and `Accept-Signature` (RFC 9421).\n\n### Section 5.1 \u2014 WIT and Proof of Possession\n\n- [x] **\u00a75.1a** Profile is said to protect the Request URI, but `@authority` is not covered; either include it or explain reliance on `wimse-aud` in more detail. \u2014 #302: protects method, path, query, audience (`wimse-aud`), and content; `@authority` omitted as above.\n\n### Section 5.2 \u2014 Middle Boxes\n\n- [ ] **\u00a75.2a** RFC 9421 specifies proxy behavior (message changes + new proxy signature). Need similar considerations for WIMSE HTTP signatures.\n\n### Section 6.3 \u2014 Integrity\n\n- [x] **\u00a76.3a** First two paragraphs overclaim that no requests/responses can be modified without detection; protection only covers signed components (3rd paragraph notes this, but 1\u20132 are still misleading). \u2014 #308: covered components + typical REST note.\n\n### Section 6.4 \u2014 Replay and Deletion\n\n- [x] **\u00a76.4a** Clarify how response signing prevents undetected deletion of a request/response pair. \u2014 #302: deletion detection only when the client required `wimse-sign-response=true`; local-policy signing is opportunistic for the client.\n\n### Section 7.1 \u2014 IANA Considerations\n\n- [x] **\u00a77.1a** Add type info to `wimse-aud` and `wimse-req-nonce` registrations. \u2014 #308.\n\n### Section 8 \u2014 References\n\n- [x] **\u00a78a** `transaction-tokens`, `wimse-arch`, RFC 8941 (\u2192 RFC 9651), and RFC 9457 appear normative but are listed as informative. \u2014 #308: `wimse-arch` and RFC 9457 normative; RFC 8941 dropped; `transaction-tokens` left informative (optional header).\n\n### Process / follow-ups\n\n- [x] Editorial comments \u2014 Flemming will submit a separate PR. \u2014 Done in #304.\n- [ ] Consider requesting an RFC 9421 expert review.",
+      "body": "WGLC review of `draft-ietf-wimse-http-signature-06` from Flemming Andreasen (@fandreas), [mail archive](https://mailarchive.ietf.org/arch/msg/wimse/K7t1qHNXVEbkaOyTd2O6qDOfkzc/).\n\nOverall: not ready yet. Editorial comments/suggested edits to come as a separate PR. Also suggests an RFC 9421 expert review if not already done.\n\nProgress note: draft checklist items addressed in [#302](https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/302), [#304](https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/304), [#308](https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/308), and [#313](https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/313). Remaining: RFC 9421 expert review (process).\n\n## Checklist\n\n### Section 3 \u2014 The Protocol\n\n- [x] **\u00a73a** `@request-target` is HTTP/1-specific (as noted by others). Decompose into constituent components while considering possible transformations between HTTP versions. \u2014 Done in #302 (`@path` + `@query`).\n- [x] **\u00a73b** Why is `@authority` not included? \u2014 #302: omitted because proxies rewrite authority; binding is via `wimse-aud`.\n- [x] **\u00a73c** `expires` text says \"The WIMSE architecture will provide separate mechanisms in support of long-lived compute processes.\" Clarify what that refers to. \u2014 #308: short expires; long-lived batch out of scope.\n- [x] **\u00a73d** Which JWS/JWA algorithms and key types MUST be supported at a minimum (interop baseline)? \u2014 #313: inherit `ES256` / `cnf.jwk.alg` from workload-creds; no separate http-sig baseline.\n- [x] **\u00a73e** Downgrade-attack considerations and local policies around acceptable algorithms? \u2014 #313: verify with `cnf.jwk.alg`; reject if not acceptable under local policy; cite RFC 9421 \u00a77.3.6.\n- [x] **\u00a73d/e note** Consider algorithm/key baseline and downgrade policy in the workload-creds draft too. \u2014 No creds change; baseline already in workload-creds (`ES256` MUST).\n- [x] **\u00a73f** Nonce uniqueness requirement: for how long, or assign a cryptographic collision probability instead? \u2014 Addressed in #302: random nonces with negligible collision probability within a signature lifetime; replay-cache retention is local policy (not a fixed window).\n\n### Section 3.1 \u2014 `wimse-aud`\n\n- [x] **\u00a73.1a** Missing a proper type definition (string?). \u2014 #308: String.\n- [x] **\u00a73.1b** What does \"default value\" imply? If `wimse-aud` is omitted from the message, can you still refer to it in a signature? \u2014 #302: parameter always present; default is the sender's usual value (target URI), not omission.\n- [x] **\u00a73.1c** \"When the default string is not suitable\u2026\" \u2014 sender may not know this; what is the downside of always specifying `wimse-aud`? \u2014 #302: always specified; deployment-specific value when target URI would not verify after rewrite.\n\n### Section 3.2 \u2014 `wimse-sign-response`\n\n- [x] **\u00a73.2a** RFC 8941 has been obsoleted by RFC 9651. \u2014 #308: dropped the RFC 8941 cite (no SFV re-cite).\n- [x] **\u00a73.2b** Clarify behavior when the parameter is set to `false` (vs missing). \u2014 #308: both mean not required; server MAY still sign.\n\n### Section 3.3 \u2014 `wimse-req-nonce`\n\n- [x] **\u00a73.3a** Missing a proper type definition (string?). \u2014 #308: String.\n- [x] **\u00a73.3b** What if the request had no signature (and hence no nonce), but the server still signs the response? \u2014 Not addressing: this profile always signs the request, so a request `nonce` is always available.\n\n### Section 3.4 \u2014 Signing the Response\n\n- [x] **\u00a73.4a** Specify interaction and conflict resolution between `wimse-sign-response` and `Accept-Signature` (RFC 9421). \u2014 #313: only `wimse-sign-response` mandates; `Accept-Signature` is preference and cannot weaken coverage.\n\n### Section 5.1 \u2014 WIT and Proof of Possession\n\n- [x] **\u00a75.1a** Profile is said to protect the Request URI, but `@authority` is not covered; either include it or explain reliance on `wimse-aud` in more detail. \u2014 #302: protects method, path, query, audience (`wimse-aud`), and content; `@authority` omitted as above.\n\n### Section 5.2 \u2014 Middle Boxes\n\n- [x] **\u00a75.2a** RFC 9421 specifies proxy behavior (message changes + new proxy signature). Need similar considerations for WIMSE HTTP signatures. \u2014 #313: proxy-added signatures OK; tag selection; strip-and-resign out of scope.\n\n### Section 6.3 \u2014 Integrity\n\n- [x] **\u00a76.3a** First two paragraphs overclaim that no requests/responses can be modified without detection; protection only covers signed components (3rd paragraph notes this, but 1\u20132 are still misleading). \u2014 #308: covered components + typical REST note.\n\n### Section 6.4 \u2014 Replay and Deletion\n\n- [x] **\u00a76.4a** Clarify how response signing prevents undetected deletion of a request/response pair. \u2014 #302: deletion detection only when the client required `wimse-sign-response=true`; local-policy signing is opportunistic for the client.\n\n### Section 7.1 \u2014 IANA Considerations\n\n- [x] **\u00a77.1a** Add type info to `wimse-aud` and `wimse-req-nonce` registrations. \u2014 #308.\n\n### Section 8 \u2014 References\n\n- [x] **\u00a78a** `transaction-tokens`, `wimse-arch`, RFC 8941 (\u2192 RFC 9651), and RFC 9457 appear normative but are listed as informative. \u2014 #308: `wimse-arch` and RFC 9457 normative; RFC 8941 dropped; `transaction-tokens` left informative (optional header).\n\n### Process / follow-ups\n\n- [x] Editorial comments \u2014 Flemming will submit a separate PR. \u2014 Done in #304.\n- [ ] Consider requesting an RFC 9421 expert review.",
       "createdAt": "2026-09-02T09:57:00Z",
-      "updatedAt": "2026-09-04T10:27:59Z",
+      "updatedAt": "2026-09-14T12:05:57Z",
       "closedAt": null,
       "comments": [
         {
@@ -5212,7 +5212,7 @@
       ],
       "body": "The three drafts are consistent in deriving the workload PoP algorithm from `cnf.jwk.alg`, but their examples do not use the MTI algorithm.\n\n`workload-creds` requires support for `ES256`, while its `cnf.jwk` example uses `EdDSA`/Ed25519. The WPT and HTTP-Sig examples follow that choice.\n\nProposed change:\n\n- Change the workload PoP examples in all three drafts to P-256/`ES256`.\n- Keep EdDSA and other permitted asymmetric JWS algorithms as optional alternatives.\n- In `workload-creds`, tighten the wording for `cnf.jwk.alg` to say directly that it identifies an asymmetric JWS signature algorithm.\n\nThe MTI requirement should remain defined only in `workload-creds`; WPT and HTTP-Sig should inherit it.",
       "createdAt": "2026-09-09T22:04:01Z",
-      "updatedAt": "2026-09-10T13:00:16Z",
+      "updatedAt": "2026-09-14T15:58:29Z",
       "closedAt": null,
       "comments": [
         {
@@ -5228,6 +5228,20 @@
           "body": "True. But it's awkward that our examples never use the MTI algorithm. In other words, if you only implement ECDSA, there's no test vector for you.",
           "createdAt": "2026-09-10T13:00:16Z",
           "updatedAt": "2026-09-10T13:00:16Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Also, we are all using `alg: eddsa` which is deprecated by RFC 9864.",
+          "createdAt": "2026-09-14T13:47:16Z",
+          "updatedAt": "2026-09-14T13:47:16Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> Also, we are all using `alg: eddsa` which is deprecated by RFC 9864.\n\nthat is something I'd been meaning to fix",
+          "createdAt": "2026-09-14T15:58:29Z",
+          "updatedAt": "2026-09-14T15:58:29Z"
         }
       ]
     }
@@ -22016,7 +22030,7 @@
       "id": "PR_kwDOLJmm788AAAABBhnmpQ",
       "title": "HTTP-Sig WGLC comments from Kieran and Anton",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/302",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -22025,17 +22039,19 @@
       ],
       "body": "5 commits, each addressing one comment.\r\n\r\nCloses #297 and #301.",
       "createdAt": "2026-08-30T19:55:53Z",
-      "updatedAt": "2026-09-12T17:44:22Z",
+      "updatedAt": "2026-09-13T08:26:57Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "25d22143e69f214a0abadb8873d47a8076ead864",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-httpsig-wglc",
       "headRefOid": "3590df425e5d2fd56f4a4ac2d128b638000b932b",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-09-13T08:26:56Z",
+      "mergedAt": "2026-09-13T08:26:56Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "90713a0f09ef1868d1eccea596e4c67f340f6903"
+      },
       "comments": [],
       "reviews": [
         {
@@ -22512,7 +22528,7 @@
       "id": "PR_kwDOLJmm788AAAABB8OVxQ",
       "title": "HTTP-Sig: Flemming WGLC comments (part 1)",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/308",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -22521,17 +22537,19 @@
       ],
       "body": "## Summary\n- Address the mechanical items from Flemming's WGLC review (#305): parameter types, `wimse-sign-response` false vs omitted, short `expires` scope, Integrity/Replay wording, and normative refs (`wimse-arch`, RFC 9457).\n- Drop the obsolete RFC 8941 citation (SFV typing inherited from RFC 9421).\n- Leave design items (`@authority`/aud, Accept-Signature, middleboxes, deletion explanation, algorithms) for follow-up PRs.\n\n\nMade with [Cursor](https://cursor.com)",
       "createdAt": "2026-09-02T18:06:58Z",
-      "updatedAt": "2026-09-12T17:47:15Z",
+      "updatedAt": "2026-09-13T09:08:30Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
-      "baseRefOid": "25d22143e69f214a0abadb8873d47a8076ead864",
+      "baseRefOid": "90713a0f09ef1868d1eccea596e4c67f340f6903",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "httpsig-wglc-fandreas-p1",
-      "headRefOid": "f58076767ce8ecd83e36d245b2609c83f1c99552",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "a231387c301c0d89a062e9aa0b87bd795fecee5a",
+      "closedAt": "2026-09-13T09:08:30Z",
+      "mergedAt": "2026-09-13T09:08:26Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "6203e7aafae9b1af33d14782ed7065e1bc087082"
+      },
       "comments": [],
       "reviews": [
         {
@@ -22678,6 +22696,60 @@
           "updatedAt": "2026-09-08T15:15:35Z"
         }
       ],
+      "reviews": []
+    },
+    {
+      "number": 313,
+      "id": "PR_kwDOLJmm788AAAABDcdvAQ",
+      "title": "HTTP-Sig: Flemming WGLC comments (part 2)",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/313",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-http-signature"
+      ],
+      "body": "## Summary\n- Close remaining draft items from Flemming's WGLC review (#305): `Accept-Signature` vs `wimse-sign-response`, middlebox/proxy signature considerations, and HTTP signature algorithm / downgrade guidance via WIT `cnf.jwk.alg`.\n- No workload-creds changes; algorithm baseline remains the existing `ES256` MTI there.\n- CC @fandreas\n\n\nMade with [Cursor](https://cursor.com)",
+      "createdAt": "2026-09-14T12:05:36Z",
+      "updatedAt": "2026-09-14T13:36:39Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "6203e7aafae9b1af33d14782ed7065e1bc087082",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "httpsig-wglc-fandreas-p2",
+      "headRefOid": "a8e63873ec02bcd617951b35b036333777090bd6",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 314,
+      "id": "PR_kwDOLJmm788AAAABDfDoQg",
+      "title": "HTTP-Sig: Ed25519 + ES256 examples (#312)",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/314",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "## Summary\n- Restructure http-sig examples: svcA\u2194svcB with `Ed25519`, and svcB\u2192svcC with `ES256` at svcC.\n- Regenerate include vectors accordingly (folded `.out` files).\n- Related to #312 but does **not** close it \u2014 WPT/creds and any remaining cross-draft consistency work are still open.\n\n\nMade with [Cursor](https://cursor.com)",
+      "createdAt": "2026-09-14T17:05:34Z",
+      "updatedAt": "2026-09-14T17:05:39Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "6203e7aafae9b1af33d14782ed7065e1bc087082",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-312",
+      "headRefOid": "b37172bd8b7112bb08e3eee3e0ccd250d36fd2b8",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
       "reviews": []
     }
   ]
