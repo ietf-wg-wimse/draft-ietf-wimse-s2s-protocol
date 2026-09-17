@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-09-15T03:29:53.678914+00:00",
+  "timestamp": "2026-09-17T03:31:33.163173+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -3475,7 +3475,7 @@
       "id": "I_kwDOLJmm787SZ2Bn",
       "title": "Move authz to Architecture document",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/177",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -3488,8 +3488,8 @@
       ],
       "body": "Much of Sec. 1.2 and in particular Figure 1 describes a view on authorization that's high level enough to fit the Architecture draft, and in fact is missing from that draft.\n\n@jsalowey WDYT?",
       "createdAt": "2025-10-19T11:40:09Z",
-      "updatedAt": "2026-09-01T14:53:17Z",
-      "closedAt": null,
+      "updatedAt": "2026-09-15T14:03:40Z",
+      "closedAt": "2026-09-15T14:03:40Z",
       "comments": [
         {
           "author": "yaronf",
@@ -4724,14 +4724,14 @@
       "author": "n2ctech",
       "authorAssociation": "NONE",
       "assignees": [
-        "yaroslavros"
+        "arndt-s"
       ],
       "labels": [
         "draft-ietf-wimse-workload-creds"
       ],
       "body": "Section 5.1 says the jti claim is useful \"to revoke\" WITs. Section 9.2.1 says WITs \"are not generally revocable on demand\". A validator implementer cannot tell whether jti deny-listing is a supported capability. jti is also OPTIONAL, so a deny list fails open for tokens issued without it. The 5.1 wording looks like a leftover from before #97 made jti optional.\n\nSuggested fix: either drop \"or to revoke them\" from 5.1, or require that deployments supporting per-WIT revocation include jti in every issued token, with a cross-reference from 9.2.1.\n\nRaised as item 2 in my WGLC review: https://mailarchive.ietf.org/arch/msg/wimse/S5Zjmr4qneFsAmepgRWhkWtFdPA/\n",
       "createdAt": "2026-07-16T11:23:23Z",
-      "updatedAt": "2026-07-28T14:32:36Z",
+      "updatedAt": "2026-09-15T14:26:23Z",
       "closedAt": null,
       "comments": []
     },
@@ -5244,6 +5244,27 @@
           "updatedAt": "2026-09-14T15:58:29Z"
         }
       ]
+    },
+    {
+      "number": 315,
+      "id": "I_kwDOLJmm788AAAABRaLt1Q",
+      "title": "Move away from `eddsa` alg identifier",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/315",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [
+        "bc-pi"
+      ],
+      "labels": [
+        "draft-ietf-wimse-wpt",
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "See https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/312#issuecomment-5666833596 for context",
+      "createdAt": "2026-09-15T14:28:07Z",
+      "updatedAt": "2026-09-15T14:29:23Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -22134,24 +22155,26 @@
       "id": "PR_kwDOLJmm788AAAABBxHF-w",
       "title": "Remove PEP and Identity issuer from diagram",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/303",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Fixes #177 ",
       "createdAt": "2026-09-01T15:14:36Z",
-      "updatedAt": "2026-09-11T18:54:18Z",
+      "updatedAt": "2026-09-15T14:03:39Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "edeebeb004b81e4eb3cd9da4ef64609731c96d17",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "arndt/177-authz",
       "headRefOid": "7d534f64a0426a1e8f0c6eca2e7a0c17ada2ea69",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-09-15T14:03:39Z",
+      "mergedAt": "2026-09-15T14:03:39Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "d9c948f546314a7dcbeebb41d78e56a8f6a309c5"
+      },
       "comments": [],
       "reviews": [
         {
