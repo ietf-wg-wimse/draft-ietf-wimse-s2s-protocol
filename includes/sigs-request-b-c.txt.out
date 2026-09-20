@@ -1,16 +1,17 @@
 =============== NOTE: '\' line wrapping per RFC 8792 ================
 
-HTTP/1.1 404 Not Found
-Content-Length: 20
-Content-Digest: sha-256=:uJC3qmCc7n6/6w4N2I0vAfj1cd/hTOAhxLEYXmPbNno\
+POST /inventory/cones HTTP/1.1
+Host: svcc.example.com
+Content-Digest: sha-256=:TzKXT0tUEfiTFkjRzwE8nCFnQljMuX5xwJaJgJCp+1g\
 =:
-Content-Type: text/plain
-Signature: sig1=:CUsdmPCDf6I587umdsSTKJvC00fMkj48Z7g1sWzYWAzhB2OZgZa\
-ujchkP1Xw2dsJlTngAIbhyIq07diOYnHIBQ==:
-Signature-Input: sig1=("@status" "workload-identity-token" "content-\
-type" "content-digest" "@method";req "@path";req "@query";req);creat\
-ed=1789405135;expires=1789405437;nonce="abcd2222";tag="wimse-workloa\
-d-to-workload";wimse-req-nonce="abcd1111"
+Content-Length: 31
+Content-Type: application/json
+Signature: sig1=:EzNtEBAW99awIJtUjPxMqtHXYh0Y6MpOwzeMePSMCx6oqU2gh68\
+0rk5+B1zFD8Xv7TRRffiM6nCOd58u4bvGDg==:
+Signature-Input: sig1=("@method" "@path" "@query" "workload-identity\
+-token" "content-type" "content-digest");created=1789405135;expires=\
+1789405437;nonce="abcd3333";tag="wimse-workload-to-workload";wimse-a\
+ud="https://svcc.example.com/inventory/cones";wimse-sign-response
 Workload-Identity-Token: eyJhbGciOiJFZDI1NTE5Iiwia2lkIjoiaXNzdWVyLWt\
 leSIsInR5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkMjU1MTki\
 LCJjcnYiOiJFZDI1NTE5Iiwia2lkIjoic3ZjLWIta2V5Iiwia3R5IjoiT0tQIiwieCI6\
@@ -20,4 +21,4 @@ bGUuY29tL2lzc3VlciIsImp0aSI6IndpdC0xNzg5NDA1MTM1OTUxNTEzODY2Iiwic3Vi\
 Ijoid2ltc2U6Ly9leGFtcGxlLmNvbS9zdmNCIn0.T9hsSJX6aaMAbF5lnB47vHXj4k_c\
 gOVRQtENfrdj0_Ut9vv5eEnGXcR_vqyfcm8mi-tQyg57sEvfFuoseRoCBA
 
-No ice cream today.
+{"flavor":"vanilla","amount":1}

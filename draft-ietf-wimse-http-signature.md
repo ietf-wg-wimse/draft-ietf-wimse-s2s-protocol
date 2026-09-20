@@ -252,35 +252,68 @@ the server SHOULD return 400 (Bad Request) or 501 (Not Implemented), optionally 
 
 ## Example Requests and Responses
 
-Following is a non-normative example of a signed request and a signed response.
+The following non-normative examples illustrate this profile with two algorithms:
+`Ed25519` ({{?RFC9864}}) for svcA/svcB, and `ES256` for svcC.
 
-The caller uses this keypair:
+The first exchange is svcA calling svcB; the second is svcB calling svcC.
+
+### Ed25519: svcA calling svcB
+
+Following is a signed request and a signed response using `Ed25519`.
+
+The caller (svcA) uses this keypair:
 
 ~~~ jwk
 {::include includes/sigs-svca-jwk.txt}
 ~~~
-{: title="Caller Private Key"}
+{: title="svcA Private Key (Ed25519)"}
 
 The caller uses its keypair and generates the following HTTP request:
 
 ~~~ http
 {::include includes/sigs-request.txt.out}
 ~~~
-{: title="Signed Request"}
+{: title="Signed Request (svcA to svcB)"}
 
-Assuming that the workload being called has the following keypair:
+Assuming that the workload being called (svcB) has the following keypair:
 
 ~~~ jwk
 {::include includes/sigs-svcb-jwk.txt}
 ~~~
-{: title="Callee Private Key"}
+{: title="svcB Private Key (Ed25519)"}
 
 A signed response would be:
 
 ~~~ http
 {::include includes/sigs-response.txt.out}
 ~~~
-{: title="Signed Response"}
+{: title="Signed Response (svcB to svcA)"}
+
+### ES256: svcB calling svcC
+
+The following exchange uses `ES256` at the callee (svcC).
+The caller is svcB, using the `Ed25519` keypair above.
+
+The callee (svcC) uses this keypair:
+
+~~~ jwk
+{::include includes/sigs-svcc-jwk.txt}
+~~~
+{: title="svcC Private Key (ES256)"}
+
+A signed request from svcB to svcC:
+
+~~~ http
+{::include includes/sigs-request-b-c.txt.out}
+~~~
+{: title="Signed Request (svcB to svcC)"}
+
+A signed response from svcC:
+
+~~~ http
+{::include includes/sigs-response-c.txt.out}
+~~~
+{: title="Signed Response (svcC to svcB)"}
 
 # Implementation Status
 
@@ -475,23 +508,12 @@ IANA is requested to register the following entries in the "HTTP Signature Metad
 
 ## draft-ietf-wimse-http-signature-07
 
-* Clarify signature parameter types (String/Boolean) and drop the obsolete RFC 8941 citation (#305).
-* Clarify `wimse-sign-response` false vs omitted (#305).
-* Soften integrity goals to covered components; note typical REST coverage; clarify short `expires` vs long-lived workloads (#305).
-* Make `wimse-arch` and RFC 9457 normative references (#305).
-* WGLC: replace `@request-target` with `@path` and `@query` (#297).
-* WGLC: require `wimse-req-nonce` on every signed response, not only when the client required one (#297).
-* WGLC: recipients reject duplicate nonces without regard to sender (#297).
-* WGLC: require `wimse-sign-response` when the client is configured to require a signed response (#301).
-* WGLC: select the WIMSE signature by `tag`, not by label (#301).
-* WGLC: clarify that deletion detection and mandatory-response guarantees require `wimse-sign-response`; local-policy signing is opportunistic for the client (#305).
-* WGLC: clarify `wimse-aud` (always present; sender default is target URI; deployment-specific when needed); omit `@authority`; state audience binding in the WIT and PoP security considerations (#305, #297).
-* WGLC: clarify interaction of `Accept-Signature` and `wimse-sign-response` (#305).
-* WGLC: expand middlebox considerations for intermediaries and proxy signatures (#305).
-* WGLC: point HTTP signature algorithms and downgrade checks at `cnf.jwk.alg` in {{I-D.ietf-wimse-workload-creds}} (#305).
-* Regenerate non-normative examples for `@path`/`@query`, `wimse-sign-response`, and `wimse-req-nonce`.
-* Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use.
-* Reference the WIT validation procedure in {{I-D.ietf-wimse-workload-creds}} (#290).
+* WGLC: replace `@request-target` with `@path`/`@query`; select the WIMSE signature by `tag` (#297, #301).
+* WGLC: tighten signed-response rules (`wimse-sign-response`, `Accept-Signature`, opportunistic local-policy signing, deletion detection) and require `wimse-req-nonce` on every signed response (#297, #301, #305).
+* WGLC: clarify `wimse-aud` (defaults, deployment-specific values) and why `@authority` is not covered; nonce replay caching; algorithms via WIT `cnf.jwk.alg`; middlebox/proxy considerations (#297, #305).
+* Clarify parameter types, `wimse-sign-response` false vs omitted, integrity goals, and short `expires`; make `wimse-arch` and RFC 9457 normative (#305).
+* Regenerate examples for the profile changes; add an `ES256` svcB-to-svcC exchange alongside `Ed25519` svcA/svcB (#312, {{?RFC9864}}).
+* Reference the WIT validation procedure in {{I-D.ietf-wimse-workload-creds}} (#290); consistent "proof of possession"/"PoP" wording.
 
 ## draft-ietf-wimse-http-signature-06
 
