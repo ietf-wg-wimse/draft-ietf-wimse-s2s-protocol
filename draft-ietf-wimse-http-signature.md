@@ -152,6 +152,18 @@ For clarity: the signature's lifetime (the `expires` signature parameter) is dif
 
 Implementers need to be aware that the WIT is extracted from the message before the message signature is validated. Recipients of signed HTTP messages MUST validate the WIT as specified in {{Section 5.1.4 of I-D.ietf-wimse-workload-creds}} before validating the HTTP message signature. They MUST ensure that the message is not processed further before it has been fully validated.
 
+## Signature Algorithms {#sig-algs}
+
+The HTTP message signature algorithm is determined by the `alg` member of the `cnf.jwk` object in the WIT
+("The Workload Identity Token" in {{I-D.ietf-wimse-workload-creds}}).
+This profile does not define a separate algorithm baseline; general-purpose implementations inherit the
+requirement that `ES256` MUST be supported from that document.
+The `alg` signature parameter MUST NOT be used, as specified above.
+
+Recipients MUST verify the HTTP message signature using the algorithm identified by `cnf.jwk.alg`
+and MUST reject the message if that algorithm is not acceptable under local policy for the peer's trust domain.
+See also {{Section 7.3.6 of RFC9421}} on key and algorithm specification downgrades.
+
 ## The `wimse-aud` Signature Parameter {#wimse-aud-param}
 
 {{RFC9421}} defines signature parameters for HTTP message signatures: metadata carried in the `Signature-Input` field
@@ -211,14 +223,17 @@ If the client did not require a signed response via `wimse-sign-response`, serve
 When validating a signed response, the client MUST verify that `wimse-req-nonce` is present and equals the `nonce` from the corresponding request.
 
 As described in {{Section 5 of RFC9421}}, either client or server MAY send an
-`Accept-Signature` header,
-but is not required to do so. The `Accept-Signature` header indicates a
-preference for signed messages but does not mandate that responses be signed.
+`Accept-Signature` header.
+That header indicates a preference for signed messages; it does not mandate that a response be signed.
+Only `wimse-sign-response` with the Boolean value true creates such a mandate ({{wimse-sign-response-param}}, {{signing-the-response}}).
+When both are present, the server MUST treat `wimse-sign-response` as authoritative for whether a signed response is required.
 When a client sends `Accept-Signature` in a request, it MUST list the
-response components it wishes to have signed (including at least those specified above for signed
-responses). When a server sends `Accept-Signature` in a response, it MUST
-list the request components it wishes to have signed in subsequent requests (minimally those
-specified above for signed requests).
+response components it wishes to have signed, including at least those specified above for signed
+responses.
+When a server sends `Accept-Signature` in a response, it MUST
+list the request components it wishes to have signed in subsequent requests, minimally those
+specified above for signed requests.
+`Accept-Signature` MUST NOT be used to request coverage weaker than this profile.
 
 ## Error Conditions {#error-conditions}
 
@@ -345,12 +360,26 @@ replay protection would not be effective.
 In some deployments the Workload Identity Token and PoP
 (signature) may pass through multiple systems. The communication between the
 systems is over TLS, but the WIT and signature are available in the clear at each
-intermediary.  While the intermediary cannot modify the token or the
-information within the signature they can attempt to capture and replay the message or modify
+intermediary. While the intermediary cannot modify the token or the
+information within the signature without detection, it can attempt to capture and replay the message or modify
 unsigned information, such as any HTTP headers that remain unsigned.
+
+HTTP permits intermediaries to transform messages ({{RFC9421}}).
+This profile is intended to remain verifiable across common TLS-terminating proxies and load balancers:
+it does not cover `@authority`, and it carries recipient binding in `wimse-aud` ({{http-sig-auth}}).
+An intermediary MAY add its own HTTP message signature to a message that already carries a WIMSE signature.
+Recipients continue to identify the WIMSE signature by its `tag` value `wimse-workload-to-workload`
+and MUST NOT select by label ({{http-sig-auth}}).
+
+If an intermediary changes a component covered by the WIMSE signature, verification of that signature fails.
+This document does not define a profile for stripping the origin WIMSE signature and replacing it with a new
+WIMSE signature at the intermediary.
+Such resigning would authenticate the intermediary rather than the origin workload and is left to
+deployment-specific policy outside this specification.
 
 Mitigations listed in the protocol provide a reasonable level of security in these situations, in particular
 if responses are signed in addition to requests.
+See also {{signing-the-response}} for the distinction between client-mandated and opportunistic response signing.
 
 ## Privacy Considerations
 
@@ -457,6 +486,9 @@ IANA is requested to register the following entries in the "HTTP Signature Metad
 * WGLC: select the WIMSE signature by `tag`, not by label (#301).
 * WGLC: clarify that deletion detection and mandatory-response guarantees require `wimse-sign-response`; local-policy signing is opportunistic for the client (#305).
 * WGLC: clarify `wimse-aud` (always present; sender default is target URI; deployment-specific when needed); omit `@authority`; state audience binding in the WIT and PoP security considerations (#305, #297).
+* WGLC: clarify interaction of `Accept-Signature` and `wimse-sign-response` (#305).
+* WGLC: expand middlebox considerations for intermediaries and proxy signatures (#305).
+* WGLC: point HTTP signature algorithms and downgrade checks at `cnf.jwk.alg` in {{I-D.ietf-wimse-workload-creds}} (#305).
 * Regenerate non-normative examples for `@path`/`@query`, `wimse-sign-response`, and `wimse-req-nonce`.
 * Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use.
 * Reference the WIT validation procedure in {{I-D.ietf-wimse-workload-creds}} (#290).
