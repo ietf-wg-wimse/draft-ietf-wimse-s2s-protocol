@@ -37,7 +37,7 @@ author:
     email: arndts.ietf@gmail.com
  -
     fullname: "Yaron Sheffer"
-    organization: Intuit
+    organization: Independent
     email: "yaronf.ietf@gmail.com"
  -
     fullname: "Yaroslav Rosomakho"

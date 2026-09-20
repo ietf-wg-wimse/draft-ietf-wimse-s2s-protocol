@@ -29,7 +29,7 @@ author:
     email: joe@salowey.net
  -
     fullname: "Yaron Sheffer"
-    organization: Intuit
+    organization: Independent
     email: "yaronf.ietf@gmail.com"
 
 informative:
