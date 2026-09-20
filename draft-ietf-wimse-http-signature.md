@@ -508,24 +508,12 @@ IANA is requested to register the following entries in the "HTTP Signature Metad
 
 ## draft-ietf-wimse-http-signature-07
 
-* Clarify signature parameter types (String/Boolean) and drop the obsolete RFC 8941 citation (#305).
-* Clarify `wimse-sign-response` false vs omitted (#305).
-* Soften integrity goals to covered components; note typical REST coverage; clarify short `expires` vs long-lived workloads (#305).
-* Make `wimse-arch` and RFC 9457 normative references (#305).
-* WGLC: replace `@request-target` with `@path` and `@query` (#297).
-* WGLC: require `wimse-req-nonce` on every signed response, not only when the client required one (#297).
-* WGLC: recipients reject duplicate nonces without regard to sender (#297).
-* WGLC: require `wimse-sign-response` when the client is configured to require a signed response (#301).
-* WGLC: select the WIMSE signature by `tag`, not by label (#301).
-* WGLC: clarify that deletion detection and mandatory-response guarantees require `wimse-sign-response`; local-policy signing is opportunistic for the client (#305).
-* WGLC: clarify `wimse-aud` (always present; sender default is target URI; deployment-specific when needed); omit `@authority`; state audience binding in the WIT and PoP security considerations (#305, #297).
-* WGLC: clarify interaction of `Accept-Signature` and `wimse-sign-response` (#305).
-* WGLC: expand middlebox considerations for intermediaries and proxy signatures (#305).
-* WGLC: point HTTP signature algorithms and downgrade checks at `cnf.jwk.alg` in {{I-D.ietf-wimse-workload-creds}} (#305).
-* Regenerate non-normative examples for `@path`/`@query`, `wimse-sign-response`, and `wimse-req-nonce`.
-* Add an `ES256` example (svcB to svcC) alongside the svcA/svcB `Ed25519` exchange (#312, {{?RFC9864}}).
-* Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use.
-* Reference the WIT validation procedure in {{I-D.ietf-wimse-workload-creds}} (#290).
+* WGLC: replace `@request-target` with `@path`/`@query`; omit `@authority` in favor of `wimse-aud`; select the WIMSE signature by `tag` (#297, #301, #305).
+* WGLC: tighten signed-response rules (`wimse-sign-response`, `Accept-Signature`, opportunistic local-policy signing, deletion detection) and require `wimse-req-nonce` on every signed response (#297, #301, #305).
+* WGLC: clarify nonce generation and replay caching; HTTP signature algorithms via WIT `cnf.jwk.alg`; middlebox/proxy signature considerations (#297, #305).
+* Flemming WGLC editorial/mechanical fixes: parameter types, `wimse-sign-response` false vs omitted, integrity goals, short `expires`, normative `wimse-arch` and RFC 9457 (#305).
+* Regenerate examples for the profile changes; add an `ES256` svcB-to-svcC exchange alongside `Ed25519` svcA/svcB (#312, {{?RFC9864}}).
+* Reference the WIT validation procedure in {{I-D.ietf-wimse-workload-creds}} (#290); consistent "proof of possession"/"PoP" wording.
 
 ## draft-ietf-wimse-http-signature-06
 
