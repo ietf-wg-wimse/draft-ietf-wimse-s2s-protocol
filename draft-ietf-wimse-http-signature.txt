@@ -5,7 +5,7 @@
 Workload Identity in Multi System Environments                J. Salowey
 Internet-Draft                                        Palo Alto Networks
 Intended status: Standards Track                              Y. Sheffer
-Expires: 24 March 2027                                            Intuit
+Expires: 24 March 2027                                       Independent
                                                        20 September 2026
 
 
@@ -1250,5 +1250,5 @@ Authors' Addresses
 
 
    Yaron Sheffer
-   Intuit
+   Independent
    Email: yaronf.ietf@gmail.com

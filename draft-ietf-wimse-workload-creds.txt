@@ -9,7 +9,7 @@ Expires: 24 March 2027                                Palo Alto Networks
                                                       A. Schwenkschuster
                                                         Defakto Security
                                                               Y. Sheffer
-                                                                  Intuit
+                                                             Independent
                                                             Y. Rosomakho
                                                                  Zscaler
                                                        20 September 2026
@@ -1128,9 +1128,9 @@ Table of Contents
    [I-D.ietf-wimse-http-signature]
               Salowey, J. A. and Y. Sheffer, "WIMSE Workload-to-Workload
               Authentication with HTTP Signatures", Work in Progress,
-              Internet-Draft, draft-ietf-wimse-http-signature-06, 4
-              August 2026, <https://datatracker.ietf.org/doc/html/draft-
-              ietf-wimse-http-signature-06>.
+              Internet-Draft, draft-ietf-wimse-http-signature-07, 20
+              September 2026, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-wimse-http-signature-07>.
 
    [I-D.ietf-wimse-wpt]
               Campbell, B. and A. Schwenkschuster, "WIMSE Workload Proof
@@ -1342,7 +1342,7 @@ Authors' Addresses
 
 
    Yaron Sheffer
-   Intuit
+   Independent
    Email: yaronf.ietf@gmail.com
 
 
