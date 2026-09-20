@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-09-17T03:31:33.163173+00:00",
+  "timestamp": "2026-09-20T03:30:36.074696+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -22735,7 +22735,7 @@
       ],
       "body": "## Summary\n- Close remaining draft items from Flemming's WGLC review (#305): `Accept-Signature` vs `wimse-sign-response`, middlebox/proxy signature considerations, and HTTP signature algorithm / downgrade guidance via WIT `cnf.jwk.alg`.\n- No workload-creds changes; algorithm baseline remains the existing `ES256` MTI there.\n- CC @fandreas\n\n\nMade with [Cursor](https://cursor.com)",
       "createdAt": "2026-09-14T12:05:36Z",
-      "updatedAt": "2026-09-14T13:36:39Z",
+      "updatedAt": "2026-09-19T18:24:41Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "6203e7aafae9b1af33d14782ed7065e1bc087082",
@@ -22747,7 +22747,21 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABOVdAqw",
+          "commit": {
+            "abbreviatedOid": "a8e6387"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-09-19T18:24:41Z",
+          "updatedAt": "2026-09-19T18:24:41Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 314,
@@ -22758,10 +22772,12 @@
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-http-signature"
+      ],
       "body": "## Summary\n- Restructure http-sig examples: svcA\u2194svcB with `Ed25519`, and svcB\u2192svcC with `ES256` at svcC.\n- Regenerate include vectors accordingly (folded `.out` files).\n- Related to #312 but does **not** close it \u2014 WPT/creds and any remaining cross-draft consistency work are still open.\n\n\nMade with [Cursor](https://cursor.com)",
       "createdAt": "2026-09-14T17:05:34Z",
-      "updatedAt": "2026-09-14T17:05:39Z",
+      "updatedAt": "2026-09-19T18:27:21Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "6203e7aafae9b1af33d14782ed7065e1bc087082",
@@ -22773,7 +22789,21 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABOVdrog",
+          "commit": {
+            "abbreviatedOid": "b37172b"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-09-19T18:27:20Z",
+          "updatedAt": "2026-09-19T18:27:20Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
