@@ -1022,22 +1022,21 @@ Appendix A.  Document History
 
 A.1.  draft-ietf-wimse-http-signature-07
 
-   *  WGLC: replace @request-target with @path/@query; omit @authority
-      in favor of wimse-aud; select the WIMSE signature by tag (#297,
-      #301, #305).
+   *  WGLC: replace @request-target with @path/@query; select the WIMSE
+      signature by tag (#297, #301).
 
    *  WGLC: tighten signed-response rules (wimse-sign-response, Accept-
       Signature, opportunistic local-policy signing, deletion detection)
       and require wimse-req-nonce on every signed response (#297, #301,
       #305).
 
-   *  WGLC: clarify nonce generation and replay caching; HTTP signature
-      algorithms via WIT cnf.jwk.alg; middlebox/proxy signature
-      considerations (#297, #305).
+   *  WGLC: clarify wimse-aud (defaults, deployment-specific values) and
+      why @authority is not covered; nonce replay caching; algorithms
+      via WIT cnf.jwk.alg; middlebox/proxy considerations (#297, #305).
 
-   *  Flemming WGLC editorial/mechanical fixes: parameter types, wimse-
-      sign-response false vs omitted, integrity goals, short expires,
-      normative wimse-arch and RFC 9457 (#305).
+   *  Clarify parameter types, wimse-sign-response false vs omitted,
+      integrity goals, and short expires; make wimse-arch and RFC 9457
+      normative (#305).
 
    *  Regenerate examples for the profile changes; add an ES256 svcB-to-
       svcC exchange alongside Ed25519 svcA/svcB (#312, [RFC9864]).
