@@ -17,24 +17,24 @@ protection of requests (and optionally, responses), even when service traffic is
 encrypted, that is, when TLS proxies and load balancers are used.
 Authentication is based on the Workload Identity Token (WIT). 
     " name="description">
-<meta content="xml2rfc 3.34.0" name="generator">
+<meta content="xml2rfc 3.34.1" name="generator">
 <meta content="workload" name="keyword">
 <meta content="identity" name="keyword">
 <meta content="draft-ietf-wimse-http-signature-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.34.0
+  xml2rfc 3.34.1
     Python 3.14.7
-    ConfigArgParse 1.7.5
+    ConfigArgParse 1.7.7
     google-i18n-address 3.1.1
     intervaltree 3.2.1
     Jinja2 3.1.6
     lxml 6.1.1
     natsort 8.4.0
-    platformdirs 4.11.7
+    platformdirs 4.11.10
     pycountry 24.6.1
     PyYAML 6.0.3
     requests 2.33.1
-    wcwidth 0.8.3
+    wcwidth 0.8.4
 -->
 <link href="draft-ietf-wimse-http-signature.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -1054,7 +1054,7 @@ svg {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Salowey &amp; Sheffer</td>
-<td class="center">Expires 18 March 2027</td>
+<td class="center">Expires 24 March 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1067,12 +1067,12 @@ svg {
 <dd class="internet-draft">draft-ietf-wimse-http-signature-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-09-14" class="published">14 September 2026</time>
+<time datetime="2026-09-20" class="published">20 September 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2027-03-18">18 March 2027</time></dd>
+<dd class="expires"><time datetime="2027-03-24">24 March 2027</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1133,7 +1133,7 @@ Authentication is based on the Workload Identity Token (WIT).<a href="#section-a
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 18 March 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 24 March 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1177,28 +1177,31 @@ Authentication is based on the Workload Identity Token (WIT).<a href="#section-a
             <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-the-protocol-authentication" class="internal xref">The Protocol: Authentication Based on HTTP Message Signatures</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
-                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-the-wimse-aud-signature-par" class="internal xref">The <code>wimse-aud</code> Signature Parameter</a></p>
+                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-signature-algorithms" class="internal xref">Signature Algorithms</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
-                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-the-wimse-sign-response-sig" class="internal xref">The <code>wimse-sign-response</code> Signature Parameter</a></p>
+                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-the-wimse-aud-signature-par" class="internal xref">The <code>wimse-aud</code> Signature Parameter</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3">
-                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="auto internal xref">3.3</a>.  <a href="#name-the-wimse-req-nonce-signatu" class="internal xref">The <code>wimse-req-nonce</code> Signature Parameter</a></p>
+                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="auto internal xref">3.3</a>.  <a href="#name-the-wimse-sign-response-sig" class="internal xref">The <code>wimse-sign-response</code> Signature Parameter</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.4">
-                <p id="section-toc.1-1.3.2.4.1"><a href="#section-3.4" class="auto internal xref">3.4</a>.  <a href="#name-signing-the-response" class="internal xref">Signing the Response</a></p>
+                <p id="section-toc.1-1.3.2.4.1"><a href="#section-3.4" class="auto internal xref">3.4</a>.  <a href="#name-the-wimse-req-nonce-signatu" class="internal xref">The <code>wimse-req-nonce</code> Signature Parameter</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.5">
-                <p id="section-toc.1-1.3.2.5.1"><a href="#section-3.5" class="auto internal xref">3.5</a>.  <a href="#name-error-conditions" class="internal xref">Error Conditions</a></p>
+                <p id="section-toc.1-1.3.2.5.1"><a href="#section-3.5" class="auto internal xref">3.5</a>.  <a href="#name-signing-the-response" class="internal xref">Signing the Response</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.6">
-                <p id="section-toc.1-1.3.2.6.1"><a href="#section-3.6" class="auto internal xref">3.6</a>.  <a href="#name-example-requests-and-respon" class="internal xref">Example Requests and Responses</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.6.2.1">
-                    <p id="section-toc.1-1.3.2.6.2.1.1"><a href="#section-3.6.1" class="auto internal xref">3.6.1</a>.  <a href="#name-ed25519-svca-calling-svcb" class="internal xref">Ed25519: svcA calling svcB</a></p>
+                <p id="section-toc.1-1.3.2.6.1"><a href="#section-3.6" class="auto internal xref">3.6</a>.  <a href="#name-error-conditions" class="internal xref">Error Conditions</a></p>
 </li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.6.2.2">
-                    <p id="section-toc.1-1.3.2.6.2.2.1"><a href="#section-3.6.2" class="auto internal xref">3.6.2</a>.  <a href="#name-es256-svcb-calling-svcc" class="internal xref">ES256: svcB calling svcC</a></p>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.7">
+                <p id="section-toc.1-1.3.2.7.1"><a href="#section-3.7" class="auto internal xref">3.7</a>.  <a href="#name-example-requests-and-respon" class="internal xref">Example Requests and Responses</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.7.2.1">
+                    <p id="section-toc.1-1.3.2.7.2.1.1"><a href="#section-3.7.1" class="auto internal xref">3.7.1</a>.  <a href="#name-ed25519-svca-calling-svcb" class="internal xref">Ed25519: svcA calling svcB</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.7.2.2">
+                    <p id="section-toc.1-1.3.2.7.2.2.1"><a href="#section-3.7.2" class="auto internal xref">3.7.2</a>.  <a href="#name-es256-svcb-calling-svcc" class="internal xref">ES256: svcB calling svcC</a></p>
 </li>
                 </ul>
 </li>
@@ -1405,7 +1408,7 @@ Formally, this is a profile of the Message Signatures specification <span>[<a hr
 </li>
       </ul>
 <p id="section-3-4">This profile uses <code>@path</code> and <code>@query</code> rather than <code>@request-target</code>, which is <span class="bcp14">NOT RECOMMENDED</span> outside HTTP/1.1 (<span><a href="https://rfc-editor.org/rfc/rfc9421#section-2.2.5" class="relref">Section 2.2.5</a> of [<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>). <code>@query</code> is included even when the request has no query component; in that case its value is <code>?</code> (<span><a href="https://rfc-editor.org/rfc/rfc9421#section-2.2.7" class="relref">Section 2.2.7</a> of [<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>).
-The <code>@authority</code> derived component is not included: TLS-terminating proxies and load balancers commonly rewrite the authority (see <span>[<a href="#I-D.ietf-wimse-arch" class="cite xref">I-D.ietf-wimse-arch</a>]</span> and <a href="#middleboxes" class="auto internal xref">Section 5.2</a>), so signing it would break those deployments. Recipient binding is carried instead by the mandatory <code>wimse-aud</code> signature parameter (<a href="#wimse-aud-param" class="auto internal xref">Section 3.1</a>).<a href="#section-3-4" class="pilcrow">¶</a></p>
+The <code>@authority</code> derived component is not included: TLS-terminating proxies and load balancers commonly rewrite the authority (see <span>[<a href="#I-D.ietf-wimse-arch" class="cite xref">I-D.ietf-wimse-arch</a>]</span> and <a href="#middleboxes" class="auto internal xref">Section 5.2</a>), so signing it would break those deployments. Recipient binding is carried instead by the mandatory <code>wimse-aud</code> signature parameter (<a href="#wimse-aud-param" class="auto internal xref">Section 3.2</a>).<a href="#section-3-4" class="pilcrow">¶</a></p>
 <p id="section-3-5">In addition, the following request headers <span class="bcp14">MUST</span> be signed when they exist:<a href="#section-3-5" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3-6.1">
@@ -1468,19 +1471,19 @@ The <code>@authority</code> derived component is not included: TLS-terminating p
 <p id="section-3-12">For requests only, the following signature parameter <span class="bcp14">MUST</span> also be included:<a href="#section-3-12" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3-13.1">
-          <p id="section-3-13.1.1"><code>wimse-aud</code> (<a href="#wimse-aud-param" class="auto internal xref">Section 3.1</a>)<a href="#section-3-13.1.1" class="pilcrow">¶</a></p>
+          <p id="section-3-13.1.1"><code>wimse-aud</code> (<a href="#wimse-aud-param" class="auto internal xref">Section 3.2</a>)<a href="#section-3-13.1.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <p id="section-3-14">For requests only, the following signature parameter <span class="bcp14">MAY</span> also be included:<a href="#section-3-14" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3-15.1">
-          <p id="section-3-15.1.1"><code>wimse-sign-response</code> (<a href="#wimse-sign-response-param" class="auto internal xref">Section 3.2</a>)<a href="#section-3-15.1.1" class="pilcrow">¶</a></p>
+          <p id="section-3-15.1.1"><code>wimse-sign-response</code> (<a href="#wimse-sign-response-param" class="auto internal xref">Section 3.3</a>)<a href="#section-3-15.1.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <p id="section-3-16">For responses only, the following signature parameter <span class="bcp14">MUST</span> also be included:<a href="#section-3-16" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3-17.1">
-          <p id="section-3-17.1.1"><code>wimse-req-nonce</code> (<a href="#wimse-req-nonce-param" class="auto internal xref">Section 3.3</a>)<a href="#section-3-17.1.1" class="pilcrow">¶</a></p>
+          <p id="section-3-17.1.1"><code>wimse-req-nonce</code> (<a href="#wimse-req-nonce-param" class="auto internal xref">Section 3.4</a>)<a href="#section-3-17.1.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <p id="section-3-18">The following signature parameters in the <code>Signature-Input</code> header <span class="bcp14">MUST NOT</span> be used:<a href="#section-3-18" class="pilcrow">¶</a></p>
@@ -1498,118 +1501,136 @@ The WIMSE signature is the one whose <code>tag</code> parameter is <code>wimse-w
 <p id="section-3-22">Recipients <span class="bcp14">MAY</span> maintain a replay cache and <span class="bcp14">SHOULD</span> reject a message (request or response) whose <code>nonce</code> they have already seen. What nonces are remembered, and for how long, is a local policy matter; this document does not require replay caches to be shared across validators. Without such sharing, replay to a different cluster member can still succeed.<a href="#section-3-22" class="pilcrow">¶</a></p>
 <p id="section-3-23">For clarity: the signature's lifetime (the <code>expires</code> signature parameter) is different and typically much shorter than the WIT's lifetime, denoted by its <code>exp</code> claim.<a href="#section-3-23" class="pilcrow">¶</a></p>
 <p id="section-3-24">Implementers need to be aware that the WIT is extracted from the message before the message signature is validated. Recipients of signed HTTP messages <span class="bcp14">MUST</span> validate the WIT as specified in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-workload-creds-02#section-5.1.4" class="relref">Section 5.1.4</a> of [<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span> before validating the HTTP message signature. They <span class="bcp14">MUST</span> ensure that the message is not processed further before it has been fully validated.<a href="#section-3-24" class="pilcrow">¶</a></p>
-<div id="wimse-aud-param">
+<div id="sig-algs">
 <section id="section-3.1">
-        <h3 id="name-the-wimse-aud-signature-par">
-<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-the-wimse-aud-signature-par" class="section-name selfRef">The <code>wimse-aud</code> Signature Parameter</a>
+        <h3 id="name-signature-algorithms">
+<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-signature-algorithms" class="section-name selfRef">Signature Algorithms</a>
         </h3>
-<p id="section-3.1-1"><span>[<a href="#RFC9421" class="cite xref">RFC9421</a>]</span> defines signature parameters for HTTP message signatures: metadata carried in the <code>Signature-Input</code> field
+<p id="section-3.1-1">The HTTP message signature algorithm is determined by the <code>alg</code> member of the <code>cnf.jwk</code> object in the WIT
+("The Workload Identity Token" in <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span>).
+This profile does not define a separate algorithm baseline; general-purpose implementations inherit the
+requirement that <code>ES256</code> <span class="bcp14">MUST</span> be supported from that document.
+The <code>alg</code> signature parameter <span class="bcp14">MUST NOT</span> be used, as specified above.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.1-2">Recipients <span class="bcp14">MUST</span> verify the HTTP message signature using the algorithm identified by <code>cnf.jwk.alg</code>
+and <span class="bcp14">MUST</span> reject the message if that algorithm is not acceptable under local policy for the peer's trust domain.
+See also <span><a href="https://rfc-editor.org/rfc/rfc9421#section-7.3.6" class="relref">Section 7.3.6</a> of [<a href="#RFC9421" class="cite xref">RFC9421</a>]</span> on key and algorithm specification downgrades.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="wimse-aud-param">
+<section id="section-3.2">
+        <h3 id="name-the-wimse-aud-signature-par">
+<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-the-wimse-aud-signature-par" class="section-name selfRef">The <code>wimse-aud</code> Signature Parameter</a>
+        </h3>
+<p id="section-3.2-1"><span>[<a href="#RFC9421" class="cite xref">RFC9421</a>]</span> defines signature parameters for HTTP message signatures: metadata carried in the <code>Signature-Input</code> field
 alongside the covered components. That metadata is covered by the signature as the <code>@signature-params</code> component value
-(Section 2.3 of <span>[<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>), which is always the last line of the signature base.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
-<p id="section-3.1-2">This document defines the <code>wimse-aud</code> signature metadata parameter for requests.
+(Section 2.3 of <span>[<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>), which is always the last line of the signature base.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.2-2">This document defines the <code>wimse-aud</code> signature metadata parameter for requests.
 It is a String parameter.
-Using a signature parameter carries the audience explicitly in <code>Signature-Input</code>, so the value is protected by the signature and is not affected by hop-by-hop rewriting of the request URI.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
-<p id="section-3.1-3">The sender <span class="bcp14">MUST</span> set <code>wimse-aud</code> to an audience value that identifies the intended recipient of the request.
+Using a signature parameter carries the audience explicitly in <code>Signature-Input</code>, so the value is protected by the signature and is not affected by hop-by-hop rewriting of the request URI.<a href="#section-3.2-2" class="pilcrow">¶</a></p>
+<p id="section-3.2-3">The sender <span class="bcp14">MUST</span> set <code>wimse-aud</code> to an audience value that identifies the intended recipient of the request.
 By default, the sender uses the HTTP target URI (<span><a href="https://rfc-editor.org/rfc/rfc9110#section-7.1" class="relref">Section 7.1</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>) of the request, without query or fragment components, as known to the sender.
 When intermediaries rewrite the request URI, or when that string would not match what the recipient expects, the sender uses a deployment-specific audience value that the recipient can recognize.
 The audience identifies the intended recipient of the proof; it is distinct from the sender's Workload Identifier in the WIT <code>sub</code> claim.
 The recipient <span class="bcp14">MUST</span> be able to verify that the audience refers to it, using trusted configuration rather than untrusted request fields such as <code>Host</code>.
-See "Workload Identifiers and Authentication Granularity" in <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span>.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
+See "Workload Identifiers and Authentication Granularity" in <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span>.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="wimse-sign-response-param">
-<section id="section-3.2">
+<section id="section-3.3">
         <h3 id="name-the-wimse-sign-response-sig">
-<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-the-wimse-sign-response-sig" class="section-name selfRef">The <code>wimse-sign-response</code> Signature Parameter</a>
+<a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-the-wimse-sign-response-sig" class="section-name selfRef">The <code>wimse-sign-response</code> Signature Parameter</a>
         </h3>
-<p id="section-3.2-1">This document defines the <code>wimse-sign-response</code> signature metadata parameter for requests.
+<p id="section-3.3-1">This document defines the <code>wimse-sign-response</code> signature metadata parameter for requests.
 It is a Boolean parameter.
 When present with the value true, the client requires the server to sign the HTTP response
-to this request as specified in <a href="#signing-the-response" class="auto internal xref">Section 3.4</a>.
-When the parameter is omitted, or present with the value false, the client does not require a signed response via this parameter.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
-<p id="section-3.2-2">If the client is configured to require a signed response, it <span class="bcp14">MUST</span> include <code>wimse-sign-response</code> with the Boolean value true in the request's <code>Signature-Input</code>.<a href="#section-3.2-2" class="pilcrow">¶</a></p>
-<p id="section-3.2-3">This parameter is not mandatory. Moreover, the server <span class="bcp14">MAY</span> sign the response even if this parameter is missing from the request or is present with the value false.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
+to this request as specified in <a href="#signing-the-response" class="auto internal xref">Section 3.5</a>.
+When the parameter is omitted, or present with the value false, the client does not require a signed response via this parameter.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
+<p id="section-3.3-2">If the client is configured to require a signed response, it <span class="bcp14">MUST</span> include <code>wimse-sign-response</code> with the Boolean value true in the request's <code>Signature-Input</code>.<a href="#section-3.3-2" class="pilcrow">¶</a></p>
+<p id="section-3.3-3">This parameter is not mandatory. Moreover, the server <span class="bcp14">MAY</span> sign the response even if this parameter is missing from the request or is present with the value false.<a href="#section-3.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="wimse-req-nonce-param">
-<section id="section-3.3">
+<section id="section-3.4">
         <h3 id="name-the-wimse-req-nonce-signatu">
-<a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-the-wimse-req-nonce-signatu" class="section-name selfRef">The <code>wimse-req-nonce</code> Signature Parameter</a>
+<a href="#section-3.4" class="section-number selfRef">3.4. </a><a href="#name-the-wimse-req-nonce-signatu" class="section-name selfRef">The <code>wimse-req-nonce</code> Signature Parameter</a>
         </h3>
-<p id="section-3.3-1">This document defines the <code>wimse-req-nonce</code> signature metadata parameter for signed responses.
+<p id="section-3.4-1">This document defines the <code>wimse-req-nonce</code> signature metadata parameter for signed responses.
 It is a String parameter.
 This parameter binds requests to responses and prevents a malicious
-server-side component or middlebox from replaying responses to the wrong client.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
-<p id="section-3.3-2">Every signed response <span class="bcp14">MUST</span> include <code>wimse-req-nonce</code>. The server <span class="bcp14">MUST</span> set it to the value of the <code>nonce</code> signature parameter from the <code>Signature-Input</code> of the request that triggered the response.<a href="#section-3.3-2" class="pilcrow">¶</a></p>
+server-side component or middlebox from replaying responses to the wrong client.<a href="#section-3.4-1" class="pilcrow">¶</a></p>
+<p id="section-3.4-2">Every signed response <span class="bcp14">MUST</span> include <code>wimse-req-nonce</code>. The server <span class="bcp14">MUST</span> set it to the value of the <code>nonce</code> signature parameter from the <code>Signature-Input</code> of the request that triggered the response.<a href="#section-3.4-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="signing-the-response">
-<section id="section-3.4">
+<section id="section-3.5">
         <h3 id="name-signing-the-response">
-<a href="#section-3.4" class="section-number selfRef">3.4. </a><a href="#name-signing-the-response" class="section-name selfRef">Signing the Response</a>
+<a href="#section-3.5" class="section-number selfRef">3.5. </a><a href="#name-signing-the-response" class="section-name selfRef">Signing the Response</a>
         </h3>
-<p id="section-3.4-1">Protecting the response by signing it with the server's WIT is <span class="bcp14">RECOMMENDED</span> but not required. In particular, if the response
-may be exceptionally large or is expected to be streamed, signing it may not be practical.<a href="#section-3.4-1" class="pilcrow">¶</a></p>
-<p id="section-3.4-2">Response signing is required of the server for a given exchange when either of the following is true:<a href="#section-3.4-2" class="pilcrow">¶</a></p>
+<p id="section-3.5-1">Protecting the response by signing it with the server's WIT is <span class="bcp14">RECOMMENDED</span> but not required. In particular, if the response
+may be exceptionally large or is expected to be streamed, signing it may not be practical.<a href="#section-3.5-1" class="pilcrow">¶</a></p>
+<p id="section-3.5-2">Response signing is required of the server for a given exchange when either of the following is true:<a href="#section-3.5-2" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-3.4-3.1">
-            <p id="section-3.4-3.1.1">The request's <code>Signature-Input</code> includes <code>wimse-sign-response</code> with the Boolean value true (<a href="#wimse-sign-response-param" class="auto internal xref">Section 3.2</a>).<a href="#section-3.4-3.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-3.5-3.1">
+            <p id="section-3.5-3.1.1">The request's <code>Signature-Input</code> includes <code>wimse-sign-response</code> with the Boolean value true (<a href="#wimse-sign-response-param" class="auto internal xref">Section 3.3</a>).<a href="#section-3.5-3.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.4-3.2">
-            <p id="section-3.4-3.2.1">Local policy at the server requires response signing for that exchange.<a href="#section-3.4-3.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-3.5-3.2">
+            <p id="section-3.5-3.2.1">Local policy at the server requires response signing for that exchange.<a href="#section-3.5-3.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-3.4-4">If the server is required to sign the response but cannot produce a signed response (for example, because the response is streamed or
+<p id="section-3.5-4">If the server is required to sign the response but cannot produce a signed response (for example, because the response is streamed or
 exceptionally large), it <span class="bcp14">MUST NOT</span> return a successful unsigned response; it <span class="bcp14">MUST</span> return an error
-as described in <a href="#error-conditions" class="auto internal xref">Section 3.5</a>.<a href="#section-3.4-4" class="pilcrow">¶</a></p>
-<p id="section-3.4-5">The client <span class="bcp14">MUST</span> reject an unsigned response when the request's <code>Signature-Input</code> included <code>wimse-sign-response</code> with the Boolean value true.<a href="#section-3.4-5" class="pilcrow">¶</a></p>
-<p id="section-3.4-6">If the client did not require a signed response via <code>wimse-sign-response</code>, server-side local-policy signing is opportunistic from the client's point of view: the client has no signal that a signature was expected, so a middlebox that strips a signed response leaves an ordinary unsigned response that the client <span class="bcp14">MUST</span> accept. The server <span class="bcp14">MAY</span> still sign in that case. Whenever a signed response is present, the client <span class="bcp14">MUST</span> validate it and reject it if validation fails.<a href="#section-3.4-6" class="pilcrow">¶</a></p>
-<p id="section-3.4-7">When validating a signed response, the client <span class="bcp14">MUST</span> verify that <code>wimse-req-nonce</code> is present and equals the <code>nonce</code> from the corresponding request.<a href="#section-3.4-7" class="pilcrow">¶</a></p>
-<p id="section-3.4-8">As described in <span><a href="https://rfc-editor.org/rfc/rfc9421#section-5" class="relref">Section 5</a> of [<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>, either client or server <span class="bcp14">MAY</span> send an
-<code>Accept-Signature</code> header,
-but is not required to do so. The <code>Accept-Signature</code> header indicates a
-preference for signed messages but does not mandate that responses be signed.
+as described in <a href="#error-conditions" class="auto internal xref">Section 3.6</a>.<a href="#section-3.5-4" class="pilcrow">¶</a></p>
+<p id="section-3.5-5">The client <span class="bcp14">MUST</span> reject an unsigned response when the request's <code>Signature-Input</code> included <code>wimse-sign-response</code> with the Boolean value true.<a href="#section-3.5-5" class="pilcrow">¶</a></p>
+<p id="section-3.5-6">If the client did not require a signed response via <code>wimse-sign-response</code>, server-side local-policy signing is opportunistic from the client's point of view: the client has no signal that a signature was expected, so a middlebox that strips a signed response leaves an ordinary unsigned response that the client <span class="bcp14">MUST</span> accept. The server <span class="bcp14">MAY</span> still sign in that case. Whenever a signed response is present, the client <span class="bcp14">MUST</span> validate it and reject it if validation fails.<a href="#section-3.5-6" class="pilcrow">¶</a></p>
+<p id="section-3.5-7">When validating a signed response, the client <span class="bcp14">MUST</span> verify that <code>wimse-req-nonce</code> is present and equals the <code>nonce</code> from the corresponding request.<a href="#section-3.5-7" class="pilcrow">¶</a></p>
+<p id="section-3.5-8">As described in <span><a href="https://rfc-editor.org/rfc/rfc9421#section-5" class="relref">Section 5</a> of [<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>, either client or server <span class="bcp14">MAY</span> send an
+<code>Accept-Signature</code> header.
+That header indicates a preference for signed messages; it does not mandate that a response be signed.
+Only <code>wimse-sign-response</code> with the Boolean value true creates such a mandate (<a href="#wimse-sign-response-param" class="auto internal xref">Section 3.3</a>, <a href="#signing-the-response" class="auto internal xref">Section 3.5</a>).
+When both are present, the server <span class="bcp14">MUST</span> treat <code>wimse-sign-response</code> as authoritative for whether a signed response is required.
 When a client sends <code>Accept-Signature</code> in a request, it <span class="bcp14">MUST</span> list the
-response components it wishes to have signed (including at least those specified above for signed
-responses). When a server sends <code>Accept-Signature</code> in a response, it <span class="bcp14">MUST</span>
-list the request components it wishes to have signed in subsequent requests (minimally those
-specified above for signed requests).<a href="#section-3.4-8" class="pilcrow">¶</a></p>
+response components it wishes to have signed, including at least those specified above for signed
+responses.
+When a server sends <code>Accept-Signature</code> in a response, it <span class="bcp14">MUST</span>
+list the request components it wishes to have signed in subsequent requests, minimally those
+specified above for signed requests.
+<code>Accept-Signature</code> <span class="bcp14">MUST NOT</span> be used to request coverage weaker than this profile.<a href="#section-3.5-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="error-conditions">
-<section id="section-3.5">
+<section id="section-3.6">
         <h3 id="name-error-conditions">
-<a href="#section-3.5" class="section-number selfRef">3.5. </a><a href="#name-error-conditions" class="section-name selfRef">Error Conditions</a>
+<a href="#section-3.6" class="section-number selfRef">3.6. </a><a href="#name-error-conditions" class="section-name selfRef">Error Conditions</a>
         </h3>
-<p id="section-3.5-1">Errors may occur during the processing of the message signature. If the signature verification fails for any reason,
+<p id="section-3.6-1">Errors may occur during the processing of the message signature. If the signature verification fails for any reason,
 such as an invalid signature, an expired validity time window, or a malformed data structure, an error is returned. Typically,
 this will be in response to an API call. An HTTP status code such as 400 (Bad Request) is appropriate. The response could
 include more details as per <span>[<a href="#RFC9457" class="cite xref">RFC9457</a>]</span>, such as an indicator that the wrong key material or algorithm was used.  The use of HTTP
 status code 401 is <span class="bcp14">NOT RECOMMENDED</span> for this purpose because it requires a WWW-Authenticate with acceptable HTTP auth mechanisms in
 the error response and an associated Authorization header in the subsequent request. The use of these headers for the WIT is not compatible
-with this specification.<a href="#section-3.5-1" class="pilcrow">¶</a></p>
-<p id="section-3.5-2">If the client required a signed response via <code>wimse-sign-response</code> and the server cannot sign the response,
+with this specification.<a href="#section-3.6-1" class="pilcrow">¶</a></p>
+<p id="section-3.6-2">If the client required a signed response via <code>wimse-sign-response</code> and the server cannot sign the response,
 the server <span class="bcp14">SHOULD</span> return 400 (Bad Request) or 501 (Not Implemented), optionally with a
-<span>[<a href="#RFC9457" class="cite xref">RFC9457</a>]</span> problem details body indicating that a signed response cannot be provided.<a href="#section-3.5-2" class="pilcrow">¶</a></p>
+<span>[<a href="#RFC9457" class="cite xref">RFC9457</a>]</span> problem details body indicating that a signed response cannot be provided.<a href="#section-3.6-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="example-requests-and-responses">
-<section id="section-3.6">
+<section id="section-3.7">
         <h3 id="name-example-requests-and-respon">
-<a href="#section-3.6" class="section-number selfRef">3.6. </a><a href="#name-example-requests-and-respon" class="section-name selfRef">Example Requests and Responses</a>
+<a href="#section-3.7" class="section-number selfRef">3.7. </a><a href="#name-example-requests-and-respon" class="section-name selfRef">Example Requests and Responses</a>
         </h3>
-<p id="section-3.6-1">The following non-normative examples illustrate this profile with two algorithms:
-<code>Ed25519</code> (<span>[<a href="#RFC9864" class="cite xref">RFC9864</a>]</span>) for svcA/svcB, and <code>ES256</code> for svcC.<a href="#section-3.6-1" class="pilcrow">¶</a></p>
-<p id="section-3.6-2">The first exchange is svcA calling svcB; the second is svcB calling svcC.<a href="#section-3.6-2" class="pilcrow">¶</a></p>
+<p id="section-3.7-1">The following non-normative examples illustrate this profile with two algorithms:
+<code>Ed25519</code> (<span>[<a href="#RFC9864" class="cite xref">RFC9864</a>]</span>) for svcA/svcB, and <code>ES256</code> for svcC.<a href="#section-3.7-1" class="pilcrow">¶</a></p>
+<p id="section-3.7-2">The first exchange is svcA calling svcB; the second is svcB calling svcC.<a href="#section-3.7-2" class="pilcrow">¶</a></p>
 <div id="ed25519-svca-calling-svcb">
-<section id="section-3.6.1">
+<section id="section-3.7.1">
           <h4 id="name-ed25519-svca-calling-svcb">
-<a href="#section-3.6.1" class="section-number selfRef">3.6.1. </a><a href="#name-ed25519-svca-calling-svcb" class="section-name selfRef">Ed25519: svcA calling svcB</a>
+<a href="#section-3.7.1" class="section-number selfRef">3.7.1. </a><a href="#name-ed25519-svca-calling-svcb" class="section-name selfRef">Ed25519: svcA calling svcB</a>
           </h4>
-<p id="section-3.6.1-1">Following is a signed request and a signed response using <code>Ed25519</code>.<a href="#section-3.6.1-1" class="pilcrow">¶</a></p>
-<p id="section-3.6.1-2">The caller (svcA) uses this keypair:<a href="#section-3.6.1-2" class="pilcrow">¶</a></p>
+<p id="section-3.7.1-1">Following is a signed request and a signed response using <code>Ed25519</code>.<a href="#section-3.7.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.7.1-2">The caller (svcA) uses this keypair:<a href="#section-3.7.1-2" class="pilcrow">¶</a></p>
 <span id="name-svca-private-key-ed25519"></span><figure id="figure-1">
-            <div class="lang-jwk sourcecode" id="section-3.6.1-3.1">
+            <div class="lang-jwk sourcecode" id="section-3.7.1-3.1">
 <pre>
 {
   "alg": "Ed25519",
@@ -1624,9 +1645,9 @@ the server <span class="bcp14">SHOULD</span> return 400 (Bad Request) or 501 (No
 <figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
 <a href="#name-svca-private-key-ed25519" class="selfRef">svcA Private Key (Ed25519)</a>
             </figcaption></figure>
-<p id="section-3.6.1-4">The caller uses its keypair and generates the following HTTP request:<a href="#section-3.6.1-4" class="pilcrow">¶</a></p>
+<p id="section-3.7.1-4">The caller uses its keypair and generates the following HTTP request:<a href="#section-3.7.1-4" class="pilcrow">¶</a></p>
 <span id="name-signed-request-svca-to-svcb"></span><figure id="figure-2">
-            <div class="lang-http sourcecode" id="section-3.6.1-5.1">
+            <div class="lang-http sourcecode" id="section-3.7.1-5.1">
 <pre>
 =============== NOTE: '\' line wrapping per RFC 8792 ================
 
@@ -1652,9 +1673,9 @@ iG7Z0QdBxj4J_d8Q4PVcoFwxfaeKnJD_iuTF8Nt_0eyZOiGYgngCk2omAg
 <figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
 <a href="#name-signed-request-svca-to-svcb" class="selfRef">Signed Request (svcA to svcB)</a>
             </figcaption></figure>
-<p id="section-3.6.1-6">Assuming that the workload being called (svcB) has the following keypair:<a href="#section-3.6.1-6" class="pilcrow">¶</a></p>
+<p id="section-3.7.1-6">Assuming that the workload being called (svcB) has the following keypair:<a href="#section-3.7.1-6" class="pilcrow">¶</a></p>
 <span id="name-svcb-private-key-ed25519"></span><figure id="figure-3">
-            <div class="lang-jwk sourcecode" id="section-3.6.1-7.1">
+            <div class="lang-jwk sourcecode" id="section-3.7.1-7.1">
 <pre>
 {
   "alg": "Ed25519",
@@ -1669,9 +1690,9 @@ iG7Z0QdBxj4J_d8Q4PVcoFwxfaeKnJD_iuTF8Nt_0eyZOiGYgngCk2omAg
 <figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
 <a href="#name-svcb-private-key-ed25519" class="selfRef">svcB Private Key (Ed25519)</a>
             </figcaption></figure>
-<p id="section-3.6.1-8">A signed response would be:<a href="#section-3.6.1-8" class="pilcrow">¶</a></p>
+<p id="section-3.7.1-8">A signed response would be:<a href="#section-3.7.1-8" class="pilcrow">¶</a></p>
 <span id="name-signed-response-svcb-to-svc"></span><figure id="figure-4">
-            <div class="lang-http sourcecode" id="section-3.6.1-9.1">
+            <div class="lang-http sourcecode" id="section-3.7.1-9.1">
 <pre>
 =============== NOTE: '\' line wrapping per RFC 8792 ================
 
@@ -1704,15 +1725,15 @@ No ice cream today.
 </section>
 </div>
 <div id="es256-svcb-calling-svcc">
-<section id="section-3.6.2">
+<section id="section-3.7.2">
           <h4 id="name-es256-svcb-calling-svcc">
-<a href="#section-3.6.2" class="section-number selfRef">3.6.2. </a><a href="#name-es256-svcb-calling-svcc" class="section-name selfRef">ES256: svcB calling svcC</a>
+<a href="#section-3.7.2" class="section-number selfRef">3.7.2. </a><a href="#name-es256-svcb-calling-svcc" class="section-name selfRef">ES256: svcB calling svcC</a>
           </h4>
-<p id="section-3.6.2-1">The following exchange uses <code>ES256</code> at the callee (svcC).
-The caller is svcB, using the <code>Ed25519</code> keypair above.<a href="#section-3.6.2-1" class="pilcrow">¶</a></p>
-<p id="section-3.6.2-2">The callee (svcC) uses this keypair:<a href="#section-3.6.2-2" class="pilcrow">¶</a></p>
+<p id="section-3.7.2-1">The following exchange uses <code>ES256</code> at the callee (svcC).
+The caller is svcB, using the <code>Ed25519</code> keypair above.<a href="#section-3.7.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.7.2-2">The callee (svcC) uses this keypair:<a href="#section-3.7.2-2" class="pilcrow">¶</a></p>
 <span id="name-svcc-private-key-es256"></span><figure id="figure-5">
-            <div class="lang-jwk sourcecode" id="section-3.6.2-3.1">
+            <div class="lang-jwk sourcecode" id="section-3.7.2-3.1">
 <pre>
 {
   "alg": "ES256",
@@ -1728,9 +1749,9 @@ The caller is svcB, using the <code>Ed25519</code> keypair above.<a href="#secti
 <figcaption><a href="#figure-5" class="selfRef">Figure 5</a>:
 <a href="#name-svcc-private-key-es256" class="selfRef">svcC Private Key (ES256)</a>
             </figcaption></figure>
-<p id="section-3.6.2-4">A signed request from svcB to svcC:<a href="#section-3.6.2-4" class="pilcrow">¶</a></p>
+<p id="section-3.7.2-4">A signed request from svcB to svcC:<a href="#section-3.7.2-4" class="pilcrow">¶</a></p>
 <span id="name-signed-request-svcb-to-svcc"></span><figure id="figure-6">
-            <div class="lang-http sourcecode" id="section-3.6.2-5.1">
+            <div class="lang-http sourcecode" id="section-3.7.2-5.1">
 <pre>
 =============== NOTE: '\' line wrapping per RFC 8792 ================
 
@@ -1761,9 +1782,9 @@ gOVRQtENfrdj0_Ut9vv5eEnGXcR_vqyfcm8mi-tQyg57sEvfFuoseRoCBA
 <figcaption><a href="#figure-6" class="selfRef">Figure 6</a>:
 <a href="#name-signed-request-svcb-to-svcc" class="selfRef">Signed Request (svcB to svcC)</a>
             </figcaption></figure>
-<p id="section-3.6.2-6">A signed response from svcC:<a href="#section-3.6.2-6" class="pilcrow">¶</a></p>
+<p id="section-3.7.2-6">A signed response from svcC:<a href="#section-3.7.2-6" class="pilcrow">¶</a></p>
 <span id="name-signed-response-svcc-to-svc"></span><figure id="figure-7">
-            <div class="lang-http sourcecode" id="section-3.6.2-7.1">
+            <div class="lang-http sourcecode" id="section-3.7.2-7.1">
 <pre>
 =============== NOTE: '\' line wrapping per RFC 8792 ================
 
@@ -1941,11 +1962,23 @@ replay protection would not be effective.<a href="#section-5.1-9" class="pilcrow
 <p id="section-5.2-1">In some deployments the Workload Identity Token and PoP
 (signature) may pass through multiple systems. The communication between the
 systems is over TLS, but the WIT and signature are available in the clear at each
-intermediary.  While the intermediary cannot modify the token or the
-information within the signature they can attempt to capture and replay the message or modify
+intermediary. While the intermediary cannot modify the token or the
+information within the signature without detection, it can attempt to capture and replay the message or modify
 unsigned information, such as any HTTP headers that remain unsigned.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
-<p id="section-5.2-2">Mitigations listed in the protocol provide a reasonable level of security in these situations, in particular
-if responses are signed in addition to requests.<a href="#section-5.2-2" class="pilcrow">¶</a></p>
+<p id="section-5.2-2">HTTP permits intermediaries to transform messages (<span>[<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>).
+This profile is intended to remain verifiable across common TLS-terminating proxies and load balancers:
+it does not cover <code>@authority</code>, and it carries recipient binding in <code>wimse-aud</code> (<a href="#http-sig-auth" class="auto internal xref">Section 3</a>).
+An intermediary <span class="bcp14">MAY</span> add its own HTTP message signature to a message that already carries a WIMSE signature.
+Recipients continue to identify the WIMSE signature by its <code>tag</code> value <code>wimse-workload-to-workload</code>
+and <span class="bcp14">MUST NOT</span> select by label (<a href="#http-sig-auth" class="auto internal xref">Section 3</a>).<a href="#section-5.2-2" class="pilcrow">¶</a></p>
+<p id="section-5.2-3">If an intermediary changes a component covered by the WIMSE signature, verification of that signature fails.
+This document does not define a profile for stripping the origin WIMSE signature and replacing it with a new
+WIMSE signature at the intermediary.
+Such resigning would authenticate the intermediary rather than the origin workload and is left to
+deployment-specific policy outside this specification.<a href="#section-5.2-3" class="pilcrow">¶</a></p>
+<p id="section-5.2-4">Mitigations listed in the protocol provide a reasonable level of security in these situations, in particular
+if responses are signed in addition to requests.
+See also <a href="#signing-the-response" class="auto internal xref">Section 3.5</a> for the distinction between client-mandated and opportunistic response signing.<a href="#section-5.2-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="privacy-considerations">
@@ -2063,7 +2096,7 @@ context where the request would be accepted as valid, and this mitigates the ris
             <p id="section-6.4-1.2.1">When a signed response is present, validating <code>wimse-req-nonce</code> mitigates replay of that response to a client other than the one that sent the triggering request.<a href="#section-6.4-1.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-6.4-1.3">
-            <p id="section-6.4-1.3.1">Undetected deletion of a request/response pair is prevented only when the client required a signed response via <code>wimse-sign-response</code> with the Boolean value true and rejects an unsigned response. Server local-policy signing alone does not provide that guarantee (<a href="#signing-the-response" class="auto internal xref">Section 3.4</a>).<a href="#section-6.4-1.3.1" class="pilcrow">¶</a></p>
+            <p id="section-6.4-1.3.1">Undetected deletion of a request/response pair is prevented only when the client required a signed response via <code>wimse-sign-response</code> with the Boolean value true and rejects an unsigned response. Server local-policy signing alone does not provide that guarantee (<a href="#signing-the-response" class="auto internal xref">Section 3.5</a>).<a href="#section-6.4-1.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
@@ -2105,7 +2138,7 @@ context where the request would be accepted as valid, and this mitigates the ris
               <p id="section-7.1.1-1.2.1">Description: String; the WIMSE message audience. Request signatures only; binds the HTTP message signature to the intended recipient.<a href="#section-7.1.1-1.2.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-7.1.1-1.3">
-              <p id="section-7.1.1-1.3.1">Reference: RFC XXX, <a href="#wimse-aud-param" class="auto internal xref">Section 3.1</a>.<a href="#section-7.1.1-1.3.1" class="pilcrow">¶</a></p>
+              <p id="section-7.1.1-1.3.1">Reference: RFC XXX, <a href="#wimse-aud-param" class="auto internal xref">Section 3.2</a>.<a href="#section-7.1.1-1.3.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </section>
@@ -2123,7 +2156,7 @@ context where the request would be accepted as valid, and this mitigates the ris
               <p id="section-7.1.2-1.2.1">Description: Boolean; when true on a request signature, the client requires the server to sign the corresponding HTTP response.<a href="#section-7.1.2-1.2.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-7.1.2-1.3">
-              <p id="section-7.1.2-1.3.1">Reference: RFC XXX, <a href="#wimse-sign-response-param" class="auto internal xref">Section 3.2</a>.<a href="#section-7.1.2-1.3.1" class="pilcrow">¶</a></p>
+              <p id="section-7.1.2-1.3.1">Reference: RFC XXX, <a href="#wimse-sign-response-param" class="auto internal xref">Section 3.3</a>.<a href="#section-7.1.2-1.3.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </section>
@@ -2141,7 +2174,7 @@ context where the request would be accepted as valid, and this mitigates the ris
               <p id="section-7.1.3-1.2.1">Description: String; on response signatures, the <code>nonce</code> value from the triggering request's <code>Signature-Input</code>; binds the response to that request.<a href="#section-7.1.3-1.2.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-7.1.3-1.3">
-              <p id="section-7.1.3-1.3.1">Reference: RFC XXX, <a href="#wimse-req-nonce-param" class="auto internal xref">Section 3.3</a>.<a href="#section-7.1.3-1.3.1" class="pilcrow">¶</a></p>
+              <p id="section-7.1.3-1.3.1">Reference: RFC XXX, <a href="#wimse-req-nonce-param" class="auto internal xref">Section 3.4</a>.<a href="#section-7.1.3-1.3.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </section>
@@ -2248,49 +2281,22 @@ context where the request would be accepted as valid, and this mitigates the ris
         </h3>
 <ul class="normal">
 <li class="normal" id="appendix-A.1-1.1">
-            <p id="appendix-A.1-1.1.1">Clarify signature parameter types (String/Boolean) and drop the obsolete RFC 8941 citation (#305).<a href="#appendix-A.1-1.1.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.1.1">WGLC: replace <code>@request-target</code> with <code>@path</code>/<code>@query</code>; omit <code>@authority</code> in favor of <code>wimse-aud</code>; select the WIMSE signature by <code>tag</code> (#297, #301, #305).<a href="#appendix-A.1-1.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.2">
-            <p id="appendix-A.1-1.2.1">Clarify <code>wimse-sign-response</code> false vs omitted (#305).<a href="#appendix-A.1-1.2.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.2.1">WGLC: tighten signed-response rules (<code>wimse-sign-response</code>, <code>Accept-Signature</code>, opportunistic local-policy signing, deletion detection) and require <code>wimse-req-nonce</code> on every signed response (#297, #301, #305).<a href="#appendix-A.1-1.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.3">
-            <p id="appendix-A.1-1.3.1">Soften integrity goals to covered components; note typical REST coverage; clarify short <code>expires</code> vs long-lived workloads (#305).<a href="#appendix-A.1-1.3.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.3.1">WGLC: clarify nonce generation and replay caching; HTTP signature algorithms via WIT <code>cnf.jwk.alg</code>; middlebox/proxy signature considerations (#297, #305).<a href="#appendix-A.1-1.3.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.4">
-            <p id="appendix-A.1-1.4.1">Make <code>wimse-arch</code> and RFC 9457 normative references (#305).<a href="#appendix-A.1-1.4.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.4.1">Flemming WGLC editorial/mechanical fixes: parameter types, <code>wimse-sign-response</code> false vs omitted, integrity goals, short <code>expires</code>, normative <code>wimse-arch</code> and RFC 9457 (#305).<a href="#appendix-A.1-1.4.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.5">
-            <p id="appendix-A.1-1.5.1">WGLC: replace <code>@request-target</code> with <code>@path</code> and <code>@query</code> (#297).<a href="#appendix-A.1-1.5.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.5.1">Regenerate examples for the profile changes; add an <code>ES256</code> svcB-to-svcC exchange alongside <code>Ed25519</code> svcA/svcB (#312, <span>[<a href="#RFC9864" class="cite xref">RFC9864</a>]</span>).<a href="#appendix-A.1-1.5.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.6">
-            <p id="appendix-A.1-1.6.1">WGLC: require <code>wimse-req-nonce</code> on every signed response, not only when the client required one (#297).<a href="#appendix-A.1-1.6.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="appendix-A.1-1.7">
-            <p id="appendix-A.1-1.7.1">WGLC: recipients reject duplicate nonces without regard to sender (#297).<a href="#appendix-A.1-1.7.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="appendix-A.1-1.8">
-            <p id="appendix-A.1-1.8.1">WGLC: require <code>wimse-sign-response</code> when the client is configured to require a signed response (#301).<a href="#appendix-A.1-1.8.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="appendix-A.1-1.9">
-            <p id="appendix-A.1-1.9.1">WGLC: select the WIMSE signature by <code>tag</code>, not by label (#301).<a href="#appendix-A.1-1.9.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="appendix-A.1-1.10">
-            <p id="appendix-A.1-1.10.1">WGLC: clarify that deletion detection and mandatory-response guarantees require <code>wimse-sign-response</code>; local-policy signing is opportunistic for the client (#305).<a href="#appendix-A.1-1.10.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="appendix-A.1-1.11">
-            <p id="appendix-A.1-1.11.1">WGLC: clarify <code>wimse-aud</code> (always present; sender default is target URI; deployment-specific when needed); omit <code>@authority</code>; state audience binding in the WIT and PoP security considerations (#305, #297).<a href="#appendix-A.1-1.11.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="appendix-A.1-1.12">
-            <p id="appendix-A.1-1.12.1">Regenerate non-normative examples for <code>@path</code>/<code>@query</code>, <code>wimse-sign-response</code>, and <code>wimse-req-nonce</code>.<a href="#appendix-A.1-1.12.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="appendix-A.1-1.13">
-            <p id="appendix-A.1-1.13.1">Add an <code>ES256</code> example (svcB to svcC) alongside the svcA/svcB <code>Ed25519</code> exchange (#312, <span>[<a href="#RFC9864" class="cite xref">RFC9864</a>]</span>).<a href="#appendix-A.1-1.13.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="appendix-A.1-1.14">
-            <p id="appendix-A.1-1.14.1">Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use.<a href="#appendix-A.1-1.14.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="appendix-A.1-1.15">
-            <p id="appendix-A.1-1.15.1">Reference the WIT validation procedure in <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span> (#290).<a href="#appendix-A.1-1.15.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.6.1">Reference the WIT validation procedure in <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span> (#290); consistent "proof of possession"/"PoP" wording.<a href="#appendix-A.1-1.6.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>

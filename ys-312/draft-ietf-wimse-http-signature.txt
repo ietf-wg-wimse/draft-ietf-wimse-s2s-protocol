@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments                J. Salowey
 Internet-Draft                                        Palo Alto Networks
 Intended status: Standards Track                              Y. Sheffer
-Expires: 18 March 2027                                            Intuit
-                                                       14 September 2026
+Expires: 24 March 2027                                            Intuit
+                                                       20 September 2026
 
 
      WIMSE Workload-to-Workload Authentication with HTTP Signatures
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 18 March 2027.
+   This Internet-Draft will expire on 24 March 2027.
 
 Copyright Notice
 
@@ -80,14 +80,15 @@ Table of Contents
      1.1.  Deployment Architecture and Message Flow
    2.  Conventions and Definitions
    3.  The Protocol: Authentication Based on HTTP Message Signatures
-     3.1.  The wimse-aud Signature Parameter
-     3.2.  The wimse-sign-response Signature Parameter
-     3.3.  The wimse-req-nonce Signature Parameter
-     3.4.  Signing the Response
-     3.5.  Error Conditions
-     3.6.  Example Requests and Responses
-       3.6.1.  Ed25519: svcA calling svcB
-       3.6.2.  ES256: svcB calling svcC
+     3.1.  Signature Algorithms
+     3.2.  The wimse-aud Signature Parameter
+     3.3.  The wimse-sign-response Signature Parameter
+     3.4.  The wimse-req-nonce Signature Parameter
+     3.5.  Signing the Response
+     3.6.  Error Conditions
+     3.7.  Example Requests and Responses
+       3.7.1.  Ed25519: svcA calling svcB
+       3.7.2.  ES256: svcB calling svcC
    4.  Implementation Status
      4.1.  Cofide
      4.2.  wimsey
@@ -200,7 +201,7 @@ Table of Contents
    and load balancers commonly rewrite the authority (see
    [I-D.ietf-wimse-arch] and Section 5.2), so signing it would break
    those deployments.  Recipient binding is carried instead by the
-   mandatory wimse-aud signature parameter (Section 3.1).
+   mandatory wimse-aud signature parameter (Section 3.2).
 
    In addition, the following request headers MUST be signed when they
    exist:
@@ -255,17 +256,17 @@ Table of Contents
    For requests only, the following signature parameter MUST also be
    included:
 
-   *  wimse-aud (Section 3.1)
+   *  wimse-aud (Section 3.2)
 
    For requests only, the following signature parameter MAY also be
    included:
 
-   *  wimse-sign-response (Section 3.2)
+   *  wimse-sign-response (Section 3.3)
 
    For responses only, the following signature parameter MUST also be
    included:
 
-   *  wimse-req-nonce (Section 3.3)
+   *  wimse-req-nonce (Section 3.4)
 
    The following signature parameters in the Signature-Input header MUST
    NOT be used:
@@ -309,7 +310,22 @@ Table of Contents
    the HTTP message signature.  They MUST ensure that the message is not
    processed further before it has been fully validated.
 
-3.1.  The wimse-aud Signature Parameter
+3.1.  Signature Algorithms
+
+   The HTTP message signature algorithm is determined by the alg member
+   of the cnf.jwk object in the WIT ("The Workload Identity Token" in
+   [I-D.ietf-wimse-workload-creds]).  This profile does not define a
+   separate algorithm baseline; general-purpose implementations inherit
+   the requirement that ES256 MUST be supported from that document.  The
+   alg signature parameter MUST NOT be used, as specified above.
+
+   Recipients MUST verify the HTTP message signature using the algorithm
+   identified by cnf.jwk.alg and MUST reject the message if that
+   algorithm is not acceptable under local policy for the peer's trust
+   domain.  See also Section 7.3.6 of [RFC9421] on key and algorithm
+   specification downgrades.
+
+3.2.  The wimse-aud Signature Parameter
 
    [RFC9421] defines signature parameters for HTTP message signatures:
    metadata carried in the Signature-Input field alongside the covered
@@ -337,12 +353,12 @@ Table of Contents
    as Host.  See "Workload Identifiers and Authentication Granularity"
    in [I-D.ietf-wimse-workload-creds].
 
-3.2.  The wimse-sign-response Signature Parameter
+3.3.  The wimse-sign-response Signature Parameter
 
    This document defines the wimse-sign-response signature metadata
    parameter for requests.  It is a Boolean parameter.  When present
    with the value true, the client requires the server to sign the HTTP
-   response to this request as specified in Section 3.4.  When the
+   response to this request as specified in Section 3.5.  When the
    parameter is omitted, or present with the value false, the client
    does not require a signed response via this parameter.
 
@@ -354,7 +370,7 @@ Table of Contents
    response even if this parameter is missing from the request or is
    present with the value false.
 
-3.3.  The wimse-req-nonce Signature Parameter
+3.4.  The wimse-req-nonce Signature Parameter
 
    This document defines the wimse-req-nonce signature metadata
    parameter for signed responses.  It is a String parameter.  This
@@ -366,7 +382,7 @@ Table of Contents
    set it to the value of the nonce signature parameter from the
    Signature-Input of the request that triggered the response.
 
-3.4.  Signing the Response
+3.5.  Signing the Response
 
    Protecting the response by signing it with the server's WIT is
    RECOMMENDED but not required.  In particular, if the response may be
@@ -377,7 +393,7 @@ Table of Contents
    either of the following is true:
 
    *  The request's Signature-Input includes wimse-sign-response with
-      the Boolean value true (Section 3.2).
+      the Boolean value true (Section 3.3).
 
    *  Local policy at the server requires response signing for that
       exchange.
@@ -385,7 +401,7 @@ Table of Contents
    If the server is required to sign the response but cannot produce a
    signed response (for example, because the response is streamed or
    exceptionally large), it MUST NOT return a successful unsigned
-   response; it MUST return an error as described in Section 3.5.
+   response; it MUST return an error as described in Section 3.6.
 
    The client MUST reject an unsigned response when the request's
    Signature-Input included wimse-sign-response with the Boolean value
@@ -404,17 +420,21 @@ Table of Contents
    request.
 
    As described in Section 5 of [RFC9421], either client or server MAY
-   send an Accept-Signature header, but is not required to do so.  The
-   Accept-Signature header indicates a preference for signed messages
-   but does not mandate that responses be signed.  When a client sends
-   Accept-Signature in a request, it MUST list the response components
-   it wishes to have signed (including at least those specified above
-   for signed responses).  When a server sends Accept-Signature in a
-   response, it MUST list the request components it wishes to have
-   signed in subsequent requests (minimally those specified above for
-   signed requests).
+   send an Accept-Signature header.  That header indicates a preference
+   for signed messages; it does not mandate that a response be signed.
+   Only wimse-sign-response with the Boolean value true creates such a
+   mandate (Section 3.3, Section 3.5).  When both are present, the
+   server MUST treat wimse-sign-response as authoritative for whether a
+   signed response is required.  When a client sends Accept-Signature in
+   a request, it MUST list the response components it wishes to have
+   signed, including at least those specified above for signed
+   responses.  When a server sends Accept-Signature in a response, it
+   MUST list the request components it wishes to have signed in
+   subsequent requests, minimally those specified above for signed
+   requests.  Accept-Signature MUST NOT be used to request coverage
+   weaker than this profile.
 
-3.5.  Error Conditions
+3.6.  Error Conditions
 
    Errors may occur during the processing of the message signature.  If
    the signature verification fails for any reason, such as an invalid
@@ -436,7 +456,7 @@ Table of Contents
    problem details body indicating that a signed response cannot be
    provided.
 
-3.6.  Example Requests and Responses
+3.7.  Example Requests and Responses
 
    The following non-normative examples illustrate this profile with two
    algorithms: Ed25519 ([RFC9864]) for svcA/svcB, and ES256 for svcC.
@@ -444,7 +464,7 @@ Table of Contents
    The first exchange is svcA calling svcB; the second is svcB calling
    svcC.
 
-3.6.1.  Ed25519: svcA calling svcB
+3.7.1.  Ed25519: svcA calling svcB
 
    Following is a signed request and a signed response using Ed25519.
 
@@ -526,7 +546,7 @@ Table of Contents
 
                   Figure 4: Signed Response (svcB to svcA)
 
-3.6.2.  ES256: svcB calling svcC
+3.7.2.  ES256: svcB calling svcC
 
    The following exchange uses ES256 at the callee (svcC).  The caller
    is svcB, using the Ed25519 keypair above.
@@ -733,13 +753,31 @@ Table of Contents
    may pass through multiple systems.  The communication between the
    systems is over TLS, but the WIT and signature are available in the
    clear at each intermediary.  While the intermediary cannot modify the
-   token or the information within the signature they can attempt to
-   capture and replay the message or modify unsigned information, such
-   as any HTTP headers that remain unsigned.
+   token or the information within the signature without detection, it
+   can attempt to capture and replay the message or modify unsigned
+   information, such as any HTTP headers that remain unsigned.
+
+   HTTP permits intermediaries to transform messages ([RFC9421]).  This
+   profile is intended to remain verifiable across common TLS-
+   terminating proxies and load balancers: it does not cover @authority,
+   and it carries recipient binding in wimse-aud (Section 3).  An
+   intermediary MAY add its own HTTP message signature to a message that
+   already carries a WIMSE signature.  Recipients continue to identify
+   the WIMSE signature by its tag value wimse-workload-to-workload and
+   MUST NOT select by label (Section 3).
+
+   If an intermediary changes a component covered by the WIMSE
+   signature, verification of that signature fails.  This document does
+   not define a profile for stripping the origin WIMSE signature and
+   replacing it with a new WIMSE signature at the intermediary.  Such
+   resigning would authenticate the intermediary rather than the origin
+   workload and is left to deployment-specific policy outside this
+   specification.
 
    Mitigations listed in the protocol provide a reasonable level of
    security in these situations, in particular if responses are signed
-   in addition to requests.
+   in addition to requests.  See also Section 3.5 for the distinction
+   between client-mandated and opportunistic response signing.
 
 5.3.  Privacy Considerations
 
@@ -840,7 +878,7 @@ Table of Contents
       when the client required a signed response via wimse-sign-response
       with the Boolean value true and rejects an unsigned response.
       Server local-policy signing alone does not provide that guarantee
-      (Section 3.4).
+      (Section 3.5).
 
 7.  IANA Considerations
 
@@ -865,7 +903,7 @@ Table of Contents
       signatures only; binds the HTTP message signature to the intended
       recipient.
 
-   *  Reference: RFC XXX, Section 3.1.
+   *  Reference: RFC XXX, Section 3.2.
 
 7.1.2.  wimse-sign-response
 
@@ -874,7 +912,7 @@ Table of Contents
    *  Description: Boolean; when true on a request signature, the client
       requires the server to sign the corresponding HTTP response.
 
-   *  Reference: RFC XXX, Section 3.2.
+   *  Reference: RFC XXX, Section 3.3.
 
 7.1.3.  wimse-req-nonce
 
@@ -884,7 +922,7 @@ Table of Contents
       the triggering request's Signature-Input; binds the response to
       that request.
 
-   *  Reference: RFC XXX, Section 3.3.
+   *  Reference: RFC XXX, Section 3.4.
 
 8.  References
 
@@ -984,49 +1022,29 @@ Appendix A.  Document History
 
 A.1.  draft-ietf-wimse-http-signature-07
 
-   *  Clarify signature parameter types (String/Boolean) and drop the
-      obsolete RFC 8941 citation (#305).
+   *  WGLC: replace @request-target with @path/@query; omit @authority
+      in favor of wimse-aud; select the WIMSE signature by tag (#297,
+      #301, #305).
 
-   *  Clarify wimse-sign-response false vs omitted (#305).
+   *  WGLC: tighten signed-response rules (wimse-sign-response, Accept-
+      Signature, opportunistic local-policy signing, deletion detection)
+      and require wimse-req-nonce on every signed response (#297, #301,
+      #305).
 
-   *  Soften integrity goals to covered components; note typical REST
-      coverage; clarify short expires vs long-lived workloads (#305).
+   *  WGLC: clarify nonce generation and replay caching; HTTP signature
+      algorithms via WIT cnf.jwk.alg; middlebox/proxy signature
+      considerations (#297, #305).
 
-   *  Make wimse-arch and RFC 9457 normative references (#305).
+   *  Flemming WGLC editorial/mechanical fixes: parameter types, wimse-
+      sign-response false vs omitted, integrity goals, short expires,
+      normative wimse-arch and RFC 9457 (#305).
 
-   *  WGLC: replace @request-target with @path and @query (#297).
-
-   *  WGLC: require wimse-req-nonce on every signed response, not only
-      when the client required one (#297).
-
-   *  WGLC: recipients reject duplicate nonces without regard to sender
-      (#297).
-
-   *  WGLC: require wimse-sign-response when the client is configured to
-      require a signed response (#301).
-
-   *  WGLC: select the WIMSE signature by tag, not by label (#301).
-
-   *  WGLC: clarify that deletion detection and mandatory-response
-      guarantees require wimse-sign-response; local-policy signing is
-      opportunistic for the client (#305).
-
-   *  WGLC: clarify wimse-aud (always present; sender default is target
-      URI; deployment-specific when needed); omit @authority; state
-      audience binding in the WIT and PoP security considerations (#305,
-      #297).
-
-   *  Regenerate non-normative examples for @path/@query, wimse-sign-
-      response, and wimse-req-nonce.
-
-   *  Add an ES256 example (svcB to svcC) alongside the svcA/svcB
-      Ed25519 exchange (#312, [RFC9864]).
-
-   *  Editorial: consistent use of "proof of possession"/"PoP", with the
-      abbreviation expanded on first use.
+   *  Regenerate examples for the profile changes; add an ES256 svcB-to-
+      svcC exchange alongside Ed25519 svcA/svcB (#312, [RFC9864]).
 
    *  Reference the WIT validation procedure in
-      [I-D.ietf-wimse-workload-creds] (#290).
+      [I-D.ietf-wimse-workload-creds] (#290); consistent "proof of
+      possession"/"PoP" wording.
 
 A.2.  draft-ietf-wimse-http-signature-06
 
