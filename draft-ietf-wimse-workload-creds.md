@@ -99,51 +99,37 @@ The credentials defined in this document are designed to be used in various prot
 
 ## Deployment Architecture and Message Flow
 
-Independent of the transport between the workloads, we assume the following logical architecture
-(numbers refer to the sequence of steps listed below):
+This architecture and message flow is part of the broader flow as described in Section 3.3 of the WIMSE architecture {{?I-D.ietf-wimse-arch}}.
+
+Independent of the transport between the workloads, we assume that workloads hold credentials from the same trust domain and that following architecture applies:
 
 ~~~ aasvg
 +------------+               +------------+
-|            |      (2)      |            |
+|            |      (1)      |            |
 |            |<=============>|            |
 |            |               |            |
-| Workload A |      (3)      | Workload B |
+| Workload A |      (2)      | Workload B |
 |            |==============>|            |
-|            |               |            |
-|            |      (5)      |   +--------+
-|            |<==============|   |  PEP   |
-+------------+               +---+--------+
-      ^                        ^     ^
-      |            (1)         |     |
-  (1) | +----------------------+     | (4)
-      | |                            |
-      v v                            v
-+------------+               +------------+
-|            |               |            |
-|  Identity  |               |    PDP     |
-|   Server   |               | (optional) |
-|            |               |            |
+|            |               |            |--+
+|            |               |            |  | (3)
+|            |               |            |<-+
+|            |      (4)      |            |
+|            |<==============|            |
 +------------+               +------------+
 ~~~
 {: #high-level-seq title="Sequence of Operations"}
 
-The Identity Server provisions credentials to each of the workloads. At least Workload A (and possibly both) must be provisioned
-with a credential before the call can proceed. Details of communication with the Identity Server are out of scope
-of this document, however we do describe the credential received by the workload.
-
-PEP is a Policy Enforcement Point, the component that allows the message to go through or blocks it. PDP is an optional
-Policy Decision Point, which may be deployed in architectures where policy management is centralized. All details of
-policy management and message authorization are out of scope of this document.
-
 The high-level message flow is as follows:
 
-1. Workload A (and similarly, Workload B) obtains a credential from the Identity Server. This happens periodically, typically on the order of hours.
-2. A transport connection is set up. This may already include the use of the Workload Identity Certificate with transport-layer security, such as TLS.
-3. Workload A prepares to call Workload B. This may include adding application-layer authentication information, such as the Workload Identity Token and proof of possession. Workload B authenticates Workload A.
-4. Workload B authorizes the call. This policy enforcement (Policy Enforcement Point, PEP) may include consulting with an external server (Policy Decision Point, PDP) when making this decision.
-5. Workload B returns a response to Workload A, which may be either a success or an error response.
+1. A transport connection is set up. This may already include the use of the Workload Identity Certificate with transport-layer security, such as TLS.
 
-Depending on the protocol, the workload authentication may happen during step (2) at the transport-layer or at step (3) at the application-layer, or both.
+2. Workload A prepares to call Workload B. This may include adding application-layer authentication information, such as the Workload Identity Token and proof of possession. Workload B authenticates Workload A.
+
+3. Workload B authorizes Workload A and the call.
+
+4. Workload B returns a response to Workload A, which may be either a success or an error response.
+
+Depending on the protocol, the workload authentication may happen during step (1) at the transport-layer or at step (2) at the application-layer, or both.
 
 ## Workload Identifiers and Authentication Granularity {#granular-auth}
 
