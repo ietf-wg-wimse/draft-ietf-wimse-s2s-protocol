@@ -1196,6 +1196,14 @@ Authentication is based on the Workload Identity Token (WIT).<a href="#section-a
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.7">
                 <p id="section-toc.1-1.3.2.7.1"><a href="#section-3.7" class="auto internal xref">3.7</a>.  <a href="#name-example-requests-and-respon" class="internal xref">Example Requests and Responses</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.7.2.1">
+                    <p id="section-toc.1-1.3.2.7.2.1.1"><a href="#section-3.7.1" class="auto internal xref">3.7.1</a>.  <a href="#name-ed25519-svca-calling-svcb" class="internal xref">Ed25519: svcA calling svcB</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.7.2.2">
+                    <p id="section-toc.1-1.3.2.7.2.2.1"><a href="#section-3.7.2" class="auto internal xref">3.7.2</a>.  <a href="#name-es256-svcb-calling-svcc" class="internal xref">ES256: svcB calling svcC</a></p>
+</li>
+                </ul>
 </li>
             </ul>
 </li>
@@ -1611,102 +1619,204 @@ the server <span class="bcp14">SHOULD</span> return 400 (Bad Request) or 501 (No
         <h3 id="name-example-requests-and-respon">
 <a href="#section-3.7" class="section-number selfRef">3.7. </a><a href="#name-example-requests-and-respon" class="section-name selfRef">Example Requests and Responses</a>
         </h3>
-<p id="section-3.7-1">Following is a non-normative example of a signed request and a signed response.<a href="#section-3.7-1" class="pilcrow">¶</a></p>
-<p id="section-3.7-2">The caller uses this keypair:<a href="#section-3.7-2" class="pilcrow">¶</a></p>
-<span id="name-caller-private-key"></span><figure id="figure-1">
-          <div class="lang-jwk sourcecode" id="section-3.7-3.1">
+<p id="section-3.7-1">The following non-normative examples illustrate this profile with two algorithms:
+<code>Ed25519</code> (<span>[<a href="#RFC9864" class="cite xref">RFC9864</a>]</span>) for svcA/svcB, and <code>ES256</code> for svcC.<a href="#section-3.7-1" class="pilcrow">¶</a></p>
+<p id="section-3.7-2">The first exchange is svcA calling svcB; the second is svcB calling svcC.<a href="#section-3.7-2" class="pilcrow">¶</a></p>
+<div id="ed25519-svca-calling-svcb">
+<section id="section-3.7.1">
+          <h4 id="name-ed25519-svca-calling-svcb">
+<a href="#section-3.7.1" class="section-number selfRef">3.7.1. </a><a href="#name-ed25519-svca-calling-svcb" class="section-name selfRef">Ed25519: svcA calling svcB</a>
+          </h4>
+<p id="section-3.7.1-1">Following is a signed request and a signed response using <code>Ed25519</code>.<a href="#section-3.7.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.7.1-2">The caller (svcA) uses this keypair:<a href="#section-3.7.1-2" class="pilcrow">¶</a></p>
+<span id="name-svca-private-key-ed25519"></span><figure id="figure-1">
+            <div class="lang-jwk sourcecode" id="section-3.7.1-3.1">
 <pre>
 {
-  "alg": "EdDSA",
+  "alg": "Ed25519",
   "crv": "Ed25519",
-  "d": "CUJccgL4-6a8pI4sE3QgxF_h3VM6aqLAzESr40cGg4A",
+  "d": "fNVx2xkvU-jbsowg3cHMGLPzODvkM8Rd1UClQxv_VP0",
   "kid": "svc-a-key",
   "kty": "OKP",
-  "x": "5IsFdO1vz8oZWgwfCTLK3K6aWIHFIz3l0vZKcCs_C3k"
+  "x": "QDYLWc32T8hljQoolDi0ukqXtvNB1h-qNbpfuwZkZDg"
 }
 </pre>
 </div>
 <figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
-<a href="#name-caller-private-key" class="selfRef">Caller Private Key</a>
-          </figcaption></figure>
-<p id="section-3.7-4">The caller uses its keypair and generates the following HTTP request:<a href="#section-3.7-4" class="pilcrow">¶</a></p>
-<span id="name-signed-request"></span><figure id="figure-2">
-          <div class="lang-http sourcecode" id="section-3.7-5.1">
+<a href="#name-svca-private-key-ed25519" class="selfRef">svcA Private Key (Ed25519)</a>
+            </figcaption></figure>
+<p id="section-3.7.1-4">The caller uses its keypair and generates the following HTTP request:<a href="#section-3.7.1-4" class="pilcrow">¶</a></p>
+<span id="name-signed-request-svca-to-svcb"></span><figure id="figure-2">
+            <div class="lang-http sourcecode" id="section-3.7.1-5.1">
 <pre>
 =============== NOTE: '\' line wrapping per RFC 8792 ================
 
 GET /gimme-ice-cream?flavor=vanilla HTTP/1.1
 Host: svcb.example.com
-Signature: sig1=:rMpSBQIFBnFHVlukNhJS2+xEy0aOlB0sPfmgMmZBv+8fDoB8QFo\
-EkgbXhAlIfqhA5Xmttq1rtR+Hg4mpcMpbAQ==:
+Signature: sig1=:wfnk8T0ysp3a6bvqZAoeBoa2dFgRHooSel8jIAbKnbIP13cpy/O\
+1J6xAYkziiUnVQ+NlMoR+ANDBHRwoB7ZIAA==:
 Signature-Input: sig1=("@method" "@path" "@query" "workload-identity\
--token");created=1788298924;expires=1788299224;nonce="abcd1111";tag=\
+-token");created=1789405135;expires=1789405435;nonce="abcd1111";tag=\
 "wimse-workload-to-workload";wimse-aud="https://svcb.example.com/gim\
 me-ice-cream";wimse-sign-response
-Workload-Identity-Token: eyJhbGciOiJFZERTQSIsImtpZCI6Imlzc3Vlci1rZXk\
-iLCJ0eXAiOiJ3aXQrand0In0.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J\
-2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1hLWtleSIsImt0eSI6Ik9LUCIsIngiOiI1SXN\
-GZE8xdno4b1pXZ3dmQ1RMSzNLNmFXSUhGSXozbDB2WktjQ3NfQzNrIn19LCJleHAiOjE\
-3ODgyOTkyMjQsImlhdCI6MTc4ODI5ODkyNCwiaXNzIjoiaHR0cHM6Ly9leGFtcGxlLmN\
-vbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc4ODI5ODkyNDI4MTA3NzA3OSIsInN1YiI6Ind\
-pbXNlOi8vZXhhbXBsZS5jb20vc3ZjQSJ9.vCWuTey47Aom9frOm1pfcB2TzL1IdwXl5m\
-vs0Plf7S4zcsZjY7qJkiCfAgkrDVXYt1hBhjgvrxsi6E1QoT1nDA
+Workload-Identity-Token: eyJhbGciOiJFZDI1NTE5Iiwia2lkIjoiaXNzdWVyLWt\
+leSIsInR5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkMjU1MTki\
+LCJjcnYiOiJFZDI1NTE5Iiwia2lkIjoic3ZjLWEta2V5Iiwia3R5IjoiT0tQIiwieCI6\
+IlFEWUxXYzMyVDhobGpRb29sRGkwdWtxWHR2TkIxaC1xTmJwZnV3WmtaRGcifX0sImV4\
+cCI6MTc4OTQwNTQzNSwiaWF0IjoxNzg5NDA1MTM1LCJpc3MiOiJodHRwczovL2V4YW1w\
+bGUuY29tL2lzc3VlciIsImp0aSI6IndpdC0xNzg5NDA1MTM1OTUxMjQ5OTY1Iiwic3Vi\
+Ijoid2ltc2U6Ly9leGFtcGxlLmNvbS9zdmNBIn0.XDaCtnf42Z4bYKqQxTkMGJ-Gtcg5\
+iG7Z0QdBxj4J_d8Q4PVcoFwxfaeKnJD_iuTF8Nt_0eyZOiGYgngCk2omAg
 
 </pre>
 </div>
 <figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
-<a href="#name-signed-request" class="selfRef">Signed Request</a>
-          </figcaption></figure>
-<p id="section-3.7-6">Assuming that the workload being called has the following keypair:<a href="#section-3.7-6" class="pilcrow">¶</a></p>
-<span id="name-callee-private-key"></span><figure id="figure-3">
-          <div class="lang-jwk sourcecode" id="section-3.7-7.1">
+<a href="#name-signed-request-svca-to-svcb" class="selfRef">Signed Request (svcA to svcB)</a>
+            </figcaption></figure>
+<p id="section-3.7.1-6">Assuming that the workload being called (svcB) has the following keypair:<a href="#section-3.7.1-6" class="pilcrow">¶</a></p>
+<span id="name-svcb-private-key-ed25519"></span><figure id="figure-3">
+            <div class="lang-jwk sourcecode" id="section-3.7.1-7.1">
 <pre>
 {
-  "alg": "EdDSA",
+  "alg": "Ed25519",
   "crv": "Ed25519",
-  "d": "QFQjrIFl29D0HaTCgJMm-g1332QiQCSZhs0PyjY0gis",
+  "d": "uJf73cksN9k54kJtgrc0nBc3_WzkcJovRXWjEIYyESE",
   "kid": "svc-b-key",
   "kty": "OKP",
-  "x": "6q34u4Yn6JUcymh4QwxzpIQr9uEos19pNfK1S5dVb8s"
+  "x": "WUZzabuwlwS9xlhndvLRMWQdkyjdOqVySiwqqd6brLM"
 }
 </pre>
 </div>
 <figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
-<a href="#name-callee-private-key" class="selfRef">Callee Private Key</a>
-          </figcaption></figure>
-<p id="section-3.7-8">A signed response would be:<a href="#section-3.7-8" class="pilcrow">¶</a></p>
-<span id="name-signed-response"></span><figure id="figure-4">
-          <div class="lang-http sourcecode" id="section-3.7-9.1">
+<a href="#name-svcb-private-key-ed25519" class="selfRef">svcB Private Key (Ed25519)</a>
+            </figcaption></figure>
+<p id="section-3.7.1-8">A signed response would be:<a href="#section-3.7.1-8" class="pilcrow">¶</a></p>
+<span id="name-signed-response-svcb-to-svc"></span><figure id="figure-4">
+            <div class="lang-http sourcecode" id="section-3.7.1-9.1">
 <pre>
 =============== NOTE: '\' line wrapping per RFC 8792 ================
 
 HTTP/1.1 404 Not Found
-Connection: close
-Content-Digest: sha-256=:UHKweBl9cpjdVqgTB65El8SexXlJYGG+XIslAYqC1mY\
+Content-Length: 20
+Content-Digest: sha-256=:uJC3qmCc7n6/6w4N2I0vAfj1cd/hTOAhxLEYXmPbNno\
 =:
 Content-Type: text/plain
-Signature: sig1=:+yKE34YoWGkdD6iK0VJEhS3ZCQpHGh/pYlDut9+Wf3xOWYvq8td\
-Wnyknaut8dAYJ4GFTzltZkvIcjmEnnj+BAA==:
+Signature: sig1=:CUsdmPCDf6I587umdsSTKJvC00fMkj48Z7g1sWzYWAzhB2OZgZa\
+ujchkP1Xw2dsJlTngAIbhyIq07diOYnHIBQ==:
 Signature-Input: sig1=("@status" "workload-identity-token" "content-\
 type" "content-digest" "@method";req "@path";req "@query";req);creat\
-ed=1788298924;expires=1788299226;nonce="abcd2222";tag="wimse-workloa\
+ed=1789405135;expires=1789405437;nonce="abcd2222";tag="wimse-workloa\
 d-to-workload";wimse-req-nonce="abcd1111"
-Workload-Identity-Token: eyJhbGciOiJFZERTQSIsImtpZCI6Imlzc3Vlci1rZXk\
-iLCJ0eXAiOiJ3aXQrand0In0.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J\
-2IjoiRWQyNTUxOSIsImtpZCI6InN2Yy1iLWtleSIsImt0eSI6Ik9LUCIsIngiOiI2cTM\
-0dTRZbjZKVWN5bWg0UXd4enBJUXI5dUVvczE5cE5mSzFTNWRWYjhzIn19LCJleHAiOjE\
-3ODgyOTkyMjYsImlhdCI6MTc4ODI5ODkyNiwiaXNzIjoiaHR0cHM6Ly9leGFtcGxlLmN\
-vbS9pc3N1ZXIiLCJqdGkiOiJ3aXQtMTc4ODI5ODkyNDI4MTIwOTY3OSIsInN1YiI6Ind\
-pbXNlOi8vZXhhbXBsZS5jb20vc3ZjQiJ9.iSl0qBzfv29LfIaYkYoCgRlc2_IQrbj9wL\
-HpOOUdnUzImhLHXjt_zGnXIoQInc9fQKqwdVeNRgmeiR5pPumiBQ
+Workload-Identity-Token: eyJhbGciOiJFZDI1NTE5Iiwia2lkIjoiaXNzdWVyLWt\
+leSIsInR5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkMjU1MTki\
+LCJjcnYiOiJFZDI1NTE5Iiwia2lkIjoic3ZjLWIta2V5Iiwia3R5IjoiT0tQIiwieCI6\
+IldVWnphYnV3bHdTOXhsaG5kdkxSTVdRZGt5amRPcVZ5U2l3cXFkNmJyTE0ifX0sImV4\
+cCI6MTc4OTQwNTQzNywiaWF0IjoxNzg5NDA1MTM3LCJpc3MiOiJodHRwczovL2V4YW1w\
+bGUuY29tL2lzc3VlciIsImp0aSI6IndpdC0xNzg5NDA1MTM1OTUxNTEzODY2Iiwic3Vi\
+Ijoid2ltc2U6Ly9leGFtcGxlLmNvbS9zdmNCIn0.T9hsSJX6aaMAbF5lnB47vHXj4k_c\
+gOVRQtENfrdj0_Ut9vv5eEnGXcR_vqyfcm8mi-tQyg57sEvfFuoseRoCBA
 
 No ice cream today.
-
 </pre>
 </div>
 <figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
-<a href="#name-signed-response" class="selfRef">Signed Response</a>
-          </figcaption></figure>
+<a href="#name-signed-response-svcb-to-svc" class="selfRef">Signed Response (svcB to svcA)</a>
+            </figcaption></figure>
+</section>
+</div>
+<div id="es256-svcb-calling-svcc">
+<section id="section-3.7.2">
+          <h4 id="name-es256-svcb-calling-svcc">
+<a href="#section-3.7.2" class="section-number selfRef">3.7.2. </a><a href="#name-es256-svcb-calling-svcc" class="section-name selfRef">ES256: svcB calling svcC</a>
+          </h4>
+<p id="section-3.7.2-1">The following exchange uses <code>ES256</code> at the callee (svcC).
+The caller is svcB, using the <code>Ed25519</code> keypair above.<a href="#section-3.7.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.7.2-2">The callee (svcC) uses this keypair:<a href="#section-3.7.2-2" class="pilcrow">¶</a></p>
+<span id="name-svcc-private-key-es256"></span><figure id="figure-5">
+            <div class="lang-jwk sourcecode" id="section-3.7.2-3.1">
+<pre>
+{
+  "alg": "ES256",
+  "crv": "P-256",
+  "d": "RuJQPzrHlQrRllszMFQQw3e8bSdArcYeXjhnXRXclHs",
+  "kid": "svc-c-key",
+  "kty": "EC",
+  "x": "dquxM0LHBbWlYCDxcNRHe9kb41lrnL0h_9ntNXKxzxw",
+  "y": "HPqRls-EZoPrHY9gNRcZGq5pkypeovfnzLSfsYP2L6o"
+}
+</pre>
+</div>
+<figcaption><a href="#figure-5" class="selfRef">Figure 5</a>:
+<a href="#name-svcc-private-key-es256" class="selfRef">svcC Private Key (ES256)</a>
+            </figcaption></figure>
+<p id="section-3.7.2-4">A signed request from svcB to svcC:<a href="#section-3.7.2-4" class="pilcrow">¶</a></p>
+<span id="name-signed-request-svcb-to-svcc"></span><figure id="figure-6">
+            <div class="lang-http sourcecode" id="section-3.7.2-5.1">
+<pre>
+=============== NOTE: '\' line wrapping per RFC 8792 ================
+
+POST /inventory/cones HTTP/1.1
+Host: svcc.example.com
+Content-Digest: sha-256=:TzKXT0tUEfiTFkjRzwE8nCFnQljMuX5xwJaJgJCp+1g\
+=:
+Content-Length: 31
+Content-Type: application/json
+Signature: sig1=:EzNtEBAW99awIJtUjPxMqtHXYh0Y6MpOwzeMePSMCx6oqU2gh68\
+0rk5+B1zFD8Xv7TRRffiM6nCOd58u4bvGDg==:
+Signature-Input: sig1=("@method" "@path" "@query" "workload-identity\
+-token" "content-type" "content-digest");created=1789405135;expires=\
+1789405437;nonce="abcd3333";tag="wimse-workload-to-workload";wimse-a\
+ud="https://svcc.example.com/inventory/cones";wimse-sign-response
+Workload-Identity-Token: eyJhbGciOiJFZDI1NTE5Iiwia2lkIjoiaXNzdWVyLWt\
+leSIsInR5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkMjU1MTki\
+LCJjcnYiOiJFZDI1NTE5Iiwia2lkIjoic3ZjLWIta2V5Iiwia3R5IjoiT0tQIiwieCI6\
+IldVWnphYnV3bHdTOXhsaG5kdkxSTVdRZGt5amRPcVZ5U2l3cXFkNmJyTE0ifX0sImV4\
+cCI6MTc4OTQwNTQzNywiaWF0IjoxNzg5NDA1MTM3LCJpc3MiOiJodHRwczovL2V4YW1w\
+bGUuY29tL2lzc3VlciIsImp0aSI6IndpdC0xNzg5NDA1MTM1OTUxNTEzODY2Iiwic3Vi\
+Ijoid2ltc2U6Ly9leGFtcGxlLmNvbS9zdmNCIn0.T9hsSJX6aaMAbF5lnB47vHXj4k_c\
+gOVRQtENfrdj0_Ut9vv5eEnGXcR_vqyfcm8mi-tQyg57sEvfFuoseRoCBA
+
+{"flavor":"vanilla","amount":1}
+</pre>
+</div>
+<figcaption><a href="#figure-6" class="selfRef">Figure 6</a>:
+<a href="#name-signed-request-svcb-to-svcc" class="selfRef">Signed Request (svcB to svcC)</a>
+            </figcaption></figure>
+<p id="section-3.7.2-6">A signed response from svcC:<a href="#section-3.7.2-6" class="pilcrow">¶</a></p>
+<span id="name-signed-response-svcc-to-svc"></span><figure id="figure-7">
+            <div class="lang-http sourcecode" id="section-3.7.2-7.1">
+<pre>
+=============== NOTE: '\' line wrapping per RFC 8792 ================
+
+HTTP/1.1 409 Conflict
+Content-Length: 43
+Content-Digest: sha-256=:xKyvC1Ob10QItKe0NdnKhtZ/6R7/JkpTxdH20RccxFY\
+=:
+Content-Type: application/json
+Signature: sig1=:opZnqGnxaozdrf8ecfV+pAQ2wH2aIOtM5+dS6NI/MozKaVF3OUf\
+xFyAC34i2+KbMNZHYlTzJzCPqXRucMbgFlA==:
+Signature-Input: sig1=("@status" "workload-identity-token" "content-\
+type" "content-digest" "@method";req "@path";req "@query";req);creat\
+ed=1789405135;expires=1789405439;nonce="abcd4444";tag="wimse-workloa\
+d-to-workload";wimse-req-nonce="abcd3333"
+Workload-Identity-Token: eyJhbGciOiJFZDI1NTE5Iiwia2lkIjoiaXNzdWVyLWt\
+leSIsInR5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVTMjU2Iiwi\
+Y3J2IjoiUC0yNTYiLCJraWQiOiJzdmMtYy1rZXkiLCJrdHkiOiJFQyIsIngiOiJkcXV4\
+TTBMSEJiV2xZQ0R4Y05SSGU5a2I0MWxybkwwaF85bnROWEt4enh3IiwieSI6IkhQcVJs\
+cy1FWm9QckhZOWdOUmNaR3E1cGt5cGVvdmZuekxTZnNZUDJMNm8ifX0sImV4cCI6MTc4\
+OTQwNTQzOSwiaWF0IjoxNzg5NDA1MTM5LCJpc3MiOiJodHRwczovL2V4YW1wbGUuY29t\
+L2lzc3VlciIsImp0aSI6IndpdC0xNzg5NDA1MTM1OTUxNTcwODY2Iiwic3ViIjoid2lt\
+c2U6Ly9leGFtcGxlLmNvbS9zdmNDIn0.kaMHAoW7nZ5NrkwOzHE1zGEm-S9Dk5rWICPj\
+KQenhHuwksZqhW2EO1MV0vh_dcBQzvnMS710Do9KEZkcg4QyDQ
+
+{"error":"out_of_stock","flavor":"vanilla"}
+</pre>
+</div>
+<figcaption><a href="#figure-7" class="selfRef">Figure 7</a>:
+<a href="#name-signed-response-svcc-to-svc" class="selfRef">Signed Response (svcC to svcB)</a>
+            </figcaption></figure>
+</section>
+</div>
 </section>
 </div>
 </section>
@@ -2146,8 +2256,12 @@ context where the request would be accepted as valid, and this mitigates the ris
 <span class="refTitle">"HTTP Message Signature"</span>, <span>n.d.</span>, <span>&lt;<a href="https://www.iana.org/assignments/http-message-signature/http-message-signature.xhtml#signature-metadata-parameters">https://www.iana.org/assignments/http-message-signature/http-message-signature.xhtml#signature-metadata-parameters</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9449">[RFC9449]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Fett, D.</span>, <span class="refAuthor">Campbell, B.</span>, <span class="refAuthor">Bradley, J.</span>, <span class="refAuthor">Lodderstedt, T.</span>, <span class="refAuthor">Jones, M.</span>, and <span class="refAuthor">D. Waite</span>, <span class="refTitle">"OAuth 2.0 Demonstrating Proof of Possession (DPoP)"</span>, <span class="seriesInfo">RFC 9449</span>, <span class="seriesInfo">DOI 10.17487/RFC9449</span>, <time datetime="2023-09" class="refDate">September 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9449">https://www.rfc-editor.org/rfc/rfc9449</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9864">[RFC9864]</dt>
+      <dd>
+<span class="refAuthor">Jones, M.B.</span> and <span class="refAuthor">O. Steele</span>, <span class="refTitle">"Fully-Specified Algorithms for JSON Object Signing and Encryption (JOSE) and CBOR Object Signing and Encryption (COSE)"</span>, <span class="seriesInfo">RFC 9864</span>, <span class="seriesInfo">DOI 10.17487/RFC9864</span>, <time datetime="2025-10" class="refDate">October 2025</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9864">https://www.rfc-editor.org/rfc/rfc9864</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -2167,55 +2281,22 @@ context where the request would be accepted as valid, and this mitigates the ris
         </h3>
 <ul class="normal">
 <li class="normal" id="appendix-A.1-1.1">
-            <p id="appendix-A.1-1.1.1">Clarify signature parameter types (String/Boolean) and drop the obsolete RFC 8941 citation (#305).<a href="#appendix-A.1-1.1.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.1.1">WGLC: replace <code>@request-target</code> with <code>@path</code>/<code>@query</code>; select the WIMSE signature by <code>tag</code> (#297, #301).<a href="#appendix-A.1-1.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.2">
-            <p id="appendix-A.1-1.2.1">Clarify <code>wimse-sign-response</code> false vs omitted (#305).<a href="#appendix-A.1-1.2.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.2.1">WGLC: tighten signed-response rules (<code>wimse-sign-response</code>, <code>Accept-Signature</code>, opportunistic local-policy signing, deletion detection) and require <code>wimse-req-nonce</code> on every signed response (#297, #301, #305).<a href="#appendix-A.1-1.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.3">
-            <p id="appendix-A.1-1.3.1">Soften integrity goals to covered components; note typical REST coverage; clarify short <code>expires</code> vs long-lived workloads (#305).<a href="#appendix-A.1-1.3.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.3.1">WGLC: clarify <code>wimse-aud</code> (defaults, deployment-specific values) and why <code>@authority</code> is not covered; nonce replay caching; algorithms via WIT <code>cnf.jwk.alg</code>; middlebox/proxy considerations (#297, #305).<a href="#appendix-A.1-1.3.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.4">
-            <p id="appendix-A.1-1.4.1">Make <code>wimse-arch</code> and RFC 9457 normative references (#305).<a href="#appendix-A.1-1.4.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.4.1">Clarify parameter types, <code>wimse-sign-response</code> false vs omitted, integrity goals, and short <code>expires</code>; make <code>wimse-arch</code> and RFC 9457 normative (#305).<a href="#appendix-A.1-1.4.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.5">
-            <p id="appendix-A.1-1.5.1">WGLC: replace <code>@request-target</code> with <code>@path</code> and <code>@query</code> (#297).<a href="#appendix-A.1-1.5.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.5.1">Regenerate examples for the profile changes; add an <code>ES256</code> svcB-to-svcC exchange alongside <code>Ed25519</code> svcA/svcB (#312, <span>[<a href="#RFC9864" class="cite xref">RFC9864</a>]</span>).<a href="#appendix-A.1-1.5.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.6">
-            <p id="appendix-A.1-1.6.1">WGLC: require <code>wimse-req-nonce</code> on every signed response, not only when the client required one (#297).<a href="#appendix-A.1-1.6.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="appendix-A.1-1.7">
-            <p id="appendix-A.1-1.7.1">WGLC: recipients reject duplicate nonces without regard to sender (#297).<a href="#appendix-A.1-1.7.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="appendix-A.1-1.8">
-            <p id="appendix-A.1-1.8.1">WGLC: require <code>wimse-sign-response</code> when the client is configured to require a signed response (#301).<a href="#appendix-A.1-1.8.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="appendix-A.1-1.9">
-            <p id="appendix-A.1-1.9.1">WGLC: select the WIMSE signature by <code>tag</code>, not by label (#301).<a href="#appendix-A.1-1.9.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="appendix-A.1-1.10">
-            <p id="appendix-A.1-1.10.1">WGLC: clarify that deletion detection and mandatory-response guarantees require <code>wimse-sign-response</code>; local-policy signing is opportunistic for the client (#305).<a href="#appendix-A.1-1.10.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="appendix-A.1-1.11">
-            <p id="appendix-A.1-1.11.1">WGLC: clarify <code>wimse-aud</code> (always present; sender default is target URI; deployment-specific when needed); omit <code>@authority</code>; state audience binding in the WIT and PoP security considerations (#305, #297).<a href="#appendix-A.1-1.11.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="appendix-A.1-1.12">
-            <p id="appendix-A.1-1.12.1">WGLC: clarify interaction of <code>Accept-Signature</code> and <code>wimse-sign-response</code> (#305).<a href="#appendix-A.1-1.12.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="appendix-A.1-1.13">
-            <p id="appendix-A.1-1.13.1">WGLC: expand middlebox considerations for intermediaries and proxy signatures (#305).<a href="#appendix-A.1-1.13.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="appendix-A.1-1.14">
-            <p id="appendix-A.1-1.14.1">WGLC: point HTTP signature algorithms and downgrade checks at <code>cnf.jwk.alg</code> in <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span> (#305).<a href="#appendix-A.1-1.14.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="appendix-A.1-1.15">
-            <p id="appendix-A.1-1.15.1">Regenerate non-normative examples for <code>@path</code>/<code>@query</code>, <code>wimse-sign-response</code>, and <code>wimse-req-nonce</code>.<a href="#appendix-A.1-1.15.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="appendix-A.1-1.16">
-            <p id="appendix-A.1-1.16.1">Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use.<a href="#appendix-A.1-1.16.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="appendix-A.1-1.17">
-            <p id="appendix-A.1-1.17.1">Reference the WIT validation procedure in <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span> (#290).<a href="#appendix-A.1-1.17.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.6.1">Reference the WIT validation procedure in <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span> (#290); consistent "proof of possession"/"PoP" wording.<a href="#appendix-A.1-1.6.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
