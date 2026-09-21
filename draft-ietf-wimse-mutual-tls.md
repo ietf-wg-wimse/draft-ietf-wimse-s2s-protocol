@@ -49,7 +49,7 @@ This document defines authentication and authorization in the context of interac
 This is the core component of the WIMSE architecture {{?WIMSE-ARCH=I-D.ietf-wimse-arch}}.
 This document focuses on using X.509 Workload Identity Certificates as defined in {{Section 6.1 of !WIMSE-CREDS=I-D.ietf-wimse-workload-creds}} to authenticate the communication between workloads using TLS.
 
-The use of TLS for authentication is widely deployed, however it may not be applicable to all environments.  For example, some deployments may lack the PKI infrastructure necessary to manage certificates or inter-service communication consists of multiple separate TLS hops. For these cases, other options based on Workload Identity Tokens (WIT) as defined in {{Section 5 of WIMSE-CREDS}} may be more appropriate since they are not based on X.509 certificates and are communicated at the application layer rather than the transport layer.
+The use of TLS for authentication is widely deployed, however it may not be applicable to all environments.  For example, some deployments may lack the Public Key Infrastructure (PKI) necessary to manage certificates or inter-service communication consists of multiple separate TLS hops. For these cases, other options based on Workload Identity Tokens (WIT) as defined in {{Section 5 of WIMSE-CREDS}} may be more appropriate since they are not based on X.509 certificates and are communicated at the application layer rather than the transport layer.
 
 ## Deployment Architecture and Message Flow
 
