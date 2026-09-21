@@ -119,7 +119,7 @@ This document specifies authentication at the TLS layer. If application traffic 
 
 Client certificate authentication exposes the client workload identity to the TLS server during the handshake. Deployments should consider whether disclosure of Workload Identifiers to servers, intermediaries, or logs is acceptable for their threat model. Workload Identifiers included in certificates and audit records should avoid embedding unnecessary sensitive information.
 
-Authorization decisions based on workload identity need to be made using the authenticated identity obtained from the validated certificate, not from unauthenticated application-layer metadata such as HTTP headers. Application-layer identity assertions can be useful for logging or context, but they MUST NOT override the identity established by mutual TLS unless protected and authorized by another mechanism.
+Authorization decisions based on workload identity MUST be made using the authenticated identity obtained from the validated certificate, not from unauthenticated application-layer metadata such as HTTP headers. Application-layer identity assertions can be useful for logging or context, but they MUST NOT override the identity established by mutual TLS unless protected and authorized by another mechanism.
 
 --- back
 
