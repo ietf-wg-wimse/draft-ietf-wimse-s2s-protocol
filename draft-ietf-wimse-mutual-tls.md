@@ -103,7 +103,7 @@ This document does not include any IANA considerations.
 
 # Security Considerations
 
-This document relies on the security properties of TLS {{!TLS=I-D.ietf-tls-rfc8446bis}}, PKIX path validation {{INET-X509-PROFILE}}, and Workload Identity Certificate validation as described in {{Section 6.1 of WIMSE-CREDS}}. Implementations MUST validate the peer certificate chain, the applicable extended key usage, and the Workload Identifier according to the rules in this document before using the authenticated identity for authorization decisions.
+This document relies on the security properties of TLS {{!TLS=RFC9846}}, PKIX path validation {{INET-X509-PROFILE}}, and Workload Identity Certificate validation as described in {{Section 6.1 of WIMSE-CREDS}}. Implementations MUST validate the peer certificate chain, the applicable extended key usage, and the Workload Identifier according to the rules in this document before using the authenticated identity for authorization decisions.
 
 Workload Identifiers are meaningful only within the scope of their trust domain. Authorization policies MUST NOT evaluate only the path or other sub-components of a Workload Identifier without also considering the trust domain and the trust anchor used to validate the certificate. Failure to bind the Workload Identifier to the expected trust domain and configured trust anchor can allow one trust domain to impersonate workloads from another domain.
 
