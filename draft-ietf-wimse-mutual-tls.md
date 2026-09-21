@@ -103,6 +103,8 @@ This document does not include any IANA considerations.
 
 # Security Considerations
 
+## Certificate and Identity Validation
+
 This document relies on the security properties of TLS {{!TLS=I-D.ietf-tls-rfc8446bis}}, PKIX path validation {{INET-X509-PROFILE}}, and Workload Identity Certificate validation as described in {{Section 6.1 of WIMSE-CREDS}}. Implementations MUST validate the peer certificate chain, the applicable extended key usage, and the Workload Identifier according to the rules in this document before using the authenticated identity for authorization decisions.
 
 Workload Identifiers are meaningful only within the scope of their trust domain. Authorization policies MUST NOT evaluate only the path or other sub-components of a Workload Identifier without also considering the trust domain and the trust anchor used to validate the certificate. Failure to bind the Workload Identifier to the expected trust domain and configured trust anchor can allow one trust domain to impersonate workloads from another domain.
@@ -111,15 +113,23 @@ When a server is identified by a DNS hostname, clients SHOULD authenticate the s
 
 Client authentication is based on the Workload Identity Certificate presented by the TLS client. A server performing mTLS authentication MUST validate the client certificate chain, the associated trust domain, and the Workload Identifier before using that identity for authorization, accounting, or auditing. Accepting any valid client certificate from a trusted CA without checking whether the authenticated workload is authorized for the requested action can allow unintended workloads to gain access.
 
+## Certificate and Private Key Management
+
 Workload Identity Certificates are often issued to dynamic or short-lived workloads. Deployments SHOULD use certificate lifetimes that are appropriate for the workload environment and SHOULD provide timely revocation or replacement mechanisms when workload identity, authorization, or runtime state changes. Long-lived certificates increase the impact of private key compromise and stale authorization decisions.
 
 Private keys associated with Workload Identity Certificates MUST be protected against disclosure and unauthorized use. In particular, deployments MUST NOT share private keys across unrelated workload instances. Where possible, private keys SHOULD be generated and held in the workload runtime environment or a dedicated key protection mechanism, rather than distributed over the network.
 
+## TLS Termination at Intermediaries
+
 This document specifies authentication at the TLS layer. If application traffic traverses intermediaries, gateways, service meshes, or other middleboxes that terminate and re-establish TLS, the application endpoint might not be directly authenticated to the peer workload. In such deployments, authorization decisions need to account for where TLS is terminated and whether the authenticated certificate represents the peer workload, an intermediary, or another delegated entity. Where end-to-end workload authentication context is required across such boundaries, deployments SHOULD use an application-layer WIMSE protection mechanism in addition to TLS-layer server authentication.
 
-Client certificate authentication exposes the client workload identity to the TLS server during the handshake. Deployments should consider whether disclosure of Workload Identifiers to servers, intermediaries, or logs is acceptable for their threat model. Workload Identifiers included in certificates and audit records should avoid embedding unnecessary sensitive information.
+## Application-Layer Identity Assertions
 
 Authorization decisions based on workload identity need to be made using the authenticated identity obtained from the validated certificate, not from unauthenticated application-layer metadata such as HTTP headers. Application-layer identity assertions can be useful for logging or context, but they MUST NOT override the identity established by mutual TLS unless protected and authorized by another mechanism.
+
+# Privacy Considerations
+
+Client certificate authentication exposes the client workload identity to the TLS server during the handshake. Deployments should consider whether disclosure of Workload Identifiers to servers, intermediaries, or logs is acceptable for their threat model. Workload Identifiers included in certificates and audit records should avoid embedding unnecessary sensitive information.
 
 --- back
 
