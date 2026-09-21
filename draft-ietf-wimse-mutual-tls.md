@@ -39,7 +39,7 @@ informative:
 
 --- abstract
 
-The WIMSE architecture defines authentication and authorization for software workloads in a variety of runtime environments, from the most basic ones to complex multi-service, multi-cloud, multi-tenant deployments. This document profiles a workload authentication based on X.509 Workload Identity Certificates using mutual TLS (mTLS).
+The WIMSE architecture defines authentication and authorization for software workloads in a variety of runtime environments, from the most basic ones to complex multi-service, multi-cloud, multi-tenant deployments. This document profiles workload authentication based on X.509 Workload Identity Certificates using mutual TLS (mTLS).
 
 --- middle
 
