@@ -581,12 +581,9 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 # Document History
 <cref>RFC Editor: please remove before publication.</cref>
 
-## draft-ietf-wimse-workload-creds-04
-
-* Replace the access-path-to-identifier mapping API with application-layer audience for WPT and HTTP signatures (#173, #175).
-
 ## draft-ietf-wimse-workload-creds-03
 
+* Replace the access-path-to-identifier mapping API with application-layer audience for WPT and HTTP signatures (#173, #175).
 * Add a WIT validation procedure for recipients (#290, #294).
 * Clarify that WIT/PoP are application-layer credentials and are not used for mutual TLS; TLS binding does not change that (#256).
 * Clarify that the one-Workload-Identifier-per-credential rule restricts only Workload Identifiers, not other identifiers in the credential.
