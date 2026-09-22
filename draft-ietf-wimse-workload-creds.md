@@ -199,7 +199,7 @@ A WIT MUST contain the following content, except where noted:
     * `sub`: The subject of the token, which is the single Workload Identifier for the workload used for authentication and authorization, as defined in {{WIMSE-ID}} and {{single-workload-identity}}. {{granular-auth}} provides additional requirements associated with these identifiers, so they can be used to secure workload-to-workload communication.
     * `exp`: The expiration time of the token (as defined in {{Section 4.1.4 of RFC7519}}).
       WITs should be refreshed regularly, e.g., on the order of hours.
-    * `jti`: A unique identifier for the token. This claim is OPTIONAL. The `jti` claim is frequently useful for auditing issuance of individual WITs or to revoke them, but some token generation environments do not support it.
+    * `jti`: A unique identifier for the token. This claim is OPTIONAL. The `jti` claim is frequently useful for auditing the issuance of individual WITs, and it is needed to identify individual tokens in deployments that operate an optional token status or deny-list mechanism ({{wit-lifetime}}). Some token generation environments do not support it.
     * `cnf`: A confirmation claim referencing the public key of the workload.
         * `jwk`: Within the `cnf` claim, a `jwk` key MUST be present that contains the public key of the workload as defined in {{Section 3.2 of RFC7800}}. The workload MUST prove possession of the corresponding private key when presenting the WIT to another party. As such, it MUST NOT be used as a bearer token and is not intended for use in the `Authorization` header.
             * `alg`: Within the `jwk` object, an `alg` field MUST be present. Allowed values are listed in the IANA "JSON Web Signature and Encryption Algorithms" registry established by {{RFC7518}}. The presented proof MUST be produced with the algorithm specified in this field. The value `none` MUST NOT be used. Algorithms used in combination with symmetric keys MUST NOT be used. Also encryption algorithms MUST NOT be used as this would require additional key distribution outside of the WIT. To promote interoperability, the `ES256` signing algorithm MUST be supported by general purpose implementations of this document.
@@ -446,7 +446,9 @@ The Workload Identity Token (WIT) is bound to a secret cryptographic key and is 
 
 ### Limiting Workload Identity Token Lifespan {#wit-lifetime}
 
-The WIT MUST have a limited lifetime expressed through the `exp` claim. If both a WIT and its corresponding private key are compromised, an attacker can impersonate the workload until the WIT expires. Because JWT-based credentials such as the WIT are not generally revocable on demand, a short expiration is the primary mitigation against continued use of a compromised WIT and key. WITs SHOULD therefore be short-lived, typically on the order of hours, with the chosen lifetime balancing the operational cost of frequent refresh against the window of exposure if a credential is compromised.
+The WIT MUST have a limited lifetime expressed through the `exp` claim. If both a WIT and its corresponding private key are compromised, an attacker can impersonate the workload until the WIT expires. Because JWT-based credentials such as the WIT are not revocable on demand, a short expiration is the primary mitigation against continued use of a compromised WIT and key. WITs SHOULD therefore be short-lived, typically on the order of hours, with the chosen lifetime balancing the operational cost of frequent refresh against the window of exposure if a credential is compromised.
+
+This document does not define a revocation mechanism for WITs and does not rely on one; validators are not required to consult any token status service. Deployments MAY nevertheless operate such a mechanism as a defense in depth measure, for example a Token Status List {{?I-D.ietf-oauth-status-list}} or a deny-list of `jti` values. A deployment that does so MUST include the `jti` claim ({{to-wit}}) in every WIT, because a WIT without a `jti` cannot be identified individually. Such mechanisms are subject to a propagation delay during which a revoked WIT may still be accepted, and their use does not relax the requirement for short WIT lifetimes.
 
 ### Limiting Proof of Possession Lifespan
 
@@ -470,7 +472,7 @@ The Workload Identity Certificate carries the Workload Identifier in a single UR
 
 ### Limiting Workload Identity Certificate Lifespan
 
-Workload Identity Certificates are frequently issued to dynamic and/or short-lived workloads. Deployments SHOULD use certificate lifetimes appropriate to the workload environment, typically on a similar scale to WITs ({{wit-pop}}). Long-lived certificates increase the impact of private-key compromise. As with WITs, short certificate lifetimes are the primary mitigation against continued use of a compromised key; this document does not rely on certificate revocation lists (CRLs) or Online Certificate Status Protocol (OCSP) {{?RFC6960}} for WICs.
+Workload Identity Certificates are frequently issued to dynamic and/or short-lived workloads. Deployments SHOULD use certificate lifetimes appropriate to the workload environment, typically on a similar scale to WITs ({{wit-pop}}). Long-lived certificates increase the impact of private-key compromise. As with WITs, short certificate lifetimes are the primary mitigation against continued use of a compromised key; this document does not rely on certificate revocation lists (CRLs) or Online Certificate Status Protocol (OCSP) {{?RFC6960}} for WICs, although deployments MAY use them as a defense in depth measure.
 
 The lifetime of Workload Identity Certificates is bounded by the lifetime and rotation cadence of the trust anchors of the trust domain ({{trust-anchors}}). Compromise of a trust anchor permits issuance of certificates for the trust domain for as long as that anchor remains trusted. Deployments should therefore consider leaf and trust-anchor lifetimes together rather than the leaf lifetime in isolation.
 
@@ -574,6 +576,7 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 * Clarify that WIT/PoP are application-layer credentials and are not used for mutual TLS; TLS binding does not change that (#256).
 * Clarify that the one-Workload-Identifier-per-credential rule restricts only Workload Identifiers, not other identifiers in the credential.
 * State the WIC revocation stance: short lifetimes like WITs; no CRL reliance (#270).
+* State the WIT revocation stance and resolve the conflicting `jti` description: the document does not rely on revocation, but deployments may operate a token status list or `jti` deny-list, in which case `jti` is required in every WIT (#269).
 * Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use, and consistent capitalization of the defined term "Workload Identifier".
 
 ## draft-ietf-wimse-workload-creds-02
