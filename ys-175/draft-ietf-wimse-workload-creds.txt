@@ -127,19 +127,18 @@ Table of Contents
      12.1.  Normative References
      12.2.  Informative References
    Appendix A.  Document History
-     A.1.  draft-ietf-wimse-workload-creds-04
-     A.2.  draft-ietf-wimse-workload-creds-03
-     A.3.  draft-ietf-wimse-workload-creds-02
-     A.4.  draft-ietf-wimse-workload-creds-01
-     A.5.  draft-ietf-wimse-workload-creds-00
-     A.6.  draft-ietf-wimse-s2s-protocol-07
-     A.7.  draft-ietf-wimse-s2s-protocol-06
-     A.8.  draft-ietf-wimse-s2s-protocol-05
-     A.9.  draft-ietf-wimse-s2s-protocol-04
-     A.10. draft-ietf-wimse-s2s-protocol-03
-     A.11. draft-ietf-wimse-s2s-protocol-02
-     A.12. draft-ietf-wimse-s2s-protocol-01
-     A.13. draft-ietf-wimse-s2s-protocol-00
+     A.1.  draft-ietf-wimse-workload-creds-03
+     A.2.  draft-ietf-wimse-workload-creds-02
+     A.3.  draft-ietf-wimse-workload-creds-01
+     A.4.  draft-ietf-wimse-workload-creds-00
+     A.5.  draft-ietf-wimse-s2s-protocol-07
+     A.6.  draft-ietf-wimse-s2s-protocol-06
+     A.7.  draft-ietf-wimse-s2s-protocol-05
+     A.8.  draft-ietf-wimse-s2s-protocol-04
+     A.9.  draft-ietf-wimse-s2s-protocol-03
+     A.10. draft-ietf-wimse-s2s-protocol-02
+     A.11. draft-ietf-wimse-s2s-protocol-01
+     A.12. draft-ietf-wimse-s2s-protocol-00
    Acknowledgments
    Authors' Addresses
 
@@ -1188,13 +1187,11 @@ Appendix A.  Document History
 
    // RFC Editor: please remove before publication.
 
-A.1.  draft-ietf-wimse-workload-creds-04
+A.1.  draft-ietf-wimse-workload-creds-03
 
    *  Replace the access-path-to-identifier mapping API with
       application-layer audience for WPT and HTTP signatures (#173,
       #175).
-
-A.2.  draft-ietf-wimse-workload-creds-03
 
    *  Add a WIT validation procedure for recipients (#290, #294).
 
@@ -1212,7 +1209,7 @@ A.2.  draft-ietf-wimse-workload-creds-03
       abbreviation expanded on first use, and consistent capitalization
       of the defined term "Workload Identifier".
 
-A.3.  draft-ietf-wimse-workload-creds-02
+A.2.  draft-ietf-wimse-workload-creds-02
 
    *  Add a section requiring exactly one Workload Identifier per
       credential (the sub claim for a WIT, a single URI SubjectAltName
@@ -1231,7 +1228,7 @@ A.3.  draft-ietf-wimse-workload-creds-02
 
    *  Rename "level" to "layer" throughout.
 
-A.4.  draft-ietf-wimse-workload-creds-01
+A.3.  draft-ietf-wimse-workload-creds-01
 
    *  Clarify that the iss claim is RECOMMENDED in part for auditing and
       operations, and that validation of workload identity uses sub, not
@@ -1240,13 +1237,13 @@ A.4.  draft-ietf-wimse-workload-creds-01
    *  Remove the wimse URI scheme definition and IANA registration from
       this document; both are specified in [WIMSE-ID].
 
-A.5.  draft-ietf-wimse-workload-creds-00
+A.4.  draft-ietf-wimse-workload-creds-00
 
    *  Remove WPT, HTTP-Sig and mutual TLS sections, which are going to
       be covered by individual documents.  This includes re-phrasing of
       various sections to focus on the credentials only.
 
-A.6.  draft-ietf-wimse-s2s-protocol-07
+A.5.  draft-ietf-wimse-s2s-protocol-07
 
    *  Rework the WPT's oth claim.
 
@@ -1264,14 +1261,14 @@ A.6.  draft-ietf-wimse-s2s-protocol-07
 
    *  Use of the Accept-Signature header.
 
-A.7.  draft-ietf-wimse-s2s-protocol-06
+A.6.  draft-ietf-wimse-s2s-protocol-06
 
    *  Explicit definition of the Workload Identity Certificate.
 
    *  Definition of the validation of workload identifiers as part of
       workload authentication.  Still work in progress.
 
-A.8.  draft-ietf-wimse-s2s-protocol-05
+A.7.  draft-ietf-wimse-s2s-protocol-05
 
    *  Removed the entire Workload Identity section which is now covered
       in the Architecture document.
@@ -1282,7 +1279,7 @@ A.8.  draft-ietf-wimse-s2s-protocol-05
 
    *  IANA considerations.
 
-A.9.  draft-ietf-wimse-s2s-protocol-04
+A.8.  draft-ietf-wimse-s2s-protocol-04
 
    *  Require cnf.jwk.alg in WIT which restricts signature algorithm of
       WPT or HTTP-Sig.
@@ -1291,7 +1288,7 @@ A.9.  draft-ietf-wimse-s2s-protocol-04
 
    *  Consolidate terminology with the Architecture draft.
 
-A.10.  draft-ietf-wimse-s2s-protocol-03
+A.9.  draft-ietf-wimse-s2s-protocol-03
 
    *  Consistently use "workload".
 
@@ -1306,7 +1303,7 @@ A.10.  draft-ietf-wimse-s2s-protocol-03
 
    *  Error handling for the application-level methods.
 
-A.11.  draft-ietf-wimse-s2s-protocol-02
+A.10.  draft-ietf-wimse-s2s-protocol-02
 
    *  Coexistence with bearer tokens.
 
@@ -1318,7 +1315,7 @@ A.11.  draft-ietf-wimse-s2s-protocol-02
 
    *  Moved an author to acknowledgments.
 
-A.12.  draft-ietf-wimse-s2s-protocol-01
+A.11.  draft-ietf-wimse-s2s-protocol-01
 
    *  Addressed multiple comments from Pieter.
 
@@ -1333,7 +1330,7 @@ A.12.  draft-ietf-wimse-s2s-protocol-01
    *  Added a section comparing the DPoP-inspired app-level security
       option to the Message Signature-based alternative.
 
-A.13.  draft-ietf-wimse-s2s-protocol-00
+A.12.  draft-ietf-wimse-s2s-protocol-00
 
    *  Initial WG draft, an exact copy of draft-sheffer-wimse-s2s-
       protocol-00
