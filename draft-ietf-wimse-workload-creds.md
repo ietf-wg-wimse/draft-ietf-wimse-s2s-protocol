@@ -440,6 +440,14 @@ Workload Identifiers ({{WIMSE-ID}}) are scoped to a trust domain (the URI author
 
 When a deployment uses the `iss` claim for key distribution as described in {{wit-iss-note}}, validators MUST enforce an allowlist of accepted issuers. Absent such a restriction, any entity could stand up an issuer, present a WIT with that issuer's `iss` value, and have it accepted by a validator that fetches and trusts the corresponding key material without verifying the issuer's legitimacy.
 
+## Trust Domain Membership and Peer Authentication {#trust-domain-membership}
+
+A workload that validates its peer's credential against the trust anchors for a trust domain and then stops has learned only that its peer belongs to that trust domain. It has not learned which workload the peer is. {{granular-auth}} requires the comparison that closes this gap.
+
+Without that comparison, every workload in the trust domain looks the same. Any workload holding a valid credential can be accepted in place of any other, so an attacker who compromises one workload gains the access of all of them, even if the workload they compromised had little access of its own. A credential issued by mistake, or one belonging to a workload that no longer exists, can be used in the same way until it expires. This affects both sides of a call, workloads acting as clients and workloads acting as servers.
+
+Proof of possession does not help here. It shows that the peer holds the private key for the credential it presented ({{wit-pop}}). It does not show that this credential is the one the peer was supposed to present. The same is true when a Workload Identity Certificate is used at the transport layer.
+
 ## Workload Identity Token and Proof of Possession {#wit-pop}
 
 The Workload Identity Token (WIT) is bound to a secret cryptographic key and is always presented with a proof of possession (PoP) as described in {{to-wit}}. The WIT is a general purpose token that can be presented in multiple contexts. The WIT and its PoP are used for application-layer authentication; they are not used as the client or server credential for mutual TLS, which uses the Workload Identity Certificate ({{to-wic}}). The WIT MUST NOT be used as a bearer token. While this helps reduce the sensitivity of the token it is still possible that a token and its PoP may be captured and replayed within the PoP's lifetime. The following are some mitigations for the capture and reuse of the WIT and its PoP:
@@ -570,6 +578,7 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 
 ## draft-ietf-wimse-workload-creds-03
 
+* Added a section to describe the security considerations of granular authentication.
 * Add a WIT validation procedure for recipients (#290, #294).
 * Clarify that WIT/PoP are application-layer credentials and are not used for mutual TLS; TLS binding does not change that (#256).
 * Clarify that the one-Workload-Identifier-per-credential rule restricts only Workload Identifiers, not other identifiers in the credential.
