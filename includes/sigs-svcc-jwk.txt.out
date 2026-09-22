@@ -1,0 +1,9 @@
+{
+  "alg": "ES256",
+  "crv": "P-256",
+  "d": "RuJQPzrHlQrRllszMFQQw3e8bSdArcYeXjhnXRXclHs",
+  "kid": "svc-c-key",
+  "kty": "EC",
+  "x": "dquxM0LHBbWlYCDxcNRHe9kb41lrnL0h_9ntNXKxzxw",
+  "y": "HPqRls-EZoPrHY9gNRcZGq5pkypeovfnzLSfsYP2L6o"
+}

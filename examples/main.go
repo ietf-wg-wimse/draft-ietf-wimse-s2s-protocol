@@ -20,7 +20,6 @@ const (
 	wptExp     = 1745510016
 	subject    = "wimse://example.com/specific-workload"
 	audience   = "https://workload.example.com/path"
-	rawAT      = "16_mAd0GiwaZokU26_0902100" // arbitrary example
 )
 
 func main() {
@@ -94,7 +93,6 @@ func generateExamples() error {
 		Aud:       audience,
 		ExpiresAt: wptExp,
 		Wth:       base64UrlEncTokenHash(witEnc),
-		Ath:       base64UrlEncTokenHash(rawAT),
 	}
 
 	wlSigner, err := jose.NewSigner(jose.SigningKey{Algorithm: wlAlg, Key: wlKeyPriv}, (&jose.SignerOptions{}).WithType(wptJWTType))
