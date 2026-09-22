@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                      A. Schwenkschuster
-Expires: 24 March 2027                                  Defakto Security
-                                                       20 September 2026
+Expires: 26 March 2027                                  Defakto Security
+                                                       22 September 2026
 
 
                        WIMSE Workload Proof Token
@@ -60,7 +60,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 24 March 2027.
+   This Internet-Draft will expire on 26 March 2027.
 
 Copyright Notice
 
@@ -266,11 +266,11 @@ Table of Contents
 
    =============== NOTE: '\' line wrapping per RFC 8792 ================
 
-   eyJhbGciOiJFZERTQSIsInR5cCI6IndwdCtqd3QifQ.eyJhdWQiOiJodHRwczovL3dvc\
-   mtsb2FkLmV4YW1wbGUuY29tL3BhdGgiLCJleHAiOjE3NDU1MTAwMTYsImp0aSI6Il9fY\
-   ndjNEVTQzNhY2MyTFRDMS1feCIsInd0aCI6Ilg5d2lQZ3EzamxTR3pBZWdIQ0doTk8xb\
-   EpnVWJEb0kxTWprYXQ1UUhKQjAifQ.sa5ZYHTeCx4AsurafaBJ2rrMnE7TBHBB47ZUT7\
-   yoiyz2lcGY5XAnpGPjPnzeRroJJiR7Nr_C5J7mexxrsHM3CQ
+   eyJhbGciOiJFZDI1NTE5IiwidHlwIjoid3B0K2p3dCJ9.eyJhdWQiOiJodHRwczovL3d\
+   vcmtsb2FkLmV4YW1wbGUuY29tL3BhdGgiLCJleHAiOjE3NDU1MTAwMTYsImp0aSI6Il9\
+   fYndjNEVTQzNhY2MyTFRDMS1feCIsInd0aCI6Ik1lT0lMazJBSkhoNmN6a25oWjJjN1R\
+   raVZwZUZUQ19jeVlBb25tVDdta0kifQ.xnXKn_1G2jZzxFqMkrO_CpxVWf77UNvs7p8R\
+   kir-QUffqD369QYjNlk39crkYH_-qL3nEcbmL5d-V4usVxhgDw
 
                 Figure 2: Example Workload Proof Token (WPT)
 
@@ -278,7 +278,7 @@ Table of Contents
    here:
 
    {
-     "alg": "EdDSA",
+     "alg": "Ed25519",
      "typ": "wpt+jwt"
    }
 
@@ -291,7 +291,7 @@ Table of Contents
      "aud": "https://workload.example.com/path",
      "exp": 1745510016,
      "jti": "__bwc4ESC3acc2LTC1-_x",
-     "wth": "X9wiPgq3jlSGzAegHCGhNO1lJgUbDoI1Mjkat5QHJB0"
+     "wth": "MeOILk2AJHh6czknhZ2c7TkiVpeFTC_cyYAonmT7mkI"
    }
 
                         Figure 4: Example WPT Claims
@@ -305,17 +305,17 @@ Table of Contents
    Host: workload.example.com
    Content-Type: application/json
    Workload-Identity-Token: eyJhbGciOiJFUzI1NiIsImtpZCI6Ikp1bmUgNSIsInR\
-   5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J2Ijoi\
-   RWQyNTUxOSIsImt0eSI6Ik9LUCIsIngiOiIxQ1hYdmZsTl9MVlZzSXNZWHNVdkIwM0pt\
-   bEdXZUNIcVFWdW91Q0Y5MmJnIn19LCJleHAiOjE3NDU1MTI1MTAsImlhdCI6MTc0NTUw\
-   ODkxMCwianRpIjoieC1fMUNUTDJjY2EzQ1NFNGN3Yl9sIiwic3ViIjoid2ltc2U6Ly9l\
-   eGFtcGxlLmNvbS9zcGVjaWZpYy13b3JrbG9hZCJ9.ohKJ50QaW8ydALJwaA0Sz4ys3hc\
-   N_1S-aTZBytMGc3u8QWUmn5uxUDSonoZFAfZk1Ro1kR4vE_xa7mvoE37R-Q
-   Authorization: WPT eyJhbGciOiJFZERTQSIsInR5cCI6IndwdCtqd3QifQ.eyJhdW\
-   QiOiJodHRwczovL3dvcmtsb2FkLmV4YW1wbGUuY29tL3BhdGgiLCJleHAiOjE3NDU1MT\
-   AwMTYsImp0aSI6Il9fYndjNEVTQzNhY2MyTFRDMS1feCIsInd0aCI6Ilg5d2lQZ3Ezam\
-   xTR3pBZWdIQ0doTk8xbEpnVWJEb0kxTWprYXQ1UUhKQjAifQ.sa5ZYHTeCx4AsurafaB\
-   J2rrMnE7TBHBB47ZUT7yoiyz2lcGY5XAnpGPjPnzeRroJJiR7Nr_C5J7mexxrsHM3CQ
+   5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkMjU1MTkiLCJjcnYi\
+   OiJFZDI1NTE5Iiwia3R5IjoiT0tQIiwieCI6IjFDWFh2ZmxOX0xWVnNJc1lYc1V2QjAz\
+   Sm1sR1dlQ0hxUVZ1b3VDRjkyYmcifX0sImV4cCI6MTc0NTUxMjUxMCwiaWF0IjoxNzQ1\
+   NTA4OTEwLCJqdGkiOiJ4LV8xQ1RMMmNjYTNDU0U0Y3diX2wiLCJzdWIiOiJ3aW1zZTov\
+   L2V4YW1wbGUuY29tL3NwZWNpZmljLXdvcmtsb2FkIn0.4kNF4FP1dshxHrFub2kRusiV\
+   9qK_xrGi0pbLG5hpOS3fR0izYZu5lPHei94TTvOvORJPT9jSVT-C6IIBattDbg
+   Authorization: WPT eyJhbGciOiJFZDI1NTE5IiwidHlwIjoid3B0K2p3dCJ9.eyJh\
+   dWQiOiJodHRwczovL3dvcmtsb2FkLmV4YW1wbGUuY29tL3BhdGgiLCJleHAiOjE3NDU1\
+   MTAwMTYsImp0aSI6Il9fYndjNEVTQzNhY2MyTFRDMS1feCIsInd0aCI6Ik1lT0lMazJB\
+   SkhoNmN6a25oWjJjN1RraVZwZUZUQ19jeVlBb25tVDdta0kifQ.xnXKn_1G2jZzxFqMk\
+   rO_CpxVWf77UNvs7p8Rkir-QUffqD369QYjNlk39crkYH_-qL3nEcbmL5d-V4usVxhgDw
 
    {"do stuff":"please"}
 
@@ -761,12 +761,21 @@ Table of Contents
               for HTTP APIs", RFC 9457, DOI 10.17487/RFC9457, July 2023,
               <https://www.rfc-editor.org/rfc/rfc9457>.
 
+   [RFC9864]  Jones, M.B. and O. Steele, "Fully-Specified Algorithms for
+              JSON Object Signing and Encryption (JOSE) and CBOR Object
+              Signing and Encryption (COSE)", RFC 9864,
+              DOI 10.17487/RFC9864, October 2025,
+              <https://www.rfc-editor.org/rfc/rfc9864>.
+
 Appendix A.  Document History
 
 
    // RFC Editor: please remove before publication.
 
 A.1.  draft-ietf-wimse-wpt-03
+
+   *  Use the fully-specified Ed25519 algorithm identifier in the
+      examples instead of the deprecated EdDSA ([RFC9864]).
 
    *  Remove Workload Identity Key Management section, which seems more
       appropriate in ietf-wimse-workload-creds where it already is.

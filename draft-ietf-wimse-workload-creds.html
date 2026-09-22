@@ -1053,7 +1053,7 @@ svg {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Campbell, et al.</td>
-<td class="center">Expires 24 March 2027</td>
+<td class="center">Expires 26 March 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1066,12 +1066,12 @@ svg {
 <dd class="internet-draft">draft-ietf-wimse-workload-creds-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-09-20" class="published">20 September 2026</time>
+<time datetime="2026-09-22" class="published">22 September 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2027-03-24">24 March 2027</time></dd>
+<dd class="expires"><time datetime="2027-03-26">26 March 2027</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1140,7 +1140,7 @@ multi-service, multi-cloud, multi-tenant deployments.<a href="#section-abstract-
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 24 March 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 26 March 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1604,12 +1604,12 @@ For deployments that do not use an environment-specific scheme, the <code>wimse<
 =============== NOTE: '\' line wrapping per RFC 8792 ================
 
 eyJhbGciOiJFUzI1NiIsImtpZCI6Ikp1bmUgNSIsInR5cCI6IndpdCtqd3QifQ.eyJjb\
-mYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J2IjoiRWQyNTUxOSIsImt0eSI6Ik9LU\
-CIsIngiOiIxQ1hYdmZsTl9MVlZzSXNZWHNVdkIwM0ptbEdXZUNIcVFWdW91Q0Y5MmJnI\
-n19LCJleHAiOjE3NDU1MTI1MTAsImlhdCI6MTc0NTUwODkxMCwianRpIjoieC1fMUNUT\
-DJjY2EzQ1NFNGN3Yl9sIiwic3ViIjoid2ltc2U6Ly9leGFtcGxlLmNvbS9zcGVjaWZpY\
-y13b3JrbG9hZCJ9.ohKJ50QaW8ydALJwaA0Sz4ys3hcN_1S-aTZBytMGc3u8QWUmn5ux\
-UDSonoZFAfZk1Ro1kR4vE_xa7mvoE37R-Q
+mYiOnsiandrIjp7ImFsZyI6IkVkMjU1MTkiLCJjcnYiOiJFZDI1NTE5Iiwia3R5IjoiT\
+0tQIiwieCI6IjFDWFh2ZmxOX0xWVnNJc1lYc1V2QjAzSm1sR1dlQ0hxUVZ1b3VDRjkyY\
+mcifX0sImV4cCI6MTc0NTUxMjUxMCwiaWF0IjoxNzQ1NTA4OTEwLCJqdGkiOiJ4LV8xQ\
+1RMMmNjYTNDU0U0Y3diX2wiLCJzdWIiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3NwZWNpZ\
+mljLXdvcmtsb2FkIn0.4kNF4FP1dshxHrFub2kRusiV9qK_xrGi0pbLG5hpOS3fR0izY\
+Zu5lPHei94TTvOvORJPT9jSVT-C6IIBattDbg
 </pre>
 </div>
 <figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
@@ -1637,7 +1637,7 @@ UDSonoZFAfZk1Ro1kR4vE_xa7mvoE37R-Q
 {
   "cnf": {
     "jwk": {
-      "alg": "EdDSA",
+      "alg": "Ed25519",
       "crv": "Ed25519",
       "kty": "OKP",
       "x": "1CXXvflN_LVVsIsYXsUvB03JmlGWeCHqQVuouCF92bg"
@@ -1669,7 +1669,7 @@ UDSonoZFAfZk1Ro1kR4vE_xa7mvoE37R-Q
             <p id="section-5.1-13.4.1">binds the public key represented by the <code>jwk</code> confirmation method to the workload <code>wimse://example.com/specific-workload</code>.<a href="#section-5.1-13.4.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.1-13.5">
-            <p id="section-5.1-13.5.1">requires the proof to be produced with the <code>EdDSA</code> signature algorithm.<a href="#section-5.1-13.5.1" class="pilcrow">¶</a></p>
+            <p id="section-5.1-13.5.1">requires the proof to be produced with the <code>Ed25519</code> signature algorithm.<a href="#section-5.1-13.5.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-5.1-14">For elucidative purposes only, the workload's key, including the private part, is shown below in JWK <span>[<a href="#RFC7517" class="cite xref">RFC7517</a>]</span> format:<a href="#section-5.1-14" class="pilcrow">¶</a></p>
@@ -1736,12 +1736,12 @@ WIT =  JWT
 =============== NOTE: '\' line wrapping per RFC 8792 ================
 
 Workload-Identity-Token: eyJhbGciOiJFUzI1NiIsImtpZCI6Ikp1bmUgNSIsInR\
-5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J2Ijoi\
-RWQyNTUxOSIsImt0eSI6Ik9LUCIsIngiOiIxQ1hYdmZsTl9MVlZzSXNZWHNVdkIwM0pt\
-bEdXZUNIcVFWdW91Q0Y5MmJnIn19LCJleHAiOjE3NDU1MTI1MTAsImlhdCI6MTc0NTUw\
-ODkxMCwianRpIjoieC1fMUNUTDJjY2EzQ1NFNGN3Yl9sIiwic3ViIjoid2ltc2U6Ly9l\
-eGFtcGxlLmNvbS9zcGVjaWZpYy13b3JrbG9hZCJ9.ohKJ50QaW8ydALJwaA0Sz4ys3hc\
-N_1S-aTZBytMGc3u8QWUmn5uxUDSonoZFAfZk1Ro1kR4vE_xa7mvoE37R-Q
+5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkMjU1MTkiLCJjcnYi\
+OiJFZDI1NTE5Iiwia3R5IjoiT0tQIiwieCI6IjFDWFh2ZmxOX0xWVnNJc1lYc1V2QjAz\
+Sm1sR1dlQ0hxUVZ1b3VDRjkyYmcifX0sImV4cCI6MTc0NTUxMjUxMCwiaWF0IjoxNzQ1\
+NTA4OTEwLCJqdGkiOiJ4LV8xQ1RMMmNjYTNDU0U0Y3diX2wiLCJzdWIiOiJ3aW1zZTov\
+L2V4YW1wbGUuY29tL3NwZWNpZmljLXdvcmtsb2FkIn0.4kNF4FP1dshxHrFub2kRusiV\
+9qK_xrGi0pbLG5hpOS3fR0izYZu5lPHei94TTvOvORJPT9jSVT-C6IIBattDbg
 </pre>
 </div>
 <figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
@@ -2311,8 +2311,12 @@ use these tokens to authenticate to each other.<a href="#section-11.1.1-9" class
 <span class="refAuthor">Santesson, S.</span>, <span class="refAuthor">Myers, M.</span>, <span class="refAuthor">Ankney, R.</span>, <span class="refAuthor">Malpani, A.</span>, <span class="refAuthor">Galperin, S.</span>, and <span class="refAuthor">C. Adams</span>, <span class="refTitle">"X.509 Internet Public Key Infrastructure Online Certificate Status Protocol - OCSP"</span>, <span class="seriesInfo">RFC 6960</span>, <span class="seriesInfo">DOI 10.17487/RFC6960</span>, <time datetime="2013-06" class="refDate">June 2013</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6960">https://www.rfc-editor.org/rfc/rfc6960</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9457">[RFC9457]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Nottingham, M.</span>, <span class="refAuthor">Wilde, E.</span>, and <span class="refAuthor">S. Dalal</span>, <span class="refTitle">"Problem Details for HTTP APIs"</span>, <span class="seriesInfo">RFC 9457</span>, <span class="seriesInfo">DOI 10.17487/RFC9457</span>, <time datetime="2023-07" class="refDate">July 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9457">https://www.rfc-editor.org/rfc/rfc9457</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9864">[RFC9864]</dt>
+      <dd>
+<span class="refAuthor">Jones, M.B.</span> and <span class="refAuthor">O. Steele</span>, <span class="refTitle">"Fully-Specified Algorithms for JSON Object Signing and Encryption (JOSE) and CBOR Object Signing and Encryption (COSE)"</span>, <span class="seriesInfo">RFC 9864</span>, <span class="seriesInfo">DOI 10.17487/RFC9864</span>, <time datetime="2025-10" class="refDate">October 2025</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9864">https://www.rfc-editor.org/rfc/rfc9864</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -2332,19 +2336,22 @@ use these tokens to authenticate to each other.<a href="#section-11.1.1-9" class
         </h3>
 <ul class="normal">
 <li class="normal" id="appendix-A.1-1.1">
-            <p id="appendix-A.1-1.1.1">Add a WIT validation procedure for recipients (#290, #294).<a href="#appendix-A.1-1.1.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.1.1">Use the fully-specified <code>Ed25519</code> algorithm identifier in the examples instead of the deprecated <code>EdDSA</code> (<span>[<a href="#RFC9864" class="cite xref">RFC9864</a>]</span>).<a href="#appendix-A.1-1.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.2">
-            <p id="appendix-A.1-1.2.1">Clarify that WIT/PoP are application-layer credentials and are not used for mutual TLS; TLS binding does not change that (#256).<a href="#appendix-A.1-1.2.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.2.1">Add a WIT validation procedure for recipients (#290, #294).<a href="#appendix-A.1-1.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.3">
-            <p id="appendix-A.1-1.3.1">Clarify that the one-Workload-Identifier-per-credential rule restricts only Workload Identifiers, not other identifiers in the credential.<a href="#appendix-A.1-1.3.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.3.1">Clarify that WIT/PoP are application-layer credentials and are not used for mutual TLS; TLS binding does not change that (#256).<a href="#appendix-A.1-1.3.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.4">
-            <p id="appendix-A.1-1.4.1">State the WIC revocation stance: short lifetimes like WITs; no CRL reliance (#270).<a href="#appendix-A.1-1.4.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.4.1">Clarify that the one-Workload-Identifier-per-credential rule restricts only Workload Identifiers, not other identifiers in the credential.<a href="#appendix-A.1-1.4.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.5">
-            <p id="appendix-A.1-1.5.1">Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use, and consistent capitalization of the defined term "Workload Identifier".<a href="#appendix-A.1-1.5.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.5.1">State the WIC revocation stance: short lifetimes like WITs; no CRL reliance (#270).<a href="#appendix-A.1-1.5.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.1-1.6">
+            <p id="appendix-A.1-1.6.1">Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use, and consistent capitalization of the defined term "Workload Identifier".<a href="#appendix-A.1-1.6.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>

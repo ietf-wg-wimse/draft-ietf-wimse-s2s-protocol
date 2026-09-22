@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 24 March 2027                                Palo Alto Networks
+Expires: 26 March 2027                                Palo Alto Networks
                                                       A. Schwenkschuster
                                                         Defakto Security
                                                               Y. Sheffer
                                                              Independent
                                                             Y. Rosomakho
                                                                  Zscaler
-                                                       20 September 2026
+                                                       22 September 2026
 
 
                        WIMSE Workload Credentials
@@ -67,7 +67,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 24 March 2027.
+   This Internet-Draft will expire on 26 March 2027.
 
 Copyright Notice
 
@@ -440,12 +440,12 @@ Table of Contents
    =============== NOTE: '\' line wrapping per RFC 8792 ================
 
    eyJhbGciOiJFUzI1NiIsImtpZCI6Ikp1bmUgNSIsInR5cCI6IndpdCtqd3QifQ.eyJjb\
-   mYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J2IjoiRWQyNTUxOSIsImt0eSI6Ik9LU\
-   CIsIngiOiIxQ1hYdmZsTl9MVlZzSXNZWHNVdkIwM0ptbEdXZUNIcVFWdW91Q0Y5MmJnI\
-   n19LCJleHAiOjE3NDU1MTI1MTAsImlhdCI6MTc0NTUwODkxMCwianRpIjoieC1fMUNUT\
-   DJjY2EzQ1NFNGN3Yl9sIiwic3ViIjoid2ltc2U6Ly9leGFtcGxlLmNvbS9zcGVjaWZpY\
-   y13b3JrbG9hZCJ9.ohKJ50QaW8ydALJwaA0Sz4ys3hcN_1S-aTZBytMGc3u8QWUmn5ux\
-   UDSonoZFAfZk1Ro1kR4vE_xa7mvoE37R-Q
+   mYiOnsiandrIjp7ImFsZyI6IkVkMjU1MTkiLCJjcnYiOiJFZDI1NTE5Iiwia3R5IjoiT\
+   0tQIiwieCI6IjFDWFh2ZmxOX0xWVnNJc1lYc1V2QjAzSm1sR1dlQ0hxUVZ1b3VDRjkyY\
+   mcifX0sImV4cCI6MTc0NTUxMjUxMCwiaWF0IjoxNzQ1NTA4OTEwLCJqdGkiOiJ4LV8xQ\
+   1RMMmNjYTNDU0U0Y3diX2wiLCJzdWIiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3NwZWNpZ\
+   mljLXdvcmtsb2FkIn0.4kNF4FP1dshxHrFub2kRusiV9qK_xrGi0pbLG5hpOS3fR0izY\
+   Zu5lPHei94TTvOvORJPT9jSVT-C6IIBattDbg
 
              Figure 2: An example Workload Identity Token (WIT)
 
@@ -466,7 +466,7 @@ Table of Contents
    {
      "cnf": {
        "jwk": {
-         "alg": "EdDSA",
+         "alg": "Ed25519",
          "crv": "Ed25519",
          "kty": "OKP",
          "x": "1CXXvflN_LVVsIsYXsUvB03JmlGWeCHqQVuouCF92bg"
@@ -497,7 +497,7 @@ Table of Contents
    *  binds the public key represented by the jwk confirmation method to
       the workload wimse://example.com/specific-workload.
 
-   *  requires the proof to be produced with the EdDSA signature
+   *  requires the proof to be produced with the Ed25519 signature
       algorithm.
 
    For elucidative purposes only, the workload's key, including the
@@ -551,12 +551,12 @@ Table of Contents
    =============== NOTE: '\' line wrapping per RFC 8792 ================
 
    Workload-Identity-Token: eyJhbGciOiJFUzI1NiIsImtpZCI6Ikp1bmUgNSIsInR\
-   5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkRFNBIiwiY3J2Ijoi\
-   RWQyNTUxOSIsImt0eSI6Ik9LUCIsIngiOiIxQ1hYdmZsTl9MVlZzSXNZWHNVdkIwM0pt\
-   bEdXZUNIcVFWdW91Q0Y5MmJnIn19LCJleHAiOjE3NDU1MTI1MTAsImlhdCI6MTc0NTUw\
-   ODkxMCwianRpIjoieC1fMUNUTDJjY2EzQ1NFNGN3Yl9sIiwic3ViIjoid2ltc2U6Ly9l\
-   eGFtcGxlLmNvbS9zcGVjaWZpYy13b3JrbG9hZCJ9.ohKJ50QaW8ydALJwaA0Sz4ys3hc\
-   N_1S-aTZBytMGc3u8QWUmn5uxUDSonoZFAfZk1Ro1kR4vE_xa7mvoE37R-Q
+   5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkMjU1MTkiLCJjcnYi\
+   OiJFZDI1NTE5Iiwia3R5IjoiT0tQIiwieCI6IjFDWFh2ZmxOX0xWVnNJc1lYc1V2QjAz\
+   Sm1sR1dlQ0hxUVZ1b3VDRjkyYmcifX0sImV4cCI6MTc0NTUxMjUxMCwiaWF0IjoxNzQ1\
+   NTA4OTEwLCJqdGkiOiJ4LV8xQ1RMMmNjYTNDU0U0Y3diX2wiLCJzdWIiOiJ3aW1zZTov\
+   L2V4YW1wbGUuY29tL3NwZWNpZmljLXdvcmtsb2FkIn0.4kNF4FP1dshxHrFub2kRusiV\
+   9qK_xrGi0pbLG5hpOS3fR0izYZu5lPHei94TTvOvORJPT9jSVT-C6IIBattDbg
 
        Figure 8: An example Workload Identity Token HTTP Header Field
 
@@ -1165,12 +1165,21 @@ Table of Contents
               for HTTP APIs", RFC 9457, DOI 10.17487/RFC9457, July 2023,
               <https://www.rfc-editor.org/rfc/rfc9457>.
 
+   [RFC9864]  Jones, M.B. and O. Steele, "Fully-Specified Algorithms for
+              JSON Object Signing and Encryption (JOSE) and CBOR Object
+              Signing and Encryption (COSE)", RFC 9864,
+              DOI 10.17487/RFC9864, October 2025,
+              <https://www.rfc-editor.org/rfc/rfc9864>.
+
 Appendix A.  Document History
 
 
    // RFC Editor: please remove before publication.
 
 A.1.  draft-ietf-wimse-workload-creds-03
+
+   *  Use the fully-specified Ed25519 algorithm identifier in the
+      examples instead of the deprecated EdDSA ([RFC9864]).
 
    *  Add a WIT validation procedure for recipients (#290, #294).
 
