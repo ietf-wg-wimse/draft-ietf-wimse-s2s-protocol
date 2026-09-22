@@ -73,6 +73,8 @@ Workload Identity Certificates are X.509 certificates that carry Workload Identi
 
 Workload Identity Certificates may be used to authenticate both the server and client side of the connections.  When validating a Workload Identity Certificate, the relying party MUST use the trust anchors configured for the trust domain in the workload identity to validate the peer's certificate.  Other PKIX {{!INET-X509-PROFILE=RFC5280}} path validation rules apply. Workloads acting as TLS clients and servers MUST validate that the trust domain portion of the Workload Identity Certificate matches the expected trust domain for the other side of the connection.
 
+Certificate revocation status MUST be determined as specified in {{Section 6.1.3 of INET-X509-PROFILE}}. The mechanism used to determine that status is deployment-specific and may use CRLs, OCSP, or out-of-band information.
+
 Servers wishing to use the Workload Identity Certificate for authorizing the client MUST require client certificate authentication in the TLS handshake. Other methods of post handshake authentication are not specified by this document.
 
 Workload Identity Certificates used by TLS servers SHOULD have the `id-kp-serverAuth` extended key usage {{!RFC5280}} field set and Workload Identity Certificates used by TLS clients SHOULD have the `id-kp-clientAuth` extended key usage field set. A certificate that is used for both client and server connections may have both fields set. This specification does not make any other requirements beyond {{INET-X509-PROFILE}} on the contents of Workload Identity Certificates or on the certification authorities that issue workload certificates.
