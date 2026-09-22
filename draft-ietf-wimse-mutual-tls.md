@@ -85,6 +85,8 @@ In deployments that use Workload Identity Certificates, successful DNS hostname 
 
 Some deployments may not use DNS names for server discovery. In such cases, the client MUST be configured with sufficient information to determine the expected workload identity of the server and MUST validate that identity before accepting the connection.
 
+Connecting directly to an IP address does not require an IP address subjectAltName when the client authenticates the server using its expected Workload Identifier. If the client additionally requires authentication of the server's IP address, it MUST validate a matching iPAddress subjectAltName (IP-ID) as specified in {{Section 6.4 of TLS-IDENTITY}}. If no matching IP-ID is present, the client MUST reject the connection, even if Workload Identifier validation succeeds.
+
 The host portion of the Workload Identifier is NOT treated as a hostname as specified in {{Section 6.4 of TLS-IDENTITY}}, but rather as a trust domain. The server identity is encoded in the path portion of the Workload Identifier in a deployment-specific way.
 
 Validation of the workload identity may consist of an exact match of the trust domain and path, or may follow deployment-specific rules. The path portion of the Workload Identifier MUST always be interpreted within the context of the trust domain. In most cases it is preferable to validate the entire Workload Identifier; see {{Section 1.3 of WIMSE-CREDS}} for additional implementation guidance.
