@@ -836,7 +836,7 @@ Table of Contents
    little access of its own.  A credential issued by mistake, or one
    belonging to a workload that no longer exists, can be used in the
    same way until it expires.  This affects both sides of a call,
-   workloads acting a clients and workloads acting as servers.
+   workloads acting as clients and workloads acting as servers.
 
    Proof of possession does not help here.  It shows that the peer holds
    the private key for the credential it presented (Section 9.3).  It
