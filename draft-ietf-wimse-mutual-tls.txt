@@ -194,6 +194,15 @@ Table of Contents
    validate the Workload Identifier in the server's certificate against
    that expectation before accepting the connection.
 
+   Connecting directly to an IP address does not require an IP address
+   subjectAltName when the client authenticates the server using its
+   expected Workload Identifier.  If the client additionally requires
+   authentication of the server's IP address, it MUST validate a
+   matching iPAddress subjectAltName (IP-ID) as specified in Section 6.4
+   of [TLS-IDENTITY].  If no matching IP-ID is present, the client MUST
+   reject the connection, even if Workload Identifier validation
+   succeeds.
+
    The host portion of the Workload Identifier is NOT treated as a
    hostname as specified in Section 6.3 of [TLS-IDENTITY], but rather as
    a trust domain.  The server identity is encoded in the path portion
