@@ -148,9 +148,13 @@ Table of Contents
 
    Workload Identity Certificates may be used to authenticate both the
    server and client side of the connections.  When validating a
-   Workload Identity Certificate, the relying party MUST use the trust
-   anchors configured for the trust domain in the workload identity to
-   validate the peer's certificate.  The relying party MUST perform
+   Workload Identity Certificate, the relying party MUST use a locally
+   configured mapping from trust domains to trust anchors, provisioned
+   as described in Section 3 of [WIMSE-CREDS].  The peer's certificate
+   MUST be rejected unless its certification path validates to a trust
+   anchor configured for the trust domain in its Workload Identifier.
+   The Workload Identifier MUST NOT be treated as authenticated until
+   this validation succeeds.  The relying party MUST perform
    certification path validation in accordance with Section 6 of
    [INET-X509-PROFILE].  Workloads acting as TLS clients and servers
    MUST validate that the trust domain portion of the Workload Identity
