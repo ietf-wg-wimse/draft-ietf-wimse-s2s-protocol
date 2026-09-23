@@ -29,7 +29,12 @@ func main() {
 }
 
 func generateExamples() error {
-	wlAlg := jose.EdDSA
+	// {{RFC9864}} deprecates the "EdDSA" algorithm identifier in favor of the
+	// fully-specified "Ed25519". go-jose has no constant for the latter, so the
+	// identifier is set explicitly in the JOSE header and the confirmation JWK
+	// while signing still uses jose.EdDSA.
+	const wlAlg = "Ed25519"
+	wlSigAlg := jose.EdDSA
 
 	wlJwkJson :=
         `{
@@ -79,7 +84,7 @@ func generateExamples() error {
 		Cnf: cnf{
 			JWK: jose.JSONWebKey{
 				Key:       wlKeyPub,
-				Algorithm: string(wlAlg),
+				Algorithm: wlAlg,
 			},
 		},
 	}
@@ -95,7 +100,9 @@ func generateExamples() error {
 		Wth:       base64UrlEncTokenHash(witEnc),
 	}
 
-	wlSigner, err := jose.NewSigner(jose.SigningKey{Algorithm: wlAlg, Key: wlKeyPriv}, (&jose.SignerOptions{}).WithType(wptJWTType))
+	wlSigner, err := jose.NewSigner(jose.SigningKey{Algorithm: wlSigAlg, Key: wlKeyPriv}, (&jose.SignerOptions{}).
+		WithType(wptJWTType).
+		WithHeader("alg", wlAlg))
 	if err != nil {
 		return fmt.Errorf("failed to create WPT signer: %w", err)
 	}
