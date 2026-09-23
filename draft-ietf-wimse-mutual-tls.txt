@@ -247,9 +247,9 @@ Table of Contents
    path validation [INET-X509-PROFILE], and Workload Identity
    Certificate validation as described in Section 6.1 of [WIMSE-CREDS].
    Implementations MUST validate the peer certificate chain, the
-   applicable extended key usage, and the Workload Identifier according
-   to the rules in this document before using the authenticated identity
-   for authorization decisions.
+   applicable extended key usage (if present), and the Workload
+   Identifier according to the rules in this document before using the
+   authenticated identity for authorization decisions.
 
    Workload Identifiers are meaningful only within the scope of their
    trust domain.  Authorization policies MUST NOT evaluate only the path
