@@ -125,7 +125,7 @@ This document specifies authentication at the TLS layer. If application traffic 
 
 ## Application-Layer Identity Assertions
 
-Authorization decisions based on workload identity need to be made using the authenticated identity obtained from the validated certificate, not from unauthenticated application-layer metadata such as HTTP headers. Application-layer identity assertions can be useful for logging or context, but they MUST NOT override the identity established by mutual TLS unless protected and authorized by another mechanism.
+Authorization decisions based on workload identity MUST be made using the authenticated identity obtained from the validated certificate, not from unauthenticated application-layer metadata such as HTTP headers. Application-layer identity assertions can be useful for logging or context, but they MUST NOT override the identity established by mutual TLS unless protected and authorized by another mechanism.
 
 # Privacy Considerations
 
