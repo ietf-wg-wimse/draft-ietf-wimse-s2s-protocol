@@ -163,14 +163,14 @@ Table of Contents
    are not specified by this document.
 
    Workload Identity Certificates used by TLS servers SHOULD have the
-   id-kp-serverAuth extended key usage [RFC5280] field set and Workload
-   Identity Certificates used by TLS clients SHOULD have the id-kp-
-   clientAuth extended key usage field set.  A certificate that is used
-   for both client and server connections may have both fields set.
-   This specification does not make any other requirements beyond
-   [INET-X509-PROFILE] and [WIMSE-CREDS] on the contents of Workload
-   Identity Certificates or on the certification authorities that issue
-   workload certificates.
+   id-kp-serverAuth extended key usage (Section 4.2.1.12 of
+   [INET-X509-PROFILE]) field set and Workload Identity Certificates
+   used by TLS clients SHOULD have the id-kp-clientAuth extended key
+   usage field set.  A certificate that is used for both client and
+   server connections may have both fields set.  This specification does
+   not make any other requirements beyond [INET-X509-PROFILE] and
+   [WIMSE-CREDS] on the contents of Workload Identity Certificates or on
+   the certification authorities that issue workload certificates.
 
 3.2.1.  Server Name Validation
 
@@ -245,12 +245,12 @@ Table of Contents
 5.1.  Certificate and Identity Validation
 
    This document relies on the security properties of TLS [TLS], PKIX
-   path validation [INET-X509-PROFILE], and Workload Identity
-   Certificate validation as described in Section 6.1 of [WIMSE-CREDS].
-   Implementations MUST validate the peer certificate chain, the
-   applicable extended key usage (if present), and the Workload
-   Identifier according to the rules in this document before using the
-   authenticated identity for authorization decisions.
+   path validation (Section 6 of [INET-X509-PROFILE]), and Workload
+   Identity Certificate validation as described in Section 6.1 of
+   [WIMSE-CREDS].  Implementations MUST validate the peer certificate
+   chain, the applicable extended key usage (if present), and the
+   Workload Identifier according to the rules in this document before
+   using the authenticated identity for authorization decisions.
 
    Workload Identifiers are meaningful only within the scope of their
    trust domain.  Authorization policies MUST NOT evaluate only the path
@@ -353,12 +353,6 @@ Table of Contents
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/rfc/rfc2119>.
-
-   [RFC5280]  Cooper, D., Santesson, S., Farrell, S., Boeyen, S.,
-              Housley, R., and W. Polk, "Internet X.509 Public Key
-              Infrastructure Certificate and Certificate Revocation List
-              (CRL) Profile", RFC 5280, DOI 10.17487/RFC5280, May 2008,
-              <https://www.rfc-editor.org/rfc/rfc5280>.
 
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
