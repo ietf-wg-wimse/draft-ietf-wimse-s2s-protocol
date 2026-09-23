@@ -57,7 +57,7 @@ Refer to {{Section 1.2 of WIMSE-CREDS}} for the deployment architecture which is
 
 # Conventions and Definitions
 
-All terminology in this document follows {{WIMSE-ARCH}}.
+This document uses the terminology defined in {{WIMSE-ARCH}}. The terms "Workload Identifier" and "trust domain" are defined in {{Section 3 of !WIMSE-ID=I-D.ietf-wimse-identifier}}, and "Workload Identity Certificate" is defined in {{Section 6.1 of WIMSE-CREDS}}.
 
 {::boilerplate bcp14-tagged}
 
