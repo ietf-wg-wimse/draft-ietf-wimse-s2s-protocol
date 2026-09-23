@@ -17,8 +17,8 @@ Abstract
    The WIMSE architecture defines authentication and authorization for
    software workloads in a variety of runtime environments, from the
    most basic ones to complex multi-service, multi-cloud, multi-tenant
-   deployments.  This document profiles a workload authentication based
-   on X.509 Workload Identity Certificates using mutual TLS (mTLS).
+   deployments.  This document profiles workload authentication based on
+   X.509 Workload Identity Certificates using mutual TLS (mTLS).
 
 About This Document
 
@@ -114,7 +114,7 @@ Table of Contents
 1.1.  Deployment Architecture and Message Flow
 
    Refer to Section 1.2 of [WIMSE-CREDS] for the deployment architecture
-   which is common to all protection options.
+   which is common to all authentication mechanisms.
 
 2.  Conventions and Definitions
 
@@ -278,8 +278,8 @@ Table of Contents
    certificate represents the peer workload, an intermediary, or another
    delegated entity.  Where end-to-end workload authentication context
    is required across such boundaries, deployments SHOULD use an
-   application-layer WIMSE protection mechanism in addition to TLS-layer
-   server authentication.
+   application-layer WIMSE authentication mechanism in addition to TLS-
+   layer server authentication.
 
    Client certificate authentication exposes the client workload
    identity to the TLS server during the handshake.  Deployments should
