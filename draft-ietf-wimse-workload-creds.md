@@ -233,7 +233,7 @@ The decoded JWT claims of the WIT from the example above are shown here:
 {
   "cnf": {
     "jwk": {
-      "alg": "EdDSA",
+      "alg": "Ed25519",
       "crv": "Ed25519",
       "kty": "OKP",
       "x": "1CXXvflN_LVVsIsYXsUvB03JmlGWeCHqQVuouCF92bg"
@@ -255,7 +255,7 @@ The claims indicate that the example WIT:
 * identifies the workload to which the token was issued as `wimse://example.com/specific-workload`.
 * has a unique identifier of `x-_1CTL2cca3CSE4cwb_l`.
 * binds the public key represented by the `jwk` confirmation method to the workload `wimse://example.com/specific-workload`.
-* requires the proof to be produced with the `EdDSA` signature algorithm.
+* requires the proof to be produced with the `Ed25519` signature algorithm.
 
 For elucidative purposes only, the workload's key, including the private part, is shown below in JWK {{RFC7517}} format:
 
@@ -570,6 +570,7 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 
 ## draft-ietf-wimse-workload-creds-03
 
+* Use the fully-specified `Ed25519` algorithm identifier in the examples instead of the deprecated `EdDSA` ({{?RFC9864}}).
 * Add a WIT validation procedure for recipients (#290, #294).
 * Clarify that WIT/PoP are application-layer credentials and are not used for mutual TLS; TLS binding does not change that (#256).
 * Clarify that the one-Workload-Identifier-per-credential rule restricts only Workload Identifiers, not other identifiers in the credential.
