@@ -121,6 +121,8 @@ Client authentication is based on the Workload Identity Certificate presented by
 
 Workload Identity Certificates are often issued to dynamic or short-lived workloads. Deployments SHOULD use certificate lifetimes that are appropriate for the workload environment and SHOULD provide timely revocation or replacement mechanisms when workload identity, authorization, or runtime state changes. Long-lived certificates increase the impact of private key compromise and stale authorization decisions.
 
+Compromise of the private key corresponding to a trust anchor can enable impersonation for as long as that anchor remains trusted, regardless of leaf certificate lifetimes. Trust-anchor provisioning and lifecycle considerations, including lifetime and rotation, are discussed in {{Section 3 of WIMSE-CREDS}} and {{Section 9.3.1 of WIMSE-CREDS}}.
+
 Private keys associated with Workload Identity Certificates MUST be protected against disclosure and unauthorized use. In particular, deployments MUST NOT share private keys across unrelated workload instances. Where possible, private keys SHOULD be generated and held in the workload runtime environment or a dedicated key protection mechanism, rather than distributed over the network.
 
 ## TLS Termination at Intermediaries
