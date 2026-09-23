@@ -53,7 +53,7 @@ The use of TLS for authentication is widely deployed, however it may not be appl
 
 ## Deployment Architecture and Message Flow
 
-Refer to {{Section 1.2 of WIMSE-CREDS}} for the deployment architecture which is common to all protection options.
+Refer to {{Section 1.2 of WIMSE-CREDS}} for the deployment architecture which is common to all authentication mechanisms.
 
 # Conventions and Definitions
 
@@ -115,7 +115,7 @@ Workload Identity Certificates are often issued to dynamic or short-lived worklo
 
 Private keys associated with Workload Identity Certificates MUST be protected against disclosure and unauthorized use. In particular, deployments MUST NOT share private keys across unrelated workload instances. Where possible, private keys SHOULD be generated and held in the workload runtime environment or a dedicated key protection mechanism, rather than distributed over the network.
 
-This document specifies authentication at the TLS layer. If application traffic traverses intermediaries, gateways, service meshes, or other middleboxes that terminate and re-establish TLS, the application endpoint might not be directly authenticated to the peer workload. In such deployments, authorization decisions need to account for where TLS is terminated and whether the authenticated certificate represents the peer workload, an intermediary, or another delegated entity. Where end-to-end workload authentication context is required across such boundaries, deployments SHOULD use an application-layer WIMSE protection mechanism in addition to TLS-layer server authentication.
+This document specifies authentication at the TLS layer. If application traffic traverses intermediaries, gateways, service meshes, or other middleboxes that terminate and re-establish TLS, the application endpoint might not be directly authenticated to the peer workload. In such deployments, authorization decisions need to account for where TLS is terminated and whether the authenticated certificate represents the peer workload, an intermediary, or another delegated entity. Where end-to-end workload authentication context is required across such boundaries, deployments SHOULD use an application-layer WIMSE authentication mechanism in addition to TLS-layer server authentication.
 
 Client certificate authentication exposes the client workload identity to the TLS server during the handshake. Deployments should consider whether disclosure of Workload Identifiers to servers, intermediaries, or logs is acceptable for their threat model. Workload Identifiers included in certificates and audit records should avoid embedding unnecessary sensitive information.
 
