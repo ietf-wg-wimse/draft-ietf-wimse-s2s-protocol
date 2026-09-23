@@ -201,11 +201,14 @@ Table of Contents
 
    The server application retrieves the Workload Identifier from the
    client certificate's URI subjectAltName (see [WIMSE-CREDS]), which in
-   turn is obtained from the TLS layer.  The identifier is used in
-   authorization, accounting and auditing.  For example, the full
-   Workload Identifier may be matched against ACLs to authorize actions
-   requested by the peer and the identifier may be included in log
-   messages to associate actions to the client workload for audit
+   turn is obtained from the TLS layer.  The certificate MUST contain
+   exactly one URI subjectAltName carrying a Workload Identifier, as
+   specified in Section 6.1 of [WIMSE-CREDS].  Certificates containing
+   zero or multiple such entries MUST be rejected.  The identifier is
+   used in authorization, accounting and auditing.  For example, the
+   full Workload Identifier may be matched against ACLs to authorize
+   actions requested by the peer and the identifier may be included in
+   log messages to associate actions to the client workload for audit
    purposes.  A deployment may specify other authorization policies
    based on the specific details of how the Workload Identifier is
    constructed.  The path portion of the Workload Identifier MUST always
