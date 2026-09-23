@@ -178,8 +178,9 @@ Table of Contents
 
    Some deployments may not use DNS names for server discovery.  In such
    cases, the client MUST be configured with sufficient information to
-   determine the expected workload identity of the server and MUST
-   validate that identity before accepting the connection.
+   determine the expected Workload Identifier of the server and MUST
+   validate the Workload Identifier in the server's certificate against
+   that expectation before accepting the connection.
 
    The host portion of the Workload Identifier is NOT treated as a
    hostname as specified in Section 6.4 of [TLS-IDENTITY], but rather as
