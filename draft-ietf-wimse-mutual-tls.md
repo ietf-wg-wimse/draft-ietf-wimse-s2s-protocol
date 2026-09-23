@@ -39,7 +39,7 @@ informative:
 
 --- abstract
 
-The WIMSE architecture defines authentication and authorization for software workloads in a variety of runtime environments, from the most basic ones to complex multi-service, multi-cloud, multi-tenant deployments. This document profiles a workload authentication based on X.509 Workload Identity Certificates using mutual TLS (mTLS).
+The WIMSE architecture defines authentication and authorization for software workloads in a variety of runtime environments, from the most basic ones to complex multi-service, multi-cloud, multi-tenant deployments. This document profiles workload authentication based on X.509 Workload Identity Certificates using mutual TLS (mTLS).
 
 --- middle
 
@@ -49,15 +49,15 @@ This document defines authentication and authorization in the context of interac
 This is the core component of the WIMSE architecture {{?WIMSE-ARCH=I-D.ietf-wimse-arch}}.
 This document focuses on using X.509 Workload Identity Certificates as defined in {{Section 6.1 of !WIMSE-CREDS=I-D.ietf-wimse-workload-creds}} to authenticate the communication between workloads using TLS.
 
-The use of TLS for authentication is widely deployed, however it may not be applicable to all environments.  For example, some deployments may lack the PKI infrastructure necessary to manage certificates or inter-service communication consists of multiple separate TLS hops. For these cases, other options based on Workload Identity Tokens (WIT) as defined in {{Section 5 of WIMSE-CREDS}} may be more appropriate since they are not based on X.509 certificates and are communicated at the application layer rather than the transport layer.
+The use of TLS for authentication is widely deployed, however it may not be applicable to all environments.  For example, some deployments may lack the Public Key Infrastructure (PKI) necessary to manage certificates or inter-service communication consists of multiple separate TLS hops. For these cases, other options based on Workload Identity Tokens (WIT) as defined in {{Section 5 of WIMSE-CREDS}} may be more appropriate since they are not based on X.509 certificates and are communicated at the application layer rather than the transport layer.
 
 ## Deployment Architecture and Message Flow
 
-Refer to {{Section 1.2 of WIMSE-CREDS}} for the deployment architecture which is common to all protection options.
+Refer to {{Section 1.2 of WIMSE-CREDS}} for the deployment architecture which is common to all authentication mechanisms.
 
 # Conventions and Definitions
 
-All terminology in this document follows {{WIMSE-ARCH}}.
+This document uses the terminology defined in {{WIMSE-ARCH}}. The terms "Workload Identifier" and "trust domain" are defined in {{Section 3 of !WIMSE-ID=I-D.ietf-wimse-identifier}}, and "Workload Identity Certificate" is defined in {{Section 6.1 of WIMSE-CREDS}}.
 
 {::boilerplate bcp14-tagged}
 
@@ -71,7 +71,7 @@ Workload Identity Certificates are X.509 certificates that carry Workload Identi
 
 ## Workload Identity Certificate Validation {#wic-validation}
 
-Workload Identity Certificates may be used to authenticate both the server and client side of the connections.  When validating a Workload Identity Certificate, the relying party MUST use the trust anchors configured for the trust domain in the workload identity to validate the peer's certificate.  Other PKIX {{!INET-X509-PROFILE=RFC5280}} path validation rules apply. Workloads acting as TLS clients and servers MUST validate that the trust domain portion of the Workload Identity Certificate matches the expected trust domain for the other side of the connection.
+Workload Identity Certificates may be used to authenticate both the server and client side of the connections.  When validating a Workload Identity Certificate, the relying party MUST use the trust anchors configured for the trust domain in the workload identity to validate the peer's certificate.  The relying party MUST perform certification path validation in accordance with {{Section 6 of !INET-X509-PROFILE=RFC5280}}. Workloads acting as TLS clients and servers MUST validate that the trust domain portion of the Workload Identity Certificate matches the expected trust domain for the other side of the connection.
 
 Servers wishing to use the Workload Identity Certificate for authorizing the client MUST require client certificate authentication in the TLS handshake. Other methods of post handshake authentication are not specified by this document.
 
@@ -79,19 +79,23 @@ Workload Identity Certificates used by TLS servers SHOULD have the `id-kp-server
 
 ### Server Name Validation {#server-name}
 
-If a WIMSE client connects to a server using a DNS hostname, the server SHOULD present a certificate containing a matching DNS Subject Alternative Name (DNS-ID), and the client MUST perform standard TLS server identity validation as specified in {{Section 6.3 of !TLS-IDENTITY=RFC9525}}.
+A WIMSE server intended to be accessed using a DNS hostname SHOULD present a certificate containing a matching DNS Subject Alternative Name (DNS-ID). A WIMSE client connecting to a server using a DNS hostname MUST perform standard TLS server identity validation as specified in {{Section 6.3 of !TLS-IDENTITY=RFC9525}}.
+
+When DNS hostname validation is required, the client MUST reject the connection if the server's certificate does not contain a matching DNS-ID, even if Workload Identifier validation succeeds.
 
 In deployments that use Workload Identity Certificates, successful DNS hostname validation authenticates the server endpoint, while the Workload Identifier provides an additional identity that can be used for workload-specific authorization and policy decisions.
 
-Some deployments may not use DNS names for server discovery. In such cases, the client MUST be configured with sufficient information to determine the expected workload identity of the server and MUST validate that identity before accepting the connection.
+Some deployments may not use DNS names for server discovery. In such cases, the client MUST be configured with sufficient information to determine the expected Workload Identifier of the server and MUST validate the Workload Identifier in the server's certificate against that expectation before accepting the connection.
 
-The host portion of the Workload Identifier is NOT treated as a hostname as specified in {{Section 6.4 of TLS-IDENTITY}}, but rather as a trust domain. The server identity is encoded in the path portion of the Workload Identifier in a deployment-specific way.
+Connecting directly to an IP address does not require an IP address subjectAltName when the client authenticates the server using its expected Workload Identifier. If the client additionally requires authentication of the server's IP address, it MUST validate a matching iPAddress subjectAltName (IP-ID) as specified in {{Section 6.4 of TLS-IDENTITY}}. If no matching IP-ID is present, the client MUST reject the connection, even if Workload Identifier validation succeeds.
+
+The host portion of the Workload Identifier is NOT treated as a hostname as specified in {{Section 6.3 of TLS-IDENTITY}}, but rather as a trust domain. The server identity is encoded in the path portion of the Workload Identifier in a deployment-specific way.
 
 Validation of the workload identity may consist of an exact match of the trust domain and path, or may follow deployment-specific rules. The path portion of the Workload Identifier MUST always be interpreted within the context of the trust domain. In most cases it is preferable to validate the entire Workload Identifier; see {{Section 1.3 of WIMSE-CREDS}} for additional implementation guidance.
 
 ## Client Authorization Using the Workload Identity {#client-name}
 
-The server application retrieves the Workload Identifier from the client certificate's URI subjectAltName (see {{WIMSE-CREDS}}), which in turn is obtained from the TLS layer. The identifier is used in authorization, accounting and auditing.
+The server application retrieves the Workload Identifier from the client certificate's URI subjectAltName (see {{WIMSE-CREDS}}), which in turn is obtained from the TLS layer. The certificate MUST contain exactly one URI subjectAltName carrying a Workload Identifier, as specified in {{Section 6.1 of WIMSE-CREDS}}. Certificates containing zero or multiple such entries MUST be rejected. The identifier is used in authorization, accounting and auditing.
 For example, the full Workload Identifier may be matched against ACLs to authorize actions requested by the peer and the identifier may be included in log messages to associate actions to the client workload for audit purposes.
 A deployment may specify other authorization policies based on the specific details of how the Workload Identifier is constructed. The path portion of the Workload Identifier MUST always be considered in the scope of the trust domain.
 
@@ -103,6 +107,8 @@ This document does not include any IANA considerations.
 
 # Security Considerations
 
+## Certificate and Identity Validation
+
 This document relies on the security properties of TLS {{!TLS=I-D.ietf-tls-rfc8446bis}}, PKIX path validation {{INET-X509-PROFILE}}, and Workload Identity Certificate validation as described in {{Section 6.1 of WIMSE-CREDS}}. Implementations MUST validate the peer certificate chain, the applicable extended key usage (if present), and the Workload Identifier according to the rules in this document before using the authenticated identity for authorization decisions.
 
 Workload Identifiers are meaningful only within the scope of their trust domain. Authorization policies MUST NOT evaluate only the path or other sub-components of a Workload Identifier without also considering the trust domain and the trust anchor used to validate the certificate. Failure to bind the Workload Identifier to the expected trust domain and configured trust anchor can allow one trust domain to impersonate workloads from another domain.
@@ -111,15 +117,25 @@ When a server is identified by a DNS hostname, clients SHOULD authenticate the s
 
 Client authentication is based on the Workload Identity Certificate presented by the TLS client. A server performing mTLS authentication MUST validate the client certificate chain, the associated trust domain, and the Workload Identifier before using that identity for authorization, accounting, or auditing. Accepting any valid client certificate from a trusted CA without checking whether the authenticated workload is authorized for the requested action can allow unintended workloads to gain access.
 
+## Certificate and Private Key Management
+
 Workload Identity Certificates are often issued to dynamic or short-lived workloads. Deployments SHOULD use certificate lifetimes that are appropriate for the workload environment and SHOULD provide timely revocation or replacement mechanisms when workload identity, authorization, or runtime state changes. Long-lived certificates increase the impact of private key compromise and stale authorization decisions.
+
+Compromise of the private key corresponding to a trust anchor can enable impersonation for as long as that anchor remains trusted, regardless of leaf certificate lifetimes. Trust-anchor provisioning and lifecycle considerations, including lifetime and rotation, are discussed in {{Section 3 of WIMSE-CREDS}} and {{Section 9.3.1 of WIMSE-CREDS}}.
 
 Private keys associated with Workload Identity Certificates MUST be protected against disclosure and unauthorized use. In particular, deployments MUST NOT share private keys across unrelated workload instances. Where possible, private keys SHOULD be generated and held in the workload runtime environment or a dedicated key protection mechanism, rather than distributed over the network.
 
-This document specifies authentication at the TLS layer. If application traffic traverses intermediaries, gateways, service meshes, or other middleboxes that terminate and re-establish TLS, the application endpoint might not be directly authenticated to the peer workload. In such deployments, authorization decisions need to account for where TLS is terminated and whether the authenticated certificate represents the peer workload, an intermediary, or another delegated entity. Where end-to-end workload authentication context is required across such boundaries, deployments SHOULD use an application-layer WIMSE protection mechanism in addition to TLS-layer server authentication.
+## TLS Termination at Intermediaries
+
+This document specifies authentication at the TLS layer. If application traffic traverses intermediaries, gateways, service meshes, or other middleboxes that terminate and re-establish TLS, the application endpoint might not be directly authenticated to the peer workload. In such deployments, authorization decisions need to account for where TLS is terminated and whether the authenticated certificate represents the peer workload, an intermediary, or another delegated entity. Where end-to-end workload authentication context is required across such boundaries, deployments SHOULD use an application-layer WIMSE authentication mechanism in addition to TLS-layer server authentication.=======
+
+## Application-Layer Identity Assertions
+
+Authorization decisions based on workload identity MUST be made using the authenticated identity obtained from the validated certificate, not from unauthenticated application-layer metadata such as HTTP headers. Application-layer identity assertions can be useful for logging or context, but they MUST NOT override the identity established by mutual TLS unless protected and authorized by another mechanism.
+
+# Privacy Considerations
 
 Client certificate authentication exposes the client workload identity to the TLS server during the handshake. Deployments should consider whether disclosure of Workload Identifiers to servers, intermediaries, or logs is acceptable for their threat model. Workload Identifiers included in certificates and audit records should avoid embedding unnecessary sensitive information.
-
-Authorization decisions based on workload identity need to be made using the authenticated identity obtained from the validated certificate, not from unauthenticated application-layer metadata such as HTTP headers. Application-layer identity assertions can be useful for logging or context, but they MUST NOT override the identity established by mutual TLS unless protected and authorized by another mechanism.
 
 --- back
 
