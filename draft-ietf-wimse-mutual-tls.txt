@@ -168,8 +168,9 @@ Table of Contents
    clientAuth extended key usage field set.  A certificate that is used
    for both client and server connections may have both fields set.
    This specification does not make any other requirements beyond
-   [INET-X509-PROFILE] on the contents of Workload Identity Certificates
-   or on the certification authorities that issue workload certificates.
+   [INET-X509-PROFILE] and [WIMSE-CREDS] on the contents of Workload
+   Identity Certificates or on the certification authorities that issue
+   workload certificates.
 
 3.2.1.  Server Name Validation
 
