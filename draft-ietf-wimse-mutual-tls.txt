@@ -290,6 +290,13 @@ Table of Contents
    increase the impact of private key compromise and stale authorization
    decisions.
 
+   Compromise of the private key corresponding to a trust anchor can
+   enable impersonation for as long as that anchor remains trusted,
+   regardless of leaf certificate lifetimes.  Trust-anchor provisioning
+   and lifecycle considerations, including lifetime and rotation, are
+   discussed in Section 3 of [WIMSE-CREDS] and Section 9.3.1 of
+   [WIMSE-CREDS].
+
    Private keys associated with Workload Identity Certificates MUST be
    protected against disclosure and unauthorized use.  In particular,
    deployments MUST NOT share private keys across unrelated workload
