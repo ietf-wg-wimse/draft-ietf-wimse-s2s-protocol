@@ -1365,7 +1365,7 @@ A deployment may specify other authorization policies based on the specific deta
         <h3 id="name-application-layer-identity-">
 <a href="#section-5.4" class="section-number selfRef">5.4. </a><a href="#name-application-layer-identity-" class="section-name selfRef">Application-Layer Identity Assertions</a>
         </h3>
-<p id="section-5.4-1">Authorization decisions based on workload identity need to be made using the authenticated identity obtained from the validated certificate, not from unauthenticated application-layer metadata such as HTTP headers. Application-layer identity assertions can be useful for logging or context, but they <span class="bcp14">MUST NOT</span> override the identity established by mutual TLS unless protected and authorized by another mechanism.<a href="#section-5.4-1" class="pilcrow">¶</a></p>
+<p id="section-5.4-1">Authorization decisions based on workload identity <span class="bcp14">MUST</span> be made using the authenticated identity obtained from the validated certificate, not from unauthenticated application-layer metadata such as HTTP headers. Application-layer identity assertions can be useful for logging or context, but they <span class="bcp14">MUST NOT</span> override the identity established by mutual TLS unless protected and authorized by another mechanism.<a href="#section-5.4-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
