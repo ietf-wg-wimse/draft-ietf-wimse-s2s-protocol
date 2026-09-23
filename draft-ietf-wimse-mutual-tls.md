@@ -81,6 +81,8 @@ Workload Identity Certificates used by TLS servers SHOULD have the `id-kp-server
 
 A WIMSE server intended to be accessed using a DNS hostname SHOULD present a certificate containing a matching DNS Subject Alternative Name (DNS-ID). A WIMSE client connecting to a server using a DNS hostname MUST perform standard TLS server identity validation as specified in {{Section 6.3 of !TLS-IDENTITY=RFC9525}}.
 
+When DNS hostname validation is required, the client MUST reject the connection if the server's certificate does not contain a matching DNS-ID, even if Workload Identifier validation succeeds.
+
 In deployments that use Workload Identity Certificates, successful DNS hostname validation authenticates the server endpoint, while the Workload Identifier provides an additional identity that can be used for workload-specific authorization and policy decisions.
 
 Some deployments may not use DNS names for server discovery. In such cases, the client MUST be configured with sufficient information to determine the expected Workload Identifier of the server and MUST validate the Workload Identifier in the server's certificate against that expectation before accepting the connection.
