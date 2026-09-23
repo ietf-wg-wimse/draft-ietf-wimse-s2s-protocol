@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments                 j Salowey
 Internet-Draft                                        Palo Alto Networks
 Intended status: Standards Track                            Y. Rosomakho
-Expires: 26 March 2027                                           Zscaler
-                                                       22 September 2026
+Expires: 27 March 2027                                           Zscaler
+                                                       23 September 2026
 
 
                 Workload Authentication Using Mutual TLS
@@ -53,7 +53,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 March 2027.
+   This Internet-Draft will expire on 27 March 2027.
 
 Copyright Notice
 
@@ -142,8 +142,9 @@ Table of Contents
    server and client side of the connections.  When validating a
    Workload Identity Certificate, the relying party MUST use the trust
    anchors configured for the trust domain in the workload identity to
-   validate the peer's certificate.  Other PKIX [INET-X509-PROFILE] path
-   validation rules apply.  Workloads acting as TLS clients and servers
+   validate the peer's certificate.  The relying party MUST perform
+   certification path validation in accordance with Section 6 of
+   [INET-X509-PROFILE].  Workloads acting as TLS clients and servers
    MUST validate that the trust domain portion of the Workload Identity
    Certificate matches the expected trust domain for the other side of
    the connection.
