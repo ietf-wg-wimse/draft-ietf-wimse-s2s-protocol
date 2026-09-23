@@ -103,12 +103,12 @@ Table of Contents
 
    The use of TLS for authentication is widely deployed, however it may
    not be applicable to all environments.  For example, some deployments
-   may lack the PKI infrastructure necessary to manage certificates or
-   inter-service communication consists of multiple separate TLS hops.
-   For these cases, other options based on Workload Identity Tokens
-   (WIT) as defined in Section 5 of [WIMSE-CREDS] may be more
-   appropriate since they are not based on X.509 certificates and are
-   communicated at the application layer rather than the transport
+   may lack the Public Key Infrastructure (PKI) necessary to manage
+   certificates or inter-service communication consists of multiple
+   separate TLS hops.  For these cases, other options based on Workload
+   Identity Tokens (WIT) as defined in Section 5 of [WIMSE-CREDS] may be
+   more appropriate since they are not based on X.509 certificates and
+   are communicated at the application layer rather than the transport
    layer.
 
 1.1.  Deployment Architecture and Message Flow
