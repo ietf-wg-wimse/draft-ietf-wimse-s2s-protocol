@@ -118,7 +118,10 @@ Table of Contents
 
 2.  Conventions and Definitions
 
-   All terminology in this document follows [WIMSE-ARCH].
+   This document uses the terminology defined in [WIMSE-ARCH].  The
+   terms "Workload Identifier" and "trust domain" are defined in
+   Section 3 of [WIMSE-ID], and "Workload Identity Certificate" is
+   defined in Section 6.1 of [WIMSE-CREDS].
 
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
@@ -340,6 +343,12 @@ Table of Contents
               ietf-wimse-workload-creds-02, 2 July 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
               workload-creds-02>.
+
+   [WIMSE-ID] Rosomakho, Y. and J. A. Salowey, "Workload Identifier",
+              Work in Progress, Internet-Draft, draft-ietf-wimse-
+              identifier-03, 6 July 2026,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
+              identifier-03>.
 
 6.2.  Informative References
 
