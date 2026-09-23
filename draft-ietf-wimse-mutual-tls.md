@@ -83,7 +83,7 @@ A WIMSE server intended to be accessed using a DNS hostname SHOULD present a cer
 
 In deployments that use Workload Identity Certificates, successful DNS hostname validation authenticates the server endpoint, while the Workload Identifier provides an additional identity that can be used for workload-specific authorization and policy decisions.
 
-Some deployments may not use DNS names for server discovery. In such cases, the client MUST be configured with sufficient information to determine the expected workload identity of the server and MUST validate that identity before accepting the connection.
+Some deployments may not use DNS names for server discovery. In such cases, the client MUST be configured with sufficient information to determine the expected Workload Identifier of the server and MUST validate the Workload Identifier in the server's certificate against that expectation before accepting the connection.
 
 The host portion of the Workload Identifier is NOT treated as a hostname as specified in {{Section 6.4 of TLS-IDENTITY}}, but rather as a trust domain. The server identity is encoded in the path portion of the Workload Identifier in a deployment-specific way.
 
