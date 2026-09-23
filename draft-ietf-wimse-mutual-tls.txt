@@ -186,7 +186,7 @@ Table of Contents
    that expectation before accepting the connection.
 
    The host portion of the Workload Identifier is NOT treated as a
-   hostname as specified in Section 6.4 of [TLS-IDENTITY], but rather as
+   hostname as specified in Section 6.3 of [TLS-IDENTITY], but rather as
    a trust domain.  The server identity is encoded in the path portion
    of the Workload Identifier in a deployment-specific way.
 
