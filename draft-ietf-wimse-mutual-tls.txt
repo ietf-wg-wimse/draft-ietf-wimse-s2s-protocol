@@ -81,9 +81,14 @@ Table of Contents
      3.3.  Client Authorization Using the Workload Identity
    4.  IANA Considerations
    5.  Security Considerations
-   6.  References
-     6.1.  Normative References
-     6.2.  Informative References
+     5.1.  Certificate and Identity Validation
+     5.2.  Certificate and Private Key Management
+     5.3.  TLS Termination at Intermediaries
+     5.4.  Application-Layer Identity Assertions
+   6.  Privacy Considerations
+   7.  References
+     7.1.  Normative References
+     7.2.  Informative References
    Appendix A.  Document History
      A.1.  draft-ietf-wimse-mutual-tls-03
      A.2.  draft-ietf-wimse-mutual-tls-02
@@ -223,6 +228,8 @@ Table of Contents
 
 5.  Security Considerations
 
+5.1.  Certificate and Identity Validation
+
    This document relies on the security properties of TLS [TLS], PKIX
    path validation [INET-X509-PROFILE], and Workload Identity
    Certificate validation as described in Section 6.1 of [WIMSE-CREDS].
@@ -260,6 +267,8 @@ Table of Contents
    authenticated workload is authorized for the requested action can
    allow unintended workloads to gain access.
 
+5.2.  Certificate and Private Key Management
+
    Workload Identity Certificates are often issued to dynamic or short-
    lived workloads.  Deployments SHOULD use certificate lifetimes that
    are appropriate for the workload environment and SHOULD provide
@@ -275,6 +284,8 @@ Table of Contents
    in the workload runtime environment or a dedicated key protection
    mechanism, rather than distributed over the network.
 
+5.3.  TLS Termination at Intermediaries
+
    This document specifies authentication at the TLS layer.  If
    application traffic traverses intermediaries, gateways, service
    meshes, or other middleboxes that terminate and re-establish TLS, the
@@ -285,14 +296,9 @@ Table of Contents
    delegated entity.  Where end-to-end workload authentication context
    is required across such boundaries, deployments SHOULD use an
    application-layer WIMSE authentication mechanism in addition to TLS-
-   layer server authentication.
+   layer server authentication.=======
 
-   Client certificate authentication exposes the client workload
-   identity to the TLS server during the handshake.  Deployments should
-   consider whether disclosure of Workload Identifiers to servers,
-   intermediaries, or logs is acceptable for their threat model.
-   Workload Identifiers included in certificates and audit records
-   should avoid embedding unnecessary sensitive information.
+5.4.  Application-Layer Identity Assertions
 
    Authorization decisions based on workload identity need to be made
    using the authenticated identity obtained from the validated
@@ -302,9 +308,18 @@ Table of Contents
    established by mutual TLS unless protected and authorized by another
    mechanism.
 
-6.  References
+6.  Privacy Considerations
 
-6.1.  Normative References
+   Client certificate authentication exposes the client workload
+   identity to the TLS server during the handshake.  Deployments should
+   consider whether disclosure of Workload Identifiers to servers,
+   intermediaries, or logs is acceptable for their threat model.
+   Workload Identifiers included in certificates and audit records
+   should avoid embedding unnecessary sensitive information.
+
+7.  References
+
+7.1.  Normative References
 
    [INET-X509-PROFILE]
               Cooper, D., Santesson, S., Farrell, S., Boeyen, S.,
@@ -353,7 +368,7 @@ Table of Contents
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
               identifier-03>.
 
-6.2.  Informative References
+7.2.  Informative References
 
    [WIMSE-ARCH]
               Salowey, J. A., Rosomakho, Y., and H. Tschofenig,
