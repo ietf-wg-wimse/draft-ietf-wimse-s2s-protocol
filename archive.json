@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-09-22T03:25:04.947922+00:00",
+  "timestamp": "2026-09-24T03:15:02.892712+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -5264,10 +5264,11 @@
       "id": "I_kwDOLJmm788AAAABRaLt1Q",
       "title": "Move away from `eddsa` alg identifier",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/315",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
+        "arndt-s",
         "bc-pi"
       ],
       "labels": [
@@ -5276,8 +5277,8 @@
       ],
       "body": "See https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/312#issuecomment-5666833596 for context",
       "createdAt": "2026-09-15T14:28:07Z",
-      "updatedAt": "2026-09-15T14:29:23Z",
-      "closedAt": null,
+      "updatedAt": "2026-09-22T14:33:09Z",
+      "closedAt": "2026-09-22T14:33:09Z",
       "comments": []
     },
     {
@@ -5285,7 +5286,7 @@
       "id": "I_kwDOLJmm788AAAABSRFL2A",
       "title": "Clarify PKIX path validation rules",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/317",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -5294,8 +5295,8 @@
       ],
       "body": "From [Flemming Andreasen](https://mailarchive.ietf.org/arch/msg/wimse/uwVIhsC5v7LcXsxx_BU0pEsIZd4/):\n\nSection 3.2 is vague in referencing \"Other PKIX path validation rules apply\"",
       "createdAt": "2026-09-20T22:21:19Z",
-      "updatedAt": "2026-09-20T22:26:50Z",
-      "closedAt": null,
+      "updatedAt": "2026-09-23T19:18:16Z",
+      "closedAt": "2026-09-23T19:18:16Z",
       "comments": [
         {
           "author": "yaroslavros",
@@ -5311,7 +5312,7 @@
       "id": "I_kwDOLJmm788AAAABSRFZJw",
       "title": "Server does not know which method the client used to connect",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/318",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -5320,8 +5321,8 @@
       ],
       "body": "From [Flemming Andreasen](https://mailarchive.ietf.org/arch/msg/wimse/uwVIhsC5v7LcXsxx_BU0pEsIZd4/):\n\nSection 3.2.1 discusses the case where \"If a WIMSE client connects to a server using a DNS hostname,\". How would the server know which method the client used to connect to it ? Overall, the paragraph needs rephrasing",
       "createdAt": "2026-09-20T22:22:03Z",
-      "updatedAt": "2026-09-20T22:22:03Z",
-      "closedAt": null,
+      "updatedAt": "2026-09-23T19:18:20Z",
+      "closedAt": "2026-09-23T19:18:20Z",
       "comments": []
     },
     {
@@ -5329,7 +5330,7 @@
       "id": "I_kwDOLJmm788AAAABSRFo0Q",
       "title": "workload identity vs workload identifier",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/319",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -5338,16 +5339,24 @@
       ],
       "body": "From [Flemming Andreasen](https://mailarchive.ietf.org/arch/msg/wimse/uwVIhsC5v7LcXsxx_BU0pEsIZd4/):\n\nSection 3.2.1, 3rd paragraph says: \"In such cases, the client MUST be configured with sufficient information to determine the expected workload identity of the server and MUST validate that identity before accepting the connection\". Is the use of the term \"workload identity\" instead of \"workload identifier\" deliberate and if so is it meant to allow for other (unspecified) methods ? In either case, this needs further elaboration.",
       "createdAt": "2026-09-20T22:22:55Z",
-      "updatedAt": "2026-09-20T22:22:55Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2026-09-23T19:19:44Z",
+      "closedAt": "2026-09-23T19:19:44Z",
+      "comments": [
+        {
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Resolved in https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/348",
+          "createdAt": "2026-09-23T19:19:44Z",
+          "updatedAt": "2026-09-23T19:19:44Z"
+        }
+      ]
     },
     {
       "number": 320,
       "id": "I_kwDOLJmm788AAAABSRF-Ig",
       "title": "Article missing",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/320",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -5356,8 +5365,8 @@
       ],
       "body": "From [Pieter Kasselman](https://mailarchive.ietf.org/arch/msg/wimse/DmyNZvgfrVXE9m3lxON2kJIrheM/):\n\nAbstract: Editorial - \u201cThis document profiles a workload\nauthentication based on X.509 workload identity certificates\" - >\n\"This document profiles workload authentication based on X.509\nworkload identity certificates\".",
       "createdAt": "2026-09-20T22:24:02Z",
-      "updatedAt": "2026-09-20T22:24:02Z",
-      "closedAt": null,
+      "updatedAt": "2026-09-23T19:20:50Z",
+      "closedAt": "2026-09-23T19:20:50Z",
       "comments": []
     },
     {
@@ -5365,7 +5374,7 @@
       "id": "I_kwDOLJmm788AAAABSRGGgQ",
       "title": "Protection is vague",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/321",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -5374,8 +5383,8 @@
       ],
       "body": "From [Pieter Kasselman](https://mailarchive.ietf.org/arch/msg/wimse/DmyNZvgfrVXE9m3lxON2kJIrheM/):\n\nSection 1: The draft uses \u201cprotection\u201d in several places. It is a\nbit vague since and perhaps in Section 1 and Section 3.2 (\u201dSHOULD use\nan application-layer WIMSE protection mechanism\u201d) the term\nauthentication mechanism may be more appropriate?\n",
       "createdAt": "2026-09-20T22:24:31Z",
-      "updatedAt": "2026-09-20T22:24:31Z",
-      "closedAt": null,
+      "updatedAt": "2026-09-23T19:20:54Z",
+      "closedAt": "2026-09-23T19:20:54Z",
       "comments": []
     },
     {
@@ -5383,7 +5392,7 @@
       "id": "I_kwDOLJmm788AAAABSRGUZQ",
       "title": "Expand PKI",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/322",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -5392,8 +5401,8 @@
       ],
       "body": "From [Pieter Kasselman](https://mailarchive.ietf.org/arch/msg/wimse/DmyNZvgfrVXE9m3lxON2kJIrheM/):\n\nSection 1: Editorial \u201csome deployments may lack the PKI\ninfrastructure necessary\u201d unpacks into publick key infrastructure\ninfrastructure. Consider alternative wording like \u201csome deployments\nmay lack PKI\u201d or \u201csome deployments may lack the Public Key\nInfrastructure (PKI) necessary\u201d.\n",
       "createdAt": "2026-09-20T22:25:19Z",
-      "updatedAt": "2026-09-20T22:25:19Z",
-      "closedAt": null,
+      "updatedAt": "2026-09-23T19:20:56Z",
+      "closedAt": "2026-09-23T19:20:56Z",
       "comments": []
     },
     {
@@ -5401,7 +5410,7 @@
       "id": "I_kwDOLJmm788AAAABSRGeTQ",
       "title": "Specific version of TLS required?",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/323",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -5410,8 +5419,8 @@
       ],
       "body": "From [Pieter Kasselman](https://mailarchive.ietf.org/arch/msg/wimse/DmyNZvgfrVXE9m3lxON2kJIrheM/):\n\nSection 3: Is there a specific version of TLS that should be used (1.2, 1.3)?",
       "createdAt": "2026-09-20T22:25:55Z",
-      "updatedAt": "2026-09-21T23:09:09Z",
-      "closedAt": null,
+      "updatedAt": "2026-09-23T19:20:22Z",
+      "closedAt": "2026-09-23T19:20:22Z",
       "comments": [
         {
           "author": "yaroslavros",
@@ -5419,6 +5428,13 @@
           "body": "I don't believe this is extensively handled by TLS and UTA. Since we are not changing anything in TLS, I don't think we need to say anything about versions.\n\n@jsalowey what do you think?",
           "createdAt": "2026-09-21T23:09:09Z",
           "updatedAt": "2026-09-21T23:09:09Z"
+        },
+        {
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Since we are not changing TLS or introducing a new protocol, we don't need to have an opinion on TLS version. Reference to the latest TLS should be enough.",
+          "createdAt": "2026-09-23T19:20:22Z",
+          "updatedAt": "2026-09-23T19:20:22Z"
         }
       ]
     },
@@ -5427,7 +5443,7 @@
       "id": "I_kwDOLJmm788AAAABSRG_ew",
       "title": "Referencing the workload identifier draft of the workload crdentials draft",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/324",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -5436,8 +5452,8 @@
       ],
       "body": "From [Pieter Kasselman](https://mailarchive.ietf.org/arch/msg/wimse/DmyNZvgfrVXE9m3lxON2kJIrheM/):\n\nSection 3.2: This section references terminology defined in the\nWorkload Identifier Draft. consider referencing the workload\nidentifier draft of the workload crdentials draft (which in turn\nreference the workload identifier draft). Alternatively consider\ndefining these terms earlier in the document by referencing the\nworkload identifier and workload credentials drafts.",
       "createdAt": "2026-09-20T22:27:55Z",
-      "updatedAt": "2026-09-20T22:27:55Z",
-      "closedAt": null,
+      "updatedAt": "2026-09-23T19:20:58Z",
+      "closedAt": "2026-09-23T19:20:58Z",
       "comments": []
     },
     {
@@ -5445,7 +5461,7 @@
       "id": "I_kwDOLJmm788AAAABSRHICw",
       "title": "Check reference to RFC 9525",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/325",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -5454,8 +5470,8 @@
       ],
       "body": "From [Pieter Kasselman](https://mailarchive.ietf.org/arch/msg/wimse/DmyNZvgfrVXE9m3lxON2kJIrheM/):\n\nSection 3.2: Double check if Section 6.4 is the correct section to\nreference in RFC 9525 (see \u201cThe host portion of the workload\nidentifier is NOT treated as a hostname as specified in Section 6.4 of\n`[TLS-IDENTITY]`, but rather as a trust domain.\u201d",
       "createdAt": "2026-09-20T22:28:28Z",
-      "updatedAt": "2026-09-20T22:28:28Z",
-      "closedAt": null,
+      "updatedAt": "2026-09-23T19:21:17Z",
+      "closedAt": "2026-09-23T19:21:17Z",
       "comments": []
     },
     {
@@ -5463,7 +5479,7 @@
       "id": "I_kwDOLJmm788AAAABSRHRjA",
       "title": "Multiple SubjectAltName",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/326",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -5472,8 +5488,8 @@
       ],
       "body": "From [Pieter Kasselman](https://mailarchive.ietf.org/arch/msg/wimse/DmyNZvgfrVXE9m3lxON2kJIrheM/):\n\nSection 3.3: What is the expected behaviour if there is more than\none SubjectAltName (as allowed for by the workload identity\ncredentials specification - which SubjectAltName should be used?)",
       "createdAt": "2026-09-20T22:29:03Z",
-      "updatedAt": "2026-09-20T22:29:03Z",
-      "closedAt": null,
+      "updatedAt": "2026-09-23T19:21:20Z",
+      "closedAt": "2026-09-23T19:21:20Z",
       "comments": []
     },
     {
@@ -5481,7 +5497,7 @@
       "id": "I_kwDOLJmm788AAAABSRHZ0w",
       "title": "Break the security considerations",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/327",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -5490,8 +5506,8 @@
       ],
       "body": "From [Pieter Kasselman](https://mailarchive.ietf.org/arch/msg/wimse/DmyNZvgfrVXE9m3lxON2kJIrheM/):\n\nSection 5: Editorial suggestion. The \u201cSecurity Considerations\u201d is\nvery long and covers several topics. To increase readability for\nimplementors, consider breaking the security considerations into\nmultiple paragraphs/segments with their own headings.",
       "createdAt": "2026-09-20T22:29:34Z",
-      "updatedAt": "2026-09-20T22:29:34Z",
-      "closedAt": null,
+      "updatedAt": "2026-09-23T19:21:22Z",
+      "closedAt": "2026-09-23T19:21:22Z",
       "comments": []
     },
     {
@@ -5499,7 +5515,7 @@
       "id": "I_kwDOLJmm788AAAABSRHqWQ",
       "title": "EKU is optional",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/328",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -5508,8 +5524,8 @@
       ],
       "body": "From [Pieter Kasselman](https://mailarchive.ietf.org/arch/msg/wimse/DmyNZvgfrVXE9m3lxON2kJIrheM/):\n\nSection 5: Propose modification of: \u201cImplementations MUST validate\nthe peer certificate chain, the applicable extended key usage, and the\nworkload identifier according to the rules in this document before\nusing the authenticated identity for authorization decisions.\u201d Since\nthe drafft allows for certificates with no extended key usage, the\nfollowing text may be clearer: \u201cImplementations MUST validate the peer\ncertificate chain, the applicable extended key usage (if present), and\nthe workload identifier according to the rules in this document before\nusing the authenticated identity for authorization decisions.",
       "createdAt": "2026-09-20T22:30:34Z",
-      "updatedAt": "2026-09-20T22:30:34Z",
-      "closedAt": null,
+      "updatedAt": "2026-09-23T19:21:24Z",
+      "closedAt": "2026-09-23T19:21:24Z",
       "comments": []
     },
     {
@@ -5517,7 +5533,7 @@
       "id": "I_kwDOLJmm788AAAABSRH54w",
       "title": "WIMSE credentials draft imposes constraints",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/329",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -5526,8 +5542,8 @@
       ],
       "body": "From [Pieter Kasselman](https://mailarchive.ietf.org/arch/msg/wimse/DmyNZvgfrVXE9m3lxON2kJIrheM/):\n\nSection 5: Proposed change to \u201cThis specification does not make\nany other requirements beyond `[INET-X509-PROFILE]` on the contents of\nWorkload Identity Certificates or on the certification authorities\nthat issue workload certificates.\u201d Since the WIMSE credentials draft\nimpose some specific constraints aroubnd SubjectAltNames, consider\nadding \u201cThis specification does not make any other requirements beyond\n`[INET-X509-PROFILE]` and [WIMSE-CREDSon the contents of Workload\nIdentity Certificates or on the certification authorities that issue\nworkload certificates.\u201d",
       "createdAt": "2026-09-20T22:31:29Z",
-      "updatedAt": "2026-09-20T22:31:29Z",
-      "closedAt": null,
+      "updatedAt": "2026-09-23T19:21:26Z",
+      "closedAt": "2026-09-23T19:21:26Z",
       "comments": []
     },
     {
@@ -5535,7 +5551,7 @@
       "id": "I_kwDOLJmm788AAAABSRICJg",
       "title": "Normative language",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/330",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -5544,8 +5560,8 @@
       ],
       "body": "From [Pieter Kasselman](https://mailarchive.ietf.org/arch/msg/wimse/DmyNZvgfrVXE9m3lxON2kJIrheM/):\n\nSection 5: Is normative language (MAY/SHOULD/MUST) needed instead\nof \u201cneed to be\u201d in \"Authorization decisions based on workload identity\nneed to be made using the authenticated identity\".\n",
       "createdAt": "2026-09-20T22:31:59Z",
-      "updatedAt": "2026-09-20T22:31:59Z",
-      "closedAt": null,
+      "updatedAt": "2026-09-23T19:21:28Z",
+      "closedAt": "2026-09-23T19:21:28Z",
       "comments": []
     },
     {
@@ -5553,7 +5569,7 @@
       "id": "I_kwDOLJmm788AAAABSRIK8g",
       "title": "Privacy vs security considerations",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/331",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -5562,8 +5578,8 @@
       ],
       "body": "From [Pieter Kasselman](https://mailarchive.ietf.org/arch/msg/wimse/DmyNZvgfrVXE9m3lxON2kJIrheM/):\n\nSection 5: Privacy Considerations. The paragraph starting with\n\u201cClient certificate authentication exposes the client workload\nidentity to the TLS server during the handshake.\u201d appears to be a\nprivacy rather than a security cosnideration. Consider moving it to a\nnew section in the document.",
       "createdAt": "2026-09-20T22:32:29Z",
-      "updatedAt": "2026-09-20T22:32:29Z",
-      "closedAt": null,
+      "updatedAt": "2026-09-23T19:21:30Z",
+      "closedAt": "2026-09-23T19:21:30Z",
       "comments": []
     },
     {
@@ -5571,7 +5587,7 @@
       "id": "I_kwDOLJmm788AAAABSRISpw",
       "title": "Update TLS reference",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/332",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -5580,8 +5596,8 @@
       ],
       "body": "From [Pieter Kasselman](https://mailarchive.ietf.org/arch/msg/wimse/DmyNZvgfrVXE9m3lxON2kJIrheM/):\n\nReferences: Update [TLS] to point to RFC 9846",
       "createdAt": "2026-09-20T22:32:56Z",
-      "updatedAt": "2026-09-20T22:32:56Z",
-      "closedAt": null,
+      "updatedAt": "2026-09-23T19:21:32Z",
+      "closedAt": "2026-09-23T19:21:32Z",
       "comments": []
     },
     {
@@ -5589,7 +5605,7 @@
       "id": "I_kwDOLJmm788AAAABSRIaKg",
       "title": "Duplicate reference",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/333",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -5598,8 +5614,8 @@
       ],
       "body": "From [Pieter Kasselman](https://mailarchive.ietf.org/arch/msg/wimse/DmyNZvgfrVXE9m3lxON2kJIrheM/):\n\nReferences: `[INET-X509-PROFILE] and [RFC5280] point to the same\nspec. Use only one.`",
       "createdAt": "2026-09-20T22:33:23Z",
-      "updatedAt": "2026-09-20T22:33:23Z",
-      "closedAt": null,
+      "updatedAt": "2026-09-23T19:21:33Z",
+      "closedAt": "2026-09-23T19:21:33Z",
       "comments": []
     },
     {
@@ -5627,7 +5643,7 @@
       "id": "I_kwDOLJmm788AAAABSRJHcg",
       "title": "Trust anchor selection is driven by the unvalidated certificate",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/335",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -5636,8 +5652,8 @@
       ],
       "body": "From [Karthik Rampalli](https://mailarchive.ietf.org/arch/msg/wimse/iNHuJIsNAIHlrnsmNQsHRvgJ3LQ/):\n\nTrust anchor selection is driven by the unvalidated certificate. Section\n3.2 says \"the relying party MUST use the trust anchors configured for the\ntrust domain in the workload identity to validate the peer's certificate.\"\nThat trust domain is read out of the peer certificate before the\ncertificate has been validated, so the presented certificate selects which\nanchor set judges it. The next sentence (match against the expected trust\ndomain) covers the single-domain case, but a relying party that trusts\nseveral domains has several expected domains. Concrete case: a relying\nparty trusts domains A and B with separate anchor sets; a certificate\nchains to B's anchors but carries an identifier under A. The current text\ndoes not require rejecting it.\n\nSuggest normative text in 3.2: the trust-domain-to-anchor-set mapping MUST\ncome from local configuration; the trust domain of the presented identifier\nMUST equal the trust domain whose anchors validated the chain; anything\nelse is rejected. Section 5 paragraph 2 already points at this (\"the trust\nanchor used to validate the certificate\"); 3.2 should state the check and\nits ordering. This is the cross-domain twin of Tom's item 1: anchor\ncompromise and anchor mis-binding are two halves of the same problem.\n\nThis also leaves Section 4.3's issuer uniqueness requirement ill-defined\n(unique under which equivalence relation?) and weakens Section 7.6: a party\nwho can obtain an equivalent-but-differently-encoded identifier can land on\neither side of an allow or deny rule depending on the consumer's\nnormalization behavior.\n\nSPIFFE closed this by restricting syntax (lowercase trust domain,\nrestricted path character set, no percent-encoding, no dot segments) so\nbyte-for-byte comparison is safe. I suggest the wimse scheme do the same:\ndefine a canonical form in Section 4.4 (lowercase scheme and authority;\nforbid percent-encoding, dot segments, and empty segments), state that\ncomparison is byte equality of that form, and state that identifiers under\nother schemes are compared per their own specifications and never across\nschemes.",
       "createdAt": "2026-09-20T22:35:56Z",
-      "updatedAt": "2026-09-21T23:49:05Z",
-      "closedAt": null,
+      "updatedAt": "2026-09-23T19:21:54Z",
+      "closedAt": "2026-09-23T19:21:54Z",
       "comments": [
         {
           "author": "yaroslavros",
@@ -5653,7 +5669,7 @@
       "id": "I_kwDOLJmm788AAAABSRJQfg",
       "title": "Cross-issuer uniqueness within a trust domain",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/336",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -5662,8 +5678,8 @@
       ],
       "body": "From [Karthik Rampalli](https://mailarchive.ietf.org/arch/msg/wimse/iNHuJIsNAIHlrnsmNQsHRvgJ3LQ/):\n\nSection 4.3 says \"Issuers\nwithin a trust domain MUST ensure uniqueness of all Workload Identifiers\nthey assign,\" and Section 4.2 anticipates multiple issuers per trust\ndomain. As written, two issuers can each satisfy the requirement\nindividually while assigning the same identifier to different workloads.\nSuggest rewording so uniqueness holds across all issuers of the trust\ndomain, with the trust domain responsible for coordination.",
       "createdAt": "2026-09-20T22:36:28Z",
-      "updatedAt": "2026-09-21T23:57:50Z",
-      "closedAt": null,
+      "updatedAt": "2026-09-23T19:22:00Z",
+      "closedAt": "2026-09-23T19:22:00Z",
       "comments": [
         {
           "author": "yaroslavros",
@@ -5705,7 +5721,7 @@
       "id": "I_kwDOLJmm788AAAABSRK0Gw",
       "title": "Allow alternative certificate types",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/338",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -5714,8 +5730,8 @@
       ],
       "body": "From [Lijun Liao](https://mailarchive.ietf.org/arch/msg/wimse/7jQ92xpmqmeu-j_6_L0HNRsi7Cs/):\n\nSection 3.1: Workload Identity Certificate Validation\n\nCurrently, only X.509 certificates are permitted. Please consider relaxing this restriction to allow alternative certificate types. TLS peers can negotiate the certificate type using the client_certificate_type and server_certificate_type extensions in the TLS ClientHello and ServerHello messages.\nOne example is the lightweight C509 certificate format defined in [C509Cert], which is being developed in the IETF COSE Working Group.",
       "createdAt": "2026-09-20T22:42:21Z",
-      "updatedAt": "2026-09-20T22:44:05Z",
-      "closedAt": null,
+      "updatedAt": "2026-09-23T19:22:06Z",
+      "closedAt": "2026-09-23T19:22:06Z",
       "comments": [
         {
           "author": "yaroslavros",
@@ -5731,7 +5747,7 @@
       "id": "I_kwDOLJmm788AAAABSRLrzg",
       "title": "Server certificate without a DNS name SAN",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/339",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -5740,8 +5756,8 @@
       ],
       "body": "From [Lijun Liao](https://mailarchive.ietf.org/arch/msg/wimse/7jQ92xpmqmeu-j_6_L0HNRsi7Cs/):\n\nSection 3.2: Workload Identity Certificate Validation\nWhat is the expected behavior if the server certificate does not contain a DNS name in the Subject Alternative Name (SAN) extension? In particular, how should the current \"SHOULD\" requirement be interpreted in this case?",
       "createdAt": "2026-09-20T22:45:12Z",
-      "updatedAt": "2026-09-20T22:52:43Z",
-      "closedAt": null,
+      "updatedAt": "2026-09-23T19:20:32Z",
+      "closedAt": "2026-09-23T19:20:32Z",
       "comments": [
         {
           "author": "yaroslavros",
@@ -5757,7 +5773,7 @@
       "id": "I_kwDOLJmm788AAAABSRL8NA",
       "title": "Certificate requirements when the client connects using an IP address",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/340",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -5766,8 +5782,8 @@
       ],
       "body": "From [Lijun Liao](https://mailarchive.ietf.org/arch/msg/wimse/7jQ92xpmqmeu-j_6_L0HNRsi7Cs/):\n\nSection 3.2: Workload Identity Certificate Validation\n\nWhat are the certificate requirements when the client connects directly to the server using an IP address rather than a DNS name?\n",
       "createdAt": "2026-09-20T22:46:11Z",
-      "updatedAt": "2026-09-22T00:02:47Z",
-      "closedAt": null,
+      "updatedAt": "2026-09-23T19:22:09Z",
+      "closedAt": "2026-09-23T19:22:09Z",
       "comments": []
     },
     {
@@ -5775,7 +5791,7 @@
       "id": "I_kwDOLJmm788AAAABSRMLJw",
       "title": "EKU requirement",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/341",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -5786,8 +5802,8 @@
       ],
       "body": "From [Lijun Liao](https://mailarchive.ietf.org/arch/msg/wimse/7jQ92xpmqmeu-j_6_L0HNRsi7Cs/):\n\nSection 3.2: Workload Identity Certificate Validation\nThe requirement for the Extended Key Usage (EKU) values id-kp-serverAuth and id-kp-clientAuth should be strengthened from \"SHOULD\" to \"MUST\".",
       "createdAt": "2026-09-20T22:46:46Z",
-      "updatedAt": "2026-09-22T00:09:16Z",
-      "closedAt": null,
+      "updatedAt": "2026-09-23T19:22:15Z",
+      "closedAt": "2026-09-23T19:22:15Z",
       "comments": [
         {
           "author": "yaroslavros",
@@ -5803,7 +5819,7 @@
       "id": "I_kwDOLJmm788AAAABSRMZjQ",
       "title": "Certificate status validation",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/342",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -5812,8 +5828,8 @@
       ],
       "body": "From [Lijun Liao](https://mailarchive.ietf.org/arch/msg/wimse/7jQ92xpmqmeu-j_6_L0HNRsi7Cs/):\n\nSection 3.2: Workload Identity Certificate Validation\nHow should certificate status validation (e.g., CRLs or OCSP) be handled?",
       "createdAt": "2026-09-20T22:47:22Z",
-      "updatedAt": "2026-09-20T22:47:22Z",
-      "closedAt": null,
+      "updatedAt": "2026-09-23T19:22:18Z",
+      "closedAt": "2026-09-23T19:22:18Z",
       "comments": []
     },
     {
@@ -5821,7 +5837,7 @@
       "id": "I_kwDOLJmm788AAAABSRMxiw",
       "title": "Trust-anchor lifetime/rotation",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/343",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -5830,8 +5846,8 @@
       ],
       "body": "From [Toshiyuki Sato](https://mailarchive.ietf.org/arch/msg/wimse/faWkmRjz989bBWWPvx7cf0asGUU/):\n\nTrust-anchor lifetime/rotation is not addressed. \u00a75 gives SHOULD-level\nguidance on leaf certificate lifetimes and revocation, but says nothing\nabout CA/trust-anchor lifetime or rotation. A compromised anchor can\nvalidate forged credentials for as long as the anchor itself is trusted,\nindependent of how short-lived the leaf credentials are. Recommend a\nparagraph naming this explicitly, even if the resolution is \"out of scope,\nsee [WIMSE-CREDS]\" \u2014 right now it's simply unaddressed rather than scoped\nout.",
       "createdAt": "2026-09-20T22:48:48Z",
-      "updatedAt": "2026-09-20T22:48:48Z",
-      "closedAt": null,
+      "updatedAt": "2026-09-23T19:22:20Z",
+      "closedAt": "2026-09-23T19:22:20Z",
       "comments": []
     },
     {
@@ -5839,7 +5855,7 @@
       "id": "I_kwDOLJmm788AAAABSRNC2w",
       "title": "Application-layer artifact session binding",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/344",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -5848,8 +5864,8 @@
       ],
       "body": "From [Toshiyuki Sato](https://mailarchive.ietf.org/arch/msg/wimse/faWkmRjz989bBWWPvx7cf0asGUU/):\n\n\u00a75's recommendation to layer \"an application-layer WIMSE protection\nmechanism in addition to TLS-layer server authentication\" (the\nintermediary/gateway case) doesn't say whether that application-layer\nartifact (presumably a WIT) needs to be bound to the mTLS session it\ntravels alongside. Without stated session binding (e.g., a TLS\nExporter-derived binding), the app-layer credential is a bearer artifact\nusable outside the mTLS context it was meant to accompany. Recommend either\nstating a binding requirement or explicitly flagging the gap as unresolved.",
       "createdAt": "2026-09-20T22:49:46Z",
-      "updatedAt": "2026-09-20T22:50:24Z",
-      "closedAt": null,
+      "updatedAt": "2026-09-23T19:22:24Z",
+      "closedAt": "2026-09-23T19:22:24Z",
       "comments": [
         {
           "author": "yaroslavros",
@@ -5865,7 +5881,7 @@
       "id": "I_kwDOLJmm788AAAABSRNXLQ",
       "title": "Denial of service",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/345",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -5874,8 +5890,8 @@
       ],
       "body": "From [Toshiyuki Sato](https://mailarchive.ietf.org/arch/msg/wimse/faWkmRjz989bBWWPvx7cf0asGUU/):\n\nDenial of service isn't discussed anywhere in \u00a75 or elsewhere. Worth\nflagging plainly: RFC 3552/BCP 72's status as Best Current Practice means\nDoS is one of the six categories every RFC's Security Considerations\nsection is already expected to address, not an optional extra layer of\nscrutiny \u2014 a draft silent on it hasn't just left a gap under-covered, it\nhasn't met a two-decade-old standing bar for what \"Security Considerations\"\nis supposed to mean. The concrete mechanism-specific angle here is\nstraightforward: PKIX chain validation is comparatively expensive and is\ntriggered on every client-certificate presentation, which is worth at least\na paragraph as a resource-exhaustion consideration.",
       "createdAt": "2026-09-20T22:51:00Z",
-      "updatedAt": "2026-09-20T22:51:43Z",
-      "closedAt": null,
+      "updatedAt": "2026-09-23T19:22:28Z",
+      "closedAt": "2026-09-23T19:22:28Z",
       "comments": [
         {
           "author": "yaroslavros",
@@ -19272,13 +19288,13 @@
       ],
       "body": "- **workload-creds (#173, #175):** Replace the mandatory access-path-to-identifier mapping API with infrastructure support for verifying that an HTTP target URI (RFC 9110 Section 7.1, without query or fragment) is intended for a workload. Document the roles of HTTP target URI (audience) vs Workload Identifier (sender) for WPT, HTTP signatures, and mTLS.\r\n- **WPT (#175):** Tie `aud` to \"Workload Identifiers and Authentication Granularity\" in workload-creds; otherwise unchanged from main.\r\n\r\nCloses #173, #175. Addresses #240.",
       "createdAt": "2026-06-19T10:29:32Z",
-      "updatedAt": "2026-09-01T14:52:00Z",
+      "updatedAt": "2026-09-22T13:42:39Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
-      "baseRefOid": "07c8a14c1c2a78d318343faff6d4027c0cb0439b",
+      "baseRefOid": "ac0f364ba46b50520181795d5dfed987ac64e28b",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-175",
-      "headRefOid": "b607001e35e45d6aeb06672f563f5acdf2401676",
+      "headRefOid": "550be6a1fb643d551266c077619dab0e16faf9f7",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -19566,6 +19582,46 @@
               "body": "needs to go to draft-ietf-wimse-workload-creds-03 - it isn't published yet.",
               "createdAt": "2026-09-01T14:51:59Z",
               "updatedAt": "2026-09-01T14:52:00Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABOqQHyA",
+          "commit": {
+            "abbreviatedOid": "c89c174"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-09-22T13:33:55Z",
+          "updatedAt": "2026-09-22T13:33:55Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "To your first point: we do not assume that the caller knows the WIMSE ID of the callee. The caller has *some* identifier of the callee (the \"external access name\"), and the fact that the request goes through is proof enough that this identifier is correct.",
+              "createdAt": "2026-09-22T13:33:55Z",
+              "updatedAt": "2026-09-22T13:33:55Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABOqWVug",
+          "commit": {
+            "abbreviatedOid": "b607001"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-09-22T13:42:38Z",
+          "updatedAt": "2026-09-22T13:42:39Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "> To your first point: we do not assume that the caller knows the WIMSE ID of the callee. The caller has some identifier of the callee (the \"external access name\"), and the fact that the request goes through is proof enough that this identifier is correct.\r\n\r\nI don't think that's written anymore in the specification though. We RECOMMEND that a workload identity certificate carries DNSSAN. If that's not the case the caller needs to know the WIMSE-ID of the callee.\r\n\r\nSee Section 6.1\r\n> When the certificate is also used for TLS server authentication, it is RECOMMENDED to include SubjectAltName extensions of type DNSName with the appropriate DNS names for clients that validate the server by host name rather than by workload identity. The certificate MAY contain SubjectAltName extensions of other types for PKIX or local policy, but only the URI SAN above is the WIMSE workload identity.",
+              "createdAt": "2026-09-22T13:42:39Z",
+              "updatedAt": "2026-09-22T13:42:39Z"
             }
           ]
         }
@@ -21277,13 +21333,13 @@
       ],
       "body": "Added security considerations for granular auth section.\r\n\r\nRelated to #272 ",
       "createdAt": "2026-08-10T13:42:14Z",
-      "updatedAt": "2026-09-01T14:27:20Z",
+      "updatedAt": "2026-09-22T13:10:30Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
-      "baseRefOid": "40b1c4161dd1971dc1ac7d5ba718a636116109ca",
+      "baseRefOid": "ac0f364ba46b50520181795d5dfed987ac64e28b",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "arndt/resolve_272",
-      "headRefOid": "f71bd1891a1a4a5d5a8909feb0705c59e40de9e0",
+      "headRefOid": "fdcb4f717bdc562c05d7c641e5dd427e618de93e",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -23480,7 +23536,7 @@
       "id": "PR_kwDOLJmm788AAAABEf4HpQ",
       "title": "Clarified PKIX path validation rules",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/346",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -23489,26 +23545,42 @@
       ],
       "body": "Addresses https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/317",
       "createdAt": "2026-09-21T22:49:31Z",
-      "updatedAt": "2026-09-21T22:49:32Z",
+      "updatedAt": "2026-09-23T15:38:20Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "ac0f364ba46b50520181795d5dfed987ac64e28b",
       "headRepository": "yaroslavros/draft-ietf-wimse-s2s-protocol",
       "headRefName": "other-pkix",
       "headRefOid": "b625bc12d5ab23936a098310623c5870e474ff3e",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-09-23T15:38:20Z",
+      "mergedAt": "2026-09-23T15:38:20Z",
+      "mergedBy": "yaroslavros",
+      "mergeCommit": {
+        "oid": "6810e100fe22ac2383b5bd76b4fc5b8df37cc61e"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABO394SQ",
+          "commit": {
+            "abbreviatedOid": "b625bc1"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-09-23T15:38:04Z",
+          "updatedAt": "2026-09-23T15:38:04Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 347,
       "id": "PR_kwDOLJmm788AAAABEf5OaA",
       "title": "Clarified DNS SaN presentation requirement",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/347",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -23517,26 +23589,42 @@
       ],
       "body": "Addresses https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/318",
       "createdAt": "2026-09-21T22:53:00Z",
-      "updatedAt": "2026-09-21T22:53:01Z",
+      "updatedAt": "2026-09-23T15:40:40Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "ac0f364ba46b50520181795d5dfed987ac64e28b",
       "headRepository": "yaroslavros/draft-ietf-wimse-s2s-protocol",
       "headRefName": "clueless-server",
       "headRefOid": "75fbfe8820ce7b3c0a44d47cb0e657f7ed58328c",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-09-23T15:40:40Z",
+      "mergedAt": "2026-09-23T15:40:40Z",
+      "mergedBy": "yaroslavros",
+      "mergeCommit": {
+        "oid": "a6b07f95acc00585cbdb61b1dfbec82f543121bc"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABO3_VAQ",
+          "commit": {
+            "abbreviatedOid": "75fbfe8"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-09-23T15:40:10Z",
+          "updatedAt": "2026-09-23T15:40:10Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 348,
       "id": "PR_kwDOLJmm788AAAABEf6NYA",
       "title": "Clarified identifier",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/348",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -23545,26 +23633,42 @@
       ],
       "body": "Addresses https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/320",
       "createdAt": "2026-09-21T22:56:00Z",
-      "updatedAt": "2026-09-21T22:56:01Z",
+      "updatedAt": "2026-09-23T15:41:23Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "ac0f364ba46b50520181795d5dfed987ac64e28b",
       "headRepository": "yaroslavros/draft-ietf-wimse-s2s-protocol",
       "headRefName": "identity-identifier",
       "headRefOid": "6e56f2e8d0e883ef3656876cd5ee79c009788a44",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-09-23T15:41:23Z",
+      "mergedAt": "2026-09-23T15:41:23Z",
+      "mergedBy": "yaroslavros",
+      "mergeCommit": {
+        "oid": "e30ecf80fcf66ff727995a6cae46c8e620a35d4a"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABO3_9hw",
+          "commit": {
+            "abbreviatedOid": "6e56f2e"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-09-23T15:41:04Z",
+          "updatedAt": "2026-09-23T15:41:04Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 349,
       "id": "PR_kwDOLJmm788AAAABEf62ew",
       "title": "Removed misplaced article",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/349",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -23573,26 +23677,42 @@
       ],
       "body": "Addresses https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/320",
       "createdAt": "2026-09-21T22:57:54Z",
-      "updatedAt": "2026-09-21T22:57:55Z",
+      "updatedAt": "2026-09-23T15:41:39Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "ac0f364ba46b50520181795d5dfed987ac64e28b",
       "headRepository": "yaroslavros/draft-ietf-wimse-s2s-protocol",
       "headRefName": "article-missing",
       "headRefOid": "c145456ff63e74049a2411d389b8245120027c90",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-09-23T15:41:39Z",
+      "mergedAt": "2026-09-23T15:41:39Z",
+      "mergedBy": "yaroslavros",
+      "mergeCommit": {
+        "oid": "4119cd58735845b7bb16370463a4bb83ecfeeeab"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABO4AOCQ",
+          "commit": {
+            "abbreviatedOid": "c145456"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-09-23T15:41:25Z",
+          "updatedAt": "2026-09-23T15:41:25Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 350,
       "id": "PR_kwDOLJmm788AAAABEf8iyQ",
       "title": "Removed vague protection",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/350",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -23601,26 +23721,42 @@
       ],
       "body": "Addresses https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/321",
       "createdAt": "2026-09-21T23:03:18Z",
-      "updatedAt": "2026-09-21T23:03:19Z",
+      "updatedAt": "2026-09-23T15:42:24Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "ac0f364ba46b50520181795d5dfed987ac64e28b",
       "headRepository": "yaroslavros/draft-ietf-wimse-s2s-protocol",
       "headRefName": "protection-vague",
       "headRefOid": "88a57f9dfd35c203665354fe9386c6f52dc55d49",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-09-23T15:42:24Z",
+      "mergedAt": "2026-09-23T15:42:23Z",
+      "mergedBy": "yaroslavros",
+      "mergeCommit": {
+        "oid": "8b64c7fe94d9c5bca695878ebb3b99065fec3808"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABO4Avkw",
+          "commit": {
+            "abbreviatedOid": "88a57f9"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-09-23T15:42:12Z",
+          "updatedAt": "2026-09-23T15:42:12Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 351,
       "id": "PR_kwDOLJmm788AAAABEf9STA",
       "title": "Expanded PKI",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/351",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -23629,26 +23765,42 @@
       ],
       "body": "Addresses https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/322",
       "createdAt": "2026-09-21T23:05:33Z",
-      "updatedAt": "2026-09-21T23:05:33Z",
+      "updatedAt": "2026-09-23T15:43:11Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "ac0f364ba46b50520181795d5dfed987ac64e28b",
       "headRepository": "yaroslavros/draft-ietf-wimse-s2s-protocol",
       "headRefName": "expand-pki",
       "headRefOid": "15c2900c4af984e5f08cde93857b3c4daa9ad944",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-09-23T15:43:11Z",
+      "mergedAt": "2026-09-23T15:43:11Z",
+      "mergedBy": "yaroslavros",
+      "mergeCommit": {
+        "oid": "2190d56faa7d590f4e7a75f069a9bffc6bea2d9b"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABO4BEyg",
+          "commit": {
+            "abbreviatedOid": "15c2900"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-09-23T15:42:37Z",
+          "updatedAt": "2026-09-23T15:42:37Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 352,
       "id": "PR_kwDOLJmm788AAAABEgAb-A",
       "title": "Clarified sources of definitions",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/352",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -23657,26 +23809,55 @@
       ],
       "body": "Addresses https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/324",
       "createdAt": "2026-09-21T23:15:35Z",
-      "updatedAt": "2026-09-21T23:15:36Z",
+      "updatedAt": "2026-09-23T15:43:47Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "ac0f364ba46b50520181795d5dfed987ac64e28b",
       "headRepository": "yaroslavros/draft-ietf-wimse-s2s-protocol",
       "headRefName": "identifier-draft",
       "headRefOid": "d16ac9b507af8a29ae68784f04515e0a83c2835e",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-09-23T15:43:47Z",
+      "mergedAt": "2026-09-23T15:43:47Z",
+      "mergedBy": "yaroslavros",
+      "mergeCommit": {
+        "oid": "39aed1057016c3ad0e1589e67ba5f39289d64c6e"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABO4BuVQ",
+          "commit": {
+            "abbreviatedOid": "d16ac9b"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-09-23T15:43:27Z",
+          "updatedAt": "2026-09-23T15:43:27Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABO4BzvQ",
+          "commit": {
+            "abbreviatedOid": "d16ac9b"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-09-23T15:43:33Z",
+          "updatedAt": "2026-09-23T15:43:33Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 353,
       "id": "PR_kwDOLJmm788AAAABEgBPEQ",
       "title": "Corrected hostname reference",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/353",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -23685,26 +23866,42 @@
       ],
       "body": "Addresses https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/325",
       "createdAt": "2026-09-21T23:18:00Z",
-      "updatedAt": "2026-09-21T23:18:01Z",
+      "updatedAt": "2026-09-23T15:44:16Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "ac0f364ba46b50520181795d5dfed987ac64e28b",
       "headRepository": "yaroslavros/draft-ietf-wimse-s2s-protocol",
       "headRefName": "9525-reference",
       "headRefOid": "3a0d2a7cefeb2c8e7d15c2e49e5a31de24b982cc",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-09-23T15:44:16Z",
+      "mergedAt": "2026-09-23T15:44:16Z",
+      "mergedBy": "yaroslavros",
+      "mergeCommit": {
+        "oid": "b7ef948ab4a04aa0cd949b143c8faee8b146c96f"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABO4CEfQ",
+          "commit": {
+            "abbreviatedOid": "3a0d2a7"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-09-23T15:43:54Z",
+          "updatedAt": "2026-09-23T15:43:54Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 354,
       "id": "PR_kwDOLJmm788AAAABEgEHoA",
       "title": "Confirm only one SAN with workload identifier is allowed",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/354",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -23713,26 +23910,42 @@
       ],
       "body": "Addresses https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/326",
       "createdAt": "2026-09-21T23:25:48Z",
-      "updatedAt": "2026-09-21T23:25:49Z",
+      "updatedAt": "2026-09-23T15:44:58Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "ac0f364ba46b50520181795d5dfed987ac64e28b",
       "headRepository": "yaroslavros/draft-ietf-wimse-s2s-protocol",
       "headRefName": "many-sans",
       "headRefOid": "eda020180a03661734257a6ad1ed2f377fc0c5ba",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-09-23T15:44:58Z",
+      "mergedAt": "2026-09-23T15:44:58Z",
+      "mergedBy": "yaroslavros",
+      "mergeCommit": {
+        "oid": "6f6e6d10ba68a7506c3b8d0782fb77f0ccf071ab"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABO4CgNg",
+          "commit": {
+            "abbreviatedOid": "eda0201"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-09-23T15:44:28Z",
+          "updatedAt": "2026-09-23T15:44:28Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 355,
       "id": "PR_kwDOLJmm788AAAABEgFxpQ",
       "title": "Structured security considerations",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/355",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -23741,26 +23954,42 @@
       ],
       "body": "Addresses https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/331 and https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/327",
       "createdAt": "2026-09-21T23:30:36Z",
-      "updatedAt": "2026-09-21T23:30:36Z",
+      "updatedAt": "2026-09-23T15:47:10Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
-      "baseRefOid": "ac0f364ba46b50520181795d5dfed987ac64e28b",
+      "baseRefOid": "6f6e6d10ba68a7506c3b8d0782fb77f0ccf071ab",
       "headRepository": "yaroslavros/draft-ietf-wimse-s2s-protocol",
       "headRefName": "break-security",
-      "headRefOid": "adea4cd51241cd827a0cbb01011c67195312ef7a",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "68ec713eb6965f6b56499035eb34268ede126610",
+      "closedAt": "2026-09-23T15:47:10Z",
+      "mergedAt": "2026-09-23T15:47:10Z",
+      "mergedBy": "yaroslavros",
+      "mergeCommit": {
+        "oid": "f8b9a961eaae372cf7c282fc15221c0428473f27"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABO4D5og",
+          "commit": {
+            "abbreviatedOid": "adea4cd"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-09-23T15:46:11Z",
+          "updatedAt": "2026-09-23T15:46:11Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 356,
       "id": "PR_kwDOLJmm788AAAABEgGayw",
       "title": "EKU may not be present",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/356",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -23769,26 +23998,42 @@
       ],
       "body": "Addresses https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/328",
       "createdAt": "2026-09-21T23:32:25Z",
-      "updatedAt": "2026-09-21T23:32:26Z",
+      "updatedAt": "2026-09-23T16:05:13Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
-      "baseRefOid": "ac0f364ba46b50520181795d5dfed987ac64e28b",
+      "baseRefOid": "3313e300b9dadd93adcae64acf3770a56fcd4105",
       "headRepository": "yaroslavros/draft-ietf-wimse-s2s-protocol",
       "headRefName": "eku-optional",
-      "headRefOid": "d3c3df9a86387f5cddbd67e4a244e6cd16af4511",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "a3c4715c3d260aa832315b1457f9d31500b36948",
+      "closedAt": "2026-09-23T16:05:13Z",
+      "mergedAt": "2026-09-23T16:05:13Z",
+      "mergedBy": "yaroslavros",
+      "mergeCommit": {
+        "oid": "4b0578c97ebe247d0901fc524d50d154e4da9435"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABO4ELMA",
+          "commit": {
+            "abbreviatedOid": "d3c3df9"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-09-23T15:46:35Z",
+          "updatedAt": "2026-09-23T15:46:35Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 357,
       "id": "PR_kwDOLJmm788AAAABEgHOpA",
       "title": "Credentials also add constraints",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/357",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -23797,26 +24042,42 @@
       ],
       "body": "Addresses https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/329",
       "createdAt": "2026-09-21T23:34:35Z",
-      "updatedAt": "2026-09-21T23:34:36Z",
+      "updatedAt": "2026-09-23T16:05:29Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "ac0f364ba46b50520181795d5dfed987ac64e28b",
       "headRepository": "yaroslavros/draft-ietf-wimse-s2s-protocol",
       "headRefName": "creds-constraints",
       "headRefOid": "89f5a18a68e4d83fd7289b7784814ddedcd0d1bf",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-09-23T16:05:29Z",
+      "mergedAt": "2026-09-23T16:05:29Z",
+      "mergedBy": "yaroslavros",
+      "mergeCommit": {
+        "oid": "3147bf8ef90ec3c7140cdbb7186bb32c49c24e07"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABO4EhtQ",
+          "commit": {
+            "abbreviatedOid": "89f5a18"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-09-23T15:47:06Z",
+          "updatedAt": "2026-09-23T15:47:06Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 358,
       "id": "PR_kwDOLJmm788AAAABEgHy5A",
       "title": "Added normative MUST",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/358",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -23825,26 +24086,42 @@
       ],
       "body": "Addresses https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/330",
       "createdAt": "2026-09-21T23:36:09Z",
-      "updatedAt": "2026-09-21T23:36:10Z",
+      "updatedAt": "2026-09-23T15:51:08Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "ac0f364ba46b50520181795d5dfed987ac64e28b",
       "headRepository": "yaroslavros/draft-ietf-wimse-s2s-protocol",
       "headRefName": "normative-language",
       "headRefOid": "041aa60bdc3acffb27d7d67951e797eff8d2629e",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-09-23T15:51:08Z",
+      "mergedAt": "2026-09-23T15:51:08Z",
+      "mergedBy": "yaroslavros",
+      "mergeCommit": {
+        "oid": "12b4e3b0b719e109be00dc1727d22d02cc94942a"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABO4E2YA",
+          "commit": {
+            "abbreviatedOid": "041aa60"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-09-23T15:47:34Z",
+          "updatedAt": "2026-09-23T15:47:34Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 359,
       "id": "PR_kwDOLJmm788AAAABEgIagA",
       "title": "Updated TLS reference",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/359",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -23853,26 +24130,42 @@
       ],
       "body": "Addresses https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/332",
       "createdAt": "2026-09-21T23:37:47Z",
-      "updatedAt": "2026-09-21T23:37:48Z",
+      "updatedAt": "2026-09-23T16:06:14Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
-      "baseRefOid": "ac0f364ba46b50520181795d5dfed987ac64e28b",
+      "baseRefOid": "3147bf8ef90ec3c7140cdbb7186bb32c49c24e07",
       "headRepository": "yaroslavros/draft-ietf-wimse-s2s-protocol",
       "headRefName": "tls-reference",
-      "headRefOid": "3174954015852ad3e249154a5cc45863103f17b3",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "76cf4ad3d156eaeb665d63df7b80c5d76f842799",
+      "closedAt": "2026-09-23T16:06:14Z",
+      "mergedAt": "2026-09-23T16:06:14Z",
+      "mergedBy": "yaroslavros",
+      "mergeCommit": {
+        "oid": "1d7d4e1d11079fdb8788f409706032d1cc8b3afc"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABO4GDLA",
+          "commit": {
+            "abbreviatedOid": "3174954"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-09-23T15:49:19Z",
+          "updatedAt": "2026-09-23T15:49:19Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 360,
       "id": "PR_kwDOLJmm788AAAABEgKT1A",
       "title": "De-duplicated and improved references to RFC5280",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/360",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -23881,26 +24174,42 @@
       ],
       "body": "Addresses https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/333",
       "createdAt": "2026-09-21T23:43:14Z",
-      "updatedAt": "2026-09-21T23:43:15Z",
+      "updatedAt": "2026-09-23T16:10:20Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
-      "baseRefOid": "ac0f364ba46b50520181795d5dfed987ac64e28b",
+      "baseRefOid": "1d7d4e1d11079fdb8788f409706032d1cc8b3afc",
       "headRepository": "yaroslavros/draft-ietf-wimse-s2s-protocol",
       "headRefName": "duplicate-reference",
-      "headRefOid": "bc84ee15e7f3432544c49804d7b2c31e075da3c2",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "93629959e09bed87e76573d90cfe51a533cd50e8",
+      "closedAt": "2026-09-23T16:10:20Z",
+      "mergedAt": "2026-09-23T16:10:20Z",
+      "mergedBy": "yaroslavros",
+      "mergeCommit": {
+        "oid": "3114afd5c2b47e226461872fee7349345841b27d"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABO4GTDg",
+          "commit": {
+            "abbreviatedOid": "bc84ee1"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-09-23T15:49:41Z",
+          "updatedAt": "2026-09-23T15:49:41Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 361,
       "id": "PR_kwDOLJmm788AAAABEgL_MQ",
       "title": "Clarified local mapping of trust domains to trust anchors",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/361",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -23909,26 +24218,42 @@
       ],
       "body": "Addresses https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/335",
       "createdAt": "2026-09-21T23:47:59Z",
-      "updatedAt": "2026-09-21T23:48:00Z",
+      "updatedAt": "2026-09-23T16:11:03Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
-      "baseRefOid": "ac0f364ba46b50520181795d5dfed987ac64e28b",
+      "baseRefOid": "1d7d4e1d11079fdb8788f409706032d1cc8b3afc",
       "headRepository": "yaroslavros/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ta-selection",
-      "headRefOid": "2b0c9a6cf30f896204707fd11b69a908a855f322",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "87b84674b309af1c97520dad9e64bc23e5e0f4ed",
+      "closedAt": "2026-09-23T16:11:03Z",
+      "mergedAt": "2026-09-23T16:11:03Z",
+      "mergedBy": "yaroslavros",
+      "mergeCommit": {
+        "oid": "47ea2c307807c7e3daf85cbeb2b5e1e95aef72b2"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABO4HL-A",
+          "commit": {
+            "abbreviatedOid": "2b0c9a6"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-09-23T15:50:58Z",
+          "updatedAt": "2026-09-23T15:50:58Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 362,
       "id": "PR_kwDOLJmm788AAAABEgQKOg",
       "title": "If DNS validation is required, DNS SAN is mandatory",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/362",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -23937,26 +24262,42 @@
       ],
       "body": "Addresses https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/339",
       "createdAt": "2026-09-22T00:02:06Z",
-      "updatedAt": "2026-09-22T00:02:07Z",
+      "updatedAt": "2026-09-23T15:57:04Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "ac0f364ba46b50520181795d5dfed987ac64e28b",
       "headRepository": "yaroslavros/draft-ietf-wimse-s2s-protocol",
       "headRefName": "no-dns",
       "headRefOid": "ff7dd1fa05e8a9a469ee867416921e34b510687b",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-09-23T15:57:03Z",
+      "mergedAt": "2026-09-23T15:57:03Z",
+      "mergedBy": "yaroslavros",
+      "mergeCommit": {
+        "oid": "6c5c1a60ba1d00a8a9b328e3282651a98ca83658"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABO4H4Ng",
+          "commit": {
+            "abbreviatedOid": "ff7dd1f"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-09-23T15:51:59Z",
+          "updatedAt": "2026-09-23T15:51:59Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 363,
       "id": "PR_kwDOLJmm788AAAABEgRIDg",
       "title": "IP address authentication is a valid option",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/363",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -23965,19 +24306,230 @@
       ],
       "body": "Addresses https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/340",
       "createdAt": "2026-09-22T00:05:33Z",
-      "updatedAt": "2026-09-22T00:05:34Z",
+      "updatedAt": "2026-09-23T15:57:13Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "12b4e3b0b719e109be00dc1727d22d02cc94942a",
+      "headRepository": "yaroslavros/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ip-address",
+      "headRefOid": "ad58bc44bf57f9281747bec27fee9c555ddf3215",
+      "closedAt": "2026-09-23T15:57:13Z",
+      "mergedAt": "2026-09-23T15:57:13Z",
+      "mergedBy": "yaroslavros",
+      "mergeCommit": {
+        "oid": "28e3def28fb55b896aee26a2bcf7d6b31d9f47c7"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABO4IyXQ",
+          "commit": {
+            "abbreviatedOid": "be031d8"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-09-23T15:53:19Z",
+          "updatedAt": "2026-09-23T15:53:19Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABO4K3jQ",
+          "commit": {
+            "abbreviatedOid": "c1d05de"
+          },
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-09-23T15:56:22Z",
+          "updatedAt": "2026-09-23T15:56:22Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "```suggestion\nThe host portion of the Workload Identifier is NOT treated as a hostname as specified in {{Section 6.3 of TLS-IDENTITY}}, but rather as a trust domain. The server identity is encoded in the path portion of the Workload Identifier in a deployment-specific way.\n```",
+              "createdAt": "2026-09-23T15:56:22Z",
+              "updatedAt": "2026-09-23T15:56:22Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 364,
+      "id": "PR_kwDOLJmm788AAAABElgcCg",
+      "title": "Clarify jti and relation to revocation",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/364",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "Resolves #269.\r\n\r\nBring WIT revocation closer to WIC. Clarify how it could be used but overall is not in scope and implementations are not expected to support revocation.",
+      "createdAt": "2026-09-22T13:35:18Z",
+      "updatedAt": "2026-09-22T13:47:13Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "ac0f364ba46b50520181795d5dfed987ac64e28b",
-      "headRepository": "yaroslavros/draft-ietf-wimse-s2s-protocol",
-      "headRefName": "ip-address",
-      "headRefOid": "be031d83451da14e8212f63bf407d99c2570519a",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "arndt/resolve_269",
+      "headRefOid": "03639d875b5d700f0271c8ebb1bb9df8c11e9034",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABOqZkIg",
+          "commit": {
+            "abbreviatedOid": "03639d8"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-09-22T13:47:13Z",
+          "updatedAt": "2026-09-22T13:47:13Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 365,
+      "id": "PR_kwDOLJmm788AAAABEloQrg",
+      "title": "Use Ed25519 instead of EdDSA",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/365",
+      "state": "MERGED",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-wpt",
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "Resolves #315 ",
+      "createdAt": "2026-09-22T13:48:17Z",
+      "updatedAt": "2026-09-22T14:33:17Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "ac0f364ba46b50520181795d5dfed987ac64e28b",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "arndt/resolve_315_eddsa_identifier",
+      "headRefOid": "c3648928c75261d617453b26e6359eb2ec900bb7",
+      "closedAt": "2026-09-22T14:33:08Z",
+      "mergedAt": "2026-09-22T14:33:08Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "2c14adcbbf83d806ca6ae868dd90fe58afcf1625"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABOq768A",
+          "commit": {
+            "abbreviatedOid": "c364892"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-09-22T14:31:17Z",
+          "updatedAt": "2026-09-22T14:31:17Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 366,
+      "id": "PR_kwDOLJmm788AAAABEmh8qA",
+      "title": "Added wording about revocation checking",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/366",
+      "state": "MERGED",
+      "author": "yaroslavros",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-mutual-tls"
+      ],
+      "body": "Addresses https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/342",
+      "createdAt": "2026-09-22T15:21:03Z",
+      "updatedAt": "2026-09-23T16:10:52Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "2c14adcbbf83d806ca6ae868dd90fe58afcf1625",
+      "headRepository": "yaroslavros/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "revocation-check",
+      "headRefOid": "cf75e4df25463a274a482fcde8f60cb23fec14e2",
+      "closedAt": "2026-09-23T16:10:52Z",
+      "mergedAt": "2026-09-23T16:10:52Z",
+      "mergedBy": "yaroslavros",
+      "mergeCommit": {
+        "oid": "6207b39d6ab3d7b09da53a6b7177f7dafb1f7df3"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABO4La2Q",
+          "commit": {
+            "abbreviatedOid": "cf75e4d"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-09-23T15:57:09Z",
+          "updatedAt": "2026-09-23T15:57:09Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 367,
+      "id": "PR_kwDOLJmm788AAAABEmjioA",
+      "title": "Added a paragraph on trust-anchor lifetime/rotation",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/367",
+      "state": "MERGED",
+      "author": "yaroslavros",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-mutual-tls"
+      ],
+      "body": "Addresses https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/343",
+      "createdAt": "2026-09-22T15:23:48Z",
+      "updatedAt": "2026-09-23T15:58:16Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "2c14adcbbf83d806ca6ae868dd90fe58afcf1625",
+      "headRepository": "yaroslavros/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "trust-lifecycle",
+      "headRefOid": "1bfbaa0a2f1c3cce9d33c9269378b5ccd39f5b2c",
+      "closedAt": "2026-09-23T15:58:16Z",
+      "mergedAt": "2026-09-23T15:58:16Z",
+      "mergedBy": "yaroslavros",
+      "mergeCommit": {
+        "oid": "3313e300b9dadd93adcae64acf3770a56fcd4105"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABO4ME5w",
+          "commit": {
+            "abbreviatedOid": "1bfbaa0"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-09-23T15:58:07Z",
+          "updatedAt": "2026-09-23T15:58:07Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
