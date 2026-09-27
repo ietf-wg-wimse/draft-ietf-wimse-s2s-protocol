@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-09-24T03:15:02.892712+00:00",
+  "timestamp": "2026-09-27T03:47:00.951556+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -19288,7 +19288,7 @@
       ],
       "body": "- **workload-creds (#173, #175):** Replace the mandatory access-path-to-identifier mapping API with infrastructure support for verifying that an HTTP target URI (RFC 9110 Section 7.1, without query or fragment) is intended for a workload. Document the roles of HTTP target URI (audience) vs Workload Identifier (sender) for WPT, HTTP signatures, and mTLS.\r\n- **WPT (#175):** Tie `aud` to \"Workload Identifiers and Authentication Granularity\" in workload-creds; otherwise unchanged from main.\r\n\r\nCloses #173, #175. Addresses #240.",
       "createdAt": "2026-06-19T10:29:32Z",
-      "updatedAt": "2026-09-22T13:42:39Z",
+      "updatedAt": "2026-09-24T13:12:33Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "ac0f364ba46b50520181795d5dfed987ac64e28b",
@@ -19622,6 +19622,32 @@
               "body": "> To your first point: we do not assume that the caller knows the WIMSE ID of the callee. The caller has some identifier of the callee (the \"external access name\"), and the fact that the request goes through is proof enough that this identifier is correct.\r\n\r\nI don't think that's written anymore in the specification though. We RECOMMEND that a workload identity certificate carries DNSSAN. If that's not the case the caller needs to know the WIMSE-ID of the callee.\r\n\r\nSee Section 6.1\r\n> When the certificate is also used for TLS server authentication, it is RECOMMENDED to include SubjectAltName extensions of type DNSName with the appropriate DNS names for clients that validate the server by host name rather than by workload identity. The certificate MAY contain SubjectAltName extensions of other types for PKIX or local policy, but only the URI SAN above is the WIMSE workload identity.",
               "createdAt": "2026-09-22T13:42:39Z",
               "updatedAt": "2026-09-22T13:42:39Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABPDHjxQ",
+          "commit": {
+            "abbreviatedOid": "550be6a"
+          },
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-09-24T13:10:56Z",
+          "updatedAt": "2026-09-24T13:12:32Z",
+          "comments": [
+            {
+              "originalPosition": 22,
+              "body": "I would remove this redundant sentence introducing the upcoming subsection.",
+              "createdAt": "2026-09-24T13:10:57Z",
+              "updatedAt": "2026-09-24T13:12:32Z"
+            },
+            {
+              "originalPosition": 25,
+              "body": "```suggestion\nApplication-level proof-of-possession mechanisms defined in {{?I-D.ietf-wimse-wpt}} and {{?I-D.ietf-wimse-http-signature}}\n```",
+              "createdAt": "2026-09-24T13:11:52Z",
+              "updatedAt": "2026-09-24T13:12:32Z"
             }
           ]
         }
@@ -21333,7 +21359,7 @@
       ],
       "body": "Added security considerations for granular auth section.\r\n\r\nRelated to #272 ",
       "createdAt": "2026-08-10T13:42:14Z",
-      "updatedAt": "2026-09-22T13:10:30Z",
+      "updatedAt": "2026-09-24T13:17:52Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "ac0f364ba46b50520181795d5dfed987ac64e28b",
@@ -21630,6 +21656,38 @@
               "body": "Discussed in the call today and removed that section. Instead, the prior section received a \"both sides of a call are affected\" sentence.",
               "createdAt": "2026-09-01T14:27:20Z",
               "updatedAt": "2026-09-01T14:27:21Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABPDKjRA",
+          "commit": {
+            "abbreviatedOid": "fdcb4f7"
+          },
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-09-24T13:15:06Z",
+          "updatedAt": "2026-09-24T13:17:52Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "```suggestion\nValidating a peer's credential against the trust anchors for a trust domain establishes that the peer belongs to that trust domain, but does not by itself establish which workload the peer represents. The additional identity comparison described in {{granular-auth}} is required to make that distinction.\n```",
+              "createdAt": "2026-09-24T13:15:06Z",
+              "updatedAt": "2026-09-24T13:17:52Z"
+            },
+            {
+              "originalPosition": 8,
+              "body": "```suggestion\nWithout that comparison workloads in the trust domain cannot be securely distinguished. Any workload holding a valid credential can be accepted in place of any other, so an attacker compromising one workload gains can move laterally and gain access on behalf of any other workload within given trust domain. A credential issued by mistake, or one belonging to a workload that no longer exists, can be used in the same way until it expires. This affects both sides of a call, workloads acting as clients and workloads acting as servers.\n```",
+              "createdAt": "2026-09-24T13:16:54Z",
+              "updatedAt": "2026-09-24T13:17:52Z"
+            },
+            {
+              "originalPosition": 10,
+              "body": "```suggestion\nProof of possession does not mitigate this vulnerability. It shows that the peer holds the private key for the credential it presented ({{wit-pop}}), but it does not show that this credential is the one the peer was supposed to present. The same consideration applies when a Workload Identity Certificate is used at the transport layer.\n```",
+              "createdAt": "2026-09-24T13:17:45Z",
+              "updatedAt": "2026-09-24T13:17:52Z"
             }
           ]
         }
@@ -24370,7 +24428,7 @@
       ],
       "body": "Resolves #269.\r\n\r\nBring WIT revocation closer to WIC. Clarify how it could be used but overall is not in scope and implementations are not expected to support revocation.",
       "createdAt": "2026-09-22T13:35:18Z",
-      "updatedAt": "2026-09-22T13:47:13Z",
+      "updatedAt": "2026-09-24T13:20:42Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "ac0f364ba46b50520181795d5dfed987ac64e28b",
@@ -24395,6 +24453,26 @@
           "createdAt": "2026-09-22T13:47:13Z",
           "updatedAt": "2026-09-22T13:47:13Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABPDODnA",
+          "commit": {
+            "abbreviatedOid": "03639d8"
+          },
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-09-24T13:19:49Z",
+          "updatedAt": "2026-09-24T13:20:42Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\n    * `jti`: A unique identifier for the token (as defined in {{Section 4.1.7 of RFC7519}}). This claim is OPTIONAL. The `jti` claim is useful for auditing the issuance of individual WITs, and it is needed to identify individual tokens in deployments that operate an optional token status or deny-list mechanism ({{wit-lifetime}}). Some token generation environments do not support it.\n```",
+              "createdAt": "2026-09-24T13:19:49Z",
+              "updatedAt": "2026-09-24T13:20:42Z"
+            }
+          ]
         }
       ]
     },
