@@ -149,10 +149,9 @@ To enable mutual and granular authentication between workloads, two things must 
 - Each workload must know its own identifier.
 - Each workload must be able to verify that it is the intended recipient of a given request
   (that is, that it is the intended audience for that request).
+  The same applies to a response if the PoP mechanism provides protection of responses.
 
 Once these conditions are met, the methods described in this document can be used for the caller and callee to mutually authenticate.
-
-For application-level proof of possession, that recipient check is expressed as follows.
 
 ### Application-Layer Audience {#app-audience}
 
