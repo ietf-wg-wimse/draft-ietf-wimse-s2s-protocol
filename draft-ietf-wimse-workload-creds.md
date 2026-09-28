@@ -156,7 +156,7 @@ For application-level proof of possession, that recipient check is expressed as 
 
 ### Application-Layer Audience {#app-audience}
 
-Application-level proof-of-possession mechanisms in {{?I-D.ietf-wimse-wpt}} and {{?I-D.ietf-wimse-http-signature}}
+Application-level proof-of-possession mechanisms defined in {{?I-D.ietf-wimse-wpt}} and {{?I-D.ietf-wimse-http-signature}}
 bind a request to an intended recipient using an audience value.
 The Workload Identifier in a WIT identifies the sender; the audience of the PoP identifies the intended recipient.
 
