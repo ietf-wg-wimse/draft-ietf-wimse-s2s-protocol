@@ -140,7 +140,7 @@ The decoded JOSE header of the WPT from the example above is shown here:
 
 ~~~ json
 {
-  "alg": "EdDSA",
+  "alg": "Ed25519",
   "typ": "wpt+jwt"
 }
 ~~~
@@ -153,7 +153,7 @@ The decoded JWT claims of the WPT from the example above are shown here:
   "aud": "https://workload.example.com/path",
   "exp": 1745510016,
   "jti": "__bwc4ESC3acc2LTC1-_x",
-  "wth": "X9wiPgq3jlSGzAegHCGhNO1lJgUbDoI1Mjkat5QHJB0"
+  "wth": "MeOILk2AJHh6czknhZ2c7TkiVpeFTC_cyYAonmT7mkI"
 }
 ~~~
 {: title="Example WPT Claims"}
@@ -382,6 +382,7 @@ IANA is requested to register the following entry to the "Hypertext Transfer Pro
 
 ## draft-ietf-wimse-wpt-03
 
+* Use the fully-specified `Ed25519` algorithm identifier in the examples instead of the deprecated `EdDSA` ({{?RFC9864}}).
 * Remove Workload Identity Key Management section, which seems more appropriate in ietf-wimse-workload-creds where it already is.
 
 ## draft-ietf-wimse-wpt-02
