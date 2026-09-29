@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-09-27T03:47:00.951556+00:00",
+  "timestamp": "2026-09-29T04:21:08.572492+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -19288,13 +19288,13 @@
       ],
       "body": "- **workload-creds (#173, #175):** Replace the mandatory access-path-to-identifier mapping API with infrastructure support for verifying that an HTTP target URI (RFC 9110 Section 7.1, without query or fragment) is intended for a workload. Document the roles of HTTP target URI (audience) vs Workload Identifier (sender) for WPT, HTTP signatures, and mTLS.\r\n- **WPT (#175):** Tie `aud` to \"Workload Identifiers and Authentication Granularity\" in workload-creds; otherwise unchanged from main.\r\n\r\nCloses #173, #175. Addresses #240.",
       "createdAt": "2026-06-19T10:29:32Z",
-      "updatedAt": "2026-09-24T13:12:33Z",
+      "updatedAt": "2026-09-28T08:37:53Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
-      "baseRefOid": "ac0f364ba46b50520181795d5dfed987ac64e28b",
+      "baseRefOid": "47ea2c307807c7e3daf85cbeb2b5e1e95aef72b2",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-175",
-      "headRefOid": "550be6a1fb643d551266c077619dab0e16faf9f7",
+      "headRefOid": "4ee245666beaa1e677d91ced8443e89ce84abb76",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -19648,6 +19648,46 @@
               "body": "```suggestion\nApplication-level proof-of-possession mechanisms defined in {{?I-D.ietf-wimse-wpt}} and {{?I-D.ietf-wimse-http-signature}}\n```",
               "createdAt": "2026-09-24T13:11:52Z",
               "updatedAt": "2026-09-24T13:12:32Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABPdwKaQ",
+          "commit": {
+            "abbreviatedOid": "550be6a"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-09-28T00:15:50Z",
+          "updatedAt": "2026-09-28T00:15:50Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "or response (if the pop mechanism provides protection of responses)",
+              "createdAt": "2026-09-28T00:15:50Z",
+              "updatedAt": "2026-09-28T00:15:50Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABPgto4A",
+          "commit": {
+            "abbreviatedOid": "b607001"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-09-28T08:30:17Z",
+          "updatedAt": "2026-09-28T08:30:17Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "@arndt-s My understanding is that for MTLS, the assumption is as you say, that the caller knows its own ID as well as the callee's ID.\r\n\r\nFor the app-level mechanisms, we only assume that the caller can somehow reach the callee, and then it's the callee's responsibility to verify that the message did reach the correct destination.\r\n\r\nIf we need to reopen this discussion with the whole team, let me know.",
+              "createdAt": "2026-09-28T08:30:17Z",
+              "updatedAt": "2026-09-28T08:30:17Z"
             }
           ]
         }
@@ -21359,7 +21399,7 @@
       ],
       "body": "Added security considerations for granular auth section.\r\n\r\nRelated to #272 ",
       "createdAt": "2026-08-10T13:42:14Z",
-      "updatedAt": "2026-09-24T13:17:52Z",
+      "updatedAt": "2026-09-28T00:19:46Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "ac0f364ba46b50520181795d5dfed987ac64e28b",
@@ -21688,6 +21728,26 @@
               "body": "```suggestion\nProof of possession does not mitigate this vulnerability. It shows that the peer holds the private key for the credential it presented ({{wit-pop}}), but it does not show that this credential is the one the peer was supposed to present. The same consideration applies when a Workload Identity Certificate is used at the transport layer.\n```",
               "createdAt": "2026-09-24T13:17:45Z",
               "updatedAt": "2026-09-24T13:17:52Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABPdw5lw",
+          "commit": {
+            "abbreviatedOid": "fdcb4f7"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-09-28T00:19:46Z",
+          "updatedAt": "2026-09-28T00:19:46Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "Do we restrict a trust root to a single trust domain? there may be a small gap here in that if the same trust root is used for multiple trust domains you may not event understand what trust domain you have.  This might be a small difference, but I think it happens in practice. ",
+              "createdAt": "2026-09-28T00:19:46Z",
+              "updatedAt": "2026-09-28T00:19:46Z"
             }
           ]
         }
@@ -23223,10 +23283,12 @@
       "author": "fandreas",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-mutual-tls"
+      ],
       "body": "Editorial changes: Section 3",
       "createdAt": "2026-09-02T15:26:21Z",
-      "updatedAt": "2026-09-04T23:50:15Z",
+      "updatedAt": "2026-09-27T16:28:30Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "edeebeb004b81e4eb3cd9da4ef64609731c96d17",
@@ -23237,7 +23299,15 @@
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Looks good. @fandreas please rebase it as some of your suggestions already got resolved in other PRs.\r\n\r\nThank you!",
+          "createdAt": "2026-09-27T16:28:18Z",
+          "updatedAt": "2026-09-27T16:28:18Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOLJmm788AAAABMRoPOw",
@@ -23263,10 +23333,12 @@
       "author": "fandreas",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "draft-ietf-wimse-mutual-tls"
+      ],
       "body": "Editorial updates: Section 5 and duplicate RFC 5280 reference.",
       "createdAt": "2026-09-02T15:40:00Z",
-      "updatedAt": "2026-09-02T15:40:01Z",
+      "updatedAt": "2026-09-27T16:26:18Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "25d22143e69f214a0abadb8873d47a8076ead864",
@@ -23278,7 +23350,40 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABPcK4pA",
+          "commit": {
+            "abbreviatedOid": "3f35179"
+          },
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-09-27T16:23:59Z",
+          "updatedAt": "2026-09-27T16:25:49Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "This is already resolved in https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/360",
+              "createdAt": "2026-09-27T16:23:59Z",
+              "updatedAt": "2026-09-27T16:25:49Z"
+            },
+            {
+              "originalPosition": 23,
+              "body": "```suggestion\nThis document specifies authentication at the TLS layer. If application traffic traverses intermediaries, gateways, service meshes, or other middleboxes that terminate and re-establish TLS, the application endpoint might not be directly authenticated to the peer workload. In such deployments, authorization decisions need to account for where TLS is terminated and whether the authenticated certificate represents the peer workload, an intermediary, or another delegated entity. Where end-to-end workload authentication context is required across such boundaries, deployments SHOULD use an application-layer WIMSE protection mechanism, such as {{?WIMSE-HTTPSIG=I-D.ietf-wimse-http-signature}} or {{?WIMSE-WPT=I-D.ietf-wimse-wpt}, in addition to TLS-layer server authentication.\n```",
+              "createdAt": "2026-09-27T16:24:52Z",
+              "updatedAt": "2026-09-27T16:25:49Z"
+            },
+            {
+              "originalPosition": 26,
+              "body": "I don't think normative SHOULD is in order here. Also, this paragraph now moved to a dedicated \"privacy considerations\" section.",
+              "createdAt": "2026-09-27T16:25:44Z",
+              "updatedAt": "2026-09-27T16:25:49Z"
+            }
+          ]
+        }
+      ]
     },
     {
       "number": 308,
@@ -24428,7 +24533,7 @@
       ],
       "body": "Resolves #269.\r\n\r\nBring WIT revocation closer to WIC. Clarify how it could be used but overall is not in scope and implementations are not expected to support revocation.",
       "createdAt": "2026-09-22T13:35:18Z",
-      "updatedAt": "2026-09-24T13:20:42Z",
+      "updatedAt": "2026-09-28T00:21:04Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "ac0f364ba46b50520181795d5dfed987ac64e28b",
@@ -24473,6 +24578,19 @@
               "updatedAt": "2026-09-24T13:20:42Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABPdxJQA",
+          "commit": {
+            "abbreviatedOid": "03639d8"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-09-28T00:21:03Z",
+          "updatedAt": "2026-09-28T00:21:03Z",
+          "comments": []
         }
       ]
     },
