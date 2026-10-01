@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-09-29T04:21:08.572492+00:00",
+  "timestamp": "2026-10-01T04:16:39.855139+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -19288,7 +19288,7 @@
       ],
       "body": "- **workload-creds (#173, #175):** Replace the mandatory access-path-to-identifier mapping API with infrastructure support for verifying that an HTTP target URI (RFC 9110 Section 7.1, without query or fragment) is intended for a workload. Document the roles of HTTP target URI (audience) vs Workload Identifier (sender) for WPT, HTTP signatures, and mTLS.\r\n- **WPT (#175):** Tie `aud` to \"Workload Identifiers and Authentication Granularity\" in workload-creds; otherwise unchanged from main.\r\n\r\nCloses #173, #175. Addresses #240.",
       "createdAt": "2026-06-19T10:29:32Z",
-      "updatedAt": "2026-09-28T08:37:53Z",
+      "updatedAt": "2026-09-29T14:53:56Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "47ea2c307807c7e3daf85cbeb2b5e1e95aef72b2",
@@ -19690,6 +19690,39 @@
               "updatedAt": "2026-09-28T08:30:17Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABPySKnQ",
+          "commit": {
+            "abbreviatedOid": "4ee2456"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-09-29T14:51:51Z",
+          "updatedAt": "2026-09-29T14:51:51Z",
+          "comments": [
+            {
+              "originalPosition": 16,
+              "body": "not sure this is true but regardless it doesn't belong here \n```suggestion\n```",
+              "createdAt": "2026-09-29T14:51:51Z",
+              "updatedAt": "2026-09-29T14:51:51Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABPyTnqQ",
+          "commit": {
+            "abbreviatedOid": "4ee2456"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2026-09-29T14:53:56Z",
+          "updatedAt": "2026-09-29T14:53:56Z",
+          "comments": []
         }
       ]
     },
