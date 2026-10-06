@@ -444,7 +444,7 @@ When a deployment uses the `iss` claim for key distribution as described in {{wi
 
 Validating a peer's credential against the trust anchors for a trust domain establishes that the peer belongs to that trust domain, but does not by itself establish which workload the peer represents. The additional identity comparison described in {{granular-auth}} is required to make that distinction. This affects both sides of a call, workloads acting as clients and workloads acting as servers.
 
-Proof of possession does not mitigate this vulnerability. It shows that the peer holds the private key for the credential it presented ({{wit-pop}}), but it does not proof the identity iself. The same consideration applies when a Workload Identity Certificate is used at the transport layer.
+Proof of possession does not mitigate this vulnerability. It shows that the peer holds the private key for the credential it presented ({{wit-pop}}), but it does not prove the identity iself. The same consideration applies when a Workload Identity Certificate is used at the transport layer.
 
 ## Workload Identity Token and Proof of Possession {#wit-pop}
 
