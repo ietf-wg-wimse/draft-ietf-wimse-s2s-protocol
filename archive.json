@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-10-01T04:16:39.855139+00:00",
+  "timestamp": "2026-10-06T04:58:38.631140+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -5901,6 +5901,48 @@
           "updatedAt": "2026-09-20T22:51:43Z"
         }
       ]
+    },
+    {
+      "number": 368,
+      "id": "I_kwDOLJmm788AAAABVRLE9A",
+      "title": "Standard CONNECT compatibility",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/368",
+      "state": "OPEN",
+      "author": "yaroslavros",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [
+        "yaronf",
+        "jsalowey"
+      ],
+      "labels": [
+        "draft-ietf-wimse-http-signature"
+      ],
+      "body": "`@path` and `@query` are required but they are undefined for the standard HTTP CONNECT.\nI don't think empty strings is a valid workaround.\n\nI suppose we need to have an exception relaxing `@path` and `@query` requirement for CONNECT.",
+      "createdAt": "2026-10-06T03:04:22Z",
+      "updatedAt": "2026-10-06T03:04:22Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 369,
+      "id": "I_kwDOLJmm788AAAABVRMtxg",
+      "title": "Server generated nonce",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/369",
+      "state": "OPEN",
+      "author": "yaroslavros",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [
+        "yaronf",
+        "jsalowey"
+      ],
+      "labels": [
+        "draft-ietf-wimse-http-signature"
+      ],
+      "body": "Current text requires senders to generate `nonce`. However, `nonce` could also come from the `Accept-Signature` header from the party - which might have better security properties in terms of replay protection.\n\nWould be great to update the text to require `nonce` but allow it to be either sender generated or provided by the party in a previous `Accept-Signature` message.",
+      "createdAt": "2026-10-06T03:07:24Z",
+      "updatedAt": "2026-10-06T03:07:24Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
