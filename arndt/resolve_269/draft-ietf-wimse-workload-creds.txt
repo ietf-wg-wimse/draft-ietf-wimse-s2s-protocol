@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 26 March 2027                                Palo Alto Networks
+Expires: 9 April 2027                                 Palo Alto Networks
                                                       A. Schwenkschuster
                                                         Defakto Security
                                                               Y. Sheffer
                                                              Independent
                                                             Y. Rosomakho
                                                                  Zscaler
-                                                       22 September 2026
+                                                          6 October 2026
 
 
                        WIMSE Workload Credentials
@@ -67,7 +67,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 March 2027.
+   This Internet-Draft will expire on 9 April 2027.
 
 Copyright Notice
 
@@ -398,12 +398,13 @@ Table of Contents
          Section 4.1.4 of [RFC7519]).  WITs should be refreshed
          regularly, e.g., on the order of hours.
 
-      -  jti: A unique identifier for the token.  This claim is
-         OPTIONAL.  The jti claim is frequently useful for auditing the
-         issuance of individual WITs, and it is needed to identify
-         individual tokens in deployments that operate an optional token
-         status or deny-list mechanism (Section 9.2.1).  Some token
-         generation environments do not support it.
+      -  jti: A unique identifier for the token (as defined in
+         Section 4.1.7 of [RFC7519]).  This claim is OPTIONAL.  The jti
+         claim is useful for auditing the issuance of individual WITs,
+         and it is needed to identify individual tokens in deployments
+         that operate an optional token status or deny-list mechanism
+         (Section 9.2.1).  Some token generation environments do not
+         support it.
 
       -  cnf: A confirmation claim referencing the public key of the
          workload.
