@@ -442,11 +442,11 @@ When a deployment uses the `iss` claim for key distribution as described in {{wi
 
 ## Trust Domain Membership and Peer Authentication {#trust-domain-membership}
 
-A workload that validates its peer's credential against the trust anchors for a trust domain and then stops has learned only that its peer belongs to that trust domain. It has not learned which workload the peer is. {{granular-auth}} requires the comparison that closes this gap.
+Validating a peer's credential against the trust anchors for a trust domain establishes that the peer belongs to that trust domain, but does not by itself establish which workload the peer represents. The additional identity comparison described in {{granular-auth}} is required to make that distinction.
 
-Without that comparison, every workload in the trust domain looks the same. Any workload holding a valid credential can be accepted in place of any other, so an attacker who compromises one workload gains the access of all of them, even if the workload they compromised had little access of its own. A credential issued by mistake, or one belonging to a workload that no longer exists, can be used in the same way until it expires. This affects both sides of a call, workloads acting as clients and workloads acting as servers.
+Without that comparison workloads in the trust domain cannot be securely distinguished. Any workload holding a valid credential can be accepted in place of any other, so an attacker compromising one workload can move laterally and gain access on behalf of any other workload within given trust domain. A credential issued by mistake, or one belonging to a workload that no longer exists, can be used in the same way until it expires. This affects both sides of a call, workloads acting as clients and workloads acting as servers.
 
-Proof of possession does not help here. It shows that the peer holds the private key for the credential it presented ({{wit-pop}}). It does not show that this credential is the one the peer was supposed to present. The same is true when a Workload Identity Certificate is used at the transport layer.
+Proof of possession does not mitigate this vulnerability. It shows that the peer holds the private key for the credential it presented ({{wit-pop}}), but it does not show that this credential is the one the peer was supposed to present. The same consideration applies when a Workload Identity Certificate is used at the transport layer.
 
 ## Workload Identity Token and Proof of Possession {#wit-pop}
 
