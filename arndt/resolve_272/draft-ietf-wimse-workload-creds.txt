@@ -835,7 +835,7 @@ Table of Contents
 
    Proof of possession does not mitigate this vulnerability.  It shows
    that the peer holds the private key for the credential it presented
-   (Section 9.3), but it does not proof the identity iself.  The same
+   (Section 9.3), but it does not prove the identity iself.  The same
    consideration applies when a Workload Identity Certificate is used at
    the transport layer.
 
