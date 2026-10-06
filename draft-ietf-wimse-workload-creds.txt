@@ -106,16 +106,17 @@ Table of Contents
    8.  Implementation Status
    9.  Security Considerations
      9.1.  Workload Identity
-     9.2.  Workload Identity Token and Proof of Possession
-       9.2.1.  Limiting Workload Identity Token Lifespan
-       9.2.2.  Limiting Proof of Possession Lifespan
-       9.2.3.  Limiting Proof of Possession Scope
-       9.2.4.  Replay Protection
-       9.2.5.  Binding to TLS Endpoint
-     9.3.  Workload Identity Certificate
-       9.3.1.  Limiting Workload Identity Certificate Lifespan
-     9.4.  Workload Identity Key Management
-     9.5.  Transport Security
+     9.2.  Trust Domain Membership and Peer Authentication
+     9.3.  Workload Identity Token and Proof of Possession
+       9.3.1.  Limiting Workload Identity Token Lifespan
+       9.3.2.  Limiting Proof of Possession Lifespan
+       9.3.3.  Limiting Proof of Possession Scope
+       9.3.4.  Replay Protection
+       9.3.5.  Binding to TLS Endpoint
+     9.4.  Workload Identity Certificate
+       9.4.1.  Limiting Workload Identity Certificate Lifespan
+     9.5.  Workload Identity Key Management
+     9.6.  Transport Security
    10. Privacy Considerations
    11. IANA Considerations
      11.1.  Media Type Registration
@@ -164,7 +165,7 @@ Table of Contents
    protocols.  The Workload Identity Certificate is targeted for
    transport-layer protocols, primarily mutual TLS.  Presenting a WIT
    over a TLS-protected channel, or binding an application-layer proof
-   of possession to TLS session properties (see Section 9.2), does not
+   of possession to TLS session properties (see Section 9.3), does not
    make the WIT a transport-layer credential: mutual TLS authentication
    uses the Workload Identity Certificate, not the WIT.  This does not
    preclude the use of the WIC in application-layer protocols or the WIT
@@ -363,7 +364,7 @@ Table of Contents
    The Workload Identity Token (WIT) is a JWS [RFC7515] signed JWT
    [RFC7519] that represents the identity of a workload.  It is issued
    by the Identity Server and binds a public key to the workload
-   identity.  See Section 9.4 for security considerations.
+   identity.  See Section 9.5 for security considerations.
 
    A WIT MUST contain the following content, except where noted:
 
@@ -403,7 +404,7 @@ Table of Contents
          claim is useful for auditing the issuance of individual WITs,
          and it is needed to identify individual tokens in deployments
          that operate an optional token status or deny-list mechanism
-         (Section 9.2.1).  Some token generation environments do not
+         (Section 9.3.1).  Some token generation environments do not
          support it.
 
       -  cnf: A confirmation claim referencing the public key of the
@@ -628,7 +629,7 @@ Table of Contents
    *  Additional claims that are not understood are ignored, as
       specified in Section 5.1.2.
 
-   See Section 9.2.1 for WIT lifetime considerations.
+   See Section 9.3.1 for WIT lifetime considerations.
 
 5.2.  Error Conditions
 
@@ -823,7 +824,22 @@ Table of Contents
    accepted by a validator that fetches and trusts the corresponding key
    material without verifying the issuer's legitimacy.
 
-9.2.  Workload Identity Token and Proof of Possession
+9.2.  Trust Domain Membership and Peer Authentication
+
+   Validating a peer's credential against the trust anchors for a trust
+   domain establishes that the peer belongs to that trust domain, but
+   does not by itself establish which workload the peer represents.  The
+   additional identity comparison described in Section 1.3 is required
+   to make that distinction.  This affects both sides of a call,
+   workloads acting as clients and workloads acting as servers.
+
+   Proof of possession does not mitigate this vulnerability.  It shows
+   that the peer holds the private key for the credential it presented
+   (Section 9.3), but it does not prove the identity iself.  The same
+   consideration applies when a Workload Identity Certificate is used at
+   the transport layer.
+
+9.3.  Workload Identity Token and Proof of Possession
 
    The Workload Identity Token (WIT) is bound to a secret cryptographic
    key and is always presented with a proof of possession (PoP) as
@@ -837,7 +853,7 @@ Table of Contents
    within the PoP's lifetime.  The following are some mitigations for
    the capture and reuse of the WIT and its PoP:
 
-9.2.1.  Limiting Workload Identity Token Lifespan
+9.3.1.  Limiting Workload Identity Token Lifespan
 
    The WIT MUST have a limited lifetime expressed through the exp claim.
    If both a WIT and its corresponding private key are compromised, an
@@ -860,14 +876,14 @@ Table of Contents
    during which a revoked WIT may still be accepted, and their use does
    not relax the requirement for short WIT lifetimes.
 
-9.2.2.  Limiting Proof of Possession Lifespan
+9.3.2.  Limiting Proof of Possession Lifespan
 
    The PoP MUST be time limited.  A PoP should only be valid over the
    time necessary for it to be successfully used for the purpose it is
    needed.  This will typically be on the order of minutes.  PoPs
    received outside their validity time MUST be rejected.
 
-9.2.3.  Limiting Proof of Possession Scope
+9.3.3.  Limiting Proof of Possession Scope
 
    In order to reduce the risk of theft and replay the PoP should have a
    limited scope.  For example, a PoP may be targeted for use with a
@@ -878,19 +894,19 @@ Table of Contents
    to the system if a PoP is disclosed allowing it to be presented by an
    attacker along with a captured WIT.
 
-9.2.4.  Replay Protection
+9.3.4.  Replay Protection
 
    PoP mechanisms should include replay protection to prevent reuse of a
    captured PoP.  Without it an attacker can replay a captured PoP
    within its validity period.
 
-9.2.5.  Binding to TLS Endpoint
+9.3.5.  Binding to TLS Endpoint
 
    The PoP MAY be bound to a transport layer sender such as the client
    identity of a TLS session or TLS channel binding parameters.  The
    mechanisms for binding are outside the scope of this document.
 
-9.3.  Workload Identity Certificate
+9.4.  Workload Identity Certificate
 
    The Workload Identity Certificate carries the Workload Identifier in
    a single URI SubjectAltName (Section 6.1).  As with the WIT, the
@@ -904,12 +920,12 @@ Table of Contents
    workloads in another.  Protocol-specific certificate validation
    requirements are defined in [I-D.ietf-wimse-mutual-tls].
 
-9.3.1.  Limiting Workload Identity Certificate Lifespan
+9.4.1.  Limiting Workload Identity Certificate Lifespan
 
    Workload Identity Certificates are frequently issued to dynamic and/
    or short-lived workloads.  Deployments SHOULD use certificate
    lifetimes appropriate to the workload environment, typically on a
-   similar scale to WITs (Section 9.2).  Long-lived certificates
+   similar scale to WITs (Section 9.3).  Long-lived certificates
    increase the impact of private-key compromise.  As with WITs, short
    certificate lifetimes are the primary mitigation against continued
    use of a compromised key; this document does not rely on certificate
@@ -924,7 +940,7 @@ Table of Contents
    trusted.  Deployments should therefore consider leaf and trust-anchor
    lifetimes together rather than the leaf lifetime in isolation.
 
-9.4.  Workload Identity Key Management
+9.5.  Workload Identity Key Management
 
    Both the Workload Identity Token and the Workload Identity
    Certificate carry a public key.  The corresponding private key:
@@ -938,7 +954,7 @@ Table of Contents
    *  SHOULD be re-generated for each new Workload Identity Token or
       Certificate.
 
-9.5.  Transport Security
+9.6.  Transport Security
 
    An attacker observing or intercepting the communication channel can
    view the Workload Identity Token and its PoP and attempt to replay
@@ -952,7 +968,7 @@ Table of Contents
    intermediary.  While an intermediary cannot modify the token or the
    information within the PoP, it can attempt to capture and replay the
    token or modify data not protected by the PoP.  Mitigations listed in
-   Section 9.2 can reduce this risk.  Deployments should analyze their
+   Section 9.3 can reduce this risk.  Deployments should analyze their
    situation to determine whether it is appropriate to trust and allow
    traffic to pass through a middlebox.
 
@@ -1199,6 +1215,9 @@ Appendix A.  Document History
    // RFC Editor: please remove before publication.
 
 A.1.  draft-ietf-wimse-workload-creds-03
+
+   *  Added a section to describe the security considerations of
+      granular authentication.
 
    *  Use the fully-specified Ed25519 algorithm identifier in the
       examples instead of the deprecated EdDSA ([RFC9864]).
