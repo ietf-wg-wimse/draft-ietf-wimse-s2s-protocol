@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 27 March 2027                                Palo Alto Networks
+Expires: 9 April 2027                                 Palo Alto Networks
                                                       A. Schwenkschuster
                                                         Defakto Security
                                                               Y. Sheffer
                                                              Independent
                                                             Y. Rosomakho
                                                                  Zscaler
-                                                       23 September 2026
+                                                          6 October 2026
 
 
                        WIMSE Workload Credentials
@@ -67,7 +67,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 27 March 2027.
+   This Internet-Draft will expire on 9 April 2027.
 
 Copyright Notice
 
@@ -398,10 +398,13 @@ Table of Contents
          Section 4.1.4 of [RFC7519]).  WITs should be refreshed
          regularly, e.g., on the order of hours.
 
-      -  jti: A unique identifier for the token.  This claim is
-         OPTIONAL.  The jti claim is frequently useful for auditing
-         issuance of individual WITs or to revoke them, but some token
-         generation environments do not support it.
+      -  jti: A unique identifier for the token (as defined in
+         Section 4.1.7 of [RFC7519]).  This claim is OPTIONAL.  The jti
+         claim is useful for auditing the issuance of individual WITs,
+         and it is needed to identify individual tokens in deployments
+         that operate an optional token status or deny-list mechanism
+         (Section 9.2.1).  Some token generation environments do not
+         support it.
 
       -  cnf: A confirmation claim referencing the public key of the
          workload.
@@ -839,12 +842,23 @@ Table of Contents
    The WIT MUST have a limited lifetime expressed through the exp claim.
    If both a WIT and its corresponding private key are compromised, an
    attacker can impersonate the workload until the WIT expires.  Because
-   JWT-based credentials such as the WIT are not generally revocable on
-   demand, a short expiration is the primary mitigation against
-   continued use of a compromised WIT and key.  WITs SHOULD therefore be
-   short-lived, typically on the order of hours, with the chosen
-   lifetime balancing the operational cost of frequent refresh against
-   the window of exposure if a credential is compromised.
+   JWT-based credentials such as the WIT are not revocable on demand, a
+   short expiration is the primary mitigation against continued use of a
+   compromised WIT and key.  WITs SHOULD therefore be short-lived,
+   typically on the order of hours, with the chosen lifetime balancing
+   the operational cost of frequent refresh against the window of
+   exposure if a credential is compromised.
+
+   This document does not define a revocation mechanism for WITs and
+   does not rely on one; validators are not required to consult any
+   token status service.  Deployments MAY nevertheless operate such a
+   mechanism as a defense in depth measure, for example a Token Status
+   List [I-D.ietf-oauth-status-list] or a deny-list of jti values.  A
+   deployment that does so MUST include the jti claim (Section 5.1) in
+   every WIT, because a WIT without a jti cannot be identified
+   individually.  Such mechanisms are subject to a propagation delay
+   during which a revoked WIT may still be accepted, and their use does
+   not relax the requirement for short WIT lifetimes.
 
 9.2.2.  Limiting Proof of Possession Lifespan
 
@@ -900,7 +914,8 @@ Table of Contents
    certificate lifetimes are the primary mitigation against continued
    use of a compromised key; this document does not rely on certificate
    revocation lists (CRLs) or Online Certificate Status Protocol (OCSP)
-   [RFC6960] for WICs.
+   [RFC6960] for WICs, although deployments MAY use them as a defense in
+   depth measure.
 
    The lifetime of Workload Identity Certificates is bounded by the
    lifetime and rotation cadence of the trust anchors of the trust
@@ -1110,6 +1125,13 @@ Table of Contents
 
 12.2.  Informative References
 
+   [I-D.ietf-oauth-status-list]
+              Looker, T., Bastian, P., and C. Bormann, "Token Status
+              List (TSL)", Work in Progress, Internet-Draft, draft-ietf-
+              oauth-status-list-21, 21 June 2026,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
+              status-list-21>.
+
    [I-D.ietf-oauth-transaction-tokens]
               Tulshibagwale, A., Fletcher, G., and P. Kasselman,
               "Transaction Tokens", Work in Progress, Internet-Draft,
@@ -1192,6 +1214,11 @@ A.1.  draft-ietf-wimse-workload-creds-03
 
    *  State the WIC revocation stance: short lifetimes like WITs; no CRL
       reliance (#270).
+
+   *  State the WIT revocation stance and resolve the conflicting jti
+      description: the document does not rely on revocation, but
+      deployments may operate a token status list or jti deny-list, in
+      which case jti is required in every WIT (#269).
 
    *  Editorial: consistent use of "proof of possession"/"PoP", with the
       abbreviation expanded on first use, and consistent capitalization

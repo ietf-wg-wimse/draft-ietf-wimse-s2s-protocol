@@ -22,18 +22,18 @@ multi-service, multi-cloud, multi-tenant deployments.
 <meta content="draft-ietf-wimse-workload-creds-latest" name="ietf.draft">
 <!-- Generator version information:
   xml2rfc 3.34.1
-    Python 3.14.7
-    ConfigArgParse 1.7.7
+    Python 3.14.8
+    ConfigArgParse 1.8.0
     google-i18n-address 3.1.1
     intervaltree 3.2.1
     Jinja2 3.1.6
     lxml 6.1.1
     natsort 8.4.0
-    platformdirs 4.11.10
+    platformdirs 4.12.2
     pycountry 24.6.1
     PyYAML 6.0.3
     requests 2.33.1
-    wcwidth 0.8.4
+    wcwidth 0.9.1
 -->
 <link href="draft-ietf-wimse-workload-creds.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -1049,11 +1049,11 @@ svg {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">WIMSE Workload Credentials</td>
-<td class="right">September 2026</td>
+<td class="right">October 2026</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Campbell, et al.</td>
-<td class="center">Expires 27 March 2027</td>
+<td class="center">Expires 9 April 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1066,12 +1066,12 @@ svg {
 <dd class="internet-draft">draft-ietf-wimse-workload-creds-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-09-23" class="published">23 September 2026</time>
+<time datetime="2026-10-06" class="published">6 October 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2027-03-27">27 March 2027</time></dd>
+<dd class="expires"><time datetime="2027-04-09">9 April 2027</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1140,7 +1140,7 @@ multi-service, multi-cloud, multi-tenant deployments.<a href="#section-abstract-
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 27 March 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 9 April 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1574,7 +1574,7 @@ It is issued by the Identity Server and binds a public key to the workload ident
 WITs should be refreshed regularly, e.g., on the order of hours.<a href="#section-5.1-3.2.2.3.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-5.1-3.2.2.4">
-                <p id="section-5.1-3.2.2.4.1"><code>jti</code>: A unique identifier for the token. This claim is <span class="bcp14">OPTIONAL</span>. The <code>jti</code> claim is frequently useful for auditing issuance of individual WITs or to revoke them, but some token generation environments do not support it.<a href="#section-5.1-3.2.2.4.1" class="pilcrow">¶</a></p>
+                <p id="section-5.1-3.2.2.4.1"><code>jti</code>: A unique identifier for the token (as defined in <span><a href="https://rfc-editor.org/rfc/rfc7519#section-4.1.7" class="relref">Section 4.1.7</a> of [<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>). This claim is <span class="bcp14">OPTIONAL</span>. The <code>jti</code> claim is useful for auditing the issuance of individual WITs, and it is needed to identify individual tokens in deployments that operate an optional token status or deny-list mechanism (<a href="#wit-lifetime" class="auto internal xref">Section 9.2.1</a>). Some token generation environments do not support it.<a href="#section-5.1-3.2.2.4.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-5.1-3.2.2.5">
                 <p id="section-5.1-3.2.2.5.1"><code>cnf</code>: A confirmation claim referencing the public key of the workload.<a href="#section-5.1-3.2.2.5.1" class="pilcrow">¶</a></p>
@@ -2016,7 +2016,8 @@ See <a href="#granular-auth" class="auto internal xref">Section 1.3</a> on addit
           <h4 id="name-limiting-workload-identity-">
 <a href="#section-9.2.1" class="section-number selfRef">9.2.1. </a><a href="#name-limiting-workload-identity-" class="section-name selfRef">Limiting Workload Identity Token Lifespan</a>
           </h4>
-<p id="section-9.2.1-1">The WIT <span class="bcp14">MUST</span> have a limited lifetime expressed through the <code>exp</code> claim. If both a WIT and its corresponding private key are compromised, an attacker can impersonate the workload until the WIT expires. Because JWT-based credentials such as the WIT are not generally revocable on demand, a short expiration is the primary mitigation against continued use of a compromised WIT and key. WITs <span class="bcp14">SHOULD</span> therefore be short-lived, typically on the order of hours, with the chosen lifetime balancing the operational cost of frequent refresh against the window of exposure if a credential is compromised.<a href="#section-9.2.1-1" class="pilcrow">¶</a></p>
+<p id="section-9.2.1-1">The WIT <span class="bcp14">MUST</span> have a limited lifetime expressed through the <code>exp</code> claim. If both a WIT and its corresponding private key are compromised, an attacker can impersonate the workload until the WIT expires. Because JWT-based credentials such as the WIT are not revocable on demand, a short expiration is the primary mitigation against continued use of a compromised WIT and key. WITs <span class="bcp14">SHOULD</span> therefore be short-lived, typically on the order of hours, with the chosen lifetime balancing the operational cost of frequent refresh against the window of exposure if a credential is compromised.<a href="#section-9.2.1-1" class="pilcrow">¶</a></p>
+<p id="section-9.2.1-2">This document does not define a revocation mechanism for WITs and does not rely on one; validators are not required to consult any token status service. Deployments <span class="bcp14">MAY</span> nevertheless operate such a mechanism as a defense in depth measure, for example a Token Status List <span>[<a href="#I-D.ietf-oauth-status-list" class="cite xref">I-D.ietf-oauth-status-list</a>]</span> or a deny-list of <code>jti</code> values. A deployment that does so <span class="bcp14">MUST</span> include the <code>jti</code> claim (<a href="#to-wit" class="auto internal xref">Section 5.1</a>) in every WIT, because a WIT without a <code>jti</code> cannot be identified individually. Such mechanisms are subject to a propagation delay during which a revoked WIT may still be accepted, and their use does not relax the requirement for short WIT lifetimes.<a href="#section-9.2.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="limiting-proof-of-possession-lifespan">
@@ -2064,7 +2065,7 @@ See <a href="#granular-auth" class="auto internal xref">Section 1.3</a> on addit
           <h4 id="name-limiting-workload-identity-c">
 <a href="#section-9.3.1" class="section-number selfRef">9.3.1. </a><a href="#name-limiting-workload-identity-c" class="section-name selfRef">Limiting Workload Identity Certificate Lifespan</a>
           </h4>
-<p id="section-9.3.1-1">Workload Identity Certificates are frequently issued to dynamic and/or short-lived workloads. Deployments <span class="bcp14">SHOULD</span> use certificate lifetimes appropriate to the workload environment, typically on a similar scale to WITs (<a href="#wit-pop" class="auto internal xref">Section 9.2</a>). Long-lived certificates increase the impact of private-key compromise. As with WITs, short certificate lifetimes are the primary mitigation against continued use of a compromised key; this document does not rely on certificate revocation lists (CRLs) or Online Certificate Status Protocol (OCSP) <span>[<a href="#RFC6960" class="cite xref">RFC6960</a>]</span> for WICs.<a href="#section-9.3.1-1" class="pilcrow">¶</a></p>
+<p id="section-9.3.1-1">Workload Identity Certificates are frequently issued to dynamic and/or short-lived workloads. Deployments <span class="bcp14">SHOULD</span> use certificate lifetimes appropriate to the workload environment, typically on a similar scale to WITs (<a href="#wit-pop" class="auto internal xref">Section 9.2</a>). Long-lived certificates increase the impact of private-key compromise. As with WITs, short certificate lifetimes are the primary mitigation against continued use of a compromised key; this document does not rely on certificate revocation lists (CRLs) or Online Certificate Status Protocol (OCSP) <span>[<a href="#RFC6960" class="cite xref">RFC6960</a>]</span> for WICs, although deployments <span class="bcp14">MAY</span> use them as a defense in depth measure.<a href="#section-9.3.1-1" class="pilcrow">¶</a></p>
 <p id="section-9.3.1-2">The lifetime of Workload Identity Certificates is bounded by the lifetime and rotation cadence of the trust anchors of the trust domain (<a href="#trust-anchors" class="auto internal xref">Section 3</a>). Compromise of a trust anchor permits issuance of certificates for the trust domain for as long as that anchor remains trusted. Deployments should therefore consider leaf and trust-anchor lifetimes together rather than the leaf lifetime in isolation.<a href="#section-9.3.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -2274,6 +2275,10 @@ use these tokens to authenticate to each other.<a href="#section-11.1.1-9" class
 <a href="#section-12.2" class="section-number selfRef">12.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
+<dt id="I-D.ietf-oauth-status-list">[I-D.ietf-oauth-status-list]</dt>
+        <dd>
+<span class="refAuthor">Looker, T.</span>, <span class="refAuthor">Bastian, P.</span>, and <span class="refAuthor">C. Bormann</span>, <span class="refTitle">"Token Status List (TSL)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-status-list-21</span>, <time datetime="2026-06-21" class="refDate">21 June 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-status-list-21">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-status-list-21</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="I-D.ietf-oauth-transaction-tokens">[I-D.ietf-oauth-transaction-tokens]</dt>
         <dd>
 <span class="refAuthor">Tulshibagwale, A.</span>, <span class="refAuthor">Fletcher, G.</span>, and <span class="refAuthor">P. Kasselman</span>, <span class="refTitle">"Transaction Tokens"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-transaction-tokens-11</span>, <time datetime="2026-07-30" class="refDate">30 July 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-transaction-tokens-11">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-transaction-tokens-11</a>&gt;</span>. </dd>
@@ -2351,7 +2356,10 @@ use these tokens to authenticate to each other.<a href="#section-11.1.1-9" class
             <p id="appendix-A.1-1.5.1">State the WIC revocation stance: short lifetimes like WITs; no CRL reliance (#270).<a href="#appendix-A.1-1.5.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.6">
-            <p id="appendix-A.1-1.6.1">Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use, and consistent capitalization of the defined term "Workload Identifier".<a href="#appendix-A.1-1.6.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.6.1">State the WIT revocation stance and resolve the conflicting <code>jti</code> description: the document does not rely on revocation, but deployments may operate a token status list or <code>jti</code> deny-list, in which case <code>jti</code> is required in every WIT (#269).<a href="#appendix-A.1-1.6.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.1-1.7">
+            <p id="appendix-A.1-1.7.1">Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use, and consistent capitalization of the defined term "Workload Identifier".<a href="#appendix-A.1-1.7.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
