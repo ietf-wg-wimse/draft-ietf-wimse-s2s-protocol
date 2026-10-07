@@ -96,6 +96,11 @@ The request is signed as per {{RFC9421}}. The following derived components MUST 
 This profile uses `@path` and `@query` rather than `@request-target`, which is NOT RECOMMENDED outside HTTP/1.1 ({{Section 2.2.5 of RFC9421}}). `@query` is included even when the request has no query component; in that case its value is `?` ({{Section 2.2.7 of RFC9421}}).
 The `@authority` derived component is not included: TLS-terminating proxies and load balancers commonly rewrite the authority (see {{I-D.ietf-wimse-arch}} and {{middleboxes}}), so signing it would break those deployments. Recipient binding is carried instead by the mandatory `wimse-aud` signature parameter ({{wimse-aud-param}}).
 
+Exception for CONNECT ({{Section 9.3.6 of !RFC9110}}): the request target is in authority-form (`host:port`), so `@path` and `@query` are not meaningful.
+For a CONNECT request, senders MUST cover `@method` and `@request-target` instead of `@path` and `@query`, and MUST NOT cover `@path` or `@query`.
+The `@request-target` value is the authority-form request target ({{Section 2.2.5 of RFC9421}}), for example `www.example.com:80`.
+This exception is specific to CONNECT; this profile otherwise continues to avoid `@request-target`.
+
 In addition, the following request headers MUST be signed when they exist:
 
 * `Content-Type`
@@ -113,6 +118,8 @@ If the response is signed, the following components MUST be signed:
 * `Content-Type` if it exists
 * `Content-Digest` if it exists
 * `Workload-Identity-Token`
+
+When the signed response corresponds to a CONNECT request, senders MUST cover `@method;req` and `@request-target;req` instead of `@path;req` and `@query;req`, and MUST NOT cover `@path;req` or `@query;req`.
 
 To ensure the message is fully integrity-protected, if the request or response includes a message body, the sender MUST include
 (and the receiver MUST verify) a Content-Digest header. This implies the receiver MUST compute the Content-Digest value for the message content received and compare it with the Content-Digest value provided in the message.
@@ -505,6 +512,10 @@ IANA is requested to register the following entries in the "HTTP Signature Metad
 
 # Document History
 <cref>RFC Editor: please remove before publication.</cref>
+
+## draft-ietf-wimse-http-signature-08
+
+* Exception for CONNECT: cover `@request-target` (authority-form host:port) instead of `@path`/`@query` (#368).
 
 ## draft-ietf-wimse-http-signature-07
 
