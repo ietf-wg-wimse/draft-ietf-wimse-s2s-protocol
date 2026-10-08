@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-10-06T04:58:38.631140+00:00",
+  "timestamp": "2026-10-08T04:36:45.120051+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -4728,7 +4728,7 @@
       "id": "I_kwDOLJmm788AAAABJCbVlw",
       "title": "Section 5.1 vs 9.2.1: jti revocation contradiction",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/269",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "n2ctech",
       "authorAssociation": "NONE",
       "assignees": [
@@ -4739,8 +4739,8 @@
       ],
       "body": "Section 5.1 says the jti claim is useful \"to revoke\" WITs. Section 9.2.1 says WITs \"are not generally revocable on demand\". A validator implementer cannot tell whether jti deny-listing is a supported capability. jti is also OPTIONAL, so a deny list fails open for tokens issued without it. The 5.1 wording looks like a leftover from before #97 made jti optional.\n\nSuggested fix: either drop \"or to revoke them\" from 5.1, or require that deployments supporting per-WIT revocation include jti in every issued token, with a cross-reference from 9.2.1.\n\nRaised as item 2 in my WGLC review: https://mailarchive.ietf.org/arch/msg/wimse/S5Zjmr4qneFsAmepgRWhkWtFdPA/\n",
       "createdAt": "2026-07-16T11:23:23Z",
-      "updatedAt": "2026-09-15T14:26:23Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-06T11:58:01Z",
+      "closedAt": "2026-10-06T11:58:01Z",
       "comments": []
     },
     {
@@ -5217,7 +5217,7 @@
       "id": "I_kwDOLJmm788AAAABQi0epQ",
       "title": "Consistent algorithms across the documents",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/312",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -5226,8 +5226,8 @@
       ],
       "body": "The three drafts are consistent in deriving the workload PoP algorithm from `cnf.jwk.alg`, but their examples do not use the MTI algorithm.\n\n`workload-creds` requires support for `ES256`, while its `cnf.jwk` example uses `EdDSA`/Ed25519. The WPT and HTTP-Sig examples follow that choice.\n\nProposed change:\n\n- Change the workload PoP examples in all three drafts to P-256/`ES256`.\n- Keep EdDSA and other permitted asymmetric JWS algorithms as optional alternatives.\n- In `workload-creds`, tighten the wording for `cnf.jwk.alg` to say directly that it identifies an asymmetric JWS signature algorithm.\n\nThe MTI requirement should remain defined only in `workload-creds`; WPT and HTTP-Sig should inherit it.",
       "createdAt": "2026-09-09T22:04:01Z",
-      "updatedAt": "2026-09-20T11:59:47Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-06T17:00:34Z",
+      "closedAt": "2026-10-06T17:00:34Z",
       "comments": [
         {
           "author": "bc-pi",
@@ -5943,6 +5943,361 @@
       "updatedAt": "2026-10-06T03:07:24Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 370,
+      "id": "I_kwDOLJmm788AAAABVXGXRA",
+      "title": "Multiple trust domains sharing or overlapping trust roots",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/370",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds",
+        "draft-ietf-wimse-mutual-tls"
+      ],
+      "body": "See https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/286/#discussion_r4195286865\n\n> Do we restrict a trust root to a single trust domain? there may be a small gap here in that if the same trust root is used for multiple trust domains you may not event understand what trust domain you have. This might be a small difference, but I think it happens in practice.",
+      "createdAt": "2026-10-06T12:36:05Z",
+      "updatedAt": "2026-10-06T14:27:09Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Example:\n\nTrust Domain A bundle:\n     CA 123\n\nTrust Domain B bundle:\n     CA 123\n\nNow, if WIC `wimse://A/foo` comes along it can be successfully validated using bundle A and B. ~~The question is, is `wimse://A/foo` a valid member of trust domain B?~~ We believe no.\n\nThe REAL question is how the validator ensures that even though standard x509 path chain building succeeds it's not a valid member or detects this.",
+          "createdAt": "2026-10-06T14:20:11Z",
+          "updatedAt": "2026-10-06T14:22:52Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Discussed with @yaronf today. We believe that this needs to be reflected in the security considerations.",
+          "createdAt": "2026-10-06T14:27:06Z",
+          "updatedAt": "2026-10-06T14:27:06Z"
+        }
+      ]
+    },
+    {
+      "number": 371,
+      "id": "I_kwDOLJmm788AAAABVXtKNg",
+      "title": "Define what \"kept private\" requires of the private key",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/371",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "Raised by Andrii Deinega in the WGLC for WIMSE Workload Credentials, with proposed text from Songbo Bu and support from Karthik Rampalli. Filing late so the thread is not lost.\n\n\"Workload Identity Key Management\" currently says only:\n\n> * MUST be kept private\n\nAndrii's point: a file with permissions set to 400, process memory, a software KMS, a remote signer, and a hardware-backed non-exportable key all satisfy that sentence identically, while implying completely different attacker models. There is no way to review an implementation against it.\n\nSongbo proposed the following replacement text on-list, which keeps the document technology-neutral but makes the security assumption explicit:\n\n> For purposes of this section, keeping the private key private means that the private key is not intentionally disclosed outside the workload instance or an authorized signing component, is not placed in credentials, logs, images, configuration artifacts, or bearer tokens, and is not made available to intermediaries except as part of an explicitly trusted signing service. Compromise or disclosure of the private key invalidates the security assumptions of the associated WIT or WIC. This document does not require a particular key-protection mechanism; deployments that require stronger properties such as non-exportability, hardware-backed protection, or binding to a measured runtime need additional deployment-specific evidence or profile requirements. Verifiers MUST NOT infer such stronger properties from the WIT or WIC alone.\n\nKarthik explicitly seconded this, singling out the final sentence as the one that matters: the credential looks identical in all five storage cases, so the inference boundary needs to be stated.\n\nSuggested resolution: adopt the text above, or a trimmed version of it. At minimum keep the closing rule \u2014 \"Verifiers MUST NOT infer stronger key-protection properties from the WIT or WIC alone.\"\n\nReferences:\n- Andrii Deinega: https://mailarchive.ietf.org/arch/msg/wimse/fpBJ_1SPMBRm7zT8NOMDhaqoFtk/\n- Songbo Bu (proposed text): https://mailarchive.ietf.org/arch/msg/wimse/RL3U5PjzldsUD6rKXAymogpgH48/\n- Karthik Rampalli (item 1): https://mailarchive.ietf.org/arch/msg/wimse/UPc_DfKS6MW5b_rRIbA41u7vd7Q/\n",
+      "createdAt": "2026-10-06T13:20:15Z",
+      "updatedAt": "2026-10-06T16:50:47Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I'm not entirely convinced it's needed but the suggested text seems okay. I'd prefer a non-RFC2119 phrasing in the last sentence though. ",
+          "createdAt": "2026-10-06T16:50:47Z",
+          "updatedAt": "2026-10-06T16:50:47Z"
+        }
+      ]
+    },
+    {
+      "number": 372,
+      "id": "I_kwDOLJmm788AAAABVXtM_g",
+      "title": "Key re-generation SHOULD conflicts with non-exportable hardware keys",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/372",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "Raised by Karthik Rampalli (item 2) in the WGLC for WIMSE Workload Credentials. Filing late so the thread is not lost.\n\n\"Workload Identity Key Management\" says:\n\n> * SHOULD be re-generated for each new Workload Identity Token or Certificate.\n\nThat SHOULD conflicts with hardware-backed non-exportable keys, where a stable key is the entire point of the deployment. As written, such deployments are permanently in violation of a SHOULD for a reason that has nothing to do with the security property the SHOULD is protecting.\n\nClaude:\n> Suggested resolution: one sentence acknowledging that profiles MAY retain a stable key where the key is non-exportable and its protection is separately evidenced, keeping the base document neutral across both deployment styles.\n\nRelated: #1 in this batch (what \"kept private\" requires) covers the same section.\n\nReference: https://mailarchive.ietf.org/arch/msg/wimse/UPc_DfKS6MW5b_rRIbA41u7vd7Q/\n",
+      "createdAt": "2026-10-06T13:20:17Z",
+      "updatedAt": "2026-10-06T14:55:18Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 373,
+      "id": "I_kwDOLJmm788AAAABVXtO6g",
+      "title": "State that delegation and on-behalf-of context are out of scope for the credential",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/373",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "Raised by Karthik Rampalli (item 3) in the WGLC for WIMSE Workload Credentials. Filing late so the thread is not lost.\n\n\"One Workload Identity per Credential\" establishes the one-identifier rule, which is sound, but says nothing about delegation. Without a statement of scope, implementers facing agent-to-agent chains will be tempted to overload `sub` or additional SubjectAltNames to carry chain context \u2014 which the single-identifier rule then makes ambiguous.\n\nClaude:\n> Suggested resolution: one sentence stating that delegation and on-behalf-of context are out of scope for the credential itself and belong to application-layer mechanisms.\n\nNote the reviewer disclosed an interest: draft-rampalli-pedigree is one individual-draft attempt at that application layer, so he has an interest in the boundary being stated clearly. The boundary is worth stating regardless of which document eventually fills it.\n\nReference: https://mailarchive.ietf.org/arch/msg/wimse/UPc_DfKS6MW5b_rRIbA41u7vd7Q/\n",
+      "createdAt": "2026-10-06T13:20:19Z",
+      "updatedAt": "2026-10-06T14:54:35Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Delegation is out of scope. We should make that explicit but not have opinions where it belongs (application vs transport)",
+          "createdAt": "2026-10-06T14:54:35Z",
+          "updatedAt": "2026-10-06T14:54:35Z"
+        }
+      ]
+    },
+    {
+      "number": 374,
+      "id": "I_kwDOLJmm788AAAABVXtQiA",
+      "title": "Reduce normative and definitional duplication with WIMSE-ID and the architecture draft",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/374",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "Raised by Jean-Fran\u00e7ois \"Jeff\" Lombardo (AWS) in the WGLC for WIMSE Workload Credentials. Filing late so the review is not lost.\n\nFour passages restate content that is normatively owned by another document. Each creates a maintenance risk: if the other document evolves, the two can diverge on what \"the requirements\" are. Grouped into one issue because they are a single editorial decision \u2014 how much this draft should restate \u2014 and because three of the four sit in text that PR #246 rewrites.\n\n- [ ] **The URI MUST in \"Workload Identifiers and Authentication Granularity\".** \"implementations MUST enforce the URI requirements outlined in {{Section 4.1 of WIMSE-ID}}\" duplicates normative requirements already in draft-ietf-wimse-identifier Section 4.1 (absolute URI, non-empty authority, prohibited components) and Section 7.1 (\"Implementations MUST enforce the URI requirements defined in this document\"). Suggested: soften to a non-normative pointer, e.g. \"Implementations are expected to conform to the URI requirements outlined in Section 4.1 of [WIMSE-ID].\"\n\n- [ ] **The paragraph restating the scheme content** (\"As noted in {{WIMSE-ID}}, a Workload Identifier is a URI that includes a trust domain in the authority component... the `wimse` URI scheme MAY be used; it is defined in {{WIMSE-ID}}, which also registers it with IANA.\"). This restates draft-ietf-wimse-identifier Sections 4.1 and 4.4 with no new normative content, including a MAY that is definitional content belonging to WIMSE-ID. Suggested: remove, or reduce to one orienting sentence.\n\n- [ ] **The first paragraph of \"Establishing Trust Anchors\"** (\"Trust anchors can be represented in different ways depending on the deployment; for example, as a set of public keys (such as a JWKS), as an X.509 certification authority...\") largely restates draft-ietf-wimse-arch Section 3.1.1, which already establishes that a trust domain maps to trust anchors for X.509 and a mechanism for obtaining a JWK Set. Suggested: delegate the definitional content and keep only the transition into the validation rules that follow.\n\n- [ ] **Circular referencing between the `sub` claim and granular-auth.** The `sub` bullet says \"{{granular-auth}} provides additional requirements associated with these identifiers\", but after the duplication above is removed there is little normative content left there to point at. Suggested: make the `sub` bullet self-contained \u2014 \"The subject is the Workload Identifier as defined in [WIMSE-ID], constrained to exactly one per credential (see One Workload Identity per Credential)\" \u2014 and drop the back-reference.\n\nNote on sequencing: PR #246 rewrites the granular-auth section and deletes the mapping requirement that was its other normative content. These items are best decided in the same pass as that merge.\n\nReference: https://mailarchive.ietf.org/arch/msg/wimse/Wc7eCyPbo-OsQuaSmEFR26pabXA/\n",
+      "createdAt": "2026-10-06T13:20:21Z",
+      "updatedAt": "2026-10-06T13:20:21Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 375,
+      "id": "I_kwDOLJmm788AAAABVXtSmg",
+      "title": "Remove or condense the \"Use In Other Protocols\" subsection",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/375",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "Raised by Jean-Fran\u00e7ois \"Jeff\" Lombardo (AWS) in the WGLC for WIMSE Workload Credentials. Filing late so the review is not lost.\n\nThe subsection reads in full:\n\n> The credentials defined in this document are designed to be used in various protocols. This document does not define the protocols themselves, but rather the credentials that can be used within them. Additional protocols MAY be defined in the future that use these credentials for workload authentication.\n\nThe reviewer's objection: a standalone subsection for what amounts to \"other specs can reference this\" adds no value. The specific protocol bindings are already referenced in the introduction, and further cross-references appear in their respective sections throughout the document.\n\nSuggested resolution: remove the subsection, or fold it into a single sentence in the introduction.\n\nReference: https://mailarchive.ietf.org/arch/msg/wimse/Wc7eCyPbo-OsQuaSmEFR26pabXA/\n",
+      "createdAt": "2026-10-06T13:20:23Z",
+      "updatedAt": "2026-10-06T14:52:31Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Agreed to remove the sub-section and merge into above. Also, the MAY is not normative and needs to be lower-cased.",
+          "createdAt": "2026-10-06T14:52:31Z",
+          "updatedAt": "2026-10-06T14:52:31Z"
+        }
+      ]
+    },
+    {
+      "number": 376,
+      "id": "I_kwDOLJmm788AAAABVXtUeg",
+      "title": "Provide separate example message flows for WIT and WIC",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/376",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "Raised by Jean-Fran\u00e7ois \"Jeff\" Lombardo (AWS) in the WGLC for WIMSE Workload Credentials. Filing late so the review is not lost.\n\n\"Deployment Architecture and Message Flow\" presents one combined flow, beginning:\n\n> 1. A transport connection is set up. This may already include the use of the Workload Identity Certificate with transport-layer security, such as TLS.\n\nThe flow is implicitly modelled around the WIC/mTLS case. For WIT-based, application-layer-only deployments the steps and ordering differ: there may be no distinct identity-bearing transport setup step at all, and authentication happens entirely at the application layer. The combined flow obscures that WIT-only deployments skip the first step.\n\nClaude:\n> Suggested resolution: two separate example flows, one for the WIC at the transport layer and one for the WIT at the application layer, so the two authentication patterns are concrete and not conflated.\n\nReference: https://mailarchive.ietf.org/arch/msg/wimse/Wc7eCyPbo-OsQuaSmEFR26pabXA/\n",
+      "createdAt": "2026-10-06T13:20:25Z",
+      "updatedAt": "2026-10-06T14:50:00Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Current steps are quite confusing. MAY include and generally wishy-washy.\n\n> A transport connection is set up. This may already include the use of the Workload Identity Certificate with transport-layer security, such as TLS.\nWorkload A prepares to call Workload B. This may include adding application-layer authentication information, such as the Workload Identity Token and proof of possession. Workload B authenticates Workload A.\nWorkload B authorizes Workload A and the call.\nWorkload B returns a response to Workload A, which may be either a success or an error response.",
+          "createdAt": "2026-10-06T14:50:00Z",
+          "updatedAt": "2026-10-06T14:50:00Z"
+        }
+      ]
+    },
+    {
+      "number": 377,
+      "id": "I_kwDOLJmm788AAAABVXtWSA",
+      "title": "\"Application-Layer\" and \"Transport-Layer Workload-to-Workload Authentication\" define credential formats, not authentication",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/377",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "Raised by Jean-Fran\u00e7ois \"Jeff\" Lombardo (AWS) in the WGLC for WIMSE Workload Credentials. Filing late so the review is not lost.\n\nThe two section titles \u2014\n\n- `# Application-Layer Workload-to-Workload Authentication {#app-layer}`\n- `# Transport-Layer Workload-to-Workload Authentication {#transport-layer}`\n\n\u2014 imply these sections define authentication using the credentials. They do not. As the introduction states, the protocol bindings that perform authentication are specified in separate documents and are explicitly out of scope:\n\n- transport-layer authentication in draft-ietf-wimse-mutual-tls\n- application-layer authentication in draft-ietf-wimse-wpt and draft-ietf-wimse-http-signature\n\nWhat these sections actually define is the credential format \u2014 claims, fields, and validation of the credential itself.\n\nSuggested resolution: retitle both to reflect that they define credentials, not authentication protocols.\n\nReference: https://mailarchive.ietf.org/arch/msg/wimse/Wc7eCyPbo-OsQuaSmEFR26pabXA/\n",
+      "createdAt": "2026-10-06T13:20:27Z",
+      "updatedAt": "2026-10-06T14:46:58Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This is editorial, but generally agreed. (with @yaronf on the weekly call)",
+          "createdAt": "2026-10-06T14:46:58Z",
+          "updatedAt": "2026-10-06T14:46:58Z"
+        }
+      ]
+    },
+    {
+      "number": 378,
+      "id": "I_kwDOLJmm788AAAABVXtX_g",
+      "title": "Listing `jti` as a correlation mechanism is confusing",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/378",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "Raised by Flemming Andreasen (Cisco, item 4) in the WGLC for WIMSE Workload Credentials. Filing late so the review is not lost.\n\n\"One Workload Identity per Credential\" says:\n\n> Additional correlation for logging or operations MUST NOT be encoded as a second Workload Identifier in the same WIT or WIC. This restriction applies only to Workload Identifiers; deployments MAY use other mechanisms for correlation, interoperability, or integration purposes, such as the optional `jti` claim, a DNSName SubjectAltName, separate credentials, or additional claims as described in {{add-claims}}.\n\nThe reviewer's objection: the `jti` part is confusing in that context \u2014 it is not clear how you would use `jti` to carry a second workload identifier or correlation value. `jti` is a unique token identifier, not a place to put deployment correlation data.\n\nThe surrounding list was broadened when #255 was resolved (the DNSName SubjectAltName was added), but `jti` was left in it.\n\nClaude:\n> Suggested resolution: drop `jti` from this list, or say explicitly what correlation role it is meant to play. Note that #269 has since given `jti` a second, distinct purpose (identifying individual tokens where a deployment operates a status list or deny-list), which makes it more important that this sentence does not also imply a correlation role.\n\nReference: https://mailarchive.ietf.org/arch/msg/wimse/onRFqESmXQOwPY4zyODQYf-Z7A8/\n",
+      "createdAt": "2026-10-06T13:20:29Z",
+      "updatedAt": "2026-10-06T14:45:46Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Agreed to drop `jti` from the examples, it's confusing.",
+          "createdAt": "2026-10-06T14:45:46Z",
+          "updatedAt": "2026-10-06T14:45:46Z"
+        }
+      ]
+    },
+    {
+      "number": 379,
+      "id": "I_kwDOLJmm788AAAABVXtZtw",
+      "title": "Editorial nits from Flemming Andreasen's WGLC review",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/379",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "Raised by Flemming Andreasen (Cisco) in the WGLC for WIMSE Workload Credentials. Filing late so the review is not lost. Batched in the style of #267; the substantive items from the same review are filed separately.\n\n- [ ] **\"vend\" (item 7).** The media type registration reads \"Applications that use this media type: Identity Servers that vend Workload Identity Tokens, and workloads that...\" \u2014 \"issue\" is the term used everywhere else.\n\n- [ ] **\"carried only in the token\" (item 2).** In \"Establishing Trust Anchors\": \"...MUST NOT be used to look up trust anchor material directly from information carried only in the token (such as by fetching a JWKS from a URL found only in the WIT).\" The sentence was scoped to the WIT when #262 was resolved, but this clause still says \"the token\". Suggested: \"carried only in the WIT\".\n\n- [ ] **TLS vs mutual TLS in the message flow (item 1).** Step 1 reads \"This may already include the use of the Workload Identity Certificate with transport-layer security, such as TLS\", where the introduction consistently says mutual TLS. Partly overtaken by the rework of that section, but worth a consistency check.\n\n- [ ] **Figure indentation (item 5).** Reported against -02 as \"Figure 5: Fix indentation\". The mismatched ABNF fence was fixed when #266 was resolved and this appears to be addressed, but it is worth one visual check of the next rendered draft before closing.\n\nItems from the same review filed separately: the `jti` correlation wording, and the Section 4 / granular-auth instance-identity tension (the latter is entangled with PR #246 and should be checked at that merge).\n\nAlready resolved from this review: \"s/MTLS/mTLS\" with the acronym expanded on first use; claim-name quoting, settled as backticks when #265 was resolved.\n\nReference: https://mailarchive.ietf.org/arch/msg/wimse/onRFqESmXQOwPY4zyODQYf-Z7A8/\n",
+      "createdAt": "2026-10-06T13:20:30Z",
+      "updatedAt": "2026-10-06T13:20:30Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 380,
+      "id": "I_kwDOLJmm788AAAABVXtbYQ",
+      "title": "Key types and downgrade considerations for the proof-of-possession algorithm",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/380",
+      "state": "CLOSED",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-http-signature"
+      ],
+      "body": "Raised by Flemming Andreasen (Cisco) in the WGLC for the HTTP Signatures draft, where he wrote of two of his items:\n\n> d) Which JWS/JWA algorithms and key types MUST be supported at a minimum (interop baseline)?\n> e) What about downgrade attack considerations and local policies around acceptable algorithms?\n>\n> Note: We should probably consider d) and e) in the workload credentials draft too.\n\nCurrent state of this draft:\n\n- **Algorithms.** Partly covered: the `cnf.jwk` `alg` bullet requires `ES256` support by general purpose implementations, and this document is where the MTI requirement lives for WPT and HTTP-Sig to inherit.\n- **Key types.** Not stated anywhere. The `alg` field constrains the algorithm but the document never says which key types an implementation must support.\n- **Downgrade and algorithm policy.** Absent. draft-ietf-wimse-http-signature now points at Section 7.3.6 of RFC 9421 on key and algorithm specification downgrades; this document says nothing equivalent, even though it is the document that defines where the algorithm comes from (`cnf.jwk.alg`) and is therefore where a validator's accepted-algorithm policy belongs.\n\nClaude:\n> Suggested resolution: state the key-type baseline alongside the existing `ES256` MTI, and add a short consideration on acceptable-algorithm policy and downgrade.\n\nRelated: #312 covers making the examples consistent with the MTI algorithm. This issue is about the interop baseline and algorithm policy rather than the examples, so it is filed separately.\n\nReference: https://mailarchive.ietf.org/arch/msg/wimse/K7t1qHNXVEbkaOyTd2O6qDOfkzc/\n",
+      "createdAt": "2026-10-06T13:20:32Z",
+      "updatedAt": "2026-10-06T14:44:02Z",
+      "closedAt": "2026-10-06T14:44:02Z",
+      "comments": [
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Duplicated. Fixed by @yaronf .",
+          "createdAt": "2026-10-06T14:44:02Z",
+          "updatedAt": "2026-10-06T14:44:02Z"
+        }
+      ]
+    },
+    {
+      "number": 381,
+      "id": "I_kwDOLJmm788AAAABVXtdLg",
+      "title": "Integrity of the external-handle to Workload Identifier mapping source is unowned",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/381",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "Raised by Toshiyuki \"Tom\" Sato (item 1) in the WGLC for the Workload Identifier draft, explicitly as a cross-draft item. Filing here so it has a home in this repository.\n\nThe reviewer's point:\n\n> Section 5 (Identifier Interpretation and Mapping) requires a deployment-defined mapping between external handles (DNS names, service names, load-balancer addresses) and the Workload Identifier, but says nothing about the integrity of the mapping source itself. If the service-discovery or orchestration system supplying that mapping is spoofed or misconfigured, a consumer can be led to accept traffic under the wrong external-handle-to-identifier association \u2014 which undermines the trust-domain binding Section 7.3 is otherwise careful about.\n\nHe notes this is the same seam as his open item on draft-ietf-wimse-mutual-tls Section 3.2.1 (DNS vs workload identity server validation), that the two documents describe the same boundary from opposite sides, and that neither states who is responsible for the mapping's trustworthiness. He asks that it be resolved as one issue across the drafts rather than separately in each.\n\nSequencing: PR #246 rewrites exactly this area in this draft, replacing the mapping requirement with an application-layer audience check. That rewrite does not address mapping-source integrity \u2014 under it, deployments MUST provide the configuration or infrastructure for audience verification, but nothing says that configuration must come from a trustworthy source. Worth settling in the same pass as that merge.\n\nReference: https://mailarchive.ietf.org/arch/msg/wimse/jR16qhAwrMgc-YRgTa8xPjYsb3Q/\n",
+      "createdAt": "2026-10-06T13:20:34Z",
+      "updatedAt": "2026-10-06T14:33:38Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Discussed with @yaronf today. We agree that we need to point out trust assumptions and make it explicit that the \"mapping\" is trusted. However, we'll be addressing it once #246 is merged.",
+          "createdAt": "2026-10-06T14:33:38Z",
+          "updatedAt": "2026-10-06T14:33:38Z"
+        }
+      ]
+    },
+    {
+      "number": 382,
+      "id": "I_kwDOLJmm788AAAABVXtfJQ",
+      "title": "State the dependency that establishes ownership of an FQDN trust domain",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/382",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "Raised by Toshiyuki \"Tom\" Sato (item 2) in the WGLC for the Workload Identifier draft, pointing at this document for the answer. Filing here so it has a home in this repository.\n\nThe reviewer's point:\n\n> Section 4.3 recommends the trust domain be a FQDN \"to help provide uniqueness\" (SHOULD-level), but nothing here \u2014 or cross-referenced \u2014 requires that only the legitimate owner of that FQDN can mint identifiers under it. I'd assume that assurance comes from whatever PKI issues the credentials carrying the identifier (per [WIMSE-CREDENTIALS]), but the dependency isn't stated. A one-line pointer would close this.\n\nReference: https://mailarchive.ietf.org/arch/msg/wimse/jR16qhAwrMgc-YRgTa8xPjYsb3Q/\n",
+      "createdAt": "2026-10-06T13:20:36Z",
+      "updatedAt": "2026-10-06T14:43:16Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "The goal is to encourage uniqueness but in order to require it we would need to enforce it which is out of scope.\n\nSection 3 \"Establishing Trust Anchors\" states:\n\n> This document does not define a mechanism for discovering trust anchor information. ",
+          "createdAt": "2026-10-06T14:37:48Z",
+          "updatedAt": "2026-10-06T14:37:48Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Todo: We need to find the original text and see where it went. 4.3 doesn't exist today anymore.",
+          "createdAt": "2026-10-06T14:43:16Z",
+          "updatedAt": "2026-10-06T14:43:16Z"
+        }
+      ]
+    },
+    {
+      "number": 383,
+      "id": "I_kwDOLJmm788AAAABVXtgwA",
+      "title": "No document owns channel binding of an application-layer artifact to the mTLS session",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/383",
+      "state": "CLOSED",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "Raised by Kieran Sweeney in the WGLC for the Mutual TLS draft, as an explicit question about document ownership. Filing here because the mutual-TLS side has since declined it.\n\nThe question:\n\n> One open question, not a blocker: when an application-layer WIMSE mechanism crosses a TLS-terminating hop (Section 5), do we want a stated channel binding to the mTLS session, and which document owns it? Glad to contribute text wherever that lands.\n\nToshiyuki Sato raised the same gap from the other direction in his mutual-TLS review: without a stated binding, an application-layer credential travelling alongside mTLS is a bearer artifact usable outside the mTLS context it was meant to accompany.\n\nBoth sides now point away from it:\n\n- **mutual-tls:** #344 was closed on 2026-09-23 without action \u2014 \"I think security properties of application-layer authentication are out of scope for mTLS specification.\"\n- **workload-creds:** \"Binding to TLS Endpoint\" says \"The PoP MAY be bound to a transport layer sender such as the client identity of a TLS session or TLS channel binding parameters. The mechanisms for binding are outside the scope of this document.\"\n\nSo the mechanism is out of scope in the document that defines the credential and out of scope in the document that defines the TLS profile. That may well be the right answer, but it should be a decision rather than an accident, and the reviewer has offered to write text.\n\nSuggested resolution: decide which document owns it \u2014 this one, one of the PoP bindings (wpt / http-signature), or neither \u2014 and if neither, say so explicitly rather than leaving two mutual deferrals.\n\nReferences:\n- Kieran Sweeney: https://mailarchive.ietf.org/arch/msg/wimse/JQN8BoIc8GXSAG3f9Iyet-ScwTA/\n- Toshiyuki Sato (mutual-TLS review, item 2): https://mailarchive.ietf.org/arch/msg/wimse/faWkmRjz989bBWWPvx7cf0asGUU/\n",
+      "createdAt": "2026-10-06T13:20:38Z",
+      "updatedAt": "2026-10-06T14:30:20Z",
+      "closedAt": "2026-10-06T14:30:20Z",
+      "comments": [
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "We believe that application-layer credentials are by design not bound to the TLS layer to allow for TLS-terminating proxies. If we'd bind them the identity would become unusable for proxy->backend communication.",
+          "createdAt": "2026-10-06T14:30:20Z",
+          "updatedAt": "2026-10-06T14:30:20Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -19324,13 +19679,12 @@
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [
-        "draft-ietf-wimse-http-signature",
         "draft-ietf-wimse-wpt",
         "draft-ietf-wimse-workload-creds"
       ],
       "body": "- **workload-creds (#173, #175):** Replace the mandatory access-path-to-identifier mapping API with infrastructure support for verifying that an HTTP target URI (RFC 9110 Section 7.1, without query or fragment) is intended for a workload. Document the roles of HTTP target URI (audience) vs Workload Identifier (sender) for WPT, HTTP signatures, and mTLS.\r\n- **WPT (#175):** Tie `aud` to \"Workload Identifiers and Authentication Granularity\" in workload-creds; otherwise unchanged from main.\r\n\r\nCloses #173, #175. Addresses #240.",
       "createdAt": "2026-06-19T10:29:32Z",
-      "updatedAt": "2026-09-29T14:53:56Z",
+      "updatedAt": "2026-10-06T13:38:43Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "47ea2c307807c7e3daf85cbeb2b5e1e95aef72b2",
@@ -19765,6 +20119,26 @@
           "createdAt": "2026-09-29T14:53:56Z",
           "updatedAt": "2026-09-29T14:53:56Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABQ5snYg",
+          "commit": {
+            "abbreviatedOid": "4ee2456"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-10-06T13:38:42Z",
+          "updatedAt": "2026-10-06T13:38:43Z",
+          "comments": [
+            {
+              "originalPosition": 16,
+              "body": "Why not? The threat model includes a malicious proxy that might modify responses. So when possible, we do want to HTTP client to know that it's getting a response targeted at it.\r\n\r\nGranted this is not to most important security guarantee, but it sure belongs here.",
+              "createdAt": "2026-10-06T13:38:42Z",
+              "updatedAt": "2026-10-06T13:38:43Z"
+            }
+          ]
         }
       ]
     },
@@ -21465,7 +21839,7 @@
       "id": "PR_kwDOLJmm7879CGuH",
       "title": "Clarify workload identifier and add security considerations",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/286",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -21474,17 +21848,19 @@
       ],
       "body": "Added security considerations for granular auth section.\r\n\r\nRelated to #272 ",
       "createdAt": "2026-08-10T13:42:14Z",
-      "updatedAt": "2026-09-28T00:19:46Z",
+      "updatedAt": "2026-10-06T14:09:44Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
-      "baseRefOid": "ac0f364ba46b50520181795d5dfed987ac64e28b",
+      "baseRefOid": "048f6bee47a72c014d924a997ccdca7ebf0520f1",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "arndt/resolve_272",
-      "headRefOid": "fdcb4f717bdc562c05d7c641e5dd427e618de93e",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "40dd30e9519bc672efe3a0389c31d2d9ff717033",
+      "closedAt": "2026-10-06T14:09:38Z",
+      "mergedAt": "2026-10-06T14:09:38Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "9888d280582eaff7769f165065fbc832d0a6962d"
+      },
       "comments": [
         {
           "author": "yaronf",
@@ -21499,6 +21875,13 @@
           "body": "@bc-pi @yaronf as discussed on Tuesday, I removed the main part and kept the security considerations.",
           "createdAt": "2026-08-13T11:38:14Z",
           "updatedAt": "2026-08-13T11:38:14Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I still think the text is not good. It brings up several issues (mistaken issuance, missing revocation) that are not really addressed here. Also \"supposed to present\" is too vague to be useful.\r\n\r\nIt's not clear what the section is about. I think it can be cut by half and just say, checking the signature is not sufficient, go see \"granular auth\".\r\n\r\nOr if we do want to say more than that, it needs more work.",
+          "createdAt": "2026-10-06T13:33:39Z",
+          "updatedAt": "2026-10-06T13:33:39Z"
         }
       ],
       "reviews": [
@@ -21825,6 +22208,72 @@
               "updatedAt": "2026-09-28T00:19:46Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABQ44cHg",
+          "commit": {
+            "abbreviatedOid": "fdcb4f7"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-10-06T12:32:38Z",
+          "updatedAt": "2026-10-06T12:32:38Z",
+          "comments": [
+            {
+              "originalPosition": 8,
+              "body": "```suggestion\r\nWithout that comparison workloads in the trust domain cannot be securely distinguished. Any workload holding a valid credential can be accepted in place of any other, so an attacker compromising one workload can move laterally and gain access on behalf of any other workload within given trust domain. A credential issued by mistake, or one belonging to a workload that no longer exists, can be used in the same way until it expires. This affects both sides of a call, workloads acting as clients and workloads acting as servers.\r\n```\r\nremoved a left over word",
+              "createdAt": "2026-10-06T12:32:38Z",
+              "updatedAt": "2026-10-06T12:32:39Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABQ46PTQ",
+          "commit": {
+            "abbreviatedOid": "fdcb4f7"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-10-06T12:34:55Z",
+          "updatedAt": "2026-10-06T12:34:55Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "That's a good question @jsalowey. I'll create an issue for it as it's not just this PR that is affected by it IMO.",
+              "createdAt": "2026-10-06T12:34:55Z",
+              "updatedAt": "2026-10-06T12:34:55Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABQ5o8qA",
+          "commit": {
+            "abbreviatedOid": "fa3b6ea"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "Per my latest comment.",
+          "createdAt": "2026-10-06T13:34:02Z",
+          "updatedAt": "2026-10-06T13:34:02Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABQ6GGCw",
+          "commit": {
+            "abbreviatedOid": "40dd30e"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-10-06T14:08:51Z",
+          "updatedAt": "2026-10-06T14:08:51Z",
+          "comments": []
         }
       ]
     },
@@ -24599,7 +25048,7 @@
       "id": "PR_kwDOLJmm788AAAABElgcCg",
       "title": "Clarify jti and relation to revocation",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/364",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -24608,17 +25057,19 @@
       ],
       "body": "Resolves #269.\r\n\r\nBring WIT revocation closer to WIC. Clarify how it could be used but overall is not in scope and implementations are not expected to support revocation.",
       "createdAt": "2026-09-22T13:35:18Z",
-      "updatedAt": "2026-09-28T00:21:04Z",
+      "updatedAt": "2026-10-06T11:58:08Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "ac0f364ba46b50520181795d5dfed987ac64e28b",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "arndt/resolve_269",
-      "headRefOid": "03639d875b5d700f0271c8ebb1bb9df8c11e9034",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "a988da4292c1e6f9e1024291b48478a077ffd02e",
+      "closedAt": "2026-10-06T11:58:00Z",
+      "mergedAt": "2026-10-06T11:58:00Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "048f6bee47a72c014d924a997ccdca7ebf0520f1"
+      },
       "comments": [],
       "reviews": [
         {
