@@ -1471,7 +1471,9 @@ The <code>@authority</code> derived component is not included: TLS-terminating p
 </li>
       </ul>
 <p id="section-3-9">To protect the integrity of the message body, if the request or response includes a body, the sender <span class="bcp14">MUST</span> include
-(and the receiver <span class="bcp14">MUST</span> verify) a Content-Digest header. This implies the receiver <span class="bcp14">MUST</span> compute the Content-Digest value for the message content received and compare it with the Content-Digest value provided in the message.<a href="#section-3-9" class="pilcrow">¶</a></p>
+(and the receiver <span class="bcp14">MUST</span> verify) a <code>Content-Digest</code> header as defined in <span>[<a href="#RFC9530" class="cite xref">RFC9530</a>]</span>.
+This implies the receiver <span class="bcp14">MUST</span> compute the <code>Content-Digest</code> value for the message content received
+and compare it with the <code>Content-Digest</code> value provided in the message.<a href="#section-3-9" class="pilcrow">¶</a></p>
 <p id="section-3-10">For both requests and responses, the following signature parameters <span class="bcp14">MUST</span> be included:<a href="#section-3-10" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3-11.1">
@@ -2227,8 +2229,12 @@ of <span>[<a href="#RFC9457" class="cite xref">RFC9457</a>]</span>.<a href="#sec
 <span class="refAuthor">Nottingham, M.</span>, <span class="refAuthor">Wilde, E.</span>, and <span class="refAuthor">S. Dalal</span>, <span class="refTitle">"Problem Details for HTTP APIs"</span>, <span class="seriesInfo">RFC 9457</span>, <span class="seriesInfo">DOI 10.17487/RFC9457</span>, <time datetime="2023-07" class="refDate">July 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9457">https://www.rfc-editor.org/rfc/rfc9457</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9525">[RFC9525]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Saint-Andre, P.</span> and <span class="refAuthor">R. Salz</span>, <span class="refTitle">"Service Identity in TLS"</span>, <span class="seriesInfo">RFC 9525</span>, <span class="seriesInfo">DOI 10.17487/RFC9525</span>, <time datetime="2023-11" class="refDate">November 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9525">https://www.rfc-editor.org/rfc/rfc9525</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9530">[RFC9530]</dt>
+      <dd>
+<span class="refAuthor">Polli, R.</span> and <span class="refAuthor">L. Pardue</span>, <span class="refTitle">"Digest Fields"</span>, <span class="seriesInfo">RFC 9530</span>, <span class="seriesInfo">DOI 10.17487/RFC9530</span>, <time datetime="2024-02" class="refDate">February 2024</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9530">https://www.rfc-editor.org/rfc/rfc9530</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
