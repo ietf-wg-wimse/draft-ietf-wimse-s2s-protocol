@@ -442,13 +442,10 @@ Mitigations listed in the protocol provide a reasonable level of security in the
 if responses are signed in addition to requests.
 See also {{signing-the-response}} for the distinction between client-mandated and opportunistic response signing.
 
-## Privacy Considerations
+# Privacy Considerations
 
-WITs and the signatures may contain private information such as user names or other identities. Care must be taken to prevent disclosure of this information. The use of TLS helps protect the privacy of WITs and PoPs.
-
-WITs are typically associated with a workload and not a specific user, however
-in some deployments the workload may be associated directly to a user. In those cases a deployment should evaluate if the disclosure of
-WITs or signatures can be used to track a user.
+Privacy considerations for the Workload Identity Token and its proof of possession are discussed in
+{{I-D.ietf-wimse-workload-creds}}. This profile does not introduce additional privacy concerns beyond those.
 
 # Security Goals
 
