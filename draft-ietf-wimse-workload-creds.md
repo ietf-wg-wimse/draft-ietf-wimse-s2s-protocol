@@ -175,7 +175,7 @@ For a Workload Identity Token, that identifier is the value of the `sub` claim. 
 
 Additional correlation for logging or operations MUST NOT be encoded as a second Workload Identifier in the same WIT or WIC. This restriction applies only to Workload Identifiers; deployments MAY use other mechanisms for correlation, interoperability, or integration purposes, such as the optional `jti` claim, a DNSName SubjectAltName, separate credentials, or additional claims as described in {{add-claims}}.
 
-# Application-Layer Workload-to-Workload Authentication {#app-layer}
+# Application-Layer Credentials {#app-layer}
 
 In many deployments communication between workloads cannot use end-to-end transport security such as TLS. For these deployment styles, this document proposes a credential that can be used at the application-layer.
 
@@ -359,7 +359,7 @@ authorization policy may take into account both the sending workload's identity 
 identity in the WIT may be used to establish which API calls can be made and information in the context token may be used to determine
 which specific resources can be accessed.
 
-# Transport-Layer Workload-to-Workload Authentication {#transport-layer}
+# Transport-Layer Credentials {#transport-layer}
 
 As noted in the introduction, for many deployments, transport-layer protection of application traffic is ideal.
 
@@ -583,6 +583,7 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 * State the WIT revocation stance and resolve the conflicting `jti` description: the document does not rely on revocation, but deployments may operate a token status list or `jti` deny-list, in which case `jti` is required in every WIT (#269).
 * Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use, and consistent capitalization of the defined term "Workload Identifier".
 * Remove superfluous 'Use In Other Protocols' subsection that basically just said what amounts to "other specs can reference this"
+* Retitle Application-Layer and Transport-Layer Workload-to-Workload Authentication to Application-Layer and Transport-Layer Credentials to clarify that these are credentials, not authentication protocols.
 
 ## draft-ietf-wimse-workload-creds-02
 
