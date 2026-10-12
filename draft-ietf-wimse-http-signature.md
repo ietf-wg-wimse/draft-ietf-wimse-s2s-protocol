@@ -161,8 +161,9 @@ Recipients MUST reject signatures that fall outside their validity time window.
 Implementers need to be aware that the WIT is extracted from the message before the message signature is validated. Recipients of signed HTTP messages MUST validate the WIT as specified in {{Section 5.1.4 of I-D.ietf-wimse-workload-creds}} before validating the HTTP message signature. They MUST ensure that the message is not processed further before it has been fully validated.
 
 The WIT and the HTTP message signature MUST be sent over a server-authenticated TLS connection
-unless a secure channel is provided by some other mechanism.
-When TLS is used, the client MUST perform hostname validation according to {{Section 6.3 of !RFC9525}}.
+unless another channel provides confidentiality and server authentication comparable to TLS.
+When TLS is used, the client MUST perform hostname validation according to {{Section 6.3 of !RFC9525}},
+and TLS deployments SHOULD follow the recommendations in {{!BCP195}}.
 
 ## Signature Algorithms {#sig-algs}
 
