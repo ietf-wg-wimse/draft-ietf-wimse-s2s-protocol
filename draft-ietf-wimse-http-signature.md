@@ -154,8 +154,13 @@ Members of a sender cluster therefore need not coordinate nonce generation.
 Recipients MAY maintain a replay cache and SHOULD reject a message (request or response) whose `nonce` they have already seen. What nonces are remembered, and for how long, is a local policy matter; this document does not require replay caches to be shared across validators. Without such sharing, replay to a different cluster member can still succeed.
 
 For clarity: the signature's lifetime (the `expires` signature parameter) is different and typically much shorter than the WIT's lifetime, denoted by its `exp` claim.
+Recipients MUST reject signatures that fall outside their validity time window.
 
 Implementers need to be aware that the WIT is extracted from the message before the message signature is validated. Recipients of signed HTTP messages MUST validate the WIT as specified in {{Section 5.1.4 of I-D.ietf-wimse-workload-creds}} before validating the HTTP message signature. They MUST ensure that the message is not processed further before it has been fully validated.
+
+The WIT and the HTTP message signature MUST be sent over a server-authenticated TLS connection
+unless a secure channel is provided by some other mechanism.
+When TLS is used, the client MUST perform hostname validation according to {{Section 6.3 of !RFC9525}}.
 
 ## Signature Algorithms {#sig-algs}
 
@@ -380,8 +385,8 @@ The Workload Identity Token (WIT) is bound to a secret cryptographic key and is
 always presented with a proof of possession (PoP) as described in
 {{I-D.ietf-wimse-workload-creds}}. The WIT is a general purpose token that can be presented
 in multiple contexts. The WIT and its PoP are only used in the
-application-layer options, and neither is used in mTLS. The WIT MUST NOT be
-used as a bearer token. While this helps reduce the sensitivity of the token it
+application-layer options, and neither is used in mTLS. As specified in that document,
+the WIT is not used as a bearer token. While this helps reduce the sensitivity of the token it
 is still possible that a token and its PoP may be captured and
 replayed within the PoP's lifetime.
 
@@ -391,22 +396,22 @@ The audience is a signed signature parameter rather than a re-derived URI compon
 This profile does not cover `@authority` for that reason ({{http-sig-auth}}).
 This eliminates most of the risk associated with active attackers on a middlebox.
 
-In addition, the following mitigations should be used:
+In addition, the following mitigations apply:
 
 * Preventing Eavesdropping and Interception with TLS
 
-An attacker observing or intercepting the communication channel can view the token and its PoP and attempt to replay it to gain an advantage. In order to prevent this, the
-token and PoP MUST be sent over a secure, server authenticated TLS connection unless a secure channel is provided by some other mechanisms. Hostname validation according
-to Section 6.3 of {{!RFC9525}} MUST be performed by the client.
+An attacker observing or intercepting the communication channel can view the token and its PoP and attempt to replay it to gain an advantage.
+Sending the token and PoP on a server-authenticated TLS connection ({{http-sig-auth}}), with hostname validation,
+mitigates passive capture on the path. TLS-terminating intermediaries still see the cleartext WIT and signature; see {{middleboxes}}.
 
 * Limiting Signature Lifespan
 
-The signature lifespan MUST be limited by using a tight `expires` value, taking into account potential clock skew and
-processing latency, but usually within minutes of the message sending time. Signatures received outside their validity time MUST be rejected.
+A short `expires` value ({{http-sig-auth}}) limits the window during which a captured signature can be replayed.
+Rejecting signatures outside their validity time is required by that section.
 
 * Replay Protection
 
-A signed message includes the `nonce` signature parameter. This parameter SHOULD be used by the receiver to perform basic replay protection: a nonce that has already been seen SHOULD cause the message to be rejected.
+The `nonce` signature parameter and optional replay caching ({{http-sig-auth}}) provide basic replay detection.
 Depending upon the design of the system it may be difficult to synchronize the replay cache across all message validators.
 If an attacker can somehow influence the identity of the validator (e.g. which cluster member receives the message) then
 replay protection would not be effective.
@@ -423,9 +428,9 @@ unsigned information, such as any HTTP headers that remain unsigned.
 HTTP permits intermediaries to transform messages ({{RFC9421}}).
 This profile is intended to remain verifiable across common TLS-terminating proxies and load balancers:
 it does not cover `@authority`, and it carries recipient binding in `wimse-aud` ({{http-sig-auth}}).
-An intermediary MAY add its own HTTP message signature to a message that already carries a WIMSE signature.
+An intermediary can add its own HTTP message signature to a message that already carries a WIMSE signature.
 Recipients continue to identify the WIMSE signature by its `tag` value `wimse-workload-to-workload`
-and MUST NOT select by label ({{http-sig-auth}}).
+and do not select by label ({{http-sig-auth}}).
 
 If an intermediary changes a component covered by the WIMSE signature, verification of that signature fails.
 This document does not define a profile for stripping the origin WIMSE signature and replacing it with a new
