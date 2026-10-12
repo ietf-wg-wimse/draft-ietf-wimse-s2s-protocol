@@ -447,57 +447,6 @@ See also {{signing-the-response}} for the distinction between client-mandated an
 Privacy considerations for the Workload Identity Token and its proof of possession are discussed in
 {{I-D.ietf-wimse-workload-creds}}. This profile does not introduce additional privacy concerns beyond those.
 
-# Security Goals
-
-This section defines semiformal security goals for this protocol, when used in conjunction with the WIT credential. Our aim
-is to inform developers and for these goals to eventually evolve into formal verification of the protocol.
-
-## Prerequisites
-
-The following are out of scope of the protocol and their security is assumed.
-
-* There exists a WIT Issuer which is trusted to issue credentials honestly.
-* Workloads have a way to authenticate themselves to the Issuer and be provisioned with a valid WIT, associated
-with their WIMSE identity.
-* All workloads are provisioned with trust anchors that allow them to validate incoming WITs.
-* The entire authorization subsystem is out of scope and trusted. This can potentially include
-provisioning and enforcement of an authorization policy, issuance of transaction tokens
-and workload attestation.
-* All workload-to-workload traffic is TLS-protected. However TLS may be terminated on one or more middleboxes
-and the TLS endpoint identity (or identities) is not associated with a WIMSE identity.
-* As a result, all workload-to-workload traffic is confidential and (assuming honest participants) is only available to sender,
-receiver, and any TLS-terminating middleboxes that process the traffic.
-
-## Authentication
-
-* A workload receiving a request can validate that it is signed correctly, and can identify the sender.
-* A workload receiving a response can similarly validate the signature and identify the sender when a signed response is present.
-* The above implies that a stolen WIT cannot be used by an entity other than its owner.
-
-## Integrity
-
-* Covered components of a request cannot be modified without detection by the recipient. Integrity of
-  all present HTTP headers specified in this document is protected, as well as
-the derived components listed in {{http-sig-auth}}, the signature parameters
-(including `wimse-aud` and `wimse-sign-response` on requests and `wimse-req-nonce` on responses)
-as covered by `@signature-params` in {{RFC9421}}, and
-the message content (when present).
-* Covered components of a signed response cannot be modified without detection by the recipient.
-* This profile is designed so that, for typical REST APIs, the essential parts of the message are covered by the signature.
-* Headers not specified in this document may remain unsigned and could potentially be modified or deleted by intermediaries without detection.
-
-## Replay and Deletion
-
-* Replay protection is not strictly mandated because of implementation
-  considerations (e.g., distributed system challenges with synchronizing replay
-caches across validators). Therefore it is not claimed as
-a goal, though implementations SHOULD attempt to detect replays where feasible.
-We note that since most of the message is signed, replay attacks are only possible in a
-context where the request would be accepted as valid, and this mitigates the risk to some extent.
-* When a signed response is present, validating `wimse-req-nonce` mitigates replay of that response to a client other than the one that sent the triggering request.
-* Undetected deletion of a request/response pair is prevented only when the client required a signed response via `wimse-sign-response` with the Boolean value true and rejects an unsigned response. Server local-policy signing alone does not provide that guarantee ({{signing-the-response}}).
-
-
 # IANA Considerations {#iana-considerations}
 
 ## HTTP Signature Metadata Parameters Registration
@@ -553,6 +502,57 @@ of {{!RFC9457}}.
 * Reference: RFC XXX, {{error-conditions}}
 
 --- back
+
+# Security Goals {#security-goals}
+
+This appendix presents semiformal security goals for this protocol, when used in conjunction with the WIT credential.
+The intent is to inform developers and to support eventual formal verification of the protocol; the goals are not
+normative requirements beyond those stated in the body of this document.
+
+## Prerequisites
+
+The following are out of scope of the protocol and their security is assumed.
+
+* There exists a WIT Issuer which is trusted to issue credentials honestly.
+* Workloads have a way to authenticate themselves to the Issuer and be provisioned with a valid WIT, associated
+with their WIMSE identity.
+* All workloads are provisioned with trust anchors that allow them to validate incoming WITs.
+* The entire authorization subsystem is out of scope and trusted. This can potentially include
+provisioning and enforcement of an authorization policy, issuance of transaction tokens
+and workload attestation.
+* All workload-to-workload traffic is TLS-protected. However TLS may be terminated on one or more middleboxes
+and the TLS endpoint identity (or identities) is not associated with a WIMSE identity.
+* As a result, all workload-to-workload traffic is confidential and (assuming honest participants) is only available to sender,
+receiver, and any TLS-terminating middleboxes that process the traffic.
+
+## Authentication
+
+* A workload receiving a request can validate that it is signed correctly, and can identify the sender.
+* A workload receiving a response can similarly validate the signature and identify the sender when a signed response is present.
+* The above implies that a stolen WIT cannot be used by an entity other than its owner.
+
+## Integrity
+
+* Covered components of a request cannot be modified without detection by the recipient. Integrity of
+  all present HTTP headers specified in this document is protected, as well as
+the derived components listed in {{http-sig-auth}}, the signature parameters
+(including `wimse-aud` and `wimse-sign-response` on requests and `wimse-req-nonce` on responses)
+as covered by `@signature-params` in {{RFC9421}}, and
+the message content (when present).
+* Covered components of a signed response cannot be modified without detection by the recipient.
+* This profile is designed so that, for typical REST APIs, the essential parts of the message are covered by the signature.
+* Headers not specified in this document may remain unsigned and could potentially be modified or deleted by intermediaries without detection.
+
+## Replay and Deletion
+
+* Replay protection is not strictly mandated because of implementation
+  considerations (e.g., distributed system challenges with synchronizing replay
+caches across validators). Therefore it is not claimed as
+a goal, though implementations are encouraged to detect replays where feasible.
+We note that since most of the message is signed, replay attacks are only possible in a
+context where the request would be accepted as valid, and this mitigates the risk to some extent.
+* When a signed response is present, validating `wimse-req-nonce` mitigates replay of that response to a client other than the one that sent the triggering request.
+* Undetected deletion of a request/response pair is prevented only when the client required a signed response via `wimse-sign-response` with the Boolean value true and rejects an unsigned response. Server local-policy signing alone does not provide that guarantee ({{signing-the-response}}).
 
 # Document History
 <cref>RFC Editor: please remove before publication.</cref>
