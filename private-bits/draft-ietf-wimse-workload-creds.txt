@@ -951,8 +951,9 @@ Table of Contents
 
    *  MUST NOT be used once the credential is expired
 
-   *  SHOULD be re-generated for each new Workload Identity Token or
-      Certificate.
+   *  SHOULD be regenerated for each new Workload Identity Token or
+      Certificate, unless the key is sufficiently protected, e.g., non-
+      exportable and hardware-bound.
 
    For purposes of this section, keeping the private key private means
    that the private key is not intentionally disclosed outside the
@@ -1257,7 +1258,9 @@ A.1.  draft-ietf-wimse-workload-creds-03
       abbreviation expanded on first use, and consistent capitalization
       of the defined term "Workload Identifier".
 
-   *  say what it means to keep the private key private
+   *  say what it means to keep the private key private and that reuse
+      of a key is probably okay when it's non-exportable and hardware-
+      protected
 
 A.2.  draft-ietf-wimse-workload-creds-02
 
