@@ -168,8 +168,8 @@ When TLS is used, the client MUST perform hostname validation according to {{Sec
 
 The HTTP message signature algorithm is determined by the `alg` member of the `cnf.jwk` object in the WIT
 ("The Workload Identity Token" in {{I-D.ietf-wimse-workload-creds}}).
-This profile does not define a separate algorithm baseline; general-purpose implementations inherit the
-requirement that `ES256` MUST be supported from that document.
+This profile does not define a separate algorithm baseline; general-purpose implementations follow the
+algorithm requirements in that document, including support for `ES256`.
 The `alg` signature parameter MUST NOT be used, as specified above.
 
 Recipients MUST verify the HTTP message signature using the algorithm identified by `cnf.jwk.alg`
