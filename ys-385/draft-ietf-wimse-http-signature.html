@@ -1266,6 +1266,20 @@ Authentication is based on the Workload Identity Token (WIT).<a href="#section-a
 </li>
                 </ul>
 </li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2">
+                <p id="section-toc.1-1.7.2.2.1"><a href="#section-7.2" class="auto internal xref">7.2</a>.  <a href="#name-http-problem-types-registra" class="internal xref">HTTP Problem Types Registration</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2.2.1">
+                    <p id="section-toc.1-1.7.2.2.2.1.1"><a href="#section-7.2.1" class="auto internal xref">7.2.1</a>.  <a href="#name-wimse-signature-invalid" class="internal xref"><code>wimse-signature-invalid</code></a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2.2.2">
+                    <p id="section-toc.1-1.7.2.2.2.2.1"><a href="#section-7.2.2" class="auto internal xref">7.2.2</a>.  <a href="#name-wimse-signed-response-unsup" class="internal xref"><code>wimse-signed-response-unsupported</code></a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2.2.3">
+                    <p id="section-toc.1-1.7.2.2.2.3.1"><a href="#section-7.2.3" class="auto internal xref">7.2.3</a>.  <a href="#name-wimse-signed-response-unava" class="internal xref"><code>wimse-signed-response-unavailable</code></a></p>
+</li>
+                </ul>
+</li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
@@ -1507,8 +1521,12 @@ To that end, senders <span class="bcp14">MUST</span> use a cryptographically sec
 and the nonce <span class="bcp14">MUST</span> contain at least 64 bits of entropy; 96 bits or more is <span class="bcp14">RECOMMENDED</span>.
 Members of a sender cluster therefore need not coordinate nonce generation.<a href="#section-3-21" class="pilcrow">¶</a></p>
 <p id="section-3-22">Recipients <span class="bcp14">MAY</span> maintain a replay cache and <span class="bcp14">SHOULD</span> reject a message (request or response) whose <code>nonce</code> they have already seen. What nonces are remembered, and for how long, is a local policy matter; this document does not require replay caches to be shared across validators. Without such sharing, replay to a different cluster member can still succeed.<a href="#section-3-22" class="pilcrow">¶</a></p>
-<p id="section-3-23">For clarity: the signature's lifetime (the <code>expires</code> signature parameter) is different and typically much shorter than the WIT's lifetime, denoted by its <code>exp</code> claim.<a href="#section-3-23" class="pilcrow">¶</a></p>
+<p id="section-3-23">For clarity: the signature's lifetime (the <code>expires</code> signature parameter) is different and typically much shorter than the WIT's lifetime, denoted by its <code>exp</code> claim.
+Recipients <span class="bcp14">MUST</span> reject signatures that fall outside their validity time window.<a href="#section-3-23" class="pilcrow">¶</a></p>
 <p id="section-3-24">Implementers need to be aware that the WIT is extracted from the message before the message signature is validated. Recipients of signed HTTP messages <span class="bcp14">MUST</span> validate the WIT as specified in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-workload-creds-02#section-5.1.4" class="relref">Section 5.1.4</a> of [<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span> before validating the HTTP message signature. They <span class="bcp14">MUST</span> ensure that the message is not processed further before it has been fully validated.<a href="#section-3-24" class="pilcrow">¶</a></p>
+<p id="section-3-25">The WIT and the HTTP message signature <span class="bcp14">MUST</span> be sent over a server-authenticated TLS connection
+unless a secure channel is provided by some other mechanism.
+When TLS is used, the client <span class="bcp14">MUST</span> perform hostname validation according to <span><a href="https://rfc-editor.org/rfc/rfc9525#section-6.3" class="relref">Section 6.3</a> of [<a href="#RFC9525" class="cite xref">RFC9525</a>]</span>.<a href="#section-3-25" class="pilcrow">¶</a></p>
 <div id="sig-algs">
 <section id="section-3.1">
         <h3 id="name-signature-algorithms">
@@ -1608,16 +1626,35 @@ specified above for signed requests.
         <h3 id="name-error-conditions">
 <a href="#section-3.6" class="section-number selfRef">3.6. </a><a href="#name-error-conditions" class="section-name selfRef">Error Conditions</a>
         </h3>
-<p id="section-3.6-1">Errors may occur during the processing of the message signature. If the signature verification fails for any reason,
-such as an invalid signature, an expired validity time window, or a malformed data structure, an error is returned. Typically,
-this will be in response to an API call. An HTTP status code such as 400 (Bad Request) is appropriate. The response could
-include more details as per <span>[<a href="#RFC9457" class="cite xref">RFC9457</a>]</span>, such as an indicator that the wrong key material or algorithm was used.  The use of HTTP
-status code 401 is <span class="bcp14">NOT RECOMMENDED</span> for this purpose because it requires a WWW-Authenticate with acceptable HTTP auth mechanisms in
+<p id="section-3.6-1">Errors may occur during the processing of the message signature.
+This profile specifies the following HTTP status codes for API use.
+The party generating the error <span class="bcp14">SHOULD</span> include a problem details body (<span>[<a href="#RFC9457" class="cite xref">RFC9457</a>]</span>)
+with the corresponding registered problem type (<a href="#iana-problem-types" class="auto internal xref">Section 7.2</a>),
+unless it knows that the peer does not accept problem details responses.<a href="#section-3.6-1" class="pilcrow">¶</a></p>
+<p id="section-3.6-2">If authentication of a signed request fails — including WIT validation
+(<span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-workload-creds-02#section-5.1.4" class="relref">Section 5.1.4</a> of [<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span>) or verification of the HTTP message signature —
+for any reason such as an invalid signature, an expired validity time window, or a malformed data structure,
+the server <span class="bcp14">MUST</span> return 400 (Bad Request).
+The problem type for this error is
+<code>https://iana.org/assignments/http-problem-types#wimse-signature-invalid</code>
+(<a href="#iana-problem-signature-invalid" class="auto internal xref">Section 7.2.1</a>).
+The server <span class="bcp14">MUST NOT</span> distinguish in the response which check failed,
+so as not to reveal whether the WIT or the HTTP message signature was unacceptable.
+The use of HTTP status code 401 is <span class="bcp14">NOT RECOMMENDED</span> for this purpose because it requires a WWW-Authenticate with acceptable HTTP auth mechanisms in
 the error response and an associated Authorization header in the subsequent request. The use of these headers for the WIT is not compatible
-with this specification.<a href="#section-3.6-1" class="pilcrow">¶</a></p>
-<p id="section-3.6-2">If the client required a signed response via <code>wimse-sign-response</code> and the server cannot sign the response,
-the server <span class="bcp14">SHOULD</span> return 400 (Bad Request) or 501 (Not Implemented), optionally with a
-<span>[<a href="#RFC9457" class="cite xref">RFC9457</a>]</span> problem details body indicating that a signed response cannot be provided.<a href="#section-3.6-2" class="pilcrow">¶</a></p>
+with this specification.<a href="#section-3.6-2" class="pilcrow">¶</a></p>
+<p id="section-3.6-3">If response signing is required (<a href="#signing-the-response" class="auto internal xref">Section 3.5</a>) and the server cannot sign the response,
+the server <span class="bcp14">MUST NOT</span> return a successful unsigned response.
+If the server does not support response signing, it <span class="bcp14">MUST</span> return 501 (Not Implemented);
+the problem type for this error is
+<code>https://iana.org/assignments/http-problem-types#wimse-signed-response-unsupported</code>
+(<a href="#iana-problem-signed-response-unsupported" class="auto internal xref">Section 7.2.2</a>).
+If the server supports response signing but cannot sign this particular response
+(for example, because the response is streamed or exceptionally large),
+it <span class="bcp14">MUST</span> return 400 (Bad Request);
+the problem type for this error is
+<code>https://iana.org/assignments/http-problem-types#wimse-signed-response-unavailable</code>
+(<a href="#iana-problem-signed-response-unavailable" class="auto internal xref">Section 7.2.3</a>).<a href="#section-3.6-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="example-requests-and-responses">
@@ -1924,8 +1961,8 @@ and its WIT representation.<a href="#section-5-1" class="pilcrow">¶</a></p>
 always presented with a proof of possession (PoP) as described in
 <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span>. The WIT is a general purpose token that can be presented
 in multiple contexts. The WIT and its PoP are only used in the
-application-layer options, and neither is used in mTLS. The WIT <span class="bcp14">MUST NOT</span> be
-used as a bearer token. While this helps reduce the sensitivity of the token it
+application-layer options, and neither is used in mTLS. As specified in that document,
+the WIT is not used as a bearer token. While this helps reduce the sensitivity of the token it
 is still possible that a token and its PoP may be captured and
 replayed within the PoP's lifetime.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
 <p id="section-5.1-2">The HTTP Signature profile presented here binds the PoP to the critical parts of the HTTP request (and potentially
@@ -1933,28 +1970,28 @@ response), including the request method, path, query, the intended audience (<co
 The audience is a signed signature parameter rather than a re-derived URI component, so it survives intermediaries that rewrite the authority.
 This profile does not cover <code>@authority</code> for that reason (<a href="#http-sig-auth" class="auto internal xref">Section 3</a>).
 This eliminates most of the risk associated with active attackers on a middlebox.<a href="#section-5.1-2" class="pilcrow">¶</a></p>
-<p id="section-5.1-3">In addition, the following mitigations should be used:<a href="#section-5.1-3" class="pilcrow">¶</a></p>
+<p id="section-5.1-3">In addition, the following mitigations apply:<a href="#section-5.1-3" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.1-4.1">
             <p id="section-5.1-4.1.1">Preventing Eavesdropping and Interception with TLS<a href="#section-5.1-4.1.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-5.1-5">An attacker observing or intercepting the communication channel can view the token and its PoP and attempt to replay it to gain an advantage. In order to prevent this, the
-token and PoP <span class="bcp14">MUST</span> be sent over a secure, server authenticated TLS connection unless a secure channel is provided by some other mechanisms. Hostname validation according
-to Section 6.3 of <span>[<a href="#RFC9525" class="cite xref">RFC9525</a>]</span> <span class="bcp14">MUST</span> be performed by the client.<a href="#section-5.1-5" class="pilcrow">¶</a></p>
+<p id="section-5.1-5">An attacker observing or intercepting the communication channel can view the token and its PoP and attempt to replay it to gain an advantage.
+Sending the token and PoP on a server-authenticated TLS connection (<a href="#http-sig-auth" class="auto internal xref">Section 3</a>), with hostname validation,
+mitigates passive capture on the path. TLS-terminating intermediaries still see the cleartext WIT and signature; see <a href="#middleboxes" class="auto internal xref">Section 5.2</a>.<a href="#section-5.1-5" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.1-6.1">
             <p id="section-5.1-6.1.1">Limiting Signature Lifespan<a href="#section-5.1-6.1.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-5.1-7">The signature lifespan <span class="bcp14">MUST</span> be limited by using a tight <code>expires</code> value, taking into account potential clock skew and
-processing latency, but usually within minutes of the message sending time. Signatures received outside their validity time <span class="bcp14">MUST</span> be rejected.<a href="#section-5.1-7" class="pilcrow">¶</a></p>
+<p id="section-5.1-7">A short <code>expires</code> value (<a href="#http-sig-auth" class="auto internal xref">Section 3</a>) limits the window during which a captured signature can be replayed.
+Rejecting signatures outside their validity time is required by that section.<a href="#section-5.1-7" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.1-8.1">
             <p id="section-5.1-8.1.1">Replay Protection<a href="#section-5.1-8.1.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-5.1-9">A signed message includes the <code>nonce</code> signature parameter. This parameter <span class="bcp14">SHOULD</span> be used by the receiver to perform basic replay protection: a nonce that has already been seen <span class="bcp14">SHOULD</span> cause the message to be rejected.
+<p id="section-5.1-9">The <code>nonce</code> signature parameter and optional replay caching (<a href="#http-sig-auth" class="auto internal xref">Section 3</a>) provide basic replay detection.
 Depending upon the design of the system it may be difficult to synchronize the replay cache across all message validators.
 If an attacker can somehow influence the identity of the validator (e.g. which cluster member receives the message) then
 replay protection would not be effective.<a href="#section-5.1-9" class="pilcrow">¶</a></p>
@@ -1974,9 +2011,9 @@ unsigned information, such as any HTTP headers that remain unsigned.<a href="#se
 <p id="section-5.2-2">HTTP permits intermediaries to transform messages (<span>[<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>).
 This profile is intended to remain verifiable across common TLS-terminating proxies and load balancers:
 it does not cover <code>@authority</code>, and it carries recipient binding in <code>wimse-aud</code> (<a href="#http-sig-auth" class="auto internal xref">Section 3</a>).
-An intermediary <span class="bcp14">MAY</span> add its own HTTP message signature to a message that already carries a WIMSE signature.
+An intermediary can add its own HTTP message signature to a message that already carries a WIMSE signature.
 Recipients continue to identify the WIMSE signature by its <code>tag</code> value <code>wimse-workload-to-workload</code>
-and <span class="bcp14">MUST NOT</span> select by label (<a href="#http-sig-auth" class="auto internal xref">Section 3</a>).<a href="#section-5.2-2" class="pilcrow">¶</a></p>
+and do not select by label (<a href="#http-sig-auth" class="auto internal xref">Section 3</a>).<a href="#section-5.2-2" class="pilcrow">¶</a></p>
 <p id="section-5.2-3">If an intermediary changes a component covered by the WIMSE signature, verification of that signature fails.
 This document does not define a profile for stripping the origin WIMSE signature and replacing it with a new
 WIMSE signature at the intermediary.
@@ -2181,6 +2218,78 @@ context where the request would be accepted as valid, and this mitigates the ris
 </li>
             <li class="normal" id="section-7.1.3-1.3">
               <p id="section-7.1.3-1.3.1">Reference: RFC XXX, <a href="#wimse-req-nonce-param" class="auto internal xref">Section 3.4</a>.<a href="#section-7.1.3-1.3.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+</section>
+</div>
+</section>
+</div>
+<div id="iana-problem-types">
+<section id="section-7.2">
+        <h3 id="name-http-problem-types-registra">
+<a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-http-problem-types-registra" class="section-name selfRef">HTTP Problem Types Registration</a>
+        </h3>
+<p id="section-7.2-1">IANA is requested to register the following entries in the "HTTP Problem Types" registry
+of <span>[<a href="#RFC9457" class="cite xref">RFC9457</a>]</span>.<a href="#section-7.2-1" class="pilcrow">¶</a></p>
+<div id="iana-problem-signature-invalid">
+<section id="section-7.2.1">
+          <h4 id="name-wimse-signature-invalid">
+<a href="#section-7.2.1" class="section-number selfRef">7.2.1. </a><a href="#name-wimse-signature-invalid" class="section-name selfRef"><code>wimse-signature-invalid</code></a>
+          </h4>
+<ul class="normal">
+<li class="normal" id="section-7.2.1-1.1">
+              <p id="section-7.2.1-1.1.1">Type URI: <code>https://iana.org/assignments/http-problem-types#wimse-signature-invalid</code><a href="#section-7.2.1-1.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.1-1.2">
+              <p id="section-7.2.1-1.2.1">Title: WIMSE HTTP Signature Invalid<a href="#section-7.2.1-1.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.1-1.3">
+              <p id="section-7.2.1-1.3.1">Recommended HTTP status code: 400<a href="#section-7.2.1-1.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.1-1.4">
+              <p id="section-7.2.1-1.4.1">Reference: RFC XXX, <a href="#error-conditions" class="auto internal xref">Section 3.6</a><a href="#section-7.2.1-1.4.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+</section>
+</div>
+<div id="iana-problem-signed-response-unsupported">
+<section id="section-7.2.2">
+          <h4 id="name-wimse-signed-response-unsup">
+<a href="#section-7.2.2" class="section-number selfRef">7.2.2. </a><a href="#name-wimse-signed-response-unsup" class="section-name selfRef"><code>wimse-signed-response-unsupported</code></a>
+          </h4>
+<ul class="normal">
+<li class="normal" id="section-7.2.2-1.1">
+              <p id="section-7.2.2-1.1.1">Type URI: <code>https://iana.org/assignments/http-problem-types#wimse-signed-response-unsupported</code><a href="#section-7.2.2-1.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.2-1.2">
+              <p id="section-7.2.2-1.2.1">Title: WIMSE Signed Response Unsupported<a href="#section-7.2.2-1.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.2-1.3">
+              <p id="section-7.2.2-1.3.1">Recommended HTTP status code: 501<a href="#section-7.2.2-1.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.2-1.4">
+              <p id="section-7.2.2-1.4.1">Reference: RFC XXX, <a href="#error-conditions" class="auto internal xref">Section 3.6</a><a href="#section-7.2.2-1.4.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+</section>
+</div>
+<div id="iana-problem-signed-response-unavailable">
+<section id="section-7.2.3">
+          <h4 id="name-wimse-signed-response-unava">
+<a href="#section-7.2.3" class="section-number selfRef">7.2.3. </a><a href="#name-wimse-signed-response-unava" class="section-name selfRef"><code>wimse-signed-response-unavailable</code></a>
+          </h4>
+<ul class="normal">
+<li class="normal" id="section-7.2.3-1.1">
+              <p id="section-7.2.3-1.1.1">Type URI: <code>https://iana.org/assignments/http-problem-types#wimse-signed-response-unavailable</code><a href="#section-7.2.3-1.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.3-1.2">
+              <p id="section-7.2.3-1.2.1">Title: WIMSE Signed Response Unavailable<a href="#section-7.2.3-1.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.3-1.3">
+              <p id="section-7.2.3-1.3.1">Recommended HTTP status code: 400<a href="#section-7.2.3-1.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.3-1.4">
+              <p id="section-7.2.3-1.4.1">Reference: RFC XXX, <a href="#error-conditions" class="auto internal xref">Section 3.6</a><a href="#section-7.2.3-1.4.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </section>
