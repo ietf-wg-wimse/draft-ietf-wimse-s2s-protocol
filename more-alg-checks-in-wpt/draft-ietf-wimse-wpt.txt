@@ -783,6 +783,8 @@ A.1.  draft-ietf-wimse-wpt-03
    *  Remove Workload Identity Key Management section, which seems more
       appropriate in ietf-wimse-workload-creds where it already is.
 
+   *  More explicit alg checks in the WPT validation procedure
+
 A.2.  draft-ietf-wimse-wpt-02
 
    *  Convey the WPT in the Authorization header field with a new WPT
