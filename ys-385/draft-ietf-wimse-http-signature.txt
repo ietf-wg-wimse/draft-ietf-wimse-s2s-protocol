@@ -287,10 +287,10 @@ Table of Contents
    present, recipients MUST use that tag to find the WIMSE signature;
    they MUST NOT choose by label (Section 7.2.5 of [RFC9421]).
 
-   Senders MUST generate each nonce at random with sufficient length
-   that the probability of collision is negligible among all nonces a
-   recipient might observe within the lifetime of a signature.  Members
-   of a sender cluster therefore need not coordinate nonce generation.
+   Senders MUST generate each nonce using a cryptographically secure
+   random number generator.  The nonce MUST contain at least 64 bits of
+   entropy; 96 bits or more is RECOMMENDED.  Members of a sender cluster
+   therefore need not coordinate nonce generation.
 
    Recipients MAY maintain a replay cache and SHOULD reject a message
    (request or response) whose nonce they have already seen.  What
