@@ -491,6 +491,14 @@ Both the Workload Identity Token and the Workload Identity Certificate carry a p
 * MUST NOT be used once the credential is expired
 * SHOULD be re-generated for each new Workload Identity Token or Certificate.
 
+For purposes of this section, keeping the private key private means that the private key is not intentionally disclosed
+outside the workload instance or an authorized signing component, is not placed in credentials, logs, images, configuration
+artifacts, or bearer tokens, and is not made available to intermediaries except as part of an explicitly trusted signing
+service. Compromise or disclosure of the private key invalidates the security assumptions of the associated WIT or WIC.
+This document does not require a particular key-protection mechanism; deployments that require stronger properties such
+as non-exportability, hardware-backed protection, or binding to a measured runtime need additional deployment-specific
+evidence or profile requirements. Verifiers must not infer such stronger properties from the WIT or WIC alone.
+
 ## Transport Security {#middleboxes}
 
 An attacker observing or intercepting the communication channel can view the Workload Identity Token and its PoP and attempt to replay them to gain an advantage. To prevent this, the WIT and its PoP MUST be sent over a secure, server-authenticated TLS connection unless a secure channel is provided by some other mechanism.
@@ -586,6 +594,7 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 * State the WIC revocation stance: short lifetimes like WITs; no CRL reliance (#270).
 * State the WIT revocation stance and resolve the conflicting `jti` description: the document does not rely on revocation, but deployments may operate a token status list or `jti` deny-list, in which case `jti` is required in every WIT (#269).
 * Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use, and consistent capitalization of the defined term "Workload Identifier".
+* say what it means to keep the private key private
 
 ## draft-ietf-wimse-workload-creds-02
 
@@ -672,3 +681,9 @@ the Message Signature-based alternative.
 The authors would like to thank Pieter Kasselman for his detailed comments.
 
 We thank Daniel Feldman for his contributions to earlier versions of this document.
+
+Additional thanks to the WIMSE working group for the feedback and discussions that helped shape this specification, including, but not limited to,
+Andrii Deinega,
+Karthik Rampalli,
+and
+Songbo Bu.
