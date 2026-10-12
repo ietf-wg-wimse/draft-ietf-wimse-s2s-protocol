@@ -73,7 +73,7 @@ This document defines the credentials that workloads use to represent their iden
 
 # Introduction
 
-This document defines authentication and authorization in the context of interaction between two workloads.
+This document defines credentials to facilitate authentication and authorization in the context of interaction between two workloads.
 This is the core component of the WIMSE architecture {{?I-D.ietf-wimse-arch}}.
 This document focuses on the credentials that carry workload identity and bind the key material to the identity. The presentation of the proof of possession of the key material is part of other documents and out of scope for this one.
 
@@ -92,10 +92,6 @@ The various protocol bindings that use these credentials to authenticate workloa
 * Application-layer authentication using the Workload Identity Token in conjunction with a JWT-based proof of possession, the Workload Proof Token (WPT), specified in {{?I-D.ietf-wimse-wpt}}.
 
 * Application-layer authentication using the Workload Identity Token in conjunction with HTTP Message Signatures, specified in {{?I-D.ietf-wimse-http-signature}}.
-
-## Use In Other Protocols
-
-The credentials defined in this document are designed to be used in various protocols. This document does not define the protocols themselves, but rather the credentials that can be used within them. Additional protocols MAY be defined in the future that use these credentials for workload authentication.
 
 ## Deployment Architecture and Message Flow
 
@@ -586,6 +582,7 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 * State the WIC revocation stance: short lifetimes like WITs; no CRL reliance (#270).
 * State the WIT revocation stance and resolve the conflicting `jti` description: the document does not rely on revocation, but deployments may operate a token status list or `jti` deny-list, in which case `jti` is required in every WIT (#269).
 * Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use, and consistent capitalization of the defined term "Workload Identifier".
+* Remove superfluous 'Use In Other Protocols' subsection that basically just said what amounts to "other specs can reference this"
 
 ## draft-ietf-wimse-workload-creds-02
 
@@ -672,3 +669,6 @@ the Message Signature-based alternative.
 The authors would like to thank Pieter Kasselman for his detailed comments.
 
 We thank Daniel Feldman for his contributions to earlier versions of this document.
+
+Additional thanks to the WIMSE working group for the feedback and discussions that helped shape this specification, including, but not limited to,
+Jean-François "Jeff" Lombardo,
