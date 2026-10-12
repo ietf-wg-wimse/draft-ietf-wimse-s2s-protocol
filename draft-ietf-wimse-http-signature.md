@@ -175,8 +175,7 @@ See also {{Section 7.3.6 of RFC9421}} on key and algorithm specification downgra
 alongside the covered components. That metadata is covered by the signature as the `@signature-params` component value
 (Section 2.3 of {{RFC9421}}), which is always the last line of the signature base.
 
-This document defines the `wimse-aud` signature metadata parameter for requests.
-It is a String parameter.
+The `wimse-aud` signature metadata parameter is a String parameter for requests.
 Using a signature parameter carries the audience explicitly in `Signature-Input`, so the value is protected by the signature and is not affected by hop-by-hop rewriting of the request URI.
 
 The sender MUST set `wimse-aud` to an audience value that identifies the intended recipient of the request.
@@ -188,8 +187,7 @@ See "Workload Identifiers and Authentication Granularity" in {{I-D.ietf-wimse-wo
 
 ## The `wimse-sign-response` Signature Parameter {#wimse-sign-response-param}
 
-This document defines the `wimse-sign-response` signature metadata parameter for requests.
-It is a Boolean parameter.
+The `wimse-sign-response` signature metadata parameter is a Boolean parameter for requests.
 When present with the value true, the client requires the server to sign the HTTP response
 to this request as specified in {{signing-the-response}}.
 When the parameter is omitted, or present with the value false, the client does not require a signed response via this parameter.
@@ -200,8 +198,7 @@ This parameter is not mandatory. Moreover, the server MAY sign the response even
 
 ## The `wimse-req-nonce` Signature Parameter {#wimse-req-nonce-param}
 
-This document defines the `wimse-req-nonce` signature metadata parameter for signed responses.
-It is a String parameter.
+The `wimse-req-nonce` signature metadata parameter is a String parameter for signed responses.
 This parameter binds requests to responses and prevents a malicious
 server-side component or middlebox from replaying responses to the wrong client.
 
