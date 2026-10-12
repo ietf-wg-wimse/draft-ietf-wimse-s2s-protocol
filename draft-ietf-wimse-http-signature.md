@@ -93,7 +93,9 @@ The request is signed as per {{RFC9421}}. The following derived components MUST 
 * `@path`
 * `@query`
 
-This profile uses `@path` and `@query` rather than `@request-target`, which is NOT RECOMMENDED outside HTTP/1.1 ({{Section 2.2.5 of RFC9421}}). `@query` is included even when the request has no query component; in that case its value is `?` ({{Section 2.2.7 of RFC9421}}).
+This profile covers `@path` and `@query` separately rather than `@request-target`,
+following {{Section 2.2.5 of RFC9421}}.
+`@query` is included even when the request has no query component; in that case its value is `?` ({{Section 2.2.7 of RFC9421}}).
 The `@authority` derived component is not included: TLS-terminating proxies and load balancers commonly rewrite the authority (see {{I-D.ietf-wimse-arch}} and {{middleboxes}}), so signing it would break those deployments. Recipient binding is carried instead by the mandatory `wimse-aud` signature parameter ({{wimse-aud-param}}).
 
 In addition, the following request headers MUST be signed when they exist:
