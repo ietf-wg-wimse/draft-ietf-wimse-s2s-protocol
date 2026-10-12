@@ -1527,8 +1527,9 @@ Members of a sender cluster therefore need not coordinate nonce generation.<a hr
 Recipients <span class="bcp14">MUST</span> reject signatures that fall outside their validity time window.<a href="#section-3-23" class="pilcrow">¶</a></p>
 <p id="section-3-24">Implementers need to be aware that the WIT is extracted from the message before the message signature is validated. Recipients of signed HTTP messages <span class="bcp14">MUST</span> validate the WIT as specified in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-workload-creds-02#section-5.1.4" class="relref">Section 5.1.4</a> of [<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span> before validating the HTTP message signature. They <span class="bcp14">MUST</span> ensure that the message is not processed further before it has been fully validated.<a href="#section-3-24" class="pilcrow">¶</a></p>
 <p id="section-3-25">The WIT and the HTTP message signature <span class="bcp14">MUST</span> be sent over a server-authenticated TLS connection
-unless a secure channel is provided by some other mechanism.
-When TLS is used, the client <span class="bcp14">MUST</span> perform hostname validation according to <span><a href="https://rfc-editor.org/rfc/rfc9525#section-6.3" class="relref">Section 6.3</a> of [<a href="#RFC9525" class="cite xref">RFC9525</a>]</span>.<a href="#section-3-25" class="pilcrow">¶</a></p>
+unless another channel provides confidentiality and server authentication comparable to TLS.
+When TLS is used, the client <span class="bcp14">MUST</span> perform hostname validation according to <span><a href="https://rfc-editor.org/rfc/rfc9525#section-6.3" class="relref">Section 6.3</a> of [<a href="#RFC9525" class="cite xref">RFC9525</a>]</span>,
+and TLS deployments <span class="bcp14">SHOULD</span> follow the recommendations in <span>[<a href="#BCP195" class="cite xref">BCP195</a>]</span>.<a href="#section-3-25" class="pilcrow">¶</a></p>
 <div id="sig-algs">
 <section id="section-3.1">
         <h3 id="name-signature-algorithms">
@@ -2200,6 +2201,16 @@ of <span>[<a href="#RFC9457" class="cite xref">RFC9457</a>]</span>.<a href="#sec
 <a href="#section-8.1" class="section-number selfRef">8.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
         </h3>
 <dl class="references">
+<dt id="BCP195">[BCP195]</dt>
+        <dd>
+<div class="refInstance">Best Current Practice 195, <span>&lt;<a href="https://www.rfc-editor.org/info/bcp195">https://www.rfc-editor.org/info/bcp195</a>&gt;</span>.<br><span>At the time of writing, this BCP comprises the following:</span>
+</div>
+<div class="refInstance" id="RFC8996">
+            <span class="refAuthor">Moriarty, K.</span> and <span class="refAuthor">S. Farrell</span>, <span class="refTitle">"Deprecating TLS 1.0 and TLS 1.1"</span>, <span class="seriesInfo">BCP 195</span>, <span class="seriesInfo">RFC 8996</span>, <span class="seriesInfo">DOI 10.17487/RFC8996</span>, <time datetime="2021-03" class="refDate">March 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8996">https://www.rfc-editor.org/info/rfc8996</a>&gt;</span>. </div>
+<div class="refInstance" id="RFC9325">
+            <span class="refAuthor">Sheffer, Y.</span>, <span class="refAuthor">Saint-Andre, P.</span>, and <span class="refAuthor">T. Fossati</span>, <span class="refTitle">"Recommendations for Secure Use of Transport Layer Security (TLS) and Datagram Transport Layer Security (DTLS)"</span>, <span class="seriesInfo">BCP 195</span>, <span class="seriesInfo">RFC 9325</span>, <span class="seriesInfo">DOI 10.17487/RFC9325</span>, <time datetime="2022-11" class="refDate">November 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc9325">https://www.rfc-editor.org/info/rfc9325</a>&gt;</span>. </div>
+</dd>
+<dd class="break"></dd>
 <dt id="I-D.ietf-wimse-workload-creds">[I-D.ietf-wimse-workload-creds]</dt>
         <dd>
 <span class="refAuthor">Campbell, B.</span>, <span class="refAuthor">Salowey, J. A.</span>, <span class="refAuthor">Schwenkschuster, A.</span>, <span class="refAuthor">Sheffer, Y.</span>, and <span class="refAuthor">Y. Rosomakho</span>, <span class="refTitle">"WIMSE Workload Credentials"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-workload-creds-02</span>, <time datetime="2026-07-02" class="refDate">2 July 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-workload-creds-02">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-workload-creds-02</a>&gt;</span>. </dd>
