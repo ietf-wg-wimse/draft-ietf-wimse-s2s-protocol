@@ -240,17 +240,37 @@ specified above for signed requests.
 
 ## Error Conditions {#error-conditions}
 
-Errors may occur during the processing of the message signature. If the signature verification fails for any reason,
-such as an invalid signature, an expired validity time window, or a malformed data structure, an error is returned. Typically,
-this will be in response to an API call. An HTTP status code such as 400 (Bad Request) is appropriate. The response could
-include more details as per {{!RFC9457}}, such as an indicator that the wrong key material or algorithm was used.  The use of HTTP
-status code 401 is NOT RECOMMENDED for this purpose because it requires a WWW-Authenticate with acceptable HTTP auth mechanisms in
+Errors may occur during the processing of the message signature.
+This profile specifies the following HTTP status codes for API use.
+The party generating the error SHOULD include a problem details body ({{!RFC9457}})
+with the corresponding registered problem type ({{iana-problem-types}}),
+unless it knows that the peer does not accept problem details responses.
+
+If authentication of a signed request fails — including WIT validation
+({{Section 5.1.4 of I-D.ietf-wimse-workload-creds}}) or verification of the HTTP message signature —
+for any reason such as an invalid signature, an expired validity time window, or a malformed data structure,
+the server MUST return 400 (Bad Request).
+The problem type for this error is
+`https://iana.org/assignments/http-problem-types#wimse-signature-invalid`
+({{iana-problem-signature-invalid}}).
+The server MUST NOT distinguish in the response which check failed,
+so as not to reveal whether the WIT or the HTTP message signature was unacceptable.
+The use of HTTP status code 401 is NOT RECOMMENDED for this purpose because it requires a WWW-Authenticate with acceptable HTTP auth mechanisms in
 the error response and an associated Authorization header in the subsequent request. The use of these headers for the WIT is not compatible
 with this specification.
 
-If the client required a signed response via `wimse-sign-response` and the server cannot sign the response,
-the server SHOULD return 400 (Bad Request) or 501 (Not Implemented), optionally with a
-{{!RFC9457}} problem details body indicating that a signed response cannot be provided.
+If response signing is required ({{signing-the-response}}) and the server cannot sign the response,
+the server MUST NOT return a successful unsigned response.
+If the server does not support response signing, it MUST return 501 (Not Implemented);
+the problem type for this error is
+`https://iana.org/assignments/http-problem-types#wimse-signed-response-unsupported`
+({{iana-problem-signed-response-unsupported}}).
+If the server supports response signing but cannot sign this particular response
+(for example, because the response is streamed or exceptionally large),
+it MUST return 400 (Bad Request);
+the problem type for this error is
+`https://iana.org/assignments/http-problem-types#wimse-signed-response-unavailable`
+({{iana-problem-signed-response-unavailable}}).
 
 
 ## Example Requests and Responses
@@ -503,6 +523,32 @@ IANA is requested to register the following entries in the "HTTP Signature Metad
 * Name: `wimse-req-nonce`
 * Description: String; on response signatures, the `nonce` value from the triggering request's `Signature-Input`; binds the response to that request.
 * Reference: RFC XXX, {{wimse-req-nonce-param}}.
+
+## HTTP Problem Types Registration {#iana-problem-types}
+
+IANA is requested to register the following entries in the "HTTP Problem Types" registry
+of {{!RFC9457}}.
+
+### `wimse-signature-invalid` {#iana-problem-signature-invalid}
+
+* Type URI: `https://iana.org/assignments/http-problem-types#wimse-signature-invalid`
+* Title: WIMSE HTTP Signature Invalid
+* Recommended HTTP status code: 400
+* Reference: RFC XXX, {{error-conditions}}
+
+### `wimse-signed-response-unsupported` {#iana-problem-signed-response-unsupported}
+
+* Type URI: `https://iana.org/assignments/http-problem-types#wimse-signed-response-unsupported`
+* Title: WIMSE Signed Response Unsupported
+* Recommended HTTP status code: 501
+* Reference: RFC XXX, {{error-conditions}}
+
+### `wimse-signed-response-unavailable` {#iana-problem-signed-response-unavailable}
+
+* Type URI: `https://iana.org/assignments/http-problem-types#wimse-signed-response-unavailable`
+* Title: WIMSE Signed Response Unavailable
+* Recommended HTTP status code: 400
+* Reference: RFC XXX, {{error-conditions}}
 
 --- back
 
