@@ -489,7 +489,7 @@ Both the Workload Identity Token and the Workload Identity Certificate carry a p
 * MUST be kept private
 * MUST be bound to a single Workload Identifier ({{WIMSE-ID}})
 * MUST NOT be used once the credential is expired
-* SHOULD be re-generated for each new Workload Identity Token or Certificate.
+* SHOULD be regenerated for each new Workload Identity Token or Certificate, unless the key is sufficiently protected, e.g., non-exportable and hardware-bound.
 
 For purposes of this section, keeping the private key private means that the private key is not intentionally disclosed
 outside the workload instance or an authorized signing component, is not placed in credentials, logs, images, configuration
@@ -594,7 +594,8 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 * State the WIC revocation stance: short lifetimes like WITs; no CRL reliance (#270).
 * State the WIT revocation stance and resolve the conflicting `jti` description: the document does not rely on revocation, but deployments may operate a token status list or `jti` deny-list, in which case `jti` is required in every WIT (#269).
 * Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use, and consistent capitalization of the defined term "Workload Identifier".
-* say what it means to keep the private key private
+* say what it means to keep the private key private and that reuse of a key is probably okay when it's non-exportable and hardware-protected
+
 
 ## draft-ietf-wimse-workload-creds-02
 
