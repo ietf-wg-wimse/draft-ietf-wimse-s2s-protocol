@@ -110,22 +110,23 @@ Table of Contents
      8.1.  Normative References
      8.2.  Informative References
    Appendix A.  Document History
-     A.1.  draft-ietf-wimse-http-signature-07
-     A.2.  draft-ietf-wimse-http-signature-06
-     A.3.  draft-ietf-wimse-http-signature-05
-     A.4.  draft-ietf-wimse-http-signature-04
-     A.5.  draft-ietf-wimse-http-signature-03
-     A.6.  draft-ietf-wimse-http-signature-02
-     A.7.  draft-ietf-wimse-http-signature-01
-     A.8.  draft-ietf-wimse-http-signature-00
-     A.9.  draft-ietf-wimse-s2s-protocol-07
-     A.10. draft-ietf-wimse-s2s-protocol-06
-     A.11. draft-ietf-wimse-s2s-protocol-05
-     A.12. draft-ietf-wimse-s2s-protocol-04
-     A.13. draft-ietf-wimse-s2s-protocol-03
-     A.14. draft-ietf-wimse-s2s-protocol-02
-     A.15. draft-ietf-wimse-s2s-protocol-01
-     A.16. draft-ietf-wimse-s2s-protocol-00
+     A.1.  draft-ietf-wimse-http-signature-08
+     A.2.  draft-ietf-wimse-http-signature-07
+     A.3.  draft-ietf-wimse-http-signature-06
+     A.4.  draft-ietf-wimse-http-signature-05
+     A.5.  draft-ietf-wimse-http-signature-04
+     A.6.  draft-ietf-wimse-http-signature-03
+     A.7.  draft-ietf-wimse-http-signature-02
+     A.8.  draft-ietf-wimse-http-signature-01
+     A.9.  draft-ietf-wimse-http-signature-00
+     A.10. draft-ietf-wimse-s2s-protocol-07
+     A.11. draft-ietf-wimse-s2s-protocol-06
+     A.12. draft-ietf-wimse-s2s-protocol-05
+     A.13. draft-ietf-wimse-s2s-protocol-04
+     A.14. draft-ietf-wimse-s2s-protocol-03
+     A.15. draft-ietf-wimse-s2s-protocol-02
+     A.16. draft-ietf-wimse-s2s-protocol-01
+     A.17. draft-ietf-wimse-s2s-protocol-00
    Appendix B.  Comparing the DPoP Inspired Option with Message
            Signatures
    Acknowledgments
@@ -232,12 +233,11 @@ Table of Contents
 
    *  Workload-Identity-Token
 
-   To ensure the message is fully integrity-protected, if the request or
-   response includes a message body, the sender MUST include (and the
-   receiver MUST verify) a Content-Digest header.  This implies the
-   receiver MUST compute the Content-Digest value for the message
-   content received and compare it with the Content-Digest value
-   provided in the message.
+   To protect the integrity of the message body, if the request or
+   response includes a body, the sender MUST include (and the receiver
+   MUST verify) a Content-Digest header.  This implies the receiver MUST
+   compute the Content-Digest value for the message content received and
+   compare it with the Content-Digest value provided in the message.
 
    For both requests and responses, the following signature parameters
    MUST be included:
@@ -1020,7 +1020,11 @@ Appendix A.  Document History
 
    // RFC Editor: please remove before publication.
 
-A.1.  draft-ietf-wimse-http-signature-07
+A.1.  draft-ietf-wimse-http-signature-08
+
+   *  Address Justin Richer's shepherd review (#385).
+
+A.2.  draft-ietf-wimse-http-signature-07
 
    *  WGLC: replace @request-target with @path/@query; select the WIMSE
       signature by tag (#297, #301).
@@ -1045,25 +1049,25 @@ A.1.  draft-ietf-wimse-http-signature-07
       [I-D.ietf-wimse-workload-creds] (#290); consistent "proof of
       possession"/"PoP" wording.
 
-A.2.  draft-ietf-wimse-http-signature-06
+A.3.  draft-ietf-wimse-http-signature-06
 
    *  Add wimse-sign-response request signature parameter so clients can
       mandate a signed response; regenerate examples (#277).
 
-A.3.  draft-ietf-wimse-http-signature-05
+A.4.  draft-ietf-wimse-http-signature-05
 
    *  Regenerate non-normative request/response examples so the signed
       response includes wimse-req-nonce matching the request nonce
       (#274).
 
-A.4.  draft-ietf-wimse-http-signature-04
+A.5.  draft-ietf-wimse-http-signature-04
 
    *  On signed responses, require wimse-req-nonce (request binding);
       register with IANA.  Non-normative response example not updated
       accordingly; the Signature value was not regenerated (see issue
       tracker).
 
-A.5.  draft-ietf-wimse-http-signature-03
+A.6.  draft-ietf-wimse-http-signature-03
 
    *  Replace Wimse-Audience HTTP header with the wimse-aud signature
       metadata parameter ([RFC9421]); register with IANA (HTTP Signature
@@ -1071,12 +1075,12 @@ A.5.  draft-ietf-wimse-http-signature-03
       accordingly; the Signature value was not regenerated (see issue
       tracker).
 
-A.6.  draft-ietf-wimse-http-signature-02
+A.7.  draft-ietf-wimse-http-signature-02
 
    *  Add new Wimse-Audience HTTP header (superseded by wimse-aud in
       -03).
 
-A.7.  draft-ietf-wimse-http-signature-01
+A.8.  draft-ietf-wimse-http-signature-01
 
    *  Clarified response signing.
 
@@ -1086,11 +1090,11 @@ A.7.  draft-ietf-wimse-http-signature-01
 
    *  Added an Implementation Status section.
 
-A.8.  draft-ietf-wimse-http-signature-00
+A.9.  draft-ietf-wimse-http-signature-00
 
    *  Initial version, extracted from the -07 draft with minimal edits.
 
-A.9.  draft-ietf-wimse-s2s-protocol-07
+A.10.  draft-ietf-wimse-s2s-protocol-07
 
    *  Rework the WPT's oth claim.
 
@@ -1108,14 +1112,14 @@ A.9.  draft-ietf-wimse-s2s-protocol-07
 
    *  Use of the Accept-Signature header.
 
-A.10.  draft-ietf-wimse-s2s-protocol-06
+A.11.  draft-ietf-wimse-s2s-protocol-06
 
    *  Explicit definition of the Workload Identity Certificate.
 
    *  Definition of the validation of workload identifiers as part of
       workload authentication.  Still work in progress.
 
-A.11.  draft-ietf-wimse-s2s-protocol-05
+A.12.  draft-ietf-wimse-s2s-protocol-05
 
    *  Removed the entire Workload Identity section which is now covered
       in the Architecture document.
@@ -1126,7 +1130,7 @@ A.11.  draft-ietf-wimse-s2s-protocol-05
 
    *  IANA considerations.
 
-A.12.  draft-ietf-wimse-s2s-protocol-04
+A.13.  draft-ietf-wimse-s2s-protocol-04
 
    *  Require cnf.jwk.alg in WIT which restricts signature algorithm of
       WPT or HTTP-Sig.
@@ -1135,7 +1139,7 @@ A.12.  draft-ietf-wimse-s2s-protocol-04
 
    *  Consolidate terminology with the Architecture draft.
 
-A.13.  draft-ietf-wimse-s2s-protocol-03
+A.14.  draft-ietf-wimse-s2s-protocol-03
 
    *  Consistently use "workload".
 
@@ -1150,7 +1154,7 @@ A.13.  draft-ietf-wimse-s2s-protocol-03
 
    *  Error handling for the application-level methods.
 
-A.14.  draft-ietf-wimse-s2s-protocol-02
+A.15.  draft-ietf-wimse-s2s-protocol-02
 
    *  Coexistence with bearer tokens.
 
@@ -1162,7 +1166,7 @@ A.14.  draft-ietf-wimse-s2s-protocol-02
 
    *  Moved an author to acknowledgments.
 
-A.15.  draft-ietf-wimse-s2s-protocol-01
+A.16.  draft-ietf-wimse-s2s-protocol-01
 
    *  Addressed multiple comments from Pieter.
 
@@ -1177,7 +1181,7 @@ A.15.  draft-ietf-wimse-s2s-protocol-01
    *  Added a section comparing the DPoP-inspired app-level security
       option to the Message Signature-based alternative.
 
-A.16.  draft-ietf-wimse-s2s-protocol-00
+A.17.  draft-ietf-wimse-s2s-protocol-00
 
    *  Initial WG draft, an exact copy of draft-sheffer-wimse-s2s-
       protocol-00
@@ -1233,9 +1237,9 @@ Acknowledgments
 
    The authors would like to thank Pieter Kasselman for his detailed
    comments, Flemming Andreasen, Kieran Sweeney and Anton Sokolov for
-   their WGLC reviews, as well as Jason Costello, Maartje Eyskens,
-   Radosław Piliszek and kanywst for implementing this draft and sharing
-   their learnings.
+   their WGLC reviews, Justin Richer for his document shepherd review,
+   as well as Jason Costello, Maartje Eyskens, Radosław Piliszek and
+   kanywst for implementing this draft and sharing their learnings.
 
    We thank Daniel Feldman for his contributions to earlier versions of
    this document.  We also thank Arndt Schwenkschuster and Brian
