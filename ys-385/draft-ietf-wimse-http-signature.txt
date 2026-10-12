@@ -360,10 +360,11 @@ Table of Contents
 
    The wimse-sign-response signature metadata parameter is a Boolean
    parameter for requests.  When present with the value true, the client
-   requires the server to sign the HTTP response to this request as
-   specified in Section 3.5.  When the parameter is omitted, or present
-   with the value false, the client does not require a signed response
-   via this parameter.
+   requires a signed HTTP response: the server MUST sign the response as
+   specified in Section 3.5, or return an error if it cannot
+   (Section 3.6).  When the parameter is omitted, or present with the
+   value false, the client does not require a signed response via this
+   parameter.
 
    If the client is configured to require a signed response, it MUST
    include wimse-sign-response with the Boolean value true in the

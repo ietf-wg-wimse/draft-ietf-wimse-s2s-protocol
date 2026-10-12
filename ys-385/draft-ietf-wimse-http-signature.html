@@ -1548,8 +1548,9 @@ See "Workload Identifiers and Authentication Granularity" in <span>[<a href="#I-
 <a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-the-wimse-sign-response-sig" class="section-name selfRef">The <code>wimse-sign-response</code> Signature Parameter</a>
         </h3>
 <p id="section-3.3-1">The <code>wimse-sign-response</code> signature metadata parameter is a Boolean parameter for requests.
-When present with the value true, the client requires the server to sign the HTTP response
-to this request as specified in <a href="#signing-the-response" class="auto internal xref">Section 3.5</a>.
+When present with the value true, the client requires a signed HTTP response:
+the server <span class="bcp14">MUST</span> sign the response as specified in <a href="#signing-the-response" class="auto internal xref">Section 3.5</a>,
+or return an error if it cannot (<a href="#error-conditions" class="auto internal xref">Section 3.6</a>).
 When the parameter is omitted, or present with the value false, the client does not require a signed response via this parameter.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
 <p id="section-3.3-2">If the client is configured to require a signed response, it <span class="bcp14">MUST</span> include <code>wimse-sign-response</code> with the Boolean value true in the request's <code>Signature-Input</code>.<a href="#section-3.3-2" class="pilcrow">¶</a></p>
 <p id="section-3.3-3">This parameter is not mandatory. Moreover, the server <span class="bcp14">MAY</span> sign the response even if this parameter is missing from the request or is present with the value false.<a href="#section-3.3-3" class="pilcrow">¶</a></p>
