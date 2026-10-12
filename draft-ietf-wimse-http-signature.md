@@ -116,7 +116,7 @@ If the response is signed, the following components MUST be signed:
 * `Content-Digest` if it exists
 * `Workload-Identity-Token`
 
-To ensure the message is fully integrity-protected, if the request or response includes a message body, the sender MUST include
+To protect the integrity of the message body, if the request or response includes a body, the sender MUST include
 (and the receiver MUST verify) a Content-Digest header. This implies the receiver MUST compute the Content-Digest value for the message content received and compare it with the Content-Digest value provided in the message.
 
 For both requests and responses, the following signature parameters MUST be included:
@@ -508,6 +508,10 @@ IANA is requested to register the following entries in the "HTTP Signature Metad
 # Document History
 <cref>RFC Editor: please remove before publication.</cref>
 
+## draft-ietf-wimse-http-signature-08
+
+* Address Justin Richer's shepherd review (#385).
+
 ## draft-ietf-wimse-http-signature-07
 
 * WGLC: replace `@request-target` with `@path`/`@query`; select the WIMSE signature by `tag` (#297, #301).
@@ -650,6 +654,7 @@ trying to reinvent Message Signatures.
 
 The authors would like to thank Pieter Kasselman for his detailed comments,
 Flemming Andreasen, Kieran Sweeney and Anton Sokolov for their WGLC reviews,
+Justin Richer for his document shepherd review,
 as well as Jason Costello, Maartje Eyskens, Radosław Piliszek and kanywst for implementing this draft and sharing their learnings.
 
 We thank Daniel Feldman for his contributions to earlier versions of this document. We also thank Arndt Schwenkschuster and Brian Campbell who coauthored
