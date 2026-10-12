@@ -1532,8 +1532,7 @@ See also <span><a href="https://rfc-editor.org/rfc/rfc9421#section-7.3.6" class=
 <p id="section-3.2-1"><span>[<a href="#RFC9421" class="cite xref">RFC9421</a>]</span> defines signature parameters for HTTP message signatures: metadata carried in the <code>Signature-Input</code> field
 alongside the covered components. That metadata is covered by the signature as the <code>@signature-params</code> component value
 (Section 2.3 of <span>[<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>), which is always the last line of the signature base.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
-<p id="section-3.2-2">This document defines the <code>wimse-aud</code> signature metadata parameter for requests.
-It is a String parameter.
+<p id="section-3.2-2">The <code>wimse-aud</code> signature metadata parameter is a String parameter for requests.
 Using a signature parameter carries the audience explicitly in <code>Signature-Input</code>, so the value is protected by the signature and is not affected by hop-by-hop rewriting of the request URI.<a href="#section-3.2-2" class="pilcrow">¶</a></p>
 <p id="section-3.2-3">The sender <span class="bcp14">MUST</span> set <code>wimse-aud</code> to an audience value that identifies the intended recipient of the request.
 By default, the sender uses the HTTP target URI (<span><a href="https://rfc-editor.org/rfc/rfc9110#section-7.1" class="relref">Section 7.1</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>) of the request, without query or fragment components, as known to the sender.
@@ -1548,8 +1547,7 @@ See "Workload Identifiers and Authentication Granularity" in <span>[<a href="#I-
         <h3 id="name-the-wimse-sign-response-sig">
 <a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-the-wimse-sign-response-sig" class="section-name selfRef">The <code>wimse-sign-response</code> Signature Parameter</a>
         </h3>
-<p id="section-3.3-1">This document defines the <code>wimse-sign-response</code> signature metadata parameter for requests.
-It is a Boolean parameter.
+<p id="section-3.3-1">The <code>wimse-sign-response</code> signature metadata parameter is a Boolean parameter for requests.
 When present with the value true, the client requires the server to sign the HTTP response
 to this request as specified in <a href="#signing-the-response" class="auto internal xref">Section 3.5</a>.
 When the parameter is omitted, or present with the value false, the client does not require a signed response via this parameter.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
@@ -1562,8 +1560,7 @@ When the parameter is omitted, or present with the value false, the client does 
         <h3 id="name-the-wimse-req-nonce-signatu">
 <a href="#section-3.4" class="section-number selfRef">3.4. </a><a href="#name-the-wimse-req-nonce-signatu" class="section-name selfRef">The <code>wimse-req-nonce</code> Signature Parameter</a>
         </h3>
-<p id="section-3.4-1">This document defines the <code>wimse-req-nonce</code> signature metadata parameter for signed responses.
-It is a String parameter.
+<p id="section-3.4-1">The <code>wimse-req-nonce</code> signature metadata parameter is a String parameter for signed responses.
 This parameter binds requests to responses and prevents a malicious
 server-side component or middlebox from replaying responses to the wrong client.<a href="#section-3.4-1" class="pilcrow">¶</a></p>
 <p id="section-3.4-2">Every signed response <span class="bcp14">MUST</span> include <code>wimse-req-nonce</code>. The server <span class="bcp14">MUST</span> set it to the value of the <code>nonce</code> signature parameter from the <code>Signature-Input</code> of the request that triggered the response.<a href="#section-3.4-2" class="pilcrow">¶</a></p>

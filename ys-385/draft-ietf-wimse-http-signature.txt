@@ -336,11 +336,11 @@ Table of Contents
    @signature-params component value (Section 2.3 of [RFC9421]), which
    is always the last line of the signature base.
 
-   This document defines the wimse-aud signature metadata parameter for
-   requests.  It is a String parameter.  Using a signature parameter
-   carries the audience explicitly in Signature-Input, so the value is
-   protected by the signature and is not affected by hop-by-hop
-   rewriting of the request URI.
+   The wimse-aud signature metadata parameter is a String parameter for
+   requests.  Using a signature parameter carries the audience
+   explicitly in Signature-Input, so the value is protected by the
+   signature and is not affected by hop-by-hop rewriting of the request
+   URI.
 
    The sender MUST set wimse-aud to an audience value that identifies
    the intended recipient of the request.  By default, the sender uses
@@ -358,12 +358,12 @@ Table of Contents
 
 3.3.  The wimse-sign-response Signature Parameter
 
-   This document defines the wimse-sign-response signature metadata
-   parameter for requests.  It is a Boolean parameter.  When present
-   with the value true, the client requires the server to sign the HTTP
-   response to this request as specified in Section 3.5.  When the
-   parameter is omitted, or present with the value false, the client
-   does not require a signed response via this parameter.
+   The wimse-sign-response signature metadata parameter is a Boolean
+   parameter for requests.  When present with the value true, the client
+   requires the server to sign the HTTP response to this request as
+   specified in Section 3.5.  When the parameter is omitted, or present
+   with the value false, the client does not require a signed response
+   via this parameter.
 
    If the client is configured to require a signed response, it MUST
    include wimse-sign-response with the Boolean value true in the
@@ -375,11 +375,10 @@ Table of Contents
 
 3.4.  The wimse-req-nonce Signature Parameter
 
-   This document defines the wimse-req-nonce signature metadata
-   parameter for signed responses.  It is a String parameter.  This
-   parameter binds requests to responses and prevents a malicious
-   server-side component or middlebox from replaying responses to the
-   wrong client.
+   The wimse-req-nonce signature metadata parameter is a String
+   parameter for signed responses.  This parameter binds requests to
+   responses and prevents a malicious server-side component or middlebox
+   from replaying responses to the wrong client.
 
    Every signed response MUST include wimse-req-nonce.  The server MUST
    set it to the value of the nonce signature parameter from the
