@@ -188,8 +188,9 @@ See "Workload Identifiers and Authentication Granularity" in {{I-D.ietf-wimse-wo
 ## The `wimse-sign-response` Signature Parameter {#wimse-sign-response-param}
 
 The `wimse-sign-response` signature metadata parameter is a Boolean parameter for requests.
-When present with the value true, the client requires the server to sign the HTTP response
-to this request as specified in {{signing-the-response}}.
+When present with the value true, the client requires a signed HTTP response:
+the server MUST sign the response as specified in {{signing-the-response}},
+or return an error if it cannot ({{error-conditions}}).
 When the parameter is omitted, or present with the value false, the client does not require a signed response via this parameter.
 
 If the client is configured to require a signed response, it MUST include `wimse-sign-response` with the Boolean value true in the request's `Signature-Input`.
