@@ -1190,7 +1190,7 @@ multi-service, multi-cloud, multi-tenant deployments.<a href="#section-abstract-
             <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-one-workload-identity-per-c" class="internal xref">One Workload Identity per Credential</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
-            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-application-layer-workload-" class="internal xref">Application-Layer Workload-to-Workload Authentication</a></p>
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-application-layer-credentia" class="internal xref">Application-Layer Credentials</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1">
                 <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="auto internal xref">5.1</a>.  <a href="#name-the-workload-identity-token" class="internal xref">The Workload Identity Token</a></p>
@@ -1218,7 +1218,7 @@ multi-service, multi-cloud, multi-tenant deployments.<a href="#section-abstract-
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
-            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-transport-layer-workload-to" class="internal xref">Transport-Layer Workload-to-Workload Authentication</a></p>
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-transport-layer-credentials" class="internal xref">Transport-Layer Credentials</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
                 <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-the-workload-identity-certi" class="internal xref">The Workload Identity Certificate</a></p>
@@ -1527,8 +1527,8 @@ appear in all capitals, as shown here.<a href="#section-2-2" class="pilcrow">¶<
 </div>
 <div id="app-layer">
 <section id="section-5">
-      <h2 id="name-application-layer-workload-">
-<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-application-layer-workload-" class="section-name selfRef">Application-Layer Workload-to-Workload Authentication</a>
+      <h2 id="name-application-layer-credentia">
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-application-layer-credentia" class="section-name selfRef">Application-Layer Credentials</a>
       </h2>
 <p id="section-5-1">In many deployments communication between workloads cannot use end-to-end transport security such as TLS. For these deployment styles, this document proposes a credential that can be used at the application-layer.<a href="#section-5-1" class="pilcrow">¶</a></p>
 <div id="to-wit">
@@ -1842,8 +1842,8 @@ which specific resources can be accessed.<a href="#section-5.3-2" class="pilcrow
 </div>
 <div id="transport-layer">
 <section id="section-6">
-      <h2 id="name-transport-layer-workload-to">
-<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-transport-layer-workload-to" class="section-name selfRef">Transport-Layer Workload-to-Workload Authentication</a>
+      <h2 id="name-transport-layer-credentials">
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-transport-layer-credentials" class="section-name selfRef">Transport-Layer Credentials</a>
       </h2>
 <p id="section-6-1">As noted in the introduction, for many deployments, transport-layer protection of application traffic is ideal.<a href="#section-6-1" class="pilcrow">¶</a></p>
 <div id="to-wic">
@@ -2367,6 +2367,9 @@ use these tokens to authenticate to each other.<a href="#section-11.1.1-9" class
 </li>
           <li class="normal" id="appendix-A.1-1.9">
             <p id="appendix-A.1-1.9.1">Remove superfluous 'Use In Other Protocols' subsection that basically just said what amounts to "other specs can reference this"<a href="#appendix-A.1-1.9.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.1-1.10">
+            <p id="appendix-A.1-1.10.1">Retitle Application-Layer and Transport-Layer Workload-to-Workload Authentication to Application-Layer and Transport-Layer Credentials to clarify that these are credentials, not authentication protocols.<a href="#appendix-A.1-1.10.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>

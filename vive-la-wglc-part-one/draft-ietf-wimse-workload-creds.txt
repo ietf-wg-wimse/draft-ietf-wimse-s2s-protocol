@@ -91,7 +91,7 @@ Table of Contents
    2.  Conventions and Definitions
    3.  Establishing Trust Anchors
    4.  One Workload Identity per Credential
-   5.  Application-Layer Workload-to-Workload Authentication
+   5.  Application-Layer Credentials
      5.1.  The Workload Identity Token
        5.1.1.  The WIT HTTP Header
        5.1.2.  Including Additional Claims
@@ -99,7 +99,7 @@ Table of Contents
        5.1.4.  Validating the WIT
      5.2.  Error Conditions
      5.3.  Coexistence with JWT Bearer Tokens
-   6.  Transport-Layer Workload-to-Workload Authentication
+   6.  Transport-Layer Credentials
      6.1.  The Workload Identity Certificate
    7.  Client Authorization Using the Workload Identity
    8.  Implementation Status
@@ -343,7 +343,7 @@ Table of Contents
    separate credentials, or additional claims as described in
    Section 5.1.2.
 
-5.  Application-Layer Workload-to-Workload Authentication
+5.  Application-Layer Credentials
 
    In many deployments communication between workloads cannot use end-
    to-end transport security such as TLS.  For these deployment styles,
@@ -662,7 +662,7 @@ Table of Contents
    calls can be made and information in the context token may be used to
    determine which specific resources can be accessed.
 
-6.  Transport-Layer Workload-to-Workload Authentication
+6.  Transport-Layer Credentials
 
    As noted in the introduction, for many deployments, transport-layer
    protection of application traffic is ideal.
@@ -1237,6 +1237,11 @@ A.1.  draft-ietf-wimse-workload-creds-03
    *  Remove superfluous 'Use In Other Protocols' subsection that
       basically just said what amounts to "other specs can reference
       this"
+
+   *  Retitle Application-Layer and Transport-Layer Workload-to-Workload
+      Authentication to Application-Layer and Transport-Layer
+      Credentials to clarify that these are credentials, not
+      authentication protocols.
 
 A.2.  draft-ietf-wimse-workload-creds-02
 
