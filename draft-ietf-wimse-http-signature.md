@@ -53,7 +53,7 @@ Authentication is based on the Workload Identity Token (WIT).
 # Introduction
 
 This document defines authentication and authorization in the context of interaction between two workloads.
-This is the core component of the WIMSE architecture {{!I-D.ietf-wimse-arch}}.
+This is the core component of the WIMSE architecture {{?I-D.ietf-wimse-arch}}.
 This document focuses on HTTP-based services,
 and the workload-to-workload call consists of a single HTTP request and its response.
 
@@ -77,7 +77,7 @@ Refer to Sec. 1.2 of {{I-D.ietf-wimse-workload-creds}} for the deployment archit
 
 # Conventions and Definitions
 
-All terminology in this document follows {{!I-D.ietf-wimse-arch}}.
+All terminology in this document follows {{?I-D.ietf-wimse-arch}}.
 
 {::boilerplate bcp14-tagged}
 
