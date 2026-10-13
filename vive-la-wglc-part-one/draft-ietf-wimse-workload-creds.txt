@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 15 April 2027                                Palo Alto Networks
+Expires: 16 April 2027                                Palo Alto Networks
                                                       A. Schwenkschuster
                                                         Defakto Security
                                                               Y. Sheffer
                                                              Independent
                                                             Y. Rosomakho
                                                                  Zscaler
-                                                         12 October 2026
+                                                         13 October 2026
 
 
                        WIMSE Workload Credentials
@@ -67,7 +67,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 15 April 2027.
+   This Internet-Draft will expire on 16 April 2027.
 
 Copyright Notice
 
@@ -942,8 +942,23 @@ Table of Contents
 
    *  MUST NOT be used once the credential is expired
 
-   *  SHOULD be re-generated for each new Workload Identity Token or
-      Certificate.
+   *  SHOULD be regenerated for each new Workload Identity Token or
+      Certificate, unless the key is sufficiently protected, e.g., non-
+      exportable and hardware-bound.
+
+   For purposes of this section, keeping the private key private means
+   that the private key is not intentionally disclosed outside the
+   workload instance or an authorized signing component, is not placed
+   in credentials, logs, images, configuration artifacts, or bearer
+   tokens, and is not made available to intermediaries except as part of
+   an explicitly trusted signing service.  Compromise or disclosure of
+   the private key invalidates the security assumptions of the
+   associated WIT or WIC.  This document does not require a particular
+   key-protection mechanism; deployments that require stronger
+   properties such as non-exportability, hardware-backed protection, or
+   binding to a measured runtime need additional deployment-specific
+   evidence or profile requirements.  Verifiers must not infer such
+   stronger properties from the WIT or WIC alone.
 
 9.6.  Transport Security
 
@@ -1243,6 +1258,10 @@ A.1.  draft-ietf-wimse-workload-creds-03
       Credentials to clarify that these are credentials, not
       authentication protocols.
 
+   *  say what it means to keep the private key private and that reuse
+      of a key is probably okay when it's non-exportable and hardware-
+      protected
+
 A.2.  draft-ietf-wimse-workload-creds-02
 
    *  Add a section requiring exactly one Workload Identifier per
@@ -1381,7 +1400,8 @@ Acknowledgments
 
    Additional thanks to the WIMSE working group for the feedback and
    discussions that helped shape this specification, including, but not
-   limited to, Jean-François "Jeff" Lombardo,
+   limited to, Jean-François "Jeff" Lombardo, Andrii Deinega, Karthik
+   Rampalli, and Songbo Bu.
 
 Authors' Addresses
 
