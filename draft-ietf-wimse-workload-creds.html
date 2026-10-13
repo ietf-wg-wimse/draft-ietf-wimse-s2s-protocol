@@ -1470,7 +1470,7 @@ This document focuses on the credentials that carry workload identity and bind t
 <a href="#section-1.2" class="section-number selfRef">1.2. </a><a href="#name-workload-identifiers-and-au" class="section-name selfRef">Workload Identifiers and Authentication Granularity</a>
         </h3>
 <p id="section-1.2-1">The Workload Identifier is a URI and its baseline syntax and processing requirements are defined in <span>[<a href="#WIMSE-ID" class="cite xref">WIMSE-ID</a>]</span>.
-While deployments define how they assign identifiers and what the path portion means, implementations <span class="bcp14">MUST</span> enforce the URI requirements outlined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-identifier-03#section-4.1" class="relref">Section 4.1</a> of [<a href="#WIMSE-ID" class="cite xref">WIMSE-ID</a>]</span>.<a href="#section-1.2-1" class="pilcrow">¶</a></p>
+While deployments define how they assign identifiers and what the path portion means, implementations are expected to conform to the URI requirements outlined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-identifier-03#section-4.1" class="relref">Section 4.1</a> of [<a href="#WIMSE-ID" class="cite xref">WIMSE-ID</a>]</span>.<a href="#section-1.2-1" class="pilcrow">¶</a></p>
 <p id="section-1.2-2">Prior to WIMSE, many containerized runtime platforms could not authenticate a peer as a specific workload;
 they could only establish that the peer belonged to a given trust domain.
 With mutual TLS (mTLS), for example, there is often no reliable way to map the external access name a client uses to reach a workload
@@ -1516,7 +1516,8 @@ appear in all capitals, as shown here.<a href="#section-2-2" class="pilcrow">¶<
       <h2 id="name-establishing-trust-anchors">
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-establishing-trust-anchors" class="section-name selfRef">Establishing Trust Anchors</a>
       </h2>
-<p id="section-3-1">This document expects that trust anchors used to validate Workload Identity Certificates and Workload Identity Tokens are associated with a trust domain and are provisioned to consumers together with trust domain metadata for that domain. Trust anchors can be represented in different ways depending on the deployment; for example, as a set of public keys (such as a JWKS), as an X.509 certification authority used to validate certificate chains, or as other deployment-specific material.<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-3-1">Trust anchors used to validate Workload Identity Certificates and Workload Identity Tokens are associated with a trust domain, as discussed in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-08#section-3.1.1" class="relref">Section 3.1.1</a> of [<a href="#I-D.ietf-wimse-arch" class="cite xref">I-D.ietf-wimse-arch</a>]</span>.
+Trust anchors used to validate WICs and WITs are associated with a trust domain are provisioned to consumers together with trust domain metadata for that domain. Trust anchors can be represented in different ways depending on the deployment; for example, as a set of public keys (such as a JWKS), as an X.509 certification authority used to validate certificate chains, or as other deployment-specific material.<a href="#section-3-1" class="pilcrow">¶</a></p>
 <p id="section-3-2">This document does not define a mechanism for discovering trust anchor information. Consumers <span class="bcp14">MUST</span> bind each trust domain to an authorized issuer (or set of issuers) and to the corresponding trust anchors. That mapping <span class="bcp14">MUST</span> be distributed via a secure out-of-band mechanism. In particular, for a WIT the <code>iss</code> claim (the JWT issuer claim <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>, defined in <a href="#to-wit" class="auto internal xref">Section 5.1</a>) <span class="bcp14">MUST NOT</span> be used to look up trust anchor material directly from information carried only in the token (such as by fetching a JWKS from a URL found only in the WIT).<a href="#section-3-2" class="pilcrow">¶</a></p>
 <p id="section-3-3">To validate a WIT, the receiving workload verifies the JWS signature using key material from the trust anchors configured for the trust domain in the <code>sub</code> claim. Trust anchor material for WIT validation <span class="bcp14">MAY</span> include more than one public key so that operators can rotate signing keys. In practice, the <code>alg</code> header parameter would identify an algorithm that the validator accepts for that trust domain, and the signature would be checked under a key drawn from the configured trust anchors. If the JWS header contains a <code>kid</code> parameter, the validator would use the key in the trust anchor material with the same <code>kid</code> value. If <code>kid</code> is absent, deployment policy would need to provide unambiguous key selection (for example, when only a single key is configured for that trust domain). Recipient processing of a presented WIT is specified in <a href="#wit-validation" class="auto internal xref">Section 5.1.4</a>.<a href="#section-3-3" class="pilcrow">¶</a></p>
 <p id="section-3-4">For Workload Identity Certificates, validators use the trust anchors for the peer's trust domain to validate the X.509 chain and the Workload Identifier in the certificate, as described in <a href="#to-wic" class="auto internal xref">Section 6.1</a> and in companion specifications such as <span>[<a href="#I-D.ietf-wimse-mutual-tls" class="cite xref">I-D.ietf-wimse-mutual-tls</a>]</span>.<a href="#section-3-4" class="pilcrow">¶</a></p>
@@ -1566,7 +1567,7 @@ It is issued by the Identity Server and binds a public key to the workload ident
                 <p id="section-5.1-3.2.2.1.1"><code>iss</code>: The issuer of the token, which is the Identity Server, represented by a URI. The <code>iss</code> claim is <span class="bcp14">RECOMMENDED</span> but optional; when present, it is particularly useful for auditing and operations (for example, identifying which Identity Server issued the WIT in logs or compliance records). See <a href="#wit-iss-note" class="auto internal xref">Section 5.1.3</a> for key distribution and validation context.<a href="#section-5.1-3.2.2.1.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-5.1-3.2.2.2">
-                <p id="section-5.1-3.2.2.2.1"><code>sub</code>: The subject of the token, which is the single Workload Identifier for the workload used for authentication and authorization, as defined in <span>[<a href="#WIMSE-ID" class="cite xref">WIMSE-ID</a>]</span> and <a href="#single-workload-identity" class="auto internal xref">Section 4</a>. <a href="#granular-auth" class="auto internal xref">Section 1.2</a> provides additional requirements associated with these identifiers, so they can be used to secure workload-to-workload communication.<a href="#section-5.1-3.2.2.2.1" class="pilcrow">¶</a></p>
+                <p id="section-5.1-3.2.2.2.1"><code>sub</code>: The subject is the Workload Identifier as defined in <span>[<a href="#WIMSE-ID" class="cite xref">WIMSE-ID</a>]</span>, constrained to exactly one per credential (<a href="#single-workload-identity" class="auto internal xref">Section 4</a>).<a href="#section-5.1-3.2.2.2.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-5.1-3.2.2.3">
                 <p id="section-5.1-3.2.2.3.1"><code>exp</code>: The expiration time of the token (as defined in <span><a href="https://rfc-editor.org/rfc/rfc7519#section-4.1.4" class="relref">Section 4.1.4</a> of [<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>).
@@ -1594,7 +1595,7 @@ WITs should be refreshed regularly, e.g., on the order of hours.<a href="#sectio
 <p id="section-5.1-4">As noted in <span>[<a href="#WIMSE-ID" class="cite xref">WIMSE-ID</a>]</span>, a Workload Identifier is a URI that includes a trust domain in the authority component.
 The runtime environment often determines which
 URI scheme is used, e.g., if SPIFFE is used to authenticate workloads, it mandates <code>spiffe</code> URIs.
-For deployments that do not use an environment-specific scheme, the <code>wimse</code> URI scheme <span class="bcp14">MAY</span> be used; it is defined in <span>[<a href="#WIMSE-ID" class="cite xref">WIMSE-ID</a>]</span>, which also registers it with IANA.<a href="#section-5.1-4" class="pilcrow">¶</a></p>
+For deployments that do not use an environment-specific scheme, the <code>wimse</code> URI scheme can be used; it is defined in <span>[<a href="#WIMSE-ID" class="cite xref">WIMSE-ID</a>]</span>.<a href="#section-5.1-4" class="pilcrow">¶</a></p>
 <p id="section-5.1-5">An example WIT might look like this:<a href="#section-5.1-5" class="pilcrow">¶</a></p>
 <span id="name-an-example-workload-identit"></span><div id="example-wit">
 <figure id="figure-2">
@@ -2404,6 +2405,15 @@ use these tokens to authenticate to each other.<a href="#section-11.1.1-9" class
           <li class="normal" id="appendix-A.1-1.12">
             <p id="appendix-A.1-1.12.1">say what it means to keep the private key private and that reuse of a key is probably okay when it's non-exportable and hardware-protected<a href="#appendix-A.1-1.12.1" class="pilcrow">¶</a></p>
 </li>
+          <li class="normal" id="appendix-A.1-1.13">
+            <p id="appendix-A.1-1.13.1">Reduce some normative and definitional duplication<a href="#appendix-A.1-1.13.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.1-1.14">
+            <p id="appendix-A.1-1.14.1">Point to draft-ietf-wimse-arch's "Trust Domain" from "Establishing Trust Anchors"<a href="#appendix-A.1-1.14.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.1-1.15">
+            <p id="appendix-A.1-1.15.1">Define <code>sub</code> a little more cleanly<a href="#appendix-A.1-1.15.1" class="pilcrow">¶</a></p>
+</li>
         </ul>
 </section>
 </div>
@@ -2650,8 +2660,8 @@ the Message Signature-based alternative.<a href="#appendix-A.11-1.5.1" class="pi
 <p id="appendix-B-1">The authors would like to thank Pieter Kasselman for his detailed comments.<a href="#appendix-B-1" class="pilcrow">¶</a></p>
 <p id="appendix-B-2">We thank Daniel Feldman for his contributions to earlier versions of this document.<a href="#appendix-B-2" class="pilcrow">¶</a></p>
 <p id="appendix-B-3">Additional thanks to the WIMSE working group for the feedback and discussions that helped shape this specification, including, but not limited to,
-Jean-François "Jeff" Lombardo,
 Andrii Deinega,
+Jean-François "Jeff" Lombardo,
 Karthik Rampalli,
 and
 Songbo Bu.<a href="#appendix-B-3" class="pilcrow">¶</a></p>

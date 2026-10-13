@@ -240,8 +240,8 @@ Table of Contents
    The Workload Identifier is a URI and its baseline syntax and
    processing requirements are defined in [WIMSE-ID].  While deployments
    define how they assign identifiers and what the path portion means,
-   implementations MUST enforce the URI requirements outlined in
-   Section 4.1 of [WIMSE-ID].
+   implementations are expected to conform to the URI requirements
+   outlined in Section 4.1 of [WIMSE-ID].
 
    Prior to WIMSE, many containerized runtime platforms could not
    authenticate a peer as a specific workload; they could only establish
@@ -285,14 +285,15 @@ Table of Contents
 
 3.  Establishing Trust Anchors
 
-   This document expects that trust anchors used to validate Workload
-   Identity Certificates and Workload Identity Tokens are associated
-   with a trust domain and are provisioned to consumers together with
-   trust domain metadata for that domain.  Trust anchors can be
-   represented in different ways depending on the deployment; for
-   example, as a set of public keys (such as a JWKS), as an X.509
-   certification authority used to validate certificate chains, or as
-   other deployment-specific material.
+   Trust anchors used to validate Workload Identity Certificates and
+   Workload Identity Tokens are associated with a trust domain, as
+   discussed in Section 3.1.1 of [I-D.ietf-wimse-arch].  Trust anchors
+   used to validate WICs and WITs are associated with a trust domain are
+   provisioned to consumers together with trust domain metadata for that
+   domain.  Trust anchors can be represented in different ways depending
+   on the deployment; for example, as a set of public keys (such as a
+   JWKS), as an X.509 certification authority used to validate
+   certificate chains, or as other deployment-specific material.
 
    This document does not define a mechanism for discovering trust
    anchor information.  Consumers MUST bind each trust domain to an
@@ -381,12 +382,9 @@ Table of Contents
          issued the WIT in logs or compliance records).  See
          Section 5.1.3 for key distribution and validation context.
 
-      -  sub: The subject of the token, which is the single Workload
-         Identifier for the workload used for authentication and
-         authorization, as defined in [WIMSE-ID] and Section 4.
-         Section 1.2 provides additional requirements associated with
-         these identifiers, so they can be used to secure workload-to-
-         workload communication.
+      -  sub: The subject is the Workload Identifier as defined in
+         [WIMSE-ID], constrained to exactly one per credential
+         (Section 4).
 
       -  exp: The expiration time of the token (as defined in
          Section 4.1.4 of [RFC7519]).  WITs should be refreshed
@@ -429,8 +427,7 @@ Table of Contents
    often determines which URI scheme is used, e.g., if SPIFFE is used to
    authenticate workloads, it mandates spiffe URIs.  For deployments
    that do not use an environment-specific scheme, the wimse URI scheme
-   MAY be used; it is defined in [WIMSE-ID], which also registers it
-   with IANA.
+   can be used; it is defined in [WIMSE-ID].
 
    An example WIT might look like this:
 
@@ -1279,6 +1276,13 @@ A.1.  draft-ietf-wimse-workload-creds-03
       of a key is probably okay when it's non-exportable and hardware-
       protected
 
+   *  Reduce some normative and definitional duplication
+
+   *  Point to draft-ietf-wimse-arch's "Trust Domain" from "Establishing
+      Trust Anchors"
+
+   *  Define sub a little more cleanly
+
 A.2.  draft-ietf-wimse-workload-creds-02
 
    *  Add a section requiring exactly one Workload Identifier per
@@ -1417,7 +1421,7 @@ Acknowledgments
 
    Additional thanks to the WIMSE working group for the feedback and
    discussions that helped shape this specification, including, but not
-   limited to, Jean-François "Jeff" Lombardo, Andrii Deinega, Karthik
+   limited to, Andrii Deinega, Jean-François "Jeff" Lombardo, Karthik
    Rampalli, and Songbo Bu.
 
 Authors' Addresses
