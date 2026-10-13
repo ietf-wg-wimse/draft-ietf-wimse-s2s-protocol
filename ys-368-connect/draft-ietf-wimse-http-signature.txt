@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments                J. Salowey
 Internet-Draft                                        Palo Alto Networks
 Intended status: Standards Track                              Y. Sheffer
-Expires: 10 April 2027                                       Independent
-                                                          7 October 2026
+Expires: 16 April 2027                                       Independent
+                                                         13 October 2026
 
 
      WIMSE Workload-to-Workload Authentication with HTTP Signatures
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 10 April 2027.
+   This Internet-Draft will expire on 16 April 2027.
 
 Copyright Notice
 
@@ -207,11 +207,10 @@ Table of Contents
    Exception for CONNECT (Section 9.3.6 of [RFC9110]): the request
    target is in authority-form (host:port), so @path and @query are not
    meaningful.  For a CONNECT request, senders MUST cover @method and
-   @request-target instead of @path and @query, and MUST NOT cover @path
-   or @query.  The @request-target value is the authority-form request
-   target (Section 2.2.5 of [RFC9421]), for example www.example.com:80.
-   This exception is specific to CONNECT; this profile otherwise
-   continues to avoid @request-target.
+   @authority instead of @path and @query, and MUST NOT cover @path or
+   @query.  The @authority value is the host and port of the CONNECT
+   target (Section 2.2.3 of [RFC9421]).  This exception is specific to
+   CONNECT; this profile otherwise continues to omit @authority.
 
    In addition, the following request headers MUST be signed when they
    exist:
@@ -243,8 +242,8 @@ Table of Contents
    *  Workload-Identity-Token
 
    When the signed response corresponds to a CONNECT request, senders
-   MUST cover @method;req and @request-target;req instead of @path;req
-   and @query;req, and MUST NOT cover @path;req or @query;req.
+   MUST cover @method;req and @authority;req instead of @path;req and
+   @query;req, and MUST NOT cover @path;req or @query;req.
 
    To ensure the message is fully integrity-protected, if the request or
    response includes a message body, the sender MUST include (and the
@@ -1036,8 +1035,8 @@ Appendix A.  Document History
 
 A.1.  draft-ietf-wimse-http-signature-08
 
-   *  Exception for CONNECT: cover @request-target (authority-form
-      host:port) instead of @path/@query (#368).
+   *  Exception for CONNECT: cover @authority instead of @path/@query
+      (#368).
 
 A.2.  draft-ietf-wimse-http-signature-07
 

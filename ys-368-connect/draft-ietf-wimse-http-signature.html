@@ -1054,7 +1054,7 @@ svg {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Salowey &amp; Sheffer</td>
-<td class="center">Expires 10 April 2027</td>
+<td class="center">Expires 16 April 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1067,12 +1067,12 @@ svg {
 <dd class="internet-draft">draft-ietf-wimse-http-signature-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-10-07" class="published">7 October 2026</time>
+<time datetime="2026-10-13" class="published">13 October 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2027-04-10">10 April 2027</time></dd>
+<dd class="expires"><time datetime="2027-04-16">16 April 2027</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1133,7 +1133,7 @@ Authentication is based on the Workload Identity Token (WIT).<a href="#section-a
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 10 April 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 16 April 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1413,9 +1413,9 @@ Formally, this is a profile of the Message Signatures specification <span>[<a hr
 <p id="section-3-4">This profile uses <code>@path</code> and <code>@query</code> rather than <code>@request-target</code>, which is <span class="bcp14">NOT RECOMMENDED</span> outside HTTP/1.1 (<span><a href="https://rfc-editor.org/rfc/rfc9421#section-2.2.5" class="relref">Section 2.2.5</a> of [<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>). <code>@query</code> is included even when the request has no query component; in that case its value is <code>?</code> (<span><a href="https://rfc-editor.org/rfc/rfc9421#section-2.2.7" class="relref">Section 2.2.7</a> of [<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>).
 The <code>@authority</code> derived component is not included: TLS-terminating proxies and load balancers commonly rewrite the authority (see <span>[<a href="#I-D.ietf-wimse-arch" class="cite xref">I-D.ietf-wimse-arch</a>]</span> and <a href="#middleboxes" class="auto internal xref">Section 5.2</a>), so signing it would break those deployments. Recipient binding is carried instead by the mandatory <code>wimse-aud</code> signature parameter (<a href="#wimse-aud-param" class="auto internal xref">Section 3.2</a>).<a href="#section-3-4" class="pilcrow">¶</a></p>
 <p id="section-3-5">Exception for CONNECT (<span><a href="https://rfc-editor.org/rfc/rfc9110#section-9.3.6" class="relref">Section 9.3.6</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>): the request target is in authority-form (<code>host:port</code>), so <code>@path</code> and <code>@query</code> are not meaningful.
-For a CONNECT request, senders <span class="bcp14">MUST</span> cover <code>@method</code> and <code>@request-target</code> instead of <code>@path</code> and <code>@query</code>, and <span class="bcp14">MUST NOT</span> cover <code>@path</code> or <code>@query</code>.
-The <code>@request-target</code> value is the authority-form request target (<span><a href="https://rfc-editor.org/rfc/rfc9421#section-2.2.5" class="relref">Section 2.2.5</a> of [<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>), for example <code>www.example.com:80</code>.
-This exception is specific to CONNECT; this profile otherwise continues to avoid <code>@request-target</code>.<a href="#section-3-5" class="pilcrow">¶</a></p>
+For a CONNECT request, senders <span class="bcp14">MUST</span> cover <code>@method</code> and <code>@authority</code> instead of <code>@path</code> and <code>@query</code>, and <span class="bcp14">MUST NOT</span> cover <code>@path</code> or <code>@query</code>.
+The <code>@authority</code> value is the host and port of the CONNECT target (<span><a href="https://rfc-editor.org/rfc/rfc9421#section-2.2.3" class="relref">Section 2.2.3</a> of [<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>).
+This exception is specific to CONNECT; this profile otherwise continues to omit <code>@authority</code>.<a href="#section-3-5" class="pilcrow">¶</a></p>
 <p id="section-3-6">In addition, the following request headers <span class="bcp14">MUST</span> be signed when they exist:<a href="#section-3-6" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3-7.1">
@@ -1458,7 +1458,7 @@ This exception is specific to CONNECT; this profile otherwise continues to avoid
           <p id="section-3-9.7.1"><code>Workload-Identity-Token</code><a href="#section-3-9.7.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="section-3-10">When the signed response corresponds to a CONNECT request, senders <span class="bcp14">MUST</span> cover <code>@method;req</code> and <code>@request-target;req</code> instead of <code>@path;req</code> and <code>@query;req</code>, and <span class="bcp14">MUST NOT</span> cover <code>@path;req</code> or <code>@query;req</code>.<a href="#section-3-10" class="pilcrow">¶</a></p>
+<p id="section-3-10">When the signed response corresponds to a CONNECT request, senders <span class="bcp14">MUST</span> cover <code>@method;req</code> and <code>@authority;req</code> instead of <code>@path;req</code> and <code>@query;req</code>, and <span class="bcp14">MUST NOT</span> cover <code>@path;req</code> or <code>@query;req</code>.<a href="#section-3-10" class="pilcrow">¶</a></p>
 <p id="section-3-11">To ensure the message is fully integrity-protected, if the request or response includes a message body, the sender <span class="bcp14">MUST</span> include
 (and the receiver <span class="bcp14">MUST</span> verify) a Content-Digest header. This implies the receiver <span class="bcp14">MUST</span> compute the Content-Digest value for the message content received and compare it with the Content-Digest value provided in the message.<a href="#section-3-11" class="pilcrow">¶</a></p>
 <p id="section-3-12">For both requests and responses, the following signature parameters <span class="bcp14">MUST</span> be included:<a href="#section-3-12" class="pilcrow">¶</a></p>
@@ -2289,7 +2289,7 @@ context where the request would be accepted as valid, and this mitigates the ris
         </h3>
 <ul class="normal">
 <li class="normal" id="appendix-A.1-1.1">
-            <p id="appendix-A.1-1.1.1">Exception for CONNECT: cover <code>@request-target</code> (authority-form host:port) instead of <code>@path</code>/<code>@query</code> (#368).<a href="#appendix-A.1-1.1.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.1.1">Exception for CONNECT: cover <code>@authority</code> instead of <code>@path</code>/<code>@query</code> (#368).<a href="#appendix-A.1-1.1.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
