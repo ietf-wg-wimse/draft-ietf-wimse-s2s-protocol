@@ -140,28 +140,17 @@ to a SubjectAltName in the presented certificate (DNSName or URI).
 As a result, the client can verify that the server certificate is valid within a trust domain,
 but not that it belongs to the particular workload the client intended to reach.
 
-To enable mutual and granular authentication between workloads, two things must be in place:
+To enable granular authentication between workloads, the following must be in place:
 
 - Each workload must know its own identifier.
-- Each workload must be able to verify that it is the intended recipient of a given request
-  (that is, that it is the intended audience for that request).
-  The same applies to a response if the PoP mechanism provides protection of responses.
+- A callee must be able to verify that a request is intended for it.
+- A caller that authenticates the callee must know the identifier it expects the callee to present,
+  either a DNS name or a Workload Identifier.
 
-Once these conditions are met, the methods described in this document can be used for the caller and callee to mutually authenticate.
-
-### Application-Layer Audience {#app-audience}
-
-Application-level proof-of-possession mechanisms defined in {{?I-D.ietf-wimse-wpt}} and {{?I-D.ietf-wimse-http-signature}}
-bind a request to an intended recipient using an audience value.
-The Workload Identifier in a WIT identifies the sender; the audience of the PoP identifies the intended recipient.
-
-By default, the caller sets the audience to the HTTP target URI ({{Section 7.1 of RFC9110}}) of the request,
-without query or fragment components.
-Intermediaries may rewrite the URI of the request in transit, so the callee MUST NOT rely solely on the request URI as
-observed on the wire to decide whether it is the intended recipient.
-The callee MUST verify that the audience value carried in the proof is intended for it.
-Deployments MUST provide the configuration or infrastructure needed for that verification,
-including support for deployment-specific aliases or normalization where request URIs may be rewritten in transit.
+Once these conditions are met, the methods described in this document can be used for the caller and callee to authenticate one another.
+At the transport layer, the client validates the server certificate against that expected identifier
+as described in "Server Name Validation" of {{I-D.ietf-wimse-mutual-tls}}.
+At the application layer, the callee verifies the audience of the proof of possession ({{app-audience}}).
 
 # Conventions and Definitions
 
@@ -346,6 +335,15 @@ Verification of a WIT follows {{RFC7515}} and the JWT best practices in {{I-D.ie
 * Additional claims that are not understood are ignored, as specified in {{add-claims}}.
 
 See {{wit-lifetime}} for WIT lifetime considerations.
+
+## Audience of Application-Layer Proofs {#app-audience}
+
+The Workload Identifier in a WIT identifies the sender.
+The audience of the proof of possession that accompanies the WIT identifies the intended recipient.
+A recipient MUST verify that the audience refers to it, using trusted configuration rather than request fields such as `Host`,
+because intermediaries may rewrite the request URI.
+Each proof-of-possession mechanism defines how the audience is set and validated;
+see "Audience validation" in {{?I-D.ietf-wimse-wpt}} and "The `wimse-aud` Signature Parameter" in {{?I-D.ietf-wimse-http-signature}}.
 
 ## Error Conditions
 
@@ -594,7 +592,7 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 
 ## draft-ietf-wimse-workload-creds-03
 
-* Replace the access-path-to-identifier mapping API with application-layer audience for WPT and HTTP signatures (#173, #175).
+* Replace the access-path-to-identifier mapping API with conditions for caller and callee, and add a short subsection on the audience of application-layer proofs (#173, #175).
 * Added a section to describe the security considerations of granular authentication.
 * Use the fully-specified `Ed25519` algorithm identifier in the examples instead of the deprecated `EdDSA` ({{?RFC9864}}).
 * Add a WIT validation procedure for recipients (#290, #294).
