@@ -130,7 +130,7 @@ Depending on the protocol, the workload authentication may happen during step (1
 ## Workload Identifiers and Authentication Granularity {#granular-auth}
 
 The Workload Identifier is a URI and its baseline syntax and processing requirements are defined in {{!WIMSE-ID=I-D.ietf-wimse-identifier}}.
-While deployments define how they assign identifiers and what the path portion means, implementations MUST enforce the URI requirements outlined in {{Section 4.1 of WIMSE-ID}}.
+While deployments define how they assign identifiers and what the path portion means, implementations are expected to conform to the URI requirements outlined in {{Section 4.1 of WIMSE-ID}}.
 
 Prior to WIMSE, many containerized runtime platforms could not authenticate a peer as a specific workload;
 they could only establish that the peer belonged to a given trust domain.
@@ -203,7 +203,7 @@ A WIT MUST contain the following content, except where noted:
 As noted in {{WIMSE-ID}}, a Workload Identifier is a URI that includes a trust domain in the authority component.
 The runtime environment often determines which
 URI scheme is used, e.g., if SPIFFE is used to authenticate workloads, it mandates `spiffe` URIs.
-For deployments that do not use an environment-specific scheme, the `wimse` URI scheme MAY be used; it is defined in {{WIMSE-ID}}, which also registers it with IANA.
+For deployments that do not use an environment-specific scheme, the `wimse` URI scheme can be used; it is defined in {{WIMSE-ID}}.
 
 An example WIT might look like this:
 
@@ -593,6 +593,7 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 * Remove superfluous 'Use In Other Protocols' subsection that basically just said what amounts to "other specs can reference this"
 * Retitle Application-Layer and Transport-Layer Workload-to-Workload Authentication to Application-Layer and Transport-Layer Credentials to clarify that these are credentials, not authentication protocols.
 * say what it means to keep the private key private and that reuse of a key is probably okay when it's non-exportable and hardware-protected
+* Reduce some normative and definitional duplication
 
 ## draft-ietf-wimse-workload-creds-02
 
@@ -681,8 +682,8 @@ The authors would like to thank Pieter Kasselman for his detailed comments.
 We thank Daniel Feldman for his contributions to earlier versions of this document.
 
 Additional thanks to the WIMSE working group for the feedback and discussions that helped shape this specification, including, but not limited to,
-Jean-François "Jeff" Lombardo,
 Andrii Deinega,
+Jean-François "Jeff" Lombardo,
 Karthik Rampalli,
 and
 Songbo Bu.
