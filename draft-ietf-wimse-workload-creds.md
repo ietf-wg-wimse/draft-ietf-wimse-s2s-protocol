@@ -130,7 +130,7 @@ Depending on the protocol, the workload authentication may happen during step (1
 ## Workload Identifiers and Authentication Granularity {#granular-auth}
 
 The Workload Identifier is a URI and its baseline syntax and processing requirements are defined in {{!WIMSE-ID=I-D.ietf-wimse-identifier}}.
-While deployments define how they assign identifiers and what the path portion means, implementations MUST enforce the URI requirements outlined in {{Section 4.1 of WIMSE-ID}}.
+While deployments define how they assign identifiers and what the path portion means, implementations are expected to conform to the URI requirements outlined in {{Section 4.1 of WIMSE-ID}}.
 
 Prior to WIMSE, many containerized runtime platforms could not authenticate a peer as a specific workload;
 they could only establish that the peer belonged to a given trust domain.
@@ -160,7 +160,8 @@ All terminology in this document follows {{?I-D.ietf-wimse-arch}}.
 
 # Establishing Trust Anchors {#trust-anchors}
 
-This document expects that trust anchors used to validate Workload Identity Certificates and Workload Identity Tokens are associated with a trust domain and are provisioned to consumers together with trust domain metadata for that domain. Trust anchors can be represented in different ways depending on the deployment; for example, as a set of public keys (such as a JWKS), as an X.509 certification authority used to validate certificate chains, or as other deployment-specific material.
+Trust anchors used to validate Workload Identity Certificates and Workload Identity Tokens are associated with a trust domain, as discussed in {{Section 3.1.1 of I-D.ietf-wimse-arch}}.
+Trust anchors used to validate WICs and WITs are associated with a trust domain are provisioned to consumers together with trust domain metadata for that domain. Trust anchors can be represented in different ways depending on the deployment; for example, as a set of public keys (such as a JWKS), as an X.509 certification authority used to validate certificate chains, or as other deployment-specific material.
 
 This document does not define a mechanism for discovering trust anchor information. Consumers MUST bind each trust domain to an authorized issuer (or set of issuers) and to the corresponding trust anchors. That mapping MUST be distributed via a secure out-of-band mechanism. In particular, for a WIT the `iss` claim (the JWT issuer claim {{RFC7519}}, defined in {{to-wit}}) MUST NOT be used to look up trust anchor material directly from information carried only in the token (such as by fetching a JWKS from a URL found only in the WIT).
 
@@ -193,7 +194,7 @@ A WIT MUST contain the following content, except where noted:
     * `typ`: the WIT is explicitly typed, as recommended in {{Section 3.11 of I-D.ietf-oauth-rfc8725bis}}, using the `wit+jwt` media type.
 * in the JWT claims:
     * `iss`: The issuer of the token, which is the Identity Server, represented by a URI. The `iss` claim is RECOMMENDED but optional; when present, it is particularly useful for auditing and operations (for example, identifying which Identity Server issued the WIT in logs or compliance records). See {{wit-iss-note}} for key distribution and validation context.
-    * `sub`: The subject of the token, which is the single Workload Identifier for the workload used for authentication and authorization, as defined in {{WIMSE-ID}} and {{single-workload-identity}}. {{granular-auth}} provides additional requirements associated with these identifiers, so they can be used to secure workload-to-workload communication.
+    * `sub`: The subject is the Workload Identifier as defined in {{WIMSE-ID}}, constrained to exactly one per credential ({{single-workload-identity}}).
     * `exp`: The expiration time of the token (as defined in {{Section 4.1.4 of RFC7519}}).
       WITs should be refreshed regularly, e.g., on the order of hours.
     * `jti`: A unique identifier for the token (as defined in {{Section 4.1.7 of RFC7519}}). This claim is OPTIONAL. The `jti` claim is useful for auditing the issuance of individual WITs, and it is needed to identify individual tokens in deployments that operate an optional token status or deny-list mechanism ({{wit-lifetime}}). Some token generation environments do not support it.
@@ -204,7 +205,7 @@ A WIT MUST contain the following content, except where noted:
 As noted in {{WIMSE-ID}}, a Workload Identifier is a URI that includes a trust domain in the authority component.
 The runtime environment often determines which
 URI scheme is used, e.g., if SPIFFE is used to authenticate workloads, it mandates `spiffe` URIs.
-For deployments that do not use an environment-specific scheme, the `wimse` URI scheme MAY be used; it is defined in {{WIMSE-ID}}, which also registers it with IANA.
+For deployments that do not use an environment-specific scheme, the `wimse` URI scheme can be used; it is defined in {{WIMSE-ID}}.
 
 An example WIT might look like this:
 
@@ -604,6 +605,9 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 * Remove superfluous 'Use In Other Protocols' subsection that basically just said what amounts to "other specs can reference this"
 * Retitle Application-Layer and Transport-Layer Workload-to-Workload Authentication to Application-Layer and Transport-Layer Credentials to clarify that these are credentials, not authentication protocols.
 * say what it means to keep the private key private and that reuse of a key is probably okay when it's non-exportable and hardware-protected
+* Reduce some normative and definitional duplication
+* Point to draft-ietf-wimse-arch's "Trust Domain" from "Establishing Trust Anchors"
+* Define `sub` a little more cleanly
 
 ## draft-ietf-wimse-workload-creds-02
 
@@ -692,8 +696,8 @@ The authors would like to thank Pieter Kasselman for his detailed comments.
 We thank Daniel Feldman for his contributions to earlier versions of this document.
 
 Additional thanks to the WIMSE working group for the feedback and discussions that helped shape this specification, including, but not limited to,
-Jean-François "Jeff" Lombardo,
 Andrii Deinega,
+Jean-François "Jeff" Lombardo,
 Karthik Rampalli,
 and
 Songbo Bu.
