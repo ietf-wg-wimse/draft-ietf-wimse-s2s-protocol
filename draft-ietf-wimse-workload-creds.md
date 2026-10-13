@@ -442,6 +442,8 @@ Validating a peer's credential against the trust anchors for a trust domain esta
 
 Proof of possession does not mitigate this vulnerability. It shows that the peer holds the private key for the credential it presented ({{wit-pop}}), but it does not prove the identity iself. The same consideration applies when a Workload Identity Certificate is used at the transport layer.
 
+When a workload instance is deprovisioned or flagged as compromised, issuers MUST stop issuing or renewing WITs and WICs for that instance. This does not invalidate credentials already issued: absent effective revocation, they can remain acceptable until expiry. Deployments MUST account for this exposure window, which can be as long as the maximum credential lifetime plus any permitted clock skew, when choosing credential lifetimes. A Workload Identifier MUST NOT be reassigned to a different workload until all previously issued credentials for that identifier have expired, including any permitted clock skew.
+
 ## Workload Identity Token and Proof of Possession {#wit-pop}
 
 The Workload Identity Token (WIT) is bound to a secret cryptographic key and is always presented with a proof of possession (PoP) as described in {{to-wit}}. The WIT is a general purpose token that can be presented in multiple contexts. The WIT and its PoP are used for application-layer authentication; they are not used as the client or server credential for mutual TLS, which uses the Workload Identity Certificate ({{to-wic}}). The WIT MUST NOT be used as a bearer token. While this helps reduce the sensitivity of the token it is still possible that a token and its PoP may be captured and replayed within the PoP's lifetime. The following are some mitigations for the capture and reuse of the WIT and its PoP:
@@ -485,6 +487,7 @@ Both the Workload Identity Token and the Workload Identity Certificate carry a p
 * MUST be kept private
 * MUST be bound to a single Workload Identifier ({{WIMSE-ID}})
 * MUST NOT be used once the credential is expired
+* MUST be destroyed when the workload instance is decommissioned, including any copies in images, snapshots, and caches
 * SHOULD be regenerated for each new Workload Identity Token or Certificate, unless the key is sufficiently protected, e.g., non-exportable and hardware-bound.
 
 For purposes of this section, keeping the private key private means that the private key is not intentionally disclosed
