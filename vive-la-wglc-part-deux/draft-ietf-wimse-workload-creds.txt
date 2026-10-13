@@ -283,14 +283,16 @@ Table of Contents
 
 3.  Establishing Trust Anchors
 
-   This document expects that trust anchors used to validate Workload
-   Identity Certificates and Workload Identity Tokens are associated
-   with a trust domain and are provisioned to consumers together with
-   trust domain metadata for that domain.  Trust anchors can be
-   represented in different ways depending on the deployment; for
-   example, as a set of public keys (such as a JWKS), as an X.509
-   certification authority used to validate certificate chains, or as
-   other deployment-specific material.
+   Trust anchors used to validate Workload Identity Certificates and
+   Workload Identity Tokens are associated with a trust domain, as
+   discussed in Section 3.1.1 of [I-D.ietf-wimse-arch].  Trust anchors
+   used to validate WICs and WITs are associated with a trust domain and
+   are provisioned to consumers together with trust domain metadata for
+   that domain.  Trust anchors can be represented in different ways
+   depending on the deployment; for example, as a set of public keys
+   (such as a JWKS), as an X.509 certification authority used to
+   validate certificate chains, or as other deployment-specific
+   material.
 
    This document does not define a mechanism for discovering trust
    anchor information.  Consumers MUST bind each trust domain to an
@@ -1262,6 +1264,9 @@ A.1.  draft-ietf-wimse-workload-creds-03
       protected
 
    *  Reduce some normative and definitional duplication
+
+   *  Point to draft-ietf-wimse-arch's "Trust Domain" from "Establishing
+      Trust Anchors"
 
 A.2.  draft-ietf-wimse-workload-creds-02
 
