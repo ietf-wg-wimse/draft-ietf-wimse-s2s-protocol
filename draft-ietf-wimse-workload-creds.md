@@ -193,7 +193,7 @@ A WIT MUST contain the following content, except where noted:
     * `typ`: the WIT is explicitly typed, as recommended in {{Section 3.11 of I-D.ietf-oauth-rfc8725bis}}, using the `wit+jwt` media type.
 * in the JWT claims:
     * `iss`: The issuer of the token, which is the Identity Server, represented by a URI. The `iss` claim is RECOMMENDED but optional; when present, it is particularly useful for auditing and operations (for example, identifying which Identity Server issued the WIT in logs or compliance records). See {{wit-iss-note}} for key distribution and validation context.
-    * `sub`: The subject of the token, which is the single Workload Identifier for the workload used for authentication and authorization, as defined in {{WIMSE-ID}} and {{single-workload-identity}}. {{granular-auth}} provides additional requirements associated with these identifiers, so they can be used to secure workload-to-workload communication.
+    * `sub`: The subject is the Workload Identifier as defined in {{WIMSE-ID}}, constrained to exactly one per credential ({{single-workload-identity}}).
     * `exp`: The expiration time of the token (as defined in {{Section 4.1.4 of RFC7519}}).
       WITs should be refreshed regularly, e.g., on the order of hours.
     * `jti`: A unique identifier for the token (as defined in {{Section 4.1.7 of RFC7519}}). This claim is OPTIONAL. The `jti` claim is useful for auditing the issuance of individual WITs, and it is needed to identify individual tokens in deployments that operate an optional token status or deny-list mechanism ({{wit-lifetime}}). Some token generation environments do not support it.
@@ -596,6 +596,7 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 * say what it means to keep the private key private and that reuse of a key is probably okay when it's non-exportable and hardware-protected
 * Reduce some normative and definitional duplication
 * Point to draft-ietf-wimse-arch's "Trust Domain" from "Establishing Trust Anchors"
+* Define `sub` a little more cleanly
 
 ## draft-ietf-wimse-workload-creds-02
 
