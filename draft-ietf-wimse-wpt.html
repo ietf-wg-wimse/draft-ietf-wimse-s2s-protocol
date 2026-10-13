@@ -1348,7 +1348,8 @@ can be parsed by generic HTTP authentication implementations.<a href="#section-2
 <li class="normal" id="section-2-5.2.2.1">
               <p id="section-2-5.2.2.1.1"><code>aud</code>: The audience SHOULD contain the HTTP target URI (<span><a href="https://rfc-editor.org/rfc/rfc9110#section-7.1" class="relref">Section 7.1</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>) of the request
    to which the WPT is attached, without query or fragment parts. However, there may be some normalization,
-  rewriting or other process that requires the audience to be set to a deployment-specific value.<a href="#section-2-5.2.2.1.1" class="pilcrow">¶</a></p>
+  rewriting or other process that requires the audience to be set to a deployment-specific value.
+  See "Audience of Application-Layer Proofs" in <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span>.<a href="#section-2-5.2.2.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-2-5.2.2.2">
               <p id="section-2-5.2.2.2.1"><code>exp</code>: The expiration time of the WPT (as defined in <span><a href="https://rfc-editor.org/rfc/rfc7519#section-4.1.4" class="relref">Section 4.1.4</a> of [<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>). WPT lifetimes MUST be short,
@@ -1918,6 +1919,9 @@ Deployments should perform analysis on their situation to determine if it is app
 </li>
           <li class="normal" id="appendix-A.1-1.3">
             <p id="appendix-A.1-1.3.1">More explicit <code>alg</code> checks in the WPT validation procedure<a href="#appendix-A.1-1.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.1-1.4">
+            <p id="appendix-A.1-1.4.1">Tie WPT <code>aud</code> to application-layer audience in workload-creds (#175).<a href="#appendix-A.1-1.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>

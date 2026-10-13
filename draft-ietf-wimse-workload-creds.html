@@ -1210,10 +1210,13 @@ multi-service, multi-cloud, multi-tenant deployments.<a href="#section-abstract-
                 </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2">
-                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="auto internal xref">5.2</a>.  <a href="#name-error-conditions" class="internal xref">Error Conditions</a></p>
+                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="auto internal xref">5.2</a>.  <a href="#name-audience-of-application-lay" class="internal xref">Audience of Application-Layer Proofs</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.3">
-                <p id="section-toc.1-1.5.2.3.1"><a href="#section-5.3" class="auto internal xref">5.3</a>.  <a href="#name-coexistence-with-jwt-bearer" class="internal xref">Coexistence with JWT Bearer Tokens</a></p>
+                <p id="section-toc.1-1.5.2.3.1"><a href="#section-5.3" class="auto internal xref">5.3</a>.  <a href="#name-error-conditions" class="internal xref">Error Conditions</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.4">
+                <p id="section-toc.1-1.5.2.4.1"><a href="#section-5.4" class="auto internal xref">5.4</a>.  <a href="#name-coexistence-with-jwt-bearer" class="internal xref">Coexistence with JWT Bearer Tokens</a></p>
 </li>
             </ul>
 </li>
@@ -1472,22 +1475,26 @@ While deployments define how they assign identifiers and what the path portion m
 they could only establish that the peer belonged to a given trust domain.
 With mutual TLS (mTLS), for example, there is often no reliable way to map the external access name a client uses to reach a workload
 (such as a Kubernetes Ingress path, service name, or HTTP Host header field)
-to the SubjectAltName in the presented certificate.
+to a SubjectAltName in the presented certificate (DNSName or URI).
 As a result, the client can verify that the server certificate is valid within a trust domain,
 but not that it belongs to the particular workload the client intended to reach.<a href="#section-1.2-2" class="pilcrow">¶</a></p>
-<p id="section-1.2-3">To enable mutual and granular authentication between workloads, two things must be in place:<a href="#section-1.2-3" class="pilcrow">¶</a></p>
+<p id="section-1.2-3">To enable granular authentication between workloads, the following must be in place:<a href="#section-1.2-3" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-1.2-4.1">
             <p id="section-1.2-4.1.1">Each workload must know its own identifier.<a href="#section-1.2-4.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-1.2-4.2">
-            <p id="section-1.2-4.2.1">There needs to be an explicit mapping from the external access name used to access a workload (such as an Ingress path or service DNS name)
-to its Workload Identifier.<a href="#section-1.2-4.2.1" class="pilcrow">¶</a></p>
+            <p id="section-1.2-4.2.1">A callee must be able to verify that a request is intended for it.<a href="#section-1.2-4.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-1.2-4.3">
+            <p id="section-1.2-4.3.1">A caller that authenticates the callee must know the identifier it expects the callee to present,
+either a DNS name or a Workload Identifier.<a href="#section-1.2-4.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-1.2-5">Once these conditions are met, the methods described in this document can be used for the caller and callee to mutually authenticate.<a href="#section-1.2-5" class="pilcrow">¶</a></p>
-<p id="section-1.2-6">Implementations <span class="bcp14">MUST</span> allow for defining this mapping between the workload's external access name and the Workload Identifier (e.g., through
-callback functions). Deployments <span class="bcp14">SHOULD</span> use these features to establish a consistent set of identifiers within their environment.<a href="#section-1.2-6" class="pilcrow">¶</a></p>
+<p id="section-1.2-5">Once these conditions are met, the methods described in this document can be used for the caller and callee to authenticate one another.
+At the transport layer, the client validates the server certificate against that expected identifier
+as described in "Server Name Validation" of <span>[<a href="#I-D.ietf-wimse-mutual-tls" class="cite xref">I-D.ietf-wimse-mutual-tls</a>]</span>.
+At the application layer, the callee verifies the audience of the proof of possession (<a href="#app-audience" class="auto internal xref">Section 5.2</a>).<a href="#section-1.2-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1807,35 +1814,48 @@ This, however, could result in interoperability issues, which the following rule
 </div>
 </section>
 </div>
-<div id="error-conditions">
+<div id="app-audience">
 <section id="section-5.2">
-        <h3 id="name-error-conditions">
-<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-error-conditions" class="section-name selfRef">Error Conditions</a>
+        <h3 id="name-audience-of-application-lay">
+<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-audience-of-application-lay" class="section-name selfRef">Audience of Application-Layer Proofs</a>
         </h3>
-<p id="section-5.2-1">Errors may occur during the processing of the WIT. If the WIT validation fails for any reason,
+<p id="section-5.2-1">The Workload Identifier in a WIT identifies the sender.
+The audience of the proof of possession that accompanies the WIT identifies the intended recipient.
+A recipient <span class="bcp14">MUST</span> verify that the audience refers to it, using trusted configuration rather than request fields such as <code>Host</code>,
+because intermediaries may rewrite the request URI.
+Each proof-of-possession mechanism defines how the audience is set and validated;
+see "Audience validation" in <span>[<a href="#I-D.ietf-wimse-wpt" class="cite xref">I-D.ietf-wimse-wpt</a>]</span> and "The <code>wimse-aud</code> Signature Parameter" in <span>[<a href="#I-D.ietf-wimse-http-signature" class="cite xref">I-D.ietf-wimse-http-signature</a>]</span>.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="error-conditions">
+<section id="section-5.3">
+        <h3 id="name-error-conditions">
+<a href="#section-5.3" class="section-number selfRef">5.3. </a><a href="#name-error-conditions" class="section-name selfRef">Error Conditions</a>
+        </h3>
+<p id="section-5.3-1">Errors may occur during the processing of the WIT. If the WIT validation fails for any reason,
 such as an invalid signature, an expired validity time window, or a malformed data structure, an error is returned. Typically,
 this will be in response to an API call, so an HTTP status code such as 400 (Bad Request) is appropriate. This response could
 include more details as per <span>[<a href="#RFC9457" class="cite xref">RFC9457</a>]</span>, such as an indicator that the wrong key material or algorithm was used.  The use of HTTP
 status code 401 is <span class="bcp14">NOT RECOMMENDED</span> for this purpose because it requires a WWW-Authenticate with acceptable HTTP authentication mechanisms in
 the error response and an associated Authorization header in the subsequent request. The use of these headers for the WIT is not compatible
-with this document.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
+with this document.<a href="#section-5.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="coexist">
-<section id="section-5.3">
+<section id="section-5.4">
         <h3 id="name-coexistence-with-jwt-bearer">
-<a href="#section-5.3" class="section-number selfRef">5.3. </a><a href="#name-coexistence-with-jwt-bearer" class="section-name selfRef">Coexistence with JWT Bearer Tokens</a>
+<a href="#section-5.4" class="section-number selfRef">5.4. </a><a href="#name-coexistence-with-jwt-bearer" class="section-name selfRef">Coexistence with JWT Bearer Tokens</a>
         </h3>
-<p id="section-5.3-1">The WIT defines new HTTP headers. It can therefore be presented along with existing headers used for JWT bearer tokens. This
+<p id="section-5.4-1">The WIT defines new HTTP headers. It can therefore be presented along with existing headers used for JWT bearer tokens. This
 property allows for transition from mechanisms using identity tokens based on bearer JWTs to proof-of-possession-based WITs.
 A workload may implement a policy that accepts both bearer tokens and WITs during a transition period. This policy may be configurable
 per-caller to allow the workload to reject bearer tokens from callers that support WITs. Once a deployment fully supports WITs, then the use of
 bearer tokens for identity can be disabled through policy.  Implementations should be careful when implementing such a transition strategy,
-since the decision which token to prefer is made when the caller's identity has still not been authenticated, and needs to be revalidated following the authentication step.<a href="#section-5.3-1" class="pilcrow">¶</a></p>
-<p id="section-5.3-2">The WIT can also coexist with tokens used to establish security context, such as transaction tokens <span>[<a href="#I-D.ietf-oauth-transaction-tokens" class="cite xref">I-D.ietf-oauth-transaction-tokens</a>]</span>. In this case a workload's
+since the decision which token to prefer is made when the caller's identity has still not been authenticated, and needs to be revalidated following the authentication step.<a href="#section-5.4-1" class="pilcrow">¶</a></p>
+<p id="section-5.4-2">The WIT can also coexist with tokens used to establish security context, such as transaction tokens <span>[<a href="#I-D.ietf-oauth-transaction-tokens" class="cite xref">I-D.ietf-oauth-transaction-tokens</a>]</span>. In this case a workload's
 authorization policy may take into account both the sending workload's identity and the information in the context token. For example, the
 identity in the WIT may be used to establish which API calls can be made and information in the context token may be used to determine
-which specific resources can be accessed.<a href="#section-5.3-2" class="pilcrow">¶</a></p>
+which specific resources can be accessed.<a href="#section-5.4-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2349,37 +2369,40 @@ use these tokens to authenticate to each other.<a href="#section-11.1.1-9" class
         </h3>
 <ul class="normal">
 <li class="normal" id="appendix-A.1-1.1">
-            <p id="appendix-A.1-1.1.1">Added a section to describe the security considerations of granular authentication.<a href="#appendix-A.1-1.1.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.1.1">Replace the access-path-to-identifier mapping API with conditions for caller and callee, and add a short subsection on the audience of application-layer proofs (#173, #175).<a href="#appendix-A.1-1.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.2">
-            <p id="appendix-A.1-1.2.1">Use the fully-specified <code>Ed25519</code> algorithm identifier in the examples instead of the deprecated <code>EdDSA</code> (<span>[<a href="#RFC9864" class="cite xref">RFC9864</a>]</span>).<a href="#appendix-A.1-1.2.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.2.1">Added a section to describe the security considerations of granular authentication.<a href="#appendix-A.1-1.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.3">
-            <p id="appendix-A.1-1.3.1">Add a WIT validation procedure for recipients (#290, #294).<a href="#appendix-A.1-1.3.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.3.1">Use the fully-specified <code>Ed25519</code> algorithm identifier in the examples instead of the deprecated <code>EdDSA</code> (<span>[<a href="#RFC9864" class="cite xref">RFC9864</a>]</span>).<a href="#appendix-A.1-1.3.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.4">
-            <p id="appendix-A.1-1.4.1">Clarify that WIT/PoP are application-layer credentials and are not used for mutual TLS; TLS binding does not change that (#256).<a href="#appendix-A.1-1.4.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.4.1">Add a WIT validation procedure for recipients (#290, #294).<a href="#appendix-A.1-1.4.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.5">
-            <p id="appendix-A.1-1.5.1">Clarify that the one-Workload-Identifier-per-credential rule restricts only Workload Identifiers, not other identifiers in the credential.<a href="#appendix-A.1-1.5.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.5.1">Clarify that WIT/PoP are application-layer credentials and are not used for mutual TLS; TLS binding does not change that (#256).<a href="#appendix-A.1-1.5.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.6">
-            <p id="appendix-A.1-1.6.1">State the WIC revocation stance: short lifetimes like WITs; no CRL reliance (#270).<a href="#appendix-A.1-1.6.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.6.1">Clarify that the one-Workload-Identifier-per-credential rule restricts only Workload Identifiers, not other identifiers in the credential.<a href="#appendix-A.1-1.6.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.7">
-            <p id="appendix-A.1-1.7.1">State the WIT revocation stance and resolve the conflicting <code>jti</code> description: the document does not rely on revocation, but deployments may operate a token status list or <code>jti</code> deny-list, in which case <code>jti</code> is required in every WIT (#269).<a href="#appendix-A.1-1.7.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.7.1">State the WIC revocation stance: short lifetimes like WITs; no CRL reliance (#270).<a href="#appendix-A.1-1.7.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.8">
-            <p id="appendix-A.1-1.8.1">Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use, and consistent capitalization of the defined term "Workload Identifier".<a href="#appendix-A.1-1.8.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.8.1">State the WIT revocation stance and resolve the conflicting <code>jti</code> description: the document does not rely on revocation, but deployments may operate a token status list or <code>jti</code> deny-list, in which case <code>jti</code> is required in every WIT (#269).<a href="#appendix-A.1-1.8.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.9">
-            <p id="appendix-A.1-1.9.1">Remove superfluous 'Use In Other Protocols' subsection that basically just said what amounts to "other specs can reference this"<a href="#appendix-A.1-1.9.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.9.1">Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use, and consistent capitalization of the defined term "Workload Identifier".<a href="#appendix-A.1-1.9.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.10">
-            <p id="appendix-A.1-1.10.1">Retitle Application-Layer and Transport-Layer Workload-to-Workload Authentication to Application-Layer and Transport-Layer Credentials to clarify that these are credentials, not authentication protocols.<a href="#appendix-A.1-1.10.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.10.1">Remove superfluous 'Use In Other Protocols' subsection that basically just said what amounts to "other specs can reference this"<a href="#appendix-A.1-1.10.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.11">
-            <p id="appendix-A.1-1.11.1">say what it means to keep the private key private and that reuse of a key is probably okay when it's non-exportable and hardware-protected<a href="#appendix-A.1-1.11.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.11.1">Retitle Application-Layer and Transport-Layer Workload-to-Workload Authentication to Application-Layer and Transport-Layer Credentials to clarify that these are credentials, not authentication protocols.<a href="#appendix-A.1-1.11.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.1-1.12">
+            <p id="appendix-A.1-1.12.1">say what it means to keep the private key private and that reuse of a key is probably okay when it's non-exportable and hardware-protected<a href="#appendix-A.1-1.12.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>

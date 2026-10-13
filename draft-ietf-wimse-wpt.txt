@@ -215,7 +215,9 @@ Table of Contents
          (Section 7.1 of [RFC9110]) of the request to which the WPT is
          attached, without query or fragment parts.  However, there may
          be some normalization, rewriting or other process that requires
-         the audience to be set to a deployment-specific value.
+         the audience to be set to a deployment-specific value.  See
+         "Audience of Application-Layer Proofs" in
+         [I-D.ietf-wimse-workload-creds].
 
       -  exp: The expiration time of the WPT (as defined in
          Section 4.1.4 of [RFC7519]).  WPT lifetimes MUST be short,
@@ -784,6 +786,9 @@ A.1.  draft-ietf-wimse-wpt-03
       appropriate in ietf-wimse-workload-creds where it already is.
 
    *  More explicit alg checks in the WPT validation procedure
+
+   *  Tie WPT aud to application-layer audience in workload-creds
+      (#175).
 
 A.2.  draft-ietf-wimse-wpt-02
 
