@@ -170,6 +170,7 @@ To validate the WPT in the request, the recipient MUST first validate the WIT as
 * There is exactly one `Authorization` header field in the request and it uses the `WPT` authentication scheme.
 * The credentials of the `WPT` authentication scheme are a single and well-formed JWT.
 * The signature algorithm in the `alg` JOSE header string-equal matches the `alg` attribute of the `jwk` in the `cnf` claim of the WIT.
+  Futhermore, the `alg` value MUST be an acceptable digital signature algorithm according to the recipient's policy and MUST NOT be `none` or a symmetric key algorithm.
 * The WPT signature is valid using the public key from the confirmation claim of the WIT.
 * The `typ` JOSE header parameter of the WPT conveys a media type of `wpt+jwt`.
 * The `aud` claim of the WPT matches the target URI, or an acceptable alias or normalization thereof, of the HTTP request
@@ -384,6 +385,7 @@ IANA is requested to register the following entry to the "Hypertext Transfer Pro
 
 * Use the fully-specified `Ed25519` algorithm identifier in the examples instead of the deprecated `EdDSA` ({{?RFC9864}}).
 * Remove Workload Identity Key Management section, which seems more appropriate in ietf-wimse-workload-creds where it already is.
+* More explicit `alg` checks in the WPT validation procedure
 
 ## draft-ietf-wimse-wpt-02
 
@@ -477,3 +479,6 @@ the Message Signature-based alternative.
 The authors would like to thank Pieter Kasselman for his detailed comments.
 
 We thank Daniel Feldman for his contributions to earlier versions of this document.
+
+Additional thanks to the WIMSE working group for the feedback and discussions that helped shape this specification, including, but not limited to,
+Mahesh Kukreja.
