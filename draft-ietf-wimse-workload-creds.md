@@ -159,7 +159,8 @@ All terminology in this document follows {{?I-D.ietf-wimse-arch}}.
 
 # Establishing Trust Anchors {#trust-anchors}
 
-This document expects that trust anchors used to validate Workload Identity Certificates and Workload Identity Tokens are associated with a trust domain and are provisioned to consumers together with trust domain metadata for that domain. Trust anchors can be represented in different ways depending on the deployment; for example, as a set of public keys (such as a JWKS), as an X.509 certification authority used to validate certificate chains, or as other deployment-specific material.
+Trust anchors used to validate Workload Identity Certificates and Workload Identity Tokens are associated with a trust domain, as discussed in {{Section 3.1.1 of I-D.ietf-wimse-arch}}.
+Trust anchors used to validate WICs and WITs are associated with a trust domain and are provisioned to consumers together with trust domain metadata for that domain. Trust anchors can be represented in different ways depending on the deployment; for example, as a set of public keys (such as a JWKS), as an X.509 certification authority used to validate certificate chains, or as other deployment-specific material.
 
 This document does not define a mechanism for discovering trust anchor information. Consumers MUST bind each trust domain to an authorized issuer (or set of issuers) and to the corresponding trust anchors. That mapping MUST be distributed via a secure out-of-band mechanism. In particular, for a WIT the `iss` claim (the JWT issuer claim {{RFC7519}}, defined in {{to-wit}}) MUST NOT be used to look up trust anchor material directly from information carried only in the token (such as by fetching a JWKS from a URL found only in the WIT).
 
@@ -594,6 +595,7 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 * Retitle Application-Layer and Transport-Layer Workload-to-Workload Authentication to Application-Layer and Transport-Layer Credentials to clarify that these are credentials, not authentication protocols.
 * say what it means to keep the private key private and that reuse of a key is probably okay when it's non-exportable and hardware-protected
 * Reduce some normative and definitional duplication
+* Point to draft-ietf-wimse-arch's "Trust Domain" from "Establishing Trust Anchors"
 
 ## draft-ietf-wimse-workload-creds-02
 
