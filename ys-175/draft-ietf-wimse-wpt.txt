@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                      A. Schwenkschuster
-Expires: 1 April 2027                                   Defakto Security
-                                                       28 September 2026
+Expires: 16 April 2027                                  Defakto Security
+                                                         13 October 2026
 
 
                        WIMSE Workload Proof Token
@@ -60,7 +60,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 1 April 2027.
+   This Internet-Draft will expire on 16 April 2027.
 
 Copyright Notice
 
@@ -336,6 +336,9 @@ Table of Contents
 
    *  The signature algorithm in the alg JOSE header string-equal
       matches the alg attribute of the jwk in the cnf claim of the WIT.
+      Futhermore, the alg value MUST be an acceptable digital signature
+      algorithm according to the recipient's policy and MUST NOT be none
+      or a symmetric key algorithm.
 
    *  The WPT signature is valid using the public key from the
       confirmation claim of the WIT.
@@ -788,6 +791,8 @@ A.2.  draft-ietf-wimse-wpt-03
    *  Remove Workload Identity Key Management section, which seems more
       appropriate in ietf-wimse-workload-creds where it already is.
 
+   *  More explicit alg checks in the WPT validation procedure
+
 A.3.  draft-ietf-wimse-wpt-02
 
    *  Convey the WPT in the Authorization header field with a new WPT
@@ -930,6 +935,10 @@ Acknowledgments
 
    We thank Daniel Feldman for his contributions to earlier versions of
    this document.
+
+   Additional thanks to the WIMSE working group for the feedback and
+   discussions that helped shape this specification, including, but not
+   limited to, Mahesh Kukreja.
 
 Authors' Addresses
 
