@@ -73,7 +73,7 @@ This document defines the credentials that workloads use to represent their iden
 
 # Introduction
 
-This document defines authentication and authorization in the context of interaction between two workloads.
+This document defines credentials to facilitate authentication and authorization in the context of interaction between two workloads.
 This is the core component of the WIMSE architecture {{?I-D.ietf-wimse-arch}}.
 This document focuses on the credentials that carry workload identity and bind the key material to the identity. The presentation of the proof of possession of the key material is part of other documents and out of scope for this one.
 
@@ -92,10 +92,6 @@ The various protocol bindings that use these credentials to authenticate workloa
 * Application-layer authentication using the Workload Identity Token in conjunction with a JWT-based proof of possession, the Workload Proof Token (WPT), specified in {{?I-D.ietf-wimse-wpt}}.
 
 * Application-layer authentication using the Workload Identity Token in conjunction with HTTP Message Signatures, specified in {{?I-D.ietf-wimse-http-signature}}.
-
-## Use In Other Protocols
-
-The credentials defined in this document are designed to be used in various protocols. This document does not define the protocols themselves, but rather the credentials that can be used within them. Additional protocols MAY be defined in the future that use these credentials for workload authentication.
 
 ## Deployment Architecture and Message Flow
 
@@ -179,7 +175,7 @@ For a Workload Identity Token, that identifier is the value of the `sub` claim. 
 
 Additional correlation for logging or operations MUST NOT be encoded as a second Workload Identifier in the same WIT or WIC. This restriction applies only to Workload Identifiers; deployments MAY use other mechanisms for correlation, interoperability, or integration purposes, such as the optional `jti` claim, a DNSName SubjectAltName, separate credentials, or additional claims as described in {{add-claims}}.
 
-# Application-Layer Workload-to-Workload Authentication {#app-layer}
+# Application-Layer Credentials {#app-layer}
 
 In many deployments communication between workloads cannot use end-to-end transport security such as TLS. For these deployment styles, this document proposes a credential that can be used at the application-layer.
 
@@ -363,7 +359,7 @@ authorization policy may take into account both the sending workload's identity 
 identity in the WIT may be used to establish which API calls can be made and information in the context token may be used to determine
 which specific resources can be accessed.
 
-# Transport-Layer Workload-to-Workload Authentication {#transport-layer}
+# Transport-Layer Credentials {#transport-layer}
 
 As noted in the introduction, for many deployments, transport-layer protection of application traffic is ideal.
 
@@ -594,8 +590,9 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 * State the WIC revocation stance: short lifetimes like WITs; no CRL reliance (#270).
 * State the WIT revocation stance and resolve the conflicting `jti` description: the document does not rely on revocation, but deployments may operate a token status list or `jti` deny-list, in which case `jti` is required in every WIT (#269).
 * Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use, and consistent capitalization of the defined term "Workload Identifier".
+* Remove superfluous 'Use In Other Protocols' subsection that basically just said what amounts to "other specs can reference this"
+* Retitle Application-Layer and Transport-Layer Workload-to-Workload Authentication to Application-Layer and Transport-Layer Credentials to clarify that these are credentials, not authentication protocols.
 * say what it means to keep the private key private and that reuse of a key is probably okay when it's non-exportable and hardware-protected
-
 
 ## draft-ietf-wimse-workload-creds-02
 
@@ -684,6 +681,7 @@ The authors would like to thank Pieter Kasselman for his detailed comments.
 We thank Daniel Feldman for his contributions to earlier versions of this document.
 
 Additional thanks to the WIMSE working group for the feedback and discussions that helped shape this specification, including, but not limited to,
+Jean-François "Jeff" Lombardo,
 Andrii Deinega,
 Karthik Rampalli,
 and
