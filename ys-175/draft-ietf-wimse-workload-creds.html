@@ -1170,18 +1170,13 @@ multi-service, multi-cloud, multi-tenant deployments.<a href="#section-abstract-
         </h2>
 <nav class="toc"><ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1">
-            <p id="section-toc.1-1.1.1"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
+            <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.1">
                 <p id="section-toc.1-1.1.2.1.1" class="keepWithNext"><a href="#section-1.1" class="auto internal xref">1.1</a>.  <a href="#name-deployment-architecture-and" class="internal xref">Deployment Architecture and Message Flow</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.2">
                 <p id="section-toc.1-1.1.2.2.1" class="keepWithNext"><a href="#section-1.2" class="auto internal xref">1.2</a>.  <a href="#name-workload-identifiers-and-au" class="internal xref">Workload Identifiers and Authentication Granularity</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.2.2.1">
-                    <p id="section-toc.1-1.1.2.2.2.1.1" class="keepWithNext"><a href="#section-1.2.1" class="auto internal xref">1.2.1</a>.  <a href="#name-application-layer-audience" class="internal xref">Application-Layer Audience</a></p>
-</li>
-                </ul>
 </li>
             </ul>
 </li>
@@ -1215,10 +1210,13 @@ multi-service, multi-cloud, multi-tenant deployments.<a href="#section-abstract-
                 </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2">
-                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="auto internal xref">5.2</a>.  <a href="#name-error-conditions" class="internal xref">Error Conditions</a></p>
+                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="auto internal xref">5.2</a>.  <a href="#name-audience-of-application-lay" class="internal xref">Audience of Application-Layer Proofs</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.3">
-                <p id="section-toc.1-1.5.2.3.1"><a href="#section-5.3" class="auto internal xref">5.3</a>.  <a href="#name-coexistence-with-jwt-bearer" class="internal xref">Coexistence with JWT Bearer Tokens</a></p>
+                <p id="section-toc.1-1.5.2.3.1"><a href="#section-5.3" class="auto internal xref">5.3</a>.  <a href="#name-error-conditions" class="internal xref">Error Conditions</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.4">
+                <p id="section-toc.1-1.5.2.4.1"><a href="#section-5.4" class="auto internal xref">5.4</a>.  <a href="#name-coexistence-with-jwt-bearer" class="internal xref">Coexistence with JWT Bearer Tokens</a></p>
 </li>
             </ul>
 </li>
@@ -1480,35 +1478,23 @@ With mutual TLS (mTLS), for example, there is often no reliable way to map the e
 to a SubjectAltName in the presented certificate (DNSName or URI).
 As a result, the client can verify that the server certificate is valid within a trust domain,
 but not that it belongs to the particular workload the client intended to reach.<a href="#section-1.2-2" class="pilcrow">¶</a></p>
-<p id="section-1.2-3">To enable mutual and granular authentication between workloads, two things must be in place:<a href="#section-1.2-3" class="pilcrow">¶</a></p>
+<p id="section-1.2-3">To enable granular authentication between workloads, the following must be in place:<a href="#section-1.2-3" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-1.2-4.1">
             <p id="section-1.2-4.1.1">Each workload must know its own identifier.<a href="#section-1.2-4.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-1.2-4.2">
-            <p id="section-1.2-4.2.1">Each workload must be able to verify that it is the intended recipient of a given request
-(that is, that it is the intended audience for that request).
-The same applies to a response if the PoP mechanism provides protection of responses.<a href="#section-1.2-4.2.1" class="pilcrow">¶</a></p>
+            <p id="section-1.2-4.2.1">A callee must be able to verify that a request is intended for it.<a href="#section-1.2-4.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-1.2-4.3">
+            <p id="section-1.2-4.3.1">A caller that authenticates the callee must know the identifier it expects the callee to present,
+either a DNS name or a Workload Identifier.<a href="#section-1.2-4.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-1.2-5">Once these conditions are met, the methods described in this document can be used for the caller and callee to mutually authenticate.<a href="#section-1.2-5" class="pilcrow">¶</a></p>
-<div id="app-audience">
-<section id="section-1.2.1">
-          <h4 id="name-application-layer-audience">
-<a href="#section-1.2.1" class="section-number selfRef">1.2.1. </a><a href="#name-application-layer-audience" class="section-name selfRef">Application-Layer Audience</a>
-          </h4>
-<p id="section-1.2.1-1">Application-level proof-of-possession mechanisms defined in <span>[<a href="#I-D.ietf-wimse-wpt" class="cite xref">I-D.ietf-wimse-wpt</a>]</span> and <span>[<a href="#I-D.ietf-wimse-http-signature" class="cite xref">I-D.ietf-wimse-http-signature</a>]</span>
-bind a request to an intended recipient using an audience value.
-The Workload Identifier in a WIT identifies the sender; the audience of the PoP identifies the intended recipient.<a href="#section-1.2.1-1" class="pilcrow">¶</a></p>
-<p id="section-1.2.1-2">By default, the caller sets the audience to the HTTP target URI (<span><a href="https://rfc-editor.org/rfc/rfc9110#section-7.1" class="relref">Section 7.1</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>) of the request,
-without query or fragment components.
-Intermediaries may rewrite the URI of the request in transit, so the callee <span class="bcp14">MUST NOT</span> rely solely on the request URI as
-observed on the wire to decide whether it is the intended recipient.
-The callee <span class="bcp14">MUST</span> verify that the audience value carried in the proof is intended for it.
-Deployments <span class="bcp14">MUST</span> provide the configuration or infrastructure needed for that verification,
-including support for deployment-specific aliases or normalization where request URIs may be rewritten in transit.<a href="#section-1.2.1-2" class="pilcrow">¶</a></p>
-</section>
-</div>
+<p id="section-1.2-5">Once these conditions are met, the methods described in this document can be used for the caller and callee to authenticate one another.
+At the transport layer, the client validates the server certificate against that expected identifier
+as described in "Server Name Validation" of <span>[<a href="#I-D.ietf-wimse-mutual-tls" class="cite xref">I-D.ietf-wimse-mutual-tls</a>]</span>.
+At the application layer, the callee verifies the audience of the proof of possession (<a href="#app-audience" class="auto internal xref">Section 5.2</a>).<a href="#section-1.2-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1828,35 +1814,48 @@ This, however, could result in interoperability issues, which the following rule
 </div>
 </section>
 </div>
-<div id="error-conditions">
+<div id="app-audience">
 <section id="section-5.2">
-        <h3 id="name-error-conditions">
-<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-error-conditions" class="section-name selfRef">Error Conditions</a>
+        <h3 id="name-audience-of-application-lay">
+<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-audience-of-application-lay" class="section-name selfRef">Audience of Application-Layer Proofs</a>
         </h3>
-<p id="section-5.2-1">Errors may occur during the processing of the WIT. If the WIT validation fails for any reason,
+<p id="section-5.2-1">The Workload Identifier in a WIT identifies the sender.
+The audience of the proof of possession that accompanies the WIT identifies the intended recipient.
+A recipient <span class="bcp14">MUST</span> verify that the audience refers to it, using trusted configuration rather than request fields such as <code>Host</code>,
+because intermediaries may rewrite the request URI.
+Each proof-of-possession mechanism defines how the audience is set and validated;
+see "Audience validation" in <span>[<a href="#I-D.ietf-wimse-wpt" class="cite xref">I-D.ietf-wimse-wpt</a>]</span> and "The <code>wimse-aud</code> Signature Parameter" in <span>[<a href="#I-D.ietf-wimse-http-signature" class="cite xref">I-D.ietf-wimse-http-signature</a>]</span>.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="error-conditions">
+<section id="section-5.3">
+        <h3 id="name-error-conditions">
+<a href="#section-5.3" class="section-number selfRef">5.3. </a><a href="#name-error-conditions" class="section-name selfRef">Error Conditions</a>
+        </h3>
+<p id="section-5.3-1">Errors may occur during the processing of the WIT. If the WIT validation fails for any reason,
 such as an invalid signature, an expired validity time window, or a malformed data structure, an error is returned. Typically,
 this will be in response to an API call, so an HTTP status code such as 400 (Bad Request) is appropriate. This response could
 include more details as per <span>[<a href="#RFC9457" class="cite xref">RFC9457</a>]</span>, such as an indicator that the wrong key material or algorithm was used.  The use of HTTP
 status code 401 is <span class="bcp14">NOT RECOMMENDED</span> for this purpose because it requires a WWW-Authenticate with acceptable HTTP authentication mechanisms in
 the error response and an associated Authorization header in the subsequent request. The use of these headers for the WIT is not compatible
-with this document.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
+with this document.<a href="#section-5.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="coexist">
-<section id="section-5.3">
+<section id="section-5.4">
         <h3 id="name-coexistence-with-jwt-bearer">
-<a href="#section-5.3" class="section-number selfRef">5.3. </a><a href="#name-coexistence-with-jwt-bearer" class="section-name selfRef">Coexistence with JWT Bearer Tokens</a>
+<a href="#section-5.4" class="section-number selfRef">5.4. </a><a href="#name-coexistence-with-jwt-bearer" class="section-name selfRef">Coexistence with JWT Bearer Tokens</a>
         </h3>
-<p id="section-5.3-1">The WIT defines new HTTP headers. It can therefore be presented along with existing headers used for JWT bearer tokens. This
+<p id="section-5.4-1">The WIT defines new HTTP headers. It can therefore be presented along with existing headers used for JWT bearer tokens. This
 property allows for transition from mechanisms using identity tokens based on bearer JWTs to proof-of-possession-based WITs.
 A workload may implement a policy that accepts both bearer tokens and WITs during a transition period. This policy may be configurable
 per-caller to allow the workload to reject bearer tokens from callers that support WITs. Once a deployment fully supports WITs, then the use of
 bearer tokens for identity can be disabled through policy.  Implementations should be careful when implementing such a transition strategy,
-since the decision which token to prefer is made when the caller's identity has still not been authenticated, and needs to be revalidated following the authentication step.<a href="#section-5.3-1" class="pilcrow">¶</a></p>
-<p id="section-5.3-2">The WIT can also coexist with tokens used to establish security context, such as transaction tokens <span>[<a href="#I-D.ietf-oauth-transaction-tokens" class="cite xref">I-D.ietf-oauth-transaction-tokens</a>]</span>. In this case a workload's
+since the decision which token to prefer is made when the caller's identity has still not been authenticated, and needs to be revalidated following the authentication step.<a href="#section-5.4-1" class="pilcrow">¶</a></p>
+<p id="section-5.4-2">The WIT can also coexist with tokens used to establish security context, such as transaction tokens <span>[<a href="#I-D.ietf-oauth-transaction-tokens" class="cite xref">I-D.ietf-oauth-transaction-tokens</a>]</span>. In this case a workload's
 authorization policy may take into account both the sending workload's identity and the information in the context token. For example, the
 identity in the WIT may be used to establish which API calls can be made and information in the context token may be used to determine
-which specific resources can be accessed.<a href="#section-5.3-2" class="pilcrow">¶</a></p>
+which specific resources can be accessed.<a href="#section-5.4-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2370,7 +2369,7 @@ use these tokens to authenticate to each other.<a href="#section-11.1.1-9" class
         </h3>
 <ul class="normal">
 <li class="normal" id="appendix-A.1-1.1">
-            <p id="appendix-A.1-1.1.1">Replace the access-path-to-identifier mapping API with application-layer audience for WPT and HTTP signatures (#173, #175).<a href="#appendix-A.1-1.1.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.1.1">Replace the access-path-to-identifier mapping API with conditions for caller and callee, and add a short subsection on the audience of application-layer proofs (#173, #175).<a href="#appendix-A.1-1.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.2">
             <p id="appendix-A.1-1.2.1">Added a section to describe the security considerations of granular authentication.<a href="#appendix-A.1-1.2.1" class="pilcrow">¶</a></p>
