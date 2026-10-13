@@ -136,20 +136,21 @@ Prior to WIMSE, many containerized runtime platforms could not authenticate a pe
 they could only establish that the peer belonged to a given trust domain.
 With mutual TLS (mTLS), for example, there is often no reliable way to map the external access name a client uses to reach a workload
 (such as a Kubernetes Ingress path, service name, or HTTP Host header field)
-to the SubjectAltName in the presented certificate.
+to a SubjectAltName in the presented certificate (DNSName or URI).
 As a result, the client can verify that the server certificate is valid within a trust domain,
 but not that it belongs to the particular workload the client intended to reach.
 
-To enable mutual and granular authentication between workloads, two things must be in place:
+To enable granular authentication between workloads, the following must be in place:
 
 - Each workload must know its own identifier.
-- There needs to be an explicit mapping from the external access name used to access a workload (such as an Ingress path or service DNS name)
-to its Workload Identifier.
+- A callee must be able to verify that a request is intended for it.
+- A caller that authenticates the callee must know the identifier it expects the callee to present,
+  either a DNS name or a Workload Identifier.
 
-Once these conditions are met, the methods described in this document can be used for the caller and callee to mutually authenticate.
-
-Implementations MUST allow for defining this mapping between the workload's external access name and the Workload Identifier (e.g., through
-callback functions). Deployments SHOULD use these features to establish a consistent set of identifiers within their environment.
+Once these conditions are met, the methods described in this document can be used for the caller and callee to authenticate one another.
+At the transport layer, the client validates the server certificate against that expected identifier
+as described in "Server Name Validation" of {{?I-D.ietf-wimse-mutual-tls}}.
+At the application layer, the callee verifies the audience of the proof of possession ({{app-audience}}).
 
 # Conventions and Definitions
 
@@ -334,6 +335,15 @@ Verification of a WIT follows {{RFC7515}} and the JWT best practices in {{I-D.ie
 * Additional claims that are not understood are ignored, as specified in {{add-claims}}.
 
 See {{wit-lifetime}} for WIT lifetime considerations.
+
+## Audience of Application-Layer Proofs {#app-audience}
+
+The Workload Identifier in a WIT identifies the sender.
+The audience of the proof of possession that accompanies the WIT identifies the intended recipient.
+A recipient MUST verify that the audience refers to it, using trusted configuration rather than request fields such as `Host`,
+because intermediaries may rewrite the request URI.
+Each proof-of-possession mechanism defines how the audience is set and validated;
+see "Audience validation" in {{?I-D.ietf-wimse-wpt}} and "The `wimse-aud` Signature Parameter" in {{?I-D.ietf-wimse-http-signature}}.
 
 ## Error Conditions
 
@@ -582,6 +592,7 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 
 ## draft-ietf-wimse-workload-creds-03
 
+* Replace the access-path-to-identifier mapping API with conditions for caller and callee, and add a short subsection on the audience of application-layer proofs (#173, #175).
 * Added a section to describe the security considerations of granular authentication.
 * Use the fully-specified `Ed25519` algorithm identifier in the examples instead of the deprecated `EdDSA` ({{?RFC9864}}).
 * Add a WIT validation procedure for recipients (#290, #294).

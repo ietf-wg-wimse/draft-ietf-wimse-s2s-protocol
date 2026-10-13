@@ -105,6 +105,7 @@ A WPT MUST contain the following:
     * `aud`: The audience SHOULD contain the HTTP target URI ({{Section 7.1 of RFC9110}}) of the request
      to which the WPT is attached, without query or fragment parts. However, there may be some normalization,
     rewriting or other process that requires the audience to be set to a deployment-specific value.
+    See "Audience of Application-Layer Proofs" in {{!I-D.ietf-wimse-workload-creds}}.
     * `exp`: The expiration time of the WPT (as defined in {{Section 4.1.4 of RFC7519}}). WPT lifetimes MUST be short,
      e.g., on the order of minutes or seconds.
     * `jti`: A unique identifier for the WPT. The value MUST be assigned such that there is a negligible probability that the same value will be assigned to any other WPT. Such uniqueness can be accomplished by encoding (base64url or any other suitable encoding) 128 bits of pseudorandom data.
@@ -381,6 +382,7 @@ IANA is requested to register the following entry to the "Hypertext Transfer Pro
 * Use the fully-specified `Ed25519` algorithm identifier in the examples instead of the deprecated `EdDSA` ({{?RFC9864}}).
 * Remove Workload Identity Key Management section, which seems more appropriate in ietf-wimse-workload-creds where it already is.
 * More explicit `alg` checks in the WPT validation procedure
+* Tie WPT `aud` to application-layer audience in workload-creds (#175).
 
 ## draft-ietf-wimse-wpt-02
 
