@@ -377,15 +377,12 @@ IANA is requested to register the following entry to the "Hypertext Transfer Pro
 # Document History
 <cref>RFC Editor: please remove before publication.</cref>
 
-## draft-ietf-wimse-wpt-04
-
-* Tie WPT `aud` to application-layer audience in workload-creds (#175).
-
 ## draft-ietf-wimse-wpt-03
 
 * Use the fully-specified `Ed25519` algorithm identifier in the examples instead of the deprecated `EdDSA` ({{?RFC9864}}).
 * Remove Workload Identity Key Management section, which seems more appropriate in ietf-wimse-workload-creds where it already is.
 * More explicit `alg` checks in the WPT validation procedure
+* Tie WPT `aud` to application-layer audience in workload-creds (#175).
 
 ## draft-ietf-wimse-wpt-02
 
