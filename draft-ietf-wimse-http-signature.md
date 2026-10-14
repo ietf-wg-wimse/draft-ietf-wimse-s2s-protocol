@@ -98,6 +98,11 @@ following {{Section 2.2.5 of RFC9421}}.
 `@query` is included even when the request has no query component; in that case its value is `?` ({{Section 2.2.7 of RFC9421}}).
 The `@authority` derived component is not included: TLS-terminating proxies and load balancers commonly rewrite the authority (see {{I-D.ietf-wimse-arch}} and {{middleboxes}}), so signing it would break those deployments. Recipient binding is carried instead by the mandatory `wimse-aud` signature parameter ({{wimse-aud-param}}).
 
+Exception for CONNECT ({{Section 9.3.6 of !RFC9110}}): the request target is in authority-form (`host:port`), so `@path` and `@query` are not meaningful.
+For a CONNECT request, senders MUST cover `@method` and `@authority` instead of `@path` and `@query`, and MUST NOT cover `@path` or `@query`.
+The `@authority` value is the host and port of the CONNECT target ({{Section 2.2.3 of RFC9421}}).
+This exception is specific to CONNECT; this profile otherwise continues to omit `@authority`.
+
 In addition, the following request headers MUST be signed when they exist:
 
 * `Content-Type`
@@ -115,6 +120,8 @@ If the response is signed, the following components MUST be signed:
 * `Content-Type` if it exists
 * `Content-Digest` if it exists
 * `Workload-Identity-Token`
+
+When the signed response corresponds to a CONNECT request, senders MUST cover `@method;req` and `@authority;req` instead of `@path;req` and `@query;req`, and MUST NOT cover `@path;req` or `@query;req`.
 
 To protect the integrity of the message body, if the request or response includes a body, the sender MUST include
 (and the receiver MUST verify) a `Content-Digest` header as defined in {{!RFC9530}}.
@@ -563,6 +570,7 @@ context where the request would be accepted as valid, and this mitigates the ris
 ## draft-ietf-wimse-http-signature-08
 
 * Address Justin Richer's shepherd review (#385).
+* Exception for CONNECT: cover `@authority` instead of `@path`/`@query` (#368).
 
 ## draft-ietf-wimse-http-signature-07
 
