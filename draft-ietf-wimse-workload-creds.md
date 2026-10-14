@@ -117,7 +117,7 @@ Independent of the transport between the workloads, we assume that workloads hol
 
 The high-level message flow is as follows:
 
-1. A transport connection is set up. This may already include the use of the Workload Identity Certificate with transport-layer security, such as TLS.
+1. A transport connection is established using TLS server authentication for Workload B, optionally incorporating mutual TLS (mTLS) with Workload A's Workload Identity Certificate for client authentication.
 
 2. Workload A prepares to call Workload B. This may include adding application-layer authentication information, such as the Workload Identity Token and proof of possession. Workload B authenticates Workload A.
 
@@ -606,6 +606,7 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 * Reduce some normative and definitional duplication
 * Point to draft-ietf-wimse-arch's "Trust Domain" from "Establishing Trust Anchors"
 * Define `sub` a little more cleanly
+* Try to clarify always server and sometimes client authentication in the transport bullet of the Message Flow breakdown
 
 ## draft-ietf-wimse-workload-creds-02
 
