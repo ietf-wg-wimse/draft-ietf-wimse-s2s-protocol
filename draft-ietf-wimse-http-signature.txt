@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments                J. Salowey
 Internet-Draft                                        Palo Alto Networks
 Intended status: Standards Track                              Y. Sheffer
-Expires: 16 April 2027                                       Independent
-                                                         13 October 2026
+Expires: 17 April 2027                                       Independent
+                                                         14 October 2026
 
 
      WIMSE Workload-to-Workload Authentication with HTTP Signatures
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 16 April 2027.
+   This Internet-Draft will expire on 17 April 2027.
 
 Copyright Notice
 
@@ -95,38 +95,43 @@ Table of Contents
    5.  Security Considerations
      5.1.  Workload Identity Token and Proof of Possession
      5.2.  Middle Boxes
-     5.3.  Privacy Considerations
-   6.  Security Goals
-     6.1.  Prerequisites
-     6.2.  Authentication
-     6.3.  Integrity
-     6.4.  Replay and Deletion
+   6.  Privacy Considerations
    7.  IANA Considerations
      7.1.  HTTP Signature Metadata Parameters Registration
        7.1.1.  wimse-aud
        7.1.2.  wimse-sign-response
        7.1.3.  wimse-req-nonce
+     7.2.  HTTP Problem Types Registration
+       7.2.1.  wimse-signature-invalid
+       7.2.2.  wimse-signed-response-unsupported
+       7.2.3.  wimse-signed-response-unavailable
    8.  References
      8.1.  Normative References
      8.2.  Informative References
-   Appendix A.  Document History
-     A.1.  draft-ietf-wimse-http-signature-07
-     A.2.  draft-ietf-wimse-http-signature-06
-     A.3.  draft-ietf-wimse-http-signature-05
-     A.4.  draft-ietf-wimse-http-signature-04
-     A.5.  draft-ietf-wimse-http-signature-03
-     A.6.  draft-ietf-wimse-http-signature-02
-     A.7.  draft-ietf-wimse-http-signature-01
-     A.8.  draft-ietf-wimse-http-signature-00
-     A.9.  draft-ietf-wimse-s2s-protocol-07
-     A.10. draft-ietf-wimse-s2s-protocol-06
-     A.11. draft-ietf-wimse-s2s-protocol-05
-     A.12. draft-ietf-wimse-s2s-protocol-04
-     A.13. draft-ietf-wimse-s2s-protocol-03
-     A.14. draft-ietf-wimse-s2s-protocol-02
-     A.15. draft-ietf-wimse-s2s-protocol-01
-     A.16. draft-ietf-wimse-s2s-protocol-00
-   Appendix B.  Comparing the DPoP Inspired Option with Message
+   Appendix A.  Security Goals
+     A.1.  Prerequisites
+     A.2.  Authentication
+     A.3.  Integrity
+     A.4.  Replay and Deletion
+   Appendix B.  Document History
+     B.1.  draft-ietf-wimse-http-signature-08
+     B.2.  draft-ietf-wimse-http-signature-07
+     B.3.  draft-ietf-wimse-http-signature-06
+     B.4.  draft-ietf-wimse-http-signature-05
+     B.5.  draft-ietf-wimse-http-signature-04
+     B.6.  draft-ietf-wimse-http-signature-03
+     B.7.  draft-ietf-wimse-http-signature-02
+     B.8.  draft-ietf-wimse-http-signature-01
+     B.9.  draft-ietf-wimse-http-signature-00
+     B.10. draft-ietf-wimse-s2s-protocol-07
+     B.11. draft-ietf-wimse-s2s-protocol-06
+     B.12. draft-ietf-wimse-s2s-protocol-05
+     B.13. draft-ietf-wimse-s2s-protocol-04
+     B.14. draft-ietf-wimse-s2s-protocol-03
+     B.15. draft-ietf-wimse-s2s-protocol-02
+     B.16. draft-ietf-wimse-s2s-protocol-01
+     B.17. draft-ietf-wimse-s2s-protocol-00
+   Appendix C.  Comparing the DPoP Inspired Option with Message
            Signatures
    Acknowledgments
    Authors' Addresses
@@ -157,7 +162,7 @@ Table of Contents
    [I-D.ietf-wimse-workload-creds].  The first alternative
    [I-D.ietf-wimse-wpt] is inspired by the OAuth DPoP specification
    [RFC9449].  The second is based on the HTTP Message Signatures RFC
-   [RFC9421], and it is defined in this document.  Appendix B includes a
+   [RFC9421], and it is defined in this document.  Appendix C includes a
    comparison of the two approaches.
 
 1.1.  Deployment Architecture and Message Flow
@@ -193,15 +198,15 @@ Table of Contents
 
    *  @query
 
-   This profile uses @path and @query rather than @request-target, which
-   is NOT RECOMMENDED outside HTTP/1.1 (Section 2.2.5 of [RFC9421]).
-   @query is included even when the request has no query component; in
-   that case its value is ? (Section 2.2.7 of [RFC9421]).  The
-   @authority derived component is not included: TLS-terminating proxies
-   and load balancers commonly rewrite the authority (see
-   [I-D.ietf-wimse-arch] and Section 5.2), so signing it would break
-   those deployments.  Recipient binding is carried instead by the
-   mandatory wimse-aud signature parameter (Section 3.2).
+   This profile covers @path and @query separately rather than @request-
+   target, following Section 2.2.5 of [RFC9421]. @query is included even
+   when the request has no query component; in that case its value is ?
+   (Section 2.2.7 of [RFC9421]).  The @authority derived component is
+   not included: TLS-terminating proxies and load balancers commonly
+   rewrite the authority (see [I-D.ietf-wimse-arch] and Section 5.2), so
+   signing it would break those deployments.  Recipient binding is
+   carried instead by the mandatory wimse-aud signature parameter
+   (Section 3.2).
 
    In addition, the following request headers MUST be signed when they
    exist:
@@ -232,11 +237,11 @@ Table of Contents
 
    *  Workload-Identity-Token
 
-   To ensure the message is fully integrity-protected, if the request or
-   response includes a message body, the sender MUST include (and the
-   receiver MUST verify) a Content-Digest header.  This implies the
-   receiver MUST compute the Content-Digest value for the message
-   content received and compare it with the Content-Digest value
+   To protect the integrity of the message body, if the request or
+   response includes a body, the sender MUST include (and the receiver
+   MUST verify) a Content-Digest header as defined in [RFC9530].  This
+   implies the receiver MUST compute the Content-Digest value for the
+   message content received and compare it with the Content-Digest value
    provided in the message.
 
    For both requests and responses, the following signature parameters
@@ -289,8 +294,11 @@ Table of Contents
 
    Senders MUST generate each nonce at random with sufficient length
    that the probability of collision is negligible among all nonces a
-   recipient might observe within the lifetime of a signature.  Members
-   of a sender cluster therefore need not coordinate nonce generation.
+   recipient might observe within the lifetime of a signature.  To that
+   end, senders MUST use a cryptographically secure random number
+   generator, and the nonce MUST contain at least 64 bits of entropy; 96
+   bits or more is RECOMMENDED.  Members of a sender cluster therefore
+   need not coordinate nonce generation.
 
    Recipients MAY maintain a replay cache and SHOULD reject a message
    (request or response) whose nonce they have already seen.  What
@@ -301,7 +309,8 @@ Table of Contents
 
    For clarity: the signature's lifetime (the expires signature
    parameter) is different and typically much shorter than the WIT's
-   lifetime, denoted by its exp claim.
+   lifetime, denoted by its exp claim.  Recipients MUST reject
+   signatures that fall outside their validity time window.
 
    Implementers need to be aware that the WIT is extracted from the
    message before the message signature is validated.  Recipients of
@@ -310,14 +319,22 @@ Table of Contents
    the HTTP message signature.  They MUST ensure that the message is not
    processed further before it has been fully validated.
 
+   The WIT and the HTTP message signature MUST be sent over a server-
+   authenticated TLS connection unless another channel provides
+   confidentiality and server authentication comparable to TLS.  When
+   TLS is used, the client MUST perform hostname validation according to
+   Section 6.3 of [RFC9525], and TLS deployments SHOULD follow the
+   recommendations in [BCP195].
+
 3.1.  Signature Algorithms
 
    The HTTP message signature algorithm is determined by the alg member
    of the cnf.jwk object in the WIT ("The Workload Identity Token" in
    [I-D.ietf-wimse-workload-creds]).  This profile does not define a
-   separate algorithm baseline; general-purpose implementations inherit
-   the requirement that ES256 MUST be supported from that document.  The
-   alg signature parameter MUST NOT be used, as specified above.
+   separate algorithm baseline; general-purpose implementations follow
+   the algorithm requirements in that document, including support for
+   ES256.  The alg signature parameter MUST NOT be used, as specified
+   above.
 
    Recipients MUST verify the HTTP message signature using the algorithm
    identified by cnf.jwk.alg and MUST reject the message if that
@@ -333,11 +350,11 @@ Table of Contents
    @signature-params component value (Section 2.3 of [RFC9421]), which
    is always the last line of the signature base.
 
-   This document defines the wimse-aud signature metadata parameter for
-   requests.  It is a String parameter.  Using a signature parameter
-   carries the audience explicitly in Signature-Input, so the value is
-   protected by the signature and is not affected by hop-by-hop
-   rewriting of the request URI.
+   The wimse-aud signature metadata parameter is a String parameter for
+   requests.  Using a signature parameter carries the audience
+   explicitly in Signature-Input, so the value is protected by the
+   signature and is not affected by hop-by-hop rewriting of the request
+   URI.
 
    The sender MUST set wimse-aud to an audience value that identifies
    the intended recipient of the request.  By default, the sender uses
@@ -355,12 +372,13 @@ Table of Contents
 
 3.3.  The wimse-sign-response Signature Parameter
 
-   This document defines the wimse-sign-response signature metadata
-   parameter for requests.  It is a Boolean parameter.  When present
-   with the value true, the client requires the server to sign the HTTP
-   response to this request as specified in Section 3.5.  When the
-   parameter is omitted, or present with the value false, the client
-   does not require a signed response via this parameter.
+   The wimse-sign-response signature metadata parameter is a Boolean
+   parameter for requests.  When present with the value true, the client
+   requires a signed HTTP response: the server MUST sign the response as
+   specified in Section 3.5, or return an error if it cannot
+   (Section 3.6).  When the parameter is omitted, or present with the
+   value false, the client does not require a signed response via this
+   parameter.
 
    If the client is configured to require a signed response, it MUST
    include wimse-sign-response with the Boolean value true in the
@@ -372,11 +390,10 @@ Table of Contents
 
 3.4.  The wimse-req-nonce Signature Parameter
 
-   This document defines the wimse-req-nonce signature metadata
-   parameter for signed responses.  It is a String parameter.  This
-   parameter binds requests to responses and prevents a malicious
-   server-side component or middlebox from replaying responses to the
-   wrong client.
+   The wimse-req-nonce signature metadata parameter is a String
+   parameter for signed responses.  This parameter binds requests to
+   responses and prevents a malicious server-side component or middlebox
+   from replaying responses to the wrong client.
 
    Every signed response MUST include wimse-req-nonce.  The server MUST
    set it to the value of the nonce signature parameter from the
@@ -436,25 +453,39 @@ Table of Contents
 
 3.6.  Error Conditions
 
-   Errors may occur during the processing of the message signature.  If
-   the signature verification fails for any reason, such as an invalid
-   signature, an expired validity time window, or a malformed data
-   structure, an error is returned.  Typically, this will be in response
-   to an API call.  An HTTP status code such as 400 (Bad Request) is
-   appropriate.  The response could include more details as per
-   [RFC9457], such as an indicator that the wrong key material or
-   algorithm was used.  The use of HTTP status code 401 is NOT
-   RECOMMENDED for this purpose because it requires a WWW-Authenticate
-   with acceptable HTTP auth mechanisms in the error response and an
-   associated Authorization header in the subsequent request.  The use
-   of these headers for the WIT is not compatible with this
-   specification.
+   Errors may occur during the processing of the message signature.
+   This profile specifies the following HTTP status codes for API use.
+   The party generating the error SHOULD include a problem details body
+   ([RFC9457]) with the corresponding registered problem type
+   (Section 7.2), unless it knows that the peer does not accept problem
+   details responses.
 
-   If the client required a signed response via wimse-sign-response and
-   the server cannot sign the response, the server SHOULD return 400
-   (Bad Request) or 501 (Not Implemented), optionally with a [RFC9457]
-   problem details body indicating that a signed response cannot be
-   provided.
+   If authentication of a signed request fails — including WIT
+   validation (Section 5.1.4 of [I-D.ietf-wimse-workload-creds]) or
+   verification of the HTTP message signature — for any reason such as
+   an invalid signature, an expired validity time window, or a malformed
+   data structure, the server MUST return 400 (Bad Request).  The
+   problem type for this error is https://iana.org/assignments/http-
+   problem-types#wimse-signature-invalid (Section 7.2.1).  The server
+   MUST NOT distinguish in the response which check failed, so as not to
+   reveal whether the WIT or the HTTP message signature was
+   unacceptable.  The use of HTTP status code 401 is NOT RECOMMENDED for
+   this purpose because it requires a WWW-Authenticate with acceptable
+   HTTP auth mechanisms in the error response and an associated
+   Authorization header in the subsequent request.  The use of these
+   headers for the WIT is not compatible with this specification.
+
+   If response signing is required (Section 3.5) and the server cannot
+   sign the response, the server MUST NOT return a successful unsigned
+   response.  If the server does not support response signing, it MUST
+   return 501 (Not Implemented); the problem type for this error is
+   https://iana.org/assignments/http-problem-types#wimse-signed-
+   response-unsupported (Section 7.2.2).  If the server supports
+   response signing but cannot sign this particular response (for
+   example, because the response is streamed or exceptionally large), it
+   MUST return 400 (Bad Request); the problem type for this error is
+   https://iana.org/assignments/http-problem-types#wimse-signed-
+   response-unavailable (Section 7.2.3).
 
 3.7.  Example Requests and Responses
 
@@ -702,10 +733,10 @@ Table of Contents
    described in [I-D.ietf-wimse-workload-creds].  The WIT is a general
    purpose token that can be presented in multiple contexts.  The WIT
    and its PoP are only used in the application-layer options, and
-   neither is used in mTLS.  The WIT MUST NOT be used as a bearer token.
-   While this helps reduce the sensitivity of the token it is still
-   possible that a token and its PoP may be captured and replayed within
-   the PoP's lifetime.
+   neither is used in mTLS.  As specified in that document, the WIT is
+   not used as a bearer token.  While this helps reduce the sensitivity
+   of the token it is still possible that a token and its PoP may be
+   captured and replayed within the PoP's lifetime.
 
    The HTTP Signature profile presented here binds the PoP to the
    critical parts of the HTTP request (and potentially response),
@@ -717,35 +748,31 @@ Table of Contents
    eliminates most of the risk associated with active attackers on a
    middlebox.
 
-   In addition, the following mitigations should be used:
+   In addition, the following mitigations apply:
 
    *  Preventing Eavesdropping and Interception with TLS
 
    An attacker observing or intercepting the communication channel can
    view the token and its PoP and attempt to replay it to gain an
-   advantage.  In order to prevent this, the token and PoP MUST be sent
-   over a secure, server authenticated TLS connection unless a secure
-   channel is provided by some other mechanisms.  Hostname validation
-   according to Section 6.3 of [RFC9525] MUST be performed by the
-   client.
+   advantage.  Sending the token and PoP on a server-authenticated TLS
+   connection (Section 3), with hostname validation, mitigates passive
+   capture on the path.  TLS-terminating intermediaries still see the
+   cleartext WIT and signature; see Section 5.2.
 
    *  Limiting Signature Lifespan
 
-   The signature lifespan MUST be limited by using a tight expires
-   value, taking into account potential clock skew and processing
-   latency, but usually within minutes of the message sending time.
-   Signatures received outside their validity time MUST be rejected.
+   A short expires value (Section 3) limits the window during which a
+   captured signature can be replayed.  Rejecting signatures outside
+   their validity time is required by that section.
 
    *  Replay Protection
 
-   A signed message includes the nonce signature parameter.  This
-   parameter SHOULD be used by the receiver to perform basic replay
-   protection: a nonce that has already been seen SHOULD cause the
-   message to be rejected.  Depending upon the design of the system it
-   may be difficult to synchronize the replay cache across all message
-   validators.  If an attacker can somehow influence the identity of the
-   validator (e.g. which cluster member receives the message) then
-   replay protection would not be effective.
+   The nonce signature parameter and optional replay caching (Section 3)
+   provide basic replay detection.  Depending upon the design of the
+   system it may be difficult to synchronize the replay cache across all
+   message validators.  If an attacker can somehow influence the
+   identity of the validator (e.g. which cluster member receives the
+   message) then replay protection would not be effective.
 
 5.2.  Middle Boxes
 
@@ -761,10 +788,10 @@ Table of Contents
    profile is intended to remain verifiable across common TLS-
    terminating proxies and load balancers: it does not cover @authority,
    and it carries recipient binding in wimse-aud (Section 3).  An
-   intermediary MAY add its own HTTP message signature to a message that
+   intermediary can add its own HTTP message signature to a message that
    already carries a WIMSE signature.  Recipients continue to identify
    the WIMSE signature by its tag value wimse-workload-to-workload and
-   MUST NOT select by label (Section 3).
+   do not select by label (Section 3).
 
    If an intermediary changes a component covered by the WIMSE
    signature, verification of that signature fails.  This document does
@@ -779,106 +806,11 @@ Table of Contents
    in addition to requests.  See also Section 3.5 for the distinction
    between client-mandated and opportunistic response signing.
 
-5.3.  Privacy Considerations
+6.  Privacy Considerations
 
-   WITs and the signatures may contain private information such as user
-   names or other identities.  Care must be taken to prevent disclosure
-   of this information.  The use of TLS helps protect the privacy of
-   WITs and PoPs.
-
-   WITs are typically associated with a workload and not a specific
-   user, however in some deployments the workload may be associated
-   directly to a user.  In those cases a deployment should evaluate if
-   the disclosure of WITs or signatures can be used to track a user.
-
-6.  Security Goals
-
-   This section defines semiformal security goals for this protocol,
-   when used in conjunction with the WIT credential.  Our aim is to
-   inform developers and for these goals to eventually evolve into
-   formal verification of the protocol.
-
-6.1.  Prerequisites
-
-   The following are out of scope of the protocol and their security is
-   assumed.
-
-   *  There exists a WIT Issuer which is trusted to issue credentials
-      honestly.
-
-   *  Workloads have a way to authenticate themselves to the Issuer and
-      be provisioned with a valid WIT, associated with their WIMSE
-      identity.
-
-   *  All workloads are provisioned with trust anchors that allow them
-      to validate incoming WITs.
-
-   *  The entire authorization subsystem is out of scope and trusted.
-      This can potentially include provisioning and enforcement of an
-      authorization policy, issuance of transaction tokens and workload
-      attestation.
-
-   *  All workload-to-workload traffic is TLS-protected.  However TLS
-      may be terminated on one or more middleboxes and the TLS endpoint
-      identity (or identities) is not associated with a WIMSE identity.
-
-   *  As a result, all workload-to-workload traffic is confidential and
-      (assuming honest participants) is only available to sender,
-      receiver, and any TLS-terminating middleboxes that process the
-      traffic.
-
-6.2.  Authentication
-
-   *  A workload receiving a request can validate that it is signed
-      correctly, and can identify the sender.
-
-   *  A workload receiving a response can similarly validate the
-      signature and identify the sender when a signed response is
-      present.
-
-   *  The above implies that a stolen WIT cannot be used by an entity
-      other than its owner.
-
-6.3.  Integrity
-
-   *  Covered components of a request cannot be modified without
-      detection by the recipient.  Integrity of all present HTTP headers
-      specified in this document is protected, as well as the derived
-      components listed in Section 3, the signature parameters
-      (including wimse-aud and wimse-sign-response on requests and
-      wimse-req-nonce on responses) as covered by @signature-params in
-      [RFC9421], and the message content (when present).
-
-   *  Covered components of a signed response cannot be modified without
-      detection by the recipient.
-
-   *  This profile is designed so that, for typical REST APIs, the
-      essential parts of the message are covered by the signature.
-
-   *  Headers not specified in this document may remain unsigned and
-      could potentially be modified or deleted by intermediaries without
-      detection.
-
-6.4.  Replay and Deletion
-
-   *  Replay protection is not strictly mandated because of
-      implementation considerations (e.g., distributed system challenges
-      with synchronizing replay caches across validators).  Therefore it
-      is not claimed as a goal, though implementations SHOULD attempt to
-      detect replays where feasible.  We note that since most of the
-      message is signed, replay attacks are only possible in a context
-      where the request would be accepted as valid, and this mitigates
-      the risk to some extent.
-
-   *  When a signed response is present, validating wimse-req-nonce
-      mitigates replay of that response to a client other than the one
-      that sent the triggering request.
-
-   *  Undetected deletion of a request/response pair is prevented only
-      when the client required a signed response via wimse-sign-response
-      with the Boolean value true and rejects an unsigned response.
-      Server local-policy signing alone does not provide that guarantee
-      (Section 3.5).
+   Privacy considerations for the Workload Identity Token and its proof
+   of possession are discussed in [I-D.ietf-wimse-workload-creds].  This
+   profile does not introduce additional privacy concerns beyond those.
 
 7.  IANA Considerations
 
@@ -924,17 +856,61 @@ Table of Contents
 
    *  Reference: RFC XXX, Section 3.4.
 
+7.2.  HTTP Problem Types Registration
+
+   IANA is requested to register the following entries in the "HTTP
+   Problem Types" registry of [RFC9457].
+
+7.2.1.  wimse-signature-invalid
+
+   *  Type URI: https://iana.org/assignments/http-problem-types#wimse-
+      signature-invalid
+
+   *  Title: WIMSE HTTP Signature Invalid
+
+   *  Recommended HTTP status code: 400
+
+   *  Reference: RFC XXX, Section 3.6
+
+7.2.2.  wimse-signed-response-unsupported
+
+   *  Type URI: https://iana.org/assignments/http-problem-types#wimse-
+      signed-response-unsupported
+
+   *  Title: WIMSE Signed Response Unsupported
+
+   *  Recommended HTTP status code: 501
+
+   *  Reference: RFC XXX, Section 3.6
+
+7.2.3.  wimse-signed-response-unavailable
+
+   *  Type URI: https://iana.org/assignments/http-problem-types#wimse-
+      signed-response-unavailable
+
+   *  Title: WIMSE Signed Response Unavailable
+
+   *  Recommended HTTP status code: 400
+
+   *  Reference: RFC XXX, Section 3.6
+
 8.  References
 
 8.1.  Normative References
 
-   [I-D.ietf-wimse-arch]
-              Salowey, J. A., Rosomakho, Y., and H. Tschofenig,
-              "Workload Identity in a Multi System Environment (WIMSE)
-              Architecture", Work in Progress, Internet-Draft, draft-
-              ietf-wimse-arch-08, 6 July 2026,
-              <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
-              arch-08>.
+   [BCP195]   Best Current Practice 195,
+              <https://www.rfc-editor.org/info/bcp195>.
+              At the time of writing, this BCP comprises the following:
+
+              Moriarty, K. and S. Farrell, "Deprecating TLS 1.0 and TLS
+              1.1", BCP 195, RFC 8996, DOI 10.17487/RFC8996, March 2021,
+              <https://www.rfc-editor.org/info/rfc8996>.
+
+              Sheffer, Y., Saint-Andre, P., and T. Fossati,
+              "Recommendations for Secure Use of Transport Layer
+              Security (TLS) and Datagram Transport Layer Security
+              (DTLS)", BCP 195, RFC 9325, DOI 10.17487/RFC9325, November
+              2022, <https://www.rfc-editor.org/info/rfc9325>.
 
    [I-D.ietf-wimse-workload-creds]
               Campbell, B., Salowey, J. A., Schwenkschuster, A.,
@@ -975,6 +951,10 @@ Table of Contents
               RFC 9525, DOI 10.17487/RFC9525, November 2023,
               <https://www.rfc-editor.org/rfc/rfc9525>.
 
+   [RFC9530]  Polli, R. and L. Pardue, "Digest Fields", RFC 9530,
+              DOI 10.17487/RFC9530, February 2024,
+              <https://www.rfc-editor.org/rfc/rfc9530>.
+
 8.2.  Informative References
 
    [I-D.ietf-oauth-transaction-tokens]
@@ -983,6 +963,14 @@ Table of Contents
               draft-ietf-oauth-transaction-tokens-11, 30 July 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
               transaction-tokens-11>.
+
+   [I-D.ietf-wimse-arch]
+              Salowey, J. A., Rosomakho, Y., and H. Tschofenig,
+              "Workload Identity in a Multi System Environment (WIMSE)
+              Architecture", Work in Progress, Internet-Draft, draft-
+              ietf-wimse-arch-08, 6 July 2026,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
+              arch-08>.
 
    [I-D.ietf-wimse-mutual-tls]
               Salowey, J. A. and Y. Rosomakho, "Workload Authentication
@@ -1015,12 +1003,106 @@ Table of Contents
               DOI 10.17487/RFC9864, October 2025,
               <https://www.rfc-editor.org/rfc/rfc9864>.
 
-Appendix A.  Document History
+Appendix A.  Security Goals
+
+   This appendix presents semiformal security goals for this protocol,
+   when used in conjunction with the WIT credential.  The intent is to
+   inform developers and to support eventual formal verification of the
+   protocol; the goals are not normative requirements beyond those
+   stated in the body of this document.
+
+A.1.  Prerequisites
+
+   The following are out of scope of the protocol and their security is
+   assumed.
+
+   *  There exists a WIT Issuer which is trusted to issue credentials
+      honestly.
+
+   *  Workloads have a way to authenticate themselves to the Issuer and
+      be provisioned with a valid WIT, associated with their WIMSE
+      identity.
+
+   *  All workloads are provisioned with trust anchors that allow them
+      to validate incoming WITs.
+
+   *  The entire authorization subsystem is out of scope and trusted.
+      This can potentially include provisioning and enforcement of an
+      authorization policy, issuance of transaction tokens and workload
+      attestation.
+
+   *  All workload-to-workload traffic is TLS-protected.  However TLS
+      may be terminated on one or more middleboxes and the TLS endpoint
+      identity (or identities) is not associated with a WIMSE identity.
+
+   *  As a result, all workload-to-workload traffic is confidential and
+      (assuming honest participants) is only available to sender,
+      receiver, and any TLS-terminating middleboxes that process the
+      traffic.
+
+A.2.  Authentication
+
+   *  A workload receiving a request can validate that it is signed
+      correctly, and can identify the sender.
+
+   *  A workload receiving a response can similarly validate the
+      signature and identify the sender when a signed response is
+      present.
+
+   *  The above implies that a stolen WIT cannot be used by an entity
+      other than its owner.
+
+A.3.  Integrity
+
+   *  Covered components of a request cannot be modified without
+      detection by the recipient.  Integrity of all present HTTP headers
+      specified in this document is protected, as well as the derived
+      components listed in Section 3, the signature parameters
+      (including wimse-aud and wimse-sign-response on requests and
+      wimse-req-nonce on responses) as covered by @signature-params in
+      [RFC9421], and the message content (when present).
+
+   *  Covered components of a signed response cannot be modified without
+      detection by the recipient.
+
+   *  This profile is designed so that, for typical REST APIs, the
+      essential parts of the message are covered by the signature.
+
+   *  Headers not specified in this document may remain unsigned and
+      could potentially be modified or deleted by intermediaries without
+      detection.
+
+A.4.  Replay and Deletion
+
+   *  Replay protection is not strictly mandated because of
+      implementation considerations (e.g., distributed system challenges
+      with synchronizing replay caches across validators).  Therefore it
+      is not claimed as a goal, though implementations are encouraged to
+      detect replays where feasible.  We note that since most of the
+      message is signed, replay attacks are only possible in a context
+      where the request would be accepted as valid, and this mitigates
+      the risk to some extent.
+
+   *  When a signed response is present, validating wimse-req-nonce
+      mitigates replay of that response to a client other than the one
+      that sent the triggering request.
+
+   *  Undetected deletion of a request/response pair is prevented only
+      when the client required a signed response via wimse-sign-response
+      with the Boolean value true and rejects an unsigned response.
+      Server local-policy signing alone does not provide that guarantee
+      (Section 3.5).
+
+Appendix B.  Document History
 
 
    // RFC Editor: please remove before publication.
 
-A.1.  draft-ietf-wimse-http-signature-07
+B.1.  draft-ietf-wimse-http-signature-08
+
+   *  Address Justin Richer's shepherd review (#385).
+
+B.2.  draft-ietf-wimse-http-signature-07
 
    *  WGLC: replace @request-target with @path/@query; select the WIMSE
       signature by tag (#297, #301).
@@ -1045,25 +1127,25 @@ A.1.  draft-ietf-wimse-http-signature-07
       [I-D.ietf-wimse-workload-creds] (#290); consistent "proof of
       possession"/"PoP" wording.
 
-A.2.  draft-ietf-wimse-http-signature-06
+B.3.  draft-ietf-wimse-http-signature-06
 
    *  Add wimse-sign-response request signature parameter so clients can
       mandate a signed response; regenerate examples (#277).
 
-A.3.  draft-ietf-wimse-http-signature-05
+B.4.  draft-ietf-wimse-http-signature-05
 
    *  Regenerate non-normative request/response examples so the signed
       response includes wimse-req-nonce matching the request nonce
       (#274).
 
-A.4.  draft-ietf-wimse-http-signature-04
+B.5.  draft-ietf-wimse-http-signature-04
 
    *  On signed responses, require wimse-req-nonce (request binding);
       register with IANA.  Non-normative response example not updated
       accordingly; the Signature value was not regenerated (see issue
       tracker).
 
-A.5.  draft-ietf-wimse-http-signature-03
+B.6.  draft-ietf-wimse-http-signature-03
 
    *  Replace Wimse-Audience HTTP header with the wimse-aud signature
       metadata parameter ([RFC9421]); register with IANA (HTTP Signature
@@ -1071,12 +1153,12 @@ A.5.  draft-ietf-wimse-http-signature-03
       accordingly; the Signature value was not regenerated (see issue
       tracker).
 
-A.6.  draft-ietf-wimse-http-signature-02
+B.7.  draft-ietf-wimse-http-signature-02
 
    *  Add new Wimse-Audience HTTP header (superseded by wimse-aud in
       -03).
 
-A.7.  draft-ietf-wimse-http-signature-01
+B.8.  draft-ietf-wimse-http-signature-01
 
    *  Clarified response signing.
 
@@ -1086,11 +1168,11 @@ A.7.  draft-ietf-wimse-http-signature-01
 
    *  Added an Implementation Status section.
 
-A.8.  draft-ietf-wimse-http-signature-00
+B.9.  draft-ietf-wimse-http-signature-00
 
    *  Initial version, extracted from the -07 draft with minimal edits.
 
-A.9.  draft-ietf-wimse-s2s-protocol-07
+B.10.  draft-ietf-wimse-s2s-protocol-07
 
    *  Rework the WPT's oth claim.
 
@@ -1108,14 +1190,14 @@ A.9.  draft-ietf-wimse-s2s-protocol-07
 
    *  Use of the Accept-Signature header.
 
-A.10.  draft-ietf-wimse-s2s-protocol-06
+B.11.  draft-ietf-wimse-s2s-protocol-06
 
    *  Explicit definition of the Workload Identity Certificate.
 
    *  Definition of the validation of workload identifiers as part of
       workload authentication.  Still work in progress.
 
-A.11.  draft-ietf-wimse-s2s-protocol-05
+B.12.  draft-ietf-wimse-s2s-protocol-05
 
    *  Removed the entire Workload Identity section which is now covered
       in the Architecture document.
@@ -1126,7 +1208,7 @@ A.11.  draft-ietf-wimse-s2s-protocol-05
 
    *  IANA considerations.
 
-A.12.  draft-ietf-wimse-s2s-protocol-04
+B.13.  draft-ietf-wimse-s2s-protocol-04
 
    *  Require cnf.jwk.alg in WIT which restricts signature algorithm of
       WPT or HTTP-Sig.
@@ -1135,7 +1217,7 @@ A.12.  draft-ietf-wimse-s2s-protocol-04
 
    *  Consolidate terminology with the Architecture draft.
 
-A.13.  draft-ietf-wimse-s2s-protocol-03
+B.14.  draft-ietf-wimse-s2s-protocol-03
 
    *  Consistently use "workload".
 
@@ -1150,7 +1232,7 @@ A.13.  draft-ietf-wimse-s2s-protocol-03
 
    *  Error handling for the application-level methods.
 
-A.14.  draft-ietf-wimse-s2s-protocol-02
+B.15.  draft-ietf-wimse-s2s-protocol-02
 
    *  Coexistence with bearer tokens.
 
@@ -1162,7 +1244,7 @@ A.14.  draft-ietf-wimse-s2s-protocol-02
 
    *  Moved an author to acknowledgments.
 
-A.15.  draft-ietf-wimse-s2s-protocol-01
+B.16.  draft-ietf-wimse-s2s-protocol-01
 
    *  Addressed multiple comments from Pieter.
 
@@ -1177,14 +1259,14 @@ A.15.  draft-ietf-wimse-s2s-protocol-01
    *  Added a section comparing the DPoP-inspired app-level security
       option to the Message Signature-based alternative.
 
-A.16.  draft-ietf-wimse-s2s-protocol-00
+B.17.  draft-ietf-wimse-s2s-protocol-00
 
    *  Initial WG draft, an exact copy of draft-sheffer-wimse-s2s-
       protocol-00
 
    *  Added this document history section
 
-Appendix B.  Comparing the DPoP Inspired Option with Message Signatures
+Appendix C.  Comparing the DPoP Inspired Option with Message Signatures
 
    The two workload protection options have different strengths and
    weaknesses regarding implementation complexity, extensibility, and
@@ -1233,9 +1315,9 @@ Acknowledgments
 
    The authors would like to thank Pieter Kasselman for his detailed
    comments, Flemming Andreasen, Kieran Sweeney and Anton Sokolov for
-   their WGLC reviews, as well as Jason Costello, Maartje Eyskens,
-   Radosław Piliszek and kanywst for implementing this draft and sharing
-   their learnings.
+   their WGLC reviews, Justin Richer for his document shepherd review,
+   as well as Jason Costello, Maartje Eyskens, Radosław Piliszek and
+   kanywst for implementing this draft and sharing their learnings.
 
    We thank Daniel Feldman for his contributions to earlier versions of
    this document.  We also thank Arndt Schwenkschuster and Brian
