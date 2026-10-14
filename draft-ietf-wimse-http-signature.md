@@ -53,7 +53,7 @@ Authentication is based on the Workload Identity Token (WIT).
 # Introduction
 
 This document defines authentication and authorization in the context of interaction between two workloads.
-This is the core component of the WIMSE architecture {{!I-D.ietf-wimse-arch}}.
+This is the core component of the WIMSE architecture {{?I-D.ietf-wimse-arch}}.
 This document focuses on HTTP-based services,
 and the workload-to-workload call consists of a single HTTP request and its response.
 
@@ -77,7 +77,7 @@ Refer to Sec. 1.2 of {{I-D.ietf-wimse-workload-creds}} for the deployment archit
 
 # Conventions and Definitions
 
-All terminology in this document follows {{!I-D.ietf-wimse-arch}}.
+All terminology in this document follows {{?I-D.ietf-wimse-arch}}.
 
 {::boilerplate bcp14-tagged}
 
@@ -93,7 +93,9 @@ The request is signed as per {{RFC9421}}. The following derived components MUST 
 * `@path`
 * `@query`
 
-This profile uses `@path` and `@query` rather than `@request-target`, which is NOT RECOMMENDED outside HTTP/1.1 ({{Section 2.2.5 of RFC9421}}). `@query` is included even when the request has no query component; in that case its value is `?` ({{Section 2.2.7 of RFC9421}}).
+This profile covers `@path` and `@query` separately rather than `@request-target`,
+following {{Section 2.2.5 of RFC9421}}.
+`@query` is included even when the request has no query component; in that case its value is `?` ({{Section 2.2.7 of RFC9421}}).
 The `@authority` derived component is not included: TLS-terminating proxies and load balancers commonly rewrite the authority (see {{I-D.ietf-wimse-arch}} and {{middleboxes}}), so signing it would break those deployments. Recipient binding is carried instead by the mandatory `wimse-aud` signature parameter ({{wimse-aud-param}}).
 
 Exception for CONNECT ({{Section 9.3.6 of !RFC9110}}): the request target is in authority-form (`host:port`), so `@path` and `@query` are not meaningful.
@@ -121,8 +123,10 @@ If the response is signed, the following components MUST be signed:
 
 When the signed response corresponds to a CONNECT request, senders MUST cover `@method;req` and `@authority;req` instead of `@path;req` and `@query;req`, and MUST NOT cover `@path;req` or `@query;req`.
 
-To ensure the message is fully integrity-protected, if the request or response includes a message body, the sender MUST include
-(and the receiver MUST verify) a Content-Digest header. This implies the receiver MUST compute the Content-Digest value for the message content received and compare it with the Content-Digest value provided in the message.
+To protect the integrity of the message body, if the request or response includes a body, the sender MUST include
+(and the receiver MUST verify) a `Content-Digest` header as defined in {{!RFC9530}}.
+This implies the receiver MUST compute the `Content-Digest` value for the message content received
+and compare it with the `Content-Digest` value provided in the message.
 
 For both requests and responses, the following signature parameters MUST be included:
 
@@ -151,20 +155,29 @@ The following signature parameters in the `Signature-Input` header MUST NOT be u
 It is RECOMMENDED to include only one signature with the HTTP message.
 The WIMSE signature is the one whose `tag` parameter is `wimse-workload-to-workload` ({{Section 7.2.7 of RFC9421}}). If no signature has that `tag` value, the message does not carry a WIMSE HTTP signature. If more than one signature has that `tag` value, the recipient MUST reject the message. When more than one signature is present, recipients MUST use that `tag` to find the WIMSE signature; they MUST NOT choose by label ({{Section 7.2.5 of RFC9421}}).
 
-Senders MUST generate each `nonce` at random with sufficient length that the probability of collision is negligible among all nonces a recipient might observe within the lifetime of a signature. Members of a sender cluster therefore need not coordinate nonce generation.
+Senders MUST generate each `nonce` at random with sufficient length that the probability of collision is negligible among all nonces a recipient might observe within the lifetime of a signature.
+To that end, senders MUST use a cryptographically secure random number generator,
+and the nonce MUST contain at least 64 bits of entropy; 96 bits or more is RECOMMENDED.
+Members of a sender cluster therefore need not coordinate nonce generation.
 
 Recipients MAY maintain a replay cache and SHOULD reject a message (request or response) whose `nonce` they have already seen. What nonces are remembered, and for how long, is a local policy matter; this document does not require replay caches to be shared across validators. Without such sharing, replay to a different cluster member can still succeed.
 
 For clarity: the signature's lifetime (the `expires` signature parameter) is different and typically much shorter than the WIT's lifetime, denoted by its `exp` claim.
+Recipients MUST reject signatures that fall outside their validity time window.
 
 Implementers need to be aware that the WIT is extracted from the message before the message signature is validated. Recipients of signed HTTP messages MUST validate the WIT as specified in {{Section 5.1.4 of I-D.ietf-wimse-workload-creds}} before validating the HTTP message signature. They MUST ensure that the message is not processed further before it has been fully validated.
+
+The WIT and the HTTP message signature MUST be sent over a server-authenticated TLS connection
+unless another channel provides confidentiality and server authentication comparable to TLS.
+When TLS is used, the client MUST perform hostname validation according to {{Section 6.3 of !RFC9525}},
+and TLS deployments SHOULD follow the recommendations in {{!BCP195}}.
 
 ## Signature Algorithms {#sig-algs}
 
 The HTTP message signature algorithm is determined by the `alg` member of the `cnf.jwk` object in the WIT
 ("The Workload Identity Token" in {{I-D.ietf-wimse-workload-creds}}).
-This profile does not define a separate algorithm baseline; general-purpose implementations inherit the
-requirement that `ES256` MUST be supported from that document.
+This profile does not define a separate algorithm baseline; general-purpose implementations follow the
+algorithm requirements in that document, including support for `ES256`.
 The `alg` signature parameter MUST NOT be used, as specified above.
 
 Recipients MUST verify the HTTP message signature using the algorithm identified by `cnf.jwk.alg`
@@ -177,8 +190,7 @@ See also {{Section 7.3.6 of RFC9421}} on key and algorithm specification downgra
 alongside the covered components. That metadata is covered by the signature as the `@signature-params` component value
 (Section 2.3 of {{RFC9421}}), which is always the last line of the signature base.
 
-This document defines the `wimse-aud` signature metadata parameter for requests.
-It is a String parameter.
+The `wimse-aud` signature metadata parameter is a String parameter for requests.
 Using a signature parameter carries the audience explicitly in `Signature-Input`, so the value is protected by the signature and is not affected by hop-by-hop rewriting of the request URI.
 
 The sender MUST set `wimse-aud` to an audience value that identifies the intended recipient of the request.
@@ -190,10 +202,10 @@ See "Workload Identifiers and Authentication Granularity" in {{I-D.ietf-wimse-wo
 
 ## The `wimse-sign-response` Signature Parameter {#wimse-sign-response-param}
 
-This document defines the `wimse-sign-response` signature metadata parameter for requests.
-It is a Boolean parameter.
-When present with the value true, the client requires the server to sign the HTTP response
-to this request as specified in {{signing-the-response}}.
+The `wimse-sign-response` signature metadata parameter is a Boolean parameter for requests.
+When present with the value true, the client requires a signed HTTP response:
+the server MUST sign the response as specified in {{signing-the-response}},
+or return an error if it cannot ({{error-conditions}}).
 When the parameter is omitted, or present with the value false, the client does not require a signed response via this parameter.
 
 If the client is configured to require a signed response, it MUST include `wimse-sign-response` with the Boolean value true in the request's `Signature-Input`.
@@ -202,8 +214,7 @@ This parameter is not mandatory. Moreover, the server MAY sign the response even
 
 ## The `wimse-req-nonce` Signature Parameter {#wimse-req-nonce-param}
 
-This document defines the `wimse-req-nonce` signature metadata parameter for signed responses.
-It is a String parameter.
+The `wimse-req-nonce` signature metadata parameter is a String parameter for signed responses.
 This parameter binds requests to responses and prevents a malicious
 server-side component or middlebox from replaying responses to the wrong client.
 
@@ -244,17 +255,37 @@ specified above for signed requests.
 
 ## Error Conditions {#error-conditions}
 
-Errors may occur during the processing of the message signature. If the signature verification fails for any reason,
-such as an invalid signature, an expired validity time window, or a malformed data structure, an error is returned. Typically,
-this will be in response to an API call. An HTTP status code such as 400 (Bad Request) is appropriate. The response could
-include more details as per {{!RFC9457}}, such as an indicator that the wrong key material or algorithm was used.  The use of HTTP
-status code 401 is NOT RECOMMENDED for this purpose because it requires a WWW-Authenticate with acceptable HTTP auth mechanisms in
+Errors may occur during the processing of the message signature.
+This profile specifies the following HTTP status codes for API use.
+The party generating the error SHOULD include a problem details body ({{!RFC9457}})
+with the corresponding registered problem type ({{iana-problem-types}}),
+unless it knows that the peer does not accept problem details responses.
+
+If authentication of a signed request fails — including WIT validation
+({{Section 5.1.4 of I-D.ietf-wimse-workload-creds}}) or verification of the HTTP message signature —
+for any reason such as an invalid signature, an expired validity time window, or a malformed data structure,
+the server MUST return 400 (Bad Request).
+The problem type for this error is
+`https://iana.org/assignments/http-problem-types#wimse-signature-invalid`
+({{iana-problem-signature-invalid}}).
+The server MUST NOT distinguish in the response which check failed,
+so as not to reveal whether the WIT or the HTTP message signature was unacceptable.
+The use of HTTP status code 401 is NOT RECOMMENDED for this purpose because it requires a WWW-Authenticate with acceptable HTTP auth mechanisms in
 the error response and an associated Authorization header in the subsequent request. The use of these headers for the WIT is not compatible
 with this specification.
 
-If the client required a signed response via `wimse-sign-response` and the server cannot sign the response,
-the server SHOULD return 400 (Bad Request) or 501 (Not Implemented), optionally with a
-{{!RFC9457}} problem details body indicating that a signed response cannot be provided.
+If response signing is required ({{signing-the-response}}) and the server cannot sign the response,
+the server MUST NOT return a successful unsigned response.
+If the server does not support response signing, it MUST return 501 (Not Implemented);
+the problem type for this error is
+`https://iana.org/assignments/http-problem-types#wimse-signed-response-unsupported`
+({{iana-problem-signed-response-unsupported}}).
+If the server supports response signing but cannot sign this particular response
+(for example, because the response is streamed or exceptionally large),
+it MUST return 400 (Bad Request);
+the problem type for this error is
+`https://iana.org/assignments/http-problem-types#wimse-signed-response-unavailable`
+({{iana-problem-signed-response-unavailable}}).
 
 
 ## Example Requests and Responses
@@ -364,8 +395,8 @@ The Workload Identity Token (WIT) is bound to a secret cryptographic key and is
 always presented with a proof of possession (PoP) as described in
 {{I-D.ietf-wimse-workload-creds}}. The WIT is a general purpose token that can be presented
 in multiple contexts. The WIT and its PoP are only used in the
-application-layer options, and neither is used in mTLS. The WIT MUST NOT be
-used as a bearer token. While this helps reduce the sensitivity of the token it
+application-layer options, and neither is used in mTLS. As specified in that document,
+the WIT is not used as a bearer token. While this helps reduce the sensitivity of the token it
 is still possible that a token and its PoP may be captured and
 replayed within the PoP's lifetime.
 
@@ -375,22 +406,22 @@ The audience is a signed signature parameter rather than a re-derived URI compon
 This profile does not cover `@authority` for that reason ({{http-sig-auth}}).
 This eliminates most of the risk associated with active attackers on a middlebox.
 
-In addition, the following mitigations should be used:
+In addition, the following mitigations apply:
 
 * Preventing Eavesdropping and Interception with TLS
 
-An attacker observing or intercepting the communication channel can view the token and its PoP and attempt to replay it to gain an advantage. In order to prevent this, the
-token and PoP MUST be sent over a secure, server authenticated TLS connection unless a secure channel is provided by some other mechanisms. Hostname validation according
-to Section 6.3 of {{!RFC9525}} MUST be performed by the client.
+An attacker observing or intercepting the communication channel can view the token and its PoP and attempt to replay it to gain an advantage.
+Sending the token and PoP on a server-authenticated TLS connection ({{http-sig-auth}}), with hostname validation,
+mitigates passive capture on the path. TLS-terminating intermediaries still see the cleartext WIT and signature; see {{middleboxes}}.
 
 * Limiting Signature Lifespan
 
-The signature lifespan MUST be limited by using a tight `expires` value, taking into account potential clock skew and
-processing latency, but usually within minutes of the message sending time. Signatures received outside their validity time MUST be rejected.
+A short `expires` value ({{http-sig-auth}}) limits the window during which a captured signature can be replayed.
+Rejecting signatures outside their validity time is required by that section.
 
 * Replay Protection
 
-A signed message includes the `nonce` signature parameter. This parameter SHOULD be used by the receiver to perform basic replay protection: a nonce that has already been seen SHOULD cause the message to be rejected.
+The `nonce` signature parameter and optional replay caching ({{http-sig-auth}}) provide basic replay detection.
 Depending upon the design of the system it may be difficult to synchronize the replay cache across all message validators.
 If an attacker can somehow influence the identity of the validator (e.g. which cluster member receives the message) then
 replay protection would not be effective.
@@ -407,9 +438,9 @@ unsigned information, such as any HTTP headers that remain unsigned.
 HTTP permits intermediaries to transform messages ({{RFC9421}}).
 This profile is intended to remain verifiable across common TLS-terminating proxies and load balancers:
 it does not cover `@authority`, and it carries recipient binding in `wimse-aud` ({{http-sig-auth}}).
-An intermediary MAY add its own HTTP message signature to a message that already carries a WIMSE signature.
+An intermediary can add its own HTTP message signature to a message that already carries a WIMSE signature.
 Recipients continue to identify the WIMSE signature by its `tag` value `wimse-workload-to-workload`
-and MUST NOT select by label ({{http-sig-auth}}).
+and do not select by label ({{http-sig-auth}}).
 
 If an intermediary changes a component covered by the WIMSE signature, verification of that signature fails.
 This document does not define a profile for stripping the origin WIMSE signature and replacing it with a new
@@ -421,18 +452,72 @@ Mitigations listed in the protocol provide a reasonable level of security in the
 if responses are signed in addition to requests.
 See also {{signing-the-response}} for the distinction between client-mandated and opportunistic response signing.
 
-## Privacy Considerations
+# Privacy Considerations
 
-WITs and the signatures may contain private information such as user names or other identities. Care must be taken to prevent disclosure of this information. The use of TLS helps protect the privacy of WITs and PoPs.
+Privacy considerations for the Workload Identity Token and its proof of possession are discussed in
+{{I-D.ietf-wimse-workload-creds}}. This profile does not introduce additional privacy concerns beyond those.
 
-WITs are typically associated with a workload and not a specific user, however
-in some deployments the workload may be associated directly to a user. In those cases a deployment should evaluate if the disclosure of
-WITs or signatures can be used to track a user.
+# IANA Considerations {#iana-considerations}
 
-# Security Goals
+## HTTP Signature Metadata Parameters Registration
 
-This section defines semiformal security goals for this protocol, when used in conjunction with the WIT credential. Our aim
-is to inform developers and for these goals to eventually evolve into formal verification of the protocol.
+IANA is requested to register the following entries in the "HTTP Signature Metadata Parameters" registry {{IANA.HTTP.MESSAGE.SIGNATURE}}, per the registration template in Section 6.3.1 of {{RFC9421}}:
+
+* `wimse-aud`, per {{iana-wimse-aud-param}}.
+* `wimse-sign-response`, per {{iana-wimse-sign-response-param}}.
+* `wimse-req-nonce`, per {{iana-wimse-req-nonce-param}}.
+
+### `wimse-aud` {#iana-wimse-aud-param}
+
+* Name: `wimse-aud`
+* Description: String; the WIMSE message audience. Request signatures only; binds the HTTP message signature to the intended recipient.
+* Reference: RFC XXX, {{wimse-aud-param}}.
+
+### `wimse-sign-response` {#iana-wimse-sign-response-param}
+
+* Name: `wimse-sign-response`
+* Description: Boolean; when true on a request signature, the client requires the server to sign the corresponding HTTP response.
+* Reference: RFC XXX, {{wimse-sign-response-param}}.
+
+### `wimse-req-nonce` {#iana-wimse-req-nonce-param}
+
+* Name: `wimse-req-nonce`
+* Description: String; on response signatures, the `nonce` value from the triggering request's `Signature-Input`; binds the response to that request.
+* Reference: RFC XXX, {{wimse-req-nonce-param}}.
+
+## HTTP Problem Types Registration {#iana-problem-types}
+
+IANA is requested to register the following entries in the "HTTP Problem Types" registry
+of {{!RFC9457}}.
+
+### `wimse-signature-invalid` {#iana-problem-signature-invalid}
+
+* Type URI: `https://iana.org/assignments/http-problem-types#wimse-signature-invalid`
+* Title: WIMSE HTTP Signature Invalid
+* Recommended HTTP status code: 400
+* Reference: RFC XXX, {{error-conditions}}
+
+### `wimse-signed-response-unsupported` {#iana-problem-signed-response-unsupported}
+
+* Type URI: `https://iana.org/assignments/http-problem-types#wimse-signed-response-unsupported`
+* Title: WIMSE Signed Response Unsupported
+* Recommended HTTP status code: 501
+* Reference: RFC XXX, {{error-conditions}}
+
+### `wimse-signed-response-unavailable` {#iana-problem-signed-response-unavailable}
+
+* Type URI: `https://iana.org/assignments/http-problem-types#wimse-signed-response-unavailable`
+* Title: WIMSE Signed Response Unavailable
+* Recommended HTTP status code: 400
+* Reference: RFC XXX, {{error-conditions}}
+
+--- back
+
+# Security Goals {#security-goals}
+
+This appendix presents semiformal security goals for this protocol, when used in conjunction with the WIT credential.
+The intent is to inform developers and to support eventual formal verification of the protocol; the goals are not
+normative requirements beyond those stated in the body of this document.
 
 ## Prerequisites
 
@@ -473,48 +558,18 @@ the message content (when present).
 * Replay protection is not strictly mandated because of implementation
   considerations (e.g., distributed system challenges with synchronizing replay
 caches across validators). Therefore it is not claimed as
-a goal, though implementations SHOULD attempt to detect replays where feasible.
+a goal, though implementations are encouraged to detect replays where feasible.
 We note that since most of the message is signed, replay attacks are only possible in a
 context where the request would be accepted as valid, and this mitigates the risk to some extent.
 * When a signed response is present, validating `wimse-req-nonce` mitigates replay of that response to a client other than the one that sent the triggering request.
 * Undetected deletion of a request/response pair is prevented only when the client required a signed response via `wimse-sign-response` with the Boolean value true and rejects an unsigned response. Server local-policy signing alone does not provide that guarantee ({{signing-the-response}}).
-
-
-# IANA Considerations {#iana-considerations}
-
-## HTTP Signature Metadata Parameters Registration
-
-IANA is requested to register the following entries in the "HTTP Signature Metadata Parameters" registry {{IANA.HTTP.MESSAGE.SIGNATURE}}, per the registration template in Section 6.3.1 of {{RFC9421}}:
-
-* `wimse-aud`, per {{iana-wimse-aud-param}}.
-* `wimse-sign-response`, per {{iana-wimse-sign-response-param}}.
-* `wimse-req-nonce`, per {{iana-wimse-req-nonce-param}}.
-
-### `wimse-aud` {#iana-wimse-aud-param}
-
-* Name: `wimse-aud`
-* Description: String; the WIMSE message audience. Request signatures only; binds the HTTP message signature to the intended recipient.
-* Reference: RFC XXX, {{wimse-aud-param}}.
-
-### `wimse-sign-response` {#iana-wimse-sign-response-param}
-
-* Name: `wimse-sign-response`
-* Description: Boolean; when true on a request signature, the client requires the server to sign the corresponding HTTP response.
-* Reference: RFC XXX, {{wimse-sign-response-param}}.
-
-### `wimse-req-nonce` {#iana-wimse-req-nonce-param}
-
-* Name: `wimse-req-nonce`
-* Description: String; on response signatures, the `nonce` value from the triggering request's `Signature-Input`; binds the response to that request.
-* Reference: RFC XXX, {{wimse-req-nonce-param}}.
-
---- back
 
 # Document History
 <cref>RFC Editor: please remove before publication.</cref>
 
 ## draft-ietf-wimse-http-signature-08
 
+* Address Justin Richer's shepherd review (#385).
 * Exception for CONNECT: cover `@authority` instead of `@path`/`@query` (#368).
 
 ## draft-ietf-wimse-http-signature-07
@@ -659,6 +714,7 @@ trying to reinvent Message Signatures.
 
 The authors would like to thank Pieter Kasselman for his detailed comments,
 Flemming Andreasen, Kieran Sweeney and Anton Sokolov for their WGLC reviews,
+Justin Richer for his document shepherd review,
 as well as Jason Costello, Maartje Eyskens, Radosław Piliszek and kanywst for implementing this draft and sharing their learnings.
 
 We thank Daniel Feldman for his contributions to earlier versions of this document. We also thank Arndt Schwenkschuster and Brian Campbell who coauthored
