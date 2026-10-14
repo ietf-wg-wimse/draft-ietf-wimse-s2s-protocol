@@ -197,7 +197,11 @@ The sender MUST set `wimse-aud` to an audience value that identifies the intende
 By default, the sender uses the HTTP target URI ({{Section 7.1 of !RFC9110}}) of the request, without query or fragment components, as known to the sender.
 When intermediaries rewrite the request URI, or when that string would not match what the recipient expects, the sender uses a deployment-specific audience value that the recipient can recognize.
 The audience identifies the intended recipient of the proof; it is distinct from the sender's Workload Identifier in the WIT `sub` claim.
-The recipient MUST be able to verify that the audience refers to it, using trusted configuration rather than untrusted request fields such as `Host`.
+
+The recipient MUST verify that `wimse-aud` matches one of the audience values in its trusted configuration using the Simple String Comparison method of {{Section 6.2.1 of !RFC3986}}.
+Strings that differ only by URI normalization (for example, a trailing slash or an explicit default port) do not match under that method; if such variants are acceptable, each should be included in the configuration.
+The recipient MUST NOT derive an acceptable audience from untrusted request fields such as `Host`.
+A sender that relies on the default target-URI value is responsible for producing a string that matches one of the recipient's configured values under that comparison.
 See "Workload Identifiers and Authentication Granularity" in {{I-D.ietf-wimse-workload-creds}}.
 
 ## The `wimse-sign-response` Signature Parameter {#wimse-sign-response-param}
@@ -571,6 +575,7 @@ context where the request would be accepted as valid, and this mitigates the ris
 
 * Address Justin Richer's shepherd review (#385).
 * Exception for CONNECT: cover `@authority` instead of `@path`/`@query` (#368).
+* Specify Simple String Comparison for `wimse-aud` verification (#396).
 
 ## draft-ietf-wimse-http-signature-07
 
