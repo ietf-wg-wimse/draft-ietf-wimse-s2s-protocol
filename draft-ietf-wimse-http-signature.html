@@ -1054,7 +1054,7 @@ svg {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Salowey &amp; Sheffer</td>
-<td class="center">Expires 17 April 2027</td>
+<td class="center">Expires 19 April 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1067,12 +1067,12 @@ svg {
 <dd class="internet-draft">draft-ietf-wimse-http-signature-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-10-14" class="published">14 October 2026</time>
+<time datetime="2026-10-16" class="published">16 October 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2027-04-17">17 April 2027</time></dd>
+<dd class="expires"><time datetime="2027-04-19">19 April 2027</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1133,7 +1133,7 @@ Authentication is based on the Workload Identity Token (WIT).<a href="#section-a
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 17 April 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 19 April 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1428,108 +1428,113 @@ Formally, this is a profile of the Message Signatures specification <span>[<a hr
 following <span><a href="https://rfc-editor.org/rfc/rfc9421#section-2.2.5" class="relref">Section 2.2.5</a> of [<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>.
 <code>@query</code> is included even when the request has no query component; in that case its value is <code>?</code> (<span><a href="https://rfc-editor.org/rfc/rfc9421#section-2.2.7" class="relref">Section 2.2.7</a> of [<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>).
 The <code>@authority</code> derived component is not included: TLS-terminating proxies and load balancers commonly rewrite the authority (see <span>[<a href="#I-D.ietf-wimse-arch" class="cite xref">I-D.ietf-wimse-arch</a>]</span> and <a href="#middleboxes" class="auto internal xref">Section 5.2</a>), so signing it would break those deployments. Recipient binding is carried instead by the mandatory <code>wimse-aud</code> signature parameter (<a href="#wimse-aud-param" class="auto internal xref">Section 3.2</a>).<a href="#section-3-4" class="pilcrow">¶</a></p>
-<p id="section-3-5">In addition, the following request headers <span class="bcp14">MUST</span> be signed when they exist:<a href="#section-3-5" class="pilcrow">¶</a></p>
+<p id="section-3-5">Exception for CONNECT (<span><a href="https://rfc-editor.org/rfc/rfc9110#section-9.3.6" class="relref">Section 9.3.6</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>): the request target is in authority-form (<code>host:port</code>), so <code>@path</code> and <code>@query</code> are not meaningful.
+For a CONNECT request, senders <span class="bcp14">MUST</span> cover <code>@method</code> and <code>@authority</code> instead of <code>@path</code> and <code>@query</code>, and <span class="bcp14">MUST NOT</span> cover <code>@path</code> or <code>@query</code>.
+The <code>@authority</code> value is the host and port of the CONNECT target (<span><a href="https://rfc-editor.org/rfc/rfc9421#section-2.2.3" class="relref">Section 2.2.3</a> of [<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>).
+This exception is specific to CONNECT; this profile otherwise continues to omit <code>@authority</code>.<a href="#section-3-5" class="pilcrow">¶</a></p>
+<p id="section-3-6">In addition, the following request headers <span class="bcp14">MUST</span> be signed when they exist:<a href="#section-3-6" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-3-6.1">
-          <p id="section-3-6.1.1"><code>Content-Type</code><a href="#section-3-6.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-3-7.1">
+          <p id="section-3-7.1.1"><code>Content-Type</code><a href="#section-3-7.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-3-6.2">
-          <p id="section-3-6.2.1"><code>Content-Digest</code><a href="#section-3-6.2.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="section-3-7.2">
+          <p id="section-3-7.2.1"><code>Content-Digest</code><a href="#section-3-7.2.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-3-6.3">
-          <p id="section-3-6.3.1"><code>Authorization</code><a href="#section-3-6.3.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="section-3-7.3">
+          <p id="section-3-7.3.1"><code>Authorization</code><a href="#section-3-7.3.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-3-6.4">
-          <p id="section-3-6.4.1"><code>Txn-Token</code> <span>[<a href="#I-D.ietf-oauth-transaction-tokens" class="cite xref">I-D.ietf-oauth-transaction-tokens</a>]</span><a href="#section-3-6.4.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="section-3-7.4">
+          <p id="section-3-7.4.1"><code>Txn-Token</code> <span>[<a href="#I-D.ietf-oauth-transaction-tokens" class="cite xref">I-D.ietf-oauth-transaction-tokens</a>]</span><a href="#section-3-7.4.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-3-6.5">
-          <p id="section-3-6.5.1"><code>Workload-Identity-Token</code><a href="#section-3-6.5.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="section-3-7.5">
+          <p id="section-3-7.5.1"><code>Workload-Identity-Token</code><a href="#section-3-7.5.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="section-3-7">If the response is signed, the following components <span class="bcp14">MUST</span> be signed:<a href="#section-3-7" class="pilcrow">¶</a></p>
+<p id="section-3-8">If the response is signed, the following components <span class="bcp14">MUST</span> be signed:<a href="#section-3-8" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-3-8.1">
-          <p id="section-3-8.1.1"><code>@status</code><a href="#section-3-8.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-3-9.1">
+          <p id="section-3-9.1.1"><code>@status</code><a href="#section-3-9.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-3-8.2">
-          <p id="section-3-8.2.1"><code>@method;req</code><a href="#section-3-8.2.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="section-3-9.2">
+          <p id="section-3-9.2.1"><code>@method;req</code><a href="#section-3-9.2.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-3-8.3">
-          <p id="section-3-8.3.1"><code>@path;req</code><a href="#section-3-8.3.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="section-3-9.3">
+          <p id="section-3-9.3.1"><code>@path;req</code><a href="#section-3-9.3.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-3-8.4">
-          <p id="section-3-8.4.1"><code>@query;req</code><a href="#section-3-8.4.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="section-3-9.4">
+          <p id="section-3-9.4.1"><code>@query;req</code><a href="#section-3-9.4.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-3-8.5">
-          <p id="section-3-8.5.1"><code>Content-Type</code> if it exists<a href="#section-3-8.5.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="section-3-9.5">
+          <p id="section-3-9.5.1"><code>Content-Type</code> if it exists<a href="#section-3-9.5.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-3-8.6">
-          <p id="section-3-8.6.1"><code>Content-Digest</code> if it exists<a href="#section-3-8.6.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="section-3-9.6">
+          <p id="section-3-9.6.1"><code>Content-Digest</code> if it exists<a href="#section-3-9.6.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-3-8.7">
-          <p id="section-3-8.7.1"><code>Workload-Identity-Token</code><a href="#section-3-8.7.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="section-3-9.7">
+          <p id="section-3-9.7.1"><code>Workload-Identity-Token</code><a href="#section-3-9.7.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="section-3-9">To protect the integrity of the message body, if the request or response includes a body, the sender <span class="bcp14">MUST</span> include
+<p id="section-3-10">When the signed response corresponds to a CONNECT request, senders <span class="bcp14">MUST</span> cover <code>@method;req</code> and <code>@authority;req</code> instead of <code>@path;req</code> and <code>@query;req</code>, and <span class="bcp14">MUST NOT</span> cover <code>@path;req</code> or <code>@query;req</code>.<a href="#section-3-10" class="pilcrow">¶</a></p>
+<p id="section-3-11">To protect the integrity of the message body, if the request or response includes a body, the sender <span class="bcp14">MUST</span> include
 (and the receiver <span class="bcp14">MUST</span> verify) a <code>Content-Digest</code> header as defined in <span>[<a href="#RFC9530" class="cite xref">RFC9530</a>]</span>.
 This implies the receiver <span class="bcp14">MUST</span> compute the <code>Content-Digest</code> value for the message content received
-and compare it with the <code>Content-Digest</code> value provided in the message.<a href="#section-3-9" class="pilcrow">¶</a></p>
-<p id="section-3-10">For both requests and responses, the following signature parameters <span class="bcp14">MUST</span> be included:<a href="#section-3-10" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-3-11.1">
-          <p id="section-3-11.1.1"><code>created</code><a href="#section-3-11.1.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="section-3-11.2">
-          <p id="section-3-11.2.1"><code>expires</code> - expiration <span class="bcp14">MUST</span> be short, e.g. on the order of minutes. This profile is for individual request/response exchanges; mechanisms for long-lived batch-style workloads are out of scope.<a href="#section-3-11.2.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="section-3-11.3">
-          <p id="section-3-11.3.1"><code>nonce</code><a href="#section-3-11.3.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="section-3-11.4">
-          <p id="section-3-11.4.1"><code>tag</code> - the value for implementations of this specification is <code>wimse-workload-to-workload</code><a href="#section-3-11.4.1" class="pilcrow">¶</a></p>
-</li>
-      </ul>
-<p id="section-3-12">For requests only, the following signature parameter <span class="bcp14">MUST</span> also be included:<a href="#section-3-12" class="pilcrow">¶</a></p>
+and compare it with the <code>Content-Digest</code> value provided in the message.<a href="#section-3-11" class="pilcrow">¶</a></p>
+<p id="section-3-12">For both requests and responses, the following signature parameters <span class="bcp14">MUST</span> be included:<a href="#section-3-12" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3-13.1">
-          <p id="section-3-13.1.1"><code>wimse-aud</code> (<a href="#wimse-aud-param" class="auto internal xref">Section 3.2</a>)<a href="#section-3-13.1.1" class="pilcrow">¶</a></p>
+          <p id="section-3-13.1.1"><code>created</code><a href="#section-3-13.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-3-13.2">
+          <p id="section-3-13.2.1"><code>expires</code> - expiration <span class="bcp14">MUST</span> be short, e.g. on the order of minutes. This profile is for individual request/response exchanges; mechanisms for long-lived batch-style workloads are out of scope.<a href="#section-3-13.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-3-13.3">
+          <p id="section-3-13.3.1"><code>nonce</code><a href="#section-3-13.3.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-3-13.4">
+          <p id="section-3-13.4.1"><code>tag</code> - the value for implementations of this specification is <code>wimse-workload-to-workload</code><a href="#section-3-13.4.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="section-3-14">For requests only, the following signature parameter <span class="bcp14">MAY</span> also be included:<a href="#section-3-14" class="pilcrow">¶</a></p>
+<p id="section-3-14">For requests only, the following signature parameter <span class="bcp14">MUST</span> also be included:<a href="#section-3-14" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3-15.1">
-          <p id="section-3-15.1.1"><code>wimse-sign-response</code> (<a href="#wimse-sign-response-param" class="auto internal xref">Section 3.3</a>)<a href="#section-3-15.1.1" class="pilcrow">¶</a></p>
+          <p id="section-3-15.1.1"><code>wimse-aud</code> (<a href="#wimse-aud-param" class="auto internal xref">Section 3.2</a>)<a href="#section-3-15.1.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="section-3-16">For responses only, the following signature parameter <span class="bcp14">MUST</span> also be included:<a href="#section-3-16" class="pilcrow">¶</a></p>
+<p id="section-3-16">For requests only, the following signature parameter <span class="bcp14">MAY</span> also be included:<a href="#section-3-16" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3-17.1">
-          <p id="section-3-17.1.1"><code>wimse-req-nonce</code> (<a href="#wimse-req-nonce-param" class="auto internal xref">Section 3.4</a>)<a href="#section-3-17.1.1" class="pilcrow">¶</a></p>
+          <p id="section-3-17.1.1"><code>wimse-sign-response</code> (<a href="#wimse-sign-response-param" class="auto internal xref">Section 3.3</a>)<a href="#section-3-17.1.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="section-3-18">The following signature parameters in the <code>Signature-Input</code> header <span class="bcp14">MUST NOT</span> be used:<a href="#section-3-18" class="pilcrow">¶</a></p>
+<p id="section-3-18">For responses only, the following signature parameter <span class="bcp14">MUST</span> also be included:<a href="#section-3-18" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3-19.1">
-          <p id="section-3-19.1.1"><code>keyid</code> - The signing key is sent along with the message in the WIT. Additionally specifying the key identity would add confusion.<a href="#section-3-19.1.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="section-3-19.2">
-          <p id="section-3-19.2.1"><code>alg</code> - The signature algorithm is specified in the <code>jwk</code> section of the <code>cnf</code> claim in the WIT. See <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span> and Sec. 3.3.7 of <span>[<a href="#RFC9421" class="cite xref">RFC9421</a>]</span> for details.<a href="#section-3-19.2.1" class="pilcrow">¶</a></p>
+          <p id="section-3-19.1.1"><code>wimse-req-nonce</code> (<a href="#wimse-req-nonce-param" class="auto internal xref">Section 3.4</a>)<a href="#section-3-19.1.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="section-3-20">It is <span class="bcp14">RECOMMENDED</span> to include only one signature with the HTTP message.
-The WIMSE signature is the one whose <code>tag</code> parameter is <code>wimse-workload-to-workload</code> (<span><a href="https://rfc-editor.org/rfc/rfc9421#section-7.2.7" class="relref">Section 7.2.7</a> of [<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>). If no signature has that <code>tag</code> value, the message does not carry a WIMSE HTTP signature. If more than one signature has that <code>tag</code> value, the recipient <span class="bcp14">MUST</span> reject the message. When more than one signature is present, recipients <span class="bcp14">MUST</span> use that <code>tag</code> to find the WIMSE signature; they <span class="bcp14">MUST NOT</span> choose by label (<span><a href="https://rfc-editor.org/rfc/rfc9421#section-7.2.5" class="relref">Section 7.2.5</a> of [<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>).<a href="#section-3-20" class="pilcrow">¶</a></p>
-<p id="section-3-21">Senders <span class="bcp14">MUST</span> generate each <code>nonce</code> at random with sufficient length that the probability of collision is negligible among all nonces a recipient might observe within the lifetime of a signature.
+<p id="section-3-20">The following signature parameters in the <code>Signature-Input</code> header <span class="bcp14">MUST NOT</span> be used:<a href="#section-3-20" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3-21.1">
+          <p id="section-3-21.1.1"><code>keyid</code> - The signing key is sent along with the message in the WIT. Additionally specifying the key identity would add confusion.<a href="#section-3-21.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-3-21.2">
+          <p id="section-3-21.2.1"><code>alg</code> - The signature algorithm is specified in the <code>jwk</code> section of the <code>cnf</code> claim in the WIT. See <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span> and Sec. 3.3.7 of <span>[<a href="#RFC9421" class="cite xref">RFC9421</a>]</span> for details.<a href="#section-3-21.2.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="section-3-22">It is <span class="bcp14">RECOMMENDED</span> to include only one signature with the HTTP message.
+The WIMSE signature is the one whose <code>tag</code> parameter is <code>wimse-workload-to-workload</code> (<span><a href="https://rfc-editor.org/rfc/rfc9421#section-7.2.7" class="relref">Section 7.2.7</a> of [<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>). If no signature has that <code>tag</code> value, the message does not carry a WIMSE HTTP signature. If more than one signature has that <code>tag</code> value, the recipient <span class="bcp14">MUST</span> reject the message. When more than one signature is present, recipients <span class="bcp14">MUST</span> use that <code>tag</code> to find the WIMSE signature; they <span class="bcp14">MUST NOT</span> choose by label (<span><a href="https://rfc-editor.org/rfc/rfc9421#section-7.2.5" class="relref">Section 7.2.5</a> of [<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>).<a href="#section-3-22" class="pilcrow">¶</a></p>
+<p id="section-3-23">Senders <span class="bcp14">MUST</span> generate each <code>nonce</code> at random with sufficient length that the probability of collision is negligible among all nonces a recipient might observe within the lifetime of a signature.
 To that end, senders <span class="bcp14">MUST</span> use a cryptographically secure random number generator,
 and the nonce <span class="bcp14">MUST</span> contain at least 64 bits of entropy; 96 bits or more is <span class="bcp14">RECOMMENDED</span>.
-Members of a sender cluster therefore need not coordinate nonce generation.<a href="#section-3-21" class="pilcrow">¶</a></p>
-<p id="section-3-22">Recipients <span class="bcp14">MAY</span> maintain a replay cache and <span class="bcp14">SHOULD</span> reject a message (request or response) whose <code>nonce</code> they have already seen. What nonces are remembered, and for how long, is a local policy matter; this document does not require replay caches to be shared across validators. Without such sharing, replay to a different cluster member can still succeed.<a href="#section-3-22" class="pilcrow">¶</a></p>
-<p id="section-3-23">For clarity: the signature's lifetime (the <code>expires</code> signature parameter) is different and typically much shorter than the WIT's lifetime, denoted by its <code>exp</code> claim.
-Recipients <span class="bcp14">MUST</span> reject signatures that fall outside their validity time window.<a href="#section-3-23" class="pilcrow">¶</a></p>
-<p id="section-3-24">Implementers need to be aware that the WIT is extracted from the message before the message signature is validated. Recipients of signed HTTP messages <span class="bcp14">MUST</span> validate the WIT as specified in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-workload-creds-02#section-5.1.4" class="relref">Section 5.1.4</a> of [<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span> before validating the HTTP message signature. They <span class="bcp14">MUST</span> ensure that the message is not processed further before it has been fully validated.<a href="#section-3-24" class="pilcrow">¶</a></p>
-<p id="section-3-25">The WIT and the HTTP message signature <span class="bcp14">MUST</span> be sent over a server-authenticated TLS connection
+Members of a sender cluster therefore need not coordinate nonce generation.<a href="#section-3-23" class="pilcrow">¶</a></p>
+<p id="section-3-24">Recipients <span class="bcp14">MAY</span> maintain a replay cache and <span class="bcp14">SHOULD</span> reject a message (request or response) whose <code>nonce</code> they have already seen. What nonces are remembered, and for how long, is a local policy matter; this document does not require replay caches to be shared across validators. Without such sharing, replay to a different cluster member can still succeed.<a href="#section-3-24" class="pilcrow">¶</a></p>
+<p id="section-3-25">For clarity: the signature's lifetime (the <code>expires</code> signature parameter) is different and typically much shorter than the WIT's lifetime, denoted by its <code>exp</code> claim.
+Recipients <span class="bcp14">MUST</span> reject signatures that fall outside their validity time window.<a href="#section-3-25" class="pilcrow">¶</a></p>
+<p id="section-3-26">Implementers need to be aware that the WIT is extracted from the message before the message signature is validated. Recipients of signed HTTP messages <span class="bcp14">MUST</span> validate the WIT as specified in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-workload-creds-02#section-5.1.4" class="relref">Section 5.1.4</a> of [<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span> before validating the HTTP message signature. They <span class="bcp14">MUST</span> ensure that the message is not processed further before it has been fully validated.<a href="#section-3-26" class="pilcrow">¶</a></p>
+<p id="section-3-27">The WIT and the HTTP message signature <span class="bcp14">MUST</span> be sent over a server-authenticated TLS connection
 unless another channel provides confidentiality and server authentication comparable to TLS.
 When TLS is used, the client <span class="bcp14">MUST</span> perform hostname validation according to <span><a href="https://rfc-editor.org/rfc/rfc9525#section-6.3" class="relref">Section 6.3</a> of [<a href="#RFC9525" class="cite xref">RFC9525</a>]</span>,
-and TLS deployments <span class="bcp14">SHOULD</span> follow the recommendations in <span>[<a href="#BCP195" class="cite xref">BCP195</a>]</span>.<a href="#section-3-25" class="pilcrow">¶</a></p>
+and TLS deployments <span class="bcp14">SHOULD</span> follow the recommendations in <span>[<a href="#BCP195" class="cite xref">BCP195</a>]</span>.<a href="#section-3-27" class="pilcrow">¶</a></p>
 <div id="sig-algs">
 <section id="section-3.1">
         <h3 id="name-signature-algorithms">
@@ -2413,6 +2418,9 @@ context where the request would be accepted as valid, and this mitigates the ris
 <ul class="normal">
 <li class="normal" id="appendix-B.1-1.1">
             <p id="appendix-B.1-1.1.1">Address Justin Richer's shepherd review (#385).<a href="#appendix-B.1-1.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-B.1-1.2">
+            <p id="appendix-B.1-1.2.1">Exception for CONNECT: cover <code>@authority</code> instead of <code>@path</code>/<code>@query</code> (#368).<a href="#appendix-B.1-1.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
