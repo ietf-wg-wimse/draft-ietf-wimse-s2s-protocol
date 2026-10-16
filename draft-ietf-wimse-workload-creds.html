@@ -1449,7 +1449,7 @@ This document focuses on the credentials that carry workload identity and bind t
 <p id="section-1.1-4">The high-level message flow is as follows:<a href="#section-1.1-4" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-1.1-5">
 <li id="section-1.1-5.1">
-            <p id="section-1.1-5.1.1">A transport connection is set up. This may already include the use of the Workload Identity Certificate with transport-layer security, such as TLS.<a href="#section-1.1-5.1.1" class="pilcrow">¶</a></p>
+            <p id="section-1.1-5.1.1">A transport connection is established using TLS server authentication for Workload B, optionally incorporating mutual TLS (mTLS) with Workload A's Workload Identity Certificate for client authentication.<a href="#section-1.1-5.1.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-1.1-5.2">
             <p id="section-1.1-5.2.1">Workload A prepares to call Workload B. This may include adding application-layer authentication information, such as the Workload Identity Token and proof of possession. Workload B authenticates Workload A.<a href="#section-1.1-5.2.1" class="pilcrow">¶</a></p>
@@ -2415,6 +2415,9 @@ use these tokens to authenticate to each other.<a href="#section-11.1.1-9" class
 </li>
           <li class="normal" id="appendix-A.1-1.16">
             <p id="appendix-A.1-1.16.1">fix various editorial nits<a href="#appendix-A.1-1.16.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.1-1.17">
+            <p id="appendix-A.1-1.17.1">Try to clarify always server and sometimes client authentication in the transport bullet of the Message Flow breakdown<a href="#appendix-A.1-1.17.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
