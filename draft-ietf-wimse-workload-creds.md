@@ -163,7 +163,7 @@ All terminology in this document follows {{?I-D.ietf-wimse-arch}}.
 Trust anchors used to validate Workload Identity Certificates and Workload Identity Tokens are associated with a trust domain, as discussed in {{Section 3.1.1 of I-D.ietf-wimse-arch}}.
 Trust anchors used to validate WICs and WITs are associated with a trust domain are provisioned to consumers together with trust domain metadata for that domain. Trust anchors can be represented in different ways depending on the deployment; for example, as a set of public keys (such as a JWKS), as an X.509 certification authority used to validate certificate chains, or as other deployment-specific material.
 
-This document does not define a mechanism for discovering trust anchor information. Consumers MUST bind each trust domain to an authorized issuer (or set of issuers) and to the corresponding trust anchors. That mapping MUST be distributed via a secure out-of-band mechanism. In particular, for a WIT the `iss` claim (the JWT issuer claim {{RFC7519}}, defined in {{to-wit}}) MUST NOT be used to look up trust anchor material directly from information carried only in the token (such as by fetching a JWKS from a URL found only in the WIT).
+This document does not define a mechanism for discovering trust anchor information. Consumers MUST bind each trust domain to an authorized issuer (or set of issuers) and to the corresponding trust anchors. That mapping MUST be distributed via a secure out-of-band mechanism. In particular, for a WIT the `iss` claim (the JWT issuer claim {{RFC7519}}, defined in {{to-wit}}) MUST NOT be used to look up trust anchor material directly from information carried only in the WIT (such as by fetching a JWKS from a URL found only in the WIT).
 
 To validate a WIT, the receiving workload verifies the JWS signature using key material from the trust anchors configured for the trust domain in the `sub` claim. Trust anchor material for WIT validation MAY include more than one public key so that operators can rotate signing keys. In practice, the `alg` header parameter would identify an algorithm that the validator accepts for that trust domain, and the signature would be checked under a key drawn from the configured trust anchors. If the JWS header contains a `kid` parameter, the validator would use the key in the trust anchor material with the same `kid` value. If `kid` is absent, deployment policy would need to provide unambiguous key selection (for example, when only a single key is configured for that trust domain). Recipient processing of a presented WIT is specified in {{wit-validation}}.
 
@@ -543,7 +543,7 @@ Interoperability considerations: N/A
 
 Published specification: RFC XXX, {{to-wit}}.
 
-Applications that use this media type: Identity Servers that vend Workload Identity Tokens, and workloads that
+Applications that use this media type: Identity Servers that issue Workload Identity Tokens, and workloads that
 use these tokens to authenticate to each other.
 
 Fragment identifier considerations: N/A
@@ -606,6 +606,7 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 * Reduce some normative and definitional duplication
 * Point to draft-ietf-wimse-arch's "Trust Domain" from "Establishing Trust Anchors"
 * Define `sub` a little more cleanly
+* fix various editorial nits
 * Try to clarify always server and sometimes client authentication in the transport bullet of the Message Flow breakdown
 
 ## draft-ietf-wimse-workload-creds-02
@@ -696,6 +697,7 @@ We thank Daniel Feldman for his contributions to earlier versions of this docume
 
 Additional thanks to the WIMSE working group for the feedback and discussions that helped shape this specification, including, but not limited to,
 Andrii Deinega,
+Flemming Andreasen,
 Jean-François "Jeff" Lombardo,
 Karthik Rampalli,
 and
