@@ -1835,10 +1835,8 @@ see "Audience validation" in <span>[<a href="#I-D.ietf-wimse-wpt" class="cite xr
 <p id="section-5.3-1">Errors may occur during the processing of the WIT. If the WIT validation fails for any reason,
 such as an invalid signature, an expired validity time window, or a malformed data structure, an error is returned. Typically,
 this will be in response to an API call, so an HTTP status code such as 400 (Bad Request) is appropriate. This response could
-include more details as per <span>[<a href="#RFC9457" class="cite xref">RFC9457</a>]</span>, such as an indicator that the wrong key material or algorithm was used.  The use of HTTP
-status code 401 is <span class="bcp14">NOT RECOMMENDED</span> for this purpose because it requires a WWW-Authenticate with acceptable HTTP authentication mechanisms in
-the error response and an associated Authorization header in the subsequent request. The use of these headers for the WIT is not compatible
-with this document.<a href="#section-5.3-1" class="pilcrow">¶</a></p>
+include more details as per <span>[<a href="#RFC9457" class="cite xref">RFC9457</a>]</span>, such as an indicator that the wrong key material or algorithm was used.  Using the HTTP
+status code 401 is only recommended for this purpose when an acceptable HTTP authentication mechanism exists that can be returned with the WWW-Authenticate HTTP header.<a href="#section-5.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="coexist">
