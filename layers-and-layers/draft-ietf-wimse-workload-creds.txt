@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 17 April 2027                                Palo Alto Networks
+Expires: 19 April 2027                                Palo Alto Networks
                                                       A. Schwenkschuster
                                                         Defakto Security
                                                               Y. Sheffer
                                                              Independent
                                                             Y. Rosomakho
                                                                  Zscaler
-                                                         14 October 2026
+                                                         16 October 2026
 
 
                        WIMSE Workload Credentials
@@ -67,7 +67,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 17 April 2027.
+   This Internet-Draft will expire on 19 April 2027.
 
 Copyright Notice
 
@@ -303,7 +303,7 @@ Table of Contents
    mechanism.  In particular, for a WIT the iss claim (the JWT issuer
    claim [RFC7519], defined in Section 5.1) MUST NOT be used to look up
    trust anchor material directly from information carried only in the
-   token (such as by fetching a JWKS from a URL found only in the WIT).
+   WIT (such as by fetching a JWKS from a URL found only in the WIT).
 
    To validate a WIT, the receiving workload verifies the JWS signature
    using key material from the trust anchors configured for the trust
@@ -1026,7 +1026,7 @@ Table of Contents
 
    Published specification: RFC XXX, Section 5.1.
 
-   Applications that use this media type: Identity Servers that vend
+   Applications that use this media type: Identity Servers that issue
    Workload Identity Tokens, and workloads that use these tokens to
    authenticate to each other.
 
@@ -1275,6 +1275,8 @@ A.1.  draft-ietf-wimse-workload-creds-03
 
    *  Define sub a little more cleanly
 
+   *  fix various editorial nits
+
    *  Try to clarify always server and sometimes client authentication
       in the transport bullet of the Message Flow breakdown
 
@@ -1416,8 +1418,8 @@ Acknowledgments
 
    Additional thanks to the WIMSE working group for the feedback and
    discussions that helped shape this specification, including, but not
-   limited to, Andrii Deinega, Jean-François "Jeff" Lombardo, Karthik
-   Rampalli, and Songbo Bu.
+   limited to, Andrii Deinega, Flemming Andreasen, Jean-François "Jeff"
+   Lombardo, Karthik Rampalli, and Songbo Bu.
 
 Authors' Addresses
 
