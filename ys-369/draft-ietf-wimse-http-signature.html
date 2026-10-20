@@ -1526,11 +1526,10 @@ and compare it with the <code>Content-Digest</code> value provided in the messag
       </ul>
 <p id="section-3-22">It is <span class="bcp14">RECOMMENDED</span> to include only one signature with the HTTP message.
 The WIMSE signature is the one whose <code>tag</code> parameter is <code>wimse-workload-to-workload</code> (<span><a href="https://rfc-editor.org/rfc/rfc9421#section-7.2.7" class="relref">Section 7.2.7</a> of [<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>). If no signature has that <code>tag</code> value, the message does not carry a WIMSE HTTP signature. If more than one signature has that <code>tag</code> value, the recipient <span class="bcp14">MUST</span> reject the message. When more than one signature is present, recipients <span class="bcp14">MUST</span> use that <code>tag</code> to find the WIMSE signature; they <span class="bcp14">MUST NOT</span> choose by label (<span><a href="https://rfc-editor.org/rfc/rfc9421#section-7.2.5" class="relref">Section 7.2.5</a> of [<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>).<a href="#section-3-22" class="pilcrow">¶</a></p>
-<p id="section-3-23">The <code>nonce</code> value <span class="bcp14">MUST</span> be unique, with negligible collision probability among nonces a recipient might observe within the lifetime of a signature.
-The value <span class="bcp14">MUST</span> contain at least 64 bits of entropy; 96 bits or more is <span class="bcp14">RECOMMENDED</span>.
-The party that creates the value <span class="bcp14">MUST</span> use a cryptographically secure random number generator.
-The sender will ordinarily create the value and, in that case, members of a sender cluster need not coordinate.
-The sender <span class="bcp14">MAY</span> instead use a value that already meets these requirements, for example a nonce conveyed in <code>Accept-Signature</code> (<span><a href="https://rfc-editor.org/rfc/rfc9421#section-5.1" class="relref">Section 5.1</a> of [<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>).<a href="#section-3-23" class="pilcrow">¶</a></p>
+<p id="section-3-23">Senders <span class="bcp14">MUST</span> generate each <code>nonce</code> at random, with negligible collision probability among nonces a recipient might observe within the lifetime of a signature.
+The sender <span class="bcp14">MUST</span> use a cryptographically secure random number generator, and the nonce <span class="bcp14">MUST</span> contain at least 64 bits of entropy; 96 bits or more is <span class="bcp14">RECOMMENDED</span>.
+Members of a sender cluster therefore need not coordinate nonce generation.
+On a request, the client <span class="bcp14">MAY</span> use a server-generated <code>nonce</code> from <code>Accept-Signature</code> (<span><a href="https://rfc-editor.org/rfc/rfc9421#section-5.1" class="relref">Section 5.1</a> of [<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>) instead of generating one, when that value meets these requirements.<a href="#section-3-23" class="pilcrow">¶</a></p>
 <p id="section-3-24">Recipients <span class="bcp14">MAY</span> maintain a replay cache and <span class="bcp14">SHOULD</span> reject a message (request or response) whose <code>nonce</code> they have already seen. What nonces are remembered, and for how long, is a local policy matter; this document does not require replay caches to be shared across validators. Without such sharing, replay to a different cluster member can still succeed.<a href="#section-3-24" class="pilcrow">¶</a></p>
 <p id="section-3-25">For clarity: the signature's lifetime (the <code>expires</code> signature parameter) is different and typically much shorter than the WIT's lifetime, denoted by its <code>exp</code> claim.
 Recipients <span class="bcp14">MUST</span> reject signatures that fall outside their validity time window.<a href="#section-3-25" class="pilcrow">¶</a></p>
@@ -2428,7 +2427,7 @@ context where the request would be accepted as valid, and this mitigates the ris
         </h3>
 <ul class="normal">
 <li class="normal" id="appendix-B.1-1.1">
-            <p id="appendix-B.1-1.1.1">State the uniqueness and entropy requirements for <code>nonce</code>, and allow a value that already meets them to be supplied to the sender (#369).<a href="#appendix-B.1-1.1.1" class="pilcrow">¶</a></p>
+            <p id="appendix-B.1-1.1.1">Allow a request to carry a server-generated <code>nonce</code> from <code>Accept-Signature</code> when that value meets the uniqueness and entropy requirements (#369).<a href="#appendix-B.1-1.1.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>

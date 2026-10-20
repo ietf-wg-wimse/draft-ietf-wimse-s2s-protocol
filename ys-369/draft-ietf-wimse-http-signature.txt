@@ -305,15 +305,15 @@ Table of Contents
    present, recipients MUST use that tag to find the WIMSE signature;
    they MUST NOT choose by label (Section 7.2.5 of [RFC9421]).
 
-   The nonce value MUST be unique, with negligible collision probability
-   among nonces a recipient might observe within the lifetime of a
-   signature.  The value MUST contain at least 64 bits of entropy; 96
-   bits or more is RECOMMENDED.  The party that creates the value MUST
-   use a cryptographically secure random number generator.  The sender
-   will ordinarily create the value and, in that case, members of a
-   sender cluster need not coordinate.  The sender MAY instead use a
-   value that already meets these requirements, for example a nonce
-   conveyed in Accept-Signature (Section 5.1 of [RFC9421]).
+   Senders MUST generate each nonce at random, with negligible collision
+   probability among nonces a recipient might observe within the
+   lifetime of a signature.  The sender MUST use a cryptographically
+   secure random number generator, and the nonce MUST contain at least
+   64 bits of entropy; 96 bits or more is RECOMMENDED.  Members of a
+   sender cluster therefore need not coordinate nonce generation.  On a
+   request, the client MAY use a server-generated nonce from Accept-
+   Signature (Section 5.1 of [RFC9421]) instead of generating one, when
+   that value meets these requirements.
 
    Recipients MAY maintain a replay cache and SHOULD reject a message
    (request or response) whose nonce they have already seen.  What
@@ -1129,9 +1129,9 @@ Appendix B.  Document History
 
 B.1.  draft-ietf-wimse-http-signature-09
 
-   *  State the uniqueness and entropy requirements for nonce, and allow
-      a value that already meets them to be supplied to the sender
-      (#369).
+   *  Allow a request to carry a server-generated nonce from Accept-
+      Signature when that value meets the uniqueness and entropy
+      requirements (#369).
 
 B.2.  draft-ietf-wimse-http-signature-08
 
