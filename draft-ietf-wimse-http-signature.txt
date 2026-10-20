@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments                J. Salowey
 Internet-Draft                                        Palo Alto Networks
 Intended status: Standards Track                              Y. Sheffer
-Expires: 19 April 2027                                       Independent
-                                                         16 October 2026
+Expires: 23 April 2027                                       Independent
+                                                         20 October 2026
 
 
      WIMSE Workload-to-Workload Authentication with HTTP Signatures
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 19 April 2027.
+   This Internet-Draft will expire on 23 April 2027.
 
 Copyright Notice
 
@@ -377,10 +377,19 @@ Table of Contents
    specific audience value that the recipient can recognize.  The
    audience identifies the intended recipient of the proof; it is
    distinct from the sender's Workload Identifier in the WIT sub claim.
-   The recipient MUST be able to verify that the audience refers to it,
-   using trusted configuration rather than untrusted request fields such
-   as Host.  See "Workload Identifiers and Authentication Granularity"
-   in [I-D.ietf-wimse-workload-creds].
+
+   The recipient MUST verify that wimse-aud matches one of the audience
+   values in its trusted configuration using the Simple String
+   Comparison method of Section 6.2.1 of [RFC3986].  Strings that differ
+   only by URI normalization (for example, a trailing slash or an
+   explicit default port) do not match under that method; if such
+   variants are acceptable, each should be included in the
+   configuration.  The recipient MUST NOT derive an acceptable audience
+   from untrusted request fields such as Host.  A sender that relies on
+   the default target-URI value is responsible for producing a string
+   that matches one of the recipient's configured values under that
+   comparison.  See "Workload Identifiers and Authentication
+   Granularity" in [I-D.ietf-wimse-workload-creds].
 
 3.3.  The wimse-sign-response Signature Parameter
 
@@ -937,6 +946,11 @@ Table of Contents
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/rfc/rfc2119>.
 
+   [RFC3986]  Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
+              Resource Identifier (URI): Generic Syntax", STD 66,
+              RFC 3986, DOI 10.17487/RFC3986, January 2005,
+              <https://www.rfc-editor.org/rfc/rfc3986>.
+
    [RFC7942]  Sheffer, Y. and A. Farrel, "Improving Awareness of Running
               Code: The Implementation Status Section", BCP 205,
               RFC 7942, DOI 10.17487/RFC7942, July 2016,
@@ -1116,6 +1130,9 @@ B.1.  draft-ietf-wimse-http-signature-08
 
    *  Exception for CONNECT: cover @authority instead of @path/@query
       (#368).
+
+   *  Specify Simple String Comparison for wimse-aud verification
+      (#396).
 
 B.2.  draft-ietf-wimse-http-signature-07
 
