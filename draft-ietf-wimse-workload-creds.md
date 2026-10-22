@@ -37,7 +37,7 @@ author:
     email: arndts.ietf@gmail.com
  -
     fullname: "Yaron Sheffer"
-    organization: Intuit
+    organization: Independent
     email: "yaronf.ietf@gmail.com"
  -
     fullname: "Yaroslav Rosomakho"
@@ -73,7 +73,7 @@ This document defines the credentials that workloads use to represent their iden
 
 # Introduction
 
-This document defines authentication and authorization in the context of interaction between two workloads.
+This document defines credentials to facilitate authentication and authorization in the context of interaction between two workloads.
 This is the core component of the WIMSE architecture {{?I-D.ietf-wimse-arch}}.
 This document focuses on the credentials that carry workload identity and bind the key material to the identity. The presentation of the proof of possession of the key material is part of other documents and out of scope for this one.
 
@@ -93,81 +93,64 @@ The various protocol bindings that use these credentials to authenticate workloa
 
 * Application-layer authentication using the Workload Identity Token in conjunction with HTTP Message Signatures, specified in {{?I-D.ietf-wimse-http-signature}}.
 
-## Use In Other Protocols
-
-The credentials defined in this document are designed to be used in various protocols. This document does not define the protocols themselves, but rather the credentials that can be used within them. Additional protocols MAY be defined in the future that use these credentials for workload authentication.
-
 ## Deployment Architecture and Message Flow
 
-Independent of the transport between the workloads, we assume the following logical architecture
-(numbers refer to the sequence of steps listed below):
+This architecture and message flow is part of the broader flow as described in Section 3.3 of the WIMSE architecture {{?I-D.ietf-wimse-arch}}.
+
+Independent of the transport between the workloads, we assume that workloads hold credentials from the same trust domain and that following architecture applies:
 
 ~~~ aasvg
 +------------+               +------------+
-|            |      (2)      |            |
+|            |      (1)      |            |
 |            |<=============>|            |
 |            |               |            |
-| Workload A |      (3)      | Workload B |
+| Workload A |      (2)      | Workload B |
 |            |==============>|            |
-|            |               |            |
-|            |      (5)      |   +--------+
-|            |<==============|   |  PEP   |
-+------------+               +---+--------+
-      ^                        ^     ^
-      |            (1)         |     |
-  (1) | +----------------------+     | (4)
-      | |                            |
-      v v                            v
-+------------+               +------------+
-|            |               |            |
-|  Identity  |               |    PDP     |
-|   Server   |               | (optional) |
-|            |               |            |
+|            |               |            |--+
+|            |               |            |  | (3)
+|            |               |            |<-+
+|            |      (4)      |            |
+|            |<==============|            |
 +------------+               +------------+
 ~~~
 {: #high-level-seq title="Sequence of Operations"}
 
-The Identity Server provisions credentials to each of the workloads. At least Workload A (and possibly both) must be provisioned
-with a credential before the call can proceed. Details of communication with the Identity Server are out of scope
-of this document, however we do describe the credential received by the workload.
-
-PEP is a Policy Enforcement Point, the component that allows the message to go through or blocks it. PDP is an optional
-Policy Decision Point, which may be deployed in architectures where policy management is centralized. All details of
-policy management and message authorization are out of scope of this document.
-
 The high-level message flow is as follows:
 
-1. Workload A (and similarly, Workload B) obtains a credential from the Identity Server. This happens periodically, typically on the order of hours.
-2. A transport connection is set up. This may already include the use of the Workload Identity Certificate with transport-layer security, such as TLS.
-3. Workload A prepares to call Workload B. This may include adding application-layer authentication information, such as the Workload Identity Token and proof of possession. Workload B authenticates Workload A.
-4. Workload B authorizes the call. This policy enforcement (Policy Enforcement Point, PEP) may include consulting with an external server (Policy Decision Point, PDP) when making this decision.
-5. Workload B returns a response to Workload A, which may be either a success or an error response.
+1. A transport connection is established using TLS server authentication for Workload B, optionally incorporating mutual TLS (mTLS) with Workload A's Workload Identity Certificate for client authentication.
 
-Depending on the protocol, the workload authentication may happen during step (2) at the transport-layer or at step (3) at the application-layer, or both.
+2. Workload A prepares to call Workload B. This may include adding application-layer authentication information, such as the Workload Identity Token and proof of possession. Workload B authenticates Workload A.
+
+3. Workload B authorizes Workload A and the call.
+
+4. Workload B returns a response to Workload A, which may be either a success or an error response.
+
+Depending on the protocol, the workload authentication may happen during step (1) at the transport-layer or at step (2) at the application-layer, or both.
 
 ## Workload Identifiers and Authentication Granularity {#granular-auth}
 
 The Workload Identifier is a URI and its baseline syntax and processing requirements are defined in {{!WIMSE-ID=I-D.ietf-wimse-identifier}}.
-While deployments define how they assign identifiers and what the path portion means, implementations MUST enforce the URI requirements outlined in {{Section 4.1 of WIMSE-ID}}.
+While deployments define how they assign identifiers and what the path portion means, implementations are expected to conform to the URI requirements outlined in {{Section 4.1 of WIMSE-ID}}.
 
 Prior to WIMSE, many containerized runtime platforms could not authenticate a peer as a specific workload;
 they could only establish that the peer belonged to a given trust domain.
 With mutual TLS (mTLS), for example, there is often no reliable way to map the external access name a client uses to reach a workload
 (such as a Kubernetes Ingress path, service name, or HTTP Host header field)
-to the SubjectAltName in the presented certificate.
+to a SubjectAltName in the presented certificate (DNSName or URI).
 As a result, the client can verify that the server certificate is valid within a trust domain,
 but not that it belongs to the particular workload the client intended to reach.
 
-To enable mutual and granular authentication between workloads, two things must be in place:
+To enable granular authentication between workloads, the following must be in place:
 
 - Each workload must know its own identifier.
-- There needs to be an explicit mapping from the external access name used to access a workload (such as an Ingress path or service DNS name)
-to its Workload Identifier.
+- A callee must be able to verify that a request is intended for it.
+- A caller that authenticates the callee must know the identifier it expects the callee to present,
+  either a DNS name or a Workload Identifier.
 
-Once these conditions are met, the methods described in this document can be used for the caller and callee to mutually authenticate.
-
-Implementations MUST allow for defining this mapping between the workload's external access name and the Workload Identifier (e.g., through
-callback functions). Deployments SHOULD use these features to establish a consistent set of identifiers within their environment.
+Once these conditions are met, the methods described in this document can be used for the caller and callee to authenticate one another.
+At the transport layer, the client validates the server certificate against that expected identifier
+as described in "Server Name Validation" of {{?I-D.ietf-wimse-mutual-tls}}.
+At the application layer, the callee verifies the audience of the proof of possession ({{app-audience}}).
 
 # Conventions and Definitions
 
@@ -177,9 +160,10 @@ All terminology in this document follows {{?I-D.ietf-wimse-arch}}.
 
 # Establishing Trust Anchors {#trust-anchors}
 
-This document expects that trust anchors used to validate Workload Identity Certificates and Workload Identity Tokens are associated with a trust domain and are provisioned to consumers together with trust domain metadata for that domain. Trust anchors can be represented in different ways depending on the deployment; for example, as a set of public keys (such as a JWKS), as an X.509 certification authority used to validate certificate chains, or as other deployment-specific material.
+Trust anchors used to validate Workload Identity Certificates and Workload Identity Tokens are associated with a trust domain, as discussed in {{Section 3.1.1 of I-D.ietf-wimse-arch}}.
+Trust anchors used to validate WICs and WITs are associated with a trust domain are provisioned to consumers together with trust domain metadata for that domain. Trust anchors can be represented in different ways depending on the deployment; for example, as a set of public keys (such as a JWKS), as an X.509 certification authority used to validate certificate chains, or as other deployment-specific material.
 
-This document does not define a mechanism for discovering trust anchor information. Consumers MUST bind each trust domain to an authorized issuer (or set of issuers) and to the corresponding trust anchors. That mapping MUST be distributed via a secure out-of-band mechanism. In particular, for a WIT the `iss` claim (the JWT issuer claim {{RFC7519}}, defined in {{to-wit}}) MUST NOT be used to look up trust anchor material directly from information carried only in the token (such as by fetching a JWKS from a URL found only in the WIT).
+This document does not define a mechanism for discovering trust anchor information. Consumers MUST bind each trust domain to an authorized issuer (or set of issuers) and to the corresponding trust anchors. That mapping MUST be distributed via a secure out-of-band mechanism. In particular, for a WIT the `iss` claim (the JWT issuer claim {{RFC7519}}, defined in {{to-wit}}) MUST NOT be used to look up trust anchor material directly from information carried only in the WIT (such as by fetching a JWKS from a URL found only in the WIT).
 
 To validate a WIT, the receiving workload verifies the JWS signature using key material from the trust anchors configured for the trust domain in the `sub` claim. Trust anchor material for WIT validation MAY include more than one public key so that operators can rotate signing keys. In practice, the `alg` header parameter would identify an algorithm that the validator accepts for that trust domain, and the signature would be checked under a key drawn from the configured trust anchors. If the JWS header contains a `kid` parameter, the validator would use the key in the trust anchor material with the same `kid` value. If `kid` is absent, deployment policy would need to provide unambiguous key selection (for example, when only a single key is configured for that trust domain). Recipient processing of a presented WIT is specified in {{wit-validation}}.
 
@@ -189,11 +173,9 @@ For Workload Identity Certificates, validators use the trust anchors for the pee
 
 Each WIMSE credential carries exactly one Workload Identifier ({{WIMSE-ID}}) that is used for authentication and authorization. Requiring a single identifier per credential keeps authorization and auditing unambiguous and aligns with common practice for workload X.509 certificates (for example, a single URI in an X.509-SVID).
 
-For a Workload Identity Token, that identifier is the value of the `sub` claim. For a Workload Identity Certificate, that identifier is carried in the single URI SubjectAltName described in {{to-wic}}. Deployments that distinguish several labels for the same runtime (for example a stable service identity and a specific instance) MUST place only one identifier into it.
+For a Workload Identity Token, that identifier is the value of the `sub` claim. For a Workload Identity Certificate, that identifier is carried in the single URI SubjectAltName described in {{to-wic}}. Multiple credentials of the same Workload Identifier may be differentiated using other fields such as the optional `jti` claim.
 
-Additional correlation for logging or operations MUST NOT be encoded as a second Workload Identifier in the same WIT or WIC. This restriction applies only to Workload Identifiers; deployments MAY use other mechanisms for correlation, interoperability, or integration purposes, such as the optional `jti` claim, a DNSName SubjectAltName, separate credentials, or additional claims as described in {{add-claims}}.
-
-# Application-Layer Workload-to-Workload Authentication {#app-layer}
+# Application-Layer Credentials {#app-layer}
 
 In many deployments communication between workloads cannot use end-to-end transport security such as TLS. For these deployment styles, this document proposes a credential that can be used at the application-layer.
 
@@ -210,10 +192,10 @@ A WIT MUST contain the following content, except where noted:
     * `typ`: the WIT is explicitly typed, as recommended in {{Section 3.11 of I-D.ietf-oauth-rfc8725bis}}, using the `wit+jwt` media type.
 * in the JWT claims:
     * `iss`: The issuer of the token, which is the Identity Server, represented by a URI. The `iss` claim is RECOMMENDED but optional; when present, it is particularly useful for auditing and operations (for example, identifying which Identity Server issued the WIT in logs or compliance records). See {{wit-iss-note}} for key distribution and validation context.
-    * `sub`: The subject of the token, which is the single Workload Identifier for the workload used for authentication and authorization, as defined in {{WIMSE-ID}} and {{single-workload-identity}}. {{granular-auth}} provides additional requirements associated with these identifiers, so they can be used to secure workload-to-workload communication.
+    * `sub`: The subject is the Workload Identifier as defined in {{WIMSE-ID}}, constrained to exactly one per credential ({{single-workload-identity}}).
     * `exp`: The expiration time of the token (as defined in {{Section 4.1.4 of RFC7519}}).
       WITs should be refreshed regularly, e.g., on the order of hours.
-    * `jti`: A unique identifier for the token. This claim is OPTIONAL. The `jti` claim is frequently useful for auditing issuance of individual WITs or to revoke them, but some token generation environments do not support it.
+    * `jti`: A unique identifier for the token (as defined in {{Section 4.1.7 of RFC7519}}). This claim is OPTIONAL. The `jti` claim is useful for auditing the issuance of individual WITs, and it is needed to identify individual tokens in deployments that operate an optional token status or deny-list mechanism ({{wit-lifetime}}). Some token generation environments do not support it.
     * `cnf`: A confirmation claim referencing the public key of the workload.
         * `jwk`: Within the `cnf` claim, a `jwk` key MUST be present that contains the public key of the workload as defined in {{Section 3.2 of RFC7800}}. The workload MUST prove possession of the corresponding private key when presenting the WIT to another party. As such, it MUST NOT be used as a bearer token and is not intended for use in the `Authorization` header.
             * `alg`: Within the `jwk` object, an `alg` field MUST be present. Allowed values are listed in the IANA "JSON Web Signature and Encryption Algorithms" registry established by {{RFC7518}}. The presented proof MUST be produced with the algorithm specified in this field. The value `none` MUST NOT be used. Algorithms used in combination with symmetric keys MUST NOT be used. Also encryption algorithms MUST NOT be used as this would require additional key distribution outside of the WIT. To promote interoperability, the `ES256` signing algorithm MUST be supported by general purpose implementations of this document.
@@ -221,7 +203,7 @@ A WIT MUST contain the following content, except where noted:
 As noted in {{WIMSE-ID}}, a Workload Identifier is a URI that includes a trust domain in the authority component.
 The runtime environment often determines which
 URI scheme is used, e.g., if SPIFFE is used to authenticate workloads, it mandates `spiffe` URIs.
-For deployments that do not use an environment-specific scheme, the `wimse` URI scheme MAY be used; it is defined in {{WIMSE-ID}}, which also registers it with IANA.
+For deployments that do not use an environment-specific scheme, the `wimse` URI scheme can be used; it is defined in {{WIMSE-ID}}.
 
 An example WIT might look like this:
 
@@ -247,7 +229,7 @@ The decoded JWT claims of the WIT from the example above are shown here:
 {
   "cnf": {
     "jwk": {
-      "alg": "EdDSA",
+      "alg": "Ed25519",
       "crv": "Ed25519",
       "kty": "OKP",
       "x": "1CXXvflN_LVVsIsYXsUvB03JmlGWeCHqQVuouCF92bg"
@@ -269,7 +251,7 @@ The claims indicate that the example WIT:
 * identifies the workload to which the token was issued as `wimse://example.com/specific-workload`.
 * has a unique identifier of `x-_1CTL2cca3CSE4cwb_l`.
 * binds the public key represented by the `jwk` confirmation method to the workload `wimse://example.com/specific-workload`.
-* requires the proof to be produced with the `EdDSA` signature algorithm.
+* requires the proof to be produced with the `Ed25519` signature algorithm.
 
 For elucidative purposes only, the workload's key, including the private part, is shown below in JWK {{RFC7517}} format:
 
@@ -353,15 +335,22 @@ Verification of a WIT follows {{RFC7515}} and the JWT best practices in {{I-D.ie
 
 See {{wit-lifetime}} for WIT lifetime considerations.
 
+## Audience of Application-Layer Proofs {#app-audience}
+
+The Workload Identifier in a WIT identifies the sender.
+The audience of the proof of possession that accompanies the WIT identifies the intended recipient.
+A recipient MUST verify that the audience refers to it, using trusted configuration rather than request fields such as `Host`,
+because intermediaries may rewrite the request URI.
+Each proof-of-possession mechanism defines how the audience is set and validated;
+see "Audience validation" in {{?I-D.ietf-wimse-wpt}} and "The `wimse-aud` Signature Parameter" in {{?I-D.ietf-wimse-http-signature}}.
+
 ## Error Conditions
 
 Errors may occur during the processing of the WIT. If the WIT validation fails for any reason,
 such as an invalid signature, an expired validity time window, or a malformed data structure, an error is returned. Typically,
 this will be in response to an API call, so an HTTP status code such as 400 (Bad Request) is appropriate. This response could
-include more details as per {{RFC9457}}, such as an indicator that the wrong key material or algorithm was used.  The use of HTTP
-status code 401 is NOT RECOMMENDED for this purpose because it requires a WWW-Authenticate with acceptable HTTP authentication mechanisms in
-the error response and an associated Authorization header in the subsequent request. The use of these headers for the WIT is not compatible
-with this document.
+include more details as per {{RFC9457}}, such as an indicator that the wrong key material or algorithm was used.  Using the HTTP
+status code 401 is only recommended for this purpose when an acceptable HTTP authentication mechanism exists that can be returned with the WWW-Authenticate HTTP header.
 
 ## Coexistence with JWT Bearer Tokens {#coexist}
 
@@ -377,7 +366,7 @@ authorization policy may take into account both the sending workload's identity 
 identity in the WIT may be used to establish which API calls can be made and information in the context token may be used to determine
 which specific resources can be accessed.
 
-# Transport-Layer Workload-to-Workload Authentication {#transport-layer}
+# Transport-Layer Credentials {#transport-layer}
 
 As noted in the introduction, for many deployments, transport-layer protection of application traffic is ideal.
 
@@ -454,13 +443,21 @@ Workload Identifiers ({{WIMSE-ID}}) are scoped to a trust domain (the URI author
 
 When a deployment uses the `iss` claim for key distribution as described in {{wit-iss-note}}, validators MUST enforce an allowlist of accepted issuers. Absent such a restriction, any entity could stand up an issuer, present a WIT with that issuer's `iss` value, and have it accepted by a validator that fetches and trusts the corresponding key material without verifying the issuer's legitimacy.
 
+## Trust Domain Membership and Peer Authentication {#trust-domain-membership}
+
+Validating a peer's credential against the trust anchors for a trust domain establishes that the peer belongs to that trust domain, but does not by itself establish which workload the peer represents. The additional identity comparison described in {{granular-auth}} is required to make that distinction. This affects both sides of a call, workloads acting as clients and workloads acting as servers.
+
+Proof of possession does not mitigate this vulnerability. It shows that the peer holds the private key for the credential it presented ({{wit-pop}}), but it does not prove the identity iself. The same consideration applies when a Workload Identity Certificate is used at the transport layer.
+
 ## Workload Identity Token and Proof of Possession {#wit-pop}
 
 The Workload Identity Token (WIT) is bound to a secret cryptographic key and is always presented with a proof of possession (PoP) as described in {{to-wit}}. The WIT is a general purpose token that can be presented in multiple contexts. The WIT and its PoP are used for application-layer authentication; they are not used as the client or server credential for mutual TLS, which uses the Workload Identity Certificate ({{to-wic}}). The WIT MUST NOT be used as a bearer token. While this helps reduce the sensitivity of the token it is still possible that a token and its PoP may be captured and replayed within the PoP's lifetime. The following are some mitigations for the capture and reuse of the WIT and its PoP:
 
 ### Limiting Workload Identity Token Lifespan {#wit-lifetime}
 
-The WIT MUST have a limited lifetime expressed through the `exp` claim. If both a WIT and its corresponding private key are compromised, an attacker can impersonate the workload until the WIT expires. Because JWT-based credentials such as the WIT are not generally revocable on demand, a short expiration is the primary mitigation against continued use of a compromised WIT and key. WITs SHOULD therefore be short-lived, typically on the order of hours, with the chosen lifetime balancing the operational cost of frequent refresh against the window of exposure if a credential is compromised.
+The WIT MUST have a limited lifetime expressed through the `exp` claim. If both a WIT and its corresponding private key are compromised, an attacker can impersonate the workload until the WIT expires. Because JWT-based credentials such as the WIT are not revocable on demand, a short expiration is the primary mitigation against continued use of a compromised WIT and key. WITs SHOULD therefore be short-lived, typically on the order of hours, with the chosen lifetime balancing the operational cost of frequent refresh against the window of exposure if a credential is compromised.
+
+This document does not define a revocation mechanism for WITs and does not rely on one; validators are not required to consult any token status service. Deployments MAY nevertheless operate such a mechanism as a defense in depth measure, for example a Token Status List {{?I-D.ietf-oauth-status-list}} or a deny-list of `jti` values. A deployment that does so MUST include the `jti` claim ({{to-wit}}) in every WIT, because a WIT without a `jti` cannot be identified individually. Such mechanisms are subject to a propagation delay during which a revoked WIT may still be accepted, and their use does not relax the requirement for short WIT lifetimes.
 
 ### Limiting Proof of Possession Lifespan
 
@@ -484,7 +481,7 @@ The Workload Identity Certificate carries the Workload Identifier in a single UR
 
 ### Limiting Workload Identity Certificate Lifespan
 
-Workload Identity Certificates are frequently issued to dynamic and/or short-lived workloads. Deployments SHOULD use certificate lifetimes appropriate to the workload environment, typically on a similar scale to WITs ({{wit-pop}}). Long-lived certificates increase the impact of private-key compromise. As with WITs, short certificate lifetimes are the primary mitigation against continued use of a compromised key; this document does not rely on certificate revocation lists (CRLs) or Online Certificate Status Protocol (OCSP) {{?RFC6960}} for WICs.
+Workload Identity Certificates are frequently issued to dynamic and/or short-lived workloads. Deployments SHOULD use certificate lifetimes appropriate to the workload environment, typically on a similar scale to WITs ({{wit-pop}}). Long-lived certificates increase the impact of private-key compromise. As with WITs, short certificate lifetimes are the primary mitigation against continued use of a compromised key; this document does not rely on certificate revocation lists (CRLs) or Online Certificate Status Protocol (OCSP) {{?RFC6960}} for WICs, although deployments MAY use them as a defense in depth measure.
 
 The lifetime of Workload Identity Certificates is bounded by the lifetime and rotation cadence of the trust anchors of the trust domain ({{trust-anchors}}). Compromise of a trust anchor permits issuance of certificates for the trust domain for as long as that anchor remains trusted. Deployments should therefore consider leaf and trust-anchor lifetimes together rather than the leaf lifetime in isolation.
 
@@ -495,7 +492,15 @@ Both the Workload Identity Token and the Workload Identity Certificate carry a p
 * MUST be kept private
 * MUST be bound to a single Workload Identifier ({{WIMSE-ID}})
 * MUST NOT be used once the credential is expired
-* SHOULD be re-generated for each new Workload Identity Token or Certificate.
+* SHOULD be regenerated for each new Workload Identity Token or Certificate, unless the key is sufficiently protected, e.g., non-exportable and hardware-bound.
+
+For purposes of this section, keeping the private key private means that the private key is not intentionally disclosed
+outside the workload instance or an authorized signing component, is not placed in credentials, logs, images, configuration
+artifacts, or bearer tokens, and is not made available to intermediaries except as part of an explicitly trusted signing
+service. Compromise or disclosure of the private key invalidates the security assumptions of the associated WIT or WIC.
+This document does not require a particular key-protection mechanism; deployments that require stronger properties such
+as non-exportability, hardware-backed protection, or binding to a measured runtime need additional deployment-specific
+evidence or profile requirements. Verifiers must not infer such stronger properties from the WIT or WIC alone.
 
 ## Transport Security {#middleboxes}
 
@@ -536,7 +541,7 @@ Interoperability considerations: N/A
 
 Published specification: RFC XXX, {{to-wit}}.
 
-Applications that use this media type: Identity Servers that vend Workload Identity Tokens, and workloads that
+Applications that use this media type: Identity Servers that issue Workload Identity Tokens, and workloads that
 use these tokens to authenticate to each other.
 
 Fragment identifier considerations: N/A
@@ -584,11 +589,23 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 
 ## draft-ietf-wimse-workload-creds-03
 
+* Replace the access-path-to-identifier mapping API with conditions for caller and callee, and add a short subsection on the audience of application-layer proofs (#173, #175).
+* Added a section to describe the security considerations of granular authentication.
+* Use the fully-specified `Ed25519` algorithm identifier in the examples instead of the deprecated `EdDSA` ({{?RFC9864}}).
 * Add a WIT validation procedure for recipients (#290, #294).
 * Clarify that WIT/PoP are application-layer credentials and are not used for mutual TLS; TLS binding does not change that (#256).
 * Clarify that the one-Workload-Identifier-per-credential rule restricts only Workload Identifiers, not other identifiers in the credential.
 * State the WIC revocation stance: short lifetimes like WITs; no CRL reliance (#270).
+* State the WIT revocation stance and resolve the conflicting `jti` description: the document does not rely on revocation, but deployments may operate a token status list or `jti` deny-list, in which case `jti` is required in every WIT (#269).
 * Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use, and consistent capitalization of the defined term "Workload Identifier".
+* Remove superfluous 'Use In Other Protocols' subsection that basically just said what amounts to "other specs can reference this"
+* Retitle Application-Layer and Transport-Layer Workload-to-Workload Authentication to Application-Layer and Transport-Layer Credentials to clarify that these are credentials, not authentication protocols.
+* say what it means to keep the private key private and that reuse of a key is probably okay when it's non-exportable and hardware-protected
+* Reduce some normative and definitional duplication
+* Point to draft-ietf-wimse-arch's "Trust Domain" from "Establishing Trust Anchors"
+* Define `sub` a little more cleanly
+* fix various editorial nits
+* Try to clarify always server and sometimes client authentication in the transport bullet of the Message Flow breakdown
 
 ## draft-ietf-wimse-workload-creds-02
 
@@ -675,3 +692,11 @@ the Message Signature-based alternative.
 The authors would like to thank Pieter Kasselman for his detailed comments.
 
 We thank Daniel Feldman for his contributions to earlier versions of this document.
+
+Additional thanks to the WIMSE working group for the feedback and discussions that helped shape this specification, including, but not limited to,
+Andrii Deinega,
+Flemming Andreasen,
+Jean-François "Jeff" Lombardo,
+Karthik Rampalli,
+and
+Songbo Bu.
