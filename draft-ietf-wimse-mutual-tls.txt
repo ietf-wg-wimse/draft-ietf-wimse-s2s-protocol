@@ -268,8 +268,8 @@ Table of Contents
    or other sub-components of a Workload Identifier without also
    considering the trust domain and the trust anchor used to validate
    the certificate.  Failure to bind the Workload Identifier to the
-   expected trust domain and configured trust anchor can allow one trust
-   domain to impersonate workloads from another domain.
+   proper trust domain and its configured trust anchor can allow one
+   trust domain to impersonate workloads from another domain.
 
    When a server is identified by a DNS hostname, clients SHOULD
    authenticate the server using standard TLS DNS hostname validation as
@@ -327,8 +327,9 @@ Table of Contents
    certificate represents the peer workload, an intermediary, or another
    delegated entity.  Where end-to-end workload authentication context
    is required across such boundaries, deployments SHOULD use an
-   application-layer WIMSE authentication mechanism in addition to TLS-
-   layer server authentication.=======
+   application-layer WIMSE authentication mechanism, such as
+   [WIMSE-HTTPSIG] or [WIMSE-WPT], in addition to TLS-layer server
+   authentication.
 
 5.4.  Application-Layer Identity Assertions
 
@@ -401,6 +402,20 @@ Table of Contents
               ietf-wimse-arch-08, 6 July 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
               arch-08>.
+
+   [WIMSE-HTTPSIG]
+              Salowey, J. A. and Y. Sheffer, "WIMSE Workload-to-Workload
+              Authentication with HTTP Signatures", Work in Progress,
+              Internet-Draft, draft-ietf-wimse-http-signature-08, 20
+              October 2026, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-wimse-http-signature-08>.
+
+   [WIMSE-WPT]
+              Campbell, B. and A. Schwenkschuster, "WIMSE Workload Proof
+              Token", Work in Progress, Internet-Draft, draft-ietf-
+              wimse-wpt-02, 27 August 2026,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
+              wpt-02>.
 
 Appendix A.  Document History
 
