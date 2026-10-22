@@ -155,10 +155,10 @@ The following signature parameters in the `Signature-Input` header MUST NOT be u
 It is RECOMMENDED to include only one signature with the HTTP message.
 The WIMSE signature is the one whose `tag` parameter is `wimse-workload-to-workload` ({{Section 7.2.7 of RFC9421}}). If no signature has that `tag` value, the message does not carry a WIMSE HTTP signature. If more than one signature has that `tag` value, the recipient MUST reject the message. When more than one signature is present, recipients MUST use that `tag` to find the WIMSE signature; they MUST NOT choose by label ({{Section 7.2.5 of RFC9421}}).
 
-Senders MUST generate each `nonce` at random with sufficient length that the probability of collision is negligible among all nonces a recipient might observe within the lifetime of a signature.
-To that end, senders MUST use a cryptographically secure random number generator,
-and the nonce MUST contain at least 64 bits of entropy; 96 bits or more is RECOMMENDED.
+Senders MUST generate each `nonce` at random, with negligible collision probability among nonces a recipient might observe within the lifetime of a signature.
+The sender MUST use a cryptographically secure random number generator, and the nonce MUST contain at least 64 bits of entropy; 96 bits or more is RECOMMENDED.
 Members of a sender cluster therefore need not coordinate nonce generation.
+On a request, the client MAY use a server-generated `nonce` from `Accept-Signature` ({{Section 5.1 of RFC9421}}) instead of generating one, when that value meets these requirements.
 
 Recipients MAY maintain a replay cache and SHOULD reject a message (request or response) whose `nonce` they have already seen. What nonces are remembered, and for how long, is a local policy matter; this document does not require replay caches to be shared across validators. Without such sharing, replay to a different cluster member can still succeed.
 
@@ -570,6 +570,10 @@ context where the request would be accepted as valid, and this mitigates the ris
 
 # Document History
 <cref>RFC Editor: please remove before publication.</cref>
+
+## draft-ietf-wimse-http-signature-09
+
+* Allow a request to carry a server-generated `nonce` from `Accept-Signature` when that value meets the uniqueness and entropy requirements (#369).
 
 ## draft-ietf-wimse-http-signature-08
 
