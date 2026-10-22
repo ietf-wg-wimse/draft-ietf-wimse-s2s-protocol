@@ -23,7 +23,7 @@ venue:
 
 author:
  -
-    ins: "j. Salowey"
+    ins: "J. Salowey"
     fullname: "Joe Salowey"
     organization: Palo Alto Networks
     email: joe@salowey.net
