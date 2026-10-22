@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 23 April 2027                                Palo Alto Networks
+Expires: 25 April 2027                                Palo Alto Networks
                                                       A. Schwenkschuster
                                                         Defakto Security
                                                               Y. Sheffer
                                                              Independent
                                                             Y. Rosomakho
                                                                  Zscaler
-                                                         20 October 2026
+                                                         22 October 2026
 
 
                        WIMSE Workload Credentials
@@ -67,7 +67,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 23 April 2027.
+   This Internet-Draft will expire on 25 April 2027.
 
 Copyright Notice
 
@@ -300,14 +300,12 @@ Table of Contents
    anchor information.  Consumers MUST bind each trust domain to an
    authorized issuer (or set of issuers) and to the corresponding trust
    anchors.  That mapping MUST be distributed via a secure out-of-band
-   mechanism.  One issuer MAY be associated with more than one trust
-   anchor and with more than one trust domain.  A credential MUST be
-   validated only against the anchors bound to the trust domain named in
-   its Workload Identifier.  In particular, for a WIT the iss claim (the
-   JWT issuer claim [RFC7519], defined in Section 5.1) MUST NOT be used
-   to look up trust anchor material directly from information carried
-   only in the WIT (such as by fetching a JWKS from a URL found only in
-   the WIT).
+   mechanism.  A credential MUST be validated only against the anchors
+   bound to the trust domain named in its Workload Identifier.  In
+   particular, for a WIT the iss claim (the JWT issuer claim [RFC7519],
+   defined in Section 5.1) MUST NOT be used to look up trust anchor
+   material directly from information carried only in the WIT (such as
+   by fetching a JWKS from a URL found only in the WIT).
 
    To validate a WIT, the receiving workload verifies the JWS signature
    using key material from the trust anchors configured for the trust
