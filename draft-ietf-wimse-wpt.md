@@ -105,6 +105,7 @@ A WPT MUST contain the following:
     * `aud`: The audience SHOULD contain the HTTP target URI ({{Section 7.1 of RFC9110}}) of the request
      to which the WPT is attached, without query or fragment parts. However, there may be some normalization,
     rewriting or other process that requires the audience to be set to a deployment-specific value.
+    See "Audience of Application-Layer Proofs" in {{!I-D.ietf-wimse-workload-creds}}.
     * `exp`: The expiration time of the WPT (as defined in {{Section 4.1.4 of RFC7519}}). WPT lifetimes MUST be short,
      e.g., on the order of minutes or seconds.
     * `jti`: A unique identifier for the WPT. The value MUST be assigned such that there is a negligible probability that the same value will be assigned to any other WPT. Such uniqueness can be accomplished by encoding (base64url or any other suitable encoding) 128 bits of pseudorandom data.
@@ -139,7 +140,7 @@ The decoded JOSE header of the WPT from the example above is shown here:
 
 ~~~ json
 {
-  "alg": "EdDSA",
+  "alg": "Ed25519",
   "typ": "wpt+jwt"
 }
 ~~~
@@ -152,7 +153,7 @@ The decoded JWT claims of the WPT from the example above are shown here:
   "aud": "https://workload.example.com/path",
   "exp": 1745510016,
   "jti": "__bwc4ESC3acc2LTC1-_x",
-  "wth": "X9wiPgq3jlSGzAegHCGhNO1lJgUbDoI1Mjkat5QHJB0"
+  "wth": "MeOILk2AJHh6czknhZ2c7TkiVpeFTC_cyYAonmT7mkI"
 }
 ~~~
 {: title="Example WPT Claims"}
@@ -169,6 +170,7 @@ To validate the WPT in the request, the recipient MUST first validate the WIT as
 * There is exactly one `Authorization` header field in the request and it uses the `WPT` authentication scheme.
 * The credentials of the `WPT` authentication scheme are a single and well-formed JWT.
 * The signature algorithm in the `alg` JOSE header string-equal matches the `alg` attribute of the `jwk` in the `cnf` claim of the WIT.
+  Futhermore, the `alg` value MUST be an acceptable digital signature algorithm according to the recipient's policy and MUST NOT be `none` or a symmetric key algorithm.
 * The WPT signature is valid using the public key from the confirmation claim of the WIT.
 * The `typ` JOSE header parameter of the WPT conveys a media type of `wpt+jwt`.
 * The `aud` claim of the WPT matches the target URI, or an acceptable alias or normalization thereof, of the HTTP request
@@ -377,7 +379,10 @@ IANA is requested to register the following entry to the "Hypertext Transfer Pro
 
 ## draft-ietf-wimse-wpt-03
 
+* Use the fully-specified `Ed25519` algorithm identifier in the examples instead of the deprecated `EdDSA` ({{?RFC9864}}).
 * Remove Workload Identity Key Management section, which seems more appropriate in ietf-wimse-workload-creds where it already is.
+* More explicit `alg` checks in the WPT validation procedure
+* Tie WPT `aud` to application-layer audience in workload-creds (#175).
 
 ## draft-ietf-wimse-wpt-02
 
@@ -471,3 +476,6 @@ the Message Signature-based alternative.
 The authors would like to thank Pieter Kasselman for his detailed comments.
 
 We thank Daniel Feldman for his contributions to earlier versions of this document.
+
+Additional thanks to the WIMSE working group for the feedback and discussions that helped shape this specification, including, but not limited to,
+Mahesh Kukreja.

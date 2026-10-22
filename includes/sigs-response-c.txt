@@ -1,0 +1,9 @@
+HTTP/1.1 409 Conflict
+Content-Length: 43
+Content-Digest: sha-256=:xKyvC1Ob10QItKe0NdnKhtZ/6R7/JkpTxdH20RccxFY=:
+Content-Type: application/json
+Signature: sig1=:opZnqGnxaozdrf8ecfV+pAQ2wH2aIOtM5+dS6NI/MozKaVF3OUfxFyAC34i2+KbMNZHYlTzJzCPqXRucMbgFlA==:
+Signature-Input: sig1=("@status" "workload-identity-token" "content-type" "content-digest" "@method";req "@path";req "@query";req);created=1789405135;expires=1789405439;nonce="abcd4444";tag="wimse-workload-to-workload";wimse-req-nonce="abcd3333"
+Workload-Identity-Token: eyJhbGciOiJFZDI1NTE5Iiwia2lkIjoiaXNzdWVyLWtleSIsInR5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVTMjU2IiwiY3J2IjoiUC0yNTYiLCJraWQiOiJzdmMtYy1rZXkiLCJrdHkiOiJFQyIsIngiOiJkcXV4TTBMSEJiV2xZQ0R4Y05SSGU5a2I0MWxybkwwaF85bnROWEt4enh3IiwieSI6IkhQcVJscy1FWm9QckhZOWdOUmNaR3E1cGt5cGVvdmZuekxTZnNZUDJMNm8ifX0sImV4cCI6MTc4OTQwNTQzOSwiaWF0IjoxNzg5NDA1MTM5LCJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsImp0aSI6IndpdC0xNzg5NDA1MTM1OTUxNTcwODY2Iiwic3ViIjoid2ltc2U6Ly9leGFtcGxlLmNvbS9zdmNDIn0.kaMHAoW7nZ5NrkwOzHE1zGEm-S9Dk5rWICPjKQenhHuwksZqhW2EO1MV0vh_dcBQzvnMS710Do9KEZkcg4QyDQ
+
+{"error":"out_of_stock","flavor":"vanilla"}
