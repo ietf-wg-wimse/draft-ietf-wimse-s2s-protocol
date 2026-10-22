@@ -129,7 +129,7 @@ Private keys associated with Workload Identity Certificates MUST be protected ag
 
 ## TLS Termination at Intermediaries
 
-This document specifies authentication at the TLS layer. If application traffic traverses intermediaries, gateways, service meshes, or other middleboxes that terminate and re-establish TLS, the application endpoint might not be directly authenticated to the peer workload. In such deployments, authorization decisions need to account for where TLS is terminated and whether the authenticated certificate represents the peer workload, an intermediary, or another delegated entity. Where end-to-end workload authentication context is required across such boundaries, deployments SHOULD use an application-layer WIMSE authentication mechanism, such as {{?WIMSE-HTTPSIG=I-D.ietf-wimse-http-signature}} or {{?WIMSE-WPT=I-D.ietf-wimse-wpt}, in addition to TLS-layer server authentication.=======
+This document specifies authentication at the TLS layer. If application traffic traverses intermediaries, gateways, service meshes, or other middleboxes that terminate and re-establish TLS, the application endpoint might not be directly authenticated to the peer workload. In such deployments, authorization decisions need to account for where TLS is terminated and whether the authenticated certificate represents the peer workload, an intermediary, or another delegated entity. Where end-to-end workload authentication context is required across such boundaries, deployments SHOULD use an application-layer WIMSE authentication mechanism, such as {{?WIMSE-HTTPSIG=I-D.ietf-wimse-http-signature}} or {{?WIMSE-WPT=I-D.ietf-wimse-wpt}}, in addition to TLS-layer server authentication.
 
 ## Application-Layer Identity Assertions
 
