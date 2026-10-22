@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-10-18T03:06:36.620697+00:00",
+  "timestamp": "2026-10-22T03:22:47.074682+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -856,17 +856,16 @@
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/42",
       "state": "OPEN",
       "author": "PieterKas",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [
-        "draft-ietf-wimse-http-signature",
         "draft-ietf-wimse-wpt",
         "draft-ietf-wimse-mutual-tls",
         "pre-wglc"
       ],
       "body": "Commenting as identity enthusiast as opposed to WIMSE co-chair.\r\n\r\nIt would be beneficial for readers, as well as future attempts at formal analysis, to have a section that explicitly defines the security goals for this draft. ",
       "createdAt": "2024-07-04T16:39:51Z",
-      "updatedAt": "2025-12-09T15:09:39Z",
+      "updatedAt": "2026-10-20T13:01:44Z",
       "closedAt": null,
       "comments": [
         {
@@ -4880,7 +4879,7 @@
       "id": "I_kwDOLJmm788AAAABJGbsAQ",
       "title": "WIT/WIC WGLC placeholder",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/273",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -4891,8 +4890,8 @@
       ],
       "body": "there's a variety of feedback and commentary in the [WGLC for WIMSE Workload Credentials thread ](https://mailarchive.ietf.org/arch/msg/wimse/5kFRCsvSmgjSdlaClnAgQDCm0J8/) some of which shouldn't get lost. This is just a placeholder issue to hopefully help towards that end. ",
       "createdAt": "2026-07-16T20:20:48Z",
-      "updatedAt": "2026-10-13T10:45:27Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-20T14:47:47Z",
+      "closedAt": "2026-10-20T14:47:47Z",
       "comments": [
         {
           "author": "bc-pi",
@@ -4900,6 +4899,20 @@
           "body": "it seems like maybe the issues created last week capture this? \n\nhttps://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues?q=is%3Aissue+slabel%3Adraft-ietf-wimse-workload-creds+created%3A2026-10-06 (all of em)\n\nhttps://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues?q=is%3Aissue+state%3Aopen+label%3Adraft-ietf-wimse-workload-creds+created%3A2026-10-06 (still open)\n\nI know some/much of it is my own fault, but I'm having a hard time just figuring out what's outstanding. ",
           "createdAt": "2026-10-12T20:28:25Z",
           "updatedAt": "2026-10-13T10:45:27Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "The 6 October batch already captured the [WGLC thread](https://mailarchive.ietf.org/arch/msg/wimse/5kFRCsvSmgjSdlaClnAgQDCm0J8/). Of that batch, only #370 is still open, and it is not a mailing-list comment. The thread's remaining open item is #268, filed in July.\n\nReviews that asked for changes to this document:\n\n| Review | Landed as | State |\n|---|---|---|\n| Pieter Kasselman, items 1\u20137 (and the rest of that mail, filed the same day) | #255\u2013#266 | closed |\n| Jeff Lombardo: drop \"Use In Other Protocols\", separate WIT/WIC flow, stop restating WIMSE-ID and the architecture draft, retitle the credential sections | #374\u2013#377 | closed |\n| Andrii Deinega / Songbo Bu / Karthik Rampalli: what \"kept private\" means | #371 | closed |\n| Karthik: key regeneration vs a non-exportable key | #372 | closed |\n| Karthik: delegation and on-behalf-of | #373 | closed, as out of scope with no opinion on where it belongs |\n| Flemming Andreasen: `jti` as a correlation example | #378 | closed |\n| Flemming: \"vend\", \"the token\", TLS vs mutual TLS, figure indentation | #379 | closed; the draft now says \"issue\", \"carried only in the WIT\", and \"mutual TLS\" in the message flow |\n| Antoine Berton: `jti` vs revocation, WIC revocation stance, credentials in logs, `iat` in the example | #269, #270, #271, #257 | closed |\n\n#381, #382, and #383 were filed the same day but come from the identifier and mutual-TLS last calls, not this thread. All three are closed.\n\nStill open, and actually about this document:\n\n- **#268** (Antoine, 16 July): deprovisioning or compromise while the WIT or WIC is still valid. Stop issuing, treat the remaining lifetime as the exposure window, do not reuse the identifier inside that window, and destroy key material when the instance is decommissioned. Nothing in the current key-management section covers that.\n- **#370**: one issuer, more than one trust anchor, more than one trust domain. This is Joe Salowey's comment on a pull request, not a WGLC mail. PR #403 has the text.\n- **#272**: follow-up on the \"Prior to WIMSE\u2026\" paragraph in the granularity section. The sentence is still in the draft. It is not a new review comment.\n\nThe rest of the thread after Antoine's review (Thi Nguyen-Huu, Songbo, morganLR, and the condition-bounded credential discussion) is about an individual draft, CAEP, and pause/resume. It does not ask for a further change here. The one sentence that did belong in this document, stable keys when the key is non-exportable, is already in the key-management section via #372.\n\nPropose closing this placeholder. The thread is recorded above, and the outstanding WGLC item is #268.",
+          "createdAt": "2026-10-20T13:41:22Z",
+          "updatedAt": "2026-10-20T13:41:22Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "TLDR but okay",
+          "createdAt": "2026-10-20T14:47:47Z",
+          "updatedAt": "2026-10-20T14:47:47Z"
         }
       ]
     },
@@ -5968,7 +5981,7 @@
       ],
       "body": "Current text requires senders to generate `nonce`. However, `nonce` could also come from the `Accept-Signature` header from the party - which might have better security properties in terms of replay protection.\n\nWould be great to update the text to require `nonce` but allow it to be either sender generated or provided by the party in a previous `Accept-Signature` message.",
       "createdAt": "2026-10-06T03:07:24Z",
-      "updatedAt": "2026-10-12T09:22:05Z",
+      "updatedAt": "2026-10-20T15:33:27Z",
       "closedAt": null,
       "comments": [
         {
@@ -5977,6 +5990,13 @@
           "body": "Thanks for the suggestion. I don't think we should take this into the profile.\n\nToday each signed message carries a sender-generated `nonce`, with optional recipient replay caching, and signed responses are bound with `wimse-req-nonce`. That is per-exchange replay protection and fits HTTP's request/response model.\n\nUsing a nonce from a prior `Accept-Signature` is a cross-exchange challenge. For that to improve replay protection for the server, the server must be able to **enforce** that the next request uses that nonce. If use of the advertised nonce is only optional, the server cannot distinguish \"client ignored / never saw Accept-Signature\" from a replay, so there is no enforceable gain. If use is mandatory whenever the server previously sent `Accept-Signature`, we couple consecutive exchanges: clients often have multiple requests in flight (or retries) before any response arrives, and it is unclear which outstanding request a given challenge applies to.\n\nSo optional Accept-Signature nonces don't help server-side enforcement, and mandatory ones fight normal HTTP concurrency. I'd keep sender-generated per-message `nonce` (plus `wimse-req-nonce` on responses) and close this unless there is a concrete binding rule that works with parallel requests.\n\nHappy to discuss further if I'm missing a deployment pattern where this is well-defined.",
           "createdAt": "2026-10-12T09:22:05Z",
           "updatedAt": "2026-10-12T09:22:05Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Following a discussion: I still think it's a bad idea. But since RFC 9421 allows it, we will massage that text so that this is not explicitly disallowed. I.e. we don't force the client to generate the nonce, we just say what properties the nonce needs to have.",
+          "createdAt": "2026-10-20T15:33:27Z",
+          "updatedAt": "2026-10-20T15:33:27Z"
         }
       ]
     },
@@ -6501,7 +6521,7 @@
       "id": "I_kwDOLJmm788AAAABWmXFYA",
       "title": "Shepherd review (Justin Richer): HTTP-Sig cleanups before AD",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/385",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -6510,8 +6530,8 @@
       ],
       "body": "Justin Richer's shepherd notes for draft-ietf-wimse-http-signature, to address before moving to the AD.\n\n- [x] **\u00a73:** The NOT RECOMMENDED for `@request-target` is oddly placed \u2014 it quotes a requirement from another spec rather than creating one here; also feels like an aside given the other required components.\n- [x] **\u00a73:** Claim of \"fully integrity-protected\" is probably too strong; consider \"sufficiently\" (or similar) instead of \"fully\".\n- [x] **\u00a73:** \"probability of collision is negligible among all nonces\" is not actionable \u2014 provide more concrete guidance.\n- [x] **\u00a73.3, \u00a73.4, etc.:** Avoid language like \"this document defines\" in the document that is doing the definition.\n- [x] **\u00a73.3:** Unclear whether the server MUST respect the signed-response request; almost addressed in \u00a73.5 but not clear enough for an implementor \u2014 clarify the normative requirement.\n- [x] **\u00a73.6:** No problem details are defined for HTTP-Sig; the RFC 9457 reference may not be actionable/interoperable as written.\n- [x] **\u00a75:** Avoid normative requirements in Security Considerations; put requirements in the main body and the WHY in Security Considerations. Much of what is here uses normative terms but is not really a requirement.\n- [x] **\u00a75.1:** Prohibitions on WIT as bearer seem out of place in this document \u2014 imported? Relocate or reframe.\n- [x] **\u00a75.3:** Privacy considerations should usually be their own section, not a heading under Security.\n- [x] **\u00a76:** Whole section feels out of place; consider moving to an appendix (aspirational / future work).\n- [x] **\u00a78.1:** Is `wimse-arch` really normative? Expect informative; if normative, it is a downref.\n- [x] Add a reference to Content-Digest definitions in RFC 9430.\n\nAddressed in PR (ys-385). Note: Content-Digest is defined in RFC 9530 (Justin\u2019s \u201cRFC9430\u201d was a typo).",
       "createdAt": "2026-10-12T09:39:25Z",
-      "updatedAt": "2026-10-12T13:33:56Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-20T13:01:22Z",
+      "closedAt": "2026-10-20T13:01:22Z",
       "comments": [
         {
           "author": "yaronf",
@@ -6546,7 +6566,7 @@
       "id": "I_kwDOLJmm788AAAABXNUl8A",
       "title": "HTTP-Sig: specify how recipients compare wimse-aud",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/396",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -6555,8 +6575,8 @@
       ],
       "body": "Follow-up from Kieran Sweeney on WGLC / Flemming \u00a73.1b and \u00a73.1c.\n\nSection 3.2 (`wimse-aud`) keeps a derived default (HTTP target URI without query/fragment, as known to the sender) with a deployment-specific override, and tells the recipient to verify against trusted configuration without saying how the comparison is made.\n\nWithout an explicit rule, two implementations can disagree on a trailing slash or a default port while both believing they follow the section.\n\n**Proposed fix (smaller edit):** state that the recipient compares `wimse-aud` octet for octet against its configured audience values, so a sender relying on the default is responsible for producing exactly one of them.\n\nAlternative: drop the default and require an explicit value.",
       "createdAt": "2026-10-14T17:28:02Z",
-      "updatedAt": "2026-10-14T17:28:02Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-20T12:32:45Z",
+      "closedAt": "2026-10-20T12:32:45Z",
       "comments": []
     },
     {
@@ -26025,13 +26045,13 @@
       ],
       "body": "Addresses https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/268",
       "createdAt": "2026-10-13T11:16:38Z",
-      "updatedAt": "2026-10-15T15:03:34Z",
+      "updatedAt": "2026-10-20T14:33:37Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
-      "baseRefOid": "43577977737070e079b9e291263cc830968c6a82",
+      "baseRefOid": "6e5e1ad11f42dc3157c76ee055b6ddeb1d088312",
       "headRepository": "yaroslavros/draft-ietf-wimse-s2s-protocol",
       "headRefName": "deprovisioning-expiry",
-      "headRefOid": "c06db47456c34ab973d28dfa8b80122374642b99",
+      "headRefOid": "914b6655356514ce69cc02cba25fa3881c03052e",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -26130,6 +26150,19 @@
               "updatedAt": "2026-10-15T15:03:35Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABTPxekA",
+          "commit": {
+            "abbreviatedOid": "914b665"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-10-20T14:33:37Z",
+          "updatedAt": "2026-10-20T14:33:37Z",
+          "comments": []
         }
       ]
     },
@@ -26301,7 +26334,7 @@
       "id": "PR_kwDOLJmm788AAAABIfszdQ",
       "title": "HTTP-Sig: specify how recipients compare wimse-aud (#396)",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/399",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -26310,17 +26343,19 @@
       ],
       "body": "## Summary\n- Require Simple String Comparison (RFC 3986 \u00a76.2.1) when verifying `wimse-aud` against trusted configuration, so trailing-slash / default-port variants do not silently disagree.\n- @jsalowey \u2014 please review.\n\nFixes #396\n\nMade with [Cursor](https://cursor.com)",
       "createdAt": "2026-10-14T21:54:01Z",
-      "updatedAt": "2026-10-15T14:55:14Z",
+      "updatedAt": "2026-10-20T12:32:44Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "d30581aa5cf085b7d420840a866a9e4c60630d28",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-396",
       "headRefOid": "49a1df6d93bb887334841531faffef9bdab108f3",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-10-20T12:32:44Z",
+      "mergedAt": "2026-10-20T12:32:44Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "6e5e1ad11f42dc3157c76ee055b6ddeb1d088312"
+      },
       "comments": [],
       "reviews": [
         {
@@ -26394,6 +26429,256 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 403,
+      "id": "PR_kwDOLJmm788AAAABJjkHhQ",
+      "title": "Creds: same trust anchor may serve more than one trust domain (#370)",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/403",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "## Summary\r\n- One issuer may be associated with more than one trust anchor and with more than one trust domain.\r\n- A credential MUST be validated only against the anchors bound to the trust domain named in its Workload Identifier.\r\n\r\nFixes #370\r\n\r\nNote: this fits into existing text, there's no need to move it into Security Considerations.",
+      "createdAt": "2026-10-20T13:10:50Z",
+      "updatedAt": "2026-10-20T15:03:38Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "6e5e1ad11f42dc3157c76ee055b6ddeb1d088312",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-370",
+      "headRefOid": "b52cbae7589334a9f26db5215861e9dde9f1a3e5",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABTPvN-Q",
+          "commit": {
+            "abbreviatedOid": "b52cbae"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-10-20T14:30:59Z",
+          "updatedAt": "2026-10-20T14:30:59Z",
+          "comments": [
+            {
+              "originalPosition": 8,
+              "body": "> One issuer MAY be associated with more than one trust anchor and with more than one trust domain.\n\nI'm still trying to understand what is the reason this is needed. I think we should go the other way and forbid it. Open to discuss though if there's a real scenario.",
+              "createdAt": "2026-10-20T14:30:59Z",
+              "updatedAt": "2026-10-20T14:30:59Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABTPv1wA",
+          "commit": {
+            "abbreviatedOid": "b52cbae"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "I'd like to discuss this a bit more in detail. Seems a bit random to just allow it without a specific scenario or situation in mind.",
+          "createdAt": "2026-10-20T14:31:41Z",
+          "updatedAt": "2026-10-20T14:31:41Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABTP6Lqg",
+          "commit": {
+            "abbreviatedOid": "b52cbae"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-10-20T14:43:20Z",
+          "updatedAt": "2026-10-20T14:43:20Z",
+          "comments": [
+            {
+              "originalPosition": 8,
+              "body": "I'm not sure what forbidding gains and it doesn't really seem testable or enforceable. ",
+              "createdAt": "2026-10-20T14:43:20Z",
+              "updatedAt": "2026-10-20T14:43:21Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABTP8G1Q",
+          "commit": {
+            "abbreviatedOid": "b52cbae"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-10-20T14:45:26Z",
+          "updatedAt": "2026-10-20T14:45:27Z",
+          "comments": [
+            {
+              "originalPosition": 8,
+              "body": "```suggestion\nThis document does not define a mechanism for discovering trust anchor information. Consumers MUST bind each trust domain to an authorized issuer (or set of issuers) and to the corresponding trust anchors. That mapping MUST be distributed via a secure out-of-band mechanism. One issuer MAY be associated with more than one trust anchors and with more than one trust domain. A credential MUST be validated only against the anchors bound to the trust domain named in its Workload Identifier. In particular, for a WIT the `iss` claim (the JWT issuer claim {{RFC7519}}, defined in {{to-wit}}) MUST NOT be used to look up trust anchor material directly from information carried only in the WIT (such as by fetching a JWKS from a URL found only in the WIT).\n```",
+              "createdAt": "2026-10-20T14:45:26Z",
+              "updatedAt": "2026-10-20T14:45:27Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABTQCjcQ",
+          "commit": {
+            "abbreviatedOid": "b52cbae"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-10-20T14:52:51Z",
+          "updatedAt": "2026-10-20T14:52:52Z",
+          "comments": [
+            {
+              "originalPosition": 8,
+              "body": "Sharing trust anchors means that the trust domain is merely a virtual trust boundary and not cryptographically ensured. That's quite a different security promise and not how \"trust domain\" is perceived in the industry. ",
+              "createdAt": "2026-10-20T14:52:51Z",
+              "updatedAt": "2026-10-20T14:52:52Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABTQFjiA",
+          "commit": {
+            "abbreviatedOid": "b52cbae"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-10-20T14:56:28Z",
+          "updatedAt": "2026-10-20T14:56:29Z",
+          "comments": [
+            {
+              "originalPosition": 8,
+              "body": "Maybe I'm just confused. Probably. ",
+              "createdAt": "2026-10-20T14:56:29Z",
+              "updatedAt": "2026-10-20T14:56:29Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABTQHO6g",
+          "commit": {
+            "abbreviatedOid": "b52cbae"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-10-20T14:58:27Z",
+          "updatedAt": "2026-10-20T14:58:27Z",
+          "comments": [
+            {
+              "originalPosition": 8,
+              "body": "I really think a scenario/use-case would help this topic massively. ",
+              "createdAt": "2026-10-20T14:58:27Z",
+              "updatedAt": "2026-10-20T14:58:28Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABTQHSIg",
+          "commit": {
+            "abbreviatedOid": "b52cbae"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-10-20T14:58:31Z",
+          "updatedAt": "2026-10-20T14:58:31Z",
+          "comments": [
+            {
+              "originalPosition": 8,
+              "body": "what about just this? \r\n```suggestion\r\nThis document does not define a mechanism for discovering trust anchor information. Consumers MUST bind each trust domain to an authorized issuer (or set of issuers) and to the corresponding trust anchors. That mapping MUST be distributed via a secure out-of-band mechanism. A credential MUST be validated only against the anchors bound to the trust domain named in its Workload Identifier. In particular, for a WIT the `iss` claim (the JWT issuer claim {{RFC7519}}, defined in {{to-wit}}) MUST NOT be used to look up trust anchor material directly from information carried only in the WIT (such as by fetching a JWKS from a URL found only in the WIT).\r\n```",
+              "createdAt": "2026-10-20T14:58:31Z",
+              "updatedAt": "2026-10-20T14:58:32Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABTQH8YQ",
+          "commit": {
+            "abbreviatedOid": "b52cbae"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-10-20T14:59:17Z",
+          "updatedAt": "2026-10-20T14:59:17Z",
+          "comments": [
+            {
+              "originalPosition": 8,
+              "body": "that's all confusing and not helping, sorry ",
+              "createdAt": "2026-10-20T14:59:17Z",
+              "updatedAt": "2026-10-20T14:59:17Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABTQLm5w",
+          "commit": {
+            "abbreviatedOid": "b52cbae"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-10-20T15:03:37Z",
+          "updatedAt": "2026-10-20T15:03:38Z",
+          "comments": [
+            {
+              "originalPosition": 8,
+              "body": "@arndt-s We mostly think that the proposed text allows to have the \"crypto separation\", but that there's no need to mandate it.",
+              "createdAt": "2026-10-20T15:03:38Z",
+              "updatedAt": "2026-10-20T15:03:38Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 404,
+      "id": "PR_kwDOLJmm788AAAABJlk9Qg",
+      "title": "Allow a server-generated request nonce from Accept-Signature (#369)",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/404",
+      "state": "OPEN",
+      "author": "yaronf",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-http-signature"
+      ],
+      "body": "## Summary\n- Keep sender-generated `nonce` values, including the nonce a server creates for a response.\n- On a request, allow the client to use a server-generated `nonce` from `Accept-Signature` when that value meets the uniqueness and entropy requirements (#369).",
+      "createdAt": "2026-10-20T15:43:47Z",
+      "updatedAt": "2026-10-20T15:47:58Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "6e5e1ad11f42dc3157c76ee055b6ddeb1d088312",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "ys-369",
+      "headRefOid": "d704e9ad053e90fabe0a6a57d5a118e416728b2e",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
