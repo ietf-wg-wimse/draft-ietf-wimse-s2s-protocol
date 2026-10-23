@@ -137,7 +137,10 @@ Table of Contents
 3.  Using Mutual TLS for Workload-to-Workload Authentication
 
    As noted in the introduction, for many deployments, transport-level
-   protection of application traffic using TLS is ideal.
+   protection of application traffic using TLS is ideal.  This document
+   describes using WIMSE certificates to authenticate a TLS connection.
+   In the case of mutual TLS either the client or the server or both
+   client and server may present WIMSE certificates.
 
 3.1.  The Workload Identity Certificate
 
