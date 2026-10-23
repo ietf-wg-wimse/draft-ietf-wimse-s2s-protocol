@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments                J. Salowey
 Internet-Draft                                        Palo Alto Networks
 Intended status: Standards Track                              Y. Sheffer
-Expires: 25 April 2027                                       Independent
-                                                         22 October 2026
+Expires: 26 April 2027                                       Independent
+                                                         23 October 2026
 
 
      WIMSE Workload-to-Workload Authentication with HTTP Signatures
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 25 April 2027.
+   This Internet-Draft will expire on 26 April 2027.
 
 Copyright Notice
 
@@ -734,13 +734,14 @@ Table of Contents
 
       -  WIT + HTTP Message Signatures: alpha
 
-   *  Coverage: WIT, HTTP Message Signatures, signed responses
+   *  Coverage: WIT, HTTP Message Signatures, signed responses as per
+      version -08 of the draft
 
    *  License: Apache 2.0
 
    *  Contact: kanywst on GitHub (https://github.com/kanywst)
 
-   *  Last updated: 08-Sep-2026
+   *  Last updated: 22-Oct-2026
 
 5.  Security Considerations
 

@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments                J. Salowey
 Internet-Draft                                        Palo Alto Networks
 Intended status: Standards Track                            Y. Rosomakho
-Expires: 25 April 2027                                           Zscaler
-                                                         22 October 2026
+Expires: 26 April 2027                                           Zscaler
+                                                         23 October 2026
 
 
                 Workload Authentication Using Mutual TLS
@@ -53,7 +53,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 25 April 2027.
+   This Internet-Draft will expire on 26 April 2027.
 
 Copyright Notice
 
@@ -389,9 +389,9 @@ Table of Contents
 
    [WIMSE-ID] Rosomakho, Y. and J. A. Salowey, "Workload Identifier",
               Work in Progress, Internet-Draft, draft-ietf-wimse-
-              identifier-03, 6 July 2026,
+              identifier-04, 23 October 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
-              identifier-03>.
+              identifier-04>.
 
 7.2.  Informative References
 
