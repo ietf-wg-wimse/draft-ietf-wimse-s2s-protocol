@@ -382,7 +382,7 @@ According to RFC 7942, "this will allow reviewers and working groups to assign d
 * Implementation: <https://github.com/kanywst/wimsey>
 * Maturity:
     * WIT + HTTP Message Signatures: alpha
-* Coverage: WIT, HTTP Message Signatures, signed responses
+* Coverage: WIT, HTTP Message Signatures, signed responses as per version -08 of the draft
 * License: Apache 2.0
 * Contact: [kanywst on GitHub](https://github.com/kanywst)
 * Last updated: 22-Oct-2026
