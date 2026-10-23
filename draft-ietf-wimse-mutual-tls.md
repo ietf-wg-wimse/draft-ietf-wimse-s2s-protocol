@@ -63,7 +63,7 @@ This document uses the terminology defined in {{WIMSE-ARCH}}. The terms "Workloa
 
 # Using Mutual TLS for Workload-to-Workload Authentication {#mutual-tls}
 
-As noted in the introduction, for many deployments, transport-level protection of application traffic using TLS is ideal.
+As noted in the introduction, for many deployments, transport-level protection of application traffic using TLS is ideal. This document describes using WIMSE certificates to authenticate a TLS connection. In the case of mutual TLS either the client or the server or both client and server may present WIMSE certificates.
 
 ## The Workload Identity Certificate {#to-wic}
 
