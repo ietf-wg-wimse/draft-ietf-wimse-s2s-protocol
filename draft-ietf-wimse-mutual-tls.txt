@@ -279,17 +279,17 @@ Table of Contents
    proper trust domain and its configured trust anchor can allow one
    trust domain to impersonate workloads from another domain.
 
-   When a server is identified by a DNS hostname, clients SHOULD
+   When a client identifies a server by a DNS hostname, clients MUST
    authenticate the server using standard TLS DNS hostname validation as
-   specified in [TLS-IDENTITY].  Workload identity validation
-   complements, rather than replaces, DNS-based server authentication by
-   providing an authenticated workload identity for authorization
-   decisions.  Only deployments that do not rely on DNS-based server
-   identification should authenticate the server solely using its
-   workload identity.  Accepting any certificate issued by a trusted
-   workload CA without validating that it represents the intended server
-   workload would allow mis-issued or otherwise valid certificates for
-   other workloads to be used for impersonation.
+   specified in [TLS-IDENTITY].  When a client expects to connect to a
+   server identified by a WIMSE identity then it MUST validate that the
+   WIMSE identifier of the server according to domain specific policy as
+   defined in Section 3.2.1.  Only deployments that do not rely on DNS-
+   based server identification should authenticate the server solely
+   using its workload identity.  Accepting any certificate issued by a
+   trusted workload CA without validating that it represents the
+   intended server workload would allow mis-issued or otherwise valid
+   certificates for other workloads to be used for impersonation.
 
    Client authentication is based on the Workload Identity Certificate
    presented by the TLS client.  A server performing mTLS authentication
