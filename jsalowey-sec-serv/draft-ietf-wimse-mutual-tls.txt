@@ -280,7 +280,7 @@ Table of Contents
    authenticate the server using standard TLS DNS hostname validation as
    specified in [TLS-IDENTITY].  When a client expects to connect to a
    server identified by a WIMSE identity then it MUST validate that the
-   WIMSE identity of the server according to domain specific policy as
+   WIMSE identifier of the server according to domain specific policy as
    defined in Section 3.2.1.  Only deployments that do not rely on DNS-
    based server identification should authenticate the server solely
    using its workload identity.  Accepting any certificate issued by a
