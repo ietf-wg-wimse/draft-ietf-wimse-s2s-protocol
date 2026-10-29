@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-10-25T03:17:30.171179+00:00",
+  "timestamp": "2026-10-29T04:28:08.487465+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -4034,13 +4034,15 @@
       "state": "OPEN",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "bc-pi"
+      ],
       "labels": [
         "draft-ietf-wimse-wpt"
       ],
       "body": "maybe instead of the access token w/ Authorization: Bearer\n\nmaybe \n\nthis might be a better conceptual model to have in examples ",
       "createdAt": "2026-03-02T22:28:55Z",
-      "updatedAt": "2026-08-14T20:00:31Z",
+      "updatedAt": "2026-10-28T19:39:51Z",
       "closedAt": null,
       "comments": [
         {
@@ -26553,7 +26555,7 @@
       ],
       "body": "## Summary\n- Repair the doubled \"are associated with a trust domain\" in the trust-anchor provisioning sentence.\n- Require a credential to be validated only against the anchors bound to the trust domain named in its Workload Identifier (#370).\n- Leave the relationship between issuers, trust anchors, and trust domains for the architecture draft.",
       "createdAt": "2026-10-20T13:10:50Z",
-      "updatedAt": "2026-10-22T15:21:55Z",
+      "updatedAt": "2026-10-28T19:38:10Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "6e5e1ad11f42dc3157c76ee055b6ddeb1d088312",
@@ -26793,6 +26795,19 @@
               "updatedAt": "2026-10-22T15:06:06Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABUxGnyw",
+          "commit": {
+            "abbreviatedOid": "cf82198"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-10-28T19:38:10Z",
+          "updatedAt": "2026-10-28T19:38:10Z",
+          "comments": []
         }
       ]
     },
