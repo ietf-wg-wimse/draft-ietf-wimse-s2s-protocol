@@ -148,9 +148,6 @@ To enable granular authentication between workloads, the following must be in pl
   either a DNS name or a Workload Identifier.
 
 Once these conditions are met, the methods described in this document can be used for the caller and callee to authenticate one another.
-At the transport layer, the client validates the server certificate against that expected identifier
-as described in "Server Name Validation" of {{?I-D.ietf-wimse-mutual-tls}}.
-At the application layer, the callee verifies the audience of the proof of possession ({{app-audience}}).
 
 # Conventions and Definitions
 
