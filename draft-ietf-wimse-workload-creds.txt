@@ -5,14 +5,14 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                              J. Salowey
-Expires: 26 April 2027                                Palo Alto Networks
+Expires: 2 May 2027                                   Palo Alto Networks
                                                       A. Schwenkschuster
                                                         Defakto Security
                                                               Y. Sheffer
                                                              Independent
                                                             Y. Rosomakho
                                                                  Zscaler
-                                                         23 October 2026
+                                                         29 October 2026
 
 
                        WIMSE Workload Credentials
@@ -67,7 +67,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 April 2027.
+   This Internet-Draft will expire on 2 May 2027.
 
 Copyright Notice
 
@@ -289,21 +289,23 @@ Table of Contents
    Trust anchors used to validate Workload Identity Certificates and
    Workload Identity Tokens are associated with a trust domain, as
    discussed in Section 3.1.1 of [I-D.ietf-wimse-arch].  Trust anchors
-   used to validate WICs and WITs are associated with a trust domain are
-   provisioned to consumers together with trust domain metadata for that
-   domain.  Trust anchors can be represented in different ways depending
-   on the deployment; for example, as a set of public keys (such as a
-   JWKS), as an X.509 certification authority used to validate
-   certificate chains, or as other deployment-specific material.
+   used to validate WICs and WITs are provisioned to consumers together
+   with trust domain metadata for that domain.  Trust anchors can be
+   represented in different ways depending on the deployment; for
+   example, as a set of public keys (such as a JWKS), as an X.509
+   certification authority used to validate certificate chains, or as
+   other deployment-specific material.
 
    This document does not define a mechanism for discovering trust
    anchor information.  Consumers MUST bind each trust domain to an
    authorized issuer (or set of issuers) and to the corresponding trust
    anchors.  That mapping MUST be distributed via a secure out-of-band
-   mechanism.  In particular, for a WIT the iss claim (the JWT issuer
-   claim [RFC7519], defined in Section 5.1) MUST NOT be used to look up
-   trust anchor material directly from information carried only in the
-   WIT (such as by fetching a JWKS from a URL found only in the WIT).
+   mechanism.  A credential MUST be validated only against the anchors
+   bound to the trust domain named in its Workload Identifier.  In
+   particular, for a WIT the iss claim (the JWT issuer claim [RFC7519],
+   defined in Section 5.1) MUST NOT be used to look up trust anchor
+   material directly from information carried only in the WIT (such as
+   by fetching a JWKS from a URL found only in the WIT).
 
    To validate a WIT, the receiving workload verifies the JWS signature
    using key material from the trust anchors configured for the trust
@@ -830,6 +832,16 @@ Table of Contents
    consideration applies when a Workload Identity Certificate is used at
    the transport layer.
 
+   Deprovisioning a workload instance or stopping credential issuance
+   does not invalidate its existing WITs or WICs.  If the corresponding
+   private key remains usable, these credentials can still support
+   authentication until expiry, including any permitted clock skew,
+   unless relying parties reject them earlier, for example through
+   revocation.  Credential lifetimes therefore affect the residual
+   exposure after deprovisioning or detection of compromise.  If
+   multiple instances use the same Workload Identifier, the identifier
+   alone cannot distinguish them for authorization or auditing.
+
 9.3.  Workload Identity Token and Proof of Possession
 
    The Workload Identity Token (WIT) is bound to a secret cryptographic
@@ -1085,9 +1097,9 @@ Table of Contents
    [I-D.ietf-wimse-mutual-tls]
               Salowey, J. A. and Y. Rosomakho, "Workload Authentication
               Using Mutual TLS", Work in Progress, Internet-Draft,
-              draft-ietf-wimse-mutual-tls-02, 6 July 2026,
+              draft-ietf-wimse-mutual-tls-03, 24 October 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
-              mutual-tls-02>.
+              mutual-tls-03>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
