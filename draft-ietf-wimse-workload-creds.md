@@ -449,6 +449,8 @@ Validating a peer's credential against the trust anchors for a trust domain esta
 
 Proof of possession does not mitigate this vulnerability. It shows that the peer holds the private key for the credential it presented ({{wit-pop}}), but it does not prove the identity iself. The same consideration applies when a Workload Identity Certificate is used at the transport layer.
 
+Deprovisioning a workload instance or stopping credential issuance does not invalidate its existing WITs or WICs. If the corresponding private key remains usable, these credentials can still support authentication until expiry, including any permitted clock skew, unless relying parties reject them earlier, for example through revocation. Credential lifetimes therefore affect the residual exposure after deprovisioning or detection of compromise. If multiple instances use the same Workload Identifier, the identifier alone cannot distinguish them for authorization or auditing.
+
 ## Workload Identity Token and Proof of Possession {#wit-pop}
 
 The Workload Identity Token (WIT) is bound to a secret cryptographic key and is always presented with a proof of possession (PoP) as described in {{to-wit}}. The WIT is a general purpose token that can be presented in multiple contexts. The WIT and its PoP are used for application-layer authentication; they are not used as the client or server credential for mutual TLS, which uses the Workload Identity Certificate ({{to-wic}}). The WIT MUST NOT be used as a bearer token. While this helps reduce the sensitivity of the token it is still possible that a token and its PoP may be captured and replayed within the PoP's lifetime. The following are some mitigations for the capture and reuse of the WIT and its PoP:
