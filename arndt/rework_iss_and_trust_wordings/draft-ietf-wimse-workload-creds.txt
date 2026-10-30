@@ -460,7 +460,7 @@ Table of Contents
           Figure 4: Example WIT claims, including an `iat` claim,
                      demonstrating WIT's extensibility
 
-   The example omits the RECOMMENDED iss claim; see Section 5.1 and
+   The example omits the recommended iss claim; see Section 5.1 and
    Section 5.1.2.
 
    The claims indicate that the example WIT:
