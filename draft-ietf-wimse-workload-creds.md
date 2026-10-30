@@ -581,7 +581,7 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 * Use the fully-specified `Ed25519` algorithm identifier in the examples instead of the deprecated `EdDSA` ({{?RFC9864}}).
 * Add a WIT validation procedure for recipients (#290, #294).
 * Clarify that WIT/PoP are application-layer credentials and are not used for mutual TLS; TLS binding does not change that (#256).
-* Clarify that the one-Workload-Identifier-per-credential rule restricts only Workload Identifiers, not other identifiers in the credential.
+* Simplify the one-Workload-Identifier-per-credential section (#395).
 * State the WIC revocation stance: short lifetimes like WITs; no CRL reliance (#270).
 * State the WIT revocation stance and resolve the conflicting `jti` description: the document does not rely on revocation, but deployments may operate a token status list or `jti` deny-list, in which case `jti` is required in every WIT (#269).
 * Editorial: consistent use of "proof of possession"/"PoP", with the abbreviation expanded on first use, and consistent capitalization of the defined term "Workload Identifier".
@@ -594,6 +594,11 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 * fix various editorial nits
 * Try to clarify always server and sometimes client authentication in the transport bullet of the Message Flow breakdown
 * Attempt some clarification of the Authentication Granularity section and reference RFC9525 for server certificate name validation
+* Allow HTTP 401 for WIT errors when a WWW-Authenticate mechanism exists (#402).
+* Validate credentials only against their trust domain's anchors (#370).
+* Simplify `iss` text; remove `iss`-based key distribution (#411).
+* Add exposure window after deprovisioning or compromise (#393).
+* Remove Identity Server, PEP and PDP from the architecture diagram (#303).
 
 
 ## draft-ietf-wimse-workload-creds-02
