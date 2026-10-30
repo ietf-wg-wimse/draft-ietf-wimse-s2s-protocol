@@ -53,6 +53,7 @@ normative:
   RFC7800:
   I-D.ietf-oauth-rfc8725bis:
   RFC9110:
+  RFC9525:
 
 informative:
   IANA.HTTP.FIELDS: IANA.http-fields
@@ -132,24 +133,15 @@ Depending on the protocol, the workload authentication may happen during step (1
 The Workload Identifier is a URI and its baseline syntax and processing requirements are defined in {{!WIMSE-ID=I-D.ietf-wimse-identifier}}.
 While deployments define how they assign identifiers and what the path portion means, implementations are expected to conform to the URI requirements outlined in {{Section 4.1 of WIMSE-ID}}.
 
-Prior to WIMSE, many containerized runtime platforms could not authenticate a peer as a specific workload;
-they could only establish that the peer belonged to a given trust domain.
-With mutual TLS (mTLS), for example, there is often no reliable way to map the external access name a client uses to reach a workload
-(such as a Kubernetes Ingress path, service name, or HTTP Host header field)
-to a SubjectAltName in the presented certificate (DNSName or URI).
-As a result, the client can verify that the server certificate is valid within a trust domain,
-but not that it belongs to the particular workload the client intended to reach.
-
-To enable granular authentication between workloads, the following must be in place:
+To enable granular authentication between workloads, i.e., authenticate a peer as a specific workload, the following must be in place:
 
 - Each workload must know its own identifier.
 - A callee must be able to verify that a request is intended for it.
-- A caller that authenticates the callee must know the identifier it expects the callee to present,
-  either a DNS name or a Workload Identifier.
+- A caller that authenticates the callee must know the identifier it expects the callee to present.
 
 Once these conditions are met, the methods described in this document can be used for the caller and callee to authenticate one another.
 At the transport layer, the client validates the server certificate against that expected identifier
-as described in "Server Name Validation" of {{?I-D.ietf-wimse-mutual-tls}}.
+as described in "Verifying Service Identity" of {{RFC9525}}.
 At the application layer, the callee verifies the audience of the proof of possession ({{app-audience}}).
 
 # Conventions and Definitions
@@ -608,6 +600,8 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 * Define `sub` a little more cleanly
 * fix various editorial nits
 * Try to clarify always server and sometimes client authentication in the transport bullet of the Message Flow breakdown
+* Attempt some clarification of the Authentication Granularity section and reference RFC9525 for server certificate name validation
+
 
 ## draft-ietf-wimse-workload-creds-02
 
