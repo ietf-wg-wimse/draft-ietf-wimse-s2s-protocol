@@ -295,11 +295,12 @@ Table of Contents
    certificate chains, or as other deployment-specific material.
 
    This document does not define a mechanism for discovering trust
-   anchor information.  Consumers MUST bind each trust domain to an
-   authorized issuer (or set of issuers) and to the corresponding trust
-   anchors.  That mapping MUST be distributed via a secure out-of-band
-   mechanism.  A credential MUST be validated only against the anchors
-   bound to the trust domain named in its Workload Identifier.
+   anchor information.  Consumers MUST associate each trust domain with
+   a known, preconfigured issuer (or set of issuers) and with the
+   corresponding trust anchors.  That mapping MUST be distributed via a
+   secure out-of-band mechanism.  A credential MUST be validated only
+   against the anchors bound to the trust domain named in its Workload
+   Identifier.
 
    To validate a WIT, the receiving workload verifies the JWS signature
    using key material from the trust anchors configured for the trust
