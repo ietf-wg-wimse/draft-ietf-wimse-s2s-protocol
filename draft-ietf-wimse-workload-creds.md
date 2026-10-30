@@ -160,10 +160,9 @@ All terminology in this document follows {{?I-D.ietf-wimse-arch}}.
 
 # Establishing Trust Anchors {#trust-anchors}
 
-Trust anchors used to validate Workload Identity Certificates and Workload Identity Tokens are associated with a trust domain, as discussed in {{Section 3.1.1 of I-D.ietf-wimse-arch}}.
-Trust anchors used to validate WICs and WITs are provisioned to consumers together with trust domain metadata for that domain. Trust anchors can be represented in different ways depending on the deployment; for example, as a set of public keys (such as a JWKS), as an X.509 certification authority used to validate certificate chains, or as other deployment-specific material.
+Trust anchors used to validate Workload Identity Certificates and Workload Identity Tokens are associated with a trust domain, as discussed in {{Section 3.1.1 of I-D.ietf-wimse-arch}}. They are provisioned to consumers together with trust domain metadata for that domain. Trust anchors can be represented in different ways depending on the deployment; for example, as a set of public keys (such as a JWKS), as an X.509 certification authority used to validate certificate chains, or as other deployment-specific material.
 
-This document does not define a mechanism for discovering trust anchor information. Consumers MUST bind each trust domain to an authorized issuer (or set of issuers) and to the corresponding trust anchors. That mapping MUST be distributed via a secure out-of-band mechanism. A credential MUST be validated only against the anchors bound to the trust domain named in its Workload Identifier. In particular, for a WIT the `iss` claim (the JWT issuer claim {{RFC7519}}, defined in {{to-wit}}) MUST NOT be used to look up trust anchor material directly from information carried only in the WIT (such as by fetching a JWKS from a URL found only in the WIT).
+This document does not define a mechanism for discovering trust anchor information. Consumers MUST associate each trust domain with a known, preconfigured issuer (or set of issuers) and with the corresponding trust anchors. That mapping MUST be distributed via a secure out-of-band mechanism. A credential MUST be validated only against the anchors bound to the trust domain named in its Workload Identifier.
 
 To validate a WIT, the receiving workload verifies the JWS signature using key material from the trust anchors configured for the trust domain in the `sub` claim. Trust anchor material for WIT validation MAY include more than one public key so that operators can rotate signing keys. In practice, the `alg` header parameter would identify an algorithm that the validator accepts for that trust domain, and the signature would be checked under a key drawn from the configured trust anchors. If the JWS header contains a `kid` parameter, the validator would use the key in the trust anchor material with the same `kid` value. If `kid` is absent, deployment policy would need to provide unambiguous key selection (for example, when only a single key is configured for that trust domain). Recipient processing of a presented WIT is specified in {{wit-validation}}.
 
@@ -191,7 +190,7 @@ A WIT MUST contain the following content, except where noted:
      (registered algorithm identifiers are listed in the IANA JOSE Algorithms registry {{IANA.JOSE.ALGS}}). The value `none` MUST NOT be used.
     * `typ`: the WIT is explicitly typed, as recommended in {{Section 3.11 of I-D.ietf-oauth-rfc8725bis}}, using the `wit+jwt` media type.
 * in the JWT claims:
-    * `iss`: The issuer of the token, which is the Identity Server, represented by a URI. The `iss` claim is RECOMMENDED but optional; when present, it is particularly useful for auditing and operations (for example, identifying which Identity Server issued the WIT in logs or compliance records). See {{wit-iss-note}} for key distribution and validation context.
+    * `iss`: The issuer of the token, which is the Identity Server, represented by a URI. The `iss` claim is RECOMMENDED but optional; See {{add-claims}} for details.
     * `sub`: The subject is the Workload Identifier as defined in {{WIMSE-ID}}, constrained to exactly one per credential ({{single-workload-identity}}).
     * `exp`: The expiration time of the token (as defined in {{Section 4.1.4 of RFC7519}}).
       WITs should be refreshed regularly, e.g., on the order of hours.
@@ -243,7 +242,7 @@ The decoded JWT claims of the WIT from the example above are shown here:
 ~~~
 {: title="Example WIT claims, including an `iat` claim, demonstrating WIT's extensibility"}
 
-The example omits the RECOMMENDED `iss` claim; see {{to-wit}} and {{wit-iss-note}}.
+The example omits the recommended `iss` claim; see {{to-wit}} and {{add-claims}}.
 
 The claims indicate that the example WIT:
 
@@ -316,11 +315,7 @@ This, however, could result in interoperability issues, which the following rule
 * A recipient that does not understand such claims MUST ignore them, as per Section 4 of {{RFC7519}}.
 * Outside of closed environments, new claims MUST be registered with IANA {{IANA.JWT.CLAIMS}} before they can be used.
 
-### A note on `iss` claim and key distribution {#wit-iss-note}
-
 It is RECOMMENDED that the WIT carries an `iss` claim for the auditing and operational uses described above. Validators are not required to use `iss` when validating the WIT or establishing the workload identity: the trust domain and workload identity are carried in the mandatory `sub` claim ({{WIMSE-ID}}).
-
-Implementations MAY include the `iss` claim in the form of a `https` URL to facilitate key distribution via mechanisms like the `jwks_uri` from {{!RFC8414}}, only when the issuer and verification keys (or metadata such as `jwks_uri`) are configured out of band as in {{trust-anchors}}. Alternative key distribution methods may use only the trust domain from the `sub` claim.
 
 ### Validating the WIT {#wit-validation}
 
@@ -439,15 +434,13 @@ wimsey
 
 ## Workload Identity
 
-Workload Identifiers ({{WIMSE-ID}}) are scoped to a trust domain (the URI authority component) and MUST be interpreted in that trust domain context. Using a Workload Identifier without taking into account the trust domain could allow one domain to issue tokens to spoof identities in another domain. See {{trust-anchors}} for binding trust domains to issuers and trust anchors.
-
-When a deployment uses the `iss` claim for key distribution as described in {{wit-iss-note}}, validators MUST enforce an allowlist of accepted issuers. Absent such a restriction, any entity could stand up an issuer, present a WIT with that issuer's `iss` value, and have it accepted by a validator that fetches and trusts the corresponding key material without verifying the issuer's legitimacy.
+Workload Identifiers ({{WIMSE-ID}}) are scoped to a trust domain (the URI authority component) and MUST be interpreted in that trust domain context. Using a Workload Identifier without taking into account the trust domain could allow one domain to issue tokens to spoof identities in another domain. Similarly, a validator that obtains key material from the credential itself, for example by resolving the `iss` claim of a WIT to a key set, would accept credentials from any entity able to operate an issuer. The pre-configured binding of trust domains to authorized issuers and trust anchors described in {{trust-anchors}} prevents both attacks.
 
 ## Trust Domain Membership and Peer Authentication {#trust-domain-membership}
 
 Validating a peer's credential against the trust anchors for a trust domain establishes that the peer belongs to that trust domain, but does not by itself establish which workload the peer represents. The additional identity comparison described in {{granular-auth}} is required to make that distinction. This affects both sides of a call, workloads acting as clients and workloads acting as servers.
 
-Proof of possession does not mitigate this vulnerability. It shows that the peer holds the private key for the credential it presented ({{wit-pop}}), but it does not prove the identity iself. The same consideration applies when a Workload Identity Certificate is used at the transport layer.
+Proof of possession does not mitigate this vulnerability. It shows that the peer holds the private key for the credential it presented ({{wit-pop}}), but it does not prove the identity itself. The same consideration applies when a Workload Identity Certificate is used at the transport layer.
 
 Deprovisioning a workload instance or stopping credential issuance does not invalidate its existing WITs or WICs. If the corresponding private key remains usable, these credentials can still support authentication until expiry, including any permitted clock skew, unless relying parties reject them earlier, for example through revocation. Credential lifetimes therefore affect the residual exposure after deprovisioning or detection of compromise. If multiple instances use the same Workload Identifier, the identifier alone cannot distinguish them for authorization or auditing.
 
