@@ -243,35 +243,23 @@ Table of Contents
    implementations are expected to conform to the URI requirements
    outlined in Section 4.1 of [WIMSE-ID].
 
-   Prior to WIMSE, many containerized runtime platforms could not
-   authenticate a peer as a specific workload; they could only establish
-   that the peer belonged to a given trust domain.  With mutual TLS
-   (mTLS), for example, there is often no reliable way to map the
-   external access name a client uses to reach a workload (such as a
-   Kubernetes Ingress path, service name, or HTTP Host header field) to
-   a SubjectAltName in the presented certificate (DNSName or URI).  As a
-   result, the client can verify that the server certificate is valid
-   within a trust domain, but not that it belongs to the particular
-   workload the client intended to reach.
-
-   To enable granular authentication between workloads, the following
-   must be in place:
+   To enable granular authentication between workloads, i.e.,
+   authenticate a peer as a specific workload, the following must be in
+   place:
 
    *  Each workload must know its own identifier.
 
    *  A callee must be able to verify that a request is intended for it.
 
    *  A caller that authenticates the callee must know the identifier it
-      expects the callee to present, either a DNS name or a Workload
-      Identifier.
+      expects the callee to present.
 
    Once these conditions are met, the methods described in this document
    can be used for the caller and callee to authenticate one another.
    At the transport layer, the client validates the server certificate
-   against that expected identifier as described in "Server Name
-   Validation" of [I-D.ietf-wimse-mutual-tls].  At the application
-   layer, the callee verifies the audience of the proof of possession
-   (Section 5.2).
+   against that expected identifier as described in "Verifying Service
+   Identity" of [RFC9525].  At the application layer, the callee
+   verifies the audience of the proof of possession (Section 5.2).
 
 2.  Conventions and Definitions
 
@@ -1126,6 +1114,10 @@ Table of Contents
               DOI 10.17487/RFC9110, June 2022,
               <https://www.rfc-editor.org/rfc/rfc9110>.
 
+   [RFC9525]  Saint-Andre, P. and R. Salz, "Service Identity in TLS",
+              RFC 9525, DOI 10.17487/RFC9525, November 2023,
+              <https://www.rfc-editor.org/rfc/rfc9525>.
+
    [WIMSE-ID] Rosomakho, Y. and J. A. Salowey, "Workload Identifier",
               Work in Progress, Internet-Draft, draft-ietf-wimse-
               identifier-04, 23 October 2026,
@@ -1264,6 +1256,10 @@ A.1.  draft-ietf-wimse-workload-creds-03
 
    *  Try to clarify always server and sometimes client authentication
       in the transport bullet of the Message Flow breakdown
+
+   *  Attempt some clarification of the Authentication Granularity
+      section and reference RFC9525 for server certificate name
+      validation
 
 A.2.  draft-ietf-wimse-workload-creds-02
 

@@ -1468,30 +1468,22 @@ This document focuses on the credentials that carry workload identity and bind t
         </h3>
 <p id="section-1.2-1">The Workload Identifier is a URI and its baseline syntax and processing requirements are defined in <span>[<a href="#WIMSE-ID" class="cite xref">WIMSE-ID</a>]</span>.
 While deployments define how they assign identifiers and what the path portion means, implementations are expected to conform to the URI requirements outlined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-identifier-04#section-4.1" class="relref">Section 4.1</a> of [<a href="#WIMSE-ID" class="cite xref">WIMSE-ID</a>]</span>.<a href="#section-1.2-1" class="pilcrow">¶</a></p>
-<p id="section-1.2-2">Prior to WIMSE, many containerized runtime platforms could not authenticate a peer as a specific workload;
-they could only establish that the peer belonged to a given trust domain.
-With mutual TLS (mTLS), for example, there is often no reliable way to map the external access name a client uses to reach a workload
-(such as a Kubernetes Ingress path, service name, or HTTP Host header field)
-to a SubjectAltName in the presented certificate (DNSName or URI).
-As a result, the client can verify that the server certificate is valid within a trust domain,
-but not that it belongs to the particular workload the client intended to reach.<a href="#section-1.2-2" class="pilcrow">¶</a></p>
-<p id="section-1.2-3">To enable granular authentication between workloads, the following must be in place:<a href="#section-1.2-3" class="pilcrow">¶</a></p>
+<p id="section-1.2-2">To enable granular authentication between workloads, i.e., authenticate a peer as a specific workload, the following must be in place:<a href="#section-1.2-2" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-1.2-4.1">
-            <p id="section-1.2-4.1.1">Each workload must know its own identifier.<a href="#section-1.2-4.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-1.2-3.1">
+            <p id="section-1.2-3.1.1">Each workload must know its own identifier.<a href="#section-1.2-3.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-1.2-4.2">
-            <p id="section-1.2-4.2.1">A callee must be able to verify that a request is intended for it.<a href="#section-1.2-4.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-1.2-3.2">
+            <p id="section-1.2-3.2.1">A callee must be able to verify that a request is intended for it.<a href="#section-1.2-3.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-1.2-4.3">
-            <p id="section-1.2-4.3.1">A caller that authenticates the callee must know the identifier it expects the callee to present,
-either a DNS name or a Workload Identifier.<a href="#section-1.2-4.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-1.2-3.3">
+            <p id="section-1.2-3.3.1">A caller that authenticates the callee must know the identifier it expects the callee to present.<a href="#section-1.2-3.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-1.2-5">Once these conditions are met, the methods described in this document can be used for the caller and callee to authenticate one another.
+<p id="section-1.2-4">Once these conditions are met, the methods described in this document can be used for the caller and callee to authenticate one another.
 At the transport layer, the client validates the server certificate against that expected identifier
-as described in "Server Name Validation" of <span>[<a href="#I-D.ietf-wimse-mutual-tls" class="cite xref">I-D.ietf-wimse-mutual-tls</a>]</span>.
-At the application layer, the callee verifies the audience of the proof of possession (<a href="#app-audience" class="auto internal xref">Section 5.2</a>).<a href="#section-1.2-5" class="pilcrow">¶</a></p>
+as described in "Verifying Service Identity" of <span>[<a href="#RFC9525" class="cite xref">RFC9525</a>]</span>.
+At the application layer, the callee verifies the audience of the proof of possession (<a href="#app-audience" class="auto internal xref">Section 5.2</a>).<a href="#section-1.2-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2272,6 +2264,10 @@ use these tokens to authenticate to each other.<a href="#section-11.1.1-9" class
         <dd>
 <span class="refAuthor">Fielding, R., Ed.</span>, <span class="refAuthor">Nottingham, M., Ed.</span>, and <span class="refAuthor">J. Reschke, Ed.</span>, <span class="refTitle">"HTTP Semantics"</span>, <span class="seriesInfo">STD 97</span>, <span class="seriesInfo">RFC 9110</span>, <span class="seriesInfo">DOI 10.17487/RFC9110</span>, <time datetime="2022-06" class="refDate">June 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9110">https://www.rfc-editor.org/rfc/rfc9110</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="RFC9525">[RFC9525]</dt>
+        <dd>
+<span class="refAuthor">Saint-Andre, P.</span> and <span class="refAuthor">R. Salz</span>, <span class="refTitle">"Service Identity in TLS"</span>, <span class="seriesInfo">RFC 9525</span>, <span class="seriesInfo">DOI 10.17487/RFC9525</span>, <time datetime="2023-11" class="refDate">November 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9525">https://www.rfc-editor.org/rfc/rfc9525</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="WIMSE-ID">[WIMSE-ID]</dt>
       <dd>
 <span class="refAuthor">Rosomakho, Y.</span> and <span class="refAuthor">J. A. Salowey</span>, <span class="refTitle">"Workload Identifier"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-identifier-04</span>, <time datetime="2026-10-23" class="refDate">23 October 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-identifier-04">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-identifier-04</a>&gt;</span>. </dd>
@@ -2400,6 +2396,9 @@ use these tokens to authenticate to each other.<a href="#section-11.1.1-9" class
 </li>
           <li class="normal" id="appendix-A.1-1.17">
             <p id="appendix-A.1-1.17.1">Try to clarify always server and sometimes client authentication in the transport bullet of the Message Flow breakdown<a href="#appendix-A.1-1.17.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.1-1.18">
+            <p id="appendix-A.1-1.18.1">Attempt some clarification of the Authentication Granularity section and reference RFC9525 for server certificate name validation<a href="#appendix-A.1-1.18.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
