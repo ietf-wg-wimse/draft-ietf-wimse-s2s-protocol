@@ -191,7 +191,7 @@ A WIT MUST contain the following content, except where noted:
      (registered algorithm identifiers are listed in the IANA JOSE Algorithms registry {{IANA.JOSE.ALGS}}). The value `none` MUST NOT be used.
     * `typ`: the WIT is explicitly typed, as recommended in {{Section 3.11 of I-D.ietf-oauth-rfc8725bis}}, using the `wit+jwt` media type.
 * in the JWT claims:
-    * `iss`: The issuer of the token, which is the Identity Server, represented by a URI. The `iss` claim is RECOMMENDED but optional; when present, it is particularly useful for auditing and operations (for example, identifying which Identity Server issued the WIT in logs or compliance records). See {{wit-iss-note}} for key distribution and validation context.
+    * `iss`: The issuer of the token, which is the Identity Server, represented by a URI. The `iss` claim is RECOMMENDED but optional; See {{add-claims}} for details.
     * `sub`: The subject is the Workload Identifier as defined in {{WIMSE-ID}}, constrained to exactly one per credential ({{single-workload-identity}}).
     * `exp`: The expiration time of the token (as defined in {{Section 4.1.4 of RFC7519}}).
       WITs should be refreshed regularly, e.g., on the order of hours.
@@ -243,7 +243,7 @@ The decoded JWT claims of the WIT from the example above are shown here:
 ~~~
 {: title="Example WIT claims, including an `iat` claim, demonstrating WIT's extensibility"}
 
-The example omits the RECOMMENDED `iss` claim; see {{to-wit}} and {{wit-iss-note}}.
+The example omits the RECOMMENDED `iss` claim; see {{to-wit}} and {{add-claims}}.
 
 The claims indicate that the example WIT:
 
