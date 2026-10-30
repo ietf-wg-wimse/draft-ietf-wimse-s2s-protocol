@@ -1053,7 +1053,7 @@ svg {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Campbell, et al.</td>
-<td class="center">Expires 2 May 2027</td>
+<td class="center">Expires 3 May 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1066,12 +1066,12 @@ svg {
 <dd class="internet-draft">draft-ietf-wimse-workload-creds-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-10-29" class="published">29 October 2026</time>
+<time datetime="2026-10-30" class="published">30 October 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2027-05-02">2 May 2027</time></dd>
+<dd class="expires"><time datetime="2027-05-03">3 May 2027</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1140,7 +1140,7 @@ multi-service, multi-cloud, multi-tenant deployments.<a href="#section-abstract-
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 2 May 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 3 May 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1202,10 +1202,7 @@ multi-service, multi-cloud, multi-tenant deployments.<a href="#section-abstract-
                     <p id="section-toc.1-1.5.2.1.2.2.1"><a href="#section-5.1.2" class="auto internal xref">5.1.2</a>.  <a href="#name-including-additional-claims" class="internal xref">Including Additional Claims</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1.2.3">
-                    <p id="section-toc.1-1.5.2.1.2.3.1"><a href="#section-5.1.3" class="auto internal xref">5.1.3</a>.  <a href="#name-a-note-on-iss-claim-and-key" class="internal xref">A note on <code>iss</code> claim and key distribution</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1.2.4">
-                    <p id="section-toc.1-1.5.2.1.2.4.1"><a href="#section-5.1.4" class="auto internal xref">5.1.4</a>.  <a href="#name-validating-the-wit" class="internal xref">Validating the WIT</a></p>
+                    <p id="section-toc.1-1.5.2.1.2.3.1"><a href="#section-5.1.3" class="auto internal xref">5.1.3</a>.  <a href="#name-validating-the-wit" class="internal xref">Validating the WIT</a></p>
 </li>
                 </ul>
 </li>
@@ -1516,10 +1513,9 @@ appear in all capitals, as shown here.<a href="#section-2-2" class="pilcrow">¶<
       <h2 id="name-establishing-trust-anchors">
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-establishing-trust-anchors" class="section-name selfRef">Establishing Trust Anchors</a>
       </h2>
-<p id="section-3-1">Trust anchors used to validate Workload Identity Certificates and Workload Identity Tokens are associated with a trust domain, as discussed in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-08#section-3.1.1" class="relref">Section 3.1.1</a> of [<a href="#I-D.ietf-wimse-arch" class="cite xref">I-D.ietf-wimse-arch</a>]</span>.
-Trust anchors used to validate WICs and WITs are provisioned to consumers together with trust domain metadata for that domain. Trust anchors can be represented in different ways depending on the deployment; for example, as a set of public keys (such as a JWKS), as an X.509 certification authority used to validate certificate chains, or as other deployment-specific material.<a href="#section-3-1" class="pilcrow">¶</a></p>
-<p id="section-3-2">This document does not define a mechanism for discovering trust anchor information. Consumers <span class="bcp14">MUST</span> bind each trust domain to an authorized issuer (or set of issuers) and to the corresponding trust anchors. That mapping <span class="bcp14">MUST</span> be distributed via a secure out-of-band mechanism. A credential <span class="bcp14">MUST</span> be validated only against the anchors bound to the trust domain named in its Workload Identifier. In particular, for a WIT the <code>iss</code> claim (the JWT issuer claim <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>, defined in <a href="#to-wit" class="auto internal xref">Section 5.1</a>) <span class="bcp14">MUST NOT</span> be used to look up trust anchor material directly from information carried only in the WIT (such as by fetching a JWKS from a URL found only in the WIT).<a href="#section-3-2" class="pilcrow">¶</a></p>
-<p id="section-3-3">To validate a WIT, the receiving workload verifies the JWS signature using key material from the trust anchors configured for the trust domain in the <code>sub</code> claim. Trust anchor material for WIT validation <span class="bcp14">MAY</span> include more than one public key so that operators can rotate signing keys. In practice, the <code>alg</code> header parameter would identify an algorithm that the validator accepts for that trust domain, and the signature would be checked under a key drawn from the configured trust anchors. If the JWS header contains a <code>kid</code> parameter, the validator would use the key in the trust anchor material with the same <code>kid</code> value. If <code>kid</code> is absent, deployment policy would need to provide unambiguous key selection (for example, when only a single key is configured for that trust domain). Recipient processing of a presented WIT is specified in <a href="#wit-validation" class="auto internal xref">Section 5.1.4</a>.<a href="#section-3-3" class="pilcrow">¶</a></p>
+<p id="section-3-1">Trust anchors used to validate Workload Identity Certificates and Workload Identity Tokens are associated with a trust domain, as discussed in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-08#section-3.1.1" class="relref">Section 3.1.1</a> of [<a href="#I-D.ietf-wimse-arch" class="cite xref">I-D.ietf-wimse-arch</a>]</span>. They are provisioned to consumers together with trust domain metadata for that domain. Trust anchors can be represented in different ways depending on the deployment; for example, as a set of public keys (such as a JWKS), as an X.509 certification authority used to validate certificate chains, or as other deployment-specific material.<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-3-2">This document does not define a mechanism for discovering trust anchor information. Consumers <span class="bcp14">MUST</span> associate each trust domain with a known, preconfigured issuer (or set of issuers) and with the corresponding trust anchors. That mapping <span class="bcp14">MUST</span> be distributed via a secure out-of-band mechanism. A credential <span class="bcp14">MUST</span> be validated only against the anchors bound to the trust domain named in its Workload Identifier.<a href="#section-3-2" class="pilcrow">¶</a></p>
+<p id="section-3-3">To validate a WIT, the receiving workload verifies the JWS signature using key material from the trust anchors configured for the trust domain in the <code>sub</code> claim. Trust anchor material for WIT validation <span class="bcp14">MAY</span> include more than one public key so that operators can rotate signing keys. In practice, the <code>alg</code> header parameter would identify an algorithm that the validator accepts for that trust domain, and the signature would be checked under a key drawn from the configured trust anchors. If the JWS header contains a <code>kid</code> parameter, the validator would use the key in the trust anchor material with the same <code>kid</code> value. If <code>kid</code> is absent, deployment policy would need to provide unambiguous key selection (for example, when only a single key is configured for that trust domain). Recipient processing of a presented WIT is specified in <a href="#wit-validation" class="auto internal xref">Section 5.1.3</a>.<a href="#section-3-3" class="pilcrow">¶</a></p>
 <p id="section-3-4">For Workload Identity Certificates, validators use the trust anchors for the peer's trust domain to validate the X.509 chain and the Workload Identifier in the certificate, as described in <a href="#to-wic" class="auto internal xref">Section 6.1</a> and in companion specifications such as <span>[<a href="#I-D.ietf-wimse-mutual-tls" class="cite xref">I-D.ietf-wimse-mutual-tls</a>]</span>.<a href="#section-3-4" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1563,7 +1559,7 @@ It is issued by the Identity Server and binds a public key to the workload ident
             <p id="section-5.1-3.2.1">in the JWT claims:<a href="#section-5.1-3.2.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.1-3.2.2.1">
-                <p id="section-5.1-3.2.2.1.1"><code>iss</code>: The issuer of the token, which is the Identity Server, represented by a URI. The <code>iss</code> claim is <span class="bcp14">RECOMMENDED</span> but optional; when present, it is particularly useful for auditing and operations (for example, identifying which Identity Server issued the WIT in logs or compliance records). See <a href="#wit-iss-note" class="auto internal xref">Section 5.1.3</a> for key distribution and validation context.<a href="#section-5.1-3.2.2.1.1" class="pilcrow">¶</a></p>
+                <p id="section-5.1-3.2.2.1.1"><code>iss</code>: The issuer of the token, which is the Identity Server, represented by a URI. The <code>iss</code> claim is <span class="bcp14">RECOMMENDED</span> but optional; See <a href="#add-claims" class="auto internal xref">Section 5.1.2</a> for details.<a href="#section-5.1-3.2.2.1.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-5.1-3.2.2.2">
                 <p id="section-5.1-3.2.2.2.1"><code>sub</code>: The subject is the Workload Identifier as defined in <span>[<a href="#WIMSE-ID" class="cite xref">WIMSE-ID</a>]</span>, constrained to exactly one per credential (<a href="#single-workload-identity" class="auto internal xref">Section 4</a>).<a href="#section-5.1-3.2.2.2.1" class="pilcrow">¶</a></p>
@@ -1652,7 +1648,7 @@ Zu5lPHei94TTvOvORJPT9jSVT-C6IIBattDbg
 <figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
 <a href="#name-example-wit-claims-includin" class="selfRef">Example WIT claims, including an `iat` claim, demonstrating WIT's extensibility</a>
           </figcaption></figure>
-<p id="section-5.1-11">The example omits the <span class="bcp14">RECOMMENDED</span> <code>iss</code> claim; see <a href="#to-wit" class="auto internal xref">Section 5.1</a> and <a href="#wit-iss-note" class="auto internal xref">Section 5.1.3</a>.<a href="#section-5.1-11" class="pilcrow">¶</a></p>
+<p id="section-5.1-11">The example omits the recommended <code>iss</code> claim; see <a href="#to-wit" class="auto internal xref">Section 5.1</a> and <a href="#add-claims" class="auto internal xref">Section 5.1.2</a>.<a href="#section-5.1-11" class="pilcrow">¶</a></p>
 <p id="section-5.1-12">The claims indicate that the example WIT:<a href="#section-5.1-12" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.1-13.1">
@@ -1772,44 +1768,36 @@ This, however, could result in interoperability issues, which the following rule
               <p id="section-5.1.2-2.4.1">Outside of closed environments, new claims <span class="bcp14">MUST</span> be registered with IANA <span>[<a href="#IANA.JWT.CLAIMS" class="cite xref">IANA.JWT.CLAIMS</a>]</span> before they can be used.<a href="#section-5.1.2-2.4.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
-</section>
-</div>
-<div id="wit-iss-note">
-<section id="section-5.1.3">
-          <h4 id="name-a-note-on-iss-claim-and-key">
-<a href="#section-5.1.3" class="section-number selfRef">5.1.3. </a><a href="#name-a-note-on-iss-claim-and-key" class="section-name selfRef">A note on <code>iss</code> claim and key distribution</a>
-          </h4>
-<p id="section-5.1.3-1">It is <span class="bcp14">RECOMMENDED</span> that the WIT carries an <code>iss</code> claim for the auditing and operational uses described above. Validators are not required to use <code>iss</code> when validating the WIT or establishing the workload identity: the trust domain and workload identity are carried in the mandatory <code>sub</code> claim (<span>[<a href="#WIMSE-ID" class="cite xref">WIMSE-ID</a>]</span>).<a href="#section-5.1.3-1" class="pilcrow">¶</a></p>
-<p id="section-5.1.3-2">Implementations <span class="bcp14">MAY</span> include the <code>iss</code> claim in the form of a <code>https</code> URL to facilitate key distribution via mechanisms like the <code>jwks_uri</code> from <span>[<a href="#RFC8414" class="cite xref">RFC8414</a>]</span>, only when the issuer and verification keys (or metadata such as <code>jwks_uri</code>) are configured out of band as in <a href="#trust-anchors" class="auto internal xref">Section 3</a>. Alternative key distribution methods may use only the trust domain from the <code>sub</code> claim.<a href="#section-5.1.3-2" class="pilcrow">¶</a></p>
+<p id="section-5.1.2-3">It is <span class="bcp14">RECOMMENDED</span> that the WIT carries an <code>iss</code> claim for the auditing and operational uses described above. Validators are not required to use <code>iss</code> when validating the WIT or establishing the workload identity: the trust domain and workload identity are carried in the mandatory <code>sub</code> claim (<span>[<a href="#WIMSE-ID" class="cite xref">WIMSE-ID</a>]</span>).<a href="#section-5.1.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="wit-validation">
-<section id="section-5.1.4">
+<section id="section-5.1.3">
           <h4 id="name-validating-the-wit">
-<a href="#section-5.1.4" class="section-number selfRef">5.1.4. </a><a href="#name-validating-the-wit" class="section-name selfRef">Validating the WIT</a>
+<a href="#section-5.1.3" class="section-number selfRef">5.1.3. </a><a href="#name-validating-the-wit" class="section-name selfRef">Validating the WIT</a>
           </h4>
-<p id="section-5.1.4-1">Verification of a WIT follows <span>[<a href="#RFC7515" class="cite xref">RFC7515</a>]</span> and the JWT best practices in <span>[<a href="#I-D.ietf-oauth-rfc8725bis" class="cite xref">I-D.ietf-oauth-rfc8725bis</a>]</span>, with the WIMSE-specific requirements below. To validate a WIT, the recipient <span class="bcp14">MUST</span> ensure the following:<a href="#section-5.1.4-1" class="pilcrow">¶</a></p>
+<p id="section-5.1.3-1">Verification of a WIT follows <span>[<a href="#RFC7515" class="cite xref">RFC7515</a>]</span> and the JWT best practices in <span>[<a href="#I-D.ietf-oauth-rfc8725bis" class="cite xref">I-D.ietf-oauth-rfc8725bis</a>]</span>, with the WIMSE-specific requirements below. To validate a WIT, the recipient <span class="bcp14">MUST</span> ensure the following:<a href="#section-5.1.3-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-5.1.4-2.1">
-              <p id="section-5.1.4-2.1.1">The token is a single well-formed JWT using JWS compact serialization (<span>[<a href="#RFC7515" class="cite xref">RFC7515</a>]</span>, <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>).<a href="#section-5.1.4-2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-5.1.3-2.1">
+              <p id="section-5.1.3-2.1.1">The token is a single well-formed JWT using JWS compact serialization (<span>[<a href="#RFC7515" class="cite xref">RFC7515</a>]</span>, <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>).<a href="#section-5.1.3-2.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-5.1.4-2.2">
-              <p id="section-5.1.4-2.2.1">The <code>sub</code> claim is present and is a single Workload Identifier (<span>[<a href="#WIMSE-ID" class="cite xref">WIMSE-ID</a>]</span>, <a href="#single-workload-identity" class="auto internal xref">Section 4</a>). The recipient uses the trust domain of that identifier to select the configured trust anchors (<a href="#trust-anchors" class="auto internal xref">Section 3</a>).<a href="#section-5.1.4-2.2.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="section-5.1.3-2.2">
+              <p id="section-5.1.3-2.2.1">The <code>sub</code> claim is present and is a single Workload Identifier (<span>[<a href="#WIMSE-ID" class="cite xref">WIMSE-ID</a>]</span>, <a href="#single-workload-identity" class="auto internal xref">Section 4</a>). The recipient uses the trust domain of that identifier to select the configured trust anchors (<a href="#trust-anchors" class="auto internal xref">Section 3</a>).<a href="#section-5.1.3-2.2.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-5.1.4-2.3">
-              <p id="section-5.1.4-2.3.1">The <code>typ</code> JOSE header parameter conveys a media type of <code>wit+jwt</code>.<a href="#section-5.1.4-2.3.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="section-5.1.3-2.3">
+              <p id="section-5.1.3-2.3.1">The <code>typ</code> JOSE header parameter conveys a media type of <code>wit+jwt</code>.<a href="#section-5.1.3-2.3.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-5.1.4-2.4">
-              <p id="section-5.1.4-2.4.1">The JWS signature is valid under those trust anchors, as described in <a href="#trust-anchors" class="auto internal xref">Section 3</a>.<a href="#section-5.1.4-2.4.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="section-5.1.3-2.4">
+              <p id="section-5.1.3-2.4.1">The JWS signature is valid under those trust anchors, as described in <a href="#trust-anchors" class="auto internal xref">Section 3</a>.<a href="#section-5.1.3-2.4.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-5.1.4-2.5">
-              <p id="section-5.1.4-2.5.1">The <code>cnf</code> claim is present and contains a <code>jwk</code> object with an <code>alg</code> member as specified in <a href="#to-wit" class="auto internal xref">Section 5.1</a>.<a href="#section-5.1.4-2.5.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="section-5.1.3-2.5">
+              <p id="section-5.1.3-2.5.1">The <code>cnf</code> claim is present and contains a <code>jwk</code> object with an <code>alg</code> member as specified in <a href="#to-wit" class="auto internal xref">Section 5.1</a>.<a href="#section-5.1.3-2.5.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-5.1.4-2.6">
-              <p id="section-5.1.4-2.6.1">Additional claims that are not understood are ignored, as specified in <a href="#add-claims" class="auto internal xref">Section 5.1.2</a>.<a href="#section-5.1.4-2.6.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="section-5.1.3-2.6">
+              <p id="section-5.1.3-2.6.1">Additional claims that are not understood are ignored, as specified in <a href="#add-claims" class="auto internal xref">Section 5.1.2</a>.<a href="#section-5.1.3-2.6.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
-<p id="section-5.1.4-3">See <a href="#wit-lifetime" class="auto internal xref">Section 9.3.1</a> for WIT lifetime considerations.<a href="#section-5.1.4-3" class="pilcrow">¶</a></p>
+<p id="section-5.1.3-3">See <a href="#wit-lifetime" class="auto internal xref">Section 9.3.1</a> for WIT lifetime considerations.<a href="#section-5.1.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2011,8 +1999,7 @@ See <a href="#granular-auth" class="auto internal xref">Section 1.2</a> on addit
         <h3 id="name-workload-identity">
 <a href="#section-9.1" class="section-number selfRef">9.1. </a><a href="#name-workload-identity" class="section-name selfRef">Workload Identity</a>
         </h3>
-<p id="section-9.1-1">Workload Identifiers (<span>[<a href="#WIMSE-ID" class="cite xref">WIMSE-ID</a>]</span>) are scoped to a trust domain (the URI authority component) and <span class="bcp14">MUST</span> be interpreted in that trust domain context. Using a Workload Identifier without taking into account the trust domain could allow one domain to issue tokens to spoof identities in another domain. See <a href="#trust-anchors" class="auto internal xref">Section 3</a> for binding trust domains to issuers and trust anchors.<a href="#section-9.1-1" class="pilcrow">¶</a></p>
-<p id="section-9.1-2">When a deployment uses the <code>iss</code> claim for key distribution as described in <a href="#wit-iss-note" class="auto internal xref">Section 5.1.3</a>, validators <span class="bcp14">MUST</span> enforce an allowlist of accepted issuers. Absent such a restriction, any entity could stand up an issuer, present a WIT with that issuer's <code>iss</code> value, and have it accepted by a validator that fetches and trusts the corresponding key material without verifying the issuer's legitimacy.<a href="#section-9.1-2" class="pilcrow">¶</a></p>
+<p id="section-9.1-1">Workload Identifiers (<span>[<a href="#WIMSE-ID" class="cite xref">WIMSE-ID</a>]</span>) are scoped to a trust domain (the URI authority component) and <span class="bcp14">MUST</span> be interpreted in that trust domain context. Using a Workload Identifier without taking into account the trust domain could allow one domain to issue tokens to spoof identities in another domain. Similarly, a validator that obtains key material from the credential itself, for example by resolving the <code>iss</code> claim of a WIT to a key set, would accept credentials from any entity able to operate an issuer. The pre-configured binding of trust domains to authorized issuers and trust anchors described in <a href="#trust-anchors" class="auto internal xref">Section 3</a> prevents both attacks.<a href="#section-9.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="trust-domain-membership">
@@ -2021,7 +2008,7 @@ See <a href="#granular-auth" class="auto internal xref">Section 1.2</a> on addit
 <a href="#section-9.2" class="section-number selfRef">9.2. </a><a href="#name-trust-domain-membership-and" class="section-name selfRef">Trust Domain Membership and Peer Authentication</a>
         </h3>
 <p id="section-9.2-1">Validating a peer's credential against the trust anchors for a trust domain establishes that the peer belongs to that trust domain, but does not by itself establish which workload the peer represents. The additional identity comparison described in <a href="#granular-auth" class="auto internal xref">Section 1.2</a> is required to make that distinction. This affects both sides of a call, workloads acting as clients and workloads acting as servers.<a href="#section-9.2-1" class="pilcrow">¶</a></p>
-<p id="section-9.2-2">Proof of possession does not mitigate this vulnerability. It shows that the peer holds the private key for the credential it presented (<a href="#wit-pop" class="auto internal xref">Section 9.3</a>), but it does not prove the identity iself. The same consideration applies when a Workload Identity Certificate is used at the transport layer.<a href="#section-9.2-2" class="pilcrow">¶</a></p>
+<p id="section-9.2-2">Proof of possession does not mitigate this vulnerability. It shows that the peer holds the private key for the credential it presented (<a href="#wit-pop" class="auto internal xref">Section 9.3</a>), but it does not prove the identity itself. The same consideration applies when a Workload Identity Certificate is used at the transport layer.<a href="#section-9.2-2" class="pilcrow">¶</a></p>
 <p id="section-9.2-3">Deprovisioning a workload instance or stopping credential issuance does not invalidate its existing WITs or WICs. If the corresponding private key remains usable, these credentials can still support authentication until expiry, including any permitted clock skew, unless relying parties reject them earlier, for example through revocation. Credential lifetimes therefore affect the residual exposure after deprovisioning or detection of compromise. If multiple instances use the same Workload Identifier, the identifier alone cannot distinguish them for authorization or auditing.<a href="#section-9.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -2280,10 +2267,6 @@ use these tokens to authenticate to each other.<a href="#section-11.1.1-9" class
 <dt id="RFC8174">[RFC8174]</dt>
         <dd>
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="RFC8414">[RFC8414]</dt>
-        <dd>
-<span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Sakimura, N.</span>, and <span class="refAuthor">J. Bradley</span>, <span class="refTitle">"OAuth 2.0 Authorization Server Metadata"</span>, <span class="seriesInfo">RFC 8414</span>, <span class="seriesInfo">DOI 10.17487/RFC8414</span>, <time datetime="2018-06" class="refDate">June 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8414">https://www.rfc-editor.org/rfc/rfc8414</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9110">[RFC9110]</dt>
         <dd>
