@@ -242,7 +242,7 @@ The decoded JWT claims of the WIT from the example above are shown here:
 ~~~
 {: title="Example WIT claims, including an `iat` claim, demonstrating WIT's extensibility"}
 
-The example omits the RECOMMENDED `iss` claim; see {{to-wit}} and {{add-claims}}.
+The example omits the recommended `iss` claim; see {{to-wit}} and {{add-claims}}.
 
 The claims indicate that the example WIT:
 
