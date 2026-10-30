@@ -2362,7 +2362,7 @@ use these tokens to authenticate to each other.<a href="#section-11.1.1-9" class
             <p id="appendix-A.1-1.5.1">Clarify that WIT/PoP are application-layer credentials and are not used for mutual TLS; TLS binding does not change that (#256).<a href="#appendix-A.1-1.5.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.6">
-            <p id="appendix-A.1-1.6.1">Clarify that the one-Workload-Identifier-per-credential rule restricts only Workload Identifiers, not other identifiers in the credential.<a href="#appendix-A.1-1.6.1" class="pilcrow">¶</a></p>
+            <p id="appendix-A.1-1.6.1">Simplify the one-Workload-Identifier-per-credential section (#395).<a href="#appendix-A.1-1.6.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-A.1-1.7">
             <p id="appendix-A.1-1.7.1">State the WIC revocation stance: short lifetimes like WITs; no CRL reliance (#270).<a href="#appendix-A.1-1.7.1" class="pilcrow">¶</a></p>
@@ -2399,6 +2399,21 @@ use these tokens to authenticate to each other.<a href="#section-11.1.1-9" class
 </li>
           <li class="normal" id="appendix-A.1-1.18">
             <p id="appendix-A.1-1.18.1">Attempt some clarification of the Authentication Granularity section and reference RFC9525 for server certificate name validation<a href="#appendix-A.1-1.18.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.1-1.19">
+            <p id="appendix-A.1-1.19.1">Allow HTTP 401 for WIT errors when a WWW-Authenticate mechanism exists (#402).<a href="#appendix-A.1-1.19.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.1-1.20">
+            <p id="appendix-A.1-1.20.1">Validate credentials only against their trust domain's anchors (#370).<a href="#appendix-A.1-1.20.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.1-1.21">
+            <p id="appendix-A.1-1.21.1">Simplify <code>iss</code> text; remove <code>iss</code>-based key distribution (#411).<a href="#appendix-A.1-1.21.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.1-1.22">
+            <p id="appendix-A.1-1.22.1">Add exposure window after deprovisioning or compromise (#393).<a href="#appendix-A.1-1.22.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-A.1-1.23">
+            <p id="appendix-A.1-1.23.1">Remove Identity Server, PEP and PDP from the architecture diagram (#303).<a href="#appendix-A.1-1.23.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>

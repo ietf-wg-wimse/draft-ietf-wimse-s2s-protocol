@@ -1216,9 +1216,8 @@ A.1.  draft-ietf-wimse-workload-creds-03
    *  Clarify that WIT/PoP are application-layer credentials and are not
       used for mutual TLS; TLS binding does not change that (#256).
 
-   *  Clarify that the one-Workload-Identifier-per-credential rule
-      restricts only Workload Identifiers, not other identifiers in the
-      credential.
+   *  Simplify the one-Workload-Identifier-per-credential section
+      (#395).
 
    *  State the WIC revocation stance: short lifetimes like WITs; no CRL
       reliance (#270).
@@ -1260,6 +1259,19 @@ A.1.  draft-ietf-wimse-workload-creds-03
    *  Attempt some clarification of the Authentication Granularity
       section and reference RFC9525 for server certificate name
       validation
+
+   *  Allow HTTP 401 for WIT errors when a WWW-Authenticate mechanism
+      exists (#402).
+
+   *  Validate credentials only against their trust domain's anchors
+      (#370).
+
+   *  Simplify iss text; remove iss-based key distribution (#411).
+
+   *  Add exposure window after deprovisioning or compromise (#393).
+
+   *  Remove Identity Server, PEP and PDP from the architecture diagram
+      (#303).
 
 A.2.  draft-ietf-wimse-workload-creds-02
 
