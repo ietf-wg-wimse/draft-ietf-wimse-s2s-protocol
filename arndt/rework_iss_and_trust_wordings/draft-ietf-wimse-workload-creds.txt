@@ -287,13 +287,12 @@ Table of Contents
 
    Trust anchors used to validate Workload Identity Certificates and
    Workload Identity Tokens are associated with a trust domain, as
-   discussed in Section 3.1.1 of [I-D.ietf-wimse-arch].  Trust anchors
-   used to validate WICs and WITs are provisioned to consumers together
-   with trust domain metadata for that domain.  Trust anchors can be
-   represented in different ways depending on the deployment; for
-   example, as a set of public keys (such as a JWKS), as an X.509
-   certification authority used to validate certificate chains, or as
-   other deployment-specific material.
+   discussed in Section 3.1.1 of [I-D.ietf-wimse-arch].  They are
+   provisioned to consumers together with trust domain metadata for that
+   domain.  Trust anchors can be represented in different ways depending
+   on the deployment; for example, as a set of public keys (such as a
+   JWKS), as an X.509 certification authority used to validate
+   certificate chains, or as other deployment-specific material.
 
    This document does not define a mechanism for discovering trust
    anchor information.  Consumers MUST bind each trust domain to an
@@ -790,15 +789,12 @@ Table of Contents
    URI authority component) and MUST be interpreted in that trust domain
    context.  Using a Workload Identifier without taking into account the
    trust domain could allow one domain to issue tokens to spoof
-   identities in another domain.  See Section 3 for binding trust
-   domains to issuers and trust anchors.
-
-   When a deployment uses the iss claim for key distribution validators
-   MUST enforce an allowlist of accepted issuers.  Absent such a
-   restriction, any entity could stand up an issuer, present a WIT with
-   that issuer's iss value, and have it accepted by a validator that
-   fetches and trusts the corresponding key material without verifying
-   the issuer's legitimacy.
+   identities in another domain.  Similarly, a validator that obtains
+   key material from the credential itself, for example by resolving the
+   iss claim of a WIT to a key set, would accept credentials from any
+   entity able to operate an issuer.  The pre-configured binding of
+   trust domains to authorized issuers and trust anchors described in
+   Section 3 prevents both attacks.
 
 9.2.  Trust Domain Membership and Peer Authentication
 
@@ -811,7 +807,7 @@ Table of Contents
 
    Proof of possession does not mitigate this vulnerability.  It shows
    that the peer holds the private key for the credential it presented
-   (Section 9.3), but it does not prove the identity iself.  The same
+   (Section 9.3), but it does not prove the identity itself.  The same
    consideration applies when a Workload Identity Certificate is used at
    the transport layer.
 
