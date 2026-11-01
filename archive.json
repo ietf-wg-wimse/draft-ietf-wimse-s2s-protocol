@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-10-29T04:28:08.487465+00:00",
+  "timestamp": "2026-11-01T04:30:06.493850+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -4714,7 +4714,7 @@
       "id": "I_kwDOLJmm788AAAABJCbVOA",
       "title": "Section 9.2 / 9.4: deprovisioning before expiry is not covered",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/268",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "n2ctech",
       "authorAssociation": "NONE",
       "assignees": [
@@ -4725,8 +4725,8 @@
       ],
       "body": "Section 9 models credential compromise but skips the routine case: a workload is deprovisioned, or flagged as compromised, while its WIT or WIC is still valid. Without a revocation mechanism the only issuer-side control is to stop issuing, so the exposure window equals the remaining credential lifetime. Section 9.2.1 treats lifetime only as a refresh-cost tradeoff. Nothing warns against reassigning a Workload Identifier while the old instance's credentials are still valid. And Section 9.4 forbids using keys once the credential is expired but says nothing about destroying key material at decommissioning. Keys outlive workloads in images, snapshots, and CI caches.\n\nSuggested fix: an end-of-life clause in 9.2 (stop issuing; treat max credential lifetime as the minimum post-deprovisioning exposure window; do not recycle identifiers within that window), plus one addition to 9.4: \"Private key material MUST be destroyed when the workload instance is decommissioned.\"\n\nRaised as item 1 in my WGLC review: https://mailarchive.ietf.org/arch/msg/wimse/S5Zjmr4qneFsAmepgRWhkWtFdPA/\n",
       "createdAt": "2026-07-16T11:23:22Z",
-      "updatedAt": "2026-07-28T14:39:41Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-29T13:41:30Z",
+      "closedAt": "2026-10-29T13:41:30Z",
       "comments": []
     },
     {
@@ -4845,7 +4845,7 @@
       "id": "I_kwDOLJmm788AAAABJGPUnQ",
       "title": "followup on Editorial fixes for workload-creds #267",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/272",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -4855,10 +4855,10 @@
       "labels": [
         "draft-ietf-wimse-workload-creds"
       ],
-      "body": "FWIW I tend to agree with Arndt here. \r\n\r\nThe first sentence \"Prior to WIMSE, many containerized runtime platforms could not authenticate a peer as a specific workload\" did seem rather strong but \"many\" was enough of a qualifier to make me unsure and not push back on it.\r\n\r\nI don't think I understand the other part either but it seemed to be text that was mostly their already so didn't seem like a good place to question it.\r\n\r\n_Originally posted by @bc-pi in https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/267#discussion_r3595285661_\r\n            ",
+      "body": "FWIW I tend to agree with Arndt here. \n\nThe first sentence \"Prior to WIMSE, many containerized runtime platforms could not authenticate a peer as a specific workload\" did seem rather strong but \"many\" was enough of a qualifier to make me unsure and not push back on it.\n\nI don't think I understand the other part either but it seemed to be text that was mostly there already so didn't seem like a good place to question it.\n\n_Originally posted by @bc-pi in https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/267#discussion_r3595285661_\n            ",
       "createdAt": "2026-07-16T19:52:56Z",
-      "updatedAt": "2026-10-14T20:16:50Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-30T16:18:55Z",
+      "closedAt": "2026-10-30T16:08:13Z",
       "comments": [
         {
           "author": "bc-pi",
@@ -6007,7 +6007,7 @@
       "id": "I_kwDOLJmm788AAAABVXGXRA",
       "title": "Multiple trust domains sharing or overlapping trust roots",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/370",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -6019,8 +6019,8 @@
       ],
       "body": "See https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/286/#discussion_r4195286865\n\n> Do we restrict a trust root to a single trust domain? there may be a small gap here in that if the same trust root is used for multiple trust domains you may not event understand what trust domain you have. This might be a small difference, but I think it happens in practice.",
       "createdAt": "2026-10-06T12:36:05Z",
-      "updatedAt": "2026-10-15T14:44:19Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-30T18:08:36Z",
+      "closedAt": "2026-10-30T18:08:36Z",
       "comments": [
         {
           "author": "arndt-s",
@@ -6049,6 +6049,13 @@
           "body": "What I think the resolution should is that an issuer can issue credentials for multiple trust domains and therefore an appear in multiple trust bundles.  The verifier will always need to take the trust domain from the WIMSE ID and verify that the issuer is in the trust bundle for that rust domain.  \nI guess the question is does this conflict with any of the text we already have?  \n",
           "createdAt": "2026-10-15T14:44:19Z",
           "updatedAt": "2026-10-15T14:44:19Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "with https://github.com/ietf-wg-wimse/draft-ietf-wimse-arch/issues/141 created and https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/403 merged, can this be closed?",
+          "createdAt": "2026-10-29T15:18:36Z",
+          "updatedAt": "2026-10-29T15:18:36Z"
         }
       ]
     },
@@ -6549,19 +6556,29 @@
       "id": "I_kwDOLJmm788AAAABW32gew",
       "title": "Am I the only one that thinks it's a little strange to have TLS \"Server Name Validation\", which, as far as I understand, is always a requirement, kinda burried in a third-level subsection of the \"**Mutual** TLS\" document?",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/394",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "arndt-s"
+      ],
       "labels": [
         "draft-ietf-wimse-workload-creds",
         "draft-ietf-wimse-mutual-tls"
       ],
       "body": "Am I the only one that thinks it's a little strange to have TLS \"Server Name Validation\", which, as far as I understand, is always a requirement, kinda burried in a third-level subsection of the \"**Mutual** TLS\" document?\n\n_Originally posted by @bc-pi in https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/246#discussion_r4258330076_\n\n<img width=\"917\" height=\"534\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/65a5db7b-4b22-48ee-82f7-7c17b4877d54\" />\n",
       "createdAt": "2026-10-13T12:01:55Z",
-      "updatedAt": "2026-10-13T15:05:10Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2026-10-30T16:08:14Z",
+      "closedAt": "2026-10-30T16:08:14Z",
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "On the Tuesday call, which only Joe and I were on and was very short, we thought moving the server name validation stuff into creds was appropriate.\n\nOn the Thursday call that had Arndt, Yaron, and myself, the leaning was to take wimse-esque server name validation out of creds. That's where #410 came from, although I don't think it is complete. ",
+          "createdAt": "2026-10-30T12:36:35Z",
+          "updatedAt": "2026-10-30T12:36:35Z"
+        }
+      ]
     },
     {
       "number": 396,
@@ -6586,17 +6603,19 @@
       "id": "I_kwDOLJmm788AAAABXp9-Fw",
       "title": "Almost contradicting text - we should improve",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/400",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "arndt-s"
+      ],
       "labels": [
         "draft-ietf-wimse-workload-creds"
       ],
       "body": "These 2 paragraphs are very easy to misread. I believe we should re-write 3 and also reference each other. \n\n3.\n\n> In particular, for a WIT the iss claim (the JWT issuer claim [[RFC7519](https://ietf-wg-wimse.github.io/draft-ietf-wimse-s2s-protocol/draft-ietf-wimse-workload-creds.html#RFC7519)], defined in [Section 5.1](https://ietf-wg-wimse.github.io/draft-ietf-wimse-s2s-protocol/draft-ietf-wimse-workload-creds.html#to-wit)) MUST NOT be used to look up trust anchor material directly from information carried only in the WIT (such as by fetching a JWKS from a URL found only in the WIT).\n\nvs\n\n5.1.3\n\n> Implementations MAY include the iss claim in the form of a https URL to facilitate key distribution via mechanisms like the jwks_uri from [[RFC8414](https://ietf-wg-wimse.github.io/draft-ietf-wimse-s2s-protocol/draft-ietf-wimse-workload-creds.html#RFC8414)], only when the issuer and verification keys (or metadata such as jwks_uri) are configured out of band as in [Section 3](https://ietf-wg-wimse.github.io/draft-ietf-wimse-s2s-protocol/draft-ietf-wimse-workload-creds.html#trust-anchors). Alternative key distribution methods may use only the trust domain from the sub claim.\n\nvs\n\n9.1\n\n> When a deployment uses the iss claim for key distribution as described in [Section 5.1.3](https://ietf-wg-wimse.github.io/draft-ietf-wimse-s2s-protocol/draft-ietf-wimse-workload-creds.html#wit-iss-note), validators MUST enforce an allowlist of accepted issuers. Absent such a restriction, any entity could stand up an issuer, present a WIT with that issuer's iss value, and have it accepted by a validator that fetches and trusts the corresponding key material without verifying the issuer's legitimacy.",
       "createdAt": "2026-10-16T10:22:44Z",
-      "updatedAt": "2026-10-16T11:30:16Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-30T13:35:13Z",
+      "closedAt": "2026-10-30T13:35:13Z",
       "comments": []
     },
     {
@@ -6627,6 +6646,24 @@
           "updatedAt": "2026-10-16T11:49:46Z"
         }
       ]
+    },
+    {
+      "number": 414,
+      "id": "I_kwDOLJmm788AAAABbbDhBw",
+      "title": "Reconsile Coexistence",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/414",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "https://mailarchive.ietf.org/arch/msg/wimse/AfyWh4twsBuHxFLfRlEbeSD2rPc/ \n\n\n[WIMSE] Re: I-D Action: draft-ietf-wimse-wpt-02.txt\n\nBrian Campbell <bcampbell@pingidentity.com> Sat, 31 October 2026 13:18 UTC[Show header](https://mailarchive.ietf.org/arch/msg/wimse/AfyWh4twsBuHxFLfRlEbeSD2rPc/#)\n\nI'm not sure, to be honest, Jeff. It looks to me like that section in creds\nyou point to has been a little neglected since the document split and\ndrifted somewhat. The section in WPT with the same name\nhttps://datatracker.ietf.org/doc/html/draft-ietf-wimse-wpt-02#name-coexistence-with-bearer-tok\nI think gives a more accurate/updated picture. The content in creds\nprobably needs to be better reconciled with that. At a minimum, for\nexample, the statement \"The WIT defines new HTTP headers\" as plural is\nwrong as that document only defines a single header.\n\nOn Fri, Oct 30, 2026 at 5:57\u202fPM Lombardo, Jeff <jeffsec=\n40amazon.com@dmarc.ietf.org> (aka @identitymonk ) wrote:\n\n> Hi WPT Authors,\n>\n> I am doubleclking on the comment of Flemming after reading the update to\n> WIMSE-Creds-03 which in Section 5.4 says\n>\n> *5.4.\n> <https://www.ietf.org/archive/id/draft-ietf-wimse-workload-creds-03.html#section-5.4>Coexistence\n> with JWT Bearer Tokens\n> <https://www.ietf.org/archive/id/draft-ietf-wimse-workload-creds-03.html#name-coexistence-with-jwt-bearer>*\n>\n> *The WIT defines new HTTP headers. It can therefore be presented along\n> with existing headers used for JWT bearer tokens. This property allows for\n> transition from mechanisms using identity tokens based on bearer JWTs to\n> proof-of-possession-based WITs. A workload may implement a policy that\n> accepts both bearer tokens and WITs during a transition period. This policy\n> may be configurable per-caller to allow the workload to reject bearer\n> tokens from callers that support WITs. Once a deployment fully supports\n> WITs, then the use of bearer tokens for identity can be disabled through\n> policy. Implementations should be careful when implementing such a\n> transition strategy, since the decision which token to prefer is made when\n> the caller's identity has still not been authenticated, and needs to be\n> revalidated following the authentication step.*\n>\n> *The WIT can also coexist with tokens used to establish security context,\n> such as transaction tokens [**I-D.ietf-oauth-transaction-tokens\n> <https://www.ietf.org/archive/id/draft-ietf-wimse-workload-creds-03.html#I-D.ietf-oauth-transaction-tokens>].\n> In this case a workload's authorization policy may take into account both\n> the sending workload's identity and the information in the context token.\n> For example, the identity in the WIT may be used to establish which API\n> calls can be made and information in the context token may be used to\n> determine which specific resources can be accessed.*\n>\n>\n>\n> Which does not prevent presentation of a WIT and Access Token. While the\n> section warms of the confusing risk it can trigger, it recognizes this can\n> happen.\n>\n> So now following both specs, I can do WIT + Access Token, but cannot use\n> the WPT to prove ownership of the key associated with the WIT. While I can\n> provide a DPoP proof if needed for the Access Token.\n>\n>\n>\n> Is my understanding correct?\n>\n>\n>\n> Jeff",
+      "createdAt": "2026-10-31T13:22:35Z",
+      "updatedAt": "2026-10-31T13:22:54Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -26108,7 +26145,7 @@
       "id": "PR_kwDOLJmm788AAAABIKDkKw",
       "title": "Added text on exposure window associated with deprovisioning or compromise",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/393",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -26117,17 +26154,19 @@
       ],
       "body": "Addresses https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/268",
       "createdAt": "2026-10-13T11:16:38Z",
-      "updatedAt": "2026-10-22T14:40:58Z",
+      "updatedAt": "2026-10-29T13:41:09Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "6e5e1ad11f42dc3157c76ee055b6ddeb1d088312",
       "headRepository": "yaroslavros/draft-ietf-wimse-s2s-protocol",
       "headRefName": "deprovisioning-expiry",
       "headRefOid": "914b6655356514ce69cc02cba25fa3881c03052e",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-10-29T13:41:09Z",
+      "mergedAt": "2026-10-29T13:41:08Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "07ccbd4d70ae5673818b5130f33ad3a512c9e6dd"
+      },
       "comments": [],
       "reviews": [
         {
@@ -26546,7 +26585,7 @@
       "id": "PR_kwDOLJmm788AAAABJjkHhQ",
       "title": "Creds: validate a credential only against its trust domain anchors (#370)",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/403",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -26555,17 +26594,19 @@
       ],
       "body": "## Summary\n- Repair the doubled \"are associated with a trust domain\" in the trust-anchor provisioning sentence.\n- Require a credential to be validated only against the anchors bound to the trust domain named in its Workload Identifier (#370).\n- Leave the relationship between issuers, trust anchors, and trust domains for the architecture draft.",
       "createdAt": "2026-10-20T13:10:50Z",
-      "updatedAt": "2026-10-28T19:38:10Z",
+      "updatedAt": "2026-10-29T13:40:59Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "6e5e1ad11f42dc3157c76ee055b6ddeb1d088312",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-370",
       "headRefOid": "cf82198b0e634f3703964ff831547129456a7763",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-10-29T13:40:58Z",
+      "mergedAt": "2026-10-29T13:40:58Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "b2bb57260ec259965e3071f8578576f24713f7c3"
+      },
       "comments": [
         {
           "author": "yaronf",
@@ -26807,6 +26848,19 @@
           "body": "",
           "createdAt": "2026-10-28T19:38:10Z",
           "updatedAt": "2026-10-28T19:38:10Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABU5_HbA",
+          "commit": {
+            "abbreviatedOid": "cf82198"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-10-29T12:50:31Z",
+          "updatedAt": "2026-10-29T12:50:31Z",
           "comments": []
         }
       ]
@@ -27148,6 +27202,394 @@
           "body": "",
           "createdAt": "2026-10-23T21:49:01Z",
           "updatedAt": "2026-10-23T21:49:01Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 410,
+      "id": "PR_kwDOLJmm788AAAABLkcQhg",
+      "title": "Remove transport and application layer examples from granular auth",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/410",
+      "state": "CLOSED",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "This could have caused confusion about using TLS server name authentication in combination with application layer auth as described in this document.\r\n\r\nResolves #394",
+      "createdAt": "2026-10-29T16:00:45Z",
+      "updatedAt": "2026-10-30T13:43:04Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "07ccbd4d70ae5673818b5130f33ad3a512c9e6dd",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "arndt/resolve-394",
+      "headRefOid": "b6af8171021b0a61c3707adcaf7b6920153d41e1",
+      "closedAt": "2026-10-30T13:43:03Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "#412 is better",
+          "createdAt": "2026-10-30T13:43:03Z",
+          "updatedAt": "2026-10-30T13:43:03Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABVHgW_g",
+          "commit": {
+            "abbreviatedOid": "b6af817"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-10-30T12:18:41Z",
+          "updatedAt": "2026-10-30T12:18:41Z",
+          "comments": [
+            {
+              "originalPosition": 1,
+              "body": "this \"either a DNS name or a Workload Identifier\" part is also talking about using a Workload Identifier in server auth",
+              "createdAt": "2026-10-30T12:18:41Z",
+              "updatedAt": "2026-10-30T12:18:41Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABVHhJ_w",
+          "commit": {
+            "abbreviatedOid": "b6af817"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-10-30T12:19:53Z",
+          "updatedAt": "2026-10-30T12:19:54Z",
+          "comments": [
+            {
+              "originalPosition": 1,
+              "body": "as is the entire paragraph above ",
+              "createdAt": "2026-10-30T12:19:54Z",
+              "updatedAt": "2026-10-30T12:19:54Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABVH4lJA",
+          "commit": {
+            "abbreviatedOid": "b6af817"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "I don't think this fully addresses the issue \n\nconsider #412 as an alternative ",
+          "createdAt": "2026-10-30T12:53:22Z",
+          "updatedAt": "2026-10-30T12:53:22Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 411,
+      "id": "PR_kwDOLJmm788AAAABLvXOOg",
+      "title": "Simplify iss wordings around trust establishment and key distribution",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/411",
+      "state": "MERGED",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "Resolves #400 ",
+      "createdAt": "2026-10-30T10:20:23Z",
+      "updatedAt": "2026-10-30T13:35:12Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "07ccbd4d70ae5673818b5130f33ad3a512c9e6dd",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "arndt/rework_iss_and_trust_wordings",
+      "headRefOid": "5191eaf74efe2350a8db85bd8495e8182d08739f",
+      "closedAt": "2026-10-30T13:35:12Z",
+      "mergedAt": "2026-10-30T13:35:12Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "e96e277caa7df29189d5d09f396d8544bc19d2a9"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABVGWiRQ",
+          "commit": {
+            "abbreviatedOid": "0f6643a"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-10-30T10:21:19Z",
+          "updatedAt": "2026-10-30T10:21:19Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "Reasoning: \nThe sentence about the WIT basically says the same thing as above: \"Consumers MUST bind each trust domain to an authorized issuer (or set of issuers)\".",
+              "createdAt": "2026-10-30T10:21:19Z",
+              "updatedAt": "2026-10-30T10:21:19Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABVGYgEA",
+          "commit": {
+            "abbreviatedOid": "540133b"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-10-30T10:24:31Z",
+          "updatedAt": "2026-10-30T10:24:32Z",
+          "comments": [
+            {
+              "originalPosition": 13,
+              "body": "Reasoning: This text here was a duplicate to the section it referenced.",
+              "createdAt": "2026-10-30T10:24:32Z",
+              "updatedAt": "2026-10-30T10:24:41Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABVGiysw",
+          "commit": {
+            "abbreviatedOid": "a59ea95"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-10-30T10:41:52Z",
+          "updatedAt": "2026-10-30T10:41:52Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "Reasoning: Both paragraph started with the same sentence\n\n\"Trust anchors used to validate Workload Identity Certificates and Workload Identity Tokens are\"\n\"Trust anchors used to validate WICs and WITs are\"",
+              "createdAt": "2026-10-30T10:41:52Z",
+              "updatedAt": "2026-10-30T10:41:52Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABVGkLCg",
+          "commit": {
+            "abbreviatedOid": "a59ea95"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-10-30T10:44:11Z",
+          "updatedAt": "2026-10-30T10:44:11Z",
+          "comments": [
+            {
+              "originalPosition": 39,
+              "body": "Reasoning: \nAbove we say that \"This document does not define a mechanism for discovering trust anchor information.\" so we should stick to it and not have opinions. The important aspect that is mentioned here that trust must be configured out of band is covered in \"Establishing Trust Anchors {#trust-anchors}\" and \"Workload Identity\"@Security Considerations. ",
+              "createdAt": "2026-10-30T10:44:11Z",
+              "updatedAt": "2026-10-30T10:44:11Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABVGlC_w",
+          "commit": {
+            "abbreviatedOid": "a59ea95"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-10-30T10:45:42Z",
+          "updatedAt": "2026-10-30T10:45:43Z",
+          "comments": [
+            {
+              "originalPosition": 50,
+              "body": "Reasoning: \nThis security consideration does not just apply to `iss` claim only but is generally applicable. So I folded these sentences together and just used `iss` as an example.",
+              "createdAt": "2026-10-30T10:45:43Z",
+              "updatedAt": "2026-10-30T10:45:43Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABVHPtjA",
+          "commit": {
+            "abbreviatedOid": "a59ea95"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-10-30T11:53:43Z",
+          "updatedAt": "2026-10-30T11:53:44Z",
+          "comments": [
+            {
+              "originalPosition": 27,
+              "body": "I realize it was there previously but meta-use of a rfc2119 keyword is awkward af \r\n```suggestion\r\nThe example omits the recommended `iss` claim; see {{to-wit}} and {{add-claims}}.\r\n```\r\n(obviously not an exhaustive list of awkward stuff but something a quick change could improve)",
+              "createdAt": "2026-10-30T11:53:44Z",
+              "updatedAt": "2026-10-30T11:58:13Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABVHjRcg",
+          "commit": {
+            "abbreviatedOid": "a59ea95"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "please consider the one minor suggestion at https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/411/changes#r4423320223",
+          "createdAt": "2026-10-30T12:23:31Z",
+          "updatedAt": "2026-10-30T12:23:31Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABVHmFmg",
+          "commit": {
+            "abbreviatedOid": "a59ea95"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2026-10-30T12:27:31Z",
+          "updatedAt": "2026-10-30T12:32:01Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "I think the \"consumers must bind\" sentence is much less clear than you think. \"Bind\" is a very vague notion. Here's an alternative:\n\n> WIT consumers MUST associate each trust domain with a known, preconfigured issuer (or set of issuers) and with the corresponding trust anchors.",
+              "createdAt": "2026-10-30T12:27:31Z",
+              "updatedAt": "2026-10-30T12:32:01Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABVIMb0g",
+          "commit": {
+            "abbreviatedOid": "5191eaf"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-10-30T13:21:41Z",
+          "updatedAt": "2026-10-30T13:21:41Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 412,
+      "id": "PR_kwDOLJmm788AAAABLxENfg",
+      "title": "clairify Authentication Granularity section with RFC9525 ref for server name validation",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/412",
+      "state": "MERGED",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "for issues #394 & #272 and instead of PR #410 ",
+      "createdAt": "2026-10-30T12:49:55Z",
+      "updatedAt": "2026-10-30T16:08:19Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "07ccbd4d70ae5673818b5130f33ad3a512c9e6dd",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "gauth",
+      "headRefOid": "9c2065363c2f3267249ab2bf4d534cde0cb27d85",
+      "closedAt": "2026-10-30T16:08:11Z",
+      "mergedAt": "2026-10-30T16:08:11Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "df52fdfd11b743ca19f34663a40039197014f5f9"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABVIc20w",
+          "commit": {
+            "abbreviatedOid": "9c20653"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "I like that much more",
+          "createdAt": "2026-10-30T13:42:39Z",
+          "updatedAt": "2026-10-30T13:42:39Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABVIhBow",
+          "commit": {
+            "abbreviatedOid": "9c20653"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-10-30T13:47:16Z",
+          "updatedAt": "2026-10-30T13:47:16Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 413,
+      "id": "PR_kwDOLJmm788AAAABL0TvWw",
+      "title": "Update changelog for -03",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/413",
+      "state": "MERGED",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "In preparation for creds -03 upload",
+      "createdAt": "2026-10-30T16:57:06Z",
+      "updatedAt": "2026-10-30T18:09:28Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "df52fdfd11b743ca19f34663a40039197014f5f9",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "arndt/prepare-03",
+      "headRefOid": "b886e26181a2f9cd37d83bdbcab3d238c1d2ad49",
+      "closedAt": "2026-10-30T18:09:21Z",
+      "mergedAt": "2026-10-30T18:09:20Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "9a3b143688392619cb1e5061c41b7134b16cd062"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABVLt5Xg",
+          "commit": {
+            "abbreviatedOid": "b886e26"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "trusting you on these ",
+          "createdAt": "2026-10-30T18:02:25Z",
+          "updatedAt": "2026-10-30T18:02:25Z",
           "comments": []
         }
       ]
