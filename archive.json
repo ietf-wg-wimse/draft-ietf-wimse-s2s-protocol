@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-11-01T04:30:06.493850+00:00",
+  "timestamp": "2026-11-03T05:26:23.787810+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -6019,7 +6019,7 @@
       ],
       "body": "See https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/286/#discussion_r4195286865\n\n> Do we restrict a trust root to a single trust domain? there may be a small gap here in that if the same trust root is used for multiple trust domains you may not event understand what trust domain you have. This might be a small difference, but I think it happens in practice.",
       "createdAt": "2026-10-06T12:36:05Z",
-      "updatedAt": "2026-10-30T18:08:36Z",
+      "updatedAt": "2026-11-02T20:32:58Z",
       "closedAt": "2026-10-30T18:08:36Z",
       "comments": [
         {
@@ -6056,6 +6056,13 @@
           "body": "with https://github.com/ietf-wg-wimse/draft-ietf-wimse-arch/issues/141 created and https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/403 merged, can this be closed?",
           "createdAt": "2026-10-29T15:18:36Z",
           "updatedAt": "2026-10-29T15:18:36Z"
+        },
+        {
+          "author": "trustanchoralliance-ctrl",
+          "authorAssociation": "NONE",
+          "body": "Before this closes: with the new \u00a73 rule in workload-creds -03 (\u201cvalidated only against the anchors bound to the trust domain named in its Workload Identifier\u201d), an anchor that appears in several trust-domain bundles no longer separates those domains by itself. Path building succeeds for either domain. What keeps one domain\u2019s issuer from issuing for another is a critical URI name constraint (RFC 5280 \u00a74.2.1.10) on each issuing CA, processed by full path validation (RFC 5937 if the issuing CA is pinned as the anchor).\n\nSuggest adding to \u00a73 and \u00a79.4, and to mutual-tls \u00a73.2/\u00a75.1: one anchor MAY be bound to several trust domains only where each domain is reached through an issuing CA whose critical URI name constraint covers that trust domain alone.\n\nFuller context, posted to the WIMSE list today: \u201cAIMS -01: upstream authorities for WICs (trust between trust domains).\u201d",
+          "createdAt": "2026-11-02T20:32:58Z",
+          "updatedAt": "2026-11-02T20:32:58Z"
         }
       ]
     },
