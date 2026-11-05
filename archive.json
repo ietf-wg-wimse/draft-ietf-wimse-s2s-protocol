@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-11-03T05:26:23.787810+00:00",
+  "timestamp": "2026-11-05T05:13:34.591208+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -6669,6 +6669,22 @@
       "body": "https://mailarchive.ietf.org/arch/msg/wimse/AfyWh4twsBuHxFLfRlEbeSD2rPc/ \n\n\n[WIMSE] Re: I-D Action: draft-ietf-wimse-wpt-02.txt\n\nBrian Campbell <bcampbell@pingidentity.com> Sat, 31 October 2026 13:18 UTC[Show header](https://mailarchive.ietf.org/arch/msg/wimse/AfyWh4twsBuHxFLfRlEbeSD2rPc/#)\n\nI'm not sure, to be honest, Jeff. It looks to me like that section in creds\nyou point to has been a little neglected since the document split and\ndrifted somewhat. The section in WPT with the same name\nhttps://datatracker.ietf.org/doc/html/draft-ietf-wimse-wpt-02#name-coexistence-with-bearer-tok\nI think gives a more accurate/updated picture. The content in creds\nprobably needs to be better reconciled with that. At a minimum, for\nexample, the statement \"The WIT defines new HTTP headers\" as plural is\nwrong as that document only defines a single header.\n\nOn Fri, Oct 30, 2026 at 5:57\u202fPM Lombardo, Jeff <jeffsec=\n40amazon.com@dmarc.ietf.org> (aka @identitymonk ) wrote:\n\n> Hi WPT Authors,\n>\n> I am doubleclking on the comment of Flemming after reading the update to\n> WIMSE-Creds-03 which in Section 5.4 says\n>\n> *5.4.\n> <https://www.ietf.org/archive/id/draft-ietf-wimse-workload-creds-03.html#section-5.4>Coexistence\n> with JWT Bearer Tokens\n> <https://www.ietf.org/archive/id/draft-ietf-wimse-workload-creds-03.html#name-coexistence-with-jwt-bearer>*\n>\n> *The WIT defines new HTTP headers. It can therefore be presented along\n> with existing headers used for JWT bearer tokens. This property allows for\n> transition from mechanisms using identity tokens based on bearer JWTs to\n> proof-of-possession-based WITs. A workload may implement a policy that\n> accepts both bearer tokens and WITs during a transition period. This policy\n> may be configurable per-caller to allow the workload to reject bearer\n> tokens from callers that support WITs. Once a deployment fully supports\n> WITs, then the use of bearer tokens for identity can be disabled through\n> policy. Implementations should be careful when implementing such a\n> transition strategy, since the decision which token to prefer is made when\n> the caller's identity has still not been authenticated, and needs to be\n> revalidated following the authentication step.*\n>\n> *The WIT can also coexist with tokens used to establish security context,\n> such as transaction tokens [**I-D.ietf-oauth-transaction-tokens\n> <https://www.ietf.org/archive/id/draft-ietf-wimse-workload-creds-03.html#I-D.ietf-oauth-transaction-tokens>].\n> In this case a workload's authorization policy may take into account both\n> the sending workload's identity and the information in the context token.\n> For example, the identity in the WIT may be used to establish which API\n> calls can be made and information in the context token may be used to\n> determine which specific resources can be accessed.*\n>\n>\n>\n> Which does not prevent presentation of a WIT and Access Token. While the\n> section warms of the confusing risk it can trigger, it recognizes this can\n> happen.\n>\n> So now following both specs, I can do WIT + Access Token, but cannot use\n> the WPT to prove ownership of the key associated with the WIT. While I can\n> provide a DPoP proof if needed for the Access Token.\n>\n>\n>\n> Is my understanding correct?\n>\n>\n>\n> Jeff",
       "createdAt": "2026-10-31T13:22:35Z",
       "updatedAt": "2026-10-31T13:22:54Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 416,
+      "id": "I_kwDOLJmm788AAAABcfoqYA",
+      "title": "Shared trust anchor across trust domains: require name-constrained issuing CAs",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/416",
+      "state": "OPEN",
+      "author": "trustanchoralliance-ctrl",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Related: #370 (trust domains sharing trust roots), wimse-arch #141 (definitions of issuer, trust anchor and trust domain)\n\nDrafts: workload-creds -03 \u00a73 and \u00a79.4; mutual-tls -03 \u00a73.2 and \u00a75.1\n\nProblem. workload-creds -03 \u00a73 requires that a credential be validated \u201conly against the anchors bound to the trust domain named in its Workload Identifier.\u201d #370 discusses an anchor that appears in the bundles of several trust domains. In that case the \u00a73 rule passes for every one of those domains, so it no longer separates them. Nothing in the certificate path stops one domain\u2019s issuer from issuing for another domain\u2019s names, and the \u00a79.4 rejection rule then depends on configuration alone.\n\nProposal. Add to workload-creds \u00a73 (with a pointer from \u00a79.4), and to mutual-tls \u00a73.2:\n\n\u201cA trust anchor MAY be bound to more than one trust domain only where each of those trust domains is reached through an issuing CA whose critical URI name constraint (RFC 5280, Section 4.2.1.10) permits only that trust domain.\u201d\n\nAnd to mutual-tls \u00a75.1 (security considerations):\n\n\u201cVerifiers validate the full certification path so that name and path length constraints are processed. A verifier that pins an issuing CA as its trust anchor MUST enforce that CA\u2019s constraints itself (RFC 5937).\u201d\n\nThis uses only existing X.509 mechanisms, with no new protocol. Testing of mainstream TLS libraries shows that a critical URI name constraint on an intermediate is either enforced or causes the chain to be rejected. None of the libraries tested accepted an identity outside the constraint. Where a library does not support the constraint, the chain is rejected rather than accepted. \n\nHappy to send a PR.\n\nList thread: \u201cAIMS -01: upstream authorities for WICs (trust between trust domains).\u201d",
+      "createdAt": "2026-11-04T16:45:29Z",
+      "updatedAt": "2026-11-04T16:45:29Z",
       "closedAt": null,
       "comments": []
     }
@@ -27600,6 +27616,32 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 415,
+      "id": "PR_kwDOLJmm788AAAABMgMPMA",
+      "title": "wpt: fix three spelling errors",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/415",
+      "state": "OPEN",
+      "author": "shlee1223",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Hi, thanks for the work on these drafts. While reading draft-ietf-wimse-wpt I noticed three spelling errors and fixed them.\n\n- \"Futhermore\" \u2192 \"Furthermore\" in the WPT validation rules\n- \"mechinism\" \u2192 \"mechanism\" in the Security Considerations\n- \"Clairify\" \u2192 \"Clarify\" in the changelog\n\nNo other changes.",
+      "createdAt": "2026-11-03T08:18:02Z",
+      "updatedAt": "2026-11-03T08:18:05Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "9a3b143688392619cb1e5061c41b7134b16cd062",
+      "headRepository": "shlee1223/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "fix/wpt-typos",
+      "headRefOid": "5dced440e7e88274fece2b8b9619a714368d11f0",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
