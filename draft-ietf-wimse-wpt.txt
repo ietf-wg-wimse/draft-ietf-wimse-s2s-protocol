@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                      A. Schwenkschuster
-Expires: 3 May 2027                                     Defakto Security
-                                                         30 October 2026
+Expires: 10 May 2027                                    Defakto Security
+                                                         6 November 2026
 
 
                        WIMSE Workload Proof Token
@@ -60,7 +60,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 3 May 2027.
+   This Internet-Draft will expire on 10 May 2027.
 
 Copyright Notice
 
@@ -335,7 +335,7 @@ Table of Contents
 
    *  The signature algorithm in the alg JOSE header string-equal
       matches the alg attribute of the jwk in the cnf claim of the WIT.
-      Futhermore, the alg value MUST be an acceptable digital signature
+      Furthermore, the alg value MUST be an acceptable digital signature
       algorithm according to the recipient's policy and MUST NOT be none
       or a symmetric key algorithm.
 
@@ -520,7 +520,7 @@ Table of Contents
 3.1.5.  Avoid Logging Raw WPT Values
 
    Implementations MUST NOT log raw WPTs by default.  Depending on the
-   aggressiveness of the replay protection mechinism, a WPT harvested
+   aggressiveness of the replay protection mechanism, a WPT harvested
    from logs could potentially be replayed and accepted as a legitimate
    proof.  Implementations should therefore treat WPT values as
    sensitive and avoid persisting them in logs.
@@ -683,9 +683,9 @@ Table of Contents
               Campbell, B., Salowey, J. A., Schwenkschuster, A.,
               Sheffer, Y., and Y. Rosomakho, "WIMSE Workload
               Credentials", Work in Progress, Internet-Draft, draft-
-              ietf-wimse-workload-creds-02, 2 July 2026,
+              ietf-wimse-workload-creds-03, 30 October 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
-              workload-creds-02>.
+              workload-creds-03>.
 
    [RFC5234]  Crocker, D., Ed. and P. Overell, "Augmented BNF for Syntax
               Specifications: ABNF", STD 68, RFC 5234,
@@ -815,7 +815,7 @@ A.2.  draft-ietf-wimse-wpt-02
 
 A.3.  draft-ietf-wimse-wpt-01
 
-   *  Clairify treatment of "jti" claim
+   *  Clarify treatment of "jti" claim
 
    *  Fix Example WPT Claims to match the example WPT
 
@@ -935,7 +935,7 @@ Acknowledgments
 
    Additional thanks to the WIMSE working group for the feedback and
    discussions that helped shape this specification, including, but not
-   limited to, Mahesh Kukreja.
+   limited to, Mahesh Kukreja and Su-hyeon Forten Lee.
 
 Authors' Addresses
 
