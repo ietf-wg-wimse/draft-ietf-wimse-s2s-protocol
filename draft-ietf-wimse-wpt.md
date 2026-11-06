@@ -478,4 +478,4 @@ The authors would like to thank Pieter Kasselman for his detailed comments.
 We thank Daniel Feldman for his contributions to earlier versions of this document.
 
 Additional thanks to the WIMSE working group for the feedback and discussions that helped shape this specification, including, but not limited to,
-Mahesh Kukreja.
+Mahesh Kukreja and Su-hyeon Forten Lee.
