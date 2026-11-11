@@ -2,11 +2,11 @@
 
 
 
-Workload Identity in Multi System Environments                 j Salowey
+Workload Identity in Multi System Environments                J. Salowey
 Internet-Draft                                        Palo Alto Networks
 Intended status: Standards Track                            Y. Rosomakho
-Expires: 15 April 2027                                           Zscaler
-                                                         12 October 2026
+Expires: 15 May 2027                                             Zscaler
+                                                        11 November 2026
 
 
                 Workload Authentication Using Mutual TLS
@@ -53,7 +53,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 15 April 2027.
+   This Internet-Draft will expire on 15 May 2027.
 
 Copyright Notice
 
@@ -137,7 +137,10 @@ Table of Contents
 3.  Using Mutual TLS for Workload-to-Workload Authentication
 
    As noted in the introduction, for many deployments, transport-level
-   protection of application traffic using TLS is ideal.
+   protection of application traffic using TLS is ideal.  This document
+   describes using WIMSE certificates to authenticate a TLS connection.
+   In the case of mutual TLS either the client or the server or both
+   client and server may present WIMSE certificates.
 
 3.1.  The Workload Identity Certificate
 
@@ -147,19 +150,19 @@ Table of Contents
 3.2.  Workload Identity Certificate Validation
 
    Workload Identity Certificates may be used to authenticate both the
-   server and client side of the connections.  When validating a
-   Workload Identity Certificate, the relying party MUST use a locally
-   configured mapping from trust domains to trust anchors, provisioned
-   as described in Section 3 of [WIMSE-CREDS].  The peer's certificate
-   MUST be rejected unless its certification path validates to a trust
-   anchor configured for the trust domain in its Workload Identifier.
-   The Workload Identifier MUST NOT be treated as authenticated until
-   this validation succeeds.  The relying party MUST perform
-   certification path validation in accordance with Section 6 of
-   [INET-X509-PROFILE].  Workloads acting as TLS clients and servers
-   MUST validate that the trust domain portion of the Workload Identity
-   Certificate matches the expected trust domain for the other side of
-   the connection.
+   server and client side of the connection.  When validating a Workload
+   Identity Certificate, the relying party MUST use a locally configured
+   mapping from trust domains to trust anchors, provisioned as described
+   in Section 3 of [WIMSE-CREDS].  The peer's certificate MUST be
+   rejected unless its certification path validates to a trust anchor
+   configured for the trust domain in its Workload Identifier.  The
+   Workload Identifier MUST NOT be treated as authenticated until this
+   validation succeeds.  The relying party MUST perform certification
+   path validation in accordance with Section 6 of [INET-X509-PROFILE].
+   Workloads acting as TLS clients or servers MUST validate that the
+   trust domain portion of the Workload Identifier in the Workload
+   Identity Certificate matches the expected trust domain for the other
+   side of the connection.
 
    Certificate revocation status MUST be determined as specified in
    Section 6.1.3 of [INET-X509-PROFILE].  The mechanism used to
@@ -189,20 +192,25 @@ Table of Contents
    hostname MUST perform standard TLS server identity validation as
    specified in Section 6.3 of [TLS-IDENTITY].
 
-   When DNS hostname validation is required, the client MUST reject the
-   connection if the server's certificate does not contain a matching
-   DNS-ID, even if Workload Identifier validation succeeds.
+   When connecting to a server based on its DNS hostname, the client
+   MUST reject the connection if the server's certificate does not
+   contain a matching DNS-ID, even if Workload Identifier validation
+   succeeds.
 
-   In deployments that use Workload Identity Certificates, successful
-   DNS hostname validation authenticates the server endpoint, while the
-   Workload Identifier provides an additional identity that can be used
-   for workload-specific authorization and policy decisions.
-
-   Some deployments may not use DNS names for server discovery.  In such
-   cases, the client MUST be configured with sufficient information to
-   determine the expected Workload Identifier of the server and MUST
-   validate the Workload Identifier in the server's certificate against
-   that expectation before accepting the connection.
+   A WIMSE client that expects to connect to a server with a WIMSE
+   certificate MUST validate that the WIMSE identifier of the server is
+   appropriate for the server it is attempting to connect.  Since the
+   structure of a WIMSE identifier is deployment specific the validation
+   is deployment specific, but the client MUST at least verify that the
+   trust domain of the WIMSE identifier matches the trust domain of the
+   server it intends to connect to.  Some deployments may require the
+   identification of servers by their WIMSE identifier.  In such cases,
+   the client MUST be configured with sufficient information to
+   determine the expected Workload Identifier of the server and the
+   client MUST validate the Workload Identifier in the server's
+   certificate against that expectation before accepting the connection.
+   The Workload Identifier can be used for additional workload-specific
+   authorization and policy decisions.
 
    Connecting directly to an IP address does not require an IP address
    subjectAltName when the client authenticates the server using its
@@ -213,10 +221,11 @@ Table of Contents
    reject the connection, even if Workload Identifier validation
    succeeds.
 
-   The host portion of the Workload Identifier is NOT treated as a
-   hostname as specified in Section 6.3 of [TLS-IDENTITY], but rather as
-   a trust domain.  The server identity is encoded in the path portion
-   of the Workload Identifier in a deployment-specific way.
+   The authority part of a URI that is a Workload Identifier is NOT
+   treated as a hostname as otherwise specified in Section 6.3 of
+   [TLS-IDENTITY], but rather as a trust domain as specified in
+   Section 4.3 of [WIMSE-ID].  The server identity is encoded in the
+   path portion of the Workload Identifier in a deployment-specific way.
 
    Validation of the workload identity may consist of an exact match of
    the trust domain and path, or may follow deployment-specific rules.
@@ -236,11 +245,12 @@ Table of Contents
    used in authorization, accounting and auditing.  For example, the
    full Workload Identifier may be matched against ACLs to authorize
    actions requested by the peer and the identifier may be included in
-   log messages to associate actions to the client workload for audit
+   log messages to associate actions with the client workload for audit
    purposes.  A deployment may specify other authorization policies
    based on the specific details of how the Workload Identifier is
    constructed.  The path portion of the Workload Identifier MUST always
-   be considered in the scope of the trust domain.
+   be considered in the scope of the trust domain of the Workload
+   Identifier.
 
    See Section 1.3 of [WIMSE-CREDS] for additional security implications
    of Workload Identifiers.
@@ -266,20 +276,20 @@ Table of Contents
    or other sub-components of a Workload Identifier without also
    considering the trust domain and the trust anchor used to validate
    the certificate.  Failure to bind the Workload Identifier to the
-   expected trust domain and configured trust anchor can allow one trust
-   domain to impersonate workloads from another domain.
+   proper trust domain and its configured trust anchor can allow one
+   trust domain to impersonate workloads from another domain.
 
-   When a server is identified by a DNS hostname, clients SHOULD
+   When a client identifies a server by a DNS hostname, clients MUST
    authenticate the server using standard TLS DNS hostname validation as
-   specified in [TLS-IDENTITY].  Workload identity validation
-   complements, rather than replaces, DNS-based server authentication by
-   providing an authenticated workload identity for authorization
-   decisions.  Only deployments that do not rely on DNS-based server
-   identification should authenticate the server solely using its
-   workload identity.  Accepting any certificate issued by a trusted
-   workload CA without validating that it represents the intended server
-   workload would allow mis-issued or otherwise valid certificates for
-   other workloads to be used for impersonation.
+   specified in [TLS-IDENTITY].  When a client expects to connect to a
+   server identified by a WIMSE identity then it MUST validate that the
+   WIMSE identifier of the server according to domain specific policy as
+   defined in Section 3.2.1.  Only deployments that do not rely on DNS-
+   based server identification should authenticate the server solely
+   using its workload identity.  Accepting any certificate issued by a
+   trusted workload CA without validating that it represents the
+   intended server workload would allow mis-issued or otherwise valid
+   certificates for other workloads to be used for impersonation.
 
    Client authentication is based on the Workload Identity Certificate
    presented by the TLS client.  A server performing mTLS authentication
@@ -325,8 +335,9 @@ Table of Contents
    certificate represents the peer workload, an intermediary, or another
    delegated entity.  Where end-to-end workload authentication context
    is required across such boundaries, deployments SHOULD use an
-   application-layer WIMSE authentication mechanism in addition to TLS-
-   layer server authentication.=======
+   application-layer WIMSE authentication mechanism, such as
+   [WIMSE-HTTPSIG] or [WIMSE-WPT], in addition to TLS-layer server
+   authentication.
 
 5.4.  Application-Layer Identity Assertions
 
@@ -380,15 +391,15 @@ Table of Contents
               Campbell, B., Salowey, J. A., Schwenkschuster, A.,
               Sheffer, Y., and Y. Rosomakho, "WIMSE Workload
               Credentials", Work in Progress, Internet-Draft, draft-
-              ietf-wimse-workload-creds-02, 2 July 2026,
+              ietf-wimse-workload-creds-03, 30 October 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
-              workload-creds-02>.
+              workload-creds-03>.
 
    [WIMSE-ID] Rosomakho, Y. and J. A. Salowey, "Workload Identifier",
               Work in Progress, Internet-Draft, draft-ietf-wimse-
-              identifier-03, 6 July 2026,
+              identifier-04, 23 October 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
-              identifier-03>.
+              identifier-04>.
 
 7.2.  Informative References
 
@@ -399,6 +410,20 @@ Table of Contents
               ietf-wimse-arch-08, 6 July 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
               arch-08>.
+
+   [WIMSE-HTTPSIG]
+              Salowey, J. A. and Y. Sheffer, "WIMSE Workload-to-Workload
+              Authentication with HTTP Signatures", Work in Progress,
+              Internet-Draft, draft-ietf-wimse-http-signature-08, 20
+              October 2026, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-wimse-http-signature-08>.
+
+   [WIMSE-WPT]
+              Campbell, B. and A. Schwenkschuster, "WIMSE Workload Proof
+              Token", Work in Progress, Internet-Draft, draft-ietf-
+              wimse-wpt-02, 27 August 2026,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
+              wpt-02>.
 
 Appendix A.  Document History
 
