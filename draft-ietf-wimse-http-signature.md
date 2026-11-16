@@ -100,7 +100,7 @@ The `@authority` derived component is not included: TLS-terminating proxies and 
 
 Exception for CONNECT ({{Section 9.3.6 of !RFC9110}}): the request target is in authority-form (`host:port`), so `@path` and `@query` are not meaningful.
 For a CONNECT request, senders MUST cover `@method` and `@authority` instead of `@path` and `@query`, and MUST NOT cover `@path` or `@query`.
-The `@authority` value is the host and port of the CONNECT target ({{Section 2.2.3 of RFC9421}}).
+The `@authority` value follows {{Section 2.2.3 of RFC9421}} (hostname lowercased; default port omitted) and can therefore differ from the CONNECT request target, which always includes the port.
 This exception is specific to CONNECT; this profile otherwise continues to omit `@authority`.
 
 In addition, the following request headers MUST be signed when they exist:
@@ -574,6 +574,7 @@ context where the request would be accepted as valid, and this mitigates the ris
 ## draft-ietf-wimse-http-signature-09
 
 * Allow a request to carry a server-generated `nonce` from `Accept-Signature` when that value meets the uniqueness and entropy requirements (#369).
+* Clarify that CONNECT `@authority` follows RFC 9421 default-port omission (#419).
 
 ## draft-ietf-wimse-http-signature-08
 
