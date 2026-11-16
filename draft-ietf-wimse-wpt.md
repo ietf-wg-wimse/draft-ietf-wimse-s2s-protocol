@@ -165,7 +165,7 @@ An example of an HTTP request with both the WIT and WPT from prior examples is s
 ~~~
 {: title="Example HTTP Request with WIT and WPT"}
 
-To validate the WPT in the request, the recipient MUST first validate the WIT as specified in {{Section 5.1.4 of I-D.ietf-wimse-workload-creds}}, then ensure the following:
+To validate the WPT in the request, the recipient MUST first validate the WIT as specified in {{Section 5.1.3 of I-D.ietf-wimse-workload-creds}}, then ensure the following:
 
 * There is exactly one `Authorization` header field in the request and it uses the `WPT` authentication scheme.
 * The credentials of the `WPT` authentication scheme are a single and well-formed JWT.
@@ -378,6 +378,8 @@ IANA is requested to register the following entry to the "Hypertext Transfer Pro
 <cref>RFC Editor: please remove before publication.</cref>
 
 ## draft-ietf-wimse-wpt-03
+
+* Point the WIT validation cross-reference at workload-creds Section 5.1.3 (#422).
 
 * Use the fully-specified `Ed25519` algorithm identifier in the examples instead of the deprecated `EdDSA` ({{?RFC9864}}).
 * Remove Workload Identity Key Management section, which seems more appropriate in ietf-wimse-workload-creds where it already is.

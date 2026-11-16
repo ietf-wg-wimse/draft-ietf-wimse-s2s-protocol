@@ -73,7 +73,7 @@ The second is based on the HTTP Message Signatures RFC {{!RFC9421}}, and it is d
 
 ## Deployment Architecture and Message Flow
 
-Refer to Sec. 1.2 of {{I-D.ietf-wimse-workload-creds}} for the deployment architecture which is common to both application-level approaches, as well as the transport-level one.
+Refer to {{Section 1.1 of I-D.ietf-wimse-workload-creds}} for the deployment architecture which is common to both application-level approaches, as well as the transport-level one.
 
 # Conventions and Definitions
 
@@ -165,7 +165,7 @@ Recipients MAY maintain a replay cache and SHOULD reject a message (request or r
 For clarity: the signature's lifetime (the `expires` signature parameter) is different and typically much shorter than the WIT's lifetime, denoted by its `exp` claim.
 Recipients MUST reject signatures that fall outside their validity time window.
 
-Implementers need to be aware that the WIT is extracted from the message before the message signature is validated. Recipients of signed HTTP messages MUST validate the WIT as specified in {{Section 5.1.4 of I-D.ietf-wimse-workload-creds}} before validating the HTTP message signature. They MUST ensure that the message is not processed further before it has been fully validated.
+Implementers need to be aware that the WIT is extracted from the message before the message signature is validated. Recipients of signed HTTP messages MUST validate the WIT as specified in {{Section 5.1.3 of I-D.ietf-wimse-workload-creds}} before validating the HTTP message signature. They MUST ensure that the message is not processed further before it has been fully validated.
 
 The WIT and the HTTP message signature MUST be sent over a server-authenticated TLS connection
 unless another channel provides confidentiality and server authentication comparable to TLS.
@@ -266,7 +266,7 @@ with the corresponding registered problem type ({{iana-problem-types}}),
 unless it knows that the peer does not accept problem details responses.
 
 If authentication of a signed request fails — including WIT validation
-({{Section 5.1.4 of I-D.ietf-wimse-workload-creds}}) or verification of the HTTP message signature —
+({{Section 5.1.3 of I-D.ietf-wimse-workload-creds}}) or verification of the HTTP message signature —
 for any reason such as an invalid signature, an expired validity time window, or a malformed data structure,
 the server MUST return 400 (Bad Request).
 The problem type for this error is
@@ -578,6 +578,7 @@ context where the request would be accepted as valid, and this mitigates the ris
 * Clarify that CONNECT `@authority` follows RFC 9421 default-port omission (#419).
 * Introduction: name HTTP in the opening sentence, and explain why application-layer signatures help across TLS hops (#417).
 * Note that example nonces are illustrative and below the entropy floor (#420).
+* Point WIT validation and deployment-architecture cross-references at the correct workload-creds sections (#422).
 
 ## draft-ietf-wimse-http-signature-08
 
