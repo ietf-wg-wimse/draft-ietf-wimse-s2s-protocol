@@ -1054,7 +1054,7 @@ svg {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Salowey &amp; Sheffer</td>
-<td class="center">Expires 10 May 2027</td>
+<td class="center">Expires 20 May 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1067,12 +1067,12 @@ svg {
 <dd class="internet-draft">draft-ietf-wimse-http-signature-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-11-06" class="published">6 November 2026</time>
+<time datetime="2026-11-16" class="published">16 November 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2027-05-10">10 May 2027</time></dd>
+<dd class="expires"><time datetime="2027-05-20">20 May 2027</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1133,7 +1133,7 @@ Authentication is based on the Workload Identity Token (WIT).<a href="#section-a
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 10 May 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 20 May 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1433,7 +1433,7 @@ following <span><a href="https://rfc-editor.org/rfc/rfc9421#section-2.2.5" class
 The <code>@authority</code> derived component is not included: TLS-terminating proxies and load balancers commonly rewrite the authority (see <span>[<a href="#I-D.ietf-wimse-arch" class="cite xref">I-D.ietf-wimse-arch</a>]</span> and <a href="#middleboxes" class="auto internal xref">Section 5.2</a>), so signing it would break those deployments. Recipient binding is carried instead by the mandatory <code>wimse-aud</code> signature parameter (<a href="#wimse-aud-param" class="auto internal xref">Section 3.2</a>).<a href="#section-3-4" class="pilcrow">¶</a></p>
 <p id="section-3-5">Exception for CONNECT (<span><a href="https://rfc-editor.org/rfc/rfc9110#section-9.3.6" class="relref">Section 9.3.6</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>): the request target is in authority-form (<code>host:port</code>), so <code>@path</code> and <code>@query</code> are not meaningful.
 For a CONNECT request, senders <span class="bcp14">MUST</span> cover <code>@method</code> and <code>@authority</code> instead of <code>@path</code> and <code>@query</code>, and <span class="bcp14">MUST NOT</span> cover <code>@path</code> or <code>@query</code>.
-The <code>@authority</code> value is the host and port of the CONNECT target (<span><a href="https://rfc-editor.org/rfc/rfc9421#section-2.2.3" class="relref">Section 2.2.3</a> of [<a href="#RFC9421" class="cite xref">RFC9421</a>]</span>).
+The <code>@authority</code> value follows <span><a href="https://rfc-editor.org/rfc/rfc9421#section-2.2.3" class="relref">Section 2.2.3</a> of [<a href="#RFC9421" class="cite xref">RFC9421</a>]</span> (hostname lowercased; default port omitted) and can therefore differ from the CONNECT request target, which always includes the port.
 This exception is specific to CONNECT; this profile otherwise continues to omit <code>@authority</code>.<a href="#section-3-5" class="pilcrow">¶</a></p>
 <p id="section-3-6">In addition, the following request headers <span class="bcp14">MUST</span> be signed when they exist:<a href="#section-3-6" class="pilcrow">¶</a></p>
 <ul class="normal">
@@ -2430,6 +2430,9 @@ context where the request would be accepted as valid, and this mitigates the ris
 <ul class="normal">
 <li class="normal" id="appendix-B.1-1.1">
             <p id="appendix-B.1-1.1.1">Allow a request to carry a server-generated <code>nonce</code> from <code>Accept-Signature</code> when that value meets the uniqueness and entropy requirements (#369).<a href="#appendix-B.1-1.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-B.1-1.2">
+            <p id="appendix-B.1-1.2.1">Clarify that CONNECT <code>@authority</code> follows RFC 9421 default-port omission (#419).<a href="#appendix-B.1-1.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
