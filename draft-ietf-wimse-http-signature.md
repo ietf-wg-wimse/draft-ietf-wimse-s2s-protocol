@@ -52,15 +52,15 @@ Authentication is based on the Workload Identity Token (WIT).
 
 # Introduction
 
-This document defines authentication and authorization in the context of interaction between two workloads.
+This document defines authentication and authorization between two HTTP-based workloads.
 This is the core component of the WIMSE architecture {{?I-D.ietf-wimse-arch}}.
-This document focuses on HTTP-based services,
-and the workload-to-workload call consists of a single HTTP request and its response.
+The workload-to-workload call consists of a single HTTP request and its response.
 
 One option to protect such traffic is through Mutual TLS (mTLS), and this usage is defined in {{?I-D.ietf-wimse-mutual-tls}}.
 Many deployments prefer application-layer approaches, whether for lack of Certification Authority (CA) infrastructure or because
-inter-service communication consists of multiple TLS hops. This document defines one such WIMSE
-approach for application-layer protection.
+inter-service communication crosses multiple TLS hops that each authenticate only one segment of the path.
+An HTTP message signature with a Workload Identity Token authenticates the caller end to end across those hops.
+This document defines one such WIMSE approach for application-layer protection.
 
 We define a profile of the HTTP Signatures protocol {{!RFC9421}} to protect the service traffic.
 Service authentication uses the Workload Identity Token (WIT) defined in {{!I-D.ietf-wimse-workload-creds}},
@@ -575,6 +575,7 @@ context where the request would be accepted as valid, and this mitigates the ris
 
 * Allow a request to carry a server-generated `nonce` from `Accept-Signature` when that value meets the uniqueness and entropy requirements (#369).
 * Clarify that CONNECT `@authority` follows RFC 9421 default-port omission (#419).
+* Introduction: name HTTP in the opening sentence, and explain why application-layer signatures help across TLS hops (#417).
 
 ## draft-ietf-wimse-http-signature-08
 
