@@ -298,6 +298,7 @@ The following non-normative examples illustrate this profile with two algorithms
 `Ed25519` ({{?RFC9864}}) for svcA/svcB, and `ES256` for svcC.
 
 The first exchange is svcA calling svcB; the second is svcB calling svcC.
+The `nonce` values in these examples are illustrative and do not meet the entropy requirement in {{http-sig-auth}}.
 
 ### Ed25519: svcA calling svcB
 
@@ -576,6 +577,7 @@ context where the request would be accepted as valid, and this mitigates the ris
 * Allow a request to carry a server-generated `nonce` from `Accept-Signature` when that value meets the uniqueness and entropy requirements (#369).
 * Clarify that CONNECT `@authority` follows RFC 9421 default-port omission (#419).
 * Introduction: name HTTP in the opening sentence, and explain why application-layer signatures help across TLS hops (#417).
+* Note that example nonces are illustrative and below the entropy floor (#420).
 
 ## draft-ietf-wimse-http-signature-08
 
