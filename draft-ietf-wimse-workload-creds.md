@@ -593,7 +593,7 @@ IANA is requested to register the following entries to the "Hypertext Transfer P
 * Move normative security and key-management requirements into the main body.
 * Add missing references, use consistent inline reference aliases, and update the TLS reference to RFC 9846.
 
-## draft-ietf-wimse-workload-creds-04
+## draft-ietf-wimse-workload-creds-03
 
 * Replace the access-path-to-identifier mapping API with conditions for caller and callee, and add a short subsection on the audience of application-layer proofs (#173, #175).
 * Added a section to describe the security considerations of granular authentication.
