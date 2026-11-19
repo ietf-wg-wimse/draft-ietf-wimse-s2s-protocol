@@ -73,7 +73,7 @@ The Workload Identity Token is targeted for application-layer protocols. The Wor
 
 The various protocol bindings that use these credentials to authenticate workloads to each other are specified in separate documents and are out of scope for this document. Each such binding defines how a workload proves possession of the key material bound to its credential in order to authenticate to another workload. At the time of writing, three such protocol bindings are defined:
 
-* Transport-layer authentication using mutual TLS with the Workload Identity Certificate, specified in {{!WIMSE-MTLS=I-D.ietf-wimse-mutual-tls}}.
+* Transport-layer authentication using mutual TLS with the Workload Identity Certificate, specified in {{?WIMSE-MTLS=I-D.ietf-wimse-mutual-tls}}.
 
 * Application-layer authentication using the Workload Identity Token in conjunction with a JWT-based proof of possession, the Workload Proof Token (WPT), specified in {{?WIMSE-WPT=I-D.ietf-wimse-wpt}}.
 
@@ -147,7 +147,7 @@ Consumers MUST associate each trust domain with a known, preconfigured issuer (o
 
 To validate a WIT, the receiving workload MUST verify the JWS signature using an algorithm accepted by its policy for the trust domain in the `sub` claim and a key from that domain's configured trust anchors. Trust anchor material for WIT validation MAY include more than one public key so that operators can rotate signing keys. The optional `kid` header parameter ({{Section 4.1.4 of !JWS=RFC7515}}) can guide selection of a key from those trust anchors; it does not establish trust in a key. Recipient processing of a presented WIT is specified in {{wit-validation}}.
 
-For Workload Identity Certificates, validators use the trust anchors for the peer's trust domain to validate the X.509 chain and the Workload Identifier in the certificate, as described in {{to-wic}} and in companion specifications such as {{WIMSE-MTLS}}.
+For Workload Identity Certificates, validators use the trust anchors for the peer's trust domain to validate the X.509 chain and the Workload Identifier in the certificate, as described in {{to-wic}}. Additional certificate validation requirements are defined by the protocol using the WIC; for example, {{Section 3.2 of WIMSE-MTLS}} defines these requirements for mutual TLS.
 
 # One Workload Identity per Credential {#single-workload-identity}
 
