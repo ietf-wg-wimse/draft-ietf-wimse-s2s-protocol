@@ -178,7 +178,7 @@ A WIT has the following header parameters and claims:
         * `jwk`: This member MUST be present within `cnf` and contain the public key of the workload as defined in {{Section 3.2 of !POP-JWT=RFC7800}}.
             * `alg`: This member MUST be present within `jwk` and identify the algorithm for the proof of possession.
 
-Both the JOSE header `alg` parameter and the `cnf.jwk.alg` member MUST identify asymmetric digital signature algorithms from the IANA JOSE Algorithms registry {{?IANA.JOSE.ALGS=IANA.jose_web-signature-encryption-algorithms}} established by {{!JWA=RFC7518}}. The presented proof MUST be produced with the algorithm specified in `cnf.jwk.alg`. To promote interoperability, the `ES256` signing algorithm SHOULD be supported by general purpose implementations of this document.
+Both the JOSE header `alg` parameter and the `cnf.jwk.alg` member MUST identify asymmetric digital signature algorithms from the IANA JOSE Algorithms registry {{?IANA.JOSE.ALGS=IANA.jose_web-signature-encryption-algorithms}} established by {{!JWA=RFC7518}}. The presented proof MUST be produced with the algorithm specified in `cnf.jwk.alg`. To promote interoperability, the `ES256` signing algorithm SHOULD be supported by general purpose implementations of this document unless local policy prevents use of this algorithm.
 
 WITs SHOULD be short-lived, typically on the order of hours; see {{wit-lifetime}} for lifetime considerations.
 
