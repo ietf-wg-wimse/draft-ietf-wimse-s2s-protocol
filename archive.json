@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-11-17T06:38:15.890774+00:00",
+  "timestamp": "2026-11-19T05:58:21.278200+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -27945,6 +27945,131 @@
       "mergeCommit": null,
       "comments": [],
       "reviews": []
+    },
+    {
+      "number": 424,
+      "id": "PR_kwDOLJmm788AAAABQMhmzQ",
+      "title": "Addressed Justin review",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/424",
+      "state": "OPEN",
+      "author": "yaroslavros",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Also improved references and changed ES256 to \"SHOULD\"",
+      "createdAt": "2026-11-18T18:32:59Z",
+      "updatedAt": "2026-11-19T01:28:09Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
+      "baseRefName": "main",
+      "baseRefOid": "1a2ad8c16daa9bddb64c935e81fe88dd67bfe786",
+      "headRepository": "yaroslavros/draft-ietf-wimse-s2s-protocol",
+      "headRefName": "main",
+      "headRefOid": "dfb439db64f8b1f69737ba31fca370823ec8a699",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABY4Iojg",
+          "commit": {
+            "abbreviatedOid": "20124ee"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2026-11-18T20:24:49Z",
+          "updatedAt": "2026-11-19T00:10:36Z",
+          "comments": [
+            {
+              "originalPosition": 53,
+              "body": "Agree with @bc-pi - informational.",
+              "createdAt": "2026-11-18T20:24:49Z",
+              "updatedAt": "2026-11-19T00:10:36Z"
+            },
+            {
+              "originalPosition": 168,
+              "body": "Why remove the MUST here? It's quite central to the draft.",
+              "createdAt": "2026-11-18T23:51:48Z",
+              "updatedAt": "2026-11-19T00:10:36Z"
+            },
+            {
+              "originalPosition": 195,
+              "body": "```suggestion\nBoth the JOSE header `alg` parameter and the `cnf.jwk.alg` member MUST identify asymmetric digital signature algorithms from the IANA JOSE Algorithms registry {{?IANA.JOSE.ALGS=IANA.jose_web-signature-encryption-algorithms}} established by {{!JWA=RFC7518}}. The presented proof MUST be produced with the algorithm specified in `cnf.jwk.alg`. To promote interoperability, the `ES256` signing algorithm SHOULD be supported by general purpose implementations of this document unless local policy prevents use of this algorithm.\n```",
+              "createdAt": "2026-11-18T23:59:04Z",
+              "updatedAt": "2026-11-19T00:10:36Z"
+            },
+            {
+              "originalPosition": 335,
+              "body": "Are we blocked on the WPT doc resolving this question?\n\nAt the very least, we need to massage this text so that it works with either decision we make in WPT.",
+              "createdAt": "2026-11-19T00:01:53Z",
+              "updatedAt": "2026-11-19T00:10:36Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABY7WQ8w",
+          "commit": {
+            "abbreviatedOid": "20124ee"
+          },
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-11-19T01:10:05Z",
+          "updatedAt": "2026-11-19T01:10:05Z",
+          "comments": [
+            {
+              "originalPosition": 53,
+              "body": "I believe it needs to be normative since spec delegates certificate validation rules to WIMSE-MTLS draft.\r\n\r\nThat is, later we say:\r\n\r\n> certificate validation requirements are defined in {{Section 3.2 of WIMSE-MTLS}}",
+              "createdAt": "2026-11-19T01:10:05Z",
+              "updatedAt": "2026-11-19T01:10:05Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABY7ZEfw",
+          "commit": {
+            "abbreviatedOid": "20124ee"
+          },
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-11-19T01:15:25Z",
+          "updatedAt": "2026-11-19T01:15:25Z",
+          "comments": [
+            {
+              "originalPosition": 168,
+              "body": "This addresses following Justin's comment\r\n\r\n> I feel like this would read more easily by having an explicit requirement on each point instead of \"MUST unless otherwise specified\" especially because there's a MUST NOT in the middle of a MUST claim (alg); recommend reformatting to put the requirement at the beginning or end of each definition, consistently, to make it easier for implementers to understand\r\n\r\nEach item below now has a relevant normative clause.",
+              "createdAt": "2026-11-19T01:15:25Z",
+              "updatedAt": "2026-11-19T01:15:25Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABY7fgGw",
+          "commit": {
+            "abbreviatedOid": "dfb439d"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-11-19T01:28:09Z",
+          "updatedAt": "2026-11-19T01:28:09Z",
+          "comments": [
+            {
+              "originalPosition": 53,
+              "body": "So maybe we need to say, \n\n> certificate validation requirements are defined by the protocol that uses the WIC, such as {{Section 3.2 of WIMSE-MTLS}}.",
+              "createdAt": "2026-11-19T01:28:09Z",
+              "updatedAt": "2026-11-19T01:28:09Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
