@@ -52,15 +52,15 @@ Authentication is based on the Workload Identity Token (WIT).
 
 # Introduction
 
-This document defines authentication and authorization in the context of interaction between two workloads.
+This document defines authentication and authorization between two HTTP-based workloads.
 This is the core component of the WIMSE architecture {{?I-D.ietf-wimse-arch}}.
-This document focuses on HTTP-based services,
-and the workload-to-workload call consists of a single HTTP request and its response.
+The workload-to-workload call consists of a single HTTP request and its response.
 
 One option to protect such traffic is through Mutual TLS (mTLS), and this usage is defined in {{?I-D.ietf-wimse-mutual-tls}}.
 Many deployments prefer application-layer approaches, whether for lack of Certification Authority (CA) infrastructure or because
-inter-service communication consists of multiple TLS hops. This document defines one such WIMSE
-approach for application-layer protection.
+inter-service communication crosses multiple TLS hops that each authenticate only one segment of the path.
+An HTTP message signature with a Workload Identity Token authenticates the caller end to end across those hops.
+This document defines one such WIMSE approach for application-layer protection.
 
 We define a profile of the HTTP Signatures protocol {{!RFC9421}} to protect the service traffic.
 Service authentication uses the Workload Identity Token (WIT) defined in {{!I-D.ietf-wimse-workload-creds}},
@@ -73,7 +73,7 @@ The second is based on the HTTP Message Signatures RFC {{!RFC9421}}, and it is d
 
 ## Deployment Architecture and Message Flow
 
-Refer to Sec. 1.2 of {{I-D.ietf-wimse-workload-creds}} for the deployment architecture which is common to both application-level approaches, as well as the transport-level one.
+Refer to {{Section 1.1 of I-D.ietf-wimse-workload-creds}} for the deployment architecture which is common to both application-level approaches, as well as the transport-level one.
 
 # Conventions and Definitions
 
@@ -165,7 +165,7 @@ Recipients MAY maintain a replay cache and SHOULD reject a message (request or r
 For clarity: the signature's lifetime (the `expires` signature parameter) is different and typically much shorter than the WIT's lifetime, denoted by its `exp` claim.
 Recipients MUST reject signatures that fall outside their validity time window.
 
-Implementers need to be aware that the WIT is extracted from the message before the message signature is validated. Recipients of signed HTTP messages MUST validate the WIT as specified in {{Section 5.1.4 of I-D.ietf-wimse-workload-creds}} before validating the HTTP message signature. They MUST ensure that the message is not processed further before it has been fully validated.
+Implementers need to be aware that the WIT is extracted from the message before the message signature is validated. Recipients of signed HTTP messages MUST validate the WIT as specified in {{Section 5.1.3 of I-D.ietf-wimse-workload-creds}} before validating the HTTP message signature. They MUST ensure that the message is not processed further before it has been fully validated.
 
 The WIT and the HTTP message signature MUST be sent over a server-authenticated TLS connection
 unless another channel provides confidentiality and server authentication comparable to TLS.
@@ -266,7 +266,7 @@ with the corresponding registered problem type ({{iana-problem-types}}),
 unless it knows that the peer does not accept problem details responses.
 
 If authentication of a signed request fails — including WIT validation
-({{Section 5.1.4 of I-D.ietf-wimse-workload-creds}}) or verification of the HTTP message signature —
+({{Section 5.1.3 of I-D.ietf-wimse-workload-creds}}) or verification of the HTTP message signature —
 for any reason such as an invalid signature, an expired validity time window, or a malformed data structure,
 the server MUST return 400 (Bad Request).
 The problem type for this error is
@@ -298,6 +298,7 @@ The following non-normative examples illustrate this profile with two algorithms
 `Ed25519` ({{?RFC9864}}) for svcA/svcB, and `ES256` for svcC.
 
 The first exchange is svcA calling svcB; the second is svcB calling svcC.
+The `nonce` values in these examples are illustrative and do not meet the entropy requirement in {{http-sig-auth}}.
 
 ### Ed25519: svcA calling svcB
 
@@ -575,6 +576,9 @@ context where the request would be accepted as valid, and this mitigates the ris
 
 * Allow a request to carry a server-generated `nonce` from `Accept-Signature` when that value meets the uniqueness and entropy requirements (#369).
 * Clarify that CONNECT `@authority` follows RFC 9421 default-port omission (#419).
+* Introduction: name HTTP in the opening sentence, and explain why application-layer signatures help across TLS hops (#417).
+* Note that example nonces are illustrative and below the entropy floor (#420).
+* Point WIT validation and deployment-architecture cross-references at the correct workload-creds sections (#422).
 
 ## draft-ietf-wimse-http-signature-08
 
