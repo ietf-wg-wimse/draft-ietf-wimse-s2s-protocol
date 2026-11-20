@@ -24,13 +24,13 @@ Authentication is based on the Workload Identity Token (WIT).
 <!-- Generator version information:
   xml2rfc 3.35.0
     Python 3.14.10
-    ConfigArgParse 1.9.0
+    ConfigArgParse 1.10.1
     google-i18n-address 3.1.1
     intervaltree 3.2.1
     Jinja2 3.1.6
     lxml 6.1.1
     natsort 8.4.0
-    platformdirs 4.14.3
+    platformdirs 4.14.7
     pycountry 24.6.1
     PyYAML 6.0.3
     requests 2.33.1
@@ -1054,7 +1054,7 @@ svg {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Salowey &amp; Sheffer</td>
-<td class="center">Expires 20 May 2027</td>
+<td class="center">Expires 24 May 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1067,12 +1067,12 @@ svg {
 <dd class="internet-draft">draft-ietf-wimse-http-signature-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-11-16" class="published">16 November 2026</time>
+<time datetime="2026-11-20" class="published">20 November 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2027-05-20">20 May 2027</time></dd>
+<dd class="expires"><time datetime="2027-05-24">24 May 2027</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1133,7 +1133,7 @@ Authentication is based on the Workload Identity Token (WIT).<a href="#section-a
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 20 May 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 24 May 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1370,14 +1370,14 @@ Authentication is based on the Workload Identity Token (WIT).<a href="#section-a
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">This document defines authentication and authorization in the context of interaction between two workloads.
+<p id="section-1-1">This document defines authentication and authorization between two HTTP-based workloads.
 This is the core component of the WIMSE architecture <span>[<a href="#I-D.ietf-wimse-arch" class="cite xref">I-D.ietf-wimse-arch</a>]</span>.
-This document focuses on HTTP-based services,
-and the workload-to-workload call consists of a single HTTP request and its response.<a href="#section-1-1" class="pilcrow">¶</a></p>
+The workload-to-workload call consists of a single HTTP request and its response.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">One option to protect such traffic is through Mutual TLS (mTLS), and this usage is defined in <span>[<a href="#I-D.ietf-wimse-mutual-tls" class="cite xref">I-D.ietf-wimse-mutual-tls</a>]</span>.
 Many deployments prefer application-layer approaches, whether for lack of Certification Authority (CA) infrastructure or because
-inter-service communication consists of multiple TLS hops. This document defines one such WIMSE
-approach for application-layer protection.<a href="#section-1-2" class="pilcrow">¶</a></p>
+inter-service communication crosses multiple TLS hops that each authenticate only one segment of the path.
+An HTTP message signature with a Workload Identity Token authenticates the caller end to end across those hops.
+This document defines one such WIMSE approach for application-layer protection.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <p id="section-1-3">We define a profile of the HTTP Signatures protocol <span>[<a href="#RFC9421" class="cite xref">RFC9421</a>]</span> to protect the service traffic.
 Service authentication uses the Workload Identity Token (WIT) defined in <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span>,
 and the signature uses the private key associated with the WIT and thus proves possession of that key.<a href="#section-1-3" class="pilcrow">¶</a></p>
@@ -1390,7 +1390,7 @@ The second is based on the HTTP Message Signatures RFC <span>[<a href="#RFC9421"
         <h3 id="name-deployment-architecture-and">
 <a href="#section-1.1" class="section-number selfRef">1.1. </a><a href="#name-deployment-architecture-and" class="section-name selfRef">Deployment Architecture and Message Flow</a>
         </h3>
-<p id="section-1.1-1">Refer to Sec. 1.2 of <span>[<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span> for the deployment architecture which is common to both application-level approaches, as well as the transport-level one.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
+<p id="section-1.1-1">Refer to <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-workload-creds-03#section-1.1" class="relref">Section 1.1</a> of [<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span> for the deployment architecture which is common to both application-level approaches, as well as the transport-level one.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1533,7 +1533,7 @@ On a request, the client <span class="bcp14">MAY</span> use a server-generated <
 <p id="section-3-24">Recipients <span class="bcp14">MAY</span> maintain a replay cache and <span class="bcp14">SHOULD</span> reject a message (request or response) whose <code>nonce</code> they have already seen. What nonces are remembered, and for how long, is a local policy matter; this document does not require replay caches to be shared across validators. Without such sharing, replay to a different cluster member can still succeed.<a href="#section-3-24" class="pilcrow">¶</a></p>
 <p id="section-3-25">For clarity: the signature's lifetime (the <code>expires</code> signature parameter) is different and typically much shorter than the WIT's lifetime, denoted by its <code>exp</code> claim.
 Recipients <span class="bcp14">MUST</span> reject signatures that fall outside their validity time window.<a href="#section-3-25" class="pilcrow">¶</a></p>
-<p id="section-3-26">Implementers need to be aware that the WIT is extracted from the message before the message signature is validated. Recipients of signed HTTP messages <span class="bcp14">MUST</span> validate the WIT as specified in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-workload-creds-03#section-5.1.4" class="relref">Section 5.1.4</a> of [<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span> before validating the HTTP message signature. They <span class="bcp14">MUST</span> ensure that the message is not processed further before it has been fully validated.<a href="#section-3-26" class="pilcrow">¶</a></p>
+<p id="section-3-26">Implementers need to be aware that the WIT is extracted from the message before the message signature is validated. Recipients of signed HTTP messages <span class="bcp14">MUST</span> validate the WIT as specified in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-workload-creds-03#section-5.1.3" class="relref">Section 5.1.3</a> of [<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span> before validating the HTTP message signature. They <span class="bcp14">MUST</span> ensure that the message is not processed further before it has been fully validated.<a href="#section-3-26" class="pilcrow">¶</a></p>
 <p id="section-3-27">The WIT and the HTTP message signature <span class="bcp14">MUST</span> be sent over a server-authenticated TLS connection
 unless another channel provides confidentiality and server authentication comparable to TLS.
 When TLS is used, the client <span class="bcp14">MUST</span> perform hostname validation according to <span><a href="https://rfc-editor.org/rfc/rfc9525#section-6.3" class="relref">Section 6.3</a> of [<a href="#RFC9525" class="cite xref">RFC9525</a>]</span>,
@@ -1646,7 +1646,7 @@ The party generating the error <span class="bcp14">SHOULD</span> include a probl
 with the corresponding registered problem type (<a href="#iana-problem-types" class="auto internal xref">Section 7.2</a>),
 unless it knows that the peer does not accept problem details responses.<a href="#section-3.6-1" class="pilcrow">¶</a></p>
 <p id="section-3.6-2">If authentication of a signed request fails — including WIT validation
-(<span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-workload-creds-03#section-5.1.4" class="relref">Section 5.1.4</a> of [<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span>) or verification of the HTTP message signature —
+(<span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-workload-creds-03#section-5.1.3" class="relref">Section 5.1.3</a> of [<a href="#I-D.ietf-wimse-workload-creds" class="cite xref">I-D.ietf-wimse-workload-creds</a>]</span>) or verification of the HTTP message signature —
 for any reason such as an invalid signature, an expired validity time window, or a malformed data structure,
 the server <span class="bcp14">MUST</span> return 400 (Bad Request).
 The problem type for this error is
@@ -1678,7 +1678,8 @@ the problem type for this error is
         </h3>
 <p id="section-3.7-1">The following non-normative examples illustrate this profile with two algorithms:
 <code>Ed25519</code> (<span>[<a href="#RFC9864" class="cite xref">RFC9864</a>]</span>) for svcA/svcB, and <code>ES256</code> for svcC.<a href="#section-3.7-1" class="pilcrow">¶</a></p>
-<p id="section-3.7-2">The first exchange is svcA calling svcB; the second is svcB calling svcC.<a href="#section-3.7-2" class="pilcrow">¶</a></p>
+<p id="section-3.7-2">The first exchange is svcA calling svcB; the second is svcB calling svcC.
+The <code>nonce</code> values in these examples are illustrative and do not meet the entropy requirement in <a href="#http-sig-auth" class="auto internal xref">Section 3</a>.<a href="#section-3.7-2" class="pilcrow">¶</a></p>
 <div id="ed25519-svca-calling-svcb">
 <section id="section-3.7.1">
           <h4 id="name-ed25519-svca-calling-svcb">
@@ -2279,7 +2280,7 @@ of <span>[<a href="#RFC9457" class="cite xref">RFC9457</a>]</span>.<a href="#sec
 <dd class="break"></dd>
 <dt id="I-D.ietf-wimse-arch">[I-D.ietf-wimse-arch]</dt>
         <dd>
-<span class="refAuthor">Salowey, J. A.</span>, <span class="refAuthor">Rosomakho, Y.</span>, and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"Workload Identity in a Multi System Environment (WIMSE) Architecture"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-arch-08</span>, <time datetime="2026-07-06" class="refDate">6 July 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-08">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-08</a>&gt;</span>. </dd>
+<span class="refAuthor">Salowey, J. A.</span>, <span class="refAuthor">Rosomakho, Y.</span>, and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"Workload Identity in a Multi System Environment (WIMSE) Architecture"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-arch-09</span>, <time datetime="2026-11-16" class="refDate">16 November 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-09">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-09</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-wimse-mutual-tls">[I-D.ietf-wimse-mutual-tls]</dt>
         <dd>
@@ -2433,6 +2434,15 @@ context where the request would be accepted as valid, and this mitigates the ris
 </li>
           <li class="normal" id="appendix-B.1-1.2">
             <p id="appendix-B.1-1.2.1">Clarify that CONNECT <code>@authority</code> follows RFC 9421 default-port omission (#419).<a href="#appendix-B.1-1.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-B.1-1.3">
+            <p id="appendix-B.1-1.3.1">Introduction: name HTTP in the opening sentence, and explain why application-layer signatures help across TLS hops (#417).<a href="#appendix-B.1-1.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-B.1-1.4">
+            <p id="appendix-B.1-1.4.1">Note that example nonces are illustrative and below the entropy floor (#420).<a href="#appendix-B.1-1.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-B.1-1.5">
+            <p id="appendix-B.1-1.5.1">Point WIT validation and deployment-architecture cross-references at the correct workload-creds sections (#422).<a href="#appendix-B.1-1.5.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>

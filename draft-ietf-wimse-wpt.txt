@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments               B. Campbell
 Internet-Draft                                             Ping Identity
 Intended status: Standards Track                      A. Schwenkschuster
-Expires: 20 May 2027                                    Defakto Security
-                                                        16 November 2026
+Expires: 24 May 2027                                    Defakto Security
+                                                        20 November 2026
 
 
                        WIMSE Workload Proof Token
@@ -60,7 +60,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 20 May 2027.
+   This Internet-Draft will expire on 24 May 2027.
 
 Copyright Notice
 
@@ -324,7 +324,7 @@ Table of Contents
               Figure 5: Example HTTP Request with WIT and WPT
 
    To validate the WPT in the request, the recipient MUST first validate
-   the WIT as specified in Section 5.1.4 of
+   the WIT as specified in Section 5.1.3 of
    [I-D.ietf-wimse-workload-creds], then ensure the following:
 
    *  There is exactly one Authorization header field in the request and
@@ -675,9 +675,9 @@ Table of Contents
               Salowey, J. A., Rosomakho, Y., and H. Tschofenig,
               "Workload Identity in a Multi System Environment (WIMSE)
               Architecture", Work in Progress, Internet-Draft, draft-
-              ietf-wimse-arch-08, 6 July 2026,
+              ietf-wimse-arch-09, 16 November 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
-              arch-08>.
+              arch-09>.
 
    [I-D.ietf-wimse-workload-creds]
               Campbell, B., Salowey, J. A., Schwenkschuster, A.,
@@ -778,6 +778,9 @@ Appendix A.  Document History
    // RFC Editor: please remove before publication.
 
 A.1.  draft-ietf-wimse-wpt-03
+
+   *  Point the WIT validation cross-reference at workload-creds
+      Section 5.1.3 (#422).
 
    *  Use the fully-specified Ed25519 algorithm identifier in the
       examples instead of the deprecated EdDSA ([RFC9864]).
