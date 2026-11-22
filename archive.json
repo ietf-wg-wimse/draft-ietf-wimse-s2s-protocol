@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-11-19T05:58:21.278200+00:00",
+  "timestamp": "2026-11-22T05:11:00.013248+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -6708,7 +6708,7 @@
       "id": "I_kwDOLJmm788AAAABc--7Fg",
       "title": "Kathleen's editorial comments: HTTP-Sig",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/417",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -6717,8 +6717,8 @@
       ],
       "body": "Introduction:\n\nIn the first sentence, I'd add HTTP so that it covers the full scope in one sentence. I do see the rest of the paragraph covers this, but with LLMs and people who don't read, having the full scope in one sentence could be increasingly important.\n\n\"This document defines authentication and authorization in the context\nof interaction between two HTTP service based workloads.\"\n\nThe next paragraph might be better to point out the object level authentication aspect of this approach rather than the reasons why TLS may not be appropriate (or both). While all of us can quickly draw the connection since we understand the protocol differences, a regular reader would have trouble.\n\nCurrent text:\nOne option to protect such traffic is through Mutual TLS (mTLS), and this usage is defined in [I-D.ietf-wimse-mutual-tls]. Many deployments prefer application-layer approaches, whether for lack of Certification Authority (CA) infrastructure or because inter-service communication consists of multiple TLS hops. This document defines one such WIMSE approach for application-layer protection.\n\nProposed text:\nOne option to protect such traffic is through Mutual TLS (mTLS), and this usage is defined in [I-D.ietf-wimse-mutual-tls]. Many deployments prefer application-layer approaches, whether for lack of Certification Authority (CA) infrastructure or because inter-service communication must remain consistent across the full transit path. TLS may involve multiple hops where sessions are terminated and restarted, such as at a proxy service or middlebox, and using the HTTP-signatures with a JWT enables use of a consistent identifier and credential without interruption. This document defines one such WIMSE approach for application-layer protection.\n\nFeel free to reword. From my experience teaching security, it's important to spell this out for most people.",
       "createdAt": "2026-11-06T09:19:03Z",
-      "updatedAt": "2026-11-06T09:21:05Z",
-      "closedAt": null,
+      "updatedAt": "2026-11-20T22:45:14Z",
+      "closedAt": "2026-11-20T22:45:14Z",
       "comments": [
         {
           "author": "yaronf",
@@ -6856,7 +6856,7 @@
       "id": "I_kwDOLJmm788AAAABdL1uEQ",
       "title": "HTTP-Sig examples: note that sample nonces are illustrative and below the entropy floor",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/420",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -6865,8 +6865,8 @@
       ],
       "body": "Raised by O-2 in #419.\n\nThe HTTP-Sig examples use short nonces such as `abcd1111` (8 hex characters). Section 3 requires a `nonce` to contain at least 64 bits of entropy. The examples are non-normative, but implementers may copy them.\n\nPreferred fix: an editorial note near the examples that the sample nonces are illustrative and do not meet the entropy minimum. Do not change the example-generator code solely for this.",
       "createdAt": "2026-11-07T01:12:13Z",
-      "updatedAt": "2026-11-07T01:12:13Z",
-      "closedAt": null,
+      "updatedAt": "2026-11-20T22:45:15Z",
+      "closedAt": "2026-11-20T22:45:15Z",
       "comments": []
     },
     {
@@ -6879,14 +6879,21 @@
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [
-        "draft-ietf-wimse-http-signature",
         "draft-ietf-wimse-wpt"
       ],
       "body": "workload-creds-03 put WIT validation in Section 5.1.3 (\"Validating the WIT\"). There is no 5.1.4 in -03, but the other two drafts on main still cite it:\n\n- `draft-ietf-wimse-http-signature.md` line 168: \"MUST validate the WIT as specified in {{Section 5.1.4 of I-D.ietf-wimse-workload-creds}}\"\n- `draft-ietf-wimse-http-signature.md` line 269: \"({{Section 5.1.4 of I-D.ietf-wimse-workload-creds}})\"\n- `draft-ietf-wimse-wpt.md` line 168: \"MUST first validate the WIT as specified in {{Section 5.1.4 of I-D.ietf-wimse-workload-creds}}\"\n\nRelated: `draft-ietf-wimse-http-signature.md` line 76 says \"Refer to Sec. 1.2 of {{I-D.ietf-wimse-workload-creds}} for the deployment architecture\". In -03 that is Section 1.1; 1.2 is now \"Workload Identifiers and Authentication Granularity\".\n\nAll four look like they should be 5.1.3 and 1.1. Since the validation step is normative (MUST) in both drafts, it would be good to fix before http-signature goes further in IESG review.",
       "createdAt": "2026-11-14T22:41:34Z",
-      "updatedAt": "2026-11-16T19:01:55Z",
+      "updatedAt": "2026-11-20T22:46:31Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Closed for HTTP-sig, not for WPT.",
+          "createdAt": "2026-11-20T22:46:15Z",
+          "updatedAt": "2026-11-20T22:46:15Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -27923,7 +27930,7 @@
       "id": "PR_kwDOLJmm788AAAABPoVY-g",
       "title": "HTTP-Sig editorial fixes (#417, #420, #422)",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/423",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaronf",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -27932,19 +27939,35 @@
       ],
       "body": "## Summary\n- Introduction: name HTTP in the opening sentence and explain application-layer signatures across TLS hops.\n- Note that example nonces are illustrative and below the entropy floor.\n- Point WIT validation and deployment-architecture cross-references at the correct workload-creds sections in HTTP-Sig and WPT.\n\nFixes #417\nFixes #420\nFixes #422",
       "createdAt": "2026-11-16T19:47:11Z",
-      "updatedAt": "2026-11-16T19:48:35Z",
+      "updatedAt": "2026-11-20T22:45:13Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "1a2ad8c16daa9bddb64c935e81fe88dd67bfe786",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "headRefName": "ys-417",
       "headRefOid": "b5709f50d1622d28db6e442b1615c4c008e59bab",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-11-20T22:45:12Z",
+      "mergedAt": "2026-11-20T22:45:12Z",
+      "mergedBy": "yaronf",
+      "mergeCommit": {
+        "oid": "ae2acf10cc5523dbe66fc9369dac8c1fb8da1534"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOLJmm788AAAABZaF75Q",
+          "commit": {
+            "abbreviatedOid": "b5709f5"
+          },
+          "author": "jsalowey",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-11-20T22:09:52Z",
+          "updatedAt": "2026-11-20T22:09:52Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 424,
@@ -27958,18 +27981,26 @@
       "labels": [],
       "body": "Also improved references and changed ES256 to \"SHOULD\"",
       "createdAt": "2026-11-18T18:32:59Z",
-      "updatedAt": "2026-11-19T01:28:09Z",
+      "updatedAt": "2026-11-20T21:14:22Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
       "baseRefName": "main",
       "baseRefOid": "1a2ad8c16daa9bddb64c935e81fe88dd67bfe786",
       "headRepository": "yaroslavros/draft-ietf-wimse-s2s-protocol",
       "headRefName": "main",
-      "headRefOid": "dfb439db64f8b1f69737ba31fca370823ec8a699",
+      "headRefOid": "61db36dc559f83e7816187d50ed456ff0a4d2198",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@bc-pi @jsalowey @arndt-s  please review, so we could cut next revision and proceed forward.",
+          "createdAt": "2026-11-20T21:14:00Z",
+          "updatedAt": "2026-11-20T21:14:22Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOLJmm788AAAABY4Iojg",
@@ -28068,6 +28099,99 @@
               "updatedAt": "2026-11-19T01:28:09Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABZHf5Ow",
+          "commit": {
+            "abbreviatedOid": "20124ee"
+          },
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-11-19T18:02:02Z",
+          "updatedAt": "2026-11-19T18:02:02Z",
+          "comments": [
+            {
+              "originalPosition": 53,
+              "body": "I'm not sure why? Just to make WIMSE-MTLS reference informational?",
+              "createdAt": "2026-11-19T18:02:02Z",
+              "updatedAt": "2026-11-19T18:02:02Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABZIApfA",
+          "commit": {
+            "abbreviatedOid": "dfb439d"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-11-19T18:39:56Z",
+          "updatedAt": "2026-11-19T18:39:56Z",
+          "comments": [
+            {
+              "originalPosition": 53,
+              "body": "Yes, because Creds should not be dependent on specific WIMSE mechanisms such as mTLS.",
+              "createdAt": "2026-11-19T18:39:56Z",
+              "updatedAt": "2026-11-19T18:39:56Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABZLjW1g",
+          "commit": {
+            "abbreviatedOid": "20124ee"
+          },
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-11-19T23:01:12Z",
+          "updatedAt": "2026-11-19T23:01:12Z",
+          "comments": [
+            {
+              "originalPosition": 53,
+              "body": "Done",
+              "createdAt": "2026-11-19T23:01:12Z",
+              "updatedAt": "2026-11-19T23:01:12Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABZMmzzQ",
+          "commit": {
+            "abbreviatedOid": "20124ee"
+          },
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-11-20T00:57:17Z",
+          "updatedAt": "2026-11-20T00:57:17Z",
+          "comments": [
+            {
+              "originalPosition": 335,
+              "body": "Made changes to add required flexibility. Please check.",
+              "createdAt": "2026-11-20T00:57:17Z",
+              "updatedAt": "2026-11-20T00:57:17Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLJmm788AAAABZYsDgQ",
+          "commit": {
+            "abbreviatedOid": "61db36d"
+          },
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-11-20T19:57:58Z",
+          "updatedAt": "2026-11-20T19:57:58Z",
+          "comments": []
         }
       ]
     }
