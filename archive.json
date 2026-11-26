@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-11-22T05:11:00.013248+00:00",
+  "timestamp": "2026-11-26T06:55:59.397190+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-s2s-protocol",
   "labels": [
     {
@@ -6874,7 +6874,7 @@
       "id": "I_kwDOLJmm788AAAABfUkHQg",
       "title": "http-signature and wpt point to workload-creds Section 5.1.4, which -03 doesn't have",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/422",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kanywst",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
@@ -6883,8 +6883,8 @@
       ],
       "body": "workload-creds-03 put WIT validation in Section 5.1.3 (\"Validating the WIT\"). There is no 5.1.4 in -03, but the other two drafts on main still cite it:\n\n- `draft-ietf-wimse-http-signature.md` line 168: \"MUST validate the WIT as specified in {{Section 5.1.4 of I-D.ietf-wimse-workload-creds}}\"\n- `draft-ietf-wimse-http-signature.md` line 269: \"({{Section 5.1.4 of I-D.ietf-wimse-workload-creds}})\"\n- `draft-ietf-wimse-wpt.md` line 168: \"MUST first validate the WIT as specified in {{Section 5.1.4 of I-D.ietf-wimse-workload-creds}}\"\n\nRelated: `draft-ietf-wimse-http-signature.md` line 76 says \"Refer to Sec. 1.2 of {{I-D.ietf-wimse-workload-creds}} for the deployment architecture\". In -03 that is Section 1.1; 1.2 is now \"Workload Identifiers and Authentication Granularity\".\n\nAll four look like they should be 5.1.3 and 1.1. Since the validation step is normative (MUST) in both drafts, it would be good to fix before http-signature goes further in IESG review.",
       "createdAt": "2026-11-14T22:41:34Z",
-      "updatedAt": "2026-11-20T22:46:31Z",
-      "closedAt": null,
+      "updatedAt": "2026-11-24T19:23:45Z",
+      "closedAt": "2026-11-24T19:23:45Z",
       "comments": [
         {
           "author": "yaronf",
@@ -6892,8 +6892,40 @@
           "body": "Closed for HTTP-sig, not for WPT.",
           "createdAt": "2026-11-20T22:46:15Z",
           "updatedAt": "2026-11-20T22:46:15Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "but despite the name \"HTTP-Sig editorial fixes\" #423 did update the reference in the WPT document, no?\n\ne.g., https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/pull/423/changes#diff-0f2fd9077599bd768c56f76bd92a0bd00d8bf25f465a6bedbcad8d42366ad03eR168   ",
+          "createdAt": "2026-11-24T17:57:16Z",
+          "updatedAt": "2026-11-24T17:57:16Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Yep, my bad.",
+          "createdAt": "2026-11-24T19:23:45Z",
+          "updatedAt": "2026-11-24T19:23:45Z"
         }
       ]
+    },
+    {
+      "number": 425,
+      "id": "I_kwDOLJmm788AAAABiH3BZQ",
+      "title": "workload-creds: WIT validation (5.1.3) has no exp check",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-s2s-protocol/issues/425",
+      "state": "OPEN",
+      "author": "kanywst",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [
+        "draft-ietf-wimse-workload-creds"
+      ],
+      "body": "The validation list in workload-creds-03 \u00a75.1.3 has no step for `exp`, although \u00a75.1 makes `exp` required and \u00a79.3.1 relies on it. The WPT list in wpt-02 \u00a72 has the matching step for the WPT.\n\nwit-wpt-go's `ValidateWPT` follows the WIT list and accepts an expired WIT.\n\nSuggest adding: \"The `exp` claim is present and conveys a time that has not passed.\"\n",
+      "createdAt": "2026-11-24T15:08:52Z",
+      "updatedAt": "2026-11-24T17:58:08Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
